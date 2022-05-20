@@ -1,0 +1,625 @@
+<?php
+/**
+ * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
+ * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
+ *
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE.txt
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @link          http://cakephp.org CakePHP(tm) Project
+ * @package       app.View.Layouts
+ * @since         CakePHP(tm) v 0.10.0.1076
+ * @license       http://www.opensource.org/licenses/mit-license.php MIT License
+ */
+$session = $this->Session->read();
+$cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework');
+$cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
+        //echo "<pre>"; print_r($session); exit;
+?>
+<!DOCTYPE html>
+<html>
+<head>
+    <?php //$logoData  = $this -> requestAction(array('controller' => 'settings','action' => 'getlogodata'));
+                   //if($logoData =="No Logo"){
+                        $logoLink = "Superyacht Operating Systems";
+                        $logoimage = "logo/thumb/1412662088_SOS logo.PNG";
+//                    }else{
+//                        $logoLink = $logoData['Company']['name'];
+//                        $logoimage = "logo/thumb/".$logoData['Company']['logo'];
+//                    }
+
+$actual_link_defaultctp = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+       
+        //echo $actual_link."<br>"; 
+        $parts_defaultctp = parse_url($actual_link_defaultctp);
+        //echo $parts['path'];
+        $explodepath_defaultctp = explode('/',$parts_defaultctp['path']);
+        $programpageCharter =  $explodepath_defaultctp[2];
+        $programpagePrograms =  $explodepath_defaultctp[3];
+            ?>
+            <?php echo $this->Html->charset('UTF-8'); ?>
+	  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="">
+            
+        <title>Superyacht Operating Systems - Charter Guest</title>
+	<?php
+		echo $this->Html->meta('icon');
+
+		//echo $this->Html->css('cake.generic');
+                echo $this->Html->css('admin/bootstrap'); 
+                echo $this->Html->css('admin/sb-admin');
+                echo $this->Html->css('admin/login');     
+                echo $this->Html->css('admin/font/css/font-awesome.min');
+                echo $this->Html->css('admin/custom_admin');
+                echo $this->Html->css('jquery-ui');
+                echo $this->Html->css('jquery-ui.theme');
+                echo $this->Html->css('jquery-ui.structure');
+                echo $this->Html->css('jquery.timepicker');
+                echo $this->Html->css('jquery.rangerover');
+                echo $this->Html->css('fastselect.min.css');
+                echo $this->Html->css('jquery.dataTables');
+                echo $this->Html->css('typeahead');
+//                echo $this->Html->script('jquery-1.7.2.min');
+                echo $this->Html->script('jquery-3.2.1.min');
+                echo $this->Html->script('jquery.validate');
+                echo $this->Html->script('jquery.ui.core');
+                echo $this->Html->script('jquery.ui.datepicker');
+                echo $this->Html->script('jquery.timepicker');
+                echo $this->Html->script('bootstrap.min');
+                echo $this->Html->script('jquery.rangerover');
+	 	echo $this->Html->script('fastselect.standalone');
+                echo $this->Html->script('jquery.dataTables.min');
+                echo $this->Html->script('typeahead');
+                
+		echo $this->fetch('meta');
+		echo $this->fetch('css');
+		echo $this->fetch('script');
+	?>
+    <style type="text/css">
+
+.modalmsg-container .modal-dialog{
+padding-left: 0px;
+}
+.modalmsg-container .modal-body{
+  margin: 0px;
+}
+
+
+				@media only screen and (max-width:1200px){
+				.login-panel{margin-top:50%;}
+				}
+/*                                .logoutDiv {
+                                    line-height: 95px;
+                                    font-weight: bold;
+                                    color: white;
+                                    float: right;
+                                    margin-right: 80px;
+                                    font-size: 20px;
+                                }*/
+		.navbar-nav.navbar-user > li > .dropdown-menu {
+    background: none transparent;
+			right: 30px;}
+
+      .col-ng-3{width: 12%;}
+.modal-content.mc-bord{
+	border-radius:0;
+	border:1px solid #000;
+	}
+.modalmsg-container .modal-content{
+width: max-content;
+    max-width: 491px;
+    min-width: 300px;
+}
+
+@media (min-width: 768px){
+.modal-dialog {
+    width: 400px;
+    margin: 30px auto;
+}
+}
+
+/*	.iter-pref{
+		width: 32%;
+	}*/
+  /* Ramesh 10/08/2018 */
+  @media only screen 
+  and (min-device-width : 768px) 
+  and (max-device-width : 1024px) 
+  and (orientation : portrait) { 
+   /* .row.ipadport-comments .col-md-8 {
+        margin-left: -12px;
+    }*/
+    span.ipadport-break {
+        display: block;
+    }
+    .ipadport-ml15{
+      margin-left: 15px;
+    }
+
+  }
+
+  @media only screen and (max-device-width : 768px) {
+.ipadport-can-you-block{
+  margin-left: -8px;
+}
+.modalmsg-container .modal-content{
+  width: 100%;
+}
+.modalmsg-container .modal-open .modal{
+  padding-right: 0px;
+}
+.chr-block{
+  display: block;
+  text-align: center;
+      padding-top: 5px;
+}
+.modalmsg-container .modal-content{
+width: max-content;
+    max-width: 100%;
+    min-width:100%;
+}
+}
+
+.ui-datepicker-title select {
+        color: black;
+    }
+			</style>              
+</head>
+<body>
+    <div style="position:fixed;height:100%;width:100%;left:0;top:0;z-index:9999;opacity:0.5;display:none;" id="hideloader">
+		<div style="text-align:center;vertical-align:center;font-weight:bold;font-size:45px;margin-top:305px;color:#000000"><?php echo $this->Html->image("admin/loader.gif"); ?></div></div>         
+	 <section class="container wrapper">
+            <div class="row">
+              <?php if (isset($session["login_username"]) && !empty($session["login_username"])) { ?>
+                <nav role="navigation" class="navbar navbar-inverse navbar-fixed-top">            
+                    <div class="navbar-header ">    
+                        <?php if (isset($session["fleetLogoUrl"]) && !empty($session["fleetLogoUrl"]) && $programpageCharter != "charters" && $programpagePrograms != "programs") { ?>
+                            <div class="logoimg"> 
+                                <img src="<?php echo $session["fleetLogoUrl"]; ?>" alt="">
+                            </div>
+                            <p class="navbar-brand logotxt brand-logo"><?php echo !empty($session["fleetCompanyName"]) ? $session["fleetCompanyName"] : ""; ?></p>
+                        <?php } elseif($programpageCharter == "charters" && $programpagePrograms == "programs"){ ?>
+
+                          <div class="logoimg"> <?php echo $this->Html->image($logoimage);?></div> 
+                            <?php 
+                            echo $this->Html->link($logoLink,'http://www.superyachtos.com/',array('target'=>'blank','class' => 'navbar-brand logotxt brand-logo','title' => $logoLink));
+                            ?>
+
+                       <?php } ?>  
+                            
+                    </div>
+
+                    <div class="label-bold-head"><?php if (isset($session["yachFullName"]) && !empty($session["yachFullName"])) { echo $session['yachFullName']; } ?></div>
+                    <div class="yachtHeaderName">Charter Guest
+            <!-- <span class="label-md-header"> <?php //echo isset($companyData['Fleetcompany']['management_company_name']) ? $companyData['Fleetcompany']['management_company_name'] : ""; ?></span>   --></div>                          <div class=""> 
+                                 <div class="userhead-name ch-mob-hd"><?php if (isset($session["login_username"]) && !empty($session["login_username"])) { echo $session['login_username']; } ?>
+                                 	
+                                 </div>
+                                    <div class="list-logout-row">
+                                        <?php echo $this->Html->link($this->Html->image("admin/table.png", array("alt" => "Logout","title" => "Logout")).'  Logout','/',array('escape' =>false,'title' => 'Logout'));?>
+                        </div>
+                    </div>
+                    
+                        </nav>
+                <?php  } ?>
+                <div class="container-row-all">
+                    
+                            <?php  echo $this->fetch('content'); ?>
+                   
+                </div>
+
+
+<div id="selectcart" class="modal fade" role="dialog">
+  <div class="modal-dialog charter-mod">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+        <h3 class="modal-title text-center"><?php echo isset($session['charter_info']['CharterGuest']['yacht_name']) ? $session['charter_info']['CharterGuest']['yacht_name'] : ""; ?></h3>          
+        <h4 class="modal-title text-center"><?php echo isset($session['charter_info']['CharterGuest']['charter_name']) ? $session['charter_info']['CharterGuest']['charter_name'] : ""; ?></h4>
+      </div>
+      <div class="modal-body">
+            <div id="selectedWineListDiv">
+                <?php if (isset($selectionCartData) && !empty($selectionCartData)) { ?>
+                    <!-- Selected Wine list table -->
+                    <?php echo $this->element('selected_wine_list_table'); ?>
+                <?php } else { ?>
+                    <p class="text-center">No selected wines available.</p>
+                <?php } ?>    
+            </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="productSelectionCart" class="modal fade" role="dialog">
+  <div class="modal-dialog charter-mod">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h3 class="modal-title text-center"><?php echo isset($session['charter_info']['CharterGuest']['yacht_name']) ? $session['charter_info']['CharterGuest']['yacht_name'] : ""; ?></h3>          
+        <h4 class="modal-title text-center"><?php echo isset($session['charter_info']['CharterGuest']['charter_name']) ? $session['charter_info']['CharterGuest']['charter_name'] : ""; ?></h4>
+      </div>
+      <div class="modal-body">
+            <div id="selectedProductListDiv">
+                <?php if (isset($productSelectionCartData) && !empty($productSelectionCartData)) { ?>
+                    <!-- Selected Wine list table -->
+                    <?php echo $this->element('selected_product_list_table'); ?>
+                <?php } else { ?>
+                    <p class="text-center">No selected products available.</p>
+                <?php } ?>    
+            </div>
+      </div>
+     
+    </div>
+
+  </div>
+</div>
+
+<div id="winePreference-modal" class="modal fade dont-modal-container" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Add Product</h4>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+            <label>Product Name</label>
+            <input type="text" name="product name" class="form-control wlinput">
+        </div>
+        <div class="col-xs-12 col-sm-9 col-md-9 md-space-12">
+        <div class="form-group">
+            <label>Product Type</label>
+            <!--
+            <select class="form-control">
+            <option>Reposado Tequila</option>
+            <option>Silver Tequila</option>
+            <option>Gingers Irish Whiskey</option>
+            </select>
+            -->
+            <?php echo $this->Form->input("wine_color_list",array("id" => "wine_color_list", "label"=>false,'options' => $colorList,'class'=>'form-control wlinput','empty'=>'Select')); ?>
+        </div>
+         <div class="form-group">
+            <label>Product Category</label>
+            <!--
+            <select class="form-control ">
+            <option>Red Raspberry</option>
+            <option>Sorrento Lemon</option>
+            <option>O'Clock Gin</option>
+            </select>
+            -->
+            <input type="text" name="Vintage" class="form-control wlinput">
+        </div>
+    </div>
+      </div>
+      <div class="modal-footer">
+        <input type="hidden" class="wlinput" id="CGID" name="CGID" value="<?php echo $session['charter_info']['CharterGuest']['id']; ?>">
+        <button id="wlinputsave" type="button" class="btn btn-save">Save</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<div id="PreferenceAlreadyExist" class="modal modalmsg-container" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" >
+  <div class="modal-dialog" role="document">
+    <div class="modal-content mc-bord">
+<!--      <div class="modal-header">
+        <h5 class="modal-title">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>-->
+        <div class="modal-body">
+          <div class="modalmsg"> 
+            <p>Preference already exist for : <b><span id="guestFullName" class="chr-block"></span></b></p>
+            <p>Click USE EXISTING to update preferences before submitting</p>
+            <p>Click CREATE NEW to delete the old and create new preferences</p>
+          </div>
+            <!-- <div class="text-center">
+                <?php if (isset($sessionData["fleetLogoUrl"]) && !empty($sessionData["fleetLogoUrl"])) { ?>
+                    <img src="<?php echo $sessionData["fleetLogoUrl"]; ?>" alt="">
+                <?php } ?> 
+                    <h3><?php echo !empty($sessionData["fleetCompanyName"]) ? $sessionData["fleetCompanyName"] : ""; ?></h3>
+            </div>     -->
+        </div>
+        <div class="modal-footer">
+            <input class="btn btn-success" type="button" name="use_existing" id="use_existing" data-preferenceExistGuestID="" data-preferenceexistUUID="" data-gtype="" value="USE EXISTING" />
+          <input class="btn btn-success"  type="button" name="create_new" data-guestuuid="" data-assid="" id="create_new" value="CREATE NEW" />
+        </div>
+    </div>
+  </div>
+</div>
+
+<div id="PreferenceBirthday" class="modal modalmsg-container" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" >
+  <div class="modal-dialog" role="document">
+    <div class="modal-content mc-bord">
+<!--      <div class="modal-header">
+        <h5 class="modal-title">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>-->
+        <div class="modal-body">
+          <div class="modalmsg"> 
+            <p>Please enter your birthday to confirm your identity.</p>
+          </div>
+            <div class="text-center">
+            <?php //echo $this->Form->input("dob",array("label"=>false,'class'=>'form-control dobDatePicker nonEditable','type' => 'text')); ?>
+            <input type="text" name="checkdob" id="checkdob" style="width: 50%;text-align: center;margin-left: 80px;" class="form-control dobDatePickerexisting existingnonEditable" />
+            <p id="confirmpreferencesuccess" style="color:green;">Confirmed - Loading your preference now</p>
+            <div id="confirmpreferencefail"> <p style="color:red;">Wrong DOB - Please try again or create new</p>
+                <input class="btn btn-success"  type="button" name="create_new" data-guuid ="" data-assid ="" id="dob_create_new" value="CREATE NEW" />
+            </div>
+            </div>    
+        </div>
+        <div class="modal-footer">
+            <input class="btn btn-success" type="button" name="confirm" id="confirmPreference" data-assid=""  data-chkuuid ="" data-gtype="" value="CONFIRM" />
+        </div>
+    </div>
+  </div>
+</div>
+
+<!-- The Modal -->
+<!-- Modal -->
+<div id="dont-click-modal" class="modal fade dont-modal-container" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Add Product</h4>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+            <label>Product Name</label>
+            <input type="text" name="product name" class="form-control bsinput">
+        </div>
+        <div class="col-xs-12 col-sm-9 col-md-9 md-space-12">
+        <div class="form-group">
+            <label>Product Type</label>
+            <!--
+            <select class="form-control">
+            <option>Reposado Tequila</option>
+            <option>Silver Tequila</option>
+            <option>Gingers Irish Whiskey</option>
+            </select>
+            -->
+            <?php echo $this->Form->input("product_type",array("id" => "product_type", "label"=>false,'options' => $typeList,'class'=>'form-control bsinput','empty'=>'Select')); ?>
+        </div>
+         <div class="form-group">
+            <label>Product Category</label>
+            <!--<select class="form-control ">
+            <option>Red Raspberry</option>
+            <option>Sorrento Lemon</option>
+            <option>O'Clock Gin</option>
+            </select>
+            -->
+            <?php echo $this->Form->input("category_list",array("id" => "category_list", "label"=>false,'options' => $categoryList,'class'=>'form-control bsinput','empty'=>'Select')); ?>
+        </div>
+    </div>
+      </div>
+      <div class="modal-footer">
+          <input type="hidden" class="bsinput" id="CGID" name="CGID" value="<?php echo $session['charter_info']['CharterGuest']['id']; ?>">
+        <button id="save_bs_product" type="button" class="btn btn-save">Save</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+                
+            </div>
+            <div class="push"></div>
+        </section>
+            <?php echo $this->element('footer'); ?>  
+
+<?php 
+    $baseFolder = $this->request->base;
+?>    
+
+<script>
+    var BASE_FOLDER = "<?php echo $baseFolder; ?>";
+</script> 
+<script type="text/javascript">
+/// existing preference
+var dateToday = new Date();
+var dobYearRange = "1900:" + dateToday.getFullYear();
+// DOB
+$(".dobDatePickerexisting").datepicker({
+    dateFormat: 'd M yy',
+    changeYear: true,
+    changeMonth:true,
+    yearRange: dobYearRange
+});
+
+// Make Non-editable fields
+$(document).on("keypress", ".existingnonEditable", function(e) {
+    if (e.which != 8) { // Except the Backspace key
+        return false;
+    }
+});
+    
+$(document).on("click",".existingCheckFunction",function(e){
+    var classObj = $(this);
+    var associd = classObj.data('associd');
+    var guestType = classObj.data('guestype');
+
+    var datasend = {"associd":associd,"guestType":guestType};
+        $("#hideloader").show();
+        $.ajax({
+            type: "POST",
+            url: BASE_FOLDER+'/charters/existingCheckFunction',
+            dataType: 'JSON',
+            data: datasend,
+            success:function(result) {
+                
+                //console.log(result); return false;
+                if (result.status == 'success') {
+                    $("#guestFullName").text(result.preferenceExistFirstName+' '+result.preferenceExistLastName);
+                    $("#use_existing").attr('data-preferenceexistUUID',result.preferenceExistGuestUUID);
+                    $("#create_new").attr('data-guestuuid',result.preferenceExistGuestUUID);
+                    $("#create_new").attr('data-assid',result.preferenceExistGuestID);
+                    $("#use_existing").attr('data-preferenceExistGuestID',result.preferenceExistGuestID);
+                    $("#use_existing").attr('data-gtype',result.guestType);
+                    $("#hideloader").hide();
+                    $("#PreferenceAlreadyExist").modal("show");
+                }else if(result.status == 'fail'){
+                    $("#hideloader").hide();
+                    window.location.href = BASE_FOLDER+result.redirectUrl;
+                }   
+            },
+            error: function(jqxhr) { 
+                $("#hideloader").hide();
+            }
+        });
+    
+     
+ });
+
+  $(document).on("click", "#use_existing", function(e) { 
+    
+    $("#checkdob").val('');
+    var chkuuid = $("#use_existing").attr('data-preferenceexistUUID');
+    var assid = $("#use_existing").attr('data-preferenceExistGuestID');
+    var gtype = $("#use_existing").attr('data-gtype');
+    $("#confirmpreferencesuccess").hide();
+    $("#confirmpreferencefail").hide();
+    $("#dob_create_new").attr("data-guuid",chkuuid);
+    $("#dob_create_new").attr("data-assid",assid);
+    $("#confirmPreference").attr("data-chkuuid",chkuuid);
+    $("#confirmPreference").attr("data-assid",assid);
+    $("#confirmPreference").attr("data-gtype",gtype);
+    $("#PreferenceAlreadyExist").modal("hide");
+    $("#PreferenceBirthday").modal("show");
+    
+});
+
+
+  $(document).on("click", "#confirmPreference", function(e) { 
+    var classObj = $(this);
+    var dob = $("#checkdob").val();
+    
+    var chkuuid = classObj.data('chkuuid');
+    var associateid = classObj.data('assid');
+    var gtype = classObj.data('gtype');
+    if(dob){
+    var data = {
+
+      "dob":dob,
+      "guest_list":chkuuid,
+      "associd":associateid,
+      "gtype":gtype
+
+    }
+        $("#hideloader").show();
+        $.ajax({
+            type: "POST",
+            url: BASE_FOLDER+'/charters/checkPersonalDetails',
+            dataType: 'json',
+            data: data,
+            success:function(result) {
+                
+                if (result.status == 'success') {
+                    ///location.reload();
+                    $("#confirmpreferencesuccess").show();
+                    setTimeout(function () {
+                        $("#PreferenceBirthday").modal("hide");
+                        window.location.href = BASE_FOLDER+result.redirectUrl;
+                    }, 1000);
+                   
+                    $("#hideloader").hide();
+                } else {
+                  $("#hideloader").hide();
+                  $("#confirmpreferencefail").show();
+                   // return false;
+                }   
+            },
+            error: function(jqxhr) { 
+                $("#hideloader").hide();
+            }
+        });
+
+    }else{
+      alert("Please select the date of birth");
+      return false;
+    }
+    
+});
+
+$(document).on("click", "#create_new", function(e) { 
+    var classObj = $(this);
+    var guestuuid = classObj.data('guestuuid');
+    var assid = classObj.data('assid');
+   createNew(guestuuid,assid);
+
+});
+
+
+$(document).on("click", "#dob_create_new", function(e) { 
+   //alert();
+  //$("#PreferenceAlreadyExist").modal("hide");
+  var classObj = $(this);
+  var guuid = classObj.data('guuid');
+  var assid = classObj.data('assid');
+  createNew(guuid,assid);
+  $("#PreferenceBirthday").modal("hide");
+
+});
+
+function createNew(guuid,assid){
+
+   
+    var data = {
+        "guest_list":guuid,
+        "assid":assid,
+    }
+        $("#hideloader").show();
+        $.ajax({
+            type: "POST",
+            url: BASE_FOLDER+'/charters/createNewPreference',
+            dataType: 'json',
+            data: data,
+            success:function(result) {
+                
+                if (result.status == 'success') {
+                    
+                    
+                    $("#PreferenceBirthday").modal("hide");
+                    window.location.href = BASE_FOLDER+result.redirectUrl;
+                    //$("#hideloader").hide();
+                } 
+            },
+            error: function(jqxhr) { 
+                $("#hideloader").hide();
+            }
+        });
+
+    
+}
+
+// Since confModal is essentially a nested modal it's enforceFocus method
+// must be no-op'd or the following error results 
+// "Uncaught RangeError: Maximum call stack size exceeded"
+// But then when the nested modal is hidden we reset modal.enforceFocus
+var enforceModalFocusFn = $.fn.modal.Constructor.prototype.enforceFocus;
+
+$.fn.modal.Constructor.prototype.enforceFocus = function() {};
+
+$confModal.on('hidden', function() {
+    $.fn.modal.Constructor.prototype.enforceFocus = enforceModalFocusFn;
+});
+
+$confModal.modal({ backdrop : false });
+/// existing preference
+</script>
+</body>
+</html>

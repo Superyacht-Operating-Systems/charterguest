@@ -1,0 +1,43 @@
+/* 
+Author: Start Bootstrap - http://startbootstrap.com
+'SB Admin' HTML Template by Start Bootstrap
+
+All Start Bootstrap themes are licensed under Apache 2.0. 
+For more info and more free Bootstrap 3 HTML themes, visit http://startbootstrap.com!
+*/
+
+/* ATTN: This is mobile first CSS - to update 786px and up screen width use the media query near the bottom of the document! */
+
+/* Global Styles */
+
+body {
+  padding-top: 50px;
+  margin-left:0 !important;
+  margin-right:0 !important;
+  background: #f2f2f3;
+  
+}
+
+#wrapper {
+  padding-left: 0;
+}
+
+#page-wrapper {
+  width: 100%;
+  padding: 5px 15px;
+}
+.tdText{
+  /*position:relative;z-index:1;*/
+}.tdTextNew{
+  position:relative;z-index:1;
+}
+/* Nav Messages */
+
+.messages-dropdown .dropdown-menu .message-preview .avatar,
+.messages-dropdown .dropdown-menu .message-preview .name,
+.messages-dropdown .dropdown-menu .message-preview .message,
+.messages-dropdown .dropdown-menu .message-preview .time {
+  display: block;
+}
+
+.messages-dropdown .dropdown-menu .message-preview .avatar {

@@ -1,0 +1,67 @@
+@charset "utf-8";
+/* CSS Document */
+
+
+
+/** Login Page **/
+body{padding:0; margin:0; /*background:#f5f5f5;*/}
+.login-panel {
+    margin-bottom: 25%;
+    margin-top: 42%;
+}
+.user-name {
+    background: url("../../img/admin/user-icon.jpg") no-repeat right center;
+    padding: 0 35px 0 11px;
+}
+.user-password {
+    background: url("../../img/admin/password.jpg") no-repeat right center;
+    padding: 0 35px 0 11px;
+}
+.login-panel{background: none!important;border:none!important;}
+.login-panel .panel-heading {background: none!important;border:none!important;}
+
+.login-panel .btn-default{
+        background: rgba(10, 230, 87, 0.58);border:none;font-weight: bold;
+}
+
+/*custom media query for small devies*/
+@media (max-width:850px) {
+.login-panel {
+    margin-top: 30%;
+    margin-bottom: 10%;
+}
+.footer-copy {
+    padding-left:20px;
+}
+}
+
+.flashError, div .error{
+    font-weight:normal;
+    color:#FF0000;
+    font-size:12px;
+    padding: 2px 5px ;
+}
+.form-control{
+    font-size:14px !important;
+}
+ 
+/* Jquery Validation */
+.form_margin
+{
+   height: 50px;
+   margin: 0 0 5px;
+}
+
+/* Jquery Validation */ 
+.login-panel .form-control {
+    background: rgba(241, 235, 235, 0.76)!important;
+    border-top: solid 1.5px rgba(2, 2, 2, 0.40)!important;
+    border-left: solid 1.5px rgba(2, 2, 2, 0.40)!important;
+    border-bottom: solid 1.5px #fff!important;
+    border-right: solid 1.5px #fff;  font-weight: 100;!important;
+    font-weight: 600;
+    color: #333!important;
+}
+
+input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill{background: rgba(241, 235, 235, 0.76)!important;}
+.login-panel fieldset{font-weight: bold;}
