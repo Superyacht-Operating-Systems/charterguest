@@ -24,7 +24,8 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
     <?php //$logoData  = $this -> requestAction(array('controller' => 'settings','action' => 'getlogodata'));
                    //if($logoData =="No Logo"){
                         $logoLink = "Superyacht Operating Systems";
-                        $logoimage = "logo/thumb/1412662088_SOS logo.PNG";
+                        // $logoimage = "logo/thumb/1412662088_SOS logo.PNG";
+                        $logoimage = "logo/thumb/charter_guest_logo.png";
 //                    }else{
 //                        $logoLink = $logoData['Company']['name'];
 //                        $logoimage = "logo/thumb/".$logoData['Company']['logo'];
