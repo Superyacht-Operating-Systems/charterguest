@@ -177,7 +177,8 @@ width: max-content;
               <?php if (isset($session["login_username"]) && !empty($session["login_username"])) { ?>
                 <nav role="navigation" class="navbar navbar-inverse navbar-fixed-top">            
                     <div class="navbar-header ">    
-                        <?php if (isset($session["fleetLogoUrl"]) && !empty($session["fleetLogoUrl"]) && $programpageCharter != "charters" && $programpagePrograms != "programs") { ?>
+                        <!-- <?php //if (isset($session["fleetLogoUrl"]) && !empty($session["fleetLogoUrl"]) && $programpageCharter != "charters" && $programpagePrograms != "programs") { ?> -->
+                        <?php if (isset($session["fleetLogoUrl"]) && !empty($session["fleetLogoUrl"]) && $programpageCharter == "charters") { ?>
                             <div class="logoimg"> 
                                 <img src="<?php echo $session["fleetLogoUrl"]; ?>" alt="">
                             </div>
