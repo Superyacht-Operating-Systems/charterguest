@@ -41,7 +41,6 @@ class ChartersController extends AppController {
                 $this->loadModel('CharterGuest');
                 $this->loadModel('GuestList');
                 $cloudUrl = Configure::read('cloudUrl');
-                $SITE_URL = Configure::read('BASE_URL');  
                 
                 $this->CharterGuest->set($this->request->data);
                 if (!$this->CharterGuest->validates(array('fieldList' => array('email')))) {
@@ -76,15 +75,11 @@ class ChartersController extends AppController {
                         $this->loadModel('Fleetcompany');
                         $companyData = $this->Fleetcompany->find('first', array('fields' => array('management_company_name','logo','fleetname','id'), 'conditions' => array('id' => $charterData['CharterGuest']['charter_company_id'])));
                         if (isset($companyData['Fleetcompany']['logo']) && !empty($companyData['Fleetcompany']['logo'])) {
-                            // $fleetLogoUrl = $cloudUrl.$companyData['Fleetcompany']['fleetname']."/img/logo/thumb/".$companyData['Fleetcompany']['logo'];
-                            $fleetLogoUrl = $SITE_URL.'/'."charterguest/img/logo/thumb/".$companyData['Fleetcompany']['logo'];
+                            $fleetLogoUrl = $cloudUrl.$companyData['Fleetcompany']['fleetname']."/img/logo/thumb/".$companyData['Fleetcompany']['logo'];
                             $this->Session->write("fleetLogoUrl", $fleetLogoUrl);
                                 $this->Session->write("fleetCompanyName", $companyData['Fleetcompany']['management_company_name']);
                                 $this->Session->write("fleetCompanyID", $companyData['Fleetcompany']['id']);
                                 $this->Session->write("fleetname", $companyData['Fleetcompany']['fleetname']);
-                        }else{
-                            $fleetLogoUrl = $SITE_URL.'/'."charterguest/img/logo/thumb/charter_guest_logo.png";
-                            $this->Session->write("fleetLogoUrl", $fleetLogoUrl);
                         }
                         
                         
@@ -142,13 +137,9 @@ class ChartersController extends AppController {
                             $this->loadModel('Fleetcompany');
                             $companyData = $this->Fleetcompany->find('first', array('fields' => array('management_company_name','logo','fleetname'), 'conditions' => array('id' => $charterHeadData['CharterGuest']['charter_company_id'])));
                             if (isset($companyData['Fleetcompany']['logo']) && !empty($companyData['Fleetcompany']['logo'])) {
-                                // $fleetLogoUrl = $cloudUrl.$companyData['Fleetcompany']['fleetname']."/img/logo/thumb/".$companyData['Fleetcompany']['logo'];
-                                $fleetLogoUrl = $SITE_URL.'/'."charterguest/img/logo/thumb/".$companyData['Fleetcompany']['logo'];
+                                $fleetLogoUrl = $cloudUrl.$companyData['Fleetcompany']['fleetname']."/img/logo/thumb/".$companyData['Fleetcompany']['logo'];
                                 $this->Session->write("fleetLogoUrl", $fleetLogoUrl);
                                 $this->Session->write("fleetCompanyName", $companyData['Fleetcompany']['management_company_name']);
-                            } else{
-                                $fleetLogoUrl = $SITE_URL.'/'."charterguest/img/logo/thumb/charter_guest_logo.png";
-                                $this->Session->write("fleetLogoUrl", $fleetLogoUrl);
                             }
                             
                             
@@ -496,7 +487,7 @@ class ChartersController extends AppController {
         $this->loadModel('CharterGuest');
         $this->loadModel('Yacht');
         $this->loadModel('CharterGuestAssociate');
-        //echo "<pre>";print_r($this->request->query['assocId']); exit;
+        
         // When main Head charterer opens other guest(if Head charterer checked) and Update the Preference sheets
         if (isset($this->request->query['assocId']) && !empty($this->request->query['assocId'])) {
             $charterAssocId = base64_decode($this->request->query['assocId']);
@@ -505,6 +496,7 @@ class ChartersController extends AppController {
             if (empty($guestAssocData)) {
                 $this->redirect(array('action' => 'view'));
             }
+            //echo "<pre>";print_r($guestAssocData); exit;
             $this->Session->write("assocprefenceID", $charterAssocId);
             $this->Session->write("assocprefenceUUID", $charterGuestAssociateUUID);
             $this->Session->write("selectedCharterProgramUUID", $guestAssocData['CharterGuestAssociate']['charter_program_id']);
@@ -3091,7 +3083,8 @@ class ChartersController extends AppController {
                 //echo "update"; exit;
                 $inputusers_UUID = "'".$input['UUID']."'";
                 $inputcharter_guest_id = "'".$input['charter_guest_id']."'";
-                $this->CharterGuest->query("UPDATE $yDBName.charter_guest_associates SET is_psheets_done=1,UUID=".$inputusers_UUID.",token=".$input['token'].",send_wine_quotation='".$input['send_wine_quotation']."',send_spirit_quotation='".$input['send_spirit_quotation']."' WHERE UUID=$inputusers_UUID and charter_guest_id = $inputcharter_guest_id");
+                $inputc_token = "'".$input['token']."'";
+                $this->CharterGuest->query("UPDATE $yDBName.charter_guest_associates SET is_psheets_done=1,UUID=".$inputusers_UUID.",token=".$inputc_token.",send_wine_quotation='".$input['send_wine_quotation']."',send_spirit_quotation='".$input['send_spirit_quotation']."' WHERE UUID=$inputusers_UUID and charter_guest_id = $inputcharter_guest_id");
             //}
         }
 
@@ -3915,6 +3908,32 @@ class ChartersController extends AppController {
                         $fancybox = "";
                     }
 
+                    $CruisingMapCommentConditons = "activity_id = '$programScheduleUUID' AND activity_name = '$title' AND type = 'schedule'";
+                         $commentdatatitle = $this->CharterGuest->getCruisingMapComment($yachtDbName, $CruisingMapCommentConditons);
+                    //}
+                      if(isset($commentdatatitle[0]) && !empty($commentdatatitle[0])){
+                        $commentcounttitle = count($commentdatatitle);
+                      }
+                      else{
+                          $commentcounttitle = 0;
+                      }
+                      $colorcodetitle = "";  
+                      if($commentcounttitle > 0){ //echo "kkkk";
+                          $colorcodetitle = "green";
+                          //echo $is_fleet;
+                          if($is_fleet == 1){
+                                if(trim($scheduleData['CharterProgramSchedule']['is_crew_commented']) == 1){  //echo "lll";
+                                    $colorcodetitle = "red";
+                                }
+                            }else{
+                                if(trim($scheduleData['CharterProgramSchedule']['is_fleet_commented']) == 1){  //echo "pppp";
+                                    $colorcodetitle = "red";
+                                }    
+                            }
+                      }else{
+                            $colorcodetitle = "";   
+                      }
+
                     $popupHtml = '';
                     $readonly = "readonly";
                     $popupHtml .= '<div class="mapPopup sp-mp-detailsrow sp-modal-600" data-schuuid="'.$scheduleId.'">
@@ -3923,17 +3942,19 @@ class ChartersController extends AppController {
                     <div class="sp-divrow">
                     <div class="sp-60-w">
                     <input type="text" name="title" value="'.$title.'" placeholder="Enter the Title" class="" '.$readonly.' style="color: #000;font-size: 15px;border: solid 1px #ccc;width:100%;margin: 0px;padding: 8px 5px;font-weight: 600;">
-                    <textarea class="form-control" name="messagestitle" rows="4" cols="50">'.$notes.'</textarea>
+                    <textarea class="form-control" name="messagestitle" '.$readonly.' rows="4" cols="50">'.$notes.'</textarea>
                     </div>
                     <div class="sp-40-w">
                     <div class="sp-upload-img"></div>
-                    <ul class="action-icon"><li><i class="fa fa-comments crew_comment_cruisingmaptitle"  data-rel="'.$scheduleData[0]['CharterProgramSchedule']['UUID'].'" data-tempname="'.$scheduleData[0]['CharterProgramSchedule']['title'].'"><input type="hidden" name=commentstitle value="" class="messagecommentstitle" /></i></li></ul>
+                    <ul class="action-icon"><li><i class="fa fa-comments crew_comment_cruisingmaptitle"  style="color:'.$colorcodetitle.'" data-rel="'.$scheduleData[0]['CharterProgramSchedule']['UUID'].'" data-yachtid="'.$yacht_id.'" data-tempname="'.$scheduleData[0]['CharterProgramSchedule']['title'].'"><input type="hidden" name=commentstitle value="" class="messagecommentstitle" /></i></li></ul>
                     </div>
                     </div>';
                     $popupHtml .= '<input type="hidden" name="schedule_id" value="'.$scheduleId.'"><input type="hidden" class="form-control" name="day_num" id="dayNum" value="'.$dayNum.'">';
+                    $popupHtml .= '<input type="hidden" name="yacht_id" value="'.$yacht_id.'">';
                     $popupHtml .= '<input type="hidden" name="markerNum" id="markerNum" value="'.$this->request->data['markerNum'].'">';
                     $popupHtml .= '<input type="hidden" id="lattitude" value="'.$this->request->data['lattitude'].'">';
                     $popupHtml .= '<input type="hidden" id="longitude" value="'.$this->request->data['longitude'].'">';
+                    $popupHtml .= '<input type="hidden" id="charterprogramuuid" value="'.$scheduleData[0]['CharterProgramSchedule']['charter_program_id'].'">';
 
             //         $readonly = "readonly";
             //         $popupHtml .= '<div class="mapPopup"><h4>'.$title.'</h4><form id="scheduleFormEdit"><div class="inputContainer">';
@@ -3975,33 +3996,63 @@ class ChartersController extends AppController {
                     if (count($activityData) != 0) {
                         foreach ($activityData as $activity) {
 
-                            $activitynotes = $activity['CharterProgramScheduleActivity']['notes'];
-                            if(isset($activitynotes) && !empty($activitynotes)){
-                                $activitynotesgreen = "style='display:block;'";
-                            }else{
-                                $activitynotesgreen = "style='display:none;'";
-                            }
-                            $activityattachment = $activity['CharterProgramScheduleActivity']['attachment'];
-                            if(isset($activityattachment) && !empty($activityattachment)){
-                                $activityattachmentimg = "style='display:block;'";
-                                if($yname == "yacht"){
-                                    $targetFullPath = BASE_URL.'/SOS/app/webroot/betayacht/app/webroot/img/cruising_map_files/'.$activityattachment;
+                            // $activitynotes = $activity['CharterProgramScheduleActivity']['notes'];
+                            // if(isset($activitynotes) && !empty($activitynotes)){
+                            //     $activitynotesgreen = "style='display:block;'";
+                            // }else{
+                            //     $activitynotesgreen = "style='display:none;'";
+                            // }
+                            // $activityattachment = $activity['CharterProgramScheduleActivity']['attachment'];
+                            // if(isset($activityattachment) && !empty($activityattachment)){
+                            //     $activityattachmentimg = "style='display:block;'";
+                            //     if($yname == "yacht"){
+                            //         $targetFullPath = BASE_URL.'/SOS/app/webroot/betayacht/app/webroot/img/cruising_map_files/'.$activityattachment;
+                            //     }else{
+                            //             $targetFullPath = BASE_URL.'/'.$yname."/app/webroot/img/cruising_map_files/'.$activityattachment";
+                            //             if (!empty($fleetSiteName)) { // IF yacht is under any Fleet
+                            //                 $targetFullPath = BASE_URL.'/'.$fleetSiteName."/app/webroot/".$yname."/app/webroot/img/cruising_map_files/'.$activityattachment";
+                            //             }
+                            //     }
+
+                            //     $activityattachmentimage = $targetFullPath;
+                            //     $activityfancybox = "fancybox";
+                            // }else{
+                            //     $activityattachmentimg = "style='display:none;'";
+                            //     $activityattachmentimage = "#";
+                            //     $activityfancybox = "";
+                            // }
+
+                            $activity_id_chk = $activity['CharterProgramScheduleActivity']['id']; 
+                            $activity_UUID_chk = $activity['CharterProgramScheduleActivity']['UUID'];  
+                            $activity_name_id_chk = $activity['CharterProgramScheduleActivity']['activity_name'];        
+                            $CruisingMapCommentConditons = "activity_id = '$activity_UUID_chk' AND activity_name = '$activity_name_id_chk' AND type = 'activity'";
+                            $commentdata = $this->CharterGuest->getCruisingMapComment($yachtDbName, $CruisingMapCommentConditons);                 
+                            //}
+                                $commentcount = 0;
+                              if(isset($commentdata) && !empty($commentdata)){
+                                $commentcount = count($commentdata);
+                              }
+                              else{
+                                  $commentcount = 0;
+                              }
+                              $colorcode = "";
+                              if($commentcount > 0){
+                                $colorcode = "green";
+                                if($is_fleet == 1){
+                                    if(trim($activity['CharterProgramScheduleActivity']['is_crew_commented']) == 1){  
+                                        $colorcode = "red";
+                                    }
                                 }else{
-                                        $targetFullPath = BASE_URL.'/'.$yname."/app/webroot/img/cruising_map_files/'.$activityattachment";
-                                        if (!empty($fleetSiteName)) { // IF yacht is under any Fleet
-                                            $targetFullPath = BASE_URL.'/'.$fleetSiteName."/app/webroot/".$yname."/app/webroot/img/cruising_map_files/'.$activityattachment";
-                                        }
+                                    if(trim($activity['CharterProgramScheduleActivity']['is_fleet_commented']) == 1){  
+                                        $colorcode = "red";
+                                    }    
                                 }
+                                  
+                              }else{
+                                $colorcode = "";
+                              }
 
-                                $activityattachmentimage = $targetFullPath;
-                                $activityfancybox = "fancybox";
-                            }else{
-                                $activityattachmentimg = "style='display:none;'";
-                                $activityattachmentimage = "#";
-                                $activityfancybox = "";
-                            }
-
-                            $popupHtml .= '<div class="sp-divrow"><div class="sp-60-w"><input type="text" name="activity_name[]" '.$readonly.' style="color: #000;font-size: 15px;border: solid 1px #ccc;width:100%;margin: 0px;padding: 8px 5px;font-weight: 600;" value="'.$activity['CharterProgramScheduleActivity']['activity_name'].'"><input type="hidden" name="activity_id[]" value="'.$activity['CharterProgramScheduleActivity']['UUID'].'"><textarea class="form-control" name="messages[]" rows="4" cols="50">'.$activity['CharterProgramScheduleActivity']['notes'].'</textarea></div><div class="sp-40-w"><div class="sp-upload-img"></div><ul class="action-icon"><li><i class="fa fa-comments crew_comment_cruisingmap"  data-rel="'.$activity['CharterProgramScheduleActivity']['UUID'].'" data-tempname="'.$activity['CharterProgramScheduleActivity']['activity_name'].'"><input type="hidden" name=comments[] value="" class="messagecomments" /></i></li></ul></div></div>
+                            $popupHtml .= '<div class="sp-divrow"><div class="sp-60-w"><input type="text" name="activity_name[]" '.$readonly.' style="color: #000;font-size: 15px;border: solid 1px #ccc;width:100%;margin: 0px;padding: 8px 5px;font-weight: 600;" value="'.$activity['CharterProgramScheduleActivity']['activity_name'].'"><input type="hidden" name="activity_id[]" value="'.$activity['CharterProgramScheduleActivity']['UUID'].'"><textarea class="form-control" name="messages[]" rows="4" cols="50">'.$activity['CharterProgramScheduleActivity']['notes'].'</textarea></div><div class="sp-40-w"><div class="sp-upload-img"></div><ul class="action-icon"><li><i class="fa fa-comments crew_comment_cruisingmap" style="color:'.$colorcode.'" data-rel="'.$activity['CharterProgramScheduleActivity']['UUID'].'" data-yachtid="'.$yachtId.'" data-tempname="'.$activity['CharterProgramScheduleActivity']['activity_name'].'" title="Comments & Feedback"><input type="hidden" name=comments[] value="" class="messagecomments" /></i></li></ul></div></div>
                              ';
                         }
                     }
@@ -4314,6 +4365,239 @@ class ChartersController extends AppController {
         
     }
 
+    function getComments() {
+        // echo "<pre>";
+         //print_r($this->request->data);exit;
+         $this->loadModel("CruisingMapComment");
+         $this->loadModel('CharterProgramSchedule');
+         $this->loadModel('CharterProgramScheduleActivity');
+         $this->loadModel('Yacht');
+         $this->loadModel('CharterGuest');
+         
+         $activityId = $this->request->data['activityId'];
+         $activity_name = $this->request->data['activity_name'];
+         $yachtid = $this->request->data['yachtid'];
+         $type = $this->request->data['type'];
+ 
+         $yachtData = $this->Yacht->find("first", array('fields' => array('yfullName','ydb_name'), 'conditions' => array('id' => $yachtid))); 
+         $yachtDbName = $yachtData['Yacht']['ydb_name'];
+ 
+ 
+         $activity_id_chk = $activityId;      
+         if(isset($activity_id_chk) && !empty($activity_id_chk)){
+             $CruisingMapCommentConditons = "activity_id = '$activity_id_chk' AND activity_name = '$activity_name' AND type = '$type'";
+             $comments = $this->CharterGuest->getCruisingMapComment($yachtDbName, $CruisingMapCommentConditons);
+         }
+ 
+         //$comments = $this->CruisingMapComment->find('all', array('conditions' => array('CruisingMapComment.activity_name' => $activity_name), 'order' => 'CruisingMapComment.created desc'));
+         $usertype = $this->Session->read('loggedfleetuser.user_type');
+         $isfleet = 1;
+         if ($isfleet == 1) {
+             if ($usertype == 1) {
+                 $usertype_comment = "Administrator";
+             } else if ($usertype == 2) {
+                 $usertype_comment = "Manager";
+             } else if ($usertype == 4) {
+                 $usertype_comment = "DPA / TSA";
+             } else if ($usertype == 5) {
+                 $usertype_comment = "Owner";
+             } else if ($usertype == 6) {
+                 $usertype_comment = "Working Staff";
+             }
+         } else {
+             if ($usertype == 0) {
+                 $usertype_comment = "Crew Member";
+             } else if ($usertype == 1) {
+                 $usertype_comment = "OBA";
+             } else if ($usertype == 2) {
+                 $usertype_comment = "HOD";
+             } else if ($usertype == 3) {
+                 $usertype_comment = "Superadmin";
+             } else if ($usertype == 4) {
+                 $usertype_comment = "DPA / TSA";
+             }
+         }
+         //bellow condition to update when crew / fleet viewed their comments.
+         $dateTime = date('Y-m-d H:i:s');
+         $shipTime = "'" . date('Y-m-d H:i:s') . "'";
+         if($type == "activity"){
+             
+             if(isset($activityId) && !empty($activityId)){
+                 if ($isfleet == 1) {
+                 
+                     $updateConditions = "UUID = '$activityId'";
+                     $updateValues = "is_crew_commented='0',modified=$shipTime";
+                     $scheduleUpdateStatus = $this->CharterGuest->updateCharterProgramScheduleActivityData($yachtDbName, $updateConditions, $updateValues);
+         
+                     $updateCruisingMapCommentValues = "crew_newlyaddedcomment='0',modified=$shipTime";
+                     
+                 } else {
+                     
+         
+                     $updateConditions = "UUID ='$activityId'";
+                     $updateValues = "is_fleet_commented='0',modified=$shipTime";
+                     $scheduleUpdateStatus = $this->CharterGuest->updateCharterProgramScheduleActivityData($yachtDbName, $updateConditions, $updateValues);
+         
+                     $updateCruisingMapCommentValues = "fleet_newlyaddedcomment='0',modified=$shipTime";
+                 }
+         
+                     $updateConditionsCruisingMapComment = "activity_id = '$activityId' AND activity_name = '$activity_name' AND type='activity'";
+                     
+                     $scheduleUpdateStatus = $this->CharterGuest->updateCruisingMapComment($yachtDbName, $updateConditionsCruisingMapComment, $updateCruisingMapCommentValues);
+             }
+             
+     }else{
+ 
+         if(isset($activityId) && !empty($activityId)){
+        
+         
+         if ($isfleet == 1) {
+             
+             $updateConditions = "UUID = '$activityId'";
+             $updateValues = "is_crew_commented='0',modified=$shipTime";
+             $scheduleUpdateStatus = $this->CharterGuest->updateCharterProgramScheduleData($yachtDbName, $updateConditions, $updateValues);
+ 
+             $updateCruisingMapCommentValues = "crew_newlyaddedcomment='0',modified=$shipTime";
+ 
+         } else {
+             
+ 
+             $updateConditions = "UUID = '$activityId'";
+             $updateValues = "is_fleet_commented='0',modified=$shipTime";
+             $scheduleUpdateStatus = $this->CharterGuest->updateCharterProgramScheduleData($yachtDbName, $updateConditions, $updateValues);
+ 
+             $updateCruisingMapCommentValues = "fleet_newlyaddedcomment='0',modified=$shipTime";
+         }
+ 
+             $updateConditionsCruisingMapComment = "activity_id = '$activityId' AND activity_name = '$activity_name' AND type='schedule'";
+             
+             $scheduleUpdateStatus = $this->CharterGuest->updateCruisingMapComment($yachtDbName, $updateConditionsCruisingMapComment, $updateCruisingMapCommentValues);
+         }
+     }
+         $comment_user_name = $this->Session->read('loggedfleetuser.first_name') . ' ' . $this->Session->read('loggedfleetuser.last_name');
+         $r = array();
+         //print_r($comments); exit;
+         $view = new View();
+         $view->layout = 'ajax'; // Optional, use if you want a "clean" view
+         //$view->set('comments', $comments);
+         //$view->set('UserType',$usertype_comment);
+         //$view->set('UserName',$comment_user_name);
+
+         $r['view'] = $view->element('cruising_crew_comments', array('comments' => $comments));
+         $r['activityId'] = $activityId;
+         $r['activity_name'] = $activity_name;
+        // $r['UserType'] = $usertype_comment;
+         $r['UserName'] = $comment_user_name;
+         $r['isfleet'] = $isfleet;
+         $r['type'] = $type;
+ 
+         // Get msgcount
+        // $msgcount = $this->gettotalmsgnotifycount();
+         //$r['msgcount'] = $msgcount;
+         // echo "<pre"; print_r($r); exit;
+         echo json_encode($r);
+         exit;
+     }
+
     
+
+     function saveComments() {
+
+        $is_fleet = 1;
+        //print_r($is_fleet);
+        //exit;
+        $this->layout = 'ajax';
+        $this->loadModel("CruisingMapComment");
+        $this->loadModel('CharterProgramSchedule');
+        $this->loadModel('CharterProgramScheduleActivity');
+        $this->loadModel('CharterGuest');
+        $this->loadModel('Yacht');
+        $postData = $this->request->data;
+        //echo "<pre>";print_r($this->Session->read());
+         //echo "<pre>";
+        //print_r($postData); exit;
+        $activityId = $postData['activityId'];
+        $activity_name = $postData['activity_name'];
+        // $user_type = $postData['user_type'];
+        // $user_name = $postData['user_name'];
+        $comments = $postData['comments'];
+        $type = $postData['type'];
+        $yachtId = $postData['yachtid'];
+
+        $yachtData = $this->Yacht->find("first", array('fields' => array('yfullName','ydb_name'), 'conditions' => array('id' => $yachtId))); 
+        $yachtDbName = $yachtData['Yacht']['ydb_name'];
+        
+        $dateTime = date('Y-m-d H:i:s');
+        $shipTime = "'" . date('Y-m-d H:i:s') . "'";
+
+if($type == "schedule"){
+    if($activityId != ""){ 
+        if(isset($comments) && !empty($comments)){ //echo "lllll"; exit;
+           
+                
+                $is_guest_commented = 1;
+            
+        $updateValues = "is_guest_commented='$is_guest_commented'";
+        }
+     
+
+    // Updating the Charter program schedules
+    $updateConditions = "UUID = '$activityId'";
+    //$updateValues = "title='$title',day_num=$dayNum,is_deleted=$isDeleted,notes='$notes',attachment='$attachment',is_crew_commented='$crew_newlyaddedcomment',is_fleet_commented='$fleet_newlyaddedcomment'";
+    $scheduleUpdateStatus = $this->CharterGuest->updateCharterProgramScheduleData($yachtDbName, $updateConditions, $updateValues);
+    
+    if(isset($comments) && !empty($comments)){ //echo "lllll"; exit;
+        $loggedUserFullName = $this->Session->read('login_username');
+        $loggedUserInfouser_type = "Guest";
+
+       
+            $crew_newlyaddedcomment = 2;
+            $fleet_newlyaddedcomment = 2;
+            $guest_newlyaddedcomment = 1;
+        
+            
+            $created = date("Y-m-d H:i:s");
+            $insertValuescommenttitle = "(activity_id,activity_name,user_name,user_type,comment,crew_newlyaddedcomment,fleet_newlyaddedcomment,guest_newlyaddedcomment,type,created) "
+                    . "VALUES ('$activityId','$activity_name','$loggedUserFullName','$loggedUserInfouser_type','$comments','$crew_newlyaddedcomment','$fleet_newlyaddedcomment','$guest_newlyaddedcomment','schedule','$created')";
+            $this->CharterGuest->insertCruisingMapComment($yachtDbName, $insertValuescommenttitle);          
+    }
+
+}
+}else if($type == "activity"){
+   if($activityId != ""){ 
+            if(isset($comments) && !empty($comments)){
+               
+                    $is_guest_commented = 1;
+                   
+                
+                 $activityValues = "is_guest_commented='$is_guest_commented',modified=$shipTime";
+
+            }
+            $activityConditions = "UUID = '$activityId'";
+            $activityUpdateStatus = $this->CharterGuest->updateCharterProgramScheduleActivityData($yachtDbName, $activityConditions, $activityValues);
+
+        if(isset($comments) && !empty($comments)){
+            $loggedUserFullName = $this->Session->read('login_username');
+            $loggedUserInfouser_type = "Guest";
+            $crew_newlyaddedcomment = 2;
+            $fleet_newlyaddedcomment = 2;
+            $guest_newlyaddedcomment = 1;
+                
+                $created = date("Y-m-d H:i:s");
+                $insertValuesActivity = "(activity_id,activity_name,user_name,user_type,comment,crew_newlyaddedcomment,fleet_newlyaddedcomment,guest_newlyaddedcomment,type,created) "
+                    . "VALUES ('$activityId','$activity_name','$loggedUserFullName','$loggedUserInfouser_type','$comments','$crew_newlyaddedcomment','$fleet_newlyaddedcomment','$guest_newlyaddedcomment','activity','$created')";
+            $this->CharterGuest->insertCruisingMapComment($yachtDbName, $insertValuesActivity);    
+                    
+        }
+
+    }
+
+}
+
+    $data['success'] = "success";
+        echo json_encode($data);
+        exit;
+}
+
     
 }

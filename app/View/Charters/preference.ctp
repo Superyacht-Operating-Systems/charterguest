@@ -117,7 +117,11 @@
     } ?>
           
        
-          <li><a href="<?php echo $baseFolder."/charters/charter_program_map/".$mapcharterprogramid.'/'.$mapydb_name; ?>" target="_blank">Cruising Map</a></li>
+          <li>
+              <?php if(isset($mapcharterprogramid) && isset($mapydb_name)){ ?>
+              <a href="<?php echo $baseFolder."/charters/charter_program_map/".$mapcharterprogramid.'/'.$mapydb_name; ?>" target="_blank">Cruising Map</a>
+              <?php } ?>
+            </li>
            <li><a>How To Video</a></li>
             <li class="list-logout-row-inner"><?php echo $this->Html->link($this->Html->image("admin/table.png", array("alt" => "","title" => "Logout")).'  Logout','/',array('escape' =>false,'title' => 'Logout'));?></li>
         </ul>

@@ -476,6 +476,7 @@ $sessionData = $this->Session->read();
 
 
 <?php  
+//echo "<pre>";print_r($this->Session->read()); exit;
 $CharterGuestAssociate = $this->Session->read('charter_assoc_info.CharterGuestAssociate'); 
 ?>
 <script>
@@ -489,9 +490,9 @@ $(document).ready(function (e) {
 $(document).click('#stay_log_in',function(){
     //alert();
     $("#successPreferenceAlert").modal("hide");
-    <?php if(empty($CharterGuestAssociate)){?>
+    <?php //if(empty($CharterGuestAssociate)){?>
       window.location.href = BASE_FOLDER+'/charters/preference<?php echo $sessionData['preferenceParam']; ?>';
-    <?php } ?>  
+    <?php //} ?>  
 });
 <?php } ?>
 

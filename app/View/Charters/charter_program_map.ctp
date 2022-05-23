@@ -519,6 +519,17 @@ hr {
     border-top-color: #000;
     border-top: 1px solid #000;
 }
+
+.certificat-modal-container .modal-content{width:600px;}
+.certificat-modal-container .modal-body{
+margin: 0px;padding: 0px;
+}
+.certificat-modal-container .modal-dialog{
+  padding-left: 0px;
+}
+.certificat-modal-container .inbox-widget .inbox-item {
+    border-bottom: 1px solid #d6d4d4;
+}
 </style>  
 
 <?php    echo $this->Html->script('jquery-1.7.2.min');
@@ -584,12 +595,11 @@ hr {
 <!--modal end here--> 
 
 <!-- sample modal content -->
-<div id="cruisingmsgmyModal" class="modal fade certificat-modal-container" tabindex="-1" role="dialog"
-    aria-labelledby="myModalLabel" aria-hidden="true">
+<div id="cruisingmsgmyModal" class="modal certificat-modal-container"  role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <button type="button" class="close" id="commentsmodal" aria-hidden="true">×</button>
                 <h4 class="modal-title" id="myModalLabel">Comments Log</h4>
             </div>
             <div class="modal-body">
@@ -990,5 +1000,102 @@ $(document).ready(function() { //alert();
     $('.leaflet-control-attribution ').find('a').remove();
    
     });
+
+    $(document).on("click", ".crew_comment_cruisingmaptitle", function() {
+    //alert('jjj');
+    thisObj = $(this);
+    var activityId = thisObj.attr('data-rel');
+    var activity_name = thisObj.attr('data-tempname');
+    var yachtid = thisObj.attr('data-yachtid');
+    //alert(activity_name);
+    var charprogid = $('#charterprogramuuid').val();
+    commenttitlecheck = 1;
+    $.ajax({
+        type: "POST",
+        url: basefolder+"/"+"charters/getComments",
+        dataType: 'json',
+        data: {
+            'activityId': activityId,
+            'activity_name': activity_name,
+            'charprogid': charprogid,
+            'yachtid':yachtid,
+            'type': 'schedule'
+        },
+        success: function(data) {
+            //console.log(data);
+            $('#crew_commentscruisingmsg').html(data.view);
+            $('.CruisingCommentSave').attr('data-id', data.activityId);
+            $('.CruisingCommentSave').attr('data-activity_name', data.activity_name);
+            $('.CruisingCommentSave').attr('data-UserType', data.UserType);
+            $('.CruisingCommentSave').attr('data-UserName', data.UserName);
+            $('.CruisingCommentSave').attr('data-type', data.type);
+            $('.CruisingCommentSave').attr('data-yachtid', yachtid);
+
+
+
+            $('#cruisingmsgmyModal').show();
+            $('#Cruising_crew_comment').val('');
+            $('.CruisingCommentMarkUnread').attr('data-id1', data.activityId);
+            $('.CruisingCommentMarkUnread').attr('data-tempname1', data.activity_name);
+            $('.CruisingCommentMarkUnread').attr('data-type1', data.UserType);
+            $('.CruisingCommentMarkUnread').attr('data-name1', data.UserName);
+            $('.CruisingCommentMarkUnread').attr('data-chartertype1', data.type);
+            $('.CruisingCommentMarkUnread').attr('data-yachtid', yachtid);
+            //alert(data.isfleet);
+            $("#hideloader").hide();
+            //thisObj.css("color","green");
+            var color = thisObj.css("color");
+            //alert(color);
+            // var colorgreen = hexc(color);
+            // //alert(colorgreen);
+            // if (colorgreen == "#ff0000") {
+            //     thisObj.css("color", "green");
+            // }
+            //alert($('#CrewCommentSave').data('id'));
+            //$('#msgcountchange').html(data.msgcount[0]);
+        }
+    });
+});
+
+$(document).on("click", "#CruisingCommentSave" ,function() {
+        var saveobj = $(this);
+        var activityId = saveobj.data('id');
+        var activity_name = saveobj.data('activity_name');
+        //alert(checklistName);
+        var user_type = saveobj.data('UserType');
+        var user_name = saveobj.data('UserName');
+        var type = saveobj.data('type');
+        var yachtid = saveobj.data('yachtid');
+
+        var comments = $('#Cruising_crew_comment').val();
+
+        //var new_activity = thisObj.find('.newactivityfield').val();
+        //alert(new_activity); return false;
+        $.ajax({
+                type: "POST",
+                dataType: 'json',
+                url: basefolder+"/"+"charters/saveComments",
+                data: {'activityId': activityId,'activity_name': activity_name,'user_type':user_type,'user_name':user_name, 'type':type,'comments':comments,'yachtid':yachtid},
+                success:function(data) {
+                    if(data.success == 'success'){
+	                    $('#cruisingmsgmyModal').modal('hide');
+                        thisObj.css("color","green");
+                    }
+                }
+       }); 
+
+    if(commenttitlecheck == 1){
+        thisObj.find(".messagecommentstitle").val(comments);
+    }else{
+        thisObj.find(".messagecomments").val(comments);
+    }
+    $('#cruisingmsgmyModal').hide();
+
+    });
+
+    $(document).on("click", "#commentsmodal" ,function() {
+        $('#cruisingmsgmyModal').hide();
+    });
+    
 </script>
   
