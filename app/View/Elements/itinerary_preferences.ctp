@@ -455,7 +455,7 @@ $sessionData = $this->Session->read();
       <div class="modalmsg"> 
         <p>Thank you for submitting your preference sheets.</p>
         <p>All information will stay secure and confidential.</p>
-        <p>If you need to update any information you can login again using the same email address and token.</p>
+        <p>If you need to update any information you can login again using the same email address and password.</p>
       </div>
         <div class="text-center">
             <?php if (isset($sessionData["fleetLogoUrl"]) && !empty($sessionData["fleetLogoUrl"])) { ?>
