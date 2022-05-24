@@ -35,6 +35,29 @@ echo $this->Html->script('leaflet/route');
 
 ?>
 <style>
+    body {
+background-color: #000 !important; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  height: 100%;
+  background-position: 0px 110px;
+  background:none;
+}
+body {
+    padding: 0;
+    margin: 0;
+}
+html, body, #map {
+    height: 100%;
+    width: 100vw;
+}
+ .container {
+    width:100vw;
+    height:100%;
+} 
+
 .wrapper{overflow: hidden;}
 .footer{height: 0px;line-height: 0;padding: 0px;}
 .common-form-row{
@@ -60,7 +83,7 @@ echo $this->Html->script('leaflet/route');
   color: #fff!important;
 }
 .sp-mp-detailsrow h2{
-color: #000;
+color: #fff;
     font-size: 18px;
     font-weight: 600;
 }
@@ -442,13 +465,13 @@ float: right;
   width: 320px;
 }
 
-.leaflet-control-attribution {
+/* .leaflet-control-attribution {
 
 height: 42px;
 width: 284px;
 
 
-}
+} */
 
 .leaflet-container .leaflet-control-attribution {
 background: #fff;
@@ -530,6 +553,16 @@ margin: 0px;padding: 0px;
 .certificat-modal-container .inbox-widget .inbox-item {
     border-bottom: 1px solid #d6d4d4;
 }
+#map {
+    width:100%;
+    height:100%;
+}
+
+.common-form-row {
+    margin-top: 0px; 
+     margin-bottom: 0px;
+    font-weight: bold!important;
+}
 </style>  
 
 <?php    echo $this->Html->script('jquery-1.7.2.min');
@@ -544,55 +577,6 @@ margin: 0px;padding: 0px;
     </div>
  -->
 <br>
-<?php if(isset($sessionCharterGuest) && !empty($sessionCharterGuest)){?>
- <div class="nav-side-menu-full-container">
-<div class="nav-side-menu">
-<div class="base-margin">
-<button id="sidebar-btn" class="sidebar-btn">
-    <div class="menu-stripes"></div>
-    <div class="menu-stripes"></div>
-    <div class="menu-stripes"></div>
-</button>
-<section id="sidebar" class="sidebar">
-    <nav class="menu"> 
-        <ul class="menu-level1 no-style nav nav-pills nav-justified">
-        <?php if(isset($sessionCharterGuest) && !empty($sessionCharterGuest)){?>
-        <li> <a href="<?php echo $basefolder."/charters/programs/".$sessionCharterGuest['users_UUID']; ?>">Charter Programs</a> 
-         
-        <?php } ?>
-           <li><a>How To Video</a></li>
-         <li class="list-logout-row row-hide-btn"><?php echo $this->Html->link($this->Html->image("admin/table.png", array("alt" => "","title" => "Logout")).'Logout','/',array('escape' =>false,'title' => 'Logout'));?></li>
-        </ul>
-    </nav>
-</section>
-</div>
-</div>
-</div>
-<?php } ?>
-<!--modal start here-->
-<div id="mapnotemodal" class="modal uplaod-modal" role="dialog">
-  <div class="modal-dialog">
-
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close mapnotemodalclose">&times;</button>
-        <h4 class="modal-title">More Information</h4>
-      </div>
-      <form action=""  name="" id="mapnoteform" method="POST" enctype="multipart/form-data">
-      <div class="modal-body">
-        <div class="form-group">
-          <textarea name="mapmessage" readonly id="mapmessage" class="form-control" rows="5" cols="10"></textarea>
-      </div>
-      </div>
-      <div class="modal-footer">
-       
-      </div>
-    </div>
-</form>
-  </div>
-</div>
-<!--modal end here--> 
 
 <!-- sample modal content -->
 <div id="cruisingmsgmyModal" class="modal certificat-modal-container"  role="dialog">
@@ -614,13 +598,13 @@ margin: 0px;padding: 0px;
 
 <div class="row common-form-row">
     <div class="col-lg-5 col-md-5 col-sm-5 mob-none">  
-        <span style="font-size: 18px;"><?php echo $schedulePeriod; ?></span>
+        <span style="font-size: 18px;color:#fff;"><?php echo $schedulePeriod; ?></span>
     </div>
     <div class="col-lg-3 col-md-3 col-sm-3 text-center mob-none">  
-        <span style="font-size: 18px;"><?php echo $charterName; ?></span>
+        <span style="font-size: 18px;color:#fff;"><?php echo $charterName; ?></span>
     </div>
     <div class="col-lg-4 col-md-4 col-sm-4 text-right md-text-center"> 
-        <span style="font-size: 18px;"><?php echo $scheduleLocation; ?>
+        <span style="font-size: 18px;color:#fff;"><?php echo $scheduleLocation; ?>
 <!--         <a>
             <span style="margin-left: 10%;" class="mob-none">   
                 <?php echo $this->Html->link('Back','view',array('id' => 'charterProgramView', 'class' => 'btn btn-warning','title' => '<< Back'));?> 
@@ -628,14 +612,9 @@ margin: 0px;padding: 0px;
         </span>
     </div>
 </div> 
-<div class="personal-row-container">
-<h1 class="position-mobile-head">Cruising Map
-</h1>
-<div class="fixed-row-container">  
- <div class="form-group base-margin">
-<div class="custom-popup" id="map" style="height: calc(100vh - 185px);"></div>
-</div></div>
-</div>
+
+<div class="custom-popup" id="map" style="height: 1000px;position:relative;outline:none;"></div>
+
 <input type="hidden" id="yachtId" value="<?php echo $yacht_id_fromyachtDB; ?>">
 <script>
 var sidebar = (function() {
@@ -685,8 +664,7 @@ var vessel = new L.LayerGroup();
 var markerArray = [];
 var markerCount = 0;
      
-var mbAttr =
-    '<table><tbody><tr style="width:100%;font-size:12px;font-weight:bold;text-align:center;"><td style="width: 30%;">Distance</td><td style="width: 30%;">Duration</td><td style="width:40%">Fuel Consumption</td></tr><tr style="width:100%;font-size:12px;color:#3388ff;font-weight:bold;text-align:center;"><td style="width: 30%;"><?php echo $RouteDatadisplaydistancevalue; ?></td><td style="width: 30%;"><?php echo $RouteDatadisplayduration; ?></td><td style="width:40%"><?php echo $RouteDatatotalconsumption; ?></td></tr></tbody></table>';
+var mbAttr ='';
 mbUrl = 'https://api.mapbox.com/styles/v1/superyachtos/{id}/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1Ijoic3VwZXJ5YWNodG9zIiwiYSI6ImNpdW54eHV5bjAxNmMzMG1sMGpkamVma2cifQ.Y9kj-j0RGCFSE6khFVPyOw';
 var satellite   =   L.tileLayer(mbUrl, {
     id: 'ciurvui5100uz2iqqe929nrlr', 
@@ -715,7 +693,7 @@ var centerLat = 40.58058466412764;
 var centerLng = -35.85937500000001;
 var centerLatDay1 = 40.58058466412764;
 var centerLngDay1 = -35.85937500000001;
-var zoom = 4;
+var zoom = 3;
 var day1 = 0;
 var latlngs = [];
 // Generating the markers for existing records
@@ -766,7 +744,7 @@ var latlngs = [];
         zoom = 7;
         
         var marker = L.marker(["<?php echo $schedule['CharterProgramSchedule']['lattitude']; ?>", "<?php echo $schedule['CharterProgramSchedule']['longitude']; ?>"],{pmIgnore: true})
-        .bindTooltip("<?php echo "Day ".$schedule['CharterProgramSchedule']['day_num']."&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;".$schedule['CharterProgramSchedule']['day_dates']."&nbsp;<span id='".$schuuid."' class='acti-count' ".$marker_msg_count." >".$schedule['CharterProgramSchedule']['marker_msg_count']."</span><br><b style='font-size: 10px;'>".$schedule['CharterProgramSchedule']['title']."<hr>".$endplace."</b><br><b style='font-size: 10px;'>".$distance.$bar.$duration.$bar.$consumption."</b>"?>", 
+        .bindTooltip("<?php echo "Day ".$schedule['CharterProgramSchedule']['day_num']."&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;".$schedule['CharterProgramSchedule']['day_dates']."&nbsp;<span id='".$schuuid."' class='acti-count' ".$marker_msg_count." >".$schedule['CharterProgramSchedule']['marker_msg_count']."</span><br><b style='font-size: 10px;'>".$schedule['CharterProgramSchedule']['title']."<hr>".$endplace."</b><br><b style='font-size: 10px;'>".$distance.$bar.$duration."</b>"?>", 
                     {
                         permanent: true, 
                         direction: 'right',
@@ -1006,7 +984,7 @@ $(document).ready(function() { //alert();
 
 
     $(".leaflet-control-attribution ").html(function(i, html) {
-        return html.replace("|", "");
+        //return html.replace("|", "");
     });
     $('.leaflet-control-attribution ').find('a').remove();
    

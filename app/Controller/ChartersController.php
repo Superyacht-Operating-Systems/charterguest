@@ -3603,7 +3603,246 @@ class ChartersController extends AppController {
         }   
         echo json_encode($result);
         exit;
-    }        
+    }     
+    
+    
+        /*
+     * Charter Program Map ipad app view
+     * Functionality -  Loading the Charter program ipad app view
+     * Developer - Nagarajan
+     * Created date - 28-May-2018
+     * Modified date - 
+     */
+    function charter_program_map_app($prgUUID,$yachtdb) {
+        //        echo "<pre>";print_r($this->Session->read());exit;
+                Configure::write('debug',0);
+                $session = $this->Session->read('charter_info');
+                $yachtDbName = $yachtdb;
+                $charterProgramId = $prgUUID;
+                if (!empty($yachtDbName)) {
+                   
+                    $this->loadModel('CharterGuest');
+                    $charterProgData = $this->CharterGuest->query("SELECT * FROM $yachtDbName.charter_programs CharterProgram WHERE UUID = '$charterProgramId' AND is_deleted = 0 LIMIT 1");
+                    
+                    if (count($charterProgData) != 0) {
+                        $startDate = $charterProgData[0]['CharterProgram']['charter_from_date'];
+                        $endDate = $charterProgData[0]['CharterProgram']['charter_to_date'];
+                        $diff = date_diff(date_create($endDate), date_create($startDate));
+                        $diffDays = $diff->days + 1;
+                        
+                        // Fetching the Charter program schedules
+                        //$scheduleData = $this->CharterGuest->query("SELECT * FROM $yachtDbName.charter_program_schedules CharterProgramSchedule WHERE charter_program_id = '$charterProgramId' AND is_deleted = 0");
+                        // Declare two dates
+                        $Date1 = $startDate;
+                        $Date2 = $endDate;
+                        
+                        // Declare an empty array
+                        $Datesarray = array();
+                        
+                        // Use strtotime function
+                        $Variable1 = strtotime($Date1);
+                        $Variable2 = strtotime($Date2);
+                        
+                        // Use for loop to store dates into array
+                        // 86400 sec = 24 hrs = 60*60*24 = 1 day
+                        $i = 1;
+                        for ($currentDate = $Variable1; $currentDate <= $Variable2; 
+                                                        $currentDate += (86400)) {
+                                                            
+                        $Store = date('d M Y',$currentDate);
+                        $Datesarray[$i] = $Store;
+                        $i++;
+                        }
+                        
+                        // Display the dates in array format
+                        //echo "<pre>";print_r($Datesarray); //exit;
+        
+                        $scheduleConditions = "charter_program_id = '$charterProgramId' AND is_deleted = 0";
+                        $scheduleData = $this->CharterGuest->getCharterProgramScheduleData($yachtDbName, $scheduleConditions);
+                        //echo "<pre>";print_r($scheduleData); exit;
+                        $markertitle = array();
+                        $markername = array();
+                        if(isset($scheduleData)){
+                            foreach($scheduleData as $key => $publishmap){
+                                    if($publishmap['CharterProgramSchedule']['publish_map'] == 1){
+                                        $modified = date('d M Y',strtotime($publishmap['CharterProgramSchedule']['modified']));
+                                        $username_modified = $publishmap['CharterProgramSchedule']['username_modified'];
+        
+                                    }
+                                    if($Datesarray[$publishmap['CharterProgramSchedule']['day_num']]){
+                                        $scheduleData[$key]['CharterProgramSchedule']['day_dates'] = $Datesarray[$publishmap['CharterProgramSchedule']['day_num']];
+                                    }
+        
+                                   //$mcount = $this->getmsgnotifycountForMarker($publishmap['CharterProgramSchedule']['UUID']);
+                                   $scheduleData[$key]['CharterProgramSchedule']['marker_msg_count'] = $this->CharterGuest->getCharterMarkerCommentCount($yachtDbName,$publishmap['CharterProgramSchedule']['UUID']);
+        
+                                   $markertitle[$publishmap['CharterProgramSchedule']['id']] = $publishmap['CharterProgramSchedule']['title'];
+                                   $markername[$publishmap['CharterProgramSchedule']['title']] = $publishmap['CharterProgramSchedule']['title'];
+                            
+                                }
+                        }
+        
+                        $YachtData =  $this->CharterGuest->query("SELECT * FROM $yachtDbName.yachts Yacht");
+                        //echo "<pre>";print_r($YachtData); exit;
+                        $cruising_speed = $YachtData[0]['Yacht']['cruising_speed'];
+                        $cruising_fuel = $YachtData[0]['Yacht']['cruising_fuel'];
+                        $yacht_id_fromyachtDB = $YachtData[0]['Yacht']['id'];
+                        //echo $YachtData['Yacht']['cruising_unit'];
+                        if(isset($YachtData[0]['Yacht']['cruising_unit']) && $YachtData[0]['Yacht']['cruising_unit'] != '0' ){
+                         $cruising_unit = $YachtData[0]['Yacht']['cruising_unit'];
+                        }
+                        //echo "<pre>";print_r($markername); exit;
+                        $Routeorderdata = array();
+                        if(isset($markername) && !empty($markername)){
+                            foreach($markername as $key => $value){
+                                $fetchData = $this->CharterGuest->query("SELECT * FROM $yachtDbName.charter_program_schedule_routes CharterProgramScheduleRoute WHERE charter_program_schedule_uuid = '$charterProgramId' AND is_deleted = 0  AND start_location= '$value'");
+                                //echo "<pre>";print_r($fetchData); exit;
+                                //$fetchData = $this->CharterProgramScheduleRoute->find('all', array('conditions' => array('charter_program_schedule_uuid' => $charterProgramId, 'is_deleted' => 0,'start_location'=>$value)));
+                                $Routeorderdata[] = $fetchData;
+                                
+                            }
+                            
+                            $RouteData = array();
+                            if(isset($Routeorderdata) && !empty($Routeorderdata)){
+                                foreach($Routeorderdata as $key => $value){
+                                    foreach($value as $v){
+                                        $RouteData[] = $v;
+                                    }
+                                }
+                             }
+                        }
+                        //echo "<pre>";print_r($RouteData); exit;
+                        if(isset($RouteData) && !empty($RouteData)){
+                            $routecount = count($RouteData);
+                            $totaldistance = array();
+                            $markerdistance = array();
+                            $markerduration = array();
+                            $markerconsumption = array();
+                            foreach($RouteData as $key => $value){
+                                $kv = $key+1;
+                                if($kv < $routecount){
+                                    
+                                    // $lat1 = $RouteData[$key]['CharterProgramScheduleRoute']['lattitude'];
+                                    // $lon1 = $RouteData[$key]['CharterProgramScheduleRoute']['longitude'];
+                                    // $lat2 = $RouteData[$key+1]['CharterProgramScheduleRoute']['lattitude'];
+                                    // $lon2 = $RouteData[$key+1]['CharterProgramScheduleRoute']['longitude'];
+                                    // $unit = "nmi";
+                                   $distance = $RouteData[$key]['CharterProgramScheduleRoute']['distance'];
+                                   if(isset($distance) && !empty($distance)){
+                                        $d_res = preg_replace("/[^0-9]/", "", $distance);
+                                   }
+                                   $markerdistance[$RouteData[$key]['CharterProgramScheduleRoute']['start_location']][] = $d_res;
+                                   $markertotal[$RouteData[$key]['CharterProgramScheduleRoute']['start_location']]['distance'] = $RouteData[$key]['CharterProgramScheduleRoute']['distance'];
+                                   $markertotal[$RouteData[$key]['CharterProgramScheduleRoute']['start_location']]['duration'] = $RouteData[$key]['CharterProgramScheduleRoute']['duration'];
+                                   $markertotal[$RouteData[$key]['CharterProgramScheduleRoute']['start_location']]['consumption'] = $RouteData[$key]['CharterProgramScheduleRoute']['fuelconsumption'];
+                                   $markertotal[$RouteData[$key]['CharterProgramScheduleRoute']['start_location']]['endplace'] = $RouteData[$key]['CharterProgramScheduleRoute']['end_location'];
+                                   $totaldistance[$RouteData[$key]['CharterProgramScheduleRoute']['start_location']] = $d_res;
+                                //    $RouteData[$key]['CharterProgramScheduleRoute']['distance'] = round($distance, 2);
+                                //    $RouteData[$key]['CharterProgramScheduleRoute']['duration'] = "";
+                                //    $RouteData[$key]['CharterProgramScheduleRoute']['consumption'] = "";
+                                //    if(isset($distance) && !empty($distance) && isset($cruising_speed) && !empty($cruising_speed) ){
+                                //         $plainduration = $distance / $cruising_speed;
+                                //         $duration = ($distance / $cruising_speed ) * 3600;
+                                //         $h = floor($duration/3600);
+                                //         $m = floor(($duration / 60) % 60);
+                                //         $s = $duration % 60;
+                                //         $displayduration = $h."h&nbsp".$m."m&nbsp";
+                                //         $RouteData[$key]['CharterProgramScheduleRoute']['duration'] = $displayduration;
+        
+                                //         if(isset($cruising_fuel) && !empty($cruising_fuel)){
+                                //             $consumption = $plainduration * $cruising_fuel;
+                                //             $consumption = round($consumption, 2);
+                                //             $RouteData[$key]['CharterProgramScheduleRoute']['consumption'] = $consumption." ".$cruising_unit;
+                                //         }
+                                //    }
+                                }
+                            }
+                            // if(isset($markerdistance) && !empty($markerdistance)){
+                                
+        
+                            //     foreach($markerdistance as $title => $data){
+                            //         $total = 0;
+                            //         foreach($data as $v){
+                            //             //echo "<pre>";print_r($v);
+                            //             $total += $v;
+                            //             $markertotal[$title]['distance'] = round($total, 2);
+                            //         }
+                            //     }
+        
+                            //     foreach($markertotal as $title => $data){
+                                    
+                            //         $totalplainduration_marker = $data['distance'] / $cruising_speed;
+                            //         $duration_m = ($data['distance'] / $cruising_speed ) * 3600;
+                            //         $h = floor($duration_m/3600);
+                            //         $m = floor(($duration_m / 60) % 60);
+                            //         $s = $duration_m % 60;
+                            //         $totaldisplayduration_m = $h."h  ".$m."m";
+                            //         $markertotal[$title]['duration'] = $totaldisplayduration_m;
+                                    
+                            //         if(isset($cruising_fuel) && !empty($cruising_fuel)){
+                            //             $totalconsumption_m = $totalplainduration_marker * $cruising_fuel;
+                            //             $totalconsumption_mv = round($totalconsumption_m, 2);
+                            //             $RouteDatatotalconsumption_m = $totalconsumption_mv." ".$cruising_unit;
+                            //             $markertotal[$title]['consumption'] = $RouteDatatotalconsumption_m;
+                            //         }
+                            //         //echo "<pre>";print_r($markertotal); exit;
+                            //     }
+                            // }
+                            //total
+                            //echo "<pre>";print_r($markertotal); exit;
+                             $totaldistancevalue = array_sum($totaldistance);
+                            $RouteDatadisplaydistancevalue = number_format($totaldistancevalue, 1).'nm';
+                            if(isset($totaldistancevalue) && !empty($totaldistancevalue) && isset($cruising_speed) && !empty($cruising_speed) ){
+                                $totalplainduration = $totaldistancevalue / $cruising_speed;
+                                $duration = ($totaldistancevalue / $cruising_speed ) * 3600;
+                                $h = floor($duration/3600);
+                                $m = floor(($duration / 60) % 60);
+                                $s = $duration % 60;
+                                $totaldisplayduration = $h."h&nbsp".$m."m&nbsp";
+                                $RouteDatadisplayduration = $totaldisplayduration;
+        
+                                if(isset($cruising_fuel) && !empty($cruising_fuel)){
+                                    $totalconsumption = $totalplainduration * $cruising_fuel;
+                                    $totalconsumption = round($totalconsumption, 2);
+                                    if(isset($cruising_unit) && !empty($cruising_unit)){
+                                        $RouteDatatotalconsumption = number_format($totalconsumption)." ".$cruising_unit;
+                                    }else{
+                                        $RouteDatatotalconsumption = number_format($totalconsumption);
+                                    }
+                                }
+                           }
+                            //exit;
+                        }
+                        //echo "<pre>";print_r($scheduleData);
+                        //echo "<pre>";print_r($markertotal); exit;
+                        $this->set('charterProgramId', $charterProgramId);
+                        $this->set('charterProgData', $charterProgData[0]);
+                        $this->set('diffDays', $diffDays);
+                        $this->set('scheduleData', $scheduleData);
+                        $this->set('modified', $modified);
+                        $this->set('RouteData', $RouteData);
+                        $this->set('RouteDatadisplaydistancevalue', $RouteDatadisplaydistancevalue);
+                        $this->set('RouteDatadisplayduration', $RouteDatadisplayduration);
+                        $this->set('RouteDatatotalconsumption', $RouteDatatotalconsumption);
+                        $this->set('username_modified', $username_modified);
+                        $this->set('markertitle', $markertitle);
+                        $this->set('markertotal', $markertotal);
+                        $this->set('yacht_id_fromyachtDB', $yacht_id_fromyachtDB);
+                        
+                        $this->set('cruising_speed', $cruising_speed);
+                        $this->set('cruising_fuel', $cruising_fuel);
+                        if(isset($cruising_unit) && !empty($cruising_unit)){
+                        $this->set('cruising_unit', $cruising_unit);
+                        }
+                    } else {
+                        $this->redirect(array('action' => 'view'));
+                    }
+                    
+                } else {
+                    $this->redirect(array('action' => 'view'));
+                }
+                
+            }
     
     /*
      * Charter Program Map view
@@ -3673,7 +3912,7 @@ class ChartersController extends AppController {
                             }
 
                            //$mcount = $this->getmsgnotifycountForMarker($publishmap['CharterProgramSchedule']['UUID']);
-                           $scheduleData[$key]['CharterProgramSchedule']['marker_msg_count'] = 0;
+                           $scheduleData[$key]['CharterProgramSchedule']['marker_msg_count'] = $this->CharterGuest->getCharterMarkerCommentCount($yachtDbName,$publishmap['CharterProgramSchedule']['UUID']);
 
                            $markertitle[$publishmap['CharterProgramSchedule']['id']] = $publishmap['CharterProgramSchedule']['title'];
                            $markername[$publishmap['CharterProgramSchedule']['title']] = $publishmap['CharterProgramSchedule']['title'];
@@ -3685,6 +3924,7 @@ class ChartersController extends AppController {
                 //echo "<pre>";print_r($YachtData); exit;
                 $cruising_speed = $YachtData[0]['Yacht']['cruising_speed'];
                 $cruising_fuel = $YachtData[0]['Yacht']['cruising_fuel'];
+                $yacht_id_fromyachtDB = $YachtData[0]['Yacht']['id'];
                 //echo $YachtData['Yacht']['cruising_unit'];
                 if(isset($YachtData[0]['Yacht']['cruising_unit']) && $YachtData[0]['Yacht']['cruising_unit'] != '0' ){
                  $cruising_unit = $YachtData[0]['Yacht']['cruising_unit'];
@@ -3825,7 +4065,8 @@ class ChartersController extends AppController {
                 $this->set('username_modified', $username_modified);
                 $this->set('markertitle', $markertitle);
                 $this->set('markertotal', $markertotal);
-
+                $this->set('yacht_id_fromyachtDB', $yacht_id_fromyachtDB);
+                
                 $this->set('cruising_speed', $cruising_speed);
                 $this->set('cruising_fuel', $cruising_fuel);
                 if(isset($cruising_unit) && !empty($cruising_unit)){
@@ -3921,22 +4162,18 @@ class ChartersController extends AppController {
                       if($commentcounttitle > 0){ //echo "kkkk";
                           $colorcodetitle = "green";
                           //echo $is_fleet;
-                          if($is_fleet == 1){
-                                if(trim($scheduleData['CharterProgramSchedule']['is_crew_commented']) == 1){  //echo "lll";
+                          
+                                if(trim($scheduleData[0]['CharterProgramSchedule']['is_crew_commented']) == 1 || trim($scheduleData[0]['CharterProgramSchedule']['is_fleet_commented']) == 1){  //echo "lll";
                                     $colorcodetitle = "red";
                                 }
-                            }else{
-                                if(trim($scheduleData['CharterProgramSchedule']['is_fleet_commented']) == 1){  //echo "pppp";
-                                    $colorcodetitle = "red";
-                                }    
-                            }
+                           
                       }else{
                             $colorcodetitle = "";   
                       }
 
                     $popupHtml = '';
                     $readonly = "readonly";
-                    $popupHtml .= '<div class="mapPopup sp-mp-detailsrow sp-modal-600" data-schuuid="'.$scheduleId.'">
+                    $popupHtml .= '<div class="mapPopup sp-mp-detailsrow sp-modal-600" data-schuuid="'.$scheduleData[0]['CharterProgramSchedule']['UUID'].'">
                     <div class="sp-modal-hd"><h1>Day '.$dayNum.'&nbsp;&nbsp;&nbsp;&nbsp;<span class="day_dates"></span></h1></div>
                     <form id="scheduleFormEdit"><div class="inputContainerdiv">
                     <div class="sp-divrow">
@@ -4038,21 +4275,17 @@ class ChartersController extends AppController {
                               $colorcode = "";
                               if($commentcount > 0){
                                 $colorcode = "green";
-                                if($is_fleet == 1){
-                                    if(trim($activity['CharterProgramScheduleActivity']['is_crew_commented']) == 1){  
+                               
+                                    if(trim($activity['CharterProgramScheduleActivity']['is_crew_commented']) == 1 || trim($activity['CharterProgramScheduleActivity']['is_fleet_commented']) == 1){  
                                         $colorcode = "red";
                                     }
-                                }else{
-                                    if(trim($activity['CharterProgramScheduleActivity']['is_fleet_commented']) == 1){  
-                                        $colorcode = "red";
-                                    }    
-                                }
+                                
                                   
                               }else{
                                 $colorcode = "";
                               }
 
-                            $popupHtml .= '<div class="sp-divrow"><div class="sp-60-w"><input type="text" name="activity_name[]" '.$readonly.' style="color: #000;font-size: 15px;border: solid 1px #ccc;width:100%;margin: 0px;padding: 8px 5px;font-weight: 600;" value="'.$activity['CharterProgramScheduleActivity']['activity_name'].'"><input type="hidden" name="activity_id[]" value="'.$activity['CharterProgramScheduleActivity']['UUID'].'"><textarea class="form-control" name="messages[]" rows="4" cols="50">'.$activity['CharterProgramScheduleActivity']['notes'].'</textarea></div><div class="sp-40-w"><div class="sp-upload-img"></div><ul class="action-icon"><li><i class="fa fa-comments crew_comment_cruisingmap" style="color:'.$colorcode.'" data-rel="'.$activity['CharterProgramScheduleActivity']['UUID'].'" data-yachtid="'.$yachtId.'" data-tempname="'.$activity['CharterProgramScheduleActivity']['activity_name'].'" title="Comments & Feedback"><input type="hidden" name=comments[] value="" class="messagecomments" /></i></li></ul></div></div>
+                            $popupHtml .= '<div class="sp-divrow"><div class="sp-60-w"><input type="text" name="activity_name[]" '.$readonly.' style="color: #000;font-size: 15px;border: solid 1px #ccc;width:100%;margin: 0px;padding: 8px 5px;font-weight: 600;" value="'.$activity['CharterProgramScheduleActivity']['activity_name'].'"><input type="hidden" name="activity_id[]" value="'.$activity['CharterProgramScheduleActivity']['UUID'].'"><textarea class="form-control" '.$readonly.' name="messages[]" rows="4" cols="50">'.$activity['CharterProgramScheduleActivity']['notes'].'</textarea></div><div class="sp-40-w"><div class="sp-upload-img"></div><ul class="action-icon"><li><i class="fa fa-comments crew_comment_cruisingmap" style="color:'.$colorcode.'" data-rel="'.$activity['CharterProgramScheduleActivity']['UUID'].'" data-yachtid="'.$yacht_id.'" data-tempname="'.$activity['CharterProgramScheduleActivity']['activity_name'].'" title="Comments & Feedback"><input type="hidden" name=comments[] value="" class="messagecomments" /></i></li></ul></div></div>
                              ';
                         }
                     }
@@ -4423,23 +4656,15 @@ class ChartersController extends AppController {
          if($type == "activity"){
              
              if(isset($activityId) && !empty($activityId)){
-                 if ($isfleet == 1) {
+                
                  
                      $updateConditions = "UUID = '$activityId'";
-                     $updateValues = "is_crew_commented='0',modified=$shipTime";
+                     $updateValues = "is_crew_commented='0',is_fleet_commented='0',modified=$shipTime";
                      $scheduleUpdateStatus = $this->CharterGuest->updateCharterProgramScheduleActivityData($yachtDbName, $updateConditions, $updateValues);
          
-                     $updateCruisingMapCommentValues = "crew_newlyaddedcomment='0',modified=$shipTime";
+                     $updateCruisingMapCommentValues = "crew_newlyaddedcomment='0',fleet_newlyaddedcomment='0',modified=$shipTime";
                      
-                 } else {
-                     
-         
-                     $updateConditions = "UUID ='$activityId'";
-                     $updateValues = "is_fleet_commented='0',modified=$shipTime";
-                     $scheduleUpdateStatus = $this->CharterGuest->updateCharterProgramScheduleActivityData($yachtDbName, $updateConditions, $updateValues);
-         
-                     $updateCruisingMapCommentValues = "fleet_newlyaddedcomment='0',modified=$shipTime";
-                 }
+                
          
                      $updateConditionsCruisingMapComment = "activity_id = '$activityId' AND activity_name = '$activity_name' AND type='activity'";
                      
@@ -4449,26 +4674,14 @@ class ChartersController extends AppController {
      }else{
  
          if(isset($activityId) && !empty($activityId)){
-        
+             
+             $updateConditions = "UUID = '$activityId'";
+             $updateValues = "is_crew_commented='0',is_fleet_commented='0',modified=$shipTime";
+             $scheduleUpdateStatus = $this->CharterGuest->updateCharterProgramScheduleData($yachtDbName, $updateConditions, $updateValues);
+ 
+             $updateCruisingMapCommentValues = "crew_newlyaddedcomment='0',fleet_newlyaddedcomment='0',modified=$shipTime";
+ 
          
-         if ($isfleet == 1) {
-             
-             $updateConditions = "UUID = '$activityId'";
-             $updateValues = "is_crew_commented='0',modified=$shipTime";
-             $scheduleUpdateStatus = $this->CharterGuest->updateCharterProgramScheduleData($yachtDbName, $updateConditions, $updateValues);
- 
-             $updateCruisingMapCommentValues = "crew_newlyaddedcomment='0',modified=$shipTime";
- 
-         } else {
-             
- 
-             $updateConditions = "UUID = '$activityId'";
-             $updateValues = "is_fleet_commented='0',modified=$shipTime";
-             $scheduleUpdateStatus = $this->CharterGuest->updateCharterProgramScheduleData($yachtDbName, $updateConditions, $updateValues);
- 
-             $updateCruisingMapCommentValues = "fleet_newlyaddedcomment='0',modified=$shipTime";
-         }
- 
              $updateConditionsCruisingMapComment = "activity_id = '$activityId' AND activity_name = '$activity_name' AND type='schedule'";
              
              $scheduleUpdateStatus = $this->CharterGuest->updateCruisingMapComment($yachtDbName, $updateConditionsCruisingMapComment, $updateCruisingMapCommentValues);
@@ -4551,8 +4764,8 @@ if($type == "schedule"){
         $loggedUserInfouser_type = "Guest";
 
        
-            $crew_newlyaddedcomment = 2;
-            $fleet_newlyaddedcomment = 2;
+            $crew_newlyaddedcomment = 0;
+            $fleet_newlyaddedcomment = 0;
             $guest_newlyaddedcomment = 1;
         
             
@@ -4579,8 +4792,8 @@ if($type == "schedule"){
         if(isset($comments) && !empty($comments)){
             $loggedUserFullName = $this->Session->read('login_username');
             $loggedUserInfouser_type = "Guest";
-            $crew_newlyaddedcomment = 2;
-            $fleet_newlyaddedcomment = 2;
+            $crew_newlyaddedcomment = 0;
+            $fleet_newlyaddedcomment = 0;
             $guest_newlyaddedcomment = 1;
                 
                 $created = date("Y-m-d H:i:s");
@@ -4597,6 +4810,104 @@ if($type == "schedule"){
     $data['success'] = "success";
         echo json_encode($data);
         exit;
+}
+
+
+function markCommentUnread() {
+
+    $isfleet = 1;
+    //print_r($is_fleet);
+    //exit;
+    $this->layout = 'ajax';
+    $this->loadModel("CruisingMapComment");
+    $this->loadModel('CharterProgramSchedule');
+    $this->loadModel('CharterProgramScheduleActivity');
+    $this->loadModel('CharterGuest');
+    $this->loadModel('Yacht');
+    $postData = $this->request->data;
+     //echo "<pre>";
+    //print_r($postData); exit;
+    $activityId = $postData['activityId'];
+    $userType = $postData['userType'];
+    $user_name = $postData['user_name'];
+    $activity_name = $postData['activity_name'];
+    $comments = $postData['comments'];
+    $chartertype1 = $postData['chartertype1'];
+    $yachtId = $postData['yachtId'];
+
+    $yachtData = $this->Yacht->find("first", array('fields' => array('yfullName','ydb_name'), 'conditions' => array('id' => $yachtId))); 
+    $yachtDbName = $yachtData['Yacht']['ydb_name'];
+    
+    $dateTime = date('Y-m-d H:i:s');
+    $shipTime = "'" . date('Y-m-d H:i:s') . "'";
+    //echo $commentsaved; exit;
+    if($chartertype1 == "activity"){
+
+            if(isset($activityId) && !empty($activityId)){
+                if ($isfleet == 1) {
+                
+                    $updateConditions = "UUID = '$activityId'";
+                    $updateValues = "is_crew_commented=1,is_fleet_commented=1,modified=$shipTime";
+                    $scheduleUpdateStatus = $this->CharterGuest->updateCharterProgramScheduleActivityData($yachtDbName, $updateConditions, $updateValues);
+        
+                    $updateCruisingMapCommentValues = "crew_newlyaddedcomment=1,fleet_newlyaddedcomment=1,modified=$shipTime";
+                    
+                } 
+        
+                    $updateConditionsCruisingMapComment = "activity_id = '$activityId' AND activity_name = '$activity_name' AND type='activity'";
+                    
+                    $scheduleUpdateStatus = $this->CharterGuest->updateCruisingMapComment($yachtDbName, $updateConditionsCruisingMapComment, $updateCruisingMapCommentValues);
+            }
+
+
+
+    }else if($chartertype1 == "schedule"){
+        if(isset($activityId) && !empty($activityId)){
+            if ($isfleet == 1) {
+                //echo "llll"; exit;
+                $updateConditions = "UUID = '$activityId'";
+                $updateValues = "is_crew_commented=1,is_fleet_commented=1,modified=$shipTime";
+                $scheduleUpdateStatus = $this->CharterGuest->updateCharterProgramScheduleData($yachtDbName, $updateConditions, $updateValues);
+    
+                $updateCruisingMapCommentValues = "crew_newlyaddedcomment=1,fleet_newlyaddedcomment=1,modified=$shipTime";
+                
+            } 
+    
+                $updateConditionsCruisingMapComment = "activity_id = '$activityId' AND activity_name = '$activity_name' AND type='schedule'";
+                
+                $scheduleUpdateStatus = $this->CharterGuest->updateCruisingMapComment($yachtDbName, $updateConditionsCruisingMapComment, $updateCruisingMapCommentValues);
+        }
+    }
+    $data['success'] = "success";
+    echo json_encode($data);
+    exit;
+}
+
+
+function getIndividualmsgcountMarer() {
+    //echo "<pre>";print_r($this->request->data);exit;
+    if($this->request->is('ajax')){
+        $this->loadModel('CharterGuest');
+        $result = array();
+        $session = $this->Session->read();
+        $postData = $this->request->data;
+        $charterpgid = $postData['charterpgid'];
+        $yachtId = $postData['yachtId'];
+        $this->loadModel('Yacht');
+        $yachtData = $this->Yacht->find("first", array('fields' => array('yfullName','ydb_name'), 'conditions' => array('id' => $yachtId))); 
+        $yachtDbName = $yachtData['Yacht']['ydb_name'];
+
+        $mcount = $this->CharterGuest->getCharterMarkerCommentCount($yachtDbName,$charterpgid);
+        
+        //echo "<pre>";print_r($mcount);exit;
+        
+    }         
+
+    $result['status'] = $mcount;
+
+    echo json_encode($result);
+    exit;
+    
 }
 
     
