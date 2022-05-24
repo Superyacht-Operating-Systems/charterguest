@@ -61,4 +61,13 @@ class AppModel extends Model {
       $lastLog = end($logs['log']);
       return $lastLog['query'];
     }
+
+    public function save($data = null, $validate = true, $fieldList = array()) {
+      foreach($data as $k => $v) {
+        if(isset($v) && !empty($v)){
+            $data[$k] = strip_tags($v); 
+        }       
+      }
+      return parent::save($data, $validate, $fieldList);
+    }
 }
