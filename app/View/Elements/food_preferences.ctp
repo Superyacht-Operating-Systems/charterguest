@@ -942,7 +942,7 @@ label.txt-right {
          </td>
        </tr>
         <tr>
-         <td class="fd-cent" >Chiken</td>
+         <td class="fd-cent" >Chicken</td>
          <td align="center" class="md-radio-column-box">
            <div class="radio my-none">
            <input type="radio" name="data[CharterGuestFoodPreference][food_10]" value="1" <?php echo $foodLove[10]; ?>>
@@ -1590,7 +1590,7 @@ label.txt-right {
          </td>
        </tr>
        <tr>
-         <td class="fd-cent" >Crab</td>
+         <td class="fd-cent" >Swordfish</td>
           <td align="center" class="md-radio-column-box">
            <div class="radio my-none">
            <input type="radio"  name="data[CharterGuestFoodPreference][food_25]" value="1" <?php echo $foodLove[25]; ?>>
@@ -1611,7 +1611,7 @@ label.txt-right {
          </td>
        </tr>
        <tr>
-         <td class="fd-cent" >King Crab</td>
+         <td class="fd-cent" >Crab</td>
            <td align="center" class="md-radio-column-box">
            <div class="radio my-none">
            <input type="radio" name="data[CharterGuestFoodPreference][food_26]" value="1" <?php echo $foodLove[26]; ?>>
@@ -1632,7 +1632,7 @@ label.txt-right {
          </td>
        </tr>
       <tr>
-         <td class="fd-cent" >Lobster</td>
+         <td class="fd-cent" >King Crab</td>
           <td align="center" class="md-radio-column-box">
            <div class="radio my-none">
            <input type="radio" name="data[CharterGuestFoodPreference][food_27]" value="1" <?php echo $foodLove[27]; ?>>
@@ -1653,7 +1653,7 @@ label.txt-right {
          </td>
        </tr>
         <tr>
-         <td class="fd-cent" >Prawns</td>
+         <td class="fd-cent" >Lobster</td>
           <td align="center" class="md-radio-column-box">
            <div class="radio my-none">
            <input type="radio" name="data[CharterGuestFoodPreference][food_28]" value="1" <?php echo $foodLove[28]; ?>>
@@ -1674,7 +1674,7 @@ label.txt-right {
          </td>
        </tr>
       <tr>
-         <td class="fd-cent" >Scallops</td>
+         <td class="fd-cent" >Prawns</td>
           <td align="center" class="md-radio-column-box">
            <div class="radio my-none">
            <input type="radio" name="data[CharterGuestFoodPreference][food_29]" value="1" <?php echo $foodLove[29]; ?>>
@@ -1695,7 +1695,7 @@ label.txt-right {
          </td>
        </tr>
       <tr>
-         <td class="fd-cent">Caviar</td>
+         <td class="fd-cent">Scallops</td>
           <td align="center" class="md-radio-column-box">
            <div class="radio my-none">
            <input type="radio" name="data[CharterGuestFoodPreference][food_30]" value="1" <?php echo $foodLove[30]; ?>>
@@ -1716,7 +1716,7 @@ label.txt-right {
          </td>
        </tr>
       <tr>
-         <td class="fd-cent" >Foie gras</td>
+         <td class="fd-cent" >Caviar</td>
          <td align="center" class="md-radio-column-box">
            <div class="radio my-none">
            <input type="radio" name="data[CharterGuestFoodPreference][food_31]" value="1" <?php echo $foodLove[31]; ?>>
@@ -1737,7 +1737,7 @@ label.txt-right {
          </td>
        </tr>
       <tr>
-         <td class="fd-cent" >Desserts</td>
+         <td class="fd-cent" >Foie gras</td>
           <td align="center" class="md-radio-column-box">
            <div class="radio my-none">
            <input type="radio" name="data[CharterGuestFoodPreference][food_32]" value="1" <?php echo $foodLove[32]; ?>>
@@ -1779,7 +1779,7 @@ label.txt-right {
          </td>
        </tr> -->
       <tr>
-         <td class="fd-cent" >Swordfish</td>
+         <td class="fd-cent" >Desserts</td>
             <td align="center" class="md-radio-column-box">
            <div class="radio my-none">
            <input type="radio" name="data[CharterGuestFoodPreference][food_33]" value="1" <?php echo $foodLove[33]; ?>>

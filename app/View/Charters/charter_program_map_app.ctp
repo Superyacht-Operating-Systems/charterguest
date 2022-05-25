@@ -14,7 +14,7 @@ $schedulePeriod = "";
 $charterName = "";
 $scheduleLocation = "";
 if (isset($charterProgData) && !empty($charterProgData)) {
-    $schedulePeriod = date_format(date_create($charterProgData['CharterProgram']['charter_from_date']), "M dS Y")." - ".date_format(date_create($charterProgData['CharterProgram']['charter_to_date']), "M dS Y");
+    $schedulePeriod = date_format(date_create($charterProgData['CharterProgram']['charter_from_date']), "M dS")." - ".date_format(date_create($charterProgData['CharterProgram']['charter_to_date']), "M dS");
     $charterName = $charterProgData['CharterProgram']['charter_name'];
     $scheduleLocation = $charterProgData['CharterProgram']['embarkation']." to ".$charterProgData['CharterProgram']['debarkation'];
 }
@@ -597,14 +597,14 @@ margin: 0px;padding: 0px;
 </div><!-- /.modal-content -->
 
 <div class="row common-form-row">
-    <div class="col-lg-5 col-md-5 col-sm-5 mob-none">  
+    <div class="col-lg-4 col-md-4 col-sm-4 mob-none">  
         <span style="font-size: 18px;color:#fff;"><?php echo $schedulePeriod; ?></span>
     </div>
-    <div class="col-lg-3 col-md-3 col-sm-3 text-center mob-none">  
+    <div class="col-lg-4 col-md-4 col-sm-4 text-center mob-none">  
         <span style="font-size: 18px;color:#fff;"><?php echo $charterName; ?></span>
     </div>
-    <div class="col-lg-4 col-md-4 col-sm-4 text-right md-text-center"> 
-        <span style="font-size: 18px;color:#fff;"><?php echo $scheduleLocation; ?>
+    <div class="col-lg-4 col-md-4 col-sm-4"> 
+        <span style="font-size: 18px;color:#fff;float:right;"><?php echo $scheduleLocation; ?>
 <!--         <a>
             <span style="margin-left: 10%;" class="mob-none">   
                 <?php echo $this->Html->link('Back','view',array('id' => 'charterProgramView', 'class' => 'btn btn-warning','title' => '<< Back'));?> 
@@ -744,7 +744,7 @@ var latlngs = [];
         zoom = 7;
         
         var marker = L.marker(["<?php echo $schedule['CharterProgramSchedule']['lattitude']; ?>", "<?php echo $schedule['CharterProgramSchedule']['longitude']; ?>"],{pmIgnore: true})
-        .bindTooltip("<?php echo "Day ".$schedule['CharterProgramSchedule']['day_num']."&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;".$schedule['CharterProgramSchedule']['day_dates']."&nbsp;<span id='".$schuuid."' class='acti-count' ".$marker_msg_count." >".$schedule['CharterProgramSchedule']['marker_msg_count']."</span><br><b style='font-size: 10px;'>".$schedule['CharterProgramSchedule']['title']."<hr>".$endplace."</b><br><b style='font-size: 10px;'>".$distance.$bar.$duration."</b>"?>", 
+        .bindTooltip("<?php echo "<b style='font-size: 12px;'>Day ".$schedule['CharterProgramSchedule']['day_num']."&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;".$schedule['CharterProgramSchedule']['day_dates']."&nbsp;</b><br><b style='font-size: 12px;'>".$schedule['CharterProgramSchedule']['title']."<hr>".$endplace."</b><br><b style='font-size: 12px;'>".$distance.$bar.$duration."</b>"?>", 
                     {
                         permanent: true, 
                         direction: 'right',
@@ -918,6 +918,11 @@ function markerOnClick(e) {
                     .openOn(map);
                     $(".leaflet-popup-close-button").addClass('updateCommentscount');
                     $('.day_dates').text(day_dates);
+
+                    $("#closeSchedule").remove();
+                    $(".crew_comment_cruisingmaptitle").remove();
+                    $(".crew_comment_cruisingmap").remove();
+                    $(".leaflet-popup-close-button").remove();
                      // to get reduce msgcount
                      $(popup._closeButton).one('click', function(e){
                         msgcount();
@@ -981,7 +986,7 @@ $(document).ready(function() { //alert();
             //$('.fancybox').fancybox();
 
             
-
+            
 
     $(".leaflet-control-attribution ").html(function(i, html) {
         //return html.replace("|", "");
