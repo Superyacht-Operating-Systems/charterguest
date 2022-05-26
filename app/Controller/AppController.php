@@ -141,5 +141,52 @@ class AppController extends Controller {
 		}
     	return;
     }
+
+
+	function charter_program_map_total_msg_count($prgUUID,$yachtdb) {
+		//        echo "<pre>";print_r($this->Session->read());exit;
+		//echo $prgUUID.''.$yachtdb;
+				Configure::write('debug',0);
+				$session = $this->Session->read('charter_info');
+				$yachtDbName = $yachtdb;
+				$charterProgramId = $prgUUID;
+				
+				if (!empty($yachtDbName)) {
+				   
+					$this->loadModel('CharterGuest');
+					$charterProgData = $this->CharterGuest->query("SELECT * FROM $yachtDbName.charter_programs CharterProgram WHERE UUID = '$charterProgramId' AND is_deleted = 0 LIMIT 1");
+					//echo "<pre>";print_r($charterProgData); //exit;
+					if (count($charterProgData) != 0) {
+						//echo "kk";
+						
+						// Display the dates in array format
+						//
+		
+						$scheduleConditions = "charter_program_id = '$charterProgramId' AND is_deleted = 0";
+						$scheduleData = $this->CharterGuest->getCharterProgramScheduleData($yachtDbName, $scheduleConditions);
+						//echo "<pre>";print_r($scheduleData); exit;
+						$markertitle = array();
+						$markername = array();
+						if(isset($scheduleData)){
+							$msgcount = 0;
+							foreach($scheduleData as $key => $publishmap){
+									
+		
+								   //$mcount = $this->getmsgnotifycountForMarker($publishmap['CharterProgramSchedule']['UUID']);
+								   $msgcount += $this->CharterGuest->getCharterMarkerCommentCount($yachtDbName,$publishmap['CharterProgramSchedule']['UUID']);
+		
+								   
+							
+							}
+						}
+						
+						
+					} 
+					//echo $msgcount; exit;
+				return $msgcount;
+				} 
+				
+				
+			}
     
 }

@@ -53,7 +53,7 @@ body{padding:0; margin:0; /*background:#f5f5f5;*/}
 }
 
 /* Jquery Validation */ 
-.login-panel .form-control {
+/*.login-panel .form-control {
     background: rgba(241, 235, 235, 0.76)!important;
     border-top: solid 1.5px rgba(2, 2, 2, 0.40)!important;
     border-left: solid 1.5px rgba(2, 2, 2, 0.40)!important;
@@ -61,7 +61,7 @@ body{padding:0; margin:0; /*background:#f5f5f5;*/}
     border-right: solid 1.5px #fff;  font-weight: 100;!important;
     font-weight: 600;
     color: #333!important;
-}
+}*/
 
 input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill{background: rgba(241, 235, 235, 0.76)!important;}
 .login-panel fieldset{font-weight: bold;}

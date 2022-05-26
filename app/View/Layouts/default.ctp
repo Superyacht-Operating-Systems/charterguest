@@ -167,15 +167,28 @@ width: max-content;
 .ui-datepicker-title select {
         color: black;
     }
+    .acti-countnav {
+    background: #f00;
+    width: 20px;
+    font-size: 11px;
+    line-height: initial;
+    height: 20px;
+    border-radius: 6px;
+    color: #fff;
+    margin-left: 2px;
+    display: inline-grid;
+    align-items: center;
+    justify-content: center;
+} 
 			</style>              
 </head>
 <body>
     <div style="position:fixed;height:100%;width:100%;left:0;top:0;z-index:9999;opacity:0.5;display:none;" id="hideloader">
 		<div style="text-align:center;vertical-align:center;font-weight:bold;font-size:45px;margin-top:305px;color:#000000"><?php echo $this->Html->image("admin/loader.gif"); ?></div></div>         
-	 <section class="container wrapper">
+	 <section class="">
             <div class="row">
               <?php if (isset($session["login_username"]) && !empty($session["login_username"])) { ?>
-                <nav role="navigation" class="navbar navbar-inverse navbar-fixed-top">            
+                <nav role="navigation" class="navbar navbar-inverse navbar-absalute-top">            
                     <div class="navbar-header ">    
                         <?php if (isset($session["fleetLogoUrl"]) && !empty($session["fleetLogoUrl"]) && $programpageCharter == "charters" && $programpagePrograms != "programs") { ?>
                             <div class="logoimg"> 
@@ -196,7 +209,7 @@ width: max-content;
                     <div class="label-bold-head"><?php if (isset($session["yachFullName"]) && !empty($session["yachFullName"])) { echo $session['yachFullName']; } ?></div>
                     <div class="yachtHeaderName">Charter Guest
             <!-- <span class="label-md-header"> <?php //echo isset($companyData['Fleetcompany']['management_company_name']) ? $companyData['Fleetcompany']['management_company_name'] : ""; ?></span>   --></div>                          <div class=""> 
-                                 <div class="userhead-name ch-mob-hd"><?php if (isset($session["login_username"]) && !empty($session["login_username"])) { echo $session['login_username']; } ?>
+                                 <div class="userhead-name ch-mob-hd"><?php if (isset($session["login_username"]) && !empty($session["login_username"])) { echo $session['login_username']; } ?><br><span class="acti-countnav"><?php echo $this->Session->read('commentcounttotal'); ?></span>
                                  	
                                  </div>
                                     <div class="list-logout-row">
@@ -206,6 +219,9 @@ width: max-content;
                     
                         </nav>
                 <?php  } ?>
+              </div></section>
+   <section class="container wrapper">
+            <div class="row">
                 <div class="container-row-all">
                     
                             <?php  echo $this->fetch('content'); ?>
@@ -418,9 +434,9 @@ width: max-content;
   </div>
 </div>
                 
-            </div>
+            </div>        </section>
             <div class="push"></div>
-        </section>
+
             <?php echo $this->element('footer'); ?>  
 
 <?php 

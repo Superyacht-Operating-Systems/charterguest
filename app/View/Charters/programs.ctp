@@ -600,11 +600,11 @@ position: relative;
         }else if(!empty($mapdetails)){
                 $title  = "";
         } ?>
-        <li class="menu__item"> <a href="#" title="<?php echo $title; ?>">Cruising Map</a>
+        <li class="menu__item"> <a href="#" title="<?php echo $title; ?>">Cruising Map <span class="acti-countnav"><?php echo $this->Session->read('commentcounttotal'); ?></span> </a>
             <?php if(isset($mapdetails)){ ?>
                 <ul class="submenu">
                     <?php foreach($mapdetails as $startdate => $data){ ?>
-                    <li class="menu__item"><a href="<?php echo $baseFolder."/charters/charter_program_map/".$data['programid'].'/'.$data['dbname']; ?>" target="_blank"><?php echo $startdate; ?></a></li>
+                    <li class="menu__item"><a href="<?php echo $baseFolder."/charters/charter_program_map/".$data['programid'].'/'.$data['dbname']; ?>" target="_blank"><?php echo $startdate; ?> <span class="acti-countnav"><?php echo $data['count']; ?></span></a></li>
                     <?php
                             
                         } ?>

@@ -262,8 +262,9 @@ class ChartersController extends AppController {
         $programFiles  = array();
         $mapdetails = array();
        // echo "<pre>";print_r($guestListData); //exit;
-        //echo "<pre>";print_r($charterGuestData); //exit;
+        //echo "<pre>";print_r($charterGuestData); exit;
         if(isset($charterGuestData) && !empty($charterGuestData)){
+            $commentcounttotal = 0;
             foreach($charterGuestData as $key => $value){
                 $YachtWeblinkConditionsGuest = array('YachtWeblink.charter_company_id' => $value['CharterGuest']['charter_company_id'],'YachtWeblink.yacht_id' => $value['CharterGuest']['yacht_id'],'YachtWeblink.is_deleted'=>0);
                 $YachtWeblinkdata = $this->YachtWeblink->find('first', array('conditions' => $YachtWeblinkConditionsGuest));
@@ -293,11 +294,18 @@ class ChartersController extends AppController {
                         $map = array();
                         $map['dbname'] = $ydb_name;
                         $map['programid'] = $value['CharterGuest']['charter_program_id'];
+                        $commentindividualtotal = $this->charter_program_map_total_msg_count($value['CharterGuest']['charter_program_id'],$ydb_name);
+                        $map['count'] = $commentindividualtotal;
                         $mapdetails[$charter_from_date] = $map;
+                        $commentcounttotal += $commentindividualtotal;
                     }
                 }
+                
             }//exit;
-            //echo "<pre>";print_r($scheduleData); exit;
+            //echo "<pre>";print_r($commentcounttotal); exit;
+
+            $this->Session->write("commentcounttotal", $commentcounttotal);
+
             $fleetname = $this->Session->read('fleetname');
             if(isset($programFiles) && !empty($programFiles) ){
                 $attachment = array();
