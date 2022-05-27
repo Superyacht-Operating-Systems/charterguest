@@ -167,19 +167,7 @@ width: max-content;
 .ui-datepicker-title select {
         color: black;
     }
-    .acti-countnav {
-    background: #f00;
-    width: 20px;
-    font-size: 11px;
-    line-height: initial;
-    height: 20px;
-    border-radius: 6px;
-    color: #fff;
-    margin-left: 2px;
-    display: inline-grid;
-    align-items: center;
-    justify-content: center;
-} 
+
 			</style>              
 </head>
 <body>
@@ -209,7 +197,7 @@ width: max-content;
                     <div class="label-bold-head"><?php if (isset($session["yachFullName"]) && !empty($session["yachFullName"])) { echo $session['yachFullName']; } ?></div>
                     <div class="yachtHeaderName">Charter Guest
             <!-- <span class="label-md-header"> <?php //echo isset($companyData['Fleetcompany']['management_company_name']) ? $companyData['Fleetcompany']['management_company_name'] : ""; ?></span>   --></div>                          <div class=""> 
-                                 <div class="userhead-name ch-mob-hd"><?php if (isset($session["login_username"]) && !empty($session["login_username"])) { echo $session['login_username']; } ?><br><span class="acti-countnav"><?php echo $this->Session->read('commentcounttotal'); ?></span>
+                                 <div class="userhead-name ch-mob-hd"><span class="user-hname"><?php if (isset($session["login_username"]) && !empty($session["login_username"])) { echo $session['login_username']; } ?></span><br><span class="acti-countnav fa fa-bell-o "><small><?php echo $this->Session->read('commentcounttotal'); ?></small></span>
                                  	
                                  </div>
                                     <div class="list-logout-row">

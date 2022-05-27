@@ -170,9 +170,7 @@ input[type="radio"], input[type="checkbox"] {
 .radio label::before {
     -o-transition: 0.3s ease-in-out;
     -webkit-transition: 0.3s ease-in-out;
-    background-color: #fff;
     border-radius: 50px;
-    border: 1px solid #cccccc;
     content: "";
     display: inline-block;
     height: 16px;

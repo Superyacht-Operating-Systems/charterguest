@@ -64,8 +64,6 @@
         border-radius: 3px;
         overflow: hidden;
         white-space: nowrap;
-        background-color: #fff;
-        border: 1px solid #ccc;
         box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
     }
     .space-50-h{

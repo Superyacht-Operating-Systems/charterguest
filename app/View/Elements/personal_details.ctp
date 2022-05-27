@@ -136,7 +136,7 @@ $sessionData = $this->Session->read();
     padding-right: 0px;
   }
   .frmgrp-mar .doy-enjoy {
-  width: 317px !important;
+  width: 317px;
 }
   /*.typeahead { border: 1px solid #CCCCCC;border-radius: 4px;padding: 8px 12px;width: 300px;font-size:1.5em;}*/
   .tt-menu { width:300px; }
@@ -221,9 +221,7 @@ $sessionData = $this->Session->read();
 .checkbox label::before {
       -o-transition: 0.3s ease-in-out;
     -webkit-transition: 0.3s ease-in-out;
-    background-color: rgba(255, 255, 255, 0.68);
     border-radius: 3px;
-    border: 1.5px solid rgba(0, 0, 0, 0.28);
     content: "";
     display: inline-block;
     height: 17px;
@@ -258,9 +256,7 @@ $sessionData = $this->Session->read();
 label.txt-cent {
     padding: 0;
 }
-.checkbox input[type="checkbox"]:checked + label::before{
-   background-color: #f0ad4e;    border: 1.5px solid rgb(255, 255, 255);
-}
+
   input[type="file"].passportImageClass{
     width: 100%;
     max-width: none !important;
@@ -296,7 +292,7 @@ label.txt-cent {
 
 
 hr.divider {
-    border-top: 3px solid rgba(8, 8, 8, 0.23)!important;
+border-top: 1px solid rgb(255 255 255 / 54%)!important;
     width: 100%;
     display: inline-block;
 }
@@ -692,7 +688,7 @@ and (max-device-width : 667px) {
         </div>
         <div class="col-xs-12 col-md-5 col-sm-7 form-group mob-w-70">
           <div class="xs-small-divice w-100">
-           <?php echo $this->Form->input("passport_image",array("type" => "file", "label"=>false,'class'=>'passportImageClass','id' => 'passportImage')); ?>
+           <?php echo $this->Form->input("passport_image",array("type" => "file", "label"=>false,'class'=>'passportImageClass form-control','id' => 'passportImage')); ?>
           </div>
           <span class="required img-view-modal" style="color:red;">only jpg, jpeg, png and pdf</span>
        

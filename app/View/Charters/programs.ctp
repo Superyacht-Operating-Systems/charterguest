@@ -44,9 +44,7 @@ font-size: 21px;
     width: 131px;
     display: flex;
 }
-.btn-warning-bg {
-    background: rgba(240, 249, 0, 0.6);
-}
+
 .text-box-container{
     width: 100%;
     display: flex;
@@ -163,10 +161,8 @@ font-weight: bold;
 
 .btn-open1{
     font-size: 13px;
-    /*background: rgba(10, 230, 87, 0.58); */
     border: none;
     float: initial;
-    color: #000;
     font-weight: bold;
     opacity: 40!important;
     padding: 6px 20px;
@@ -641,6 +637,8 @@ position: relative;
 
     </div>
 <div  class="container-fluid">
+
+<div class="ch-program-container">    
 <div class="table table-condensed no-border" id="guestDetailsTable">
 <div class="header-row">
     <div class="tcont-center md-row-hd-12">Start Date</div>
@@ -741,7 +739,7 @@ if(isset($charterAssocData) && !empty($charterAssocData)){
 ?>
 </div>
 
-</div></div></div>
+</div></div></div></div>
 </div>
 </div>
 

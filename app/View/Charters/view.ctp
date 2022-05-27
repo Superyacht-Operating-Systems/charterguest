@@ -62,14 +62,7 @@
 .modal-dialog{
         padding-left: 94px;
 }
-.footer-mob-row .btn-success {
-    color: #000;
-    background-color: rgba(5, 156, 226, 0.83);
-    border-color: #7dc6ec;
-    width: 80px;
-    font-weight: bolder;
-    font-size: 14px;
-}
+
 .yachtHeaderName{font-weight: bold;font-size: 46px;}
 .container-row-column .row{margin-bottom: 7px;}
 .container-row-column .row .form-control{
@@ -117,7 +110,7 @@
         padding:5px;
         }
 .owl-nav.disabled{display: none!important}
-#saveBtn{margin-right: 128px;border-radius: 0px;}
+#saveBtn{margin-right: 110px;border-radius: 0px;}
 
 .center-img{margin-left: 15px;
     width: 100%;
@@ -191,35 +184,9 @@ font-weight: bold;
     height: 0px;
     font-size: 14px;
 }                
-.yes-btn{    
-    background: rgba(10, 230, 87, 0.58);
-    border: none;
-    color: #000;
-    font-weight: bold;
-    padding: 5px 10px;height: 30px;
-}
-.yes-btn:hover{
-   color: #fff; 
-   background: #4CAF50!important;
-}
 
-.no-btn{
-        background: rgba(255, 75, 75, 0.72);
-    border: none;
-    color: #000;
-    font-weight: bold;
-    padding: 5px 10px;height: 30px;
-}
-.gry-btn{
-   /* background: rgb(220,220,220); */
-    border: none;
-   /* color: #DCDCDC; */
-    font-weight: bold;
-    padding: 5px 10px;height: 30px;
-}
-.gry-btn:hover{
-        background: #d0d0d0;
-} 
+
+
 .header-row div{
     float: left;
     color: #000;
@@ -233,10 +200,8 @@ font-weight: bold;
 }
 .btn-open{
     font-size: 13px;
-    background: rgba(10, 230, 87, 0.58);
     border: none;
     float: initial;
-    color: #000;
     font-weight: bold;
     opacity: 40!important;
     padding: 6px 20px;
@@ -358,26 +323,10 @@ font-weight: bold;
     border-right: solid 1.5px #fff;
 
 }
-.form-two{ background: rgba(255, 255, 255, 0.83)!important;}
 
-
-.btn-eml-send{font-size: 13px;
-         background: rgba(255, 75, 75, 0.84);
-    border: none;
-    float: left;
-    color: #000!important;
-    font-weight: bold;
-    opacity: 40!important;
-    padding: 6px 5px;
-    border-radius: 0px;margin:0% 0.3%;
-    height: 30px;
-
-}
 .btn-eml-send1{font-size: 13px;
-       /*   background: rgba(241, 28, 28, 0.52); */
     border: none;
     float: left;
-    color: #000!important;
     font-weight: bold;
     opacity: 40!important;
     padding: 6px 5px;
@@ -408,8 +357,12 @@ font-weight: bold;
 
 
 .header-row {width:100%;display: inline-block;margin: 0px 13px;}
-.container-row-column .row>div {float: left;margin: 0px 0.4%;}
-.btn-eml-send{width:78px;}
+.container-row-column .row>div {
+    float: left;
+    margin: 0px 0.4%;
+
+}
+.btn-eml-send{width:78px; color: #000}
 .btn-eml-send1{width:78px;}
 .btn-open{width:78px;}
 
@@ -450,6 +403,7 @@ font-weight: bold;
     .owl-carousel label {
     width: 100%;
     display: block!important;
+    color: #fff;
 }
 .footer-mob-row .btn-success {
     width: 140px;
@@ -516,9 +470,6 @@ font-weight: bold;
     text-align: center;}
 
 
-.form-mob-ctrl {
-    background: rgba(241, 235, 235, 0.76)!important;
-}
 .none-mob-ctrl{display: none;}
 
 .label-preference{margin-top: 10px; text-align: left;}
@@ -615,16 +566,9 @@ font-weight: bold;
 .info-box img{width: 14px;}
 
 }
-.btn-open1{
-   background: rgba(240, 249, 0, 0.6); 
-}
-.btn-open1:hover,
-.btn-open1:active:hover
-{background: rgb(240, 249, 0);
-color: #000;
-}
 
-.btn-warning-bg{ background: rgba(240, 249, 0, 0.6);}
+
+
 .btn-warning-bg:hover,
 .btn-warning-bg:active:hover
 {background: rgb(240, 249, 0);
@@ -642,19 +586,6 @@ color: #000;
 .btn-primary:hover{
         background: #4CAF50!important;
         color: #fff;
-}
-
-
-.btn-eml-send1,
-.sent-btnr
-{
-background: rgba(10, 230, 87, 0.58) !important;
-}
-.btn-eml-send1:hover,
-.sent-btnr:hover
-{
-background:#449d44!important;
-color: #fff!important;
 }
 
 
@@ -765,6 +696,7 @@ color: #fff!important;
     </div>
 
 <div  class="container-fluid">
+  <div class="charterer-viewcontainer">  
         <!-- Head charterer id -->
         <input type="hidden" id="headChartererId" value="<?php echo $charterData['CharterGuest']['id']; ?>">
         <!-- Charter program id -->
@@ -796,14 +728,14 @@ color: #fff!important;
   <?php include 'view-min.php';?>   
 </div>
 <?php } ?>
-</div></div></div>
+</div></div>
 <div class="col-md-12">
             <div class="pull-right footer-mob-row">
                 <button class="btn btn-success" id="saveBtn">Save</button>
             </div>
         </div> 
 </div>
-</div>
+</div></div></div>
 
 <!-- <script>
     $(document).ready(function() {

@@ -90,7 +90,9 @@ td.td-cnt.td-esent{
     margin: 10px 0;
 }
 /*main page css*/
-li>a.nav-anch {background-color:#ff7f27;margin-right: 20px;color: #000;font-weight: 500;}
+li>a.nav-anch {
+  margin-right: 20px;
+  font-weight: 500;}
 .nav-pills>li>a.nav-anch{
   border-radius: 0;
   font-size: 14px;
@@ -98,11 +100,6 @@ li>a.nav-anch {background-color:#ff7f27;margin-right: 20px;color: #000;font-weig
 .base-margin{
   margin:20px 0px; 
 }
-.nav-pills>li.active>a.nav-anch{
-  color: #000;
-  background-color: #ffc90e;
-}
-
 .tab-content .space-20{
   height: 20px;
 }

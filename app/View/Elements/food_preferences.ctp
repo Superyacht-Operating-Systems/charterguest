@@ -165,7 +165,6 @@ width: 110px!important;
   width: 25%;
   text-align: right;
    margin-top: 13px;}
-.table-bordered{background: #fff;}
 .foodpreferences-container table.table tbody tr{border-bottom: solid 1px #eee;    width: 100%;
     display: inline-flex;}
 table.table tbody th{border:none;}    
