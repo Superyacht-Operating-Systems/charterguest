@@ -21,7 +21,10 @@ body{padding:0; margin:0; /*background:#f5f5f5;*/}
 .login-panel .panel-heading {background: none!important;border:none!important;}
 
 .login-panel .btn-default{
-        background: rgba(10, 230, 87, 0.58);border:none;font-weight: bold;
+        background:#1ca0ef;
+        border:none;
+        font-weight: bold;
+        color: #fff;
 }
 
 /*custom media query for small devies*/

@@ -326,7 +326,7 @@ width: max-content;
       </div>-->
         <div class="modal-body">
           <div class="modalmsg"> 
-            <p>Preference already exist for : <b><span id="guestFullName" class="chr-block"></span></b></p>
+            <p>Preferences already exist for : <b><span id="guestFullName" class="chr-block"></span></b></p>
             <p>Click USE EXISTING to update preferences before submitting</p>
             <p>Click CREATE NEW to delete the old and create new preferences</p>
           </div>
@@ -356,7 +356,7 @@ width: max-content;
       </div>-->
         <div class="modal-body">
           <div class="modalmsg"> 
-            <p>Please enter your birthday to confirm your identity.</p>
+            <p>Enter your birthday to confirm your identity.</p>
           </div>
             <div class="text-center">
             <?php //echo $this->Form->input("dob",array("label"=>false,'class'=>'form-control dobDatePicker nonEditable','type' => 'text')); ?>

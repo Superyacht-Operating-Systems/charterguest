@@ -146,7 +146,7 @@ $sessionData = $this->Session->read();
   <div class="col-md-12">
       <div class="form-group frmgrp-mar">
           <div class="col-md-12">
-            <label class="min-hd-label">Itinerary</label>  
+           <!--  <label class="min-hd-label">Itinerary</label>   -->
           </div>
           <div class="iter-pref">
             <div class="be-col-6">

@@ -153,11 +153,7 @@ $sessionData = $this->Session->read();
 .p-0left{
   padding-left: 0px;
 }
-.md-label-size{
-    margin-bottom: 15px;
-    color: #000;
 
-}
 
 .upload-img-row-container{
     width: 100%;
@@ -301,8 +297,6 @@ border-top: 1px solid rgb(255 255 255 / 54%)!important;
     .diet-head{
       width: 22%;
     }
-.checkbox-label-row-padd .pdd-none{padding-right:8px!important;}
-
 
 .clearfix {
     display: none!important;
@@ -690,7 +684,7 @@ and (max-device-width : 667px) {
           <div class="xs-small-divice w-100">
            <?php echo $this->Form->input("passport_image",array("type" => "file", "label"=>false,'class'=>'passportImageClass form-control','id' => 'passportImage')); ?>
           </div>
-          <span class="required img-view-modal" style="color:red;">only jpg, jpeg, png and pdf</span>
+          <span class="required img-view-modal">only jpg, jpeg, png and pdf</span>
        
         <div class="upload-img-result">
             <?php
@@ -714,17 +708,17 @@ and (max-device-width : 667px) {
 </div>
       <div class="col-md-12 md-full-container-width">
         <div class="col-md-4 col-sm-3">
-          <label class="pdd-none txt-right">Medical Conditions:</label>
+          <label class="pdd-none txt-right medic-left">Medical Conditions:</label>
         </div>
         <div class="col-md-5 col-sm-7 ">
-             <?php echo $this->Form->input("medical_conditions",array("type" => "textarea", "label"=>false,'class'=>'form-control textarea-height')); ?>
+             <?php echo $this->Form->input("medical_conditions",array("type" => "textarea", "label"=>false,'class'=>'form-control textarea-height med-h')); ?>
         </div>
       </div>
       <div class="clearfix"></div>
     
       <div class="col-md-12 " style="margin-top:20px;">
         <div class="col-xs-5 col-md-4 col-sm-3 mob-w-30">
-          <label class="pdd-none txt-right p-t-2">Next of Kin:</label>
+          <label class="txt-right p-t-02">Next of Kin:</label>
         </div>
         <div class="col-xs-7 col-md-5 col-sm-7 form-group mob-w-70">
          <?php echo $this->Form->input("next_of_kin",array("label"=>false,'class'=>'form-control','type' => 'text')); ?>
@@ -732,7 +726,7 @@ and (max-device-width : 667px) {
       </div>
       <div class="col-md-12 ">
         <div class="col-xs-5 col-md-4 col-sm-3 mob-w-30">
-          <label class="pdd-none txt-right p-t-2">NoK Phone:</label>
+          <label class="txt-right p-t-02">NoK Phone:</label>
         </div>
         <div class="col-xs-7 col-md-5 col-sm-7 form-group mob-w-70">
          <?php echo $this->Form->input("next_of_kin_phone",array("label"=>false,'class'=>'form-control','type' => 'text')); ?>
@@ -740,7 +734,7 @@ and (max-device-width : 667px) {
       </div>
       <div class="clearfix"></div>
       <hr class="divider md-12-padd-15">
-
+<div class="charte-rightalign">
       <div class="col-md-12">
          <label class="md-label-size">Special Occasions during cruise:</label>
       </div>
@@ -867,7 +861,7 @@ and (max-device-width : 667px) {
                   </div>
                 </div></div>
 
-      </div>
+      </div>  </div>
        <div class="clearfix"></div>
        <hr class="divider md-12-padd-15"/>
 
@@ -926,7 +920,7 @@ and (max-device-width : 667px) {
                        <label class="pdd-none">
                          
                    <?php // echo $this->Form->input("dietries[]",array("type" => "checkbox", "label"=>false,'div'=>false,'class'=>'', 'value' => 5)); ?>
-                   Vegitarian   
+                   Vegetarian   
                        </label>
                       </div>                    
                   </div>

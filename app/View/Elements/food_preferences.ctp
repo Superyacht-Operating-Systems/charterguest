@@ -165,7 +165,8 @@ width: 110px!important;
   width: 25%;
   text-align: right;
    margin-top: 13px;}
-.foodpreferences-container table.table tbody tr{border-bottom: solid 1px #eee;    width: 100%;
+.foodpreferences-container table.table tbody tr{
+   width: 100%;
     display: inline-flex;}
 table.table tbody th{border:none;}    
 table.table tbody td{border:none;}
@@ -255,14 +256,13 @@ table.fd-table tr>td {
 .table-container-row td:first-child {
     text-align: left;
 }
+
 }
 @media screen and (max-width: 767px) {
 .comt-like-row {
     text-align: left;
 }
-label.txt-right {
-    text-align: left;
-}
+
 
       .Comments-1024 {
       margin-left: 0px;
@@ -324,7 +324,7 @@ label.txt-right {
           <div class="col-lg-3 col-sm-3 md-radio-column-box-max">
             <div class="radio ma-t-check">
             <input type="radio" name="data[CharterGuestFoodPreference][breakfast_service_style]" value="3" <?php echo (isset($foodPreferences['CharterGuestFoodPreference']['breakfast_service_style']) && $foodPreferences['CharterGuestFoodPreference']['breakfast_service_style'] == 3) ? 'checked' : ''; ?>>
-              <label class="pdd-none"><span>Sliver Service</span></label>
+              <label class="pdd-none"><span>Silver Service</span></label>
             </div>
           </div>
         </div>
@@ -356,7 +356,7 @@ label.txt-right {
           <div class="col-lg-3 col-sm-3 md-radio-column-box-max">
             <div class="radio ma-t-check">
             <input type="radio" name="data[CharterGuestFoodPreference][lunch_service_style]" value="3" <?php echo (isset($foodPreferences['CharterGuestFoodPreference']['lunch_service_style']) && $foodPreferences['CharterGuestFoodPreference']['lunch_service_style'] == 3) ? 'checked' : ''; ?>>
-              <label class="pdd-none"><span>Sliver Service</span></label>
+              <label class="pdd-none"><span>Silver Service</span></label>
             </div>
           </div>
         </div>
@@ -388,7 +388,7 @@ label.txt-right {
           <div class="col-lg-3 col-sm-3 md-radio-column-box-max">
             <div class="radio ma-t-check">
             <input type="radio" name="data[CharterGuestFoodPreference][dinner_service_style]" value="3" <?php echo (isset($foodPreferences['CharterGuestFoodPreference']['dinner_service_style']) && $foodPreferences['CharterGuestFoodPreference']['dinner_service_style'] == 3) ? 'checked' : ''; ?>>
-              <label class="pdd-none"><span>Sliver Service</span></label>
+              <label class="pdd-none"><span>Silver Service</span></label>
             </div>
           </div>
         </div>
@@ -1435,10 +1435,8 @@ label.txt-right {
 <div class="col-md-6  col-sm-6 th-md-col-space">
    <table class="table table-bordered fd-table tabport-tabletext-middel table-container-row">
         <tr>
-          <th>Food Preferences  </th>
-         <!--  <th style="text-align: center;">Love  </th>
-          <th style="text-align: center;">Like  </th>
-          <th style="text-align: center;">Dislike  </th> -->
+          <th></th>
+
         </tr>
        <tr>
          <td class="fd-cent" >Mussels</td>
@@ -2221,8 +2219,8 @@ label.txt-right {
         <div class="clearfix"></div>
 
         <div class="row ipad-port-comments">
-          <div class="col-md-2 col-sm-2 md-dislike-0 comt-like-row">
-          <label class="control-label label-comments-space">Comments</label>
+          <div class="col-md-1 col-sm-2 md-dislike-0 comt-like-row">
+          <label class="cmt-space control-label label-comments-space">Comments</label>
         </div>
         <div class="col-md-7 col-sm-9 md-dislike-0">
           <!--<input type="text" class="form-control">-->

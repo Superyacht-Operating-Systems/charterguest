@@ -239,7 +239,7 @@ hr.divmar{
   <div class="col-md-12">
           <div class="form-group frmgrp-mar">
             <div class="">
-              <label class="pdd-none">Beverage Preferences</label>
+<!--               <label class="pdd-none">Beverage Preferences</label> -->
             </div>
             <div class="col-md-3 col-sm-4 pdd-none pl-2">
               <label class="pdd-none mrg-label">COFFEE</label>

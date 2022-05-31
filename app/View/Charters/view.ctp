@@ -714,7 +714,7 @@ color: #000;
 <div class="tcont-center md-row-hd-12">Title</div>
 <div class="tcont-center md-row-hd-20">First Name</div>
 <div class="tcont-center md-row-hd-20">Last Name</div>
-<div class="tcont-center emailFieldClass md-row-hd-30">Email-Address</div>
+<div class="tcont-center emailFieldClass md-row-hd-30">Email</div>
 <div class="tcont-center md-row-hd-20 md-row-hd-20-10">Preference Sheets</div>
 <!--    <th class="tcont-center" colspan="2">Submitted P-Sheets</th> -->
 </div>

@@ -56,7 +56,7 @@
                                        </section>
 
                                            <div class="md-row-h-30"> 
-                                           <label>Email-Address</label>  
+                                           <label>Email</label>  
                                                             <input type="text" class="form-control tinput rowInput form-mob-ctrl" name="email[]"  value="<?php echo $charterData['CharterGuest']['email']; ?>" readonly="true">
                                                 
                                         </div>
@@ -135,7 +135,7 @@
                                             <input type="text" class="form-control tinput rowInput validateInput" name="last_name[]" value="<?php echo $charterAssoc['CharterGuestAssociate']['last_name']; ?>"></div>
                                     </section>
                                         <div class="md-row-h-30">
-                                                   <label>Email-Address</label>
+                                                   <label>Email</label>
                                                     <input type="text" class="form-control tinput rowInput validateInput"  name="email[]" value="<?php echo $charterAssoc['CharterGuestAssociate']['email']; ?>">
 
                                            
@@ -222,7 +222,7 @@
                                         </div>
                                     </section>
                                         <div class="md-row-h-30">
-                                             <label>Email-Address</label>
+                                             <label>Email</label>
                                                                 <input type="text" class="form-control tinput rowInput validateInput"  name="email[]" value="">
     
                                         </div>
