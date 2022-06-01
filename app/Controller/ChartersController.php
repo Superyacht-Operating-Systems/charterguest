@@ -41,6 +41,7 @@ class ChartersController extends AppController {
                 $this->loadModel('CharterGuest');
                 $this->loadModel('GuestList');
                 $cloudUrl = Configure::read('cloudUrl');
+                $SITE_URL = Configure::read('BASE_URL');  
                 
                 $this->CharterGuest->set($this->request->data);
                 if (!$this->CharterGuest->validates(array('fieldList' => array('email')))) {
@@ -75,11 +76,15 @@ class ChartersController extends AppController {
                         $this->loadModel('Fleetcompany');
                         $companyData = $this->Fleetcompany->find('first', array('fields' => array('management_company_name','logo','fleetname','id'), 'conditions' => array('id' => $charterData['CharterGuest']['charter_company_id'])));
                         if (isset($companyData['Fleetcompany']['logo']) && !empty($companyData['Fleetcompany']['logo'])) {
-                            $fleetLogoUrl = $cloudUrl.$companyData['Fleetcompany']['fleetname']."/img/logo/thumb/".$companyData['Fleetcompany']['logo'];
+                            // $fleetLogoUrl = $cloudUrl.$companyData['Fleetcompany']['fleetname']."/img/logo/thumb/".$companyData['Fleetcompany']['logo'];
+                            $fleetLogoUrl = $SITE_URL.'/'."charterguest/img/logo/thumb/".$companyData['Fleetcompany']['logo'];
                             $this->Session->write("fleetLogoUrl", $fleetLogoUrl);
                                 $this->Session->write("fleetCompanyName", $companyData['Fleetcompany']['management_company_name']);
                                 $this->Session->write("fleetCompanyID", $companyData['Fleetcompany']['id']);
                                 $this->Session->write("fleetname", $companyData['Fleetcompany']['fleetname']);
+                        }else{
+                            $fleetLogoUrl = $SITE_URL.'/'."charterguest/img/logo/thumb/charter_guest_logo.png";
+                            $this->Session->write("fleetLogoUrl", $fleetLogoUrl);
                         }
                         
                         
@@ -137,9 +142,13 @@ class ChartersController extends AppController {
                             $this->loadModel('Fleetcompany');
                             $companyData = $this->Fleetcompany->find('first', array('fields' => array('management_company_name','logo','fleetname'), 'conditions' => array('id' => $charterHeadData['CharterGuest']['charter_company_id'])));
                             if (isset($companyData['Fleetcompany']['logo']) && !empty($companyData['Fleetcompany']['logo'])) {
-                                $fleetLogoUrl = $cloudUrl.$companyData['Fleetcompany']['fleetname']."/img/logo/thumb/".$companyData['Fleetcompany']['logo'];
+                                // $fleetLogoUrl = $cloudUrl.$companyData['Fleetcompany']['fleetname']."/img/logo/thumb/".$companyData['Fleetcompany']['logo'];
+                                $fleetLogoUrl = $SITE_URL.'/'."charterguest/img/logo/thumb/".$companyData['Fleetcompany']['logo'];
                                 $this->Session->write("fleetLogoUrl", $fleetLogoUrl);
                                 $this->Session->write("fleetCompanyName", $companyData['Fleetcompany']['management_company_name']);
+                            } else{
+                                $fleetLogoUrl = $SITE_URL.'/'."charterguest/img/logo/thumb/charter_guest_logo.png";
+                                $this->Session->write("fleetLogoUrl", $fleetLogoUrl);
                             }
                             
                             
