@@ -2201,6 +2201,7 @@ class ChartersController extends AppController {
         $mapdetails = array();
         $ydb_name = $session['CharterGuest']['ydb_name'];
         $charter_from_date = date("d M Y", strtotime($session['CharterGuest']['charter_from_date']));
+        echo "<pre>";print_r($guestAssocData);exit;
         if(isset($guestAssocData) && !empty($guestAssocData))
             $charter_from_date = date("d M Y", strtotime($guestAssocData['CharterGuest']['charter_from_date']));
 
