@@ -263,9 +263,9 @@ body .menu .submenu .menu__item a {
                     $title  = "";
             } ?>
              <?php if(isset($ownerprefenceID) && !empty($ownerprefenceID)){ ?>
-            <li class="menu__item"><a href="<?php echo $baseFolder."/charters/view/".$ownerprefenceID."/".$selectedCharterProgramUUID."/".$sessionCharterGuest['charter_company_id']; ?>">Guest List</a></li>
+            <li class="menu__item pagleave"><a href="<?php echo $baseFolder."/charters/view/".$ownerprefenceID."/".$selectedCharterProgramUUID."/".$sessionCharterGuest['charter_company_id']; ?>">Guest List</a></li>
             <?php }else if(isset($assocprefenceID) && !empty($assocprefenceID)){ ?>
-                <li class="menu__item"><a href="<?php echo $baseFolder."/charters/view_guest/".$selectedCharterProgramUUID."/".$sessionCharterGuest['charter_company_id']; ?>">Guest List</a></li>
+                <li class="menu__item pagleave"><a href="<?php echo $baseFolder."/charters/view_guest/".$selectedCharterProgramUUID."/".$sessionCharterGuest['charter_company_id']; ?>">Guest List</a></li>
                 <?php } ?>    
             <li class="menu__item"> <a href="#" title="<?php echo $title; ?>">Cruising Map</a>
                 <?php if(isset($ownerprefenceID) && !empty($ownerprefenceID)){ if(isset($mapdetails)){ ?>
@@ -334,11 +334,11 @@ body .menu .submenu .menu__item a {
           
           <li class="<?php echo $itineraryPreferenceTab; ?>"><a data-toggle="tab" href="#itinerary" class="nav-anch">Itinerary</a></li>
           
-          <li class="none-vew"> <a href="<?php echo $baseFolder."/charters/programs/".$session['guestListUUID'];  ?>">Charter Programs</a></li>
+          <li class="none-vew pagleave"> <a href="<?php echo $baseFolder."/charters/programs/".$session['guestListUUID'];  ?>">Charter Programs</a></li>
           <?php if(isset($ownerprefenceID) && !empty($ownerprefenceID)){ ?>
-            <li class="none-vew"><a href="<?php echo $baseFolder."/charters/view/".$ownerprefenceID."/".$selectedCharterProgramUUID."/".$sessionCharterGuest['charter_company_id']; ?>">Guest List</a></li>
+            <li class="none-vew pagleave"><a href="<?php echo $baseFolder."/charters/view/".$ownerprefenceID."/".$selectedCharterProgramUUID."/".$sessionCharterGuest['charter_company_id']; ?>">Guest List</a></li>
             <?php }else if(isset($assocprefenceID) && !empty($assocprefenceID)){ ?>
-                <li class="none-vew"><a href="<?php echo $baseFolder."/charters/view_guest/".$selectedCharterProgramUUID."/".$sessionCharterGuest['charter_company_id']; ?>">Guest List</a></li>
+                <li class="none-vew pagleave"><a href="<?php echo $baseFolder."/charters/view_guest/".$selectedCharterProgramUUID."/".$sessionCharterGuest['charter_company_id']; ?>">Guest List</a></li>
                 <?php } ?>    
                 <?php if(empty($mapdetails)){ 
                 $title  = "Not published";
