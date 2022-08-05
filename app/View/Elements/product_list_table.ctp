@@ -42,8 +42,8 @@
     <table id="productTable" class="table-row-container table table-striped table-bordered" style="width:100%">
         <thead>
             <tr class="th-head-bg">
-                <th class="td-10"></th>
-                <th class="td-40"><?php echo !($recordExits) ? "Product Name" : $this->Paginator->sort('ProductList.name', 'Product Name'); ?></th>
+                <!-- <th class="td-10"></th> -->
+                <th class="td-50"><?php echo !($recordExits) ? "Product Name" : $this->Paginator->sort('ProductList.name', 'Product Name'); ?></th>
                 <th class="text-center type-hide"><?php echo !($recordExits) ? "Type" : $this->Paginator->sort('ProductList.primary_category', 'Type'); ?></th>
                 <th class="text-center td-30"><?php echo !($recordExits) ? "Category" : $this->Paginator->sort('ProductList.secondary_category', 'Category'); ?></th>
                 <th class="td-20">Action</th>	
@@ -57,8 +57,8 @@
                 foreach ($productList as $item) { 
             ?>
                 <tr>
-                    <td align="center" class="td-10"><?php echo $i; ?></td>
-                    <td class="td-40"><?php echo $item['ProductList']['name']; ?></td>
+                    <!-- <td align="center" class="td-10"><?php //echo $i; ?></td> -->
+                    <td class="td-50"><?php echo $item['ProductList']['name']; ?></td>
                     <td class="text-center type-hide"><?php echo $item['ProductList']['primary_category']; ?></td>
                     <td class="text-center td-30"><?php echo $item['ProductList']['secondary_category']; ?></td>
                     <td align="center" class="td-20">
@@ -79,7 +79,7 @@
                 }
             } else {    
             ?>
-                <tr class="text-center"><td colspan="5">No records found.</td></tr>
+                <tr class="text-center"><td colspan="4">No records found.</td></tr>
             <?php } ?>
         </tbody>
     </table>

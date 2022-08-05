@@ -9,7 +9,7 @@ $session = $this->Session->read();
         width: 670px;
     }
     .logo img {
-        width: 150px;
+        width: 90px;
         height: 90px;
     }
     .first{
@@ -67,15 +67,15 @@ $session = $this->Session->read();
             <?php foreach ($colorCountList as $color => $sum) { ?>
                 <tr>
                     <td width="430"></td>
-                    <td colspan="2">Total <?php echo !empty($color) ? $color : 'Non-type'; ?></td>
-                    <td colspan="1" align="right"><?php echo $sum; ?> Bottles</td>
+                    <td width="150" align="right">Total <?php echo !empty($color) ? $color : 'Non-type'; ?></td>
+                    <td width="100" align="right"><?php echo $sum; ?> Bottles</td>
                 </tr>
             <?php } ?>
                 <tr><td colspan="4"></td></tr>    
             <tr>
                 <td width="430"></td>
-                <td colspan="2">Total Quantity</td>
-                <td colspan="1" align="right"><?php echo $totalQuantity; ?> Bottles</td>
+                <td width="150" align="right">Total Quantity</td>
+                <td width="100" align="right"><?php echo $totalQuantity; ?> Bottles</td>
             </tr>
         </tfooter>
     </tbody>

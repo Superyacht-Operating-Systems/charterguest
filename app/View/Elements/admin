@@ -1,0 +1,114 @@
+<?php 
+
+    echo $this->Html->css('admin/dropzone');
+    echo $this->Html->script('admin/dropzone'); 
+    define('HTTP_HOST', BASE_URL.$this->webroot);
+?>
+<style>
+.thumbHolder ul li {
+    width: 150px;
+    height: 150px;
+}
+
+.sp-location-ht,
+.thumbHolder {
+    min-height: 317px;
+    overflow-y: scroll;
+    max-height: 317px;
+}
+
+.locationsave-btn {
+    margin-top: 6px;
+    margin-bottom: 31px;
+}
+</style>
+
+<button class="btn btn-success locationsave-btn" data-val="" data-color="" data-submitteddate="" data-rel=""
+    data-id="<?php  echo $locationdata['LocationContent']['id'];?>" data-block-id="" id="description_save"
+    style="float:right;">Save</button>
+<div class="table-50">
+    <table id="example" class="table table-bordered table-hover table-striped tablesorter" cellspacing="0" width="100%"
+        style="border: 0px solid rgb(221, 221, 221); border-collapse: separate;">
+        <thead>
+            <tr>
+                <th id="location">Descripton</th>
+            </tr>
+        </thead>
+        <tbody class="dyntable">
+            <tr>
+                <td style="padding-left:5px;">
+                    <div class="sp-location-ht">
+                        <textarea name="edit_description" id="edit_description" class="form-control"
+                            style="height: 315px;overflow: hidden;">
+                            <?php  echo $locationdata['LocationContent']['description'];?>
+                        </textarea>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+
+    </table>
+</div>
+<br>
+
+<div class="table-50">
+    <table id="example" class="table table-bordered table-hover table-striped tablesorter" cellspacing="0" width="100%"
+        style="border: 0px solid rgb(221, 221, 221); border-collapse: separate;">
+        <thead>
+            <tr>
+                <th id="location">Images</th>
+            </tr>
+        </thead>
+        <tbody class="dyntable">
+            <tr>
+                <td>
+                    <div class="row">
+                        <div class="col-xs-12 col-md-12">
+                            <div class="thumbHolder" style="padding-left: 15px;">
+                                <ul> <?php if(isset($images) && !empty($images)){ 
+                
+                    // echo "<pre>"; print_r($images); exit;
+                    foreach($images as $key => $img){
+                        $img = trim($img);
+                        $ext = pathinfo($img, PATHINFO_EXTENSION);
+                        $fileExist = WWW_ROOT."img/location_contents/".trim($img);
+                        
+                        // if(file_exists($fileExist)) { ?>
+                                    <?php if($ext != 'pdf'){ 
+                                ?>
+                                    <!-- <li  data-url='<?php echo $img;?>' class='openimageNonIsm' id='liremove_<?php echo $this->request->data['Worklist']['id'].'_'.$key;   ?>' style="background-image:url('<?php echo $this->webroot; ?>img/location_contents/<?php echo $img;  ?>');"><a class="deleteThumb" id='delete_<?php echo $this->request->data['Worklist']['id'].'_'.$key;   ?>' href="javascript:void(0);"></a></li> -->
+                                    <li data-locationId="<?php  echo $locationdata['LocationContent']['id'];?>"
+                                        data-url='<?php echo trim($img);?>'
+                                        style="background-image:url('<?php echo $this->webroot; ?>img/location_contents/<?php echo trim($img); ?>');"
+                                        id='liremove_<?php echo $key; ?>'><a class="deleteThumb"
+                                            id='delete_<?php echo $this->request->data['Worklist']['id'].'_'.$key;   ?>'
+                                            href="javascript:void(0);"
+                                            onclick="removeLocationImg('<?php echo $key; ?>')"></a></li>
+                                    <?php } ?>
+
+                                    <?php if($ext == 'pdf'){ ?>
+                                    <li onclick='openimageNonIsm("<?php echo $img;?>")'
+                                        id='liremove_<?php echo $this->request->data['Worklist']['id'].'_'.$key;   ?>'
+                                        style="background-image:url('<?php echo $this->webroot; ?>img/pdfsymbol.jpg');">
+                                        <a class="deleteThumb"
+                                            id='delete_<?php echo $this->request->data['Worklist']['id'].'_'.$key;   ?>'
+                                            href="javascript:void(0);"></a>
+                                    </li>
+                                    <?php } ?>
+                                    <?php //} else {
+                        //echo $img;
+                   // } ?>
+                                    <?php  } ?>
+
+                                    <?php } ?>
+                                </ul>
+                            </div>
+                        </div>
+
+                    </div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+</div>

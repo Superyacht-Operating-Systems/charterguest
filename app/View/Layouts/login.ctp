@@ -37,9 +37,9 @@
                             left:0px;
                          font-size: 30px;}
                 @media only screen and (max-width:1200px){
-                .login-panel{    top: 10%;
-                                 width: 300px;
-                                 position: relative;
+                .login-panel{  width: 360px;
+    margin: 0 auto;
+    position: relative;
                                  }
 
 
@@ -59,6 +59,9 @@
                             font-size: 20px;
                          }
                         }
+
+
+
             </style>              
     </head>    
     <body>

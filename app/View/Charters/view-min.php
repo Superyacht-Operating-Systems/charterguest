@@ -9,6 +9,8 @@
                                     <input type="hidden" class="rowInput" name="charter_program_id" value="<?php echo $charterData['CharterGuest']['charter_program_id']; ?>">
                                     <!-- Yacht id -->
                                     <input type="hidden" class="rowInput" name="yacht_id" value="<?php echo $charterData['CharterGuest']['yacht_id']; ?>">
+                                    <!-- company id -->
+                                    <input type="hidden" class="rowInput" name="charter_company_id" value="<?php echo $charter_company_id; ?>">
                                     <!-- Empty assoc id -->
                                     <input type="hidden" class="rowInput newGuestAssocId" name="charter_assoc_id[]" value="">
  
@@ -53,31 +55,42 @@
                                         <div class="md-row-h-10"> 
                                             <label>Last Name</label> 
                                             <input type="text" class="form-control tinput rowInput" name="last_name[]" value="<?php echo $charterData['CharterGuest']['last_name']; ?>" readonly="true" ></div>
-                                       </section>
+                                    
 
                                            <div class="md-row-h-30"> 
                                            <label>Email</label>  
                                                             <input type="text" class="form-control tinput rowInput form-mob-ctrl" name="email[]"  value="<?php echo $charterData['CharterGuest']['email']; ?>" readonly="true">
                                                 
-                                        </div>
+                                        </div>   </section>
                                         <div class="md-row-h-18">
                                              <label class="label-preference">Preference Sheets</label>  
                                              <?php 
                                                  $openButtonLink = "/charters/preference?CharterGuestId=". base64_encode($charterData['CharterGuest']['id']);
 
                                                 // as per the client showing the btn in warning color @07 Aug 2020
+                                                
                                                 $adminopenbutColor = "btn-open1 btn-warning btn-warning-bg";
                                                 if (isset($charterData['CharterGuest']['is_psheets_done']) && $charterData['CharterGuest']['is_psheets_done'] == 1) {
                                                     $adminopenbutColor = "btn-open";
+                                                    $textPreferenceSheet = "OPEN";
+                                                    $style = "";
+                                                    $waitingclass = "";
+                                                    
+                                                }else{
+                                                    $textPreferenceSheet = "WAITING";
+                                                    $style = "style='padding:0;'";
+                                                    $waitingclass = "ch-waiting-btn";
+                                                   
                                                 }
                                                 ?>
+                                                <button type="button" data-charterHeadId="<?php echo $charterData['CharterGuest']['id']; ?>" data-charterAssocId="" class="btn  btn-eml-send sendMailClass <?php echo ($charterData['CharterGuest']['is_email_sent']) ? "displayNone" : ""; ?>" disabled="true">EMAIL</button>
+                                                                
+                                                 <button type="button" data-charterHeadId="<?php echo $charterData['CharterGuest']['id']; ?>" data-charterAssocId="" class="btn btn-eml-send1 sent-btnr emailSentClass <?php echo ($charterData['CharterGuest']['is_email_sent']) ? "" : "displayNone"; ?>"><a></a></button>
                                           <a href="#">
                                              
-                                              <button type="button" class="btn <?php echo $adminopenbutColor; ?> existingCheckFunction" data-guestype="owner" data-associd ="<?php echo $charterData['CharterGuest']['id']; ?>">OPEN</button>
+                                              <button type="button" <?php echo $style; ?> class="btn <?php echo $waitingclass; ?> <?php echo $adminopenbutColor; ?> existingCheckFunction" data-guestype="owner" data-associd ="<?php echo $charterData['CharterGuest']['id']; ?>"><?php echo $textPreferenceSheet; ?></button>
                                           </a>
-                                          <button type="button" data-charterHeadId="<?php echo $charterData['CharterGuest']['id']; ?>" data-charterAssocId="" class="btn  btn-eml-send sendMailClass <?php echo ($charterData['CharterGuest']['is_email_sent']) ? "displayNone" : ""; ?>" disabled="true">EMAIL</button>
-                                                                
-                                          <button type="button" data-charterHeadId="<?php echo $charterData['CharterGuest']['id']; ?>" data-charterAssocId="" class="btn btn-eml-send1 sent-btnr emailSentClass <?php echo ($charterData['CharterGuest']['is_email_sent']) ? "" : "displayNone"; ?>">SENT</button>
+                                          
          
                                            
                                 </div>
@@ -98,19 +111,33 @@
                                          <div class="md-row-h-8">
                                          <label>Head Charterer</label>  
                                         <?php 
+                                        //existingCheckFunction class used to open the preference sheet based on condition
                                         if(isset($charterAssoc['CharterGuestAssociate']['is_head_charterer']) && $charterAssoc['CharterGuestAssociate']['is_head_charterer'] == 2){
                                             $yesClass = "yes-btn";
                                             $noClass = "gry-btn";
-                                            $displayOpen = "display:inline-block";
+                                            $displayOpen = "display:inline-block;";
+                                            $textPreferenceSheet = "OPEN";
+                                            $style = "";
+                                            $waitingclass = "";
+                                            $openPreferenceSheetClass = "existingCheckFunction";
                                         }else if($charterAssoc['CharterGuestAssociate']['is_head_charterer'] == 1){
                                             
                                             $yesClass = "gry-btn";
                                             $noClass = "no-btn";
-                                            $displayOpen = "display:none";
+                                            $displayOpen = "display:inline-block;";
+                                            if (isset($charterAssoc['CharterGuestAssociate']['is_psheets_done']) && $charterAssoc['CharterGuestAssociate']['is_psheets_done'] == 0) {
+                                                $textPreferenceSheet = "WAITING";
+                                                $openPreferenceSheetClass = "";
+                                            }else{
+                                                $textPreferenceSheet = "OPEN";
+                                                $openPreferenceSheetClass = "existingCheckFunction";
+                                            }
+                                            $style = "padding:0;";
+                                            $waitingclass = "ch-waiting-btn";
                                         }else{
                                             $yesClass = "gry-btn";
                                             $noClass = "gry-btn";
-                                            $displayOpen = "display:inline-block";
+                                            $displayOpen = "display:none;";
                                         }
                                         ?>
                                         <button class="<?php echo $yesClass; ?>  isHeadChartererYes">Yes</button>
@@ -122,7 +149,7 @@
                                         <!-- <td class="td-cnt td-check"><input class="cbox-sz isHeadCharterer" type="checkbox" name="is_head_charterer" <?php //echo ($charterAssoc['CharterGuestAssociate']['is_head_charterer']) ? "checked" : ""; ?>></td> -->
                                          <section class="rowm-md-mob-resize">
                                        <div class="md-row-h-12">
-                                        <label>Ttile</label>
+                                        <label>Title</label>
                                         
                                   
                                             <?php echo $this->Form->input("salutation",array("label"=>false,'name' => 'salutation[]','options' => $salutationList,'class'=>'form-control tinput rowInput validateInput','default' => $charterAssoc['CharterGuestAssociate']['salutation'])); ?>
@@ -133,7 +160,7 @@
                                         <div class="md-row-h-10">
                                           <label>Last Name</label>
                                             <input type="text" class="form-control tinput rowInput validateInput" name="last_name[]" value="<?php echo $charterAssoc['CharterGuestAssociate']['last_name']; ?>"></div>
-                                    </section>
+                                  
                                         <div class="md-row-h-30">
                                                    <label>Email</label>
                                                     <input type="text" class="form-control tinput rowInput validateInput"  name="email[]" value="<?php echo $charterAssoc['CharterGuestAssociate']['email']; ?>">
@@ -148,7 +175,7 @@
                                                 if (isset($charterAssoc['CharterGuestAssociate']['is_head_charterer']) && $charterAssoc['CharterGuestAssociate']['is_head_charterer'] !=1) {
                                                     $sendMailBtnDisable = "disabled";
                                                 }
-                                            ?>         </div>
+                                            ?>         </div>  </section>
                                                <div class="md-row-h-18">
                                                <label class="label-preference">Preference Sheets</label>
                                                  <?php
@@ -176,16 +203,21 @@
                                                     $openButtonLink = "/charters/preference?id=". base64_encode($charterAssoc['CharterGuestAssociate']['id']);
                                                     $openBtnColor = "btn-open btn-primary hideshow";
                                                     $openBtnDisable = "";
+                                                    
+                                                }else{
+                                                    
                                                 }
                                                 
                                             ?>
                                             <?php //echo $baseFolder.$openButtonLink; ?>
-                                            <a href="#"><button type="button" class="btn <?php echo $openBtnColor; ?> existingCheckFunction" data-guestype="guest" data-associd ="<?php echo $charterAssoc['CharterGuestAssociate']['id']; ?>" style="<?php echo $displayOpen; ?>" <?php echo $openBtnDisable; ?>>OPEN</button></a>
+                                            <button type="button" data-charterHeadId=""  data-charterAssocId="<?php echo $charterAssoc['CharterGuestAssociate']['id']; ?>" class="btn btn-danger btn-eml-send sendMailClass <?php echo ($charterAssoc['CharterGuestAssociate']['is_email_sent']) ? "displayNone" : ""; ?>" <?php echo $sendMailBtnDisable; ?>>EMAIL</button>
+                                                                <button type="button" data-charterHeadId=""  data-charterAssocId="<?php echo $charterAssoc['CharterGuestAssociate']['id']; ?>"  class="btn btn-success btn-eml-send1 sent-btnr emailSentClass <?php echo ($charterAssoc['CharterGuestAssociate']['is_email_sent']) ? "" : "displayNone"; ?>"></button>
+
+                                            <a href="#"><button type="button" class="btn <?php echo $waitingclass; ?> <?php echo $openBtnColor; ?> <?php echo $openPreferenceSheetClass; ?>" data-guestype="guest" data-associd ="<?php echo $charterAssoc['CharterGuestAssociate']['id']; ?>" style="<?php echo $displayOpen; ?><?php echo $style; ?>" <?php echo $openBtnDisable; ?>><?php echo $textPreferenceSheet; ?></button></a>
 
 
 
-                                                                <button type="button" data-charterHeadId=""  data-charterAssocId="<?php echo $charterAssoc['CharterGuestAssociate']['id']; ?>" class="btn btn-danger btn-eml-send sendMailClass <?php echo ($charterAssoc['CharterGuestAssociate']['is_email_sent']) ? "displayNone" : ""; ?>" <?php echo $sendMailBtnDisable; ?>>EMAIL</button>
-                                                                <button type="button" data-charterHeadId=""  data-charterAssocId="<?php echo $charterAssoc['CharterGuestAssociate']['id']; ?>"  class="btn btn-success btn-eml-send1 sent-btnr emailSentClass <?php echo ($charterAssoc['CharterGuestAssociate']['is_email_sent']) ? "" : "displayNone"; ?>">SENT</button>
+                                                               
                                        
                                            
                                       </div>
@@ -208,7 +240,7 @@
                                     </div>
                                               <section class="rowm-md-mob-resize">
                                        <div class="md-row-h-12">  
-                                        <label>Titile</label>
+                                        <label>Title</label>
                                         
                                             <?php echo $this->Form->input("salutation",array("label"=>false,'name' => 'salutation[]','options' => $salutationList,'class'=>'form-control tinput rowInput validateInput')); ?>
                                         </div>
@@ -220,18 +252,20 @@
                                              <label>Last Name</label>
                                             <input type="text" class="form-control tinput rowInput validateInput" name="last_name[]" value="">
                                         </div>
-                                    </section>
+                               
                                         <div class="md-row-h-30">
                                              <label>Email</label>
                                                                 <input type="text" class="form-control tinput rowInput validateInput"  name="email[]" value="">
     
                                         </div>
-    
+         </section>
                                          <div class="md-row-h-18">
                                             <label class="label-preference">Preference Sheets</label>
                                              <a href="javascript:void(0);" data-charterHeadId=""  data-charterAssocId=""  class="btn btn-default btn-open newGuestAssoc">OPEN</a> 
                                            <button type="button" data-charterHeadId=""  data-charterAssocId="" class="btn btn-danger btn-eml-send sendMailClass">EMAIL</button>
-                                        <button type="button" data-charterHeadId=""  data-charterAssocId="" class="sent-btnr btn btn-success btn-eml-send emailSentClass displayNone">SENT</button>
+                                        <button type="button" data-charterHeadId=""  data-charterAssocId="" class="sent-btnr btn btn-success btn-eml-send emailSentClass displayNone"></button>
+
+                                         <button type="button" data-charterHeadId=""  data-charterAssocId="" class="sent-btnr btn btn-success complete-btn">COMPLETE</button>
                                                  
                                               
 

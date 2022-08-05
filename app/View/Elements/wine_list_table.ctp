@@ -54,7 +54,7 @@
     <table id="wineTable" class="table-row-container table table-striped table-bordered" style="width:100%">
         <thead>
             <tr class="th-head-bg">
-                <th class="td-10"></th>
+                <!-- <th class="td-10"></th> -->
                 <th class="td-40"><?php echo !($recordExits) ? "Wine" : $this->Paginator->sort('WineList.wine', 'Wine'); ?></th>
                 <th class="text-center type-hide"><?php echo !($recordExits) ? "Vintage" : $this->Paginator->sort('WineList.vintage', 'Vintage'); ?></th>
                 <th class="text-center td-30"><?php echo !($recordExits) ? "Rating" : $this->Paginator->sort('WineList.score', 'Rating'); ?></th>
@@ -69,8 +69,8 @@
                 foreach ($wineList as $item) { 
             ?>
                 <tr>
-                    <td align="center" class="td-10"><?php echo $i; ?></td>
-                    <td class="td-40"><?php echo $item['WineList']['wine']; ?></td>
+                    <!-- <td align="center" class="td-10"><?php echo $i; ?></td> -->
+                    <td class="td-50"><?php echo $item['WineList']['wine']; ?></td>
                     <td class="text-center type-hide"><?php echo $item['WineList']['vintage']; ?></td>
                     <td class="text-center td-30"><?php echo $item['WineList']['score']; ?></td>
                     <td align="center" class="td-20">
@@ -90,7 +90,7 @@
                 }
             } else {    
             ?>
-                <tr class="text-center"><td colspan="5">No records found.</td></tr>
+                <tr class="text-center"><td colspan="4">No records found.</td></tr>
             <?php } ?>
         </tbody>
     </table>

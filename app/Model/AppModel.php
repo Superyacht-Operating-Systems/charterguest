@@ -64,7 +64,7 @@ class AppModel extends Model {
 
     public function save($data = null, $validate = true, $fieldList = array()) {
       foreach($data as $k => $v) {
-        if(isset($v) && !empty($v)){
+        if(isset($v) && !empty($v) && !is_array($v)){
             $data[$k] = strip_tags($v); 
         }       
       }

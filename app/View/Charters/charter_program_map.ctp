@@ -4,6 +4,8 @@ $userType = $this->Session->read('loggedUserInfo.user_type');
 $basefolder = $this->request->base; 
 $sessionCharterGuest = $this->Session->read('charter_info.CharterGuest');
 
+$charter_assoc_info = $this->Session->read('charter_assoc_info');
+
 $options = "";
 for ($i = 0; $i < $diffDays; $i++) {
     $j = $i + 1;
@@ -14,12 +16,278 @@ $schedulePeriod = "";
 $charterName = "";
 $scheduleLocation = "";
 if (isset($charterProgData) && !empty($charterProgData)) {
-    $schedulePeriod = date_format(date_create($charterProgData['CharterProgram']['charter_from_date']), "M dS Y")." - ".date_format(date_create($charterProgData['CharterProgram']['charter_to_date']), "M dS Y");
+    $schedulePeriod = date_format(date_create($charterProgData['CharterProgram']['charter_from_date']), "d M Y")." - ".date_format(date_create($charterProgData['CharterProgram']['charter_to_date']), "d M Y");
     $charterName = $charterProgData['CharterProgram']['charter_name'];
     $scheduleLocation = $charterProgData['CharterProgram']['embarkation']." to ".$charterProgData['CharterProgram']['debarkation'];
 }
 
 ?>
+<style>
+    .leaflet-popup-content {
+  margin: 13px 10px!important;
+  line-height: 1.4;
+}
+
+/* sub menu */
+.menu__item{
+    cursor: pointer;
+}
+.menu > li{
+  /* display: inline-block; */
+  margin-right: 10px;
+  position: relative;
+  cursor: pointer;
+}
+.menu .menu__item a {
+  text-decoration: none;
+  padding: 10px 20px;
+   color: #000;
+  transition: 0.5s;
+}
+.menu .menu__item {
+  list-style: none;}
+.nav-side-menu-full-container .nav-side-menu .sidebar.show{
+    overflow-y: inherit;
+}
+.menu .submenu {
+    position: absolute;
+    margin-left:182px;
+    padding-left: 0;
+    top: 0px;
+  display: none;
+}
+.menu .submenu .menu__item{
+    display: inline-block;
+        width: 100%;
+}
+.menu .submenu .menu__item a{
+    display: inline-block;
+        word-break: break-all;
+}
+.menu .submenu .menu__item a:hover{
+    color:#fff !important;
+    background: #149be9 !important;
+}
+@media only screen and (max-width: 767px){
+    .sp-close-modal, .mapnotemodalclose, .leaflet-container a.leaflet-popup-close-button {
+  right: -4px!important;
+  top: -5px!important;
+    }
+    .leaflet-popup {
+  left: -180px !important;
+}
+.nav-side-menu .sidebar.show {
+  transform: translate(0);
+  overflow-y: inherit;
+}
+body .menu .submenu .menu__item a {
+  padding: 8px 8px;
+  border: none;
+}
+.menu .submenu .menu__item:hover{
+    color:#fff;
+}
+}
+.menu .submenu{
+    right:-169px !important;
+}
+.menu .submenu .menu__item a {
+    width: 168px !important;
+    
+}
+/* end submenu */
+    .modal {
+  z-index: 99999;
+    }
+    .uplaod-modal .modal-dialog{
+   
+    width: inherit;
+} 
+@media only screen and (min-width: 769px){
+.uplaod-modal .modal-dialog{
+        width: 420px;
+} 
+}
+
+.map-userlabelp{
+position: absolute;
+    left: 73px;
+    top: 9px;
+}
+
+.frmclass {
+    /* background: #000!important; */
+    color: #000!important;
+    border: solid 1px rgb(243 243 243 / 70%)!important;
+}
+    /* ----------- iPhone 6, 6S, 7 and 8 ----------- */
+
+/* Portrait and Landscape */
+@media only screen 
+  and (min-device-width: 375px) 
+  and (max-device-width: 667px) 
+  and (-webkit-min-device-pixel-ratio: 2) { 
+   
+    .form-control {
+    background: none !important;
+    color: #000 !important;
+    border: solid 1px rgb(243 243 243 / 70%)!important;
+    overflow-wrap: break-word;
+    }
+    .sp-upload-img {
+        margin-top:5px;
+    }
+}
+
+/* Portrait */
+@media only screen 
+  and (min-device-width: 375px) 
+  and (max-device-width: 667px) 
+  and (-webkit-min-device-pixel-ratio: 2)
+  and (orientation: portrait) { 
+    .form-control {
+    background: none !important;
+    color: #000 !important;
+    border: solid 1px rgb(243 243 243 / 70%)!important;
+    overflow-wrap: break-word;
+    }
+    .sp-upload-img {
+        margin-top:5px;
+    }
+}
+
+/* Landscape */
+@media only screen 
+  and (min-device-width: 375px) 
+  and (max-device-width: 667px) 
+  and (-webkit-min-device-pixel-ratio: 2)
+  and (orientation: landscape) { 
+    .form-control {
+    background: none !important;
+    color: #000 !important;
+    border: solid 1px rgb(243 243 243 / 70%)!important;
+    overflow-wrap: break-word;
+    }
+    .sp-upload-img {
+        margin-top:5px;
+    }
+}
+
+/* ----------- iPhone 6+, 7+ and 8+ ----------- */
+
+/* Portrait and Landscape */
+@media only screen 
+  and (min-device-width: 414px) 
+  and (max-device-width: 736px) 
+  and (-webkit-min-device-pixel-ratio: 3) { 
+    .form-control {
+    background: none !important;
+    color: #000 !important;
+    border: solid 1px rgb(243 243 243 / 70%)!important;
+    overflow-wrap: break-word;
+    }
+    .sp-upload-img {
+        margin-top:5px;
+    }
+}
+
+/* Portrait */
+@media only screen 
+  and (min-device-width: 414px) 
+  and (max-device-width: 736px) 
+  and (-webkit-min-device-pixel-ratio: 3)
+  and (orientation: portrait) { 
+
+    .form-control {
+    background: none !important;
+    color: #000 !important;
+    border: solid 1px rgb(243 243 243 / 70%)!important;
+    overflow-wrap: break-word;
+    }
+    .sp-upload-img {
+        margin-top:5px;
+    }
+}
+
+/* Landscape */
+@media only screen 
+  and (min-device-width: 414px) 
+  and (max-device-width: 736px) 
+  and (-webkit-min-device-pixel-ratio: 3)
+  and (orientation: landscape) { 
+
+    .form-control {
+    background: none !important;
+    color: #000 !important;
+    border: solid 1px rgb(243 243 243 / 70%)!important;
+    overflow-wrap: break-word;
+    }
+    .sp-upload-img {
+        margin-top:5px;
+    }
+}
+
+/* ----------- iPhone X ----------- */
+
+/* Portrait and Landscape */
+@media only screen 
+  and (min-device-width: 375px) 
+  and (max-device-width: 812px) 
+  and (-webkit-min-device-pixel-ratio: 3) { 
+
+    .form-control {
+    background: none !important;
+    color: #000 !important;
+    border: solid 1px rgb(243 243 243 / 70%)!important;
+    overflow-wrap: break-word;
+    }
+    .sp-upload-img {
+        margin-top:5px;
+    }
+}
+
+/* Portrait */
+@media only screen 
+  and (min-device-width: 375px) 
+  and (max-device-width: 812px) 
+  and (-webkit-min-device-pixel-ratio: 3)
+  and (orientation: portrait) { 
+
+    .form-control {
+    background: none !important;
+    color: #000 !important;
+    border: solid 1px rgb(243 243 243 / 70%)!important;
+    overflow-wrap: break-word;
+    }
+    .sp-upload-img {
+        margin-top:5px;
+    }
+
+}
+
+/* Landscape */
+@media only screen 
+  and (min-device-width: 375px) 
+  and (max-device-width: 812px) 
+  and (-webkit-min-device-pixel-ratio: 3)
+  and (orientation: landscape) { 
+
+
+    
+.form-control {
+    background: none !important;
+    color: #000 !important;
+    border: solid 1px rgb(243 243 243 / 70%)!important;
+    overflow-wrap: break-word;
+}
+
+.sp-upload-img {
+        margin-top:5px;
+    }
+
+}
+
+    </style>
 
 <?php
 echo $this->Html->script('leaflet/leaflet'); 
@@ -38,7 +306,7 @@ echo $this->Html->script('leaflet/route');
 .wrapper{overflow: hidden;}
 .footer{height: 0px;line-height: 0;padding: 0px;}
 .common-form-row{
-    margin-top:30px;margin-bottom: 10px;font-weight: bold!important;}
+    margin-top:10px;margin-bottom: 10px;font-weight: bold!important;}
 /*.back-btn button {
     float: right;
     margin-right: 20px;
@@ -98,10 +366,10 @@ float: left;
     width:176px!important;
         margin-left: 10px;
 }
-.sp-upload-img img{
-  width: 100%;
-  height: 100%;
-}
+/* .sp-upload-img img{
+    margin-left: -150%;
+    margin-top: -60%;
+} */
 .sp-upload-img{
     float: left;
     border: solid 1px #ccc;
@@ -293,7 +561,12 @@ display: block;
 }
 .fixed-row-container{margin-top:0px!important;padding: 0px;}
 .custom-popup .leaflet-popup-content-wrapper {
-   width:300px;
+   width:360px;
+}
+.leaflet-popup {
+  max-height: 450px;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 /*.back-btn {background: rgba(66, 117, 230, 0.39);
     padding: 10px 0px;
@@ -307,12 +580,7 @@ display: block;
     top: 143px;
 
 }
-.nav-side-menu-full-container .nav-side-menu .sidebar-btn{
-top: 102px;
-    right: 11px;
-    left: 0px;
 
-}
 .leaflet-marker-icon:hover{
     z-index: 99999999;
 }
@@ -375,9 +643,7 @@ float: right;
 .modal-backdrop {
     background-color: rgb(0 0 0 / 16%);
 }
-.uplaod-modal .modal-dialog{
-    width: 420px;
-} 
+
 .uplaod-modal .pr-0{
     padding-right: 0px;
 }
@@ -445,7 +711,7 @@ float: right;
 .leaflet-control-attribution {
 
 height: 42px;
-width: 284px;
+width: 160px;
 
 
 }
@@ -511,7 +777,10 @@ margin: 10px;
 .leaflet-tooltip-bottom {
     display: none;
 }
-
+.btn-warning, .btn-default, .btn-warning-bg{
+    background-color: #f0ad4e;
+    border-color: #eea236;
+}
 hr {
     margin-top: 6px;
     margin-bottom: 6px;
@@ -519,22 +788,169 @@ hr {
     border-top-color: #000;
     border-top: 1px solid #000;
 }
-
-.certificat-modal-container .modal-content{width:600px;}
 .certificat-modal-container .modal-body{
 margin: 0px;padding: 0px;
 }
 .certificat-modal-container .modal-dialog{
   padding-left: 0px;
+  width: 600px;
 }
 .certificat-modal-container .inbox-widget .inbox-item {
     border-bottom: 1px solid #d6d4d4;
+}
+@media only screen and (max-width:1024px){
+.common-form-row {
+    margin-top: 50px;
+}
+.yachtHeaderName {
+    margin-top: 4px!important;
+}
+body .mydemolabel {
+    top: 57px!important;
+}
+
+
+}
+@media only screen and (max-width:767px){
+
+body .mydemolabel {
+    top: 44px!important;
+}
+body span.sp-leftalign {
+    font-size: 15px!important;
+}
+
+.map-container{
+    margin-top: 40px!important;
+}
+.map-header{
+    margin-top: 17px;
+}
+
+.nav-side-menu-full-container .nav-side-menu .sidebar {
+top: 115px;
+}
+.certificat-modal-container .modal-dialog{
+width: 95%;
+    margin: 0 auto;
+    margin-top: 15px;
+}
+.chat-send button{
+width: 126px;
+    margin-right: 10px;
+}
+.chat-send {
+    display: flex;
+    justify-content: center;
+}
+.chat-inputbar textarea{
+    width: 100%;
+    height: 93px;
+}
+.chat-inputbar{
+padding-left: 15px!important;
+    padding-right: 15px;
+}
+.sp-modal-600 {
+    width: 100%;
+}
+}
+
+#CruisingButton {
+  position: fixed;
+  top: 100px;
+  right: 125px;
+  padding: 10px;
+  color:#000;
+  z-index: 400;
+  font-weight:bold;
+}
+
+.fancybox-overlay {
+    z-index: 99999999 !important;
+}
+span.sp-leftalign {
+    width: 300px;
+    text-align: left;
+    font-size: 18px!important;
+    position: relative;
+    padding-left: 15px;
+}
+.yacht-centerlabel {
+    position: absolute;
+    left: 0px;
+    font-size: 18px!important;
+    right: 0;
+    font-weight: bold;
+    text-align: center;
+}
+span.sp-rightalign {
+    float: right;
+    padding-right: 15px;
+    width: 20%;
+    text-align: right;
+    overflow: hidden;
+    font-size: 18px!important;
+    position: relative;
+}
+
+@media only screen and (max-width: 990px){
+.common-form-row.map-form-rwo {
+    margin-top: 50px;
+    margin-bottom: 20px;
+}}
+@media only screen and (max-width:767px){
+.sp-rightalign{
+    display: none;
+}
+.sp-40-w{
+    margin-top: 10px;
+    margin-left: 0px;
+}
+
+
+.sp-divrow {
+    padding-bottom: 15px;
+    margin-bottom: 10px;
+    padding: 2px 2px;
+    border-bottom: solid 1px #eee;
+}
+span.sp-leftalign {
+    width: 100%;
+    padding-left: 15px;
+    margin-top: 29px;
+    display: block;
+    padding-left: 78px;
+}
+.position-mobile-head{
+        left: 80px;
+}
+.map-container {
+    margin-top: 18px!important;
+}
+}
+
+.leaflet-tooltip{
+    pointer-events: inherit !important;
+}
+
+.textareacontmarker{
+   
+   overflow:scroll !important;
+} 
+
+@media only screen and (max-width:400px){
+   .sp-60-w  input{
+    width: 100%!important;
+    margin-bottom: 8px!important;
+   }
 }
 </style>  
 
 <?php    echo $this->Html->script('jquery-1.7.2.min');
         echo $this->Html->script('fancybox/jquery.fancybox');
         echo $this->Html->css('fancybox/jquery.fancybox');
+        
     ?> 
     
 <!--    <div class="back-btn">
@@ -555,12 +971,30 @@ margin: 0px;padding: 0px;
 </button>
 <section id="sidebar" class="sidebar">
     <nav class="menu"> 
-        <ul class="menu-level1 no-style nav nav-pills nav-justified">
-        <?php if(isset($sessionCharterGuest) && !empty($sessionCharterGuest)){?>
-        <li> <a href="<?php echo $basefolder."/charters/programs/".$sessionCharterGuest['users_UUID']; ?>">Charter Programs</a> 
-         
-        <?php } ?>
-           <li><a>How To Video</a></li>
+        <ul class="menu menu-level1 no-style nav nav-pills nav-justified">
+        
+        <li> <a href="<?php echo $basefolder."/charters/programs/".$this->Session->read('guestListUUID');?>">Charter Programs</a> 
+        <!-- <li class="menu__item"> <a href="#">Charter Contracts</a>
+            <?php if(isset($programFiles)){ ?>
+                <ul class="submenu">
+                    <?php foreach($programFiles as $startdate => $filepath){ ?>
+                    <li class="menu__item"><a href="<?php echo $filepath; ?>" target="_blank"><?php echo $startdate; ?></a></li>
+                    <?php
+                            
+                        } ?>
+                </ul>
+            <?php } ?>
+    
+        </li>     -->
+        <li class="menu__item"> <a href="">Guest list</a></li>
+        <li class="menu__item" ><a>How To Video</a>
+           <ul class="submenu">
+                   <li class="menu__item" id="MenuHowToVideo"><a href="#">Preference Sheets</a></li>
+                   <li class="menu__item" id="MenuHowToVideoCharterHead"><a href="#">Head Charterer</a></li>
+                </ul>
+            </li>
+            <li> <a href="<?php echo $baseFolder."/charters/privacytermsofuse/1" ?>" target="blank">Terms of Use</a></li>
+        <li> <a href="<?php echo $baseFolder."/charters/privacytermsofuse/2" ?>" target="blank">Privacy Policy</a></li>
          <li class="list-logout-row row-hide-btn"><?php echo $this->Html->link($this->Html->image("admin/table.png", array("alt" => "","title" => "Logout")).'Logout','/',array('escape' =>false,'title' => 'Logout'));?></li>
         </ul>
     </nav>
@@ -594,6 +1028,61 @@ margin: 0px;padding: 0px;
 </div>
 <!--modal end here--> 
 
+<!--help modal start here-->
+<div id="mapquestionmodal" class="modal uplaod-modal" role="dialog" style="margin-top: 65px;">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Help Tips</h4>
+      </div>
+      
+      <div class="modal-body">
+        <div class="form-group">
+          1. Tap the location marker to display the days activities.
+        </div>
+        <div class="form-group">
+          2. Tap the activities text to expand the field.
+        </div>
+        <div class="form-group">
+          3. Tap the image to enlarge it.
+        </div>
+        <div class="form-group">
+          4. The Cruising Schedule button lists all the locations.
+        </div>
+        <div class="form-group">
+          5. Hide the location cards by taping on the info icon.
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="mapquestionmodalclose btn btn-success ">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+<!--help modal end here--> 
+
+<!-- sample modal content -->
+<div id="cruisinglocationModal" class="modal certificat-modal-container"  role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content" style="width:620px;">
+            <div class="modal-header">
+                <button type="button" class="close" id="cruisinglocationModalclose" aria-hidden="true" style="margin-right: 5px;">×</button>
+                <h4 class="modal-title" id="myModalLabel" style="text-align: center;font-weight: bold;"><?php echo $startloc; ?> to <?php echo $endloc; ?></h4>
+            </div>
+            <div class="modal-body" style="max-height: 495px;
+    overflow-y: scroll;overflow-x: hidden;">
+                <div id="cruisinglocationModal_load" style="margin:5px 10px 5px 8px;">
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div><!-- /.modal-content -->
+
 <!-- sample modal content -->
 <div id="cruisingmsgmyModal" class="modal certificat-modal-container"  role="dialog">
     <div class="modal-dialog">
@@ -612,31 +1101,28 @@ margin: 0px;padding: 0px;
     </div>
 </div><!-- /.modal-content -->
 
-<div class="row common-form-row">
-    <div class="col-lg-5 col-md-5 col-sm-5 mob-none">  
-        <span style="font-size: 18px;"><?php echo $schedulePeriod; ?></span>
-    </div>
-    <div class="col-lg-3 col-md-3 col-sm-3 text-center mob-none">  
-        <span style="font-size: 18px;"><?php echo $charterName; ?></span>
-    </div>
-    <div class="col-lg-4 col-md-4 col-sm-4 text-right md-text-center"> 
-        <span style="font-size: 18px;"><?php echo $scheduleLocation; ?>
+<div class="row common-form-row map-form-rwo view-mainrow">
+        <span class="sp-leftalign"><?php echo $schedulePeriod; ?></span>
+                <span class="yacht-centerlabel" ><?php echo $scheduleLocation; ?>
+ </span>
+        <span class="label-bold md-bold sp-rightalign"><?php echo $charterName; ?></span>
 <!--         <a>
             <span style="margin-left: 10%;" class="mob-none">   
                 <?php echo $this->Html->link('Back','view',array('id' => 'charterProgramView', 'class' => 'btn btn-warning','title' => '<< Back'));?> 
             </span><span class="go-back-btn"><i class="fa fa-long-arrow-left"></i></span></a> -->
-        </span>
-    </div>
+       
 </div> 
 <div class="personal-row-container">
-<h1 class="position-mobile-head">Cruising Map
+<h1 class="position-mobile-head map-header">Cruising Map
 </h1>
-<div class="fixed-row-container">  
+<div class="fixed-row-container map-container">  
  <div class="form-group base-margin">
-<div class="custom-popup" id="map" style="height: calc(100vh - 185px);"></div>
+<div class="custom-popup " id="map" style="height: calc(100vh - 100px);"></div>
+<button id="CruisingButton">Cruising Schedule</button>
 </div></div>
 </div>
 <input type="hidden" id="yachtId" value="<?php echo $yacht_id_fromyachtDB; ?>">
+<input type="hidden" id="charterProgramId" value="<?php echo $charterProgramId; ?>">
 <script>
 var sidebar = (function() {
     "use strict";
@@ -675,18 +1161,25 @@ var sidebar = (function() {
     }
 })();
 
+$('.menu > .menu__item').hover(function(){
+  $(this).children('.submenu').show();
+  
+}, function() {
+  $(this).children('.submenu').hide();
+  
+});
 </script>
 
 
 <script>
+    var guesttype = '<?php echo $guesttype;?>';
 
 var basefolder = '<?php echo $basefolder;?>';
 var vessel = new L.LayerGroup();
 var markerArray = [];
 var markerCount = 0;
      
-var mbAttr =
-    '<table><tbody><tr style="width:100%;font-size:12px;font-weight:bold;text-align:center;"><td style="width: 30%;">Distance</td><td style="width: 30%;">Duration</td><td style="width:40%">Fuel Consumption</td></tr><tr style="width:100%;font-size:12px;color:#3388ff;font-weight:bold;text-align:center;"><td style="width: 30%;"><?php echo $RouteDatadisplaydistancevalue; ?></td><td style="width: 30%;"><?php echo $RouteDatadisplayduration; ?></td><td style="width:40%"><?php echo $RouteDatatotalconsumption; ?></td></tr></tbody></table>';
+var mbAttr = '<table width=100%><thead><tr style="font-size:12px;font-weight:bold;text-align:center;"><td style="width:50%">Distance</td><td style="width:50%">Duration</td></tr></thead><tbody><tr style="font-size:12px;color:#3388ff;font-weight:bold;text-align:center;"><td ><?php echo $RouteDatadisplaydistancevalue; ?></td><td ><?php echo $RouteDatadisplayduration; ?></td></tr></tbody></table>';
 mbUrl = 'https://api.mapbox.com/styles/v1/superyachtos/{id}/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1Ijoic3VwZXJ5YWNodG9zIiwiYSI6ImNpdW54eHV5bjAxNmMzMG1sMGpkamVma2cifQ.Y9kj-j0RGCFSE6khFVPyOw';
 var satellite   =   L.tileLayer(mbUrl, {
     id: 'ciurvui5100uz2iqqe929nrlr', 
@@ -719,12 +1212,20 @@ var zoom = 4;
 var day1 = 0;
 var latlngs = [];
 // Generating the markers for existing records
-<?php foreach ($scheduleData as $schedule) { 
+<?php foreach ($scheduleData as $key => $schedule) { 
     $schuuid = $schedule['CharterProgramSchedule']['UUID'];
     if($schedule['CharterProgramSchedule']['marker_msg_count'] == 0){
         $marker_msg_count = "style='display:none;'";
     }else if($schedule['CharterProgramSchedule']['marker_msg_count'] != 0){
         $marker_msg_count = "";
+        if(isset($guesttype) && !empty($guesttype)){ //echo $guesttype; exit;
+            if($guesttype == "guest"){
+                    $marker_msg_count = "style='display:none;'";
+            }else{
+                    $marker_msg_count = "";
+            }
+        }
+        
     }
     if(isset($markertotal[$schedule['CharterProgramSchedule']['title']]['endplace']) && !empty($markertotal[$schedule['CharterProgramSchedule']['title']]['endplace'])){
             $endplace = $markertotal[$schedule['CharterProgramSchedule']['title']]['endplace'];
@@ -766,7 +1267,7 @@ var latlngs = [];
         zoom = 7;
         
         var marker = L.marker(["<?php echo $schedule['CharterProgramSchedule']['lattitude']; ?>", "<?php echo $schedule['CharterProgramSchedule']['longitude']; ?>"],{pmIgnore: true})
-        .bindTooltip("<?php echo "Day ".$schedule['CharterProgramSchedule']['day_num']."&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;".$schedule['CharterProgramSchedule']['day_dates']."&nbsp;<span id='".$schuuid."' class='acti-count' ".$marker_msg_count." >".$schedule['CharterProgramSchedule']['marker_msg_count']."</span><br><b style='font-size: 10px;'>".$schedule['CharterProgramSchedule']['title']."<hr>".$endplace."</b><br><b style='font-size: 10px;'>".$distance.$bar.$duration.$bar.$consumption."</b>"?>", 
+        .bindTooltip("<?php echo "<span class='owntooltip' id=".$key.">Day ".$schedule['CharterProgramSchedule']['day_num']."&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;".$schedule['CharterProgramSchedule']['day_dates']."&nbsp;<span id='".$schuuid."'   class='acti-count' ".$marker_msg_count." >".$schedule['CharterProgramSchedule']['marker_msg_count']."</span><br><b style='font-size: 10px;'>".$schedule['CharterProgramSchedule']['title']."<hr>".$endplace."</b><br><b style='font-size: 10px;'>".$distance.$bar.$duration."</b></span>"?>", 
                     {
                         permanent: true, 
                         direction: 'right',
@@ -783,7 +1284,6 @@ var latlngs = [];
         marker.daytitle = "<?php echo $schedule['CharterProgramSchedule']['title']; ?>";
         marker.day_dates = "<?php echo $schedule['CharterProgramSchedule']['day_dates']; ?>";
         marker.marker_msg_count = "<?php echo $schedule['CharterProgramSchedule']['marker_msg_count']; ?>";
-        
         marker.markerNum = markerCount; 
         markerArray.push(marker);
         marker.addTo(map);
@@ -793,12 +1293,12 @@ var latlngs = [];
 // Making the Centre point
 if (day1) {
     map.setView(new L.LatLng(centerLatDay1, centerLngDay1), zoom);
-    if(latlngs){
+    if(latlngs.length > 0){
         map.fitBounds(latlngs);
     }
 } else {
     map.setView(new L.LatLng(centerLat, centerLng), zoom);
-    if(latlngs){
+    if(latlngs.length > 0){
         map.fitBounds(latlngs);
     }
 }
@@ -868,6 +1368,7 @@ for (let layer of polyLayers) { //console.log(layer);
    
 } ?>
 
+
 L.Control.MarkerControl = L.Control.extend({
     onAdd: function(map) {
         var el = L.DomUtil.create('div', 'leaflet-pm-toolbar leaflet-pm-draw leaflet-bar my-control');
@@ -882,7 +1383,7 @@ L.Control.MarkerControl = L.Control.extend({
             if (disp == "block") {
                 $(".Tooltip").css("display", "none");
                 el.innerHTML =
-                    '<div class="button-container" title="Hide / Show Location Cards" style="text-align: center;margin-top: -6px;font-size: 20px;"><i class="fa fa-info"></i></div>';
+                    '<div class="button-container" title="Hide / Show Location Cards" style="text-align: center;margin-top: -6px;font-size: 20px;color:#000;"><i class="fa fa-info"></i></div>';
 
             } else {
                 $(".Tooltip").css("display", "block");
@@ -908,6 +1409,64 @@ L.control.markerControl({
     position: 'topleft'
 }).addTo(map);
 
+
+/***********************************************Help icon************/
+L.Control.MarkerControl = L.Control.extend({
+    onAdd: function(map) {
+        var el = L.DomUtil.create('div', 'leaflet-pm-toolbar leaflet-pm-draw leaflet-bar my-control');
+
+        el.innerHTML =
+            '<div class="button-container" title="Hide / Show Location Cards" style="text-align: center;margin-top: -6px;font-size: 20px;color:#3388ff;"><i class="fa fa-question-circle"></i></div>';
+
+        el.onclick = function() {
+            mapClickEvent = false; // this is for condition to disable the map click function
+
+            openhelpmodal();
+            
+        }
+
+        return el;
+    },
+
+    onRemove: function(map) {
+        // Nothing to do here
+    }
+});
+
+L.control.markerControl = function(opts) {
+    return new L.Control.MarkerControl(opts);
+}
+
+L.control.markerControl({
+    position: 'topleft'
+}).addTo(map);
+
+function openhelpmodal(e){
+    $('#mapquestionmodal').show();
+}
+
+$(document).on("click", ".mapquestionmodalclose", function(e) {
+    $('#mapquestionmodal').hide();
+});
+
+
+/***********************************************Help icon************/
+
+/***********************************On clicking marker tooltip open modal of that specific marker */
+// added the custom classname to marker and id to tooltip and then onclicking the tooltip found that id and matches with marker classname.
+// then opened the modal using same markerclick function
+if(markerCount > 0){
+$('.leaflet-marker-icon').each(function(i, obj) {
+    $(this).addClass('myownmarker'+i);
+});
+}
+$(document).on("click", ".Tooltip", function(e) {
+    var myowntooltip = $(this).find('.owntooltip').attr('id');
+    $(".myownmarker"+myowntooltip).click();
+    
+});
+/***********************************On clicking marker tooltip open modal of that specific marker */
+
 var mapmarkerglobalObj = null;
 var fitzoommap = [];
 function markerOnClick(e) {
@@ -929,21 +1488,42 @@ function markerOnClick(e) {
             type: "POST",
             url: basefolder+"/"+"charters/editCharterProgramSchedules",
             dataType: 'json',
-            data: { "scheduleId": scheduleId,"tablepId":tablepId ,"diffDays": <?php echo $diffDays; ?>, "markerNum": markerNum, "lattitude": lattitude, "longitude": longitude },
+            data: { "scheduleId": scheduleId,"tablepId":tablepId ,"diffDays": <?php echo $diffDays; ?>, "markerNum": markerNum, "lattitude": lattitude, "longitude": longitude,"guesttype":guesttype },
             success:function(result) {
                 $("#hideloader").hide();
                 if (result.status == 'success') {
+                    $(".leaflet-control-attribution").hide();
+                    $("#CruisingButton").hide();
+                    $(".leaflet-control-container").hide();
+                    // open popup center to map
+                    map.setView(e.latlng);
+
                     var popLocation= e.latlng;
-                    var popup = L.popup()
+                setTimeout(function() {
+                    var popup = L.popup({
+                        autoPan: true
+                        })
                     .setLatLng(popLocation)
                     .setContent(result.popupHtml)
-                    .openOn(map);
-                    $(".leaflet-popup-close-button").addClass('updateCommentscount');
+                    .openOn(map)
+                        .on("remove", function () {
+                            msgcount();
+                            $(".leaflet-control-attribution").show();
+                            $("#CruisingButton").show();
+                            $(".leaflet-control-container").show();
+                            
+                        });
+                    // display popup from top
+                    window.scrollTo(0, 0);
                     $('.day_dates').text(day_dates);
+                }, 1000);
+                    $(".leaflet-popup-close-button").addClass('updateCommentscount');
+                   // alert(day_dates);
+                    
                      // to get reduce msgcount
-                     $(popup._closeButton).one('click', function(e){
+                     /* $(popup._closeButton).one('click', function(e){
                         msgcount();
-                    });
+                    }); */
                 }
             },
             error: function(jqxhr) { 
@@ -957,6 +1537,9 @@ function markerOnClick(e) {
 // Closing the popup
 $(document).on("click", "#closeSchedule", function(e) {
     $(".leaflet-popup-close-button")[0].click();
+    $(".leaflet-control-attribution").show();
+    $("#CruisingButton").show();
+    $(".leaflet-control-container").show();
 });
 
 
@@ -1230,5 +1813,142 @@ $(document).on("click", ".CruisingCommentMarkUnread" ,function() {
                 }
        }); 
     });
+
+    $(document).on("click", "#CruisingButton", function(e) {
+
+var scheduleId = $("#charterProgramId").val();
+$("#hideloader").show();
+    $.ajax({
+        type: "POST",
+        url: basefolder+"/"+"charters/getIpadViewCharterProgramSchedules",
+        dataType: 'json',
+        data: { "scheduleId": scheduleId},
+        success:function(result) {
+            $("#hideloader").hide();
+            if (result.status == 'success') {
+
+                $("#cruisinglocationModal_load").html(result.popupHtml);
+                $("#cruisinglocationModal").show();
+                
+                $(".leaflet-control-attribution").hide();
+                
+                //$(".leaflet-popup-close-button").addClass('updateCommentscount');
+                //$('.day_dates').text(day_dates);
+
+                $("#closeSchedule").remove();
+                $(".crew_comment_cruisingmaptitle").remove();
+                $(".crew_comment_cruisingmap").remove();
+                $(".leaflet-popup-close-button").remove();
+                 
+            }
+        },
+        error: function(jqxhr) { 
+            $("#hideloader").hide();
+        }
+    });
+
+});
+
+$(document).on("click", "#cruisinglocationModalclose" ,function() {
+        $('#cruisinglocationModal').hide();
+        $(".leaflet-control-attribution").show();
+    });
+
+    $(document).on("focus", ".textareacont" ,function() {
+        //console.log('testse');
+        $(this).animate({
+                 height: "14em"
+                }, 500);
+
+                $(this).css({
+                    overflow:"scroll"
+                });
+                
+    });
+
+    $(document).on("blur", ".textareacont" ,function() {
+        //console.log('sss');
+        $(this).animate({
+                 height: "7em"
+                }, 500);
+
+                $(this).css({
+                    overflow:"scroll"
+                });
+    });
+    
+        $(document).on("click", ".textareacontmarker" ,function() {
+        
+            var valuetxt = $(this).val();
+
+            if(valuetxt != ""){
+                    //console.log("webopen");
+                    $(this).animate({
+                            height: "14em"
+                            }, 500);
+
+                            $(this).css({
+                                overflow:"scroll"
+                            });
+                }
+                    
+        });
+   
+    
+        // $(document).on("mouseleave", ".textareacontmarker" ,function() {
+        //     var valuetxt = $(this).val();
+
+        //     if(valuetxt != ""){
+        //             //console.log("llllllllllll");
+        //             $(this).animate({
+        //                     height: "7em"
+        //             }, 500);
+
+        //             $(this).css({
+        //                 overflow:"scroll"
+        //             });
+        //     }
+        // });
+
+        $(document).on("click", function(event){
+        if(!$(event.target).closest(".textareacontmarker").length){
+            $(".textareacontmarker").animate({
+                            height: "7em"
+                    }, 500);
+
+                    // $(".textareacontmarker").css({
+                    //     overflow:"scroll"
+                    // });
+            
+            
+        }
+    });
+    
+    $(document).on("click", "#MenuHowToVideo", function(e) {   
+  $("#howtovideo").show();
+  
+       $("#sidebar-btn").click();
+           
+           // $('#content').off();
+        //toggleMenu();
+    
+
+});
+
+$(document).on("click", "#MenuHowToVideoCharterHead", function(e) { 
+  $("#howtovideocharterhead").show();
+  
+       $("#sidebar-btn").click();
+            
+           // $('#content').off();
+        //toggleMenu();
+    
+
+});
+$(document).on("click", ".close", function(e) { 
+    $("#howtovideo").hide();
+    $("#howtovideocharterhead").hide();
+});
+close
 </script>
   

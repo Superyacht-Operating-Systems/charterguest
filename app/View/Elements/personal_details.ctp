@@ -48,15 +48,49 @@ $sessionData = $this->Session->read();
         6 => ''
     );
     $dietriesList = array(
-        1 => 'Kosher',
-        2 => 'Low-Carb',
-        3 => 'Low Fat',
-        4 => 'Low Sugar',
-        5 => 'Vegitarian',
-        6 => 'Low Cholesterol',
-        7 => 'Low Sodium'
+      1 => 'Kosher',
+      2 => 'Low-Carb',
+      3 => 'Low Cholesterol',
+      4 => 'Low Sugar',
+      5 => 'Vegetarian',
+      6 => 'Low Fat',
+      7 => 'Low Sodium',
+      8 => 'Gluten Free',
+      9 => 'Vegan',
+      10 => 'Diabetic',
+      11 => 'Diary Free',
+      12 => 'Keto'
     );
     $dietriesChecked = array(
+      1 => '',
+      2 => '',
+      3 => '',
+      4 => '',
+      5 => '',
+      6 => '',
+      7 => '',
+      8 => '',
+      9 => '',
+      10 => '',
+      11 => '',
+      12 => ''
+    );
+    
+    $allergiesList = array(
+      1 => 'Shellfish',
+      2 => 'Lactose',
+      3 => 'Peanuts',
+      4 => 'Gluten',
+      5 => 'Kiwi Fruit',
+      6 => 'Tomato',
+      7 => 'Egg',
+      8 => 'Sesame',
+      9 => 'Tree Nuts',
+      10 => 'Fish',
+      11 => 'Milk',
+      12 => 'Soy'
+    ); 
+    $allergiesChecked = array(
         1 => '',
         2 => '',
         3 => '',
@@ -64,19 +98,11 @@ $sessionData = $this->Session->read();
         5 => '',
         6 => '',
         7 => '',
-        8 => ''
-    );
-    $allergiesList = array(
-        1 => 'Shellfish',
-        2 => 'Lactose',
-        3 => 'Nuts',
-        4 => 'Glutten'
-    );
-    $allergiesChecked = array(
-        1 => '',
-        2 => '',
-        3 => '',
-        4 => ''
+        8 => '',
+        9 => '',
+        10 => '',
+        11 => '',
+        12 => ''
     );
     
     
@@ -115,16 +141,16 @@ $sessionData = $this->Session->read();
     $defaultFirstName = "";
     $defaultLastName = "";
     if (empty($personalDetails)) {
-        if (isset($sessionAssoc['CharterGuestAssociate']['id'])) { //echo "dddd";
-            $defaultFirstName = $sessionAssoc['CharterGuestAssociate']['first_name'];
-            $defaultLastName = $sessionAssoc['CharterGuestAssociate']['last_name'];
-        } else if (isset($charterAssocIdByHeaderEdit) && !empty($guestAssocDataByHeaderEdit)) { //echo "ssss";
-           $defaultFirstName = $guestAssocDataByHeaderEdit['CharterGuestAssociate']['first_name'];
-            $defaultLastName = $guestAssocDataByHeaderEdit['CharterGuestAssociate']['last_name'];
-        } else { //echo "AAAAAA";
-            $defaultFirstName = $session['first_name'];
-            $defaultLastName = $session['last_name'];
-        }
+        // if (isset($sessionAssoc['CharterGuestAssociate']['id'])) { //echo "dddd";
+        //     $defaultFirstName = $sessionAssoc['CharterGuestAssociate']['first_name'];
+        //     $defaultLastName = $sessionAssoc['CharterGuestAssociate']['last_name'];
+        // } else if (isset($charterAssocIdByHeaderEdit) && !empty($guestAssocDataByHeaderEdit)) { //echo "ssss";
+        //    $defaultFirstName = $guestAssocDataByHeaderEdit['CharterGuestAssociate']['first_name'];
+        //     $defaultLastName = $guestAssocDataByHeaderEdit['CharterGuestAssociate']['last_name'];
+        // } else { //echo "AAAAAA";
+            $defaultFirstName = $setdefaultFirstName;
+            $defaultLastName = $setdefaultLastName;
+        //}
     }
     
 ?>
@@ -137,6 +163,11 @@ $sessionData = $this->Session->read();
   }
   .frmgrp-mar .doy-enjoy {
   width: 317px;
+}
+.meals-other {
+      display: inline-block;
+    width: 100%;
+    margin: 30px 0px 0px 0px;
 }
   /*.typeahead { border: 1px solid #CCCCCC;border-radius: 4px;padding: 8px 12px;width: 300px;font-size:1.5em;}*/
   .tt-menu { width:300px; }
@@ -153,7 +184,6 @@ $sessionData = $this->Session->read();
 .p-0left{
   padding-left: 0px;
 }
-
 
 .upload-img-row-container{
     width: 100%;
@@ -177,7 +207,7 @@ $sessionData = $this->Session->read();
     text-align: right;
 }
 
- .checkbox-label-row  .occfild{    width: 13%;}
+ .checkbox-label-row  .occfild{    width: 140px;}
 
 .checkbox-label-row .checkbox input[type="checkbox"]{right:0px;}
 .checkbox-label-row .checkbox label::before {
@@ -274,7 +304,10 @@ label.txt-cent {
   .text-right.occfild{
     width:15%;
   }
-
+.checkbox-label-row .base-margin-botm .spoc-lab{
+  position: relative;
+    right: 6px!important;
+}
 
     .diet-head{
       width: 18%;
@@ -288,7 +321,7 @@ label.txt-cent {
 
 
 hr.divider {
-border-top: 1px solid rgb(255 255 255 / 54%)!important;
+    border-top: 1px solid rgb(255 255 255)!important;
     width: 100%;
     display: inline-block;
 }
@@ -475,7 +508,6 @@ and (max-device-width : 667px) {
       margin-left: -50px !important;
     }
 .personal-row-container label{
-  display: contents;
   font-size: 13px;}
 
 .personal-row-container .checkbox, .radio {
@@ -498,7 +530,7 @@ and (max-device-width : 667px) {
 .label-bold-head{
     display: block;
     color: #fff;
-    position: fixed;
+    position: absolute;
     z-index: 9000;
     left: 95px;
     font-size: 20px!important;
@@ -520,33 +552,24 @@ and (max-device-width : 667px) {
   margin-left: 77px!important;
 }
 
-.container {
-    
+}
 
-}
-}
-@media only screen and (max-width: 767px)
-{
-.tabport-pl0, .occDate {
-    width: 55.555555%!important;
-    float: right;
-}
-.p-inlineblock{
-  display: inline-block;
-  width: 100%;
-}
-.p-inlineblock .col-xs-7{
-  padding: 0px!important;
-      width: 55.555555%!important;
-      float: right;
-}
-}
 @media screen and (max-width: 768px){
 .tabport-mlminus9 label {
     font-size: inherit;
 }
+.rain-marginleft {
+    margin-left:0px;
+}
+.p-inlineblock .mob-w-70 {
+    width: 60%!important;
+    padding: 0px;
+}
+
 .mob-w-30{
   width: 40%!important;
+  text-align: right;
+  padding-left: 0px;
 }
 .p-inlineblock .mob-w-70{
   width: 60%!important;
@@ -560,17 +583,37 @@ and (max-device-width : 667px) {
   width: 100%;
   padding: 0px;
 }
-.w-100 .input.file{
-  margin-top: 21px;
-}
+
 .p-t-2{
   padding-top: 7px!important;
 }
 .tabport-mlminus9 label
 {
   font-weight: bold!important;
-  font-size: 14px!important;
+ /* font-size: 14px!important;*/
 }
+}
+@media only screen and (max-width: 767px)
+{
+.tabport-mlminus9 label{
+  text-align: right!important;
+}
+.w-100 .input.file{
+  margin-top: 21px!important;
+}
+.p-inlineblock{
+  display: inline-block;
+  width: 100%;
+}
+.p-inlineblock .col-xs-7{
+  padding: 0px!important;
+      width: 59%!important;
+      float: right;
+}
+.p-inlineblock .mob-w-70 {
+    padding: 0px;
+}
+
 }
 </style>
 <!-- personal details -->
@@ -594,7 +637,7 @@ and (max-device-width : 667px) {
   <div class="p-inlineblock">       
           <div class="col-md-12">
           <div class="col-xs-5 col-md-4 col-sm-3 mob-w-30">
-            <label class="pdd-none txt-right">First Name:</label>
+            <label class="pdd-none txt-right">First Name</label>
           </div>
           <div class="col-xs-7 col-md-5 col-sm-7 form-group mob-w-70">
               <?php echo $this->Form->input("first_name",array("label"=>false,'class'=>'form-control','type' => 'text', 'default' => $defaultFirstName)); ?>
@@ -605,7 +648,7 @@ and (max-device-width : 667px) {
   <div class="p-inlineblock">   
       <div class="col-md-12 ">
         <div class="col-xs-5 col-md-4 col-sm-3 mob-w-30">
-          <label class="pdd-none txt-right">Family Name:</label>
+          <label class="pdd-none txt-right">Family Name</label>
         </div>
         <div class="col-xs-7 col-md-5 col-sm-7 form-group mob-w-70">
           <?php echo $this->Form->input("family_name",array("label"=>false,'class'=>'form-control','type' => 'text', 'default' => $defaultLastName)); ?>
@@ -616,7 +659,7 @@ and (max-device-width : 667px) {
   <div class="p-inlineblock">   
       <div class="col-md-12 ">
         <div class="col-xs-5 col-md-4 col-sm-3 mob-w-30">
-          <label class="pdd-none txt-right">Date of Birth:</label>
+          <label class="pdd-none txt-right">Date of Birth</label>
         </div>
         <div class="col-xs-7 col-md-5 form-group col-sm-7 mob-w-70">
           <?php echo $this->Form->input("dob",array("label"=>false,'class'=>'form-control dobDatePicker nonEditable','type' => 'text')); ?>
@@ -626,7 +669,7 @@ and (max-device-width : 667px) {
   <div class="p-inlineblock">   
        <div class="col-md-12 ">
         <div class="col-xs-5 col-md-4 col-sm-3 mob-w-30">
-          <label class="pdd-none txt-right">Place of Birth:</label>
+          <label class="pdd-none txt-right">Place of Birth</label>
         </div>
         <div class="col-xs-7 col-md-5 form-group col-sm-7 mob-w-70">
            <?php echo $this->Form->input("pob",array("label"=>false,'class'=>'form-control','type' => 'text')); ?>
@@ -636,7 +679,7 @@ and (max-device-width : 667px) {
   <div class="p-inlineblock">   
       <div class="col-md-12 ">
         <div class="col-xs-5 col-md-4 col-sm-3 mob-w-30">
-          <label class="pdd-none txt-right">Nationality:</label>
+          <label class="pdd-none txt-right">Nationality</label>
         </div>
         <div class="col-xs-7 col-md-5 col-sm-7 form-group mob-w-70">
          <?php echo $this->Form->input("nationality",array("label"=>false,'class'=>'form-control typeahead','type' => 'text')); ?>
@@ -645,10 +688,10 @@ and (max-device-width : 667px) {
      </div>
       <div class="clearfix"></div>
 
-  <div class="p-inlineblock">   
+  <div class="p-inlineblock passort-div">   
       <div class="col-md-12 ">
         <div class="col-xs-5 col-md-4 col-sm-3 mob-w-30">
-          <label class="pdd-none txt-right">Passport #:</label>
+          <label class="pdd-none txt-right">Passport #</label>
         </div>
         <div class="col-xs-7 col-md-5 col-sm-7 form-group mob-w-70">
              <?php echo $this->Form->input("passport_num",array("label"=>false,'class'=>'form-control','type' => 'text')); ?>
@@ -658,7 +701,7 @@ and (max-device-width : 667px) {
   <div class="p-inlineblock">   
       <div class="col-md-12 ">
         <div class="col-xs-5 col-md-4 col-sm-3 mob-w-30">
-          <label class="pdd-none txt-right">Issue Date:</label>
+          <label class="pdd-none txt-right">Issue Date</label>
         </div>
         <div class="col-xs-7 col-md-5 col-sm-7 form-group mob-w-70">
            <?php echo $this->Form->input("issued_date",array("label"=>false,'class'=>'form-control datePicker nonEditable','type' => 'text')); ?>
@@ -668,7 +711,7 @@ and (max-device-width : 667px) {
   <div class="p-inlineblock">   
       <div class="col-md-12 ">
         <div class="col-xs-5 col-md-4 col-sm-3 mob-w-30">
-          <label class="pdd-none txt-right">Expiry Date:</label>
+          <label class="pdd-none txt-right">Expiry Date</label>
         </div>
         <div class="col-xs-7 col-md-5 col-sm-7 form-group mob-w-70">
           <?php echo $this->Form->input("expiry_date",array("label"=>false,'class'=>'form-control datePicker nonEditable','type' => 'text')); ?>
@@ -678,7 +721,7 @@ and (max-device-width : 667px) {
   <div class="p-inlineblock">   
       <div class="col-md-12 upload-img-row-container">
         <div class="col-xs-5 col-md-4 col-sm-3 mob-w-30">
-          <label class="pdd-none txt-right">Passport:</label>
+          <label class="pdd-none txt-right">Passport</label>
         </div>
         <div class="col-xs-12 col-md-5 col-sm-7 form-group mob-w-70">
           <div class="xs-small-divice w-100">
@@ -707,26 +750,26 @@ and (max-device-width : 667px) {
       <div class="clearfix"></div>
 </div>
       <div class="col-md-12 md-full-container-width">
-        <div class="col-md-4 col-sm-3">
-          <label class="pdd-none txt-right medic-left">Medical Conditions:</label>
+        <div class="col-xs-5 col-md-4 col-sm-3 mob-w-30">
+          <label class="txt-right p-t-02">Medical Conditions</label>
         </div>
-        <div class="col-md-5 col-sm-7 ">
+        <div class="col-xs-7 col-md-5 col-sm-7 form-group mob-w-70">
              <?php echo $this->Form->input("medical_conditions",array("type" => "textarea", "label"=>false,'class'=>'form-control textarea-height med-h')); ?>
         </div>
       </div>
       <div class="clearfix"></div>
     
-      <div class="col-md-12 " style="margin-top:20px;">
+      <div class="col-md-12 ">
         <div class="col-xs-5 col-md-4 col-sm-3 mob-w-30">
-          <label class="txt-right p-t-02">Next of Kin:</label>
+          <label class="txt-right p-t-02">Next of Kin</label>
         </div>
         <div class="col-xs-7 col-md-5 col-sm-7 form-group mob-w-70">
          <?php echo $this->Form->input("next_of_kin",array("label"=>false,'class'=>'form-control','type' => 'text')); ?>
         </div>
       </div>
-      <div class="col-md-12 ">
+      <div class="col-md-12 d-inlineblockelements">
         <div class="col-xs-5 col-md-4 col-sm-3 mob-w-30">
-          <label class="txt-right p-t-02">NoK Phone:</label>
+          <label class="txt-right p-t-02">NoK Phone</label>
         </div>
         <div class="col-xs-7 col-md-5 col-sm-7 form-group mob-w-70">
          <?php echo $this->Form->input("next_of_kin_phone",array("label"=>false,'class'=>'form-control','type' => 'text')); ?>
@@ -736,10 +779,10 @@ and (max-device-width : 667px) {
       <hr class="divider md-12-padd-15">
 <div class="charte-rightalign">
       <div class="col-md-12">
-         <label class="md-label-size">Special Occasions during cruise:</label>
+         <label class="md-label-size specail-label">Special Occasions during cruise</label>
       </div>
 
-      <div class="col-md-12 form-group checkbox-label-row checkbox-label-row-padd">
+      <div class="col-md-12 form-group checkbox-label-row checkbox-label-row-padd ch-mrgbellow-0">
              <div class="base-margin-botm">
               <div class="base-reponsive">
                   <div class="col-sm-2 occfild mob-w-30">
@@ -763,7 +806,7 @@ and (max-device-width : 667px) {
                   <div class="col-sm-2 occfild mob-w-30">
                     <div class="checkbox my-none">
             <input type="checkbox" name="data[CharterGuestPersonalDetail][special_occations][]" value="2" <?php echo $specialOccationsChecked[2]; ?>> 
-                  <label class="spoc-lab">Honeymoon&nbsp;</label>
+                  <label class="spoc-lab">Honeymoon</label>
 <!--
                      <div class="checkbox">
                           <input type="checkbox" name="data[CharterGuestPersonalDetail][special_occations][]" value="2" <?php echo $specialOccationsChecked[2]; ?>> 
@@ -779,11 +822,11 @@ and (max-device-width : 667px) {
                      <?php echo $this->Form->input("honeymoon_date",array("label"=>false,'class'=>'form-control occationDatePicker nonEditable birthdaybox','type' => 'text')); ?>
                   </div> </div>
                    <div class="base-reponsive">
-                    <div class="col-sm-2  occfild">
+                    <div class="col-sm-2 occfild mob-w-30">
                       <div class="checkbox my-none">
           
              <input type="checkbox" name="data[CharterGuestPersonalDetail][special_occations][]" value="6" <?php echo $specialOccationsChecked[6]; ?>> 
-              <label class="spoc-lab">Event&nbsp;</label>
+              <label class="spoc-lab">Event</label>
 <!--
                      <div class="checkbox">
                       <input type="checkbox" name="data[CharterGuestPersonalDetail][special_occations][]" value="6" <?php echo $specialOccationsChecked[6]; ?>> 
@@ -804,7 +847,7 @@ and (max-device-width : 667px) {
                   <div class="col-sm-2 occfild mob-w-30 film p-0left">
                 <div class="checkbox my-none">
             <input class="filmcheckbox"type="checkbox" name="data[CharterGuestPersonalDetail][special_occations][]" value="3" <?php echo $specialOccationsChecked[3]; ?>> 
-             <label class="spoc-lab ">Film Festival&nbsp;</label>
+             <label class="spoc-lab ">Festival</label>
 <!--
                       <div class="checkbox">
                        <input type="checkbox" name="data[CharterGuestPersonalDetail][special_occations][]" value="3" <?php echo $specialOccationsChecked[3]; ?>> 
@@ -823,7 +866,7 @@ and (max-device-width : 667px) {
                   <div class="col-sm-2  occfild mob-w-30">
                         <div class="checkbox my-none">
             <input type="checkbox" name="data[CharterGuestPersonalDetail][special_occations][]" value="4" <?php echo $specialOccationsChecked[4]; ?>> 
-                        <label class="spoc-lab">Anniversary&nbsp;</label>
+                        <label class="spoc-lab">Anniversary</label>
 <!--
                      <div class="checkbox">
                        <input type="checkbox" name="data[CharterGuestPersonalDetail][special_occations][]" value="4" <?php echo $specialOccationsChecked[4]; ?>> 
@@ -843,7 +886,7 @@ and (max-device-width : 667px) {
                     <div class="col-sm-2 occfild mob-w-30">
                           <div class="checkbox my-none">
             <input type="checkbox" name="data[CharterGuestPersonalDetail][special_occations][]" value="5" <?php echo $specialOccationsChecked[5]; ?>> 
-                        <label class="spoc-lab">Other&nbsp;</label>
+                        <label class="spoc-lab">Other</label>
             
 <!--
                      <div class="checkbox">
@@ -867,9 +910,9 @@ and (max-device-width : 667px) {
 
 <!-- Dietry requirements -->
         <div class="col-md-12 form-group dietary-requirements-row">
-          <label class="txt-right col-sm-2 md-label-size no-text-padd">Dietary Requirements:</label>
+          <label class="txt-right col-sm-2 md-label-size no-text-padd">Dietary Requirements</label>
         <div class="col-sm-10 row-100-width">
-                  <div class="col-xs-6 col-sm-2 pdd-none">
+                  <div class="col-xs-6 col-sm-2 pdd-none w-fit-200">
                       <div class="checkbox my-none">
                       <input type="checkbox" class="dietchk" name="data[CharterGuestPersonalDetail][dietries][]" value="1" <?php echo $dietriesChecked[1]; ?>>
                        <label class="pdd-none">
@@ -879,19 +922,19 @@ and (max-device-width : 667px) {
                        </label>
                       </div>                    
                   </div>
-                  <div class="col-xs-6 col-sm-2 pdd-none rit-padd">
+                  <div class="col-xs-6 col-sm-2 pdd-none rit-padd w-fit-200">
                        <div class="checkbox my-none">
                         <input type="checkbox" class="dietchk" name="data[CharterGuestPersonalDetail][dietries][]" value="2" <?php echo $dietriesChecked[2]; ?>>
                        <label class="pdd-none">
                        
                                <?php // echo $this->Form->input("dietries[]",array("type" => "checkbox", "label"=>false,'div'=>false,'class'=>'', 'value' => 2)); ?>
-                               Low-Carb
+                               Low Carb
                        </label>
                       </div>
                   </div>
-               <div class="col-xs-6 col-sm-3 col-24 col-md-2 pdd-none">
+               <div class="col-xs-6 col-sm-3 col-24 col-md-2 pdd-none w-fit-200">
                        <div class="checkbox">
-                        <input type="checkbox" class="dietchk" name="data[CharterGuestPersonalDetail][dietries][]" value="6" <?php echo $dietriesChecked[6]; ?>>
+                        <input type="checkbox" class="dietchk" name="data[CharterGuestPersonalDetail][dietries][]" value="3" <?php echo $dietriesChecked[3]; ?>>
                        <label class="pdd-none">
                         
                                <?php // echo $this->Form->input("dietries[]",array("type" => "checkbox", "label"=>false,'div'=>false,'class'=>'', 'value' => 6)); ?>
@@ -899,7 +942,7 @@ and (max-device-width : 667px) {
                        </label>
                       </div>
                   </div>
-                  <div class="col-xs-6 col-sm-2 col-md-2 pdd-none rit-padd">
+                  <div class="col-xs-6 col-sm-2 col-md-2 pdd-none space-012 rit-padd w-fit-200">
                      <div class="checkbox my-none">
                       <input type="checkbox" class="dietchk" name="data[CharterGuestPersonalDetail][dietries][]" value="4" <?php echo $dietriesChecked[4]; ?>>
                      <label class="pdd-none">
@@ -910,11 +953,11 @@ and (max-device-width : 667px) {
                    </div>
                   </div>
         </div>
-        <div class="clearfix"></div>
+         <div class="clearfix"></div>
                 <label class="col-sm-2 mg-0-space" >
                         </label>
                       <div class="col-sm-10 row-100-width">
-                  <div class="col-xs-6 col-sm-2 pdd-none">
+                  <div class="col-xs-6 col-sm-2 pdd-none w-fit-200">
                       <div class="checkbox ">
                        <input type="checkbox" class="dietchk" name="data[CharterGuestPersonalDetail][dietries][]" value="5" <?php echo $dietriesChecked[5]; ?>>
                        <label class="pdd-none">
@@ -924,9 +967,9 @@ and (max-device-width : 667px) {
                        </label>
                       </div>                    
                   </div>
-                       <div class="col-xs-6 col-sm-2 col-md-2 pdd-none rit-padd">
+                       <div class="col-xs-6 col-sm-2 col-md-2 pdd-none rit-padd w-fit-200 ">
                      <div class="checkbox my-none">
-                      <input type="checkbox" class="dietchk" name="data[CharterGuestPersonalDetail][dietries][]" value="3" <?php echo $dietriesChecked[3]; ?>>
+                      <input type="checkbox" class="dietchk" name="data[CharterGuestPersonalDetail][dietries][]" value="6" <?php echo $dietriesChecked[6]; ?>>
                      <label class="pdd-none">
                       
                              <?php // echo $this->Form->input("dietries[]",array("type" => "checkbox", "label"=>false,'div'=>false,'class'=>'', 'value' => 3)); ?>
@@ -935,8 +978,8 @@ and (max-device-width : 667px) {
                    </div>
                   </div>
             
-                  <div class="col-xs-6 col-sm-3 col-md-2 col-24 pdd-none ">
-                     <div class="checkbox">
+                  <div class="col-xs-6 col-sm-3 col-md-2 col-24 pdd-none w-fit-200">
+                     <div class="checkbox ">
                      <input type="checkbox" class="dietchk" name="data[CharterGuestPersonalDetail][dietries][]" value="7" <?php echo $dietriesChecked[7]; ?>>
                      <label class="pdd-none">
                    
@@ -945,7 +988,7 @@ and (max-device-width : 667px) {
                      </label>
                    </div>
                   </div>
-          <div class="col-xs-6 col-sm-2 col-md-3 pdd-none rit-padd">
+          <div class="col-xs-6 col-sm-2 col-md-3 pdd-none rit-padd space-012 w-fit-200">
                      <div class="checkbox">
                      <input type="checkbox" class="dietchk" name="data[CharterGuestPersonalDetail][dietries][]" value="8" <?php echo $dietriesChecked[8]; ?>>
                      <label class="pdd-none">
@@ -956,11 +999,57 @@ and (max-device-width : 667px) {
                    </div>
                   </div>
               </div>
+        <div class="clearfix"></div>
+                <label class="col-sm-2 mg-0-space" >
+                        </label>
+                      <div class="col-sm-10 row-100-width">
+                  <div class="col-xs-6 col-sm-2 pdd-none w-fit-200">
+                      <div class="checkbox ">
+                       <input type="checkbox" class="dietchk" name="data[CharterGuestPersonalDetail][dietries][]" value="9" <?php echo $dietriesChecked[9]; ?>>
+                       <label class="pdd-none">
+                         
+                   <?php // echo $this->Form->input("dietries[]",array("type" => "checkbox", "label"=>false,'div'=>false,'class'=>'', 'value' => 5)); ?>
+                   Vegan   
+                       </label>
+                      </div>                    
+                  </div>
+                       <div class="col-xs-6 col-sm-2 col-md-2 pdd-none rit-padd w-fit-200">
+                     <div class="checkbox my-none">
+                      <input type="checkbox" class="dietchk" name="data[CharterGuestPersonalDetail][dietries][]" value="10" <?php echo $dietriesChecked[10]; ?>>
+                     <label class="pdd-none">
+                      
+                             <?php // echo $this->Form->input("dietries[]",array("type" => "checkbox", "label"=>false,'div'=>false,'class'=>'', 'value' => 3)); ?>
+                             Diabetic
+                     </label>
+                   </div>
+                  </div>
+            
+                  <div class="col-xs-6 col-sm-3 col-md-2 col-24 pdd-none w-fit-200">
+                     <div class="checkbox">
+                     <input type="checkbox" class="dietchk" name="data[CharterGuestPersonalDetail][dietries][]" value="11" <?php echo $dietriesChecked[11]; ?>>
+                     <label class="pdd-none">
+                   
+                   <?php // echo $this->Form->input("dietries[]",array("type" => "checkbox", "label"=>false,'div'=>false,'class'=>'', 'value' => 7)); ?>
+                   Diary Free
+                     </label>
+                   </div>
+                  </div>
+          <div class="col-xs-6 col-sm-2 col-md-3 pdd-none rit-padd space-012 w-fit-200">
+                     <div class="checkbox">
+                     <input type="checkbox" class="dietchk" name="data[CharterGuestPersonalDetail][dietries][]" value="12" <?php echo $dietriesChecked[12]; ?>>
+                     <label class="pdd-none">
+                   
+                   <?php // echo $this->Form->input("dietries[]",array("type" => "checkbox", "label"=>false,'div'=>false,'class'=>'', 'value' => 7)); ?>
+                 Keto
+                     </label>
+                   </div>
+                  </div>
+              </div>
                <div class="clearfix"></div>
                <input type="hidden" name="data[CharterGuestPersonalDetail][dietries_hidden][]" id="dietries_hidden" value="" />
-         <div class="form-group base-margin tabport-othercomments ">
+         <div class="form-group base-margin no-text-padd tabport-othercomments ">
           
-           <label class="txt-right col-sm-2 md-padd-mob" >Other:</label>
+           <label class="txt-right col-sm-2 md-padd-mob no-text-padd" >Other</label>
            <div class="col-sm-8 two ">
                  <?php echo $this->Form->input("dietry_comments",array("label"=>false,'class'=>'form-control','type' => 'text')); ?>
             </div>
@@ -969,9 +1058,9 @@ and (max-device-width : 667px) {
            <div class="base-margin">
             <div class="form-group tabport-othercomments">
           
-          <label class="col-xs-12 txt-right col-sm-2 allerg md-padd-mob">Allergies:</label>
+          <label class="col-xs-12 txt-right no-text-padd col-sm-2 allerg md-padd-mob">Allergies</label>
              <div class="col-xs-12 col-sm-10 two allergbox">
-            <div class="col-xs-6 col-sm-2 md-l0">
+            <div class="col-xs-6 col-sm-2 md-l0 w-fit-200">
                       <div class="checkbox my-none">
                        <input type="checkbox" class="allergieschk" name="data[CharterGuestPersonalDetail][allergies][]" value="1" <?php echo $allergiesChecked[1]; ?>>
                        <label class="pdd-none">
@@ -981,7 +1070,7 @@ and (max-device-width : 667px) {
                        </label>
                       </div>                    
             </div>
-                  <div class="col-xs-6 col-sm-2 md-0-320">
+                  <div class="col-xs-6 col-sm-2 md-0-320 w-fit-200">
                        <div class="checkbox my-none">
                         <input type="checkbox" class="allergieschk" name="data[CharterGuestPersonalDetail][allergies][]" value="2" <?php echo $allergiesChecked[2]; ?>>
                        <label class="pdd-none">
@@ -991,17 +1080,17 @@ and (max-device-width : 667px) {
                        </label>
                       </div>
                   </div>
-                  <div class="col-xs-6 col-sm-2 pad-md-left-0">
+                  <div class="col-xs-6 col-sm-2 pad-md-left-0 space-08 w-fit-200">
                      <div class="checkbox my-none nuts">
                       <input type="checkbox" class="allergieschk" name="data[CharterGuestPersonalDetail][allergies][]" value="3" <?php echo $allergiesChecked[3]; ?>>
                      <label class="pdd-none">
                      
                              <?php // echo $this->Form->input("allergies[]",array("type" => "checkbox", "label"=>false,'div'=>false,'class'=>'', 'value' => 3)); ?>
-                             Nuts
+                             Peanut
                      </label>
                    </div>
                   </div>
-                  <div class="col-xs-6 col-sm-2 md-0-320">
+                  <div class="col-xs-6 col-sm-2 md-0-320 space-06 w-fit-200">
                      <div class="checkbox my-none glutten">
                      <input type="checkbox" class="allergieschk" name="data[CharterGuestPersonalDetail][allergies][]" value="4" <?php echo $allergiesChecked[4]; ?>>
                      <label class="pdd-none">
@@ -1012,13 +1101,114 @@ and (max-device-width : 667px) {
                    </div>
                   </div>
           </div>
+
           </div>
+ <div class="form-group tabport-othercomments sp-space-column">
+          
+          <label class="col-xs-12 dis-label-space col-sm-2"></label>
+             <div class="col-xs-12 col-sm-10 two allergbox">
+            <div class="col-xs-6 col-sm-2 md-l0 w-fit-200">
+                      <div class="checkbox my-none">
+                       <input type="checkbox" class="allergieschk" name="data[CharterGuestPersonalDetail][allergies][]" value="5" <?php echo $allergiesChecked[5]; ?>>
+                       <label class="pdd-none">
+                       
+                               <?php // echo $this->Form->input("allergies[]",array("type" => "checkbox", "label"=>false,'div'=>false,'class'=>'', 'value' => 1)); ?>
+                               Kiwi Fruit
+                       </label>
+                      </div>                    
+            </div>
+                  <div class="col-xs-6 col-sm-2 md-0-320 w-fit-200">
+                       <div class="checkbox my-none">
+                        <input type="checkbox" class="allergieschk" name="data[CharterGuestPersonalDetail][allergies][]" value="6" <?php echo $allergiesChecked[6]; ?>>
+                       <label class="pdd-none">
+                        
+                               <?php // echo $this->Form->input("allergies[]",array("type" => "checkbox", "label"=>false,'div'=>false,'class'=>'', 'value' => 2)); ?>
+                               Tomato
+                       </label>
+                      </div>
+                  </div>
+                  <div class="col-xs-6 col-sm-2 pad-md-left-0 space-08 w-fit-200">
+                     <div class="checkbox my-none nuts">
+                      <input type="checkbox" class="allergieschk" name="data[CharterGuestPersonalDetail][allergies][]" value="7" <?php echo $allergiesChecked[7]; ?>>
+                     <label class="pdd-none">
+                     
+                             <?php // echo $this->Form->input("allergies[]",array("type" => "checkbox", "label"=>false,'div'=>false,'class'=>'', 'value' => 3)); ?>
+                            Egg
+                     </label>
+                   </div>
+                  </div>
+                  <div class="col-xs-6 col-sm-2 md-0-320 space-06 w-fit-200">
+                     <div class="checkbox my-none glutten">
+                     <input type="checkbox" class="allergieschk" name="data[CharterGuestPersonalDetail][allergies][]" value="8" <?php echo $allergiesChecked[8]; ?>>
+                     <label class="pdd-none">
+                       
+                             <?php // echo $this->Form->input("allergies[]",array("type" => "checkbox", "label"=>false,'div'=>false,'class'=>'', 'value' => 4)); ?>
+                             Sesame
+                     </label>
+                   </div>
+                  </div>
+          </div>
+
+          </div>
+           <div class="form-group tabport-othercomments">
+          
+           <label class="col-xs-12 dis-label-space col-sm-2"></label>
+             <div class="col-xs-12 col-sm-10 two allergbox ">
+            <div class="col-xs-6 col-sm-2 md-l0 w-fit-200">
+                      <div class="checkbox my-none">
+                       <input type="checkbox" class="allergieschk" name="data[CharterGuestPersonalDetail][allergies][]" value="9" <?php echo $allergiesChecked[9]; ?>>
+                       <label class="pdd-none">
+                       
+                               <?php // echo $this->Form->input("allergies[]",array("type" => "checkbox", "label"=>false,'div'=>false,'class'=>'', 'value' => 1)); ?>
+                               Tree Nuts
+                       </label>
+                      </div>                    
+            </div>
+                  <div class="col-xs-6 col-sm-2 md-0-320 w-fit-200">
+                       <div class="checkbox my-none">
+                        <input type="checkbox" class="allergieschk" name="data[CharterGuestPersonalDetail][allergies][]" value="10" <?php echo $allergiesChecked[10]; ?>>
+                       <label class="pdd-none">
+                        
+                               <?php // echo $this->Form->input("allergies[]",array("type" => "checkbox", "label"=>false,'div'=>false,'class'=>'', 'value' => 2)); ?>
+                               Fish
+                       </label>
+                      </div>
+                  </div>
+                  <div class="col-xs-6 col-sm-2 pad-md-left-0 space-08 w-fit-200">
+                     <div class="checkbox my-none nuts">
+                      <input type="checkbox" class="allergieschk" name="data[CharterGuestPersonalDetail][allergies][]" value="11" <?php echo $allergiesChecked[11]; ?>>
+                     <label class="pdd-none">
+                     
+                             <?php // echo $this->Form->input("allergies[]",array("type" => "checkbox", "label"=>false,'div'=>false,'class'=>'', 'value' => 3)); ?>
+                             Milk
+                     </label>
+                   </div>
+                  </div>
+                  <div class="col-xs-6 col-sm-2 md-0-320 space-06 w-fit-200">
+                     <div class="checkbox my-none glutten">
+                     <input type="checkbox" class="allergieschk" name="data[CharterGuestPersonalDetail][allergies][]" value="12" <?php echo $allergiesChecked[12]; ?>>
+                     <label class="pdd-none">
+                       
+                             <?php // echo $this->Form->input("allergies[]",array("type" => "checkbox", "label"=>false,'div'=>false,'class'=>'', 'value' => 4)); ?>
+                             Soy
+                     </label>
+                   </div>
+                  </div>
+          </div>
+
+          </div>
+
+
+
+
+
+
         </div>
         <input type="hidden" name="data[CharterGuestPersonalDetail][allergies_hidden][]" id="allergies_hidden" value="" />
         <div class="clearfix"></div>
          <div class="form-group base-margin tabport-othercomments otherpart">
           
-          <label class="txt-right col-sm-2 md-padd-mob" >Other:</label>
+          <label class="txt-right col-sm-2 md-padd-mob no-text-padd" >Other</label>
            <div class="col-sm-8 two">
               <?php echo $this->Form->input("allergy_comments",array("label"=>false,'class'=>'form-control','type' => 'text')); ?>
             </div>
@@ -1027,40 +1217,45 @@ and (max-device-width : 667px) {
       <div class="clearfix"></div>
       <hr class="divider seconddivider md-12-padd-15" />
 
-            <div class="col-md-12 label-inline tabport-mlminus9">  
-      <div class="p-inlineblock">
-      <div class="col-xs-4 col-md-2 col-sm-3 mob-w-30  p-t-2">
-        <label class="pdd-none txt-right">Rain Jacket:</label>
+            <div class="col-md-12 label-inline tabport-mlminus9 rain-marginleft">  
+      <div class="p-inlineblock col-md-5">
+        <div class="rain-rwo">
+      <div class="col-xs-4 col-md-4 col-sm-4 mob-w-30  p-t-2">
+        <label class="pdd-none txt-right">Rain Jacket</label>
       </div>
-      <div class="col-xs-8 col-md-2 col-sm-3 tabport-pl0 mob-w-70">
+      <div class="col-xs-8 col-md-7 col-sm-7 tabport-pl0 mob-w-70">
               <?php echo $this->Form->input("rain_jacket_size",array("label"=>false,'class'=>'form-control form-group rainipbox','options' => $rainJacketSizeList)); ?>
-      </div>  </div>
-   <!-- <div class="col-md-1 col-sm-1"></div> -->
-     <div class="p-inlineblock">
-            <div class="col-xs-4 col-md-2 col-sm-2 mob-w-30 p-t-2">
-        <label class="pdd-none txt-right pillowtext ">Pillow Type:</label>
+      </div>  
       </div>
-      <div class="col-xs-8 col-sm-3 col-md-2 tabport-pl0 mob-w-70">
+
+        <div class="clearfix"></div>
+        <div class="rain-rwo">
+      <div class="col-xs-4 col-md-4 col-sm-4 mob-w-30 p-t-2">
+        <label class="pdd-none txt-right">Foot Size</label>
+      </div>
+      <div class="col-xs-8 col-sm-7 col-md-7 tabport-pl0 mob-w-70">
+                    <?php echo $this->Form->input("foot_size",array("label"=>false,'class'=>'form-control form-group foot','options' => $footSizeList)); ?>
+    </div></div>
+  </div>
+  
+   <!-- <div class="col-md-1 col-sm-1"></div> -->
+     <div class="p-inlineblock col-md-5">
+      <div class="rain-rwo">
+            <div class="col-xs-4 col-md-4 col-sm-4 mob-w-30 p-t-2">
+        <label class="pdd-none txt-right ">Pillow Type</label>
+      </div>
+      <div class="col-xs-8 col-sm-7 col-md-7 tabport-pl0 mob-w-70">
    <?php echo $this->Form->input("pillow_type",array("label"=>false,'class'=>'form-control form-group pillow','options' => $pillowTypeList)); ?>
       </div>
-    </div>
-      <div class="p-inlineblock">
-        <div class="clearfix"></div>
-      <div class="col-xs-4 col-md-2 col-sm-3 mob-w-30 p-t-2">
-        <label class="pdd-none txt-right footsize ">Foot Size:</label>
-      </div>
-      <div class="col-xs-8 col-sm-3 col-md-2 tabport-pl0 mob-w-70">
-                    <?php echo $this->Form->input("foot_size",array("label"=>false,'class'=>'form-control form-group foot','options' => $footSizeList)); ?>
-      </div>
-    </div>
-        <div class="p-inlineblock">
+</div>
+<div class="rain-rwo">
    <!-- <div class="col-md-1 col-sm-1"></div> -->
-       <div class="col-xs-4 col-md-2 col-sm-2 mob-w-30 p-t-2">
-        <label class="pdd-none txt-right extrapillow ">Extra Pillow:</label>
+       <div class="col-xs-4 col-md-4 col-sm-4 mob-w-30 p-t-2">
+        <label class="pdd-none txt-right">Extra Pillow</label>
       </div>
-      <div class="col-xs-8 col-sm-3 col-md-2 tabport-pl0 mob-w-70">
+      <div class="col-xs-8 col-sm-7 col-md-7 tabport-pl0 mob-w-70">
                <?php echo $this->Form->input("extra_pillow",array("label"=>false,'class'=>'form-control form-group extra','options' => $pillowTypeList)); ?>
-      </div></div>
+      </div></div></div>
       </div>
       </div>
         <div class="clearfix"></div>
@@ -1090,7 +1285,7 @@ and (max-device-width : 667px) {
                   diet[di++] = "unchecked";
               }
             });
-            //console.log(cbox);
+            // console.log($(this).val());
             $("#dietries_hidden").val(diet);
               di = 0;
                

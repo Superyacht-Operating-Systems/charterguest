@@ -2,7 +2,8 @@
 $base = $this->request->base;
 $sessionData = $this->Session->read();
 //echo "<pre>";print_r($sessionData); exit;
-
+ $iti_guestListUUID = $this->Session->read('guestListUUID');
+ $iti_selectedCharterProgramUUID = $this->Session->read('selectedCharterProgramUUID'); 
 // Itineraries
     $itineraryList = array(
         1 => 'Swimming',
@@ -338,7 +339,7 @@ $sessionData = $this->Session->read();
           <hr class="divider divmar">
           
            <div class="ipadport-can-you-block">
-             <div class="col-md-3 col-sm-3 label-ng-space col-ng-3">
+             <div class="col-md-3 col-sm-3 ch-mt-3 label-ng-space col-ng-3">
                <label>Can you swim?</label>
              </div>
              <div class="col-md-7 col-sm-7 ipadport-ml15 mrg-btm-row">
@@ -361,7 +362,7 @@ $sessionData = $this->Session->read();
              </div>
              <div class="clearfix"></div>
              <br>
-             <div class="col-md-3 col-sm-3 label-ng-space col-ng-6">
+             <div class="col-md-3 col-sm-3 label-ng-space col-ng-6 ch-mt-3">
                <label>Do you have a PWC (Jet Ski) licence?</label>
              </div>
              <div class="col-md-7 col-sm-7 ipadport-ml15 mrg-btm-row">
@@ -386,8 +387,8 @@ $sessionData = $this->Session->read();
            <div class="space-20-h"></div>
             <br>
 
-             <div class="col-md-12 col-sm-12">
-               <label class="no-sp-lb">What level of dive licence do you have?</label>
+             <div class="col-md-12 col-sm-12 ch-mt-3">
+               <label class="no-sp-lb ">What level of dive licence do you have?</label>
              </div>
              <div class="col-md-12 col-sm-12 mrg-btm-row">
                <div class="be-col-6 col-md-2 col-sm-3 pdd-none">
@@ -418,7 +419,7 @@ $sessionData = $this->Session->read();
              </div>
              <div class="clearfix"></div>
              <br>
-             <div class="col-md-12">
+             <div class="col-md-12 spcae-02">
                <label>Special Considerations:</label>
              </div>
              <div class="col-md-10 ">
@@ -432,7 +433,7 @@ $sessionData = $this->Session->read();
                    
                     <div class="text-center">
                         <?php if (!isset($charterAssocIdByHeaderView)) { ?>
-                            <?php echo $this->Form->submit("Submit", array('class' => 'btn btn-success'));?>
+                            <?php echo $this->Form->submit("Submit", array('class' => 'btn btn-success lastbutton'));?>
                         <?php } ?>
                     </div>
                     
@@ -444,14 +445,9 @@ $sessionData = $this->Session->read();
 
 <div id="successPreferenceAlert" class="modal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" >
   <div class="modal-dialog" role="document">
-    <div class="modal-content mc-bord">
-<!--      <div class="modal-header">
-        <h5 class="modal-title">Modal title</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>-->
-      <div class="modal-body">
+    <!---------------- login or logout-------------------->
+    <div class="modal-content mc-bord" id="successbody">
+      <div class="modal-body" >
       <div class="modalmsg"> 
         <p>Thank you for submitting your preference sheets.</p>
         <p>All information will stay secure and confidential.</p>
@@ -464,18 +460,64 @@ $sessionData = $this->Session->read();
                 <h3><?php echo !empty($sessionData["fleetCompanyName"]) ? $sessionData["fleetCompanyName"] : ""; ?></h3>
         </div>    
       </div>
-      <div class="modal-footer">
+      <div class="modal-footer" style="text-align: center;">
           <input class="btn btn-success"type="button" name="stay_log_in" id="stay_log_in" value="Stay Logged in">
-        <a href="<?php echo $base; ?>" class="btn btn-success">Close</a>
+          <a href="<?php echo $base; ?>" class="btn btn-success" style="width: 103px; margin-left: 70px;">Log Out</a>
       </div>
     </div>
+              <!------------------login or logout----------------->
+
+    <div class="modal-content mc-bord" id="successUsePreference">
+      <div class="modal-body">
+      <div class="modalmsg" style="margin-left: 30px;"> 
+        <p>Would you like to allow your preferences to</p>
+        <p>be provided to future charter programs</p>
+        <p>without you having to submit them again?</p>
+      </div>
+        <div class="text-center">
+          <input class="btn btn-success" style="background-color: #5cb85c;
+    border-color: #4cae4c;" type="button" name="yes_please" id="yes_please" value="Yes please" />
+          <input class="btn btn-danger" type="button" name="no_thanks" id="no_thanks" value="No thanks" />
+        </div>   
+        <div class="modalmsg" style="margin-left: 30px;"> 
+        <p>You can login to Charter Guest and make</p>
+        <p>changes to your preferences at any time.</p>
+        </div> 
+      </div>
+    </div>
+
   </div>
 </div>
 
 
 
+<!-- <div id="usesubmittedpreferences" class="modal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" >
+  <div class="modal-dialog" role="document">
+    <div class="modal-content mc-bord">
+      <div class="modal-body">
+      <div class="modalmsg" style="margin-left: 30px;"> 
+        <p>Would you like to allow your preferences to</p>
+        <p>be provided to future charter programs</p>
+        <p>without you having to submit them again?</p>
+      </div>
+        <div class="text-center">
+          <input class="btn btn-success" style="background-color: #5cb85c;
+    border-color: #4cae4c;" type="button" name="yes_please" id="yes_please" value="Yes please" />
+          <input class="btn btn-danger" type="button" name="no_thanks" id="no_thanks" value="No thanks" />
+        </div>   
+        <div class="modalmsg" style="margin-left: 30px;"> 
+        <p>You can login to Charter Guest and make</p>
+        <p>changes to your preferences at any time.</p>
+        </div> 
+      </div>
+    </div>
+  </div>
+</div> -->
 
-<?php  
+
+
+
+<?php  //echo $showPopup;
 //echo "<pre>";print_r($this->Session->read()); exit;
 $CharterGuestAssociate = $this->Session->read('charter_assoc_info.CharterGuestAssociate'); 
 ?>
@@ -483,7 +525,10 @@ $CharterGuestAssociate = $this->Session->read('charter_assoc_info.CharterGuestAs
   var BASE_FOLDER = "<?php echo $baseFolder; ?>";
 $(document).ready(function (e) {
     <?php if (isset($showPopup)) { ?>
+            //$("#usesubmittedpreferences").modal('show');
             $("#successPreferenceAlert").modal("show");
+            $("#successUsePreference").show();
+            $("#successbody").hide();
     <?php } ?> 
 });    
 <?php if (isset($showPopup)) { ?>
@@ -531,4 +576,44 @@ $(".itinerary").click(function () {
               lic = 0;
                
      });
+
+$(document).on("click", "#yes_please", function(e) {     //alert();
+  
+    var data = {
+        "guestListUUID": "<?php echo $iti_guestListUUID; ?>",
+        "selectedCharterProgramUUID": "<?php echo $iti_selectedCharterProgramUUID; ?>"
+    };
+    
+    
+        $("#hideloader").show();
+        $.ajax({
+            type: "POST",
+            url: BASE_FOLDER+'/charters/saveusesubmittedpreferences',
+            dataType: 'json',
+            data: data,
+            success:function(result) {
+                $("#hideloader").hide();
+                if (result.status == 'success') {
+                  $("#successUsePreference").hide();
+                  $("#successbody").show();
+                  return false;
+                }else if(result.status == 'fail'){
+                  $("#successUsePreference").hide();
+                  $("#successbody").show();
+                  return false;
+                }   
+            },
+            error: function(jqxhr) { 
+                $("#hideloader").hide();
+            }
+        });
+        return false;
+});
+$(document).on("click", "#no_thanks", function(e) {
+
+  $("#successUsePreference").hide();
+  $("#successbody").show();
+            return false;
+
+});
 </script>

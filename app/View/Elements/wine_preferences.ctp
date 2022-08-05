@@ -6,10 +6,11 @@ $session = $this->Session->read();
 ?>
 <style>
 .card {
-    display: block;
+    display: block;QUICK LINKS
     margin-bottom: 20px;
     line-height: 1.42857143;
-    background-color: #fff;
+    background-color: #000;
+        border: 1px solid #dddddd8fQUICK LINKS;
     border-radius: 2px;
     box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12);
     transition: box-shadow .25s;
@@ -30,7 +31,7 @@ $session = $this->Session->read();
 		list-style:none;
 	}
 	ul.quick-lst li a{
-		color:rgba(0, 0, 0, 0.6509);
+		color:#fff;
 	}
 	.progress.scope{
 		height:8px;
@@ -128,7 +129,8 @@ span.ds-skate-year-mark {
 }
 table#wineTable button {
     font-size: 12px;
-    width: 90%;
+    width: 65px;
+    padding: 0px!important;
 }
 table#selectedWineListTableId tr td {
     padding: 5px !important;
@@ -159,21 +161,6 @@ table#selectedWineListTableId tr td input {
 <div class="filter-banel">  
 <div class="close-filter-button">Close Filters</div>  
     <div class="col-sm-12 col-md-3 pdd-none no-space">
-		 <div class="card">
-		  	<div class="card-content">
-				<div class="card-title text-center">
-					QUICK LINKS
-				</div>
-				
-				<ul class="quick-lst">
-                                    <li><a href="javascript:void(0);" class="filterTop" data-color="Red" data-region="Bordeaux" data-vintage="2017">Top Red Bordeaux 2017</a></li>
-                                    <li><a href="javascript:void(0);" class="filterTop" data-color="Red" data-region="Bordeaux" data-vintage="2016">Top Red Bordeaux 2016</a></li>
-                                    <li><a href="javascript:void(0);" class="filterTop" data-color="White" data-region="Bordeaux" data-vintage="2017">Top White Bordeaux 2017</a></li>
-					
-				</ul>
-			</div> 
-		</div>
-		
 		<div class="card">
 		  	<div class="card-content">
                             <div class="search-right">
@@ -294,7 +281,7 @@ table#selectedWineListTableId tr td input {
 	</div></div>
 	
 <!--	table-->
-    <div class="col-md-9 panel-full-md-row">
+    <div class="col-md-9 panel-full-md-row mob-right0">
         <div class="row">
 <div class="filter-button">Show Filters</div>  
 			<div class="col-sm-4">
@@ -304,14 +291,14 @@ table#selectedWineListTableId tr td input {
                         <option value="25">25</option>
                         <option value="50">50</option>
                         <option value="100">100</option>
-                        </select> entries</label>
+                        </select></label>
 				</div>
                         </div>
 			<div class="col-sm-8 serch-filter-row">
 				<div id="example_filter" class="pull-right">
-					<label class="col-md-4 searchpos">Search:</label>
+			<!-- 		<label class="col-md-4 searchpos">Search:</label> -->
 				    <div class="input-group">
-                        <input type="search" id="wineName" class="form-control" placeholder="Enter the Wine name" aria-controls="example">
+                        <input type="search" id="wineName" class="form-control" placeholder="Search Name" aria-controls="example">
                         <span type="button" class="btn btn-info input-group-addon wineFilter"><i class="fa fa-search"></i></span>
                     </div>
 				<!-- <div class="col-md-8">
@@ -322,6 +309,7 @@ table#selectedWineListTableId tr td input {
 				</div> -->
 			</div>
 		</div>
+        <button class="btn pull-right previous-btn previousSelectionButton" data-type="wine">Previous Selections</button>
 			</div>
 	
             <div id="wineListDiv">
@@ -654,6 +642,48 @@ function downloadFile(filePath){
     link.click();
     
 }
+
+
+$(document).on("click", ".addPreviousWineToCart", function(e) {
+    var obj = $(this);
+    var rowObj = obj.closest("tr");
+    var wineListId = obj.data("winelistid");
+    var quantity = obj.data("quantity");
+    
+    if (wineListId != "") {
+        $("#hideloader").show();
+        $.ajax({
+            type: "POST",
+            url: '<?php echo $baseFolder; ?>/charters/addPreviousWineToCart',
+            dataType: 'json',
+            data: { "wineListId": wineListId,"quantity":quantity },
+            success:function(result) {
+                $("#hideloader").hide();
+                if (result.status == 'success') {
+                    // obj.css('display', 'none');
+                    // rowObj.find('.removeWineRow').css('display', 'block');
+
+                    $(".selectWineRow").each(function (i,e) { 
+                        if($(this).attr('data-winelistid') == wineListId){ 
+                            $(this).css('display', 'none');
+                        };   
+                    });
+                    $(".removeWineRow").each(function (i,e) {
+                        if($(this).attr('data-winelistid') == wineListId){
+                            $(this).css('display', 'block');
+                        };   
+                    });
+                    $("#previousWineSelectionCart").modal('hide');
+                    $("#selectionCartBtn").click();
+                }  
+            },
+            error: function(jqxhr) { 
+                $("#hideloader").hide();
+            }
+        });
+    }  
+	
+});
 </script>
 
 

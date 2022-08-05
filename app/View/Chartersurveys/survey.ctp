@@ -6,6 +6,15 @@
     tbody.chechbox tr td {
       padding: 20px;
     }
+.survey-contain-row h5 span{
+  padding-right: 10px;
+}
+.survey-contain-row h5 span::before {
+  counter-increment: section;
+  content: "" counter(section) "";
+  padding-right: 5px;
+}
+
 .survey-contain-row h5{
 font-weight: bold;
 }
@@ -14,11 +23,20 @@ font-weight: bold;
 font-size: 18px;
 margin-bottom: 10px;
 margin-top: 0px;
+line-height: 24px;
+}
+.survey-contain-row h3 span{
+  display: inline-block;
+    width: 100%;
+    margin-top: 35px;
+    font-size: 24px;
 }
 .form-textarea .form-control{
-width: 80%;
+width: 600px;
 }
-
+.row-fld-hText h5{
+  margin-bottom: 0px;
+}
 
 
 .yes-nofld label span{
@@ -36,8 +54,20 @@ width: 80%;
   display: flex;
 }
 .flex-mdrow{
+  display: inline-block;
+  width: 100%;
+  margin: 0px;
+}
+.row-fld-hText .col-md-12{
+  padding: 0px;
+}
+.survey-100 .text-right{
+  text-align: left;
+  margin-bottom: 0px;
   display: flex;
-  align-items: center;
+}
+.col-md-12.form-textarea{
+   padding: 0px;
 }
 .survey-contain-row
 
@@ -53,7 +83,7 @@ width: 80%;
     .radio label::before {
       -o-transition: border 0.5s ease-in-out;
       -webkit-transition: border 0.5s ease-in-out;
-      background-color: #ffffff;
+      background-color: #d5d5d5;
       border-radius: 50%;
       border: 1px solid #cccccc;
       content: "";
@@ -106,7 +136,7 @@ width: 80%;
       transform: scale(1, 1);
       left: 0px!important;
           top: 0px!important;
-          background: #66ff66!important;
+          background: #1eabfc!important;
     }
     .radio input[type="radio"]:disabled + label::before {
       cursor: not-allowed;
@@ -136,6 +166,14 @@ width: 80%;
         counter-reset: section;
     }
 
+@media only screen and (min-width: 320px) and (max-width: 767px){
+.survey-containerbody {
+    width: 100%;
+        padding: 0px 30px;
+}
+}
+
+
   </style>
 </head>
 <body>
@@ -152,7 +190,7 @@ width: 80%;
 
 ?>
 <div class="fixed-row-container survey-contain-row">
-<div class="container">
+<div class="survey-containerbody">
         <div class="row">
             <div class="col-lg-8">                        
                 <?php echo $this->Session->flash();?>   
@@ -162,7 +200,7 @@ width: 80%;
             </div>
         </div>
       <h3>Dear <?php echo isset($data['salutation']) ? $data['salutation'] : ""; ?>,</h3>
-      <h3>Please provide us with your feedback about your experience onboard the <?php echo isset($data['yacht_name']) ? $data['yacht_name'] : ""; ?>.</h3>
+      <h3>Please rate your experience onboard.<span><?php echo isset($data['yacht_name']) ? $data['yacht_name'] : ""; ?>.</span></h3>
       <form method="post" action="<?php echo $base; ?>/chartersurveys/add_edit">
           <input type="hidden" name="id" value="<?php echo isset($surveyData['CharterGuestSurvey']['id']) ? $surveyData['CharterGuestSurvey']['id'] : ""; ?>">
           <input type="hidden" name="charter_company_id" value="<?php echo isset($data['charter_company_id']) ? $data['charter_company_id'] : ""; ?>">
@@ -177,7 +215,7 @@ width: 80%;
       ?>
         <div class="row flex-mdrow">
           <div class="col-md-4 label-h5 survey-100">
-            <h5 class="text-right"><?php echo $question['CharterSurveyQuestion']['question']; ?></h5>
+            <h5 class="text-right"><span>-</span><?php echo $question['CharterSurveyQuestion']['question']; ?></h5>
           </div>
           <div class="col-md-8 survey-100">
             <div class="flex-row">
@@ -249,10 +287,10 @@ width: 80%;
       } ?>
       
       <div class="row flex-mdrow row-fld-hText">
-        <div class="col-md-4">
-          <h5 class="text-right">Would you charter with this yacht agin?</h5>
+        <div class="col-md-12">
+          <h5>Would you charter with this yacht again?</h5>
         </div>
-        <div class="col-md-8">
+        <div class="col-md-12">
           <div class="yes-nofld">
                 <div>
                   <div class="radio">
@@ -277,10 +315,10 @@ width: 80%;
       </div>
 
       <div class="row flex-mdrow row-fld-hText">
-        <div class="col-md-4">
-          <h5 class="text-right">Would you use this charter broker again?</h5>
+        <div class="col-md-12">
+          <h5>Would you use this charter broker again?</h5>
         </div>
-  <div class="col-md-8">
+  <div class="col-md-12">
           <div class="yes-nofld">
                 <div>
                   <div class="radio">
@@ -305,8 +343,7 @@ width: 80%;
       </div>
 
       <div class="row flex-mdrow">
-        <div class="col-md-4"></div>
-        <div class="col-md-8 form-textarea">
+        <div class="col-md-12 form-textarea">
           <h5>Comments</h5>
           <textarea class="form-control" rows="4" name="comments" value="<?php echo (isset($surveyData['CharterGuestSurvey']['comments']) ? $surveyData['CharterGuestSurvey']['comments'] : ""); ?>"><?php echo (isset($surveyData['CharterGuestSurvey']['comments']) ? $surveyData['CharterGuestSurvey']['comments'] : ""); ?></textarea>
           <br>
@@ -322,10 +359,11 @@ width: 80%;
 
 <div id="StartModal" class="modal fade" role="dialog">
   <div class="modal-dialog">
-
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
+         <button type="button" class="close" data-dismiss="modal">&times;</button>
+
           <div class="row">
               <div class="col-md-4">
                   <h4 class="modal-title">Welcome</h4>
@@ -333,14 +371,13 @@ width: 80%;
               <div class="col-md-7">
                   
               </div>
-              <div class="col-md-1">
-                  <button type="button" class="close" data-dismiss="modal">&times;</button>
-              </div>
           </div> 
       </div>
       <div class="modal-body">
         <div class="form-group">
             <p>Because we value your feedback, all answers will be kept anonymous and confidential.</p>
+            <p>1 is the lowest rating</p>
+            <p>10 is the highest rating</p>
 
 	      </div>
       </div>
@@ -360,17 +397,8 @@ width: 80%;
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
-          <div class="row">
-              <div class="col-md-4">
+        <!--  <button type="button" class="close" data-dismiss="modal">&times;</button> -->
                   <h4 class="modal-title">Thank You</h4>
-              </div>
-              <div class="col-md-7">
-                  
-              </div>
-              <div class="col-md-1">
-                  <button type="button" class="close" data-dismiss="modal">&times;</button>
-              </div>
-          </div> 
       </div>
       <div class="modal-body">
         <div class="form-group">

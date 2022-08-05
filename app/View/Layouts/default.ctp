@@ -39,6 +39,8 @@ $actual_link_defaultctp = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on
         $explodepath_defaultctp = explode('/',$parts_defaultctp['path']);
         $programpageCharter =  $explodepath_defaultctp[2];
         $programpagePrograms =  $explodepath_defaultctp[3];
+        $pageUrlName = $explodepath_defaultctp[count($explodepath_defaultctp)-2];
+        // echo $pageUrlName;
             ?>
             <?php echo $this->Html->charset('UTF-8'); ?>
 	  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
@@ -78,9 +80,9 @@ $actual_link_defaultctp = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on
 		echo $this->fetch('meta');
 		echo $this->fetch('css');
 		echo $this->fetch('script');
-	?>
-    <style type="text/css">
-
+?>
+    
+<style type="text/css">
 .modalmsg-container .modal-dialog{
 padding-left: 0px;
 }
@@ -168,6 +170,74 @@ width: max-content;
         color: black;
     }
 
+
+    /* @media screen 
+  and (min-device-width: 700px) 
+  and (max-device-width: 1600px) 
+  { 
+
+    .videomodalcontent{
+      width: 482px !important;
+    }
+
+    .videoclass{
+      width: 450px !important;
+    }
+
+} */
+
+@media only screen and (max-device-width : 700px) {
+  .videomodalcontent{
+      width: 482px !important;
+    }
+
+    .videoclass{
+      width: 450px !important;
+    }
+}
+
+@media screen 
+  and (max-device-width: 1000px) 
+  { 
+
+    .videomodalcontent{
+      width: 482px !important;
+    }
+
+    .videoclass{
+      width: 450px !important;
+    }
+
+}
+
+@media screen 
+  and (max-device-width: 900px) 
+  { 
+
+    .videomodalcontent{
+      width: 482px !important;
+    }
+
+    .videoclass{
+      width: 450px !important;
+    }
+
+}
+
+@media screen 
+  and (max-device-width: 1600px) 
+  { 
+
+    .videomodalcontent{
+      width: 482px !important;
+    }
+
+    .videoclass{
+      width: 450px !important;
+    }
+
+}
+
 			</style>              
 </head>
 <body>
@@ -175,7 +245,15 @@ width: max-content;
 		<div style="text-align:center;vertical-align:center;font-weight:bold;font-size:45px;margin-top:305px;color:#000000"><?php echo $this->Html->image("admin/loader.gif"); ?></div></div>         
 	 <section class="">
             <div class="row">
-              <?php if (isset($session["login_username"]) && !empty($session["login_username"])) { ?>
+              <?php if($pageUrlName == 'privacytermsofuse'){ ?>
+                <div class="navbar-header ">             
+                  <div class="logoimg"> <?php echo $this->Html->image($logoimage);?></div> 
+                    <?php 
+                      echo $this->Html->link($logoLink,'http://www.superyachtos.com/',array('target'=>'blank','class' => 'navbar-brand logotxt brand-logo','title' => $logoLink, 'style'=>"color: white;"));
+                    ?>
+                </div>
+                <div class="headerRightText">Charter Guest</div>
+              <?php } else if (isset($session["login_username"]) && !empty($session["login_username"])) { ?>
                 <nav role="navigation" class="navbar navbar-inverse navbar-absalute-top">            
                     <div class="navbar-header ">    
                         <?php if (isset($session["fleetLogoUrl"]) && !empty($session["fleetLogoUrl"]) && $programpageCharter == "charters" && $programpagePrograms != "programs") { ?>
@@ -184,20 +262,40 @@ width: max-content;
                             </div>
                             <p class="navbar-brand logotxt brand-logo"><?php echo !empty($session["fleetCompanyName"]) ? $session["fleetCompanyName"] : ""; ?></p>
                         <?php } elseif($programpageCharter == "charters" && $programpagePrograms == "programs"){ ?>
-
                           <div class="logoimg"> <?php echo $this->Html->image($logoimage);?></div> 
                             <?php 
                             echo $this->Html->link($logoLink,'http://www.superyachtos.com/',array('target'=>'blank','class' => 'navbar-brand logotxt brand-logo','title' => $logoLink));
                             ?>
 
                        <?php } ?>  
+
+                       <!-- Background image -->
+                       <?php if (isset($session["cgBackgroundImage"]) && !empty($session["cgBackgroundImage"]) && $programpageCharter == "charters" && $programpagePrograms != "programs") { ?>
+                        <script>
+                          document.body.style.backgroundImage = "url('<?php echo $session["cgBackgroundImage"]; ?>')";
+                        </script>
+                        <?php } elseif($programpageCharter == "charters" && $programpagePrograms == "programs"){ ?>
+                          <script>
+                          document.body.style.backgroundImage = "url('https://totalsuperyacht.com:8080/charterguest/css/admin/images/full-charter.png')";
+                        </script>
+                       <?php } ?>  
                             
                     </div>
 
-                    <div class="label-bold-head"><?php if (isset($session["yachFullName"]) && !empty($session["yachFullName"])) { echo $session['yachFullName']; } ?></div>
+                    <div class="label-bold-head mydemolabel">
+                      <?php if($programpageCharter == "charters" && $programpagePrograms != "programs" && $programpagePrograms == "preference"){ ?>
+                        <?php if (isset($session["yachFullName"]) && !empty($session["yachFullName"])) { echo $session['login_username']; } ?>
+                      <?php } else if($programpageCharter == "charters" && $programpagePrograms != "programs"){ ?>
+                        <?php if (isset($session["yachFullName"]) && !empty($session["yachFullName"])) { echo $session['yachFullName']; } ?>
+                      <?php } ?>  
+                    </div>
                     <div class="yachtHeaderName">Charter Guest
-            <!-- <span class="label-md-header"> <?php //echo isset($companyData['Fleetcompany']['management_company_name']) ? $companyData['Fleetcompany']['management_company_name'] : ""; ?></span>   --></div>                          <div class=""> 
-                                 <div class="userhead-name ch-mob-hd"><span class="user-hname"><?php if (isset($session["login_username"]) && !empty($session["login_username"])) { echo $session['login_username']; } ?></span><br><span class="acti-countnav fa fa-bell-o "><small><?php echo $this->Session->read('commentcounttotal'); ?></small></span>
+                    <!-- <span class="label-md-header"> <?php //echo isset($companyData['Fleetcompany']['management_company_name']) ? $companyData['Fleetcompany']['management_company_name'] : ""; ?></span>   --></div>                          <div class=""> 
+                                 <div class="userhead-name ch-mob-hd">
+                                 <?php if($programpageCharter == "charters" && $programpagePrograms == "programs"){ ?>
+                                  <span class="user-hname"><?php if (isset($session["login_username"]) && !empty($session["login_username"])) { echo $session['login_username']; } ?></span>
+                                  <?php } ?>
+                                  <br><?php if($this->Session->read('commentcounttotal') > 0){ ?><span class="acti-countnav fa fa-bell-o "><small><?php echo $this->Session->read('commentcounttotal'); ?></small></span><?php } ?>
                                  	
                                  </div>
                                     <div class="list-logout-row">
@@ -217,7 +315,7 @@ width: max-content;
                 </div>
 
 
-<div id="selectcart" class="modal fade" role="dialog">
+<div id="selectcart" class="modal fade" role="dialog" style="margin-top: 55px;">
   <div class="modal-dialog charter-mod">
 
     <!-- Modal content-->
@@ -241,7 +339,7 @@ width: max-content;
     </div>
   </div>
 </div>
-<div id="productSelectionCart" class="modal fade" role="dialog">
+<div id="productSelectionCart" class="modal fade" role="dialog" style="margin-top: 55px;">
   <div class="modal-dialog charter-mod">
 
     <!-- Modal content-->
@@ -315,7 +413,87 @@ width: max-content;
 </div>
 
 
-<div id="PreferenceAlreadyExist" class="modal modalmsg-container" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" >
+<div id="previousSelectionModal" class="modal fade" role="dialog" style="margin-top: 55px;">
+  <div class="modal-dialog charter-mod">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+        <h3 class="modal-title text-center">Charter Programs List</h3>          
+        <!-- <h4 class="modal-title text-center"><?php //echo isset($session['charter_info']['CharterGuest']['charter_name']) ? $session['charter_info']['CharterGuest']['charter_name'] : ""; ?></h4> -->
+      </div>
+      <div class="modal-body">
+            <div id="previousSelectionListDiv">
+                <?php //if (isset($selectionCartData) && !empty($selectionCartData)) { ?>
+                    <!-- Selected Wine list table -->
+                    <?php echo $this->element('previous_charter_program_list'); ?>
+                <?php //} else { ?>
+                    <!-- <p class="text-center">No selected wines available.</p> -->
+                <?php //} ?>    
+            </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div id="previousBeerSelectionCart" class="modal fade" role="dialog" style="margin-top: 55px;">
+  <div class="modal-dialog charter-mod">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close previousBeerSelectionCartclose">&times;</button>
+        <h4 class="modal-title text-center"> Previous Beer and Spirit Selection</h4>          
+        <h4 class="modal-title text-center" id="prevchartername"></h4>
+      </div>
+      <div class="modal-body">
+            <div id="selectedPreBeerListDiv">
+                <?php if (isset($productSelectionCartData) && !empty($productSelectionCartData)) { ?>
+                    <!-- Selected Wine list table -->
+                    <?php echo $this->element('selected_product_list_table'); ?>
+                <?php } else { ?>
+                    <p class="text-center">No selected products available.</p>
+                <?php } ?>    
+            </div>
+      </div>
+     
+    </div>
+
+  </div>
+</div>
+
+
+<div id="previousWineSelectionCart" class="modal fade" role="dialog" style="margin-top: 55px;">
+  <div class="modal-dialog charter-mod">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close previousWineSelectionCartclose">&times;</button>
+        <h4 class="modal-title text-center"> Previous Wine Selection</h4>          
+        <h4 class="modal-title text-center" id="prevwinechartername"></h4>
+      </div>
+      <div class="modal-body">
+            <div id="selectedPreWineListDiv">
+                <?php if (isset($productSelectionCartData) && !empty($productSelectionCartData)) { ?>
+                    <!-- Selected Wine list table -->
+                    <?php echo $this->element('selected_product_list_table'); ?>
+                <?php } else { ?>
+                    <p class="text-center">No selected products available.</p>
+                <?php } ?>    
+            </div>
+      </div>
+     
+    </div>
+
+  </div>
+</div>
+
+
+<div id="PreferenceAlreadyExist" class="modal modalmsg-container" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" style="margin-top: 55px;">
   <div class="modal-dialog" role="document">
     <div class="modal-content mc-bord">
 <!--      <div class="modal-header">
@@ -326,6 +504,9 @@ width: max-content;
       </div>-->
         <div class="modal-body">
           <div class="modalmsg"> 
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
             <p>Preferences already exist for : <b><span id="guestFullName" class="chr-block"></span></b></p>
             <p>Click USE EXISTING to update preferences before submitting</p>
             <p>Click CREATE NEW to delete the old and create new preferences</p>
@@ -345,7 +526,7 @@ width: max-content;
   </div>
 </div>
 
-<div id="PreferenceBirthday" class="modal modalmsg-container" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" >
+<div id="PreferenceBirthday" class="modal modalmsg-container" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" style="margin-top: 55px;">
   <div class="modal-dialog" role="document">
     <div class="modal-content mc-bord">
 <!--      <div class="modal-header">
@@ -362,13 +543,61 @@ width: max-content;
             <?php //echo $this->Form->input("dob",array("label"=>false,'class'=>'form-control dobDatePicker nonEditable','type' => 'text')); ?>
             <input type="text" name="checkdob" id="checkdob" style="width: 50%;text-align: center;margin-left: 80px;" class="form-control dobDatePickerexisting existingnonEditable" />
             <p id="confirmpreferencesuccess" style="color:green;">Confirmed - Loading your preference now</p>
-            <div id="confirmpreferencefail"> <p style="color:red;">Wrong DOB - Please try again or create new</p>
-                <input class="btn btn-success"  type="button" name="create_new" data-guuid ="" data-assid ="" id="dob_create_new" value="CREATE NEW" />
-            </div>
+            <p id="confirmpreferencefail" style="color:red;">Wrong DOB - Please try again or create new</p>
+            <input class="btn btn-success" style="margin-top: 10px;
+    margin-left: 20px;" type="button" name="confirm" id="confirmPreference" data-assid=""  data-chkuuid ="" data-gtype="" value="CONFIRM" />
+               
+           
             </div>    
         </div>
         <div class="modal-footer">
-            <input class="btn btn-success" type="button" name="confirm" id="confirmPreference" data-assid=""  data-chkuuid ="" data-gtype="" value="CONFIRM" />
+          <button class="btn btn-success closedobmodal" style="float:left;" >Close</button>
+        <input class="btn btn-success"  type="button" name="create_new" data-guuid ="" data-assid ="" id="dob_create_new" value="CREATE NEW" />
+        </div>
+    </div>
+  </div>
+</div>
+
+
+<div id="howtovideo" class="modal modalmsg-container" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" style="margin-top: 55px;">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content mc-bord  videomodalcontent">
+     <div class="modal-header">
+        <h5 class="modal-title">How To Video</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+        <div class="modal-body">
+        <video width="100%" height="100%" controls class="videoclass" id="">
+        <source src="<?php echo  $this->request->base; ?>/app/webroot/210322061346_sample-mp4-file.mp4" type="video/mp4">
+        </video>
+                            
+        </div>
+        <div class="modal-footer">
+            
+        </div>
+    </div>
+  </div>
+</div>
+
+<div id="howtovideocharterhead" class="modal modalmsg-container" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" style="margin-top: 55px;">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content mc-bord  videomodalcontent">
+     <div class="modal-header">
+        <h5 class="modal-title">How To Video</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+        <div class="modal-body">
+        <video width="100%" height="100%" controls class="videoclass" id="">
+        <source src="<?php echo  $this->request->base; ?>/app/webroot/210322061346_sample-mp4-file.mp4" type="video/mp4">
+        </video>
+                            
+        </div>
+        <div class="modal-footer">
+            
         </div>
     </div>
   </div>
@@ -508,6 +737,24 @@ $(document).on("click",".existingCheckFunction",function(e){
     
 });
 
+$(document).on("click", ".closedobmodal", function(e) { 
+    
+    $("#checkdob").val('');
+    var chkuuid = $("#use_existing").attr('data-preferenceexistUUID',"");
+    var assid = $("#use_existing").attr('data-preferenceExistGuestID',"");
+    var gtype = $("#use_existing").attr('data-gtype',"");
+    $("#confirmpreferencesuccess").hide();
+    $("#confirmpreferencefail").hide();
+    $("#dob_create_new").attr("data-guuid","");
+    $("#dob_create_new").attr("data-assid","");
+    $("#confirmPreference").attr("data-chkuuid","");
+    $("#confirmPreference").attr("data-assid","");
+    $("#confirmPreference").attr("data-gtype","");
+    $("#PreferenceAlreadyExist").modal("hide");
+    $("#PreferenceBirthday").modal("hide");
+    
+});
+
 
   $(document).on("click", "#confirmPreference", function(e) { 
     var classObj = $(this);
@@ -610,6 +857,120 @@ function createNew(guuid,assid){
 
     
 }
+
+$(document).on("click", "#MenuHowToVideo", function(e) { 
+  $("#howtovideo").modal("show");
+  
+       $("#sidebar-btn").click();
+            
+           // $('#content').off();
+        //toggleMenu();
+    
+
+});
+
+$(document).on("click", "#MenuHowToVideoCharterHead", function(e) { 
+  $("#howtovideocharterhead").modal("show");
+  
+       $("#sidebar-btn").click();
+            
+           // $('#content').off();
+        //toggleMenu();
+    
+
+});
+
+
+
+$(document).on("click", ".previousSelectionButton", function(e) { 
+
+  var classObj = $(this);
+  var typeofspirit = classObj.data('type');
+
+        $("#hideloader").show();
+        $.ajax({
+            type: "POST",
+            url: BASE_FOLDER+'/charters/getPreviousCharterProgramSelections',
+            dataType: 'json',
+            data: {"type":typeofspirit},
+            success:function(result) {
+              
+                  $('#previousSelectionListDiv').html(result.view);
+                  $("#hideloader").hide();
+                  $("#previousSelectionModal").modal("show");
+                  
+              
+            },
+            error: function(jqxhr) { 
+                $("#hideloader").hide();
+            }
+        });
+
+    
+     
+});
+
+
+
+$(document).on("click", ".selectpreviousprogram", function(e) { 
+
+var classObj = $(this);
+var typeofspirit = classObj.data('type');
+var programuuid = classObj.data('programuuid');
+
+
+      $("#hideloader").show();
+      $.ajax({
+          type: "POST",
+          url: BASE_FOLDER+'/charters/getPreviousSelectedBeerWine',
+          dataType: 'json',
+          data: {"type":typeofspirit,"programuuid":programuuid},
+          success:function(result) {
+            $("#hideloader").hide();
+            if (result.status == 'success') {
+              $("#previousSelectionModal").modal('hide');
+              if(result.type == "spirit"){ 
+                  if (result.cartRecordCount != 0 || result.preferenceRecordCount != 0) {
+                      $("#selectedPreBeerListDiv").html(result.view);
+                      
+                  } else {
+                      $("#selectedPreBeerListDiv").html('<p class="text-center">No previous selection available.</p>');
+                  }  
+                  $("#prevchartername").text(result.chartername);
+                  $("#previousBeerSelectionCart").modal('show');
+              }else if(result.type == "wine"){
+                if (result.cartRecordCount != 0 || result.preferenceRecordCount != 0) {
+                      $("#selectedPreWineListDiv").html(result.view);
+                      
+                  } else {
+                      $("#selectedPreWineListDiv").html('<p class="text-center">No previous selection available.</p>');
+                  }  
+                  $("#prevwinechartername").text(result.chartername);
+                  $("#previousWineSelectionCart").modal('show');
+              }
+               
+            }  
+                
+          },
+          error: function(jqxhr) { 
+              $("#hideloader").hide();
+          }
+      });
+
+  
+   
+});
+
+$(document).on("click", ".previousBeerSelectionCartclose", function(e) { 
+  $("#previousBeerSelectionCart").modal('hide');
+  
+});
+
+$(document).on("click", ".previousWineSelectionCartclose", function(e) { 
+  $("#previousWineSelectionCart").modal('hide');
+  
+});
+
 
 // Since confModal is essentially a nested modal it's enforceFocus method
 // must be no-op'd or the following error results 

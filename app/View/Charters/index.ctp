@@ -1,4 +1,34 @@
-           
+<?php ?>
+<style> 
+    .terms-userow a{
+margin: 0px 5px;
+    }
+    .terms-userow input{
+position: relative;
+    top: 2px;
+}
+.forgot-link{
+        font-size: 13px;
+    margin-top: -10px;
+    display: block;
+}
+.terms-userow-row{
+        margin-top: 10px;
+}
+ @media only screen and (max-width:767px){
+ .form-group {
+    margin-bottom: 0px!important;
+}
+ }
+
+
+
+</style>
+
+
+
+<?php $basefolder = $this->request->base; ?>
+
 <div id="tokenDiv" class="panel-body" style="height: 250px;">        
             <?php echo $this->Form->create('CharterGuest', array('url' => array('controller' => 'charters', 'action' => 'index'),'id'=>'tokenVerifyForm'));?>
     <fieldset style="padding-top:10px;">
@@ -13,8 +43,13 @@
                     <?php echo $this->Form->input('token',array('type' => 'password', 'label' => false,'div' => false, 'name' => 'token', 'id' => 'token', 'placeholder' => 'Enter the Token/Password','class' => 'form-control','maxlength' => 55));?>
             <span class="text-small red errorMsg" id="tokenError" style="color: red"></span>
         </div>
-        <div class="">
-                    <?php echo $this->Form->button('Submit',array('class' => 'btn btn-default' , 'id' => 'tokenSubmit'));?>                
+        <a class="forgot-link" href="<?php echo $this->request->base."/charters/forgot_password/" ?>">Forgot password </a>
+        <div class="terms-userow-row">
+            <label class="terms-userow">
+                I agree with the <a href="<?php echo $this->request->base."/charters/privacytermsofuse/1" ?>" target="blank">terms of use </a>
+                <input id="termsOfUse"  type="checkbox" value="" onclick="ToggleDisable()"/>
+            </label>            
+            <?php echo $this->Form->button('Submit',array('class' => 'btn btn-default', 'id' => 'tokenSubmit'));?>                
             <span class="text-small red errorMsg" id="commonError" style="color: red"></span>
         </div>
     </fieldset>
@@ -149,5 +184,16 @@ $("#passwordSubmit").on("click", function(e) {
     }
 
 });
+
+var myObj = document.getElementById ("tokenSubmit");
+myObj.disabled = true;
+
+function ToggleDisable () {
+    if (myObj.isDisabled) {
+        myObj.disabled = (myObj.isDisabled == true)? false : true;
+    } else {
+        myObj.disabled = (myObj.disabled == true)? false : true;
+    }
+}
 
 </script>

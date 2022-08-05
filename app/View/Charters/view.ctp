@@ -25,6 +25,23 @@
     );
 ?>
 <style>
+
+.emailSentClass::after {
+content: "SENT";
+}
+.emailSentClass:hover::after {
+ content: "RESEND";
+}
+
+.footer-mob-row {
+    /* width: 26%; */
+    width: 81px;
+    float: none!important;
+    margin: 0 auto;
+}
+
+
+
 .info-modal-pop .modal-body{
     padding: 20px!important;
     margin-left: 0px!important;
@@ -33,8 +50,6 @@
     border-radius: 0px;
     width: auto;
 }
-
-
 
 .info-modal-pop .modal-dialog{
     padding-left: 0px;
@@ -79,13 +94,10 @@
         width: 100%;
     }
     .inputError { 
-        border:  1px solid red; 
+        border:  1px solid red !important; 
     }
     .displayNone {
         display: none;
-    }
-    .emailFieldClass {
-        width: 30%;
     }
     .table.table-condensed.no-border td {
         border: 0;
@@ -110,7 +122,8 @@
         padding:5px;
         }
 .owl-nav.disabled{display: none!important}
-#saveBtn{margin-right: 110px;border-radius: 0px;}
+#saveBtn{
+border-radius: 0px;}
 
 .center-img{margin-left: 15px;
     width: 100%;
@@ -206,7 +219,6 @@ font-weight: bold;
     opacity: 40!important;
     padding: 6px 20px;
     border-radius: 0px;
-    margin: 0px 5px;
      height: 30px!important;
 }
 
@@ -215,12 +227,12 @@ font-weight: bold;
     /*background: rgba(10, 230, 87, 0.58); */
     border: none;
     float: initial;
-    color: #000;
+    color: #fff;
     font-weight: bold;
     opacity: 40!important;
     padding: 6px 20px;
+        width: 78px;
     border-radius: 0px;
-    margin: 0px 5px;
      height: 30px!important;
 }
 .newGuestAssoc{display: none;}
@@ -238,48 +250,31 @@ font-weight: bold;
 .menu .menu__item a {
   text-decoration: none;
   padding: 10px 20px;
-    background: rgb(229 224 224 / 70%)!important;  color: #000;
+  color: #000;
   transition: 0.5s;
-  border: 2px solid transparent;
 }
 .menu .menu__item {
   list-style: none;
-  font-size: 1.5rem;
 }
 .nav-side-menu-full-container .nav-side-menu .sidebar.show{
     overflow-y: inherit;
 }
-.menu .submenu {
-    position: absolute;
-    right: -205px;
-    padding-left: 0;
-    top: 0px;
-  display: none;
-}
+
 .menu .submenu .menu__item{
-    display: inline-block;
+    display: block;
         width: 100%;
 }
 .menu .submenu .menu__item a{
-        margin-bottom: 1px;
     display: inline-block;
-    width: 200px;
-    border: solid 1px #356173;
 }
-.menu .menu__item a:hover{
-
+.menu .submenu .menu__item a:hover{
+    color:#fff !important;
+    background: #149be9 !important;
 }
-.menu .submenu .menu__item a:hover, .menu .submenu .menu__item a:focus {
-    color: #fffefe!important;
-    background-color: rgba(16, 16, 16, 0.51)!important;
-    transition: 0.5s;
-}
-
 .md-left-text{    text-align: left!important;
     padding: -3px;
     margin-left: -5px;
     position: relative;
-    left: -13px;
     top:-10px!important;
 
 
@@ -343,20 +338,18 @@ font-weight: bold;
     flex: none!important;}
 .md-row-h-10{width:15%;}
 .md-row-h-8{width:8%;}
-.md-row-h-18{width:18%;}
+.md-row-h-18{width:16%;}
 .md-row-h-12{width:11%;}
-.md-row-h-30{width:28%;}
+.md-row-h-30{width:30%;}
 .md-row-h-20{width:15%;}
 
 .md-row-hd-10{width:15%;}
 .md-row-hd-18{width:18%;}
-.md-row-hd-12{width:10%;}
-.md-row-hd-30{width:28%;}
-.md-row-hd-20{width:15%;}
 
 
 
-.header-row {width:100%;display: inline-block;margin: 0px 13px;}
+.header-row {
+    display: inline-block;}
 .container-row-column .row>div {
     float: left;
     margin: 0px 0.4%;
@@ -373,16 +366,12 @@ font-weight: bold;
 @media screen and (max-width: 1200px) {
 
 .md-row-h-10{width:14%;}
-.md-row-h-8{width:10%;}
-.md-row-h-18{width:20%;}
+.md-row-h-18{width:18%;}
 .md-row-h-12{width:11%;}
-.md-row-h-30{width:24%;}
+.md-row-h-30{width:28%;}
 .md-row-hd-18{width:18%;}
-.md-row-hd-12{width:12%;    margin: 0px 0.4%!important;}
-.md-row-hd-30{width:26%;margin: 0px 0.4%!important;}
-.md-row-hd-20{width:14.5%;margin: 0px 0.4%!important;}
-#saveBtn{margin-right:83px;border-radius: 0px;}
-.header-row div{font-size:12px;margin: 0px;}
+#saveBtn{border-radius: 0px;}
+.header-row div{}
 }
 
 .owl-nav{display: none;}
@@ -413,15 +402,17 @@ font-weight: bold;
 .container-row-column {
     margin: 55px 13px 0px 13px;
 }
-
+.md-row-h-18 {
+ display: block!important;
+}
 .md-row-h-12{width:30%;}
 .md-row-h-10 {width:33.555%;}
 .md-row-h-8{
-    width: 50%;
+    width: 50%!important;
     left: 15%;
     float: right;
     position: absolute;
-    top: 200px;
+    top: 254px;
 }
 .rowm-md-mob-resize{
        display: inline-block;
@@ -429,12 +420,12 @@ font-weight: bold;
 
 
 }
-.md-row-h-30{display: inline-block;margin:5px 2px!important;width:98.9%;}
+.md-row-h-30{display: inline-block;margin:5px 2px!important;width:100%!important;}
 .md-row-h-18 {
-        width: 197px!important;
+        width: 175px!important;
     float: right!important;
     position: relative;
-    right: 6%;
+    right: 9px;
 }
 .bigitem{width:100%;display: inline-block;}
 .map-row{display: none!important;}
@@ -465,9 +456,12 @@ font-weight: bold;
 .btn-open,
 .btn-open1
 {    float: none;
-    width: 55px;
-    padding-left: 10px;
-    text-align: center;}
+    min-width: 65px;
+    text-align: center;
+    width: auto;
+        padding: 6px 6px!important;
+
+}
 
 
 .none-mob-ctrl{display: none;}
@@ -482,7 +476,7 @@ font-weight: bold;
     width: 55px;
 }
 
-
+.gry-btn,
 .yes-btn,
 .no-btn
 {
@@ -493,7 +487,6 @@ font-weight: bold;
 }
 .nav-justified > li > a{
     color: #000!important;
-           background: rgba(255, 255, 255, 0.7)!important;
     transition: 0.3s;
         border-radius: 0px;cursor: pointer;
 }
@@ -513,10 +506,13 @@ font-weight: bold;
 .container-row-column {
     margin: 0px 0px 0px 13px;
 }
-#saveBtn {
-    margin-right: 110px;
+
 }
-}
+
+
+
+
+
 /*.mobile-owl-view{display: none;}
 .desk-owl-view{display: block;}*/
 .desk-owl-view label{display: none;}
@@ -526,7 +522,10 @@ font-weight: bold;
 }
 
 @media only screen and (max-width:600px){
-.md-row-h-18{right: 0px;    width: 135px!important;}
+.md-row-h-18{
+    right: 6px;
+    width: 175px!important;
+  }
 .md-row-h-8{left: 15px;}
 .label-lunch{
     width: 100%;
@@ -550,17 +549,23 @@ font-weight: bold;
     
 }
 }
+@media only screen and (max-width:990px){
+.footer-mob-row {
+    width: 100%;
+}
+}
+
 
 @media only screen and (max-width:768px){
-.rowm-md-mob-resize {
-    margin: 65px 0px 0px 0px !important;
-}
+
 .info-modal-pop .modal-dialog {
     padding-left: 0px;
     width: auto;
         top: 20%;
 }
-
+.footer-mob-row {
+    width: 100%;
+}
 }
 @media screen and (max-width:768px) {
 .info-box img{width: 14px;}
@@ -583,12 +588,29 @@ color: #000;
         background: #4CAF50!important;
         color: #fff;
 }
-.btn-primary:hover{
-        background: #4CAF50!important;
-        color: #fff;
+
+@media screen and (max-width: 360px) {
+.md-row-h-18 {
+    right: -30px;
+/*    width: 143px!important;*/
+}
+.md-row-h-18 button {
+    width: 70px!important;
+}
 }
 
+.menu .submenu{
+    right:-162px !important;
+}
 
+/* .menu .submenu .menu__item {
+    width: 50% !important;
+} */
+
+.menu .submenu .menu__item a {
+    width: 160px !important;
+    
+}
 </style>
   <div class="modal fade info-modal-pop" id="info-modal" role="dialog">
     <div class="modal-dialog">
@@ -646,7 +668,8 @@ color: #000;
             <?php if(isset($mapdetails)){ ?>
                 <ul class="submenu">
                     <?php foreach($mapdetails as $startdate => $data){ ?>
-                    <li class="menu__item"><a href="<?php echo $baseFolder."/charters/charter_program_map/".$data['programid'].'/'.$data['dbname']; ?>" target="_blank"><?php echo $startdate; ?></a></li>
+                        <!-- <li class="menu__item"><a href="<?php echo $baseFolder."/charters/charter_program_map/".$data['programid'].'/'.$data['dbname'].'/owner'; ?>" target="_blank"><?php echo $startdate; ?></a></li> -->
+                        <li class="menu__item"><a href="<?php echo $baseFolder."/charters/charter_program_map/".$data['programid'].'/'.$data['dbname'].'/owner'; ?>"><?php echo $startdate; ?></a></li>
                     <?php
                             
                         } ?>
@@ -654,6 +677,14 @@ color: #000;
             <?php } ?>
     
         </li>    
+        <li class="menu__item" ><a href="#">How To Video</a>
+           <ul class="submenu">
+                   <li class="menu__item" id="MenuHowToVideo"><a href="#">Preference Sheets</a></li>
+                   <li class="menu__item" id="MenuHowToVideoCharterHead"><a href="#">Head Charterer</a></li>
+                </ul>
+            </li>
+        <li> <a href="<?php echo $baseFolder."/charters/privacytermsofuse/1" ?>" target="blank">Terms of Use</a></li>
+        <li> <a href="<?php echo $baseFolder."/charters/privacytermsofuse/2" ?>" target="blank">Privacy Policy</a></li>
         <?php } ?>
          <!-- <li class="guest-list"> <a href="#">Guest List</a></li>
            <li><a href="charter_program_map">Cruising Map</a></li>
@@ -665,14 +696,23 @@ color: #000;
 </div>
 </div>
 </div>
-<span class="label-bold md-block" style="font-size: 35px;color: #fff;"> <?php echo isset($companyData['Fleetcompany']['management_company_name']) ? $companyData['Fleetcompany']['management_company_name'] : ""; ?></span>
+<h1 class="position-mobile-head rowgustlist-p">Guest List</h1>
+
+            
+
+<span class="label-bold md-block ychat-hd-row" style="font-size: 35px;color: #fff;"> <?php echo isset($companyData['Fleetcompany']['management_company_name']) ? $companyData['Fleetcompany']['management_company_name'] : ""; ?></span>
 <div id="content" class="list-page-container">
-    <div class="two">
+    <div class="two viewcontainer-hd view-mainrow">
         <div class="bigitem md-row-space">
 
-            <span class="label-bold top-align-md-class"> <?php echo $session['yacht_name']; ?></span>
-            <span class="label-bold md-bold"><?php echo $charterData['CharterGuest']['charter_name']; ?></span><br>
-            <span class="label-bold"><?php echo date_format(date_create($charterData['CharterGuest']['charter_from_date']), 'dS F Y')." to ".date_format(date_create($charterData['CharterGuest']['charter_to_date']), 'dS F Y'); ?></span>
+<span class="label-bold sp-leftalign"><?php echo date_format(date_create($charterData['CharterGuest']['charter_from_date']), 'd M Y')." to ".date_format(date_create($charterData['CharterGuest']['charter_to_date']), 'd M Y'); ?></span>
+           <!--  <span class="label-bold top-align-md-class sp-centeralign"> <?php echo $session['yacht_name']; ?></span> -->
+
+            <span class="label-bold yacht-centerlabel"><?php echo $charterData['CharterGuest']['embarkation']; ?> to <?php echo $charterData['CharterGuest']['debarkation']; ?></span>
+
+
+            <span class="label-bold md-bold sp-rightalign"><?php echo $charterData['CharterGuest']['charter_name']; ?></span>
+            
            <!--  <span>Enter the name and email of the guest and press the button to send them their preference forms.</span> -->
         </div>
 
@@ -703,6 +743,8 @@ color: #000;
         <input type="hidden" id="charterProgramId" value="<?php echo $charterData['CharterGuest']['charter_program_id']; ?>">
         <!-- Yacht id -->
         <input type="hidden" id="yachtId" value="<?php echo $charterData['CharterGuest']['yacht_id']; ?>">
+        <!-- company id -->
+        <input type="hidden" id="charter_company_id" value="<?php echo $charter_company_id; ?>">
         <!-- Charter head salutation -->
         <input type="hidden" id="existSalutation" value="<?php echo $charterData['CharterGuest']['salutation']; ?>">
 
@@ -711,11 +753,11 @@ color: #000;
     <div class="tcont-center md-row-h-8 md-left-text">HEAD CHARTERER
      <div class="info-box" data-toggle="modal" data-target="#info-modal"><img src="../../../../img/info-icon.jpg"></div>       
     </div>
-<div class="tcont-center md-row-hd-12">Title</div>
-<div class="tcont-center md-row-hd-20">First Name</div>
-<div class="tcont-center md-row-hd-20">Last Name</div>
-<div class="tcont-center emailFieldClass md-row-hd-30">Email</div>
-<div class="tcont-center md-row-hd-20 md-row-hd-20-10">Preference Sheets</div>
+<div class="tcont-center md-row-hd-12 md-hdtilt">Title</div>
+<div class="tcont-center md-row-hd-20 p-first-name">First Name</div>
+<div class="tcont-center md-row-hd-20 p-last-name">Last Name</div>
+<div class="tcont-center emailFieldClass md-row-hd-30 p-email-name">Email</div>
+<div class="tcont-center md-row-hd-20 p-prefrenace-name md-row-hd-20-10">Preference Sheets</div>
 <!--    <th class="tcont-center" colspan="2">Submitted P-Sheets</th> -->
 </div>
 <div id="charterguest">
@@ -724,7 +766,7 @@ color: #000;
 <?php include 'view-min.php';?>       
 </div>
 <?php }else{ ?>
-<div class="desk-owl-view">
+<div class="mobile-owl-view">
   <?php include 'view-min.php';?>   
 </div>
 <?php } ?>
@@ -780,11 +822,21 @@ $(".sendMailClass").on("click", function(e) {
             error++;
         } else {
             $(this).removeClass("inputError");
+            
         }
     });
     
+    if(rowObj.find('.isHeadChartererChecked').val() == ""){
+                rowObj.find('.gry-btn').addClass("inputError").blur();
+                error++;
+    }else{
+
+        rowObj.find('.gry-btn').removeClass("inputError");
+    }
+    
     var yachtId = $("#yachtId").val();
     var charterProgramId = $("#charterProgramId").val();
+    var charter_company_id = $("#charter_company_id").val();
     var existCharterHeadId = classObj.data('charterheadid');
     var charterAssocId = classObj.data('charterassocid');
     var headChartererId = $("#headChartererId").val();
@@ -793,7 +845,7 @@ $(".sendMailClass").on("click", function(e) {
         isHeadCharterer = 1;
     }*/
     var isHeadCharterer = rowObj.find(".isHeadChartererChecked").val();
-    console.log(isHeadCharterer);
+    //console.log(isHeadCharterer);
     var salutation = rowObj.find("select[name='salutation[]']").val();
     var firstName = rowObj.find("input[name='first_name[]']").val();
     var lastName = rowObj.find("input[name='last_name[]']").val();
@@ -814,6 +866,7 @@ $(".sendMailClass").on("click", function(e) {
         "headChartererId": headChartererId,
         "charterAssocId": charterAssocId,
         "isHeadCharterer": isHeadCharterer,
+        "charter_company_id": charter_company_id,
         "salutation": salutation,
         "firstName": firstName,
         "lastName": lastName,
@@ -821,7 +874,7 @@ $(".sendMailClass").on("click", function(e) {
         "resend":0, // not sending email again
         "Otherrowdata":Otherrowdata
     };
-    //console.log(data);
+    //console.log(error);
     if (!error) {
         $("#hideloader").show();
         $.ajax({
@@ -981,7 +1034,8 @@ $(".isHeadChartererYes").on("click",function(e){
         $(this).closest("div .row").find(".newGuestAssoc").attr("disabled", false);
         //$(this).closest("div .row").find(".newGuestAssoc").removeClass("btn-default").addClass("btn-primary");
         $(this).closest("div .row").find(".inputError").removeClass("inputError");
-        $(this).closest("div .row").find(".hideshow ").show();
+        $(this).closest("div .row").find(".hideshow ").removeClass("ch-waiting-btn").addClass("btn-warning").text('OPEN').show();
+        
 });
 $(".isHeadChartererNo").on("click",function(e){ 
         $(this).closest("div").find(".isHeadChartererChecked").val(1);
@@ -990,7 +1044,10 @@ $(".isHeadChartererNo").on("click",function(e){
         $(this).closest("div .row").find(".sendMailClass").attr("disabled", false);
        // $(this).closest("div .row").find(".newGuestAssoc").show();
         $(this).closest("div .row").find(".newGuestAssoc").attr("disabled", true);
-        $(this).closest("div .row").find(".hideshow ").hide();
+       
+        $(this).closest("div .row").find(".hideshow ").removeClass("btn-warning").addClass("ch-waiting-btn").text('WAITING').show();
+        
+       
        // $(this).closest("div .row").find(".newGuestAssoc").removeClass("btn-primary").addClass("btn-default");
 });
 // Submit and Redirect to the Preference pages when OPEN button clicked(If Head charterer is checked)
@@ -1072,29 +1129,45 @@ $(".newGuestAssoc").on("click", function(e) {
 
 // Saving the newly entered Associates details
 $("#saveBtn").on("click", function(e) {
-    $("#saveBtn").attr("disabled", true);
+    //$("#saveBtn").attr("disabled", true);
     // Validation
     var error = 0;
     $(".inputError").removeClass('inputError');
-    $("#guestDetailsTable tr").each(function (e) {
-        console.log(e);
+    $("#guestDetailsTable div").each(function (e) {
+       // console.log(e);
         var empty = 0;
-        $(this).find(".validateInput").each(function () {
-            if ($(this).val().trim() == "") {
-                $(this).addClass("inputError").blur();
-                empty++;
-                error++;
-            } else {
-                $(this).removeClass("inputError");
-            }
-        });
-        if (empty == 4) {
-            $(this).find(".validateInput").removeClass("inputError");
-            error -= 4;
-        } else if (empty > 0) {
-            return true; // Break the loop
-        }
+        var divobj = $(this);
+        divobj.find('.charterRow').each(function () {
+                $(this).find(".validateInput").each(function () {
+                    //console.log($(this).val());
+                    if ($(this).val().trim() == "") {
+                        $(this).addClass("inputError").blur();
+                        empty++;
+                        error = 1;
+                    } else {
+                        $(this).removeClass("inputError");
+                    }
+                });
+                if($(this).find('.isHeadChartererChecked').val() == ""){
+                    $(this).find('.gry-btn').addClass("inputError").blur();
+                    error = 1;
+                }else{
+
+                    $(this).find('.gry-btn').removeClass("inputError");
+                }
+
+                if (empty == 4) {
+                    $(this).find(".validateInput").removeClass("inputError");
+                    $(this).find('.gry-btn').removeClass("inputError");
+                    error = 0;
+                } else if (empty > 0) {
+                    return true; // Break the loop
+                }
+        }); 
     });
+    
+    console.log(error);
+    //console.log(empty);
     //return false;
     if (!error) {
         var data = $("#guestDetailsTable div").find(".rowInput").serialize();

@@ -241,7 +241,7 @@ hr.divmar{
             <div class="">
 <!--               <label class="pdd-none">Beverage Preferences</label> -->
             </div>
-            <div class="col-md-3 col-sm-4 pdd-none pl-2">
+            <div class="col-md-4 col-sm-4 pdd-none pl-2">
               <label class="pdd-none mrg-label">COFFEE</label>
               <div class="be-col-3 be-col-8">
                <div class="checkbox bev-chbox">
@@ -284,7 +284,7 @@ hr.divmar{
               <?php echo $this->Form->input("coffee_comments",array("label"=>false,'class'=>'form-control','type' => 'text')); ?>
             </div> 
               </div>
-            <div class="col-md-3 col-sm-4 pdd-none pl-2">
+            <div class="col-md-4 col-sm-4 pdd-none pl-2">
               <label class="pdd-none mrg-label">TEA</label>
                 <div class="be-col-3 be-col-8">
                <div class="checkbox bev-chbox">
@@ -324,7 +324,7 @@ hr.divmar{
               <?php echo $this->Form->input("tea_comments",array("label"=>false,'class'=>'form-control','type' => 'text')); ?>
             </div>
             </div>
-            <div class="col-md-3 col-sm-4 pdd-none pl-2">
+            <div class="col-md-4 col-sm-4 pdd-none pl-2">
                 <label class="pdd-none mrg-label">MILK</label>
                 <div class="be-col-3 be-col-8">
               <div class="checkbox bev-chbox">
@@ -368,7 +368,7 @@ hr.divmar{
             <div class="clearfix"></div>
            <hr class="divider divmar">
       <!--<div class="space-50-h"></div>-->
-            <div class="col-sm-3 col-md-2 pdd-none ipad-bev pl-25">
+            <div class="col-sm-3 col-md-3 pdd-none ipad-bev pl-25">
               <label class="mrg-label">SODA</label>
               <div class="be-col-3 be-col-8">
               <div class="checkbox bev-chbox">
@@ -408,7 +408,7 @@ hr.divmar{
               <?php echo $this->Form->input("soda_comments1",array("label"=>false,'class'=>'form-control','type' => 'text')); ?>
             </div> 
             </div>
-            <div class="col-md-2 col-sm-3 ipad-bev pdd-none pl-25">
+            <div class="col-md-3 col-sm-3 ipad-bev pdd-none pl-25">
                <label class="pdd-none mrg-label">SODA</label>
                <div class="be-col-3 be-col-8">
               <div class="checkbox bev-chbox">
@@ -449,7 +449,7 @@ hr.divmar{
               <?php echo $this->Form->input("soda_comments2",array("label"=>false,'class'=>'form-control','type' => 'text')); ?>
             </div>
             </div>
-            <div class="col-md-2 col-sm-3 ipad-bev pdd-none pl-25">
+            <div class="col-md-3 col-sm-3 ipad-bev pdd-none pl-25">
                 <label class="mrg-label">JUICE</label>
                 <div class="be-col-3 be-col-8">
               <div class="checkbox bev-chbox">
@@ -490,7 +490,7 @@ hr.divmar{
               <?php echo $this->Form->input("juice_comments",array("label"=>false,'class'=>'form-control','type' => 'text')); ?>
             </div>
             </div>
-            <div class="col-md-2 col-sm-3  ipad-bev pdd-none pl-25">
+            <div class="col-md-3 col-sm-3  ipad-bev pdd-none pl-25">
 
               <label class="pdd-none mrg-label">WATER</label>
                <div class="be-col-3 be-col-8">
@@ -660,7 +660,7 @@ hr.divmar{
                 <div class="col-sm-4"></div> 
                 <div class="col-sm-4">
                     <?php if (!isset($charterAssocIdByHeaderView)) { ?>
-                        <?php echo $this->Form->submit("Save and Continue", array('class' => 'btn btn-success'));?>
+                        <?php echo $this->Form->submit("Save and Continue", array('class' => 'btn btn-success lastbutton'));?>
                     <?php } ?>
                 </div>
             </div>

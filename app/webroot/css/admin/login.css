@@ -7,7 +7,10 @@
 body{padding:0; margin:0; /*background:#f5f5f5;*/}
 .login-panel {
     margin-bottom: 25%;
-    margin-top: 42%;
+    margin-top:150px!important;
+}
+.login-panel{
+    width: 380px;
 }
 .user-name {
     background: url("../../img/admin/user-icon.jpg") no-repeat right center;
@@ -25,6 +28,8 @@ body{padding:0; margin:0; /*background:#f5f5f5;*/}
         border:none;
         font-weight: bold;
         color: #fff;
+            float: right;
+    margin-top: 0px;
 }
 
 /*custom media query for small devies*/
@@ -66,5 +71,23 @@ body{padding:0; margin:0; /*background:#f5f5f5;*/}
     color: #333!important;
 }*/
 
-input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill{background: rgba(241, 235, 235, 0.76)!important;}
+
+
+
 .login-panel fieldset{font-weight: bold;}
+/* Change the white to any color */
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active{
+    -webkit-box-shadow: 0 0 0 30px black inset;
+    -webkit-text-fill-color: white !important;
+}
+
+@media only screen and (max-width: 768px){
+.login-panel .btn-default {
+    margin-top: 10px;
+    display: block;
+    float: none;
+}
+}

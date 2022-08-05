@@ -74,7 +74,7 @@
         3 => 'Cooked Onions',
         4 => 'Beets',
         5 => 'Olives',
-        6 => 'Caviar',
+        6 => 'Sardines',
         7 => 'Tomato',
         8 => 'Tomato Sauce',
         9 => 'Hot Spice',
@@ -153,16 +153,33 @@
 ?>
 <style>
 .foodpreferences-container .radio input[type="radio"] {
-width: 110px!important;
-    margin-left: -22px;
+    width: 66px!important;
+    margin-left: 0px;
     top: -1px;
     height: 30px!important;
+    left:-23px;
+}
+.cp-head{
+	text-align: right;
+}
+.r-pa-30{
+	padding-left: 30px;
+}
+.foodpreferences-container .md-radio-column-box-max .radio input[type="radio"] {
+  width: 112px!important;
 }
 
+.foodpreferences-container .table-inlinebox .radio input[type="radio"] {
+    width: 66px!important;
+    margin-left: 0px;
+    top: -1px;
+    height: 30px!important;
+    left:2px;
+}
 
   
 .table-container-row td:first-child{ 
-  width: 25%;
+  width: 100px;
   text-align: right;
    margin-top: 13px;}
 .foodpreferences-container table.table tbody tr{
@@ -196,12 +213,18 @@ table.fd-table tr>th {
   
   
   @media (max-width: 1024px){
+hr.margin-divid{
+margin: 20px 0px!important;
+    display: inline-block!important;
+width: 100%;
+
+
+  }
+
+
 .comt-like-row{text-align: right;}
     .fs-wd{
-      width:13.2%
-    }
-   .fs-wd.ipad-fs-wd{
-      width:16%;
+      width:150px
     }
     .cp-width{
       width:12.5% !important;
@@ -210,7 +233,27 @@ table.fd-table tr>th {
 /*      margin-left: 59px;*/
       width: 70%;
     }
+    .foodpreferences-container .md-radio-column-box-max .radio input[type="radio"] {
+    width: 86px!important;
+}
+.foodpreferences-container .table-inlinebox .radio input[type="radio"] {
+    width: 55px!important;
+    left: -1px;
+}
+.foodpreferences-container .radio input[type="radio"] {
+    width: 57px!important;
+    left: -23px;
+}
+
   }
+  @media (max-width: 900px){
+.fs-wd {
+  width: 33.3333333%;
+}
+  }
+
+
+
   @media (max-width: 768px){
     .foodpreferences-row .label-comments-space{
   width: 20%;float: left;
@@ -222,9 +265,6 @@ table.fd-table tr>th {
     .fs-wd {
     width: 50%;float: left;
 }
-    .fs-wd.ipad-fs-wd{
-      width: 50%;float: left;
-    }
     .cp-width{
       width:14% !important;
     }
@@ -237,11 +277,9 @@ table.fd-table tr>th {
 
   }
   @media (min-width: 992px){
-.fs-wd{
-    width:13.2%
-  }
+
     .cp-head{
-      width:8%
+      width:7%
     }
     .cp-width{
       width:11.5%;
@@ -297,17 +335,13 @@ table.fd-table tr>td {
         <div class="col-md-12 foodpreferences-row">
       <div class="form-group frmgrp-mar">
         <div class="col-md-12 md-col-nospace">
-          <label>Meal Time Preferences and Service style</label>
+          <label>Meal Time Preferences and Service Style</label>
         </div>
         <div class="col-lg-12 pdd-none full-column-marg">
-          <div class="col-lg-1 col-sm-2 ipadport-middle"><label class="control-label ma-b">Breakfast</label></div>
-          <div class="col-lg-1 col-sm-2 pdd-none f-timewidth" >
-            
-            <label class="control-label ma-b">Time</label>
-          </div>
-          <div class="col-lg-2 col-sm-2 ipadport-input-padding-vertical input-mobile-width">
+          <div class="col-lg-1 col-sm-2 ipadport-middle label-rigt-align"><label class="control-label ma-b ">Breakfast</label></div>
+          <div class="col-lg-2 rt-nospacesp col-sm-2 ipadport-input-padding-vertical input-mobile-width">
             <!--<input type="text" class="form-control input-wid">-->
-            <?php echo $this->Form->input("breakfast_time",array("label"=>false,'class'=>'form-control input-wid timePicker','type' => 'text')); ?>
+            <?php echo $this->Form->input("breakfast_time",array("label"=>false, 'placeholder' => 'Time','class'=>'form-control input-wid breakfast_time_timePicker','type' => 'text')); ?>
           </div>
           <div class="col-lg-2 col-sm-2 md-radio-column-box">
             <div class="radio ma-t-check">
@@ -332,14 +366,10 @@ table.fd-table tr>td {
         <div class="clearfix"></div>
 
         <div class="col-lg-12 pdd-none full-column-marg">
-          <div class="col-lg-1 col-sm-2 ipadport-middle"><label class="control-label ma-b">Lunch</label></div>
-          <div class="col-lg-1 col-sm-2 pdd-none f-timewidth" >
-            
-            <label class="control-label ma-b">Time</label>
-          </div>
-          <div class="col-lg-2 col-sm-2 ipadport-input-padding-vertical input-mobile-width">
+          <div class="col-lg-1 col-sm-2 ipadport-middle label-rigt-align"><label class="control-label ma-b">Lunch</label></div>
+          <div class="col-lg-2 rt-nospacesp col-sm-2 ipadport-input-padding-vertical input-mobile-width">
             <!--<input type="text" class="form-control input-wid">-->
-            <?php echo $this->Form->input("lunch_time",array("label"=>false,'class'=>'form-control input-wid timePicker','type' => 'text')); ?>
+            <?php echo $this->Form->input("lunch_time",array("label"=>false, 'placeholder' => 'Time','class'=>'form-control input-wid lunch_time_timePicker','type' => 'text')); ?>
           </div>
           <div class="col-lg-2 col-sm-2 md-radio-column-box">
             <div class="radio ma-t-check">
@@ -364,14 +394,10 @@ table.fd-table tr>td {
         <div class="clearfix"></div>
 
          <div class="col-lg-12 pdd-none full-column-marg">
-          <div class="col-lg-1 col-sm-2 ipadport-middle"><label class="control-label ma-b">Dinner</label></div>
-          <div class="col-lg-1 col-sm-2 pdd-none f-timewidth" >
-            
-            <label class="control-label ma-b">Time</label>
-          </div>
-          <div class="col-lg-2 col-sm-2 ipadport-input-padding-vertical input-mobile-width">
+          <div class="col-lg-1 col-sm-2 ipadport-middle label-rigt-align"><label class="control-label ma-b">Dinner</label></div>
+          <div class="col-lg-2 rt-nospacesp col-sm-2 ipadport-input-padding-vertical input-mobile-width">
             <!--<input type="text" class="form-control input-wid">-->
-            <?php echo $this->Form->input("dinner_time",array("label"=>false,'class'=>'form-control input-wid timePicker','type' => 'text')); ?>
+            <?php echo $this->Form->input("dinner_time",array("label"=>false, 'placeholder' => 'Time','class'=>'form-control input-wid dinner_time_timePicker','type' => 'text')); ?>
           </div>
           <div class="col-lg-2 col-sm-2 md-radio-column-box">
             <div class="radio ma-t-check">
@@ -741,15 +767,10 @@ table.fd-table tr>td {
         </div> </div>
         <div class="clearfix"></div>
         <hr class="divider divmar">
+        <label class="food-label-hd">Food Preferences  </label>
 <!--<div class="space-50-h"></div>-->
-    <div class="col-md-6  col-sm-6 th-md-col-space">
-      <table class="table table-bordered fd-table table-container-row">
-        <tr>
-          <th>Food Preferences  </th>
-         <!--  <th style="text-align: center;">Love  </th>
-          <th style="text-align: center;">Like  </th>
-          <th style="text-align: center;">Dislike  </th> -->
-        </tr>
+    <div class="col-xs-127  col-md-6  col-sm-6 th-md-col-space table-inlinebox">
+      <table class="table table-bordered fd-table boottom-table-marg table-container-row">
        <tr>
          <td class="fd-cent" >Soups</td>
           <td align="center" class="md-radio-column-box">
@@ -1432,10 +1453,10 @@ table.fd-table tr>td {
       </table>
 </div>-->
 <!--<div class="clear"></div>-->
-<div class="col-md-6  col-sm-6 th-md-col-space">
+<div class="col-md-6 col-xs-127 col-sm-6 th-md-col-space table-inlinebox">
    <table class="table table-bordered fd-table tabport-tabletext-middel table-container-row">
-        <tr>
-          <th></th>
+        <tr class="mobspace-none">
+          <th ></th>
 
         </tr>
        <tr>
@@ -2141,7 +2162,7 @@ table.fd-table tr>td {
 </div>-->
 <div class="clearfix"></div>
       <!--<div class="space-20-h"></div>-->
-      <hr class="divider divmar">
+      <hr class="divider divmar margin-divid">
 
       <div class="form-group frmgrp-mar dietary-requirements-row">
         <div class="col-md-12 md-col-nospace">
@@ -2185,7 +2206,7 @@ table.fd-table tr>td {
           <div class="col-xs-6 col-md-2 col-sm-2 md-dislike-0">
               <div class="checkbox">
               <input type="checkbox" class="dislikeschk" name="data[CharterGuestFoodPreference][dislikes][]" value="6" <?php echo $dislikesListChecked[6]; ?>>
-               <label class="pdd-none">Caviar</label>
+               <label class="pdd-none">Sardines</label>
           </div>  
           </div>
           <div class="col-xs-6 col-md-2 col-sm-3 md-dislike-0">
@@ -2219,10 +2240,10 @@ table.fd-table tr>td {
         <div class="clearfix"></div>
 
         <div class="row ipad-port-comments">
-          <div class="col-md-1 col-sm-2 md-dislike-0 comt-like-row">
+          <div class="col-md-1 col-sm-2 md-dislike-0 comt-like-row ">
           <label class="cmt-space control-label label-comments-space">Comments</label>
         </div>
-        <div class="col-md-7 col-sm-9 md-dislike-0">
+        <div class="col-md-7 col-sm-9 md-dislike-0 r-pa-30">
           <!--<input type="text" class="form-control">-->
           <?php echo $this->Form->input("dislike_comments",array("label"=>false,'class'=>'form-control','type' => 'text')); ?>
         </div>

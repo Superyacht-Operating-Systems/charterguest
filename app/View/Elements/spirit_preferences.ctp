@@ -9,10 +9,12 @@ $session = $this->Session->read();
     display: block;
     margin-bottom: 20px;
     line-height: 1.42857143;
-    background-color: #fff;
+    background-color: #000;
     border-radius: 2px;
+    border: 1px solid #dddddd8f;
     box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12);
     transition: box-shadow .25s;
+    color: #fff;
 }
 
 .card-content {
@@ -30,7 +32,7 @@ $session = $this->Session->read();
 		list-style:none;
 	}
 	ul.quick-lst li a{
-		color:rgba(0, 0, 0, 0.6509);
+		  color:#fff;
 	}
 	.progress.scope{
 		height:8px;
@@ -249,7 +251,7 @@ table#selectedProductListTableId tr td input {
 	</div>
 	</div>
 <!--	table-->
-	<div class="col-md-9 panel-full-md-row">
+	<div class="col-md-9 panel-full-md-row mob-right0">
 		<div class="row">
 <div class="filter-button">Show Filters</div>  
 			<div class="col-sm-4">
@@ -259,14 +261,13 @@ table#selectedProductListTableId tr td input {
 					<option value="25">25</option>
                     <option value="50">50</option>
                     <option value="100">100</option>
-                     </select> entries</label>
+                     </select></label>
 				</div>
                         </div>
 			<div class="col-sm-8 serch-filter-row">
 				<div id="example_filter" class="pull-right">
-					<label class="col-md-4 searchpos">Search:</label>
 				    <div class="input-group">
-                        <input type="search" id="productName" class="form-control" placeholder="Enter the Product name" aria-controls="example">
+                        <input type="search" id="productName" class="form-control" placeholder="Search Name" aria-controls="example">
                         <span type="button" class="btn btn-info input-group-addon productFilter"><i class="fa fa-search"></i></span>
                     </div>
                                     <!-- <div class="col-md-8">
@@ -277,6 +278,7 @@ table#selectedProductListTableId tr td input {
                                     </div> -->
                                 </div>
                         </div>
+                         <button class="btn pull-right previous-btn previousSelectionButton" data-type="spirit" >Previous Selections</button>
 			</div>
 	
             <div id="productListDiv">
@@ -623,7 +625,47 @@ $(document).on("click", "#wlinputsave", function(e) {
             }
         });
 });
+
+
+$(document).on("click", ".addtocartselectedBeer", function(e) {
+    var obj = $(this);
+    var rowObj = obj.closest("tr");
+    var productid = obj.data("productid");
+    var quantity = obj.data("quantity");
     
+    if (productid != "") {
+        $("#hideloader").show();
+        $.ajax({
+            type: "POST",
+            url: '<?php echo $baseFolder; ?>/charters/addPreviousSpiritToCart',
+            dataType: 'json',
+            data: { "productListId": productid,"quantity":quantity },
+            success:function(result) {
+                $("#hideloader").hide();
+                if (result.status == 'success') {
+                    $(".selectProductRow").each(function (i,e) { 
+                        if($(this).attr('data-productlistid') == productid){ 
+                            $(this).css('display', 'none');
+                        };   
+                    });
+                    $(".removeProductRow").each(function (i,e) {
+                        if($(this).attr('data-productlistid') == productid){
+                            $(this).css('display', 'block');
+                        };   
+                    });
+                    $("#previousBeerSelectionCart").modal('hide');
+                    $("#productSelectionCartBtn").click();
+                }  
+            },
+            error: function(jqxhr) { 
+                $("#hideloader").hide();
+            }
+        });
+    }  
+	
+});
+    
+                    
 </script>
 
 

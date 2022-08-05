@@ -6,8 +6,7 @@
      $selectedCHID = $this->Session->read('selectedCHID');
      $selectedCHPRGID = $this->Session->read('selectedCHPRGID');
      $selectedCHPRGCOMID = $this->Session->read('selectedCHPRGCOMID');
-    //echo "<pre>"; print_r($this->Session->read()); 
-    //exit;
+    
     if(isset($charterAssocIdisHeadChecked) && $charterAssocIdisHeadChecked!=''){
     $sessionCH = $charterAssocIdisHeadChecked;//$sessionAssoc['CharterGuestAssociate']['is_head_charterer'];
     }
@@ -19,6 +18,19 @@
     $sessionCharterGuest = $this->Session->read('charter_info.CharterGuest');
 
     $sessionCharterGuestAssociate = $this->Session->read('charter_info.CharterGuestAssociate');
+
+            $ownerprefenceID = $this->Session->read('ownerprefenceID');
+            $ownerprefenceUUID = $this->Session->read('ownerprefenceUUID');
+
+            $selectedCharterProgramUUID = $this->Session->read('selectedCharterProgramUUID');
+
+            $assocprefenceID = $this->Session->read('assocprefenceID');
+            $assocprefenceUUID = $this->Session->read('assocprefenceUUID');
+
+            $base = $this->request->base;
+
+            //echo "<pre>"; print_r($this->Session->read()); 
+    //exit;
 ?>
 
 <?php 
@@ -78,10 +90,141 @@
 .back-btn button{float: right;    margin-right: 20px;}
 .base-margin {margin: 5px 0px 20px 0px}
 
+/* sub menu */
+.menu__item{
+    cursor: pointer;
+}
+.menu > li{
+  /* display: inline-block; */
+  margin-right: 10px;
+  position: relative;
+  cursor: pointer;
+}
+.menu .menu__item a {
+  text-decoration: none;
+  padding: 10px 20px;
+   color: #000;
+  transition: 0.5s;
+}
+.menu .menu__item {
+  list-style: none;}
+.nav-side-menu-full-container .nav-side-menu .sidebar.show{
+    overflow-y: inherit;
+}
+.menu .submenu {
+    position: absolute;
+    margin-left:182px;
+    padding-left: 0;
+    top: 0px;
+  display: none;
+}
+.menu .submenu .menu__item{
+    display: inline-block;
+        width: 100%;
+}
+.menu .submenu .menu__item a{
+    display: inline-block;
+        word-break: break-all;
+}
+.menu .submenu .menu__item a:hover{
+    color:#fff !important;
+    background: #149be9 !important;
+}
+.modal {
+  z-index: 9999;
+}
+@media only screen and (max-width: 767px){
+    body .menu .submenu .menu__item a {
+  background: #a4a0a0!important;
+  color: #000;
+}
+body .menu .menu__item a{
+    background: #a4a0a0!important;
+  color: #000;
+}
+    .nav-side-menu .sidebar {
+  width: 190px;
+    }
 
+.nav-side-menu .sidebar.show {
+  transform: translate(0);
+  overflow-y: inherit;
+}
+body .menu .submenu .menu__item a {
+  padding: 8px 8px;
+  border: none;
+}
+.menu .submenu .menu__item:hover{
+    color:#fff;
+}
+}
 
+@media screen and (max-width: 990px) {
+.nav-side-menu {
+    display: block;
+}
+.label-bold {
+        font-size:16px;
+    }
+}
+.menu .submenu{
+    right:-164px !important;
+}
 
+.menu .submenu .menu__item a {
+    width: 160px !important;
+    
+}
 </style>
+
+<?php
+// Dynamic color
+    $session = $this->Session->read();
+    if(isset($session['pSheetsColor']) && $session['pSheetsColor'] != ''){
+      $pSheetsColor = $session['pSheetsColor'];
+    ?>
+    <style>
+        .nav > li > a:hover, .nav > li > a:focus {
+            background: <?php echo $pSheetsColor; ?> !important;
+        }
+        .nav-pills>li.active>a.nav-anch {
+            background-color: <?php echo $pSheetsColor; ?> !important;
+        }
+        .checkbox input[type="checkbox"]:checked + label::before{
+            background-color: <?php echo $pSheetsColor; ?> !important;
+        }
+        .radio input[type="radio"]:checked + label::after{
+            background: <?php echo $pSheetsColor; ?> !important;
+        }
+        .lastbutton {
+            background: <?php echo $pSheetsColor; ?> !important;
+        }
+        .selectProductRow {
+            background: <?php echo $pSheetsColor; ?> !important;
+        }
+        .productFilter {
+            background: <?php echo $pSheetsColor; ?> !important;
+        }
+        .select-btn {
+            background: <?php echo $pSheetsColor; ?> !important;
+        }
+        .selectWineRow {
+            background: <?php echo $pSheetsColor; ?> !important;
+        }
+        .wineFilter {
+            background: <?php echo $pSheetsColor; ?> !important;
+        }
+        .ds-category {
+            background: <?php echo $pSheetsColor; ?> !important;
+        }
+        .pagination > .active > span {
+            background: <?php echo $pSheetsColor; ?> !important;
+        }
+
+    </style>
+<?php } ?>
+<!-- Dynamic color -->
+
 <?php if (!empty($this->request->query) || !isset($sessionAssoc['CharterGuestAssociate']['id'])) { ?>
     <div class="back-btn">
         <a href="<?php echo $baseFolder."/charters/view"; ?>"><button type="button" class="btn btn-warning" title="Back" data-placement="bottom">
@@ -92,36 +235,69 @@
 <div class="nav-side-menu-full-container hidden-mob-view">
  <div class="nav-side-menu">
 <div class="base-margin">
-<div class="sidebar-btn">
+<div  class="sidebar-btn">
     <div class="menu-stripes"></div>
     <div class="menu-stripes"></div>
     <div class="menu-stripes"></div>
 </div>
-<section class="sidebar">
+<section class="sidebar" >
     <nav class="menu"> 
-        <ul class="menu-level1 no-style nav nav-pills nav-justified">
+        <ul class="menu menu-level1 no-style nav nav-pills nav-justified">
        
-        <?php if(isset($adminLogin) && $adminLogin==1){ ?>
-            <li class=""> <a href="<?php echo $baseFolder."/charters/programs/".$sessionCharterGuest['users_UUID']; ?>">Charter Programs</a></li>
+        <?php //if(isset($adminLogin) && $adminLogin==1){ ?>
+            <li class="pagleave"> <a href="<?php echo $baseFolder."/charters/programs/".$session['guestListUUID'];  ?>">Charter Programs</a></li>
             <!-- <li class="guest-list"> <a href="<?php //echo $baseFolder."/charters/view"; ?>">Guest List</a></li> -->
 
-        <?php }else{ 
-            if(isset($sessionCH)){ if($sessionCH == 2){ 
-                ?>
-          <!-- <li class="guest-list"> <a href="<?php //echo $baseFolder."/charters/view"; ?>">Guest List</a></li> -->
-        <?php 
-        } 
-    } 
-    } ?>
+        <?php //}
+     ?>
           
        
-          <li>
-              <?php if(isset($mapcharterprogramid) && isset($mapydb_name)){ ?>
-              <a href="<?php echo $baseFolder."/charters/charter_program_map/".$mapcharterprogramid.'/'.$mapydb_name; ?>" target="_blank">Cruising Map</a>
-              <?php } ?>
+          <!-- <li>
+              <?php //if(isset($mapcharterprogramid) && isset($mapydb_name)){ ?>
+              <a href="<?php //echo $baseFolder."/charters/charter_program_map/".$mapcharterprogramid.'/'.$mapydb_name.'/owner'; ?>" target="_blank">Cruising Map</a>
+              <?php //} ?>
+            </li> -->
+            <?php if(empty($mapdetails)){ 
+                $title  = "Not published";
+            }else if(!empty($mapdetails)){
+                    $title  = "";
+            } ?>
+             <?php if(isset($ownerprefenceID) && !empty($ownerprefenceID)){ ?>
+            <li class="menu__item"><a href="<?php echo $baseFolder."/charters/view/".$ownerprefenceID."/".$selectedCharterProgramUUID."/".$sessionCharterGuest['charter_company_id']; ?>">Guest List</a></li>
+            <?php }else if(isset($assocprefenceID) && !empty($assocprefenceID)){ ?>
+                <li class="menu__item"><a href="<?php echo $baseFolder."/charters/view_guest/".$selectedCharterProgramUUID."/".$sessionCharterGuest['charter_company_id']; ?>">Guest List</a></li>
+                <?php } ?>    
+            <li class="menu__item"> <a href="#" title="<?php echo $title; ?>">Cruising Map</a>
+                <?php if(isset($mapdetails)){ ?>
+                    <ul class="submenu">
+                        <?php foreach($mapdetails as $startdate => $data){ ?>
+                            <li class="menu__item pagleave"><a href="<?php echo $baseFolder."/charters/charter_program_map/".$data['programid'].'/'.$data['dbname'].'/owner'; ?>" target="blank"><?php echo $startdate; ?></a></li>
+                        <?php
+                                
+                            } ?>
+                    </ul>
+                <?php } ?>
+            </li>   
+            <li class="menu__item"> <a href="#">Charter Contracts</a>
+            <?php if(isset($programFiles)){ ?>
+                <ul class="submenu">
+                    <?php foreach($programFiles as $startdate => $filepath){ ?>
+                    <li class="menu__item"><a href="<?php echo $filepath; ?>" target="_blank"><?php echo $startdate; ?></a></li>
+                    <?php
+                            
+                        } ?>
+                </ul>
+            <?php } ?>
+        </li>   
+        <li class="menu__item" ><a>How To Video</a>
+           <ul class="submenu">
+                   <li class="menu__item" id="MenuHowToVideo"><a href="#">Preference Sheets</a></li>
+                   <li class="menu__item" id="MenuHowToVideoCharterHead"><a href="#">Head Charterer</a></li>
+                </ul>
             </li>
-           <li><a>How To Video</a></li>
-            <li class="list-logout-row-inner"><?php echo $this->Html->link($this->Html->image("admin/table.png", array("alt" => "","title" => "Logout")).'  Logout','/',array('escape' =>false,'title' => 'Logout'));?></li>
+           <li> <a href="<?php echo $baseFolder."/charters/privacytermsofuse/1" ?>" target="blank">Terms of Use</a></li>
+           <li> <a href="<?php echo $baseFolder."/charters/privacytermsofuse/2" ?>" target="blank">Privacy Policy</a></li>
+            <li class="list-logout-row-inner pagleave"><?php echo $this->Html->link($this->Html->image("admin/table.png", array("alt" => "","title" => "Logout")).'  Logout','/',array('escape' =>false,'title' => 'Logout'));?></li>
         </ul>
     </nav>
 </section>
@@ -138,30 +314,50 @@
 </div>
 <section id="sidebar" class="sidebar">
     <nav class="menu"> 
-        <ul class="menu-level1 no-style nav nav-pills nav-justified">
+        <ul class="menu menu-level1 no-style nav nav-pills nav-justified">
           <li class="<?php echo $personalDetailsTab; ?>"><a data-toggle="tab" href="#personal_det" class="nav-anch">Personal</a></li>
           <li class="<?php echo $mealPreferenceTab; ?>"><a data-toggle="tab" href="#meals" class="nav-anch">Meal Service</a></li>
           <li class="<?php echo $foodPreferenceTab; ?>"><a data-toggle="tab" href="#food" class="nav-anch">Food</a></li>
           <li class="<?php echo $beveragePreferenceTab; ?>"><a data-toggle="tab" href="#beverage" class="nav-anch">Beverage</a></li>
-          <?php if(isset($sessionCH)){
-              if($sessionCH == 2){ ?>
+          <?php if(isset($ownerprefenceID)){
+              //if($sessionCH == 2){ ?>
           <li class="<?php echo $spiritPreferenceTab; ?>"><a data-toggle="tab" href="#spirit" class="nav-anch">Beer & Spirit</a></li>
           <li class="<?php echo $winePreferenceTab; ?>"><a data-toggle="tab" id="wineTab" href="#wine" class="nav-anch">Wine List</a></li>
-          <?php } } else{ ?>
-           <li class="<?php echo $spiritPreferenceTab; ?>"><a data-toggle="tab" href="#spirit" class="nav-anch">Beer & Spirit</a></li>
-           <li class="<?php echo $winePreferenceTab; ?>"><a data-toggle="tab" id="wineTab" href="#wine" class="nav-anch">Wine List</a></li>
+          <?php } //} else{ ?>
+           <!-- <li class="<?php echo $spiritPreferenceTab; ?>"><a data-toggle="tab" href="#spirit" class="nav-anch">Beer & Spirit</a></li>
+           <li class="<?php echo $winePreferenceTab; ?>"><a data-toggle="tab" id="wineTab" href="#wine" class="nav-anch">Wine List</a></li> -->
         
-          <?php } ?>
+          <?php //} ?>
           
           <li class="<?php echo $itineraryPreferenceTab; ?>"><a data-toggle="tab" href="#itinerary" class="nav-anch">Itinerary</a></li>
           
-            <?php if(isset($adminLogin) && $adminLogin==1){ ?>
-                <li class="guest-list none-vew"><a href="<?php echo $baseFolder."/charters/view/".$selectedCHID."/".$selectedCHPRGID."/".$selectedCHPRGCOMID; ?>">Guest List</a></li>
-            <?php }else{ if(isset($sessionCH)){ if($sessionCH == 2){ ?>
-                <li class="guest-list none-vew"> <a href="<?php echo $baseFolder."/charters/view/".$selectedCHID."/".$selectedCHPRGID."/".$selectedCHPRGCOMID; ?>">Guest List</a></li>
-            <?php } } } ?>
+          <li class="none-vew"> <a href="<?php echo $baseFolder."/charters/programs/".$session['guestListUUID'];  ?>">Charter Programs</a></li>
+          <?php if(isset($ownerprefenceID) && !empty($ownerprefenceID)){ ?>
+            <li class="none-vew"><a href="<?php echo $baseFolder."/charters/view/".$ownerprefenceID."/".$selectedCharterProgramUUID."/".$sessionCharterGuest['charter_company_id']; ?>">Guest List</a></li>
+            <?php }else if(isset($assocprefenceID) && !empty($assocprefenceID)){ ?>
+                <li class="none-vew"><a href="<?php echo $baseFolder."/charters/view_guest/".$selectedCharterProgramUUID."/".$sessionCharterGuest['charter_company_id']; ?>">Guest List</a></li>
+                <?php } ?>    
           <li class="none-vew"><a href="<?php echo $baseFolder."/charters/charter_program_map/".$mapcharterprogramid.'/'.$mapydb_name; ?>" class="nav-anch" target="_blank">Cruising Map</a></li>
-           <li class="none-vew"><a class="nav-anch">How To Video</a></li>
+          <li class="none-vew menu__item"> <a href="#">Charter Contracts</a>
+            <?php if(isset($programFiles)){ ?>
+                <ul class="submenu">
+                    <?php foreach($programFiles as $startdate => $filepath){ ?>
+                    <li class="none-vew menu__item"><a href="<?php echo $filepath; ?>" target="_blank"><?php echo $startdate; ?></a></li>
+                    <?php
+                            
+                        } ?>
+                </ul>
+            <?php } ?>
+        </li>  
+        <li class="none-vew menu__item" ><a>How To Video</a>
+           <ul class="submenu">
+                   <li class="menu__item" id="MenuHowToVideo"><a href="#">Preference Sheets</a></li>
+                   <li class="menu__item" id="MenuHowToVideoCharterHead"><a href="#">Head Charterer</a></li>
+                </ul>
+            </li> 
+           
+           <li class="none-vew"> <a class="nav-anch" href="<?php echo $baseFolder."/charters/privacytermsofuse/1" ?>" target="blank">Terms of Use</a></li>
+           <li class="none-vew"> <a class="nav-anch" href="<?php echo $baseFolder."/charters/privacytermsofuse/2" ?>" target="blank">Privacy Policy</a></li>
          <li class="list-logout-row-inner none-vew"><?php echo $this->Html->link($this->Html->image("admin/table.png", array("alt" => "","title" => "Logout")).'  Logout','/',array('escape' =>false,'title' => 'Logout'));?></li>
         </ul>
     </nav>
@@ -169,10 +365,43 @@
 </div>
 </div>
 
+
+
+<?php 
+// if(isset($defaultFirstName)){
+// $defaultFirstName = $defaultFirstName;
+// }else{
+//     $defaultFirstName = "";  
+// } 
+// if(isset($defaultLastName)){
+//     $defaultLastName = $defaultLastName;
+//     }else{
+//         $defaultLastName = "";  
+//     }
+?>
+<div id="pageleavemodal" class="modal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" >
+  <div class="modal-dialog" role="document">
+    <div class="modal-content mc-bord">
+      <div class="modal-body">
+      <div class="modalmsg" style="margin-left: 50px;"> 
+        <p>Would you like to save or submit your</p>
+        <p>preferences before leaving this page?</p>
+      </div>
+        <div class="text-center">
+        <input class="btn btn-primary" type="button" name="pageleave_save" id="pageleave_save" value="Save" />
+     <input class="btn btn-success" style="background-color: #5cb85c;
+    border-color: #4cae4c;" type="button" name="pageleave_submit" id="pageleave_submit" value="Submit" />
+          <input class="btn btn-secondary"  type="button" name="pageleave_close" id="pageleave_close" value="Close" />
+        </div>   
+       
+      </div>
+    </div>
+  </div>
+</div>
 <!-- Tab content -->
     <div class="tab-content container tab-md-row-container">    
         <!-- Personal details -->
-        <?php echo $this->element('personal_details', array('session' => $session, 'sessionAssoc' => $sessionAssoc)); ?>
+        <?php echo $this->element('personal_details', array('session' => $session, 'sessionAssoc' => $sessionAssoc,'setdefaultFirstName'=>$defaultFirstName,'setdefaultLastName'=>$defaultLastName)); ?>
         
         <!-- Meal Preferences -->
         <?php echo $this->element('meal_preferences'); ?>
@@ -198,6 +427,102 @@
 
 </div>
 <script> 
+var urltogo = "";
+var form = "";
+var url = "";
+$(document).on("click", ".pagleave", function(e) { 
+    $("#pageleavemodal").modal("show");
+     urltogo = $(this).find('a').attr('href');
+    return false;
+});
+
+$(document).on("click","#pageleave_close",function(e) {
+    $("#pageleavemodal").modal("hide");
+    //return false;
+});
+
+$(document).on("click","#pageleave_save",function(e) {
+    var tabname = $("ul.menu-level1").find('li.active').text();
+        //alert(ref_this.data("id"));
+    if(tabname == "Personal"){
+         form = $("#personalDetailsForm");
+            url = form.attr('action');
+             //alert('Personal');
+       // $("#personalDetailsForm").submit(); 
+    }else if(tabname == "Meal Service"){ //alert('Meal');
+        form = $("#mealPreferenceForm");
+            url = form.attr('action');
+        
+    }else if(tabname == "Food"){ //alert('Food');
+        form = $("#foodPreferenceForm");
+            url = form.attr('action');
+        
+    }else if(tabname == "Beverage"){ //alert('Beverage');
+        
+        form = $("#beveragePreferenceForm");
+            url = form.attr('action');
+    }else if(tabname == "Beer & Spirit"){ //alert('Beer');
+        
+        form = $("#spiritPreferenceForm");
+            url = form.attr('action');
+    }else if(tabname == "Wine List"){ //alert('Wine');
+        
+        form = $("#winePreferenceForm");
+            url = form.attr('action');
+        
+    }else if(tabname == "Itinerary"){ //alert('Itinerary');
+        form = $("#itineraryPreferenceForm");
+            url = form.attr('action');
+        
+        
+    }
+    $("#hideloader").show();
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: form.serialize(),
+                success: function(data) {
+                    $("#hideloader").hide();
+                    // Ajax call completed successfully
+                    window.location.href = urltogo;
+                },
+                error: function(data) {
+                    $("#hideloader").hide();
+                    // Some error in ajax call
+                    alert("some Error");
+                }
+            });
+        //console.log(ref_this);
+});
+
+$(document).on("click","#pageleave_submit",function(e) {
+    var tabname = $("ul.menu-level1").find('li.active').text();
+        //alert(ref_this.data("id"));
+    //if(tabname == "Itinerary"){ alert('Itinerary');
+        form = $("#itineraryPreferenceForm");
+            url = form.attr('action');
+            $("#hideloader").show();
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: form.serialize(),
+                success: function(data) {
+                    $("#hideloader").hide();
+                    // Ajax call completed successfully
+                    window.location.href = urltogo;
+                },
+                error: function(data) {
+                    $("#hideloader").hide();
+                    // Some error in ajax call
+                    alert("some Error");
+                }
+            });
+        //console.log(ref_this);
+        
+    //}
+        //console.log(ref_this);
+});
+
     
 // Submit Guests with mail sending
 $(".sendMailClass").on("click", function(e) {
@@ -311,6 +636,27 @@ $('.timePicker').timepicker({
     step: 15 
 });
 
+
+$('.breakfast_time_timePicker').timepicker({ 
+    timeFormat: 'H:i', 
+    scrollDefault:"06:00",
+    step: 15 
+});
+
+$('.lunch_time_timePicker').timepicker({ 
+    timeFormat: 'H:i', 
+    scrollDefault:"12:00",
+    step: 15 
+});
+
+$('.dinner_time_timePicker').timepicker({ 
+    timeFormat: 'H:i', 
+    scrollDefault:"18:00",
+    step: 15 
+});
+
+
+
 // Make Non-editable fields
 $(document).on("keypress", ".nonEditable", function(e) {
     if (e.which != 8) { // Except the Backspace key
@@ -357,13 +703,13 @@ $(document).on('keypress', '.numericInput', function (e) {
 </script>
 
 <script>
+
 var sidebar = (function() {
     "use strict";
     var $contnet         = $('#content'),
         $sidebar         = $('.sidebar'),
-        $li              = $('li'),
         $sidebarBtn      = $('.sidebar-btn'),
-        $toggleCol       = $('body').add($contnet).add($sidebarBtn).add($li),
+        $toggleCol       = $('body').add($contnet).add($sidebarBtn),
         sidebarIsVisible = false;
     $sidebarBtn.on('click', function() {
         if (!sidebarIsVisible) {
@@ -373,19 +719,20 @@ var sidebar = (function() {
         }
         toggleMenu();
     });
-
- function bindContent() {
-        $li.on('click', function() {
+    function bindContent() {
+  
+        $contnet.on('click', function() {
             toggleMenu();
             unbindContent();
         });
     }
     function unbindContent() {
-        $li.off();
+        $contnet.off();
     }
     function toggleMenu() {
         $toggleCol.toggleClass('sidebar-show');
         $sidebar.toggleClass('show');
+
         if (!sidebarIsVisible) {
             sidebarIsVisible = true;
         } else {
@@ -393,6 +740,18 @@ var sidebar = (function() {
         }
     }
 })();
+
+
+$('.menu > .menu__item').hover(function(){
+  $(this).children('.submenu').show();
+  
+}, function() {
+  $(this).children('.submenu').hide();
+  
+});
+
+
+
 $(document).ready(function(){
         //var countries = ["Afghan", "Albanian", "Bahamas", "Bahrain", "Cambodia", "Cameroon", "Denmark", "Djibouti", "East Timor", "Ecuador", "Falkland Islands (Malvinas)", "Faroe Islands", "Gabon", "Gambia", "Haiti", "Heard and Mc Donald Islands", "Iceland", "India", "Jamaica", "Japan", "Kenya", "Kiribati", "Lao People's Democratic Republic", "Latvia", "Macau", "Macedonia", "Namibia", "Nauru", "Oman", "Pakistan", "Palau", "Qatar", "Reunion", "Romania", "Saint Kitts and Nevis", "Saint Lucia", "Taiwan", "Tajikistan", "Uganda", "Ukraine", "Vanuatu", "Vatican City State", "Wallis and Futuna Islands", "Western Sahara", "Yemen", "Yugoslavia", "Zaire", "Zambia"];
         
@@ -409,5 +768,14 @@ $(document).ready(function(){
             { minLength: 1 },
             { source: countries_suggestion }
         );
-    });  
+
+// This prevents the page from scrolling down to where it was previously.
+if ('scrollRestoration' in history) {
+    history.scrollRestoration = 'manual';
+}
+// This is needed if the user scrolls down during page load and you want to make sure the page is scrolled to the top once it's fully loaded. This has Cross-browser support.
+window.scrollTo(0,0);
+     });  
+
+
 </script> 

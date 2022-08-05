@@ -22,6 +22,106 @@ class ChartersController extends AppController {
         $this->layout = 'login';        
     }
     
+    function forgot_password() {       
+        Configure::write('debug',0);
+       $this->Session->destroy();
+        //exit('ddddddd');
+        //$this->autoRender = false;
+        $this->layout = 'login';        
+        $this->set('name','kkkkk');
+         //$this->redirect(array('action' => 'forgot_password'));
+    }
+    
+    function verifyEmail() {
+        //echo "<pre>"; print_r($this->request->data); exit;
+        if ($this->request->is('ajax')) {
+            $this->layout = false;
+            $this->autoRender = false;
+            $result = array();
+
+            if (isset($this->request->data['email']) && !empty($this->request->data['email'])) {
+                $email = $this->request->data['email'];
+                $this->loadModel('CharterGuest');
+                $this->loadModel('GuestList');
+                $cloudUrl = Configure::read('cloudUrl');
+                $SITE_URL = Configure::read('BASE_URL');
+
+                $this->CharterGuest->set($this->request->data);
+                if (!$this->CharterGuest->validates(array('fieldList' => array('email')))) {
+                    $result['status'] = "invalid_email";
+                    $result['message'] = "Please enter a valid Email.";
+                } else {
+                    $guestConditions = array('email' => $email);
+
+                    $GuestListData = $this->GuestList->find('first', array('conditions' => $guestConditions));
+                    $this->loadModel('CharterGuestAssociate');
+                    $guestassConditions = array('UUID' => $GuestListData['GuestList']['UUID']);
+                    $GuestAssListData = $this->CharterGuestAssociate->find('first', array('conditions' => $guestassConditions));
+                   
+                    //echo "<pre>"; print_r($GuestAssListData); exit;
+                    if (count($GuestListData) != 0) {
+                        // user exit
+                        $sesstion = $this->Session->read();
+                        //echo "<pre>"; print_r($GuestListData); print_r($sesstion); exit;
+                        $salutation = $GuestListData['GuestList']['salutation'];
+                        $firstName = $GuestListData['GuestList']['first_name'];
+                        $lastName = $GuestListData['GuestList']['last_name'];
+                        $userToken = $GuestListData['GuestList']['token'];
+                        $to = $email;
+                        $cloudURL = Configure::read('cloudUrl') . "charterguest";
+                        $subject = "Charter Guest password reset";
+                        $message = "
+                        <html>
+                        <head>
+                        <title></title>
+                        </head>
+                        <body>
+                        <div style='font-size:14px; font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif;'>
+                        <p>Hello <b>" . $firstName . "</b>,</p>
+                        <p>Use the below token to log in and change your password.</p>
+                        <br/>
+                        <p>Token : <b>" . $userToken . "</b></p>
+                        <br/>
+                        <p>Please contact support@charterguest.com with any questions.</p>
+                        </br>
+                        <p>Sincerely,</p>        
+                        <p>The SOS Team.</p>   
+                        </div>
+                        </body>
+                        </html>";
+
+                        $headers = "MIME-version: 1.0\n";
+                        $headers .= "Content-type: text/html; charset= iso-8859-1\n";
+                        $headers .= 'From: TotalSuperyacht <mail@totalsuperyacht.com>' . "\r\n";
+                        //echo "<pre>"; print_r($GuestListData); 
+                       
+                        //exit;
+                        $sendMail = $this->chkSMTPEmail($to, $subject, $message, $headers);
+                        //echo $sendMail; exit;
+                         $this->loadModel('GuestList');
+                            $updateData['GuestList']['id'] = $GuestListData['GuestList']['id'];;
+                            $updateData['GuestList']['password'] = NULL;
+                            $this->GuestList->save($updateData);
+                            $this->loadModel('CharterGuestAssociate');
+                            $updateData1['CharterGuestAssociate']['id'] = $GuestAssListData['CharterGuestAssociate']['id'];;
+                            $updateData1['CharterGuestAssociate']['password'] = NULL;
+                            $this->CharterGuestAssociate->save($updateData1);
+                        
+                            $result['status'] = "success";
+                            $result['message'] = "Please check your mail.";
+                         
+                    } else {
+                        // exit('ddddd');
+                        $result['status'] = "invalid_email";
+                        $result['message'] = "Sorry no email address was found.";
+                    }
+                }
+                echo json_encode($result);
+                exit;
+            }
+        }
+    }
+
     /*
         * Token verification
         * Functionality -  Verify the token and redirect to the Guest page
@@ -77,16 +177,28 @@ class ChartersController extends AppController {
                         $companyData = $this->Fleetcompany->find('first', array('fields' => array('management_company_name','logo','fleetname','id'), 'conditions' => array('id' => $charterData['CharterGuest']['charter_company_id'])));
                         if (isset($companyData['Fleetcompany']['logo']) && !empty($companyData['Fleetcompany']['logo'])) {
                             // $fleetLogoUrl = $cloudUrl.$companyData['Fleetcompany']['fleetname']."/img/logo/thumb/".$companyData['Fleetcompany']['logo'];
-                            $fleetLogoUrl = $SITE_URL.'/'."charterguest/img/logo/thumb/".$companyData['Fleetcompany']['logo'];
+                            // $fleetLogoUrl = $SITE_URL.'/'."charterguest/img/logo/thumb/".$companyData['Fleetcompany']['logo'];
+                            // $fleetLogoUrl = $cloudUrl.$companyData['Fleetcompany']['fleetname']."/img/logo/thumb/".$companyData['Fleetcompany']['logo'];
+                            $fleetLogoUrl = $SITE_URL.'/'.$companyData['Fleetcompany']['fleetname']."/img/logo/thumb/".$companyData['Fleetcompany']['logo'];
                             $this->Session->write("fleetLogoUrl", $fleetLogoUrl);
-                                $this->Session->write("fleetCompanyName", $companyData['Fleetcompany']['management_company_name']);
-                                $this->Session->write("fleetCompanyID", $companyData['Fleetcompany']['id']);
-                                $this->Session->write("fleetname", $companyData['Fleetcompany']['fleetname']);
+                            $this->Session->write("fleetCompanyName", $companyData['Fleetcompany']['management_company_name']);
+                            $this->Session->write("fleetCompanyID", $companyData['Fleetcompany']['id']);
+                            $this->Session->write("fleetname", $companyData['Fleetcompany']['fleetname']);
                         }else{
                             $fleetLogoUrl = $SITE_URL.'/'."charterguest/img/logo/thumb/charter_guest_logo.png";
                             $this->Session->write("fleetLogoUrl", $fleetLogoUrl);
                         }
                         
+                        $yachtDBData = $this->Yacht->getYachtData('yacht');
+                        $image = $yachtDBData[0]['yachts']['cg_background_image'];
+                        $pSheetsColor = $yachtDBData[0]['yachts']['psheets_color'];
+                        if($image){
+                            $cgBackgroundImage = BASE_URL.'/SOS/app/webroot/betayacht/app/webroot/img/charter_program_files/'.$image;
+                        }else{
+                            $cgBackgroundImage = "https://totalsuperyacht.com:8080/charterguest/css/admin/images/full-charter.png";
+                        }
+                        $this->Session->write("cgBackgroundImage", $cgBackgroundImage);
+                        $this->Session->write("pSheetsColor", $pSheetsColor);
                         
                         // Check whether the Password is already created
                         $passwordExists = $this->CharterGuest->find('first', array('conditions' => array('id' => $charterData['CharterGuest']['id'], 'password IS NOT NULL', 'password != ""')));
@@ -94,7 +206,7 @@ class ChartersController extends AppController {
                             //echo "here"; exit;
                             $result['status'] = "success_redirect";
                             $result['url'] = 'charters/programs/'.$GuestListData['GuestList']['UUID'];
-
+                            $this->Session->write("guestListUUID", $GuestListData['GuestList']['UUID']);
                         } else {
                            // echo "kkkkkkkkk"; exit;
                             $result['status'] = "success";
@@ -157,6 +269,7 @@ class ChartersController extends AppController {
                             if (!empty($passwordExists)) {
                                 $result['status'] = "success_redirect";
                                 $result['url'] = 'charters/programs/'.$GuestListData['GuestList']['UUID'];
+                                $this->Session->write("guestListUUID", $GuestListData['GuestList']['UUID']);
                             } else {
                                 $result['status'] = "success";
                                 $result['url'] = 'charters/programs';
@@ -263,15 +376,17 @@ class ChartersController extends AppController {
         $this->loadModel('Yacht');
         $this->loadModel('YachtWeblink');
         $this->loadModel('CharterProgramFile');
+        $this->loadModel('Fleetcompany');
         $guestListData = $this->GuestList->find('first', array('conditions' => $GuestListConditions));
-        $charterGuestData = $this->CharterGuest->find('all', array('conditions' => $CharterGuestConditions));
+        $charterGuestData = $this->CharterGuest->find('all', array('conditions' => $CharterGuestConditions, 'order' => 'CharterGuest.charter_from_date desc'));
 
         $websiteList = $this->Yacht->find('list', array('fields' => array('id','charter_website')));
-
+        $yfullName = $this->Yacht->find('list', array('fields' => array('id','yfullName')));
         $programFiles  = array();
         $mapdetails = array();
+        $SITE_URL = Configure::read('BASE_URL');
        // echo "<pre>";print_r($guestListData); //exit;
-        //echo "<pre>";print_r($charterGuestData); exit;
+        // echo "<pre>";print_r($charterGuestData); exit;
         if(isset($charterGuestData) && !empty($charterGuestData)){
             $commentcounttotal = 0;
             foreach($charterGuestData as $key => $value){
@@ -290,13 +405,34 @@ class ChartersController extends AppController {
                     //$programFiles[]['startdate'] = $charter_from_date;
                 }
                 $yacht_id = $value['CharterGuest']['yacht_id'];
+                $charter_company_id = $value['CharterGuest']['charter_company_id'];
                 $yachtCond = array('Yacht.id' => $yacht_id);
                 $Ydata = $this->Yacht->find('first', array('conditions' => $yachtCond));
                 $ydb_name = $Ydata['Yacht']['ydb_name'];
+                $yname = $Ydata['Yacht']['yname'];
                 
-
+                if(isset($charter_company_id) && !empty($charter_company_id)){
+                    $companyData = $this->Fleetcompany->find('first', array('fields' => array('management_company_name','logo','fleetname'), 'conditions' => array('id' => $charter_company_id)));
+                    $fleetname = $companyData['Fleetcompany']['fleetname'];
+                }
+                if(isset($value['CharterGuest']['program_image']) && !empty($value['CharterGuest']['program_image'])){
+                    if (!empty($fleetname)) {
+                        if($fleetname == "fleetbeta" || $fleetname == "SOS"){
+                            $targetFullPath = $SITE_URL."/fleetbeta/app/webroot/img/charter_program_files/charter_program_photo/".$value['CharterGuest']['program_image'];
+                        }else if($fleetname != "fleetbeta" || $fleetname != "SOS"){
+                            $targetFullPath = $SITE_URL."/".$fleetname."/app/webroot/img/charter_program_files/charter_program_photo/".$value['CharterGuest']['program_image'];
+                        }else{
+                            $targetFullPath = $SITE_URL."/".$fleetname."/app/webroot/".$yname."/app/webroot/img/charter_program_files/charter_program_photo/".$value['CharterGuest']['program_image'];
+                        }
+                    } else {
+                        $targetFullPath = $SITE_URL."/".$yname."/app/webroot/img/charter_program_files/charter_program_photo/".$value['CharterGuest']['program_image'];
+                    }
+                    $charterGuestData[$key]['program_image'] = $targetFullPath;
+                }else{
+                    $charterGuestData[$key]['program_image'] = "#";
+                }
                 $pid = $value['CharterGuest']['charter_program_id'];
-
+                $charterGuestData[$key]['ydb_name'] = $ydb_name;
                 $scheduleData = $this->CharterProgramFile->query("SELECT * FROM $ydb_name.charter_program_schedules CharterProgramSchedule WHERE charter_program_id = '$pid' AND is_deleted = 0");
                 if(isset($scheduleData) && !empty($scheduleData)){
                     if(($scheduleData[0]['CharterProgramSchedule']['publish_map'] == 1)){
@@ -304,11 +440,32 @@ class ChartersController extends AppController {
                         $map['dbname'] = $ydb_name;
                         $map['programid'] = $value['CharterGuest']['charter_program_id'];
                         $commentindividualtotal = $this->charter_program_map_total_msg_count($value['CharterGuest']['charter_program_id'],$ydb_name);
+                        $charterGuestData[$key]['msg_count'] = $commentindividualtotal;
                         $map['count'] = $commentindividualtotal;
                         $mapdetails[$charter_from_date] = $map;
                         $commentcounttotal += $commentindividualtotal;
+                        $charterGuestData[$key]['map_url'] = "link";
+                    }else{
+                        $charterGuestData[$key]['map_url'] = "nolink";
                     }
+                }else{
+                    $charterGuestData[$key]['map_url'] = "nolink";
                 }
+
+                // $yachtDBData = $this->Yacht->getYachtData($ydb_name);
+                // $image = $yachtDBData[0]['yachts']['cg_background_image'];
+                // $pSheetsColor = $yachtDBData[0]['yachts']['psheets_color'];
+
+                            $this->loadModel('Fleetcompany');
+                            $companyData = $this->Fleetcompany->find('first', array('fields' => array('management_company_name','logo','fleetname'), 'conditions' => array('id' => $value['CharterGuest']['charter_company_id'])));
+                            if (isset($companyData['Fleetcompany']['logo']) && !empty($companyData['Fleetcompany']['logo'])) {
+                                // $fleetLogoUrl = $cloudUrl.$companyData['Fleetcompany']['fleetname']."/img/logo/thumb/".$companyData['Fleetcompany']['logo'];
+                                $fleetLogoUrl = $SITE_URL.'/'."charterguest/img/logo/thumb/".$companyData['Fleetcompany']['logo'];
+                                $charterGuestData[$key]['charter_logo'] = $fleetLogoUrl;
+                            } else{
+                                $fleetLogoUrl = $SITE_URL.'/'."charterguest/img/logo/thumb/charter_guest_logo.png";
+                                $charterGuestData[$key]['charter_logo'] = $fleetLogoUrl;
+                            }
                 
             }//exit;
             //echo "<pre>";print_r($commentcounttotal); exit;
@@ -330,31 +487,100 @@ class ChartersController extends AppController {
 
          }
 
-             $charterAssocData = $this->CharterGuestAssociate->find('all', array('conditions' => $charterAssocConditions));
-             //echo "<pre>";print_r($charterAssocData); exit;
+            //  $charterAssocData = $this->CharterGuestAssociate->find('all', array('conditions' => $charterAssocConditions)); old query
+             $charterAssocData = $this->CharterGuestAssociate->find('all', array(
+                'conditions' => $charterAssocConditions, 
+                "joins" => array(
+                    array(
+                        'table' => 'charter_guests',
+                        'alias' => 'CharterGuest',
+                        'type' => 'LEFT',
+                        'conditions' => array('CharterGuestAssociate.charter_program_id = CharterGuest.charter_program_id')
+                    ),
+                ),
+                'order' => array('CharterGuest.charter_from_date' => 'DESC'),
+                ));
+                // echo " query = "; print_r($this->CharterGuestAssociate->getLastQuery());
+            //  echo "<pre>";print_r($charterAssocData); exit;
              if(isset($charterAssocData) && !empty($charterAssocData)){
 
                 foreach($charterAssocData as $key => $value){
                     $chConditions = array('charter_program_id' => $value['CharterGuestAssociate']['charter_program_id']);
                     $chData = $this->CharterGuest->find('first', array('conditions' => $chConditions));
                     $charterAssocData[$key]['charterDetails'] = $chData;
-
+                    
+                        $yachtCond = array('Yacht.id' => $value['CharterGuestAssociate']['yacht_id']);
+                        $charter_company_id = $value['CharterGuestAssociate']['fleetcompany_id'];
+                        $Ydata = $this->Yacht->find('first', array('conditions' => $yachtCond));
+                        if(isset($Ydata['Yacht']['ydb_name'])){
+                        $ydb_name = $Ydata['Yacht']['ydb_name'];
+                        }
+                        $yname = $Ydata['Yacht']['yname'];
+                        if(isset($charter_company_id) && !empty($charter_company_id)){
+                            $companyData = $this->Fleetcompany->find('first', array('fields' => array('management_company_name','logo','fleetname'), 'conditions' => array('id' => $charter_company_id)));
+                            $fleetname = $companyData['Fleetcompany']['fleetname'];
+                        }
+                    if(isset($chData['CharterGuest']['program_image']) && !empty($chData['CharterGuest']['program_image'])){
+                        if (!empty($fleetname)) {
+                            if($fleetname == "fleetbeta" || $fleetname == "SOS"){
+                                $targetFullPath = $SITE_URL."/fleetbeta/app/webroot/img/charter_program_files/charter_program_photo/".$chData['CharterGuest']['program_image'];
+                            }else if($fleetname != "fleetbeta" || $fleetname != "SOS"){
+                                $targetFullPath = $SITE_URL."/".$fleetname."/app/webroot/img/charter_program_files/charter_program_photo/".$value['CharterGuest']['program_image'];
+                            }else{
+                                $targetFullPath = $SITE_URL."/".$fleetname."/app/webroot/".$yname."/app/webroot/img/charter_program_files/charter_program_photo/".$chData['CharterGuest']['program_image'];
+                            }
+                        } else {
+                            $targetFullPath = $SITE_URL."/".$yname."/app/webroot/img/charter_program_files/charter_program_photo/".$chData['CharterGuest']['program_image'];
+                        }
+                        $charterAssocData[$key]['charterDetails']['ch_image'] = $targetFullPath;
+                    }else{
+                        $charterAssocData[$key]['charterDetails']['ch_image'] = "#";
+                    }
+                    $charterAssocData[$key]['charterDetails']['ydb_name'] = $ydb_name;
                     $YachtWeblinkConditions = array('YachtWeblink.charter_company_id' => $value['CharterGuestAssociate']['fleetcompany_id'],'YachtWeblink.yacht_id' => $value['CharterGuestAssociate']['yacht_id'],'YachtWeblink.is_deleted'=>0);
                     $YachtWeblink = $this->YachtWeblink->find('first', array('conditions' => $YachtWeblinkConditions));
                     if(isset($YachtWeblink)){
                         $charterAssocData[$key]['websitedetails'] = $YachtWeblink;
                     }
+
+                    $this->loadModel('Fleetcompany');
+                            $companyData = $this->Fleetcompany->find('first', array('fields' => array('management_company_name','logo','fleetname'), 'conditions' => array('id' => $value['CharterGuestAssociate']['fleetcompany_id'])));
+                            if (isset($companyData['Fleetcompany']['logo']) && !empty($companyData['Fleetcompany']['logo'])) {
+                                // $fleetLogoUrl = $cloudUrl.$companyData['Fleetcompany']['fleetname']."/img/logo/thumb/".$companyData['Fleetcompany']['logo'];
+                                $fleetLogoUrl = $SITE_URL.'/'."charterguest/img/logo/thumb/".$companyData['Fleetcompany']['logo'];
+                                $charterAssocData[$key]['charterDetails']['charter_logo'] = $fleetLogoUrl;
+                            } else{
+                                $fleetLogoUrl = $SITE_URL.'/'."charterguest/img/logo/thumb/charter_guest_logo.png";
+                                $charterAssocData[$key]['charterDetails']['charter_logo'] = $fleetLogoUrl;
+                            }
+
+                            $commentindividualtotal = $this->charter_program_map_total_msg_count($value['CharterGuestAssociate']['charter_program_id'],$ydb_name);
+                        $charterAssocData[$key]['charterDetails']['msg_count'] = $commentindividualtotal;
+
+                        $pid = $value['CharterGuestAssociate']['charter_program_id'];
+                        $scheduleData = $this->CharterProgramFile->query("SELECT * FROM $ydb_name.charter_program_schedules CharterProgramSchedule WHERE charter_program_id = '$pid' AND is_deleted = 0");
+                        if(isset($scheduleData) && !empty($scheduleData)){
+                            if(($scheduleData[0]['CharterProgramSchedule']['publish_map'] == 1)){
+                                
+                                $charterAssocData[$key]['charterDetails']['map_url'] = "link";
+                            }else{
+                                $charterAssocData[$key]['charterDetails']['map_url'] = "nolink";
+                            }
+                        }else{
+                            $charterAssocData[$key]['charterDetails']['map_url'] = "nolink";
+                        }
                 }
 
              }
-        //echo "<pre>";print_r($charterGuestData); 
-        //echo "<pre>";print_r($charterAssocData); exit;
-        //echo "<pre>";print_r($attachment); exit;
+    //echo "<pre>";print_r($charterGuestData); 
+        //echo "<pre>";print_r($charterAssocData); //exit;
+        //echo "<pre>";print_r($mapdetails); exit;
         
         $this->set('charterGuestData', $charterGuestData);
         $this->set('charterAssocData', $charterAssocData);
         $this->set('guestListData', $guestListData);
         $this->set('websiteList', $websiteList);
+        $this->set('yfullName', $yfullName);
         if(isset($attachment) && !empty($attachment)){
             $this->set('programFiles', $attachment);
         }
@@ -372,9 +598,9 @@ class ChartersController extends AppController {
         * Modified date - 
     */
     function view() {
-        //echo "<pre>";print_r($this->is_mobile);exit;
         $session = $this->Session->read('charter_info');
         $sessionAssoc = $this->Session->read('charter_assoc_info');
+        // echo "<pre>";print_r($sessionAssoc);exit;
         if (empty($session)) {
             $this->redirect(array('action' => 'index'));
         } else if (!empty($sessionAssoc)) {
@@ -405,6 +631,102 @@ class ChartersController extends AppController {
         $this->loadModel('Yacht');
         $this->loadModel('Yacht');
         $charterData = $this->CharterGuest->find('first', array('conditions' => array('id' => $CharterGuest_id)));
+        $this->set('charterData', $charterData);
+//        echo "<pre>";print_r($charterData);
+
+        /****************** */
+        $programFiles  = array();
+        $mapdetails = array();
+        $programFilesCond = array('CharterProgramFile.charter_program_id' => $charterData['CharterGuest']['charter_program_id'],'CharterProgramFile.yacht_id' => $charterData['CharterGuest']['yacht_id'],'CharterProgramFile.is_deleted'=>0);
+        $programFiledata = $this->CharterProgramFile->find('all', array('conditions' => $programFilesCond));
+
+
+        $charter_from_date = date("d M Y", strtotime($charterData['CharterGuest']['charter_from_date']));
+        if(isset($programFiledata)){
+            $programFiles[$charter_from_date]['attachment'] = $programFiledata;
+            //$programFiles[]['startdate'] = $charter_from_date;
+        }
+        $yacht_id = $charterData['CharterGuest']['yacht_id'];
+        $yachtCond = array('Yacht.id' => $yacht_id);
+        $Ydata = $this->Yacht->find('first', array('conditions' => $yachtCond));
+        $ydb_name = $Ydata['Yacht']['ydb_name'];
+        
+
+        $pid = $charterData['CharterGuest']['charter_program_id'];
+        //echo "SELECT * FROM $ydb_name.charter_program_schedules CharterProgramSchedule WHERE charter_program_id = '$pid' AND is_deleted = 0";
+        $scheduleData = $this->CharterProgramFile->query("SELECT * FROM $ydb_name.charter_program_schedules CharterProgramSchedule WHERE charter_program_id = '$pid' AND is_deleted = 0");
+        //echo "<pre>";print_r($scheduleData);exit;
+        if(isset($scheduleData) && !empty($scheduleData)){
+            if(($scheduleData[0]['CharterProgramSchedule']['publish_map'] == 1)){
+                $map = array();
+                $map['dbname'] = $ydb_name;
+                $map['programid'] = $charterData['CharterGuest']['charter_program_id'];
+                $mapdetails[$charter_from_date] = $map;
+            }
+        }
+
+        $fleetname = $this->Session->read('fleetname');
+        if(isset($programFiles) ){
+            $attachment = array();
+            $SITE_URL = Configure::read('BASE_URL');
+            foreach($programFiles as $startdate => $filedata){ 
+                foreach($filedata['attachment'] as $file){ 
+                    $sourceImagePath = $SITE_URL.'/'.$fleetname."/app/webroot/img/charter_program_files/".$file['CharterProgramFile']['file_name'];
+                    $attachment[$startdate] = $sourceImagePath;
+
+                    }
+            } 
+        }
+
+        $this->set('programFiles', $attachment);
+        $this->set('mapdetails', $mapdetails);
+        /*********************** */
+        
+        // Fetching the Charter guest associates details
+        $this->loadModel('CharterGuestAssociate');
+        $charterAssocData = $this->CharterGuestAssociate->find('all', array('conditions' => array('charter_guest_id' => $charter_program_id)));
+        $this->set('charterAssocData', $charterAssocData);
+//        echo "<pre>";print_r($charterAssocData);exit;
+        
+        // Fetch the Charter company details
+        $this->loadModel('Fleetcompany');
+        $companyData = $this->Fleetcompany->find('first', array('fields' => array('management_company_name','logo','fleetname'), 'conditions' => array('id' => $charter_company_id)));
+        $this->set('companyData', $companyData);
+        $this->set('charter_company_id', $charter_company_id);
+        $this->set('ismobile',$this->is_mobile);
+
+        // Logo url
+        if (isset($companyData['Fleetcompany']['logo']) && !empty($companyData['Fleetcompany']['logo'])) {
+            $fleetLogoUrl = $SITE_URL.'/'."charterguest/img/logo/thumb/".$companyData['Fleetcompany']['logo'];
+        } else{
+            $fleetLogoUrl = $SITE_URL.'/'."charterguest/img/logo/thumb/charter_guest_logo.png";
+        }
+        $this->Session->write("fleetLogoUrl", $fleetLogoUrl);
+    }
+
+
+    /*
+        * Load the Charter Head's page
+        * Functionality -  Loading the Charter head's page with existing Head charterer details
+        * Developer - Nagarajan
+        * Created date - 24-May-2018
+        * Modified date - 
+    */
+    function view_guest($charter_program_id,$charter_company_id) {
+        //echo "<pre>";print_r($this->is_mobile);exit;
+
+        //echo "<pre>";print_r($explodepath);
+        
+        $charter_program_id = $charter_program_id;
+        $charter_company_id = $charter_company_id;
+        // Fetching the Head Charterer details
+       
+
+        $this->loadModel('CharterGuest');
+        $this->loadModel('CharterProgramFile');
+        $this->loadModel('Yacht');
+        $this->loadModel('Yacht');
+        $charterData = $this->CharterGuest->find('first', array('conditions' => array('charter_program_id' => $charter_program_id)));
         $this->set('charterData', $charterData);
 //        echo "<pre>";print_r($charterData);
 
@@ -510,6 +832,8 @@ class ChartersController extends AppController {
             $charterAssocId = base64_decode($this->request->query['assocId']);
             $guestAssocData = $this->CharterGuestAssociate->find('first', array('conditions' => array('id' => $charterAssocId)));
             $charterGuestAssociateUUID = $guestAssocData['CharterGuestAssociate']['UUID'];
+            $charterGuestAssociatefirst_name = $guestAssocData['CharterGuestAssociate']['first_name'];
+            $charterGuestAssociatelast_name = $guestAssocData['CharterGuestAssociate']['last_name'];
             if (empty($guestAssocData)) {
                 $this->redirect(array('action' => 'view'));
             }
@@ -526,6 +850,9 @@ class ChartersController extends AppController {
             $this->set("mapcharterprogramid", $guestAssocData['CharterGuestAssociate']['charter_program_id']);
             $this->set("mapydb_name", $mapydb_name);
 
+            $this->set("defaultFirstName", $charterGuestAssociatefirst_name);
+            $this->set("defaultLastName", $charterGuestAssociatelast_name);
+
             $this->Session->delete("ownerprefenceID");
             $this->Session->delete("ownerprefenceUUID");
 
@@ -534,6 +861,7 @@ class ChartersController extends AppController {
             $this->set("guestAssocDataByHeaderEdit", $guestAssocData);
             $this->set("charterAssocIdByHeaderEdit", $charterAssocId);
             $this->set("charterAssocIdisHeadChecked", $guestAssocData['CharterGuestAssociate']['is_head_charterer']);
+            $this->Session->write('is_head_charterer', $guestAssocData['CharterGuestAssociate']['is_head_charterer']);
            // echo "<pre>"; print_r($guestAssocData); exit;
             // Storing the assoc id to Session
             $this->Session->write("charterAssocIdByHeaderEdit", $charterAssocId);
@@ -548,6 +876,12 @@ class ChartersController extends AppController {
             if ($checkAssocExist != 0) {
                 $chedkAss = $this->CharterGuestAssociate->find('first', array('conditions' => array('id' => $charterAssociateRowId)));
                 $charterGuestAssociateUUID = $chedkAss['CharterGuestAssociate']['UUID'];
+                $charterGuestAssociatefirst_name = $chedkAss['CharterGuestAssociate']['first_name'];
+                $charterGuestAssociatelast_name = $chedkAss['CharterGuestAssociate']['last_name'];
+
+                $this->set("defaultFirstName", $charterGuestAssociatefirst_name);
+                $this->set("defaultLastName", $charterGuestAssociatelast_name);
+                
                 //echo "<pre>"; print_r($chedkAss); exit;
                 $charterAssocId = $charterAssociateRowId;
                 // For disabling the submit button
@@ -568,6 +902,7 @@ class ChartersController extends AppController {
                 $this->Session->write("charterAssocIdByHeaderView", $charterAssocId);
                 //$this->Session->write("charterAssocisHeadCharter", $chedkAss['CharterGuestAssociate']['is_head_charterer']);
                 $this->set("charterAssocIdisHeadChecked", $chedkAss['CharterGuestAssociate']['is_head_charterer']);
+                $this->Session->write('is_head_charterer', $chedkAss['CharterGuestAssociate']['is_head_charterer']);
             } else {
                 // Deleting the assoc id from Session
                 $this->Session->delete("charterAssocIdByHeaderView");
@@ -581,7 +916,13 @@ class ChartersController extends AppController {
         if (isset($this->request->query['CharterGuestId']) && !empty($this->request->query['CharterGuestId'])) {
            $charterGuestId = base64_decode($this->request->query['CharterGuestId']);
             $guestAssocData = $this->CharterGuest->find('first', array('conditions' => array('id' => $charterGuestId)));
-            $charterGuestAssociateUUID = $guestAssocData['CharterGuest']['users_UUID'];
+
+            $charterGuestAssociatefirst_name = $guestAssocData['CharterGuest']['first_name'];
+            $charterGuestAssociatelast_name = $guestAssocData['CharterGuest']['last_name'];
+
+            $this->set("defaultFirstName", $charterGuestAssociatefirst_name);
+            $this->set("defaultLastName", $charterGuestAssociatelast_name);
+
             $this->Session->write("ownerprefenceID", $charterGuestId);
             $this->Session->write("ownerprefenceUUID", $charterGuestAssociateUUID);
             $this->Session->write("selectedCharterProgramUUID", $guestAssocData['CharterGuest']['charter_program_id']);
@@ -597,6 +938,7 @@ class ChartersController extends AppController {
             //$this->set("guestAssocDataByHeaderEdit", $guestAssocData);
            // $this->set("charterAssocIdByHeaderEdit", $charterAssocId);
             $this->set("charterAssocIdisHeadChecked", $guestAssocData['CharterGuest']['is_head_charterer']);
+            $this->Session->write('is_head_charterer', $guestAssocData['CharterGuest']['is_head_charterer']);
 
             $mapyacht_id = $guestAssocData['CharterGuest']['yacht_id'];
             $mapyachtCond = array('Yacht.id' => $mapyacht_id);
@@ -924,6 +1266,10 @@ class ChartersController extends AppController {
             //echo "<pre>";print_r($data);exit;
             $ownerprefenceID = $this->Session->read('ownerprefenceID');
             $ownerprefenceUUID = $this->Session->read('ownerprefenceUUID');
+
+            $assocprefenceID = $this->Session->read('assocprefenceID');
+            $assocprefenceUUID = $this->Session->read('assocprefenceUUID');
+
             if(isset($ownerprefenceID) && !empty($ownerprefenceID)){
                  
                  $data['guest_lists_UUID'] = $ownerprefenceUUID;
@@ -1036,8 +1382,14 @@ class ChartersController extends AppController {
             if ($this->CharterGuestBeveragePreference->save($data)) {
                 //echo "<pre>"; print_r($sessionAssoc); exit;
                 // if user is not head charter then show directily ininery tab.
-                if(isset($sessionAssoc) && !empty($sessionAssoc)){
-                    if(isset($sessionAssoc['CharterGuestAssociate']['is_head_charterer']) && $sessionAssoc['CharterGuestAssociate']['is_head_charterer'] == 1){
+                // if(isset($sessionAssoc) && !empty($sessionAssoc)){
+
+            $ownerprefenceID = $this->Session->read('ownerprefenceID');
+            $ownerprefenceUUID = $this->Session->read('ownerprefenceUUID');
+
+            $assocprefenceID = $this->Session->read('assocprefenceID');
+            $assocprefenceUUID = $this->Session->read('assocprefenceUUID');
+            if(isset($assocprefenceID) && !empty($assocprefenceID)){
                         $personalDetailsTab = '';
                         $mealPreferenceTab = '';
                         $foodPreferenceTab = '';
@@ -1045,24 +1397,46 @@ class ChartersController extends AppController {
                         $spiritPreferenceTab = '';
                         $winePreferenceTab = '';
                         $itineraryPreferenceTab = 'active in';
-                    }else{
-                        $personalDetailsTab = '';
+
+            }elseif(isset($ownerprefenceID) && !empty($ownerprefenceID)){
+                            $personalDetailsTab = '';
                         $mealPreferenceTab = '';
                         $foodPreferenceTab = '';
                         $beveragePreferenceTab = '';
                         $spiritPreferenceTab = 'active in';
                         $winePreferenceTab = '';
                         $itineraryPreferenceTab = '';
-                    }
-                }else{
-                $personalDetailsTab = '';
-                $mealPreferenceTab = '';
-                $foodPreferenceTab = '';
-                $beveragePreferenceTab = '';
-                $spiritPreferenceTab = 'active in';
-                $winePreferenceTab = '';
-                $itineraryPreferenceTab = '';
-                }
+            }
+
+                $is_head_charterer = $this->Session->read('is_head_charterer');
+                // if(isset($is_head_charterer) && !empty($is_head_charterer)){
+                    
+                //     if(isset($is_head_charterer) && $is_head_charterer == 1){
+                //         $personalDetailsTab = '';
+                //         $mealPreferenceTab = '';
+                //         $foodPreferenceTab = '';
+                //         $beveragePreferenceTab = '';
+                //         $spiritPreferenceTab = '';
+                //         $winePreferenceTab = '';
+                //         $itineraryPreferenceTab = 'active in';
+                //     }else{
+                //         $personalDetailsTab = '';
+                //         $mealPreferenceTab = '';
+                //         $foodPreferenceTab = '';
+                //         $beveragePreferenceTab = '';
+                //         $spiritPreferenceTab = 'active in';
+                //         $winePreferenceTab = '';
+                //         $itineraryPreferenceTab = '';
+                //     }
+                // }else{
+                // $personalDetailsTab = '';
+                // $mealPreferenceTab = '';
+                // $foodPreferenceTab = '';
+                // $beveragePreferenceTab = '';
+                // $spiritPreferenceTab = 'active in';
+                // $winePreferenceTab = '';
+                // $itineraryPreferenceTab = '';
+                // }
             } else {
                 $personalDetailsTab = '';
                 $mealPreferenceTab = '';
@@ -1086,6 +1460,9 @@ class ChartersController extends AppController {
             //echo $charterAssocId;
             $ownerprefenceID = $this->Session->read('ownerprefenceID');
             $ownerprefenceUUID = $this->Session->read('ownerprefenceUUID');
+
+            $assocprefenceID = $this->Session->read('assocprefenceID');
+            $assocprefenceUUID = $this->Session->read('assocprefenceUUID');
 
             $guestAssc = $this->CharterGuestAssociate->find('first', array('conditions' => array('id' => $charterAssocId)));
             if (isset($guestAssc['CharterGuestAssociate']['id'])) {
@@ -1160,9 +1537,10 @@ class ChartersController extends AppController {
             if (isset($data['send_spirit_quotation'])) {
                 $sendSpiritQuotation = 1;
             }
-            if ($charterAssocId != 0) { // Charter Associate table
-                $this->CharterGuestAssociate->save(array('id' => $associatePrimaryid, 'send_spirit_quotation' => $sendSpiritQuotation));
-            } else { // Charter Guest table
+            if (isset($assocprefenceID) && !empty($assocprefenceID)) { // Charter Associate table
+                $this->CharterGuestAssociate->save(array('id' => $assocprefenceID, 'send_spirit_quotation' => $sendSpiritQuotation));
+            }
+            if (isset($ownerprefenceID) && !empty($ownerprefenceID)) {  // Charter Guest table
                 $this->CharterGuest->save(array('id' => $ownerprefenceID, 'send_spirit_quotation' => $sendSpiritQuotation));
             }
             
@@ -1189,6 +1567,10 @@ class ChartersController extends AppController {
             //echo "<pre>";print_r($guestAssc);exit;
             $ownerprefenceID = $this->Session->read('ownerprefenceID');
             $ownerprefenceUUID = $this->Session->read('ownerprefenceUUID');
+
+            $assocprefenceID = $this->Session->read('assocprefenceID');
+            $assocprefenceUUID = $this->Session->read('assocprefenceUUID');
+
             if(isset($ownerprefenceUUID) && !empty($ownerprefenceUUID)){
                  
                  $data['guest_lists_UUID'] = $ownerprefenceUUID;
@@ -1253,9 +1635,10 @@ class ChartersController extends AppController {
             if (isset($data['send_wine_quotation'])) {
                 $sendWineQuotation = 1;
             }
-            if ($charterAssocId != 0) { // Charter Associate table
-                $this->CharterGuestAssociate->save(array('id' => $associatePrimaryid, 'send_wine_quotation' => $sendWineQuotation));
-            } else { // Charter Guest table
+            if (isset($assocprefenceID) && !empty($assocprefenceID)) {  // Charter Associate table
+                $this->CharterGuestAssociate->save(array('id' => $assocprefenceID, 'send_wine_quotation' => $sendWineQuotation));
+            } 
+            if (isset($ownerprefenceID) && !empty($ownerprefenceID)) {// Charter Guest table
                 $this->CharterGuest->save(array('id' => $ownerprefenceID, 'send_wine_quotation' => $sendWineQuotation));
             }
             
@@ -1290,10 +1673,13 @@ class ChartersController extends AppController {
                 $data['guest_lists_UUID'] = $ownerprefenceUUID;
                 $guest_uuid = $ownerprefenceUUID;
                 $charterHeadId = $ownerprefenceID;
+                $CharterGuestData = $this->CharterGuest->find('first', array('conditions' => array('id' => $ownerprefenceID)));
+                $salutation = $CharterGuestData['CharterGuest']['salutation'];
             }else{
                $data['guest_lists_UUID'] = $guestAssc['CharterGuestAssociate']['UUID'];
                $guest_uuid = $guestAssc['CharterGuestAssociate']['UUID'];
                $charterAssocId = $guestAssc['CharterGuestAssociate']['id'];
+               $salutation = $guestAssc['CharterGuestAssociate']['salutation'];
             }
             $data['charter_assoc_id'] = $charterAssocId;
             $charterGuestAssociateUUID = $data['guest_lists_UUID'];
@@ -1342,14 +1728,108 @@ class ChartersController extends AppController {
                     $this->CharterGuest->save($updateData);
                 }
                 $modified = date("Y-m-d H:i:s");
-                $updateguest_listsQuery = "UPDATE guest_lists SET is_psheets_done='".$is_psheets_done."',modified='".$modified."' WHERE UUID='$guest_uuid'";
+                $updateguest_listsQuery = "UPDATE guest_lists SET is_psheets_done='".$is_psheets_done."',modified='".$modified."',salutation='".$salutation."' WHERE UUID='$guest_uuid'";
                 $this->CharterGuest->query($updateguest_listsQuery);
                 
                 // Updating the Charter guest's details into corresponding yacht's passanger list table
                 $yDBName = $session['CharterGuest']['ydb_name'];
                 // Personal details
+                $created = date("Y-m-d H:i:s");
                 $guestPersonalData = $this->CharterGuestPersonalDetail->find('first', array('conditions' => array('guest_lists_UUID' => $guest_uuid,'is_deleted'=>0)));
                 if (!empty($guestPersonalData)) {
+                    $this->loadModel('GuestList');
+                    $this->loadModel('GuestGroup');
+                    $guestListData = $this->GuestList->find('first', array('conditions' => array('UUID' => $guest_uuid,'is_deleted'=>0)));
+                    //echo "<pre>";print_r($guestListData); exit;
+                    if(isset($guestListData)){
+                        $guest_type = $guestListData['GuestList']['guest_type'];
+                        $guest_group_id = $guestListData['GuestList']['group_id'];
+                        $guest_email = $guestListData['GuestList']['email'];
+                        $guest_file_name = $guestListData['GuestList']['file_name'];
+                        $guest_file_path = $guestListData['GuestList']['file_path'];
+                        $guest_fleetcompany_id = $guestListData['GuestList']['fleetcompany_id'];
+                        //$salutation = $guestListData['GuestList']['salutation'];
+                        if($guest_file_name != ""){
+                                $guest_targetFullPath = "";
+                                $guest_sourceImagePath = WWW_ROOT."img/charter_program_files/".$guest_file_name;
+                                $guest_targetImagePath = "crew_pages/crewfiles/passenger_docs";
+                                $DOC_ROOT = $_SERVER["DOCUMENT_ROOT"];
+            //                    $targetFileName = date("ymdHis")."_".$fileName;
+                                $guest_targetFileName = $guest_file_name;
+                                
+                                // echo "<pre>";print_r($guest_sourceImagePath);
+                                // echo "<pre>";print_r($guest_targetImagePath);
+                                // echo "<pre>";print_r($guest_targetFileName);
+                                //  exit;
+                                // Check the passport file is available
+                                if (!empty($guest_file_name)) {
+                                    $guestDetails = $this->CharterGuest->find('first', array('conditions' => array('charter_program_id' => $selectedCharterProgramUUID)));
+                       
+                                    $charter_company_id = $guestDetails['CharterGuest']['charter_company_id'];
+
+                                    $this->loadModel('Fleetcompany');
+                                    $companyData = $this->Fleetcompany->find('first', array('fields' => array('management_company_name','logo','fleetname'), 'conditions' => array('id' => $charter_company_id)));
+
+                                    // Fetch the FleetCompany/Yacht path
+                                    $this->loadModel('Yacht');
+                                    $yachtData = $this->Yacht->find('first', array('conditions' => array('id' => $session['CharterGuest']['yacht_id'])));
+                                    if (!empty($yachtData['Yacht']['fleetname'])) {
+                                        $guest_sourceImagePath = $DOC_ROOT."/".$companyData['Fleetcompany']['fleetname']."/app/webroot/img/charter_program_files/".$guest_file_name;
+                                        $guest_targetFullPath = $DOC_ROOT."/".$yachtData['Yacht']['fleetname']."/app/webroot/".$yachtData['Yacht']['yname']."/app/webroot/".$guest_targetImagePath;
+                                    } else {
+                                        $guest_sourceImagePath = $DOC_ROOT."/".$companyData['Fleetcompany']['fleetname']."/app/webroot/img/charter_program_files/".$guest_file_name;
+                                        $guest_targetFullPath = $DOC_ROOT."/".$yachtData['Yacht']['yname']."/app/webroot/".$guest_targetImagePath;
+                                    }
+                                    // Create IF not exists
+                                    if(!file_exists($guest_targetFullPath)){
+                                        mkdir($guest_targetFullPath,0777,true);
+                                    }
+
+                                //     echo "<pre>";print_r($guest_sourceImagePath);
+                                // echo "<pre>";print_r($guest_targetFullPath);
+                                // echo "<pre>";print_r($guest_targetFileName);
+                                //  exit;
+                                    // Copying the image file
+                                    copy($guest_sourceImagePath, $guest_targetFullPath."/".$guest_targetFileName);
+                                    //echo $companyData['Fleetcompany']['fleetname'];
+                                    if($companyData['Fleetcompany']['fleetname'] == 'SOS' || $companyData['Fleetcompany']['fleetname'] == 'fleetbeta'){
+                                        $targetFullbetayachtPath = $DOC_ROOT."/SOS/app/webroot/betayacht/app/webroot/".$guest_targetImagePath;
+                                        copy($guest_sourceImagePath,$targetFullbetayachtPath.'/'.$guest_targetFileName);
+                                        $targetFullbetayachtPath = $DOC_ROOT."/SOS/app/webroot/yacht/app/webroot/".$guest_targetImagePath;
+                                        copy($guest_sourceImagePath,$targetFullbetayachtPath.'/'.$guest_targetFileName);
+                                        
+                                    }
+
+                                //     echo "<pre>";print_r($targetFullbetayachtPath);
+                                // echo "<pre>";print_r($guest_sourceImagePath);
+                                // echo "<pre>";print_r($guest_targetFileName);
+                                //  exit;
+                                }
+                                $targetFileName = $guest_targetFileName;
+                                $targetImagePath = $guest_targetImagePath;
+                                //     echo "<pre>";print_r($targetFileName);
+                                // echo "<pre>";print_r($targetImagePath);
+                                // //echo "<pre>";print_r($guest_targetFileName);
+                                //  exit;
+                        }
+                        if(isset($guest_group_id) && $guest_group_id != 0){
+                                $G_group_id = $guest_fleetcompany_id."_".$guest_group_id;
+
+                                $GuestGroupData = $this->GuestGroup->find('first', array('conditions' => array('id' => $guest_group_id)));
+                            $group_name = $GuestGroupData['GuestGroup']['group_name'];
+                                    // Checks the yacht.passenger_lists table whether charter id is already exists
+                            $selectQuery = "SELECT id FROM $yDBName.passenger_groups PassengerGroup WHERE group_name='$group_name' and group_id='$G_group_id'";
+                            $checkpassenger_groupsExists = $this->CharterGuest->query($selectQuery);
+                            
+                            if (empty($checkpassenger_groupsExists)) {
+
+                                // Insertion
+                                $insertQuery = "INSERT INTO $yDBName.passenger_groups (group_name,group_id,created) VALUES ('".$group_name."','".$G_group_id."','".$created."')";
+                                $this->CharterGuest->query($insertQuery);
+                            }
+                               
+                        }
+                    }
 
                     $firstName = $guestPersonalData['CharterGuestPersonalDetail']['first_name'];
                     $familyName = $guestPersonalData['CharterGuestPersonalDetail']['family_name'];
@@ -1360,14 +1840,18 @@ class ChartersController extends AppController {
                     $issuedDate = $guestPersonalData['CharterGuestPersonalDetail']['issued_date'];
                     $expiryDate = $guestPersonalData['CharterGuestPersonalDetail']['expiry_date'];
                     $fileName = $guestPersonalData['CharterGuestPersonalDetail']['passport_image'];
-                    $created = date("Y-m-d H:i:s");
+                    
+                    
                     $status = 0;
                     $targetFullPath = "";
                     $sourceImagePath = WWW_ROOT."img/passport_images/".$fileName;
                     $targetImagePath = "crew_pages/crewfiles/passenger_docs";
                     $DOC_ROOT = $_SERVER["DOCUMENT_ROOT"];
 //                    $targetFileName = date("ymdHis")."_".$fileName;
-                    $targetFileName = $fileName;
+                    if(!empty($fileName)){
+                        $targetFileName = $fileName;
+                    }
+                    
                     
 
                     // Check the passport file is available
@@ -1395,11 +1879,11 @@ class ChartersController extends AppController {
                     
                     if (empty($checkCharterExists)) {
                         // Insertion
-                        $insertQuery = "INSERT INTO $yDBName.passenger_lists (UUID,family_name,first_name,date_of_birth,place_of_birth,nationality,passport_number,issued_date,expiration_date,file_name,file_path,status,modified,is_psheets_done) VALUES ('".$guest_uuid."','".$familyName."','".$firstName."','".$dob."','".$pob."','".$nationality."','".$passportNum."','".$issuedDate."','".$expiryDate."','".$targetFileName."','".$targetImagePath."',$status,'".$created."','".$is_psheets_done."')";
+                        $insertQuery = "INSERT INTO $yDBName.passenger_lists (UUID,salutation,family_name,first_name,date_of_birth,place_of_birth,nationality,passport_number,issued_date,expiration_date,file_name,file_path,status,modified,is_psheets_done,type,group_id,email) VALUES ('".$guest_uuid."','".$salutation."','".$familyName."','".$firstName."','".$dob."','".$pob."','".$nationality."','".$passportNum."','".$issuedDate."','".$expiryDate."','".$targetFileName."','".$targetImagePath."',$status,'".$created."','".$is_psheets_done."','".$guest_type."','".$G_group_id."','".$guest_email."')";
                         $this->CharterGuest->query($insertQuery);
                     } else {
                         // Updation
-                        $updateQuery = "UPDATE $yDBName.passenger_lists SET is_psheets_done='".$is_psheets_done."',family_name='".$familyName."',first_name='".$firstName."',date_of_birth='".$dob."',place_of_birth='".$pob."',nationality='".$nationality."',passport_number='".$passportNum."',issued_date='".$issuedDate."',expiration_date='".$expiryDate."',file_name='".$targetFileName."',file_path='".$targetImagePath."',modified='".$created."' WHERE UUID='$guest_uuid'";
+                        $updateQuery = "UPDATE $yDBName.passenger_lists SET is_psheets_done='".$is_psheets_done."',salutation='".$salutation."',family_name='".$familyName."',first_name='".$firstName."',date_of_birth='".$dob."',place_of_birth='".$pob."',nationality='".$nationality."',passport_number='".$passportNum."',issued_date='".$issuedDate."',expiration_date='".$expiryDate."',file_name='".$targetFileName."',file_path='".$targetImagePath."',modified='".$created."',type='".$guest_type."',group_id='".$G_group_id."',email='".$guest_email."' WHERE UUID='$guest_uuid'"; 
                         $this->CharterGuest->query($updateQuery);
                     }
                     
@@ -1414,23 +1898,96 @@ class ChartersController extends AppController {
                         $assocDetails = $this->CharterGuestAssociate->find('first', array('conditions' => array('id' => $charterAssocId)));
                         $firstName = $assocDetails['CharterGuestAssociate']['first_name'];
                         $familyName = $assocDetails['CharterGuestAssociate']['last_name'];
+                        $salutation = $assocDetails['CharterGuestAssociate']['salutation'];
+                        $charter_company_id = $assocDetails['CharterGuestAssociate']['fleetcompany_id'];
                     } else { // Head Charterer
                         $guestDetails = $this->CharterGuest->find('first', array('conditions' => array('charter_program_id' => $selectedCharterProgramUUID)));
                         $firstName = $guestDetails['CharterGuest']['first_name'];
                         $familyName = $guestDetails['CharterGuest']['last_name'];
+                        $salutation = $guestDetails['CharterGuest']['salutation'];
+                        $charter_company_id = $guestDetails['CharterGuest']['charter_company_id'];
                     }
-                    
+
+                    $this->loadModel('GuestList');
+                    $this->loadModel('GuestGroup');
+                    $guestListData = $this->GuestList->find('first', array('conditions' => array('UUID' => $guest_uuid,'is_deleted'=>0)));
+                    if(isset($guestListData)){
+                        $guest_type = $guestListData['GuestList']['guest_type'];
+                        $guest_group_id = $guestListData['GuestList']['group_id'];
+                        $guest_email = $guestListData['GuestList']['email'];
+                        $guest_file_name = $guestListData['GuestList']['file_name'];
+                        $guest_file_path = $guestListData['GuestList']['file_path'];
+                        //$salutation = $guestListData['GuestList']['salutation'];
+                        if($guest_file_name != ""){
+                                $guest_targetFullPath = "";
+                                $guest_sourceImagePath = WWW_ROOT."img/charter_program_files/".$guest_file_name;
+                                $guest_targetImagePath = "crew_pages/crewfiles/passenger_docs";
+                                $DOC_ROOT = $_SERVER["DOCUMENT_ROOT"];
+            //                    $targetFileName = date("ymdHis")."_".$fileName;
+                                $guest_targetFileName = $guest_file_name;
+                                
+
+                                // Check the passport file is available
+                                if (!empty($guest_file_name)) {
+                                    if($charter_company_id != 0){
+                                        $this->loadModel('Fleetcompany');
+                                        $companyData = $this->Fleetcompany->find('first', array('fields' => array('management_company_name','logo','fleetname'), 'conditions' => array('id' => $charter_company_id)));
+                                    }
+                                    // Fetch the FleetCompany/Yacht path
+                                    $this->loadModel('Yacht');
+                                    $yachtData = $this->Yacht->find('first', array('conditions' => array('id' => $session['CharterGuest']['yacht_id'])));
+                                    if (!empty($yachtData['Yacht']['fleetname'])) {
+                                        $guest_sourceImagePath = $DOC_ROOT."/".$companyData['Fleetcompany']['fleetname']."/app/webroot/img/charter_program_files/".$guest_file_name;
+                                        $guest_targetFullPath = $DOC_ROOT."/".$yachtData['Yacht']['fleetname']."/app/webroot/".$yachtData['Yacht']['yname']."/app/webroot/".$guest_targetImagePath;
+                                    } else {
+                                        $guest_sourceImagePath = $DOC_ROOT."/".$companyData['Fleetcompany']['fleetname']."/app/webroot/img/charter_program_files/".$guest_file_name;
+                                        $guest_targetFullPath = $DOC_ROOT."/".$yachtData['Yacht']['yname']."/app/webroot/".$guest_targetImagePath;
+                                    }
+                                    // Create IF not exists
+                                    if(!file_exists($guest_targetFullPath)){
+                                        mkdir($guest_targetFullPath,0777,true);
+                                    }
+
+                                    // Copying the image file
+                                    copy($guest_sourceImagePath, $guest_targetFullPath."/".$guest_targetFileName);
+                                    if($companyData['Fleetcompany']['fleetname'] == 'SOS' || $companyData['Fleetcompany']['fleetname'] == 'fleetbeta' ){
+                                        $targetFullbetayachtPath = $DOC_ROOT."/SOS/app/webroot/betayacht/app/webroot/".$guest_targetImagePath;
+                                        copy($guest_sourceImagePath,$targetFullbetayachtPath.'/'.$guest_targetFileName);
+                                        $targetFullbetayachtPath = $DOC_ROOT."/SOS/app/webroot/yacht/app/webroot/".$guest_targetImagePath;
+                                        copy($guest_sourceImagePath,$targetFullbetayachtPath.'/'.$guest_targetFileName);
+                                        
+                                    }
+                                }
+                        }
+                        if(isset($guest_group_id) && $guest_group_id != 0){
+                            $G_group_id = $guest_fleetcompany_id."_".$guest_group_id;
+
+                            $GuestGroupData = $this->GuestGroup->find('first', array('conditions' => array('id' => $guest_group_id)));
+                        $group_name = $GuestGroupData['GuestGroup']['group_name'];
+                                // Checks the yacht.passenger_lists table whether charter id is already exists
+                        $selectQuery = "SELECT id FROM $yDBName.passenger_groups PassengerGroup WHERE group_name='$group_name' and group_id='$G_group_id'";
+                        $checkpassenger_groupsExists = $this->CharterGuest->query($selectQuery);
+                        
+                            if (empty($checkpassenger_groupsExists)) {
+                                // Insertion
+                                $insertQuery = "INSERT INTO $yDBName.passenger_groups (group_name,group_id,created) VALUES ('".$group_name."','".$G_group_id."','".$created."')";
+                                $this->CharterGuest->query($insertQuery);
+                                
+                            } 
+
+                        }
+                    }
                     // Checks the yacht.passenger_lists table whether charter id is already exists
                     $selectQuery = "SELECT id FROM $yDBName.passenger_lists WHERE UUID='$guest_uuid' AND is_deleted=0";
                     $checkCharterExists = $this->CharterGuest->query($selectQuery);
                     
                     if (empty($checkCharterExists)) {
                         // Insertion
-                        $insertQuery = "INSERT INTO $yDBName.passenger_lists (UUID,family_name,first_name,status,modified,is_psheets_done) VALUES ('".$guest_uuid."','".$familyName."','".$firstName."',$status,'".$created."','".$is_psheets_done."')";
+                        $insertQuery = "INSERT INTO $yDBName.passenger_lists (UUID,salutation,family_name,first_name,status,modified,is_psheets_done,type,group_id,file_name,file_path) VALUES ('".$guest_uuid."','".$salutation."','".$familyName."','".$firstName."',$status,'".$created."','".$is_psheets_done."','".$guest_type."','".$G_group_id."','".$guest_targetFileName."','".$guest_targetImagePath."')";
                         $this->CharterGuest->query($insertQuery);
                     } else {
                         // Updation
-                        $updateQuery = "UPDATE $yDBName.passenger_lists SET family_name='".$familyName."',first_name='".$firstName."',modified='".$created."',is_psheets_done='".$is_psheets_done."' WHERE UUID='$guest_uuid'";
+                        $updateQuery = "UPDATE $yDBName.passenger_lists SET family_name='".$familyName."',salutation='".$salutation."',first_name='".$firstName."',modified='".$created."',type='".$guest_type."',group_id='".$G_group_id."',file_name='".$guest_targetFileName."',file_path='".$guest_targetImagePath."',is_psheets_done='".$is_psheets_done."' WHERE UUID='$guest_uuid'";
                         $this->CharterGuest->query($updateQuery);
                     }
                 }
@@ -1635,6 +2192,50 @@ class ChartersController extends AppController {
         $this->set('charterHeadId', $charterHeadId);
         $this->set('charterAssocId', $charterAssocId);
         
+        $mapdetails = array();
+        $ydb_name = $session['CharterGuest']['ydb_name'];
+        $charter_from_date = date("d M Y", strtotime($session['CharterGuest']['charter_from_date']));
+        if($guestAssocData)
+            $charter_from_date = date("d M Y", strtotime($guestAssocData['CharterGuest']['charter_from_date']));
+
+        $this->loadModel('CharterProgramFile');
+        $scheduleData = $this->CharterProgramFile->query("SELECT * FROM $ydb_name.charter_program_schedules CharterProgramSchedule WHERE charter_program_id = '$charterHeadProgramId' AND is_deleted = 0");
+        // echo "<pre>";print_r($scheduleData);exit;
+        
+        if(isset($scheduleData) && !empty($scheduleData)){
+            if(($scheduleData[0]['CharterProgramSchedule']['publish_map'] == 1)){
+                $map = array();
+                $map['dbname'] = $ydb_name;
+                $map['programid'] = $charterHeadProgramId;
+                $mapdetails[$charter_from_date] = $map;
+            }
+        }
+        $this->set('mapdetails', $mapdetails);
+
+        $programFiles  = array();
+        // $this->Session->read('selectedCharterProgramUUID')
+        // charterHeadProgramId
+        $programFilesCond = array('CharterProgramFile.charter_program_id' => $this->Session->read('selectedCharterProgramUUID'),'CharterProgramFile.yacht_id' => $session['CharterGuest']['yacht_id'],'CharterProgramFile.is_deleted'=>0);
+        $programFiledata = $this->CharterProgramFile->find('all', array('conditions' => $programFilesCond));
+
+        if(isset($programFiledata)){
+            $programFiles[$charter_from_date]['attachment'] = $programFiledata;
+        }
+
+        $fleetname = $this->Session->read('fleetname');
+        $attachment = array();
+        if(isset($programFiles) ){
+            $SITE_URL = Configure::read('BASE_URL');
+            foreach($programFiles as $startdate => $filedata){ 
+                foreach($filedata['attachment'] as $file){ 
+                    $sourceImagePath = $SITE_URL.'/'.$fleetname."/app/webroot/img/charter_program_files/".$file['CharterProgramFile']['file_name'];
+                    $attachment[$startdate] = $sourceImagePath;
+                }
+            } 
+        }
+        $this->set('programFiles', $attachment);
+        // echo "<pre>";print_r($programFilesCond);
+        // echo "<pre>";print_r($attachment);exit;
     }
 
     function existingCheckFunction(){
@@ -2125,10 +2726,10 @@ class ChartersController extends AppController {
         }else if(isset($session['ownerprefenceUUID']) && !empty($session['ownerprefenceUUID'])){
             $charterHeadId = $session['ownerprefenceUUID'];
         }
-        
+        $selectedCharterProgramUUID = $session['selectedCharterProgramUUID'];
         $this->loadModel('CharterGuestWinePreference');
         $this->loadModel('TempWineListSelection');
-        $conditions = array('guest_lists_UUID' => $charterHeadId,);
+        $conditions = array('guest_lists_UUID' => $charterHeadId,'charter_program_id'=>$selectedCharterProgramUUID);
         $prefConditions = array_merge(array('is_deleted' => 0), $conditions);
         // Fetch the existing Wine Preferences
         $winePreferences = $this->CharterGuestWinePreference->find('list', array('fields' => array('wine_list_id','wine_list_id'), 'conditions' => $prefConditions));
@@ -2329,7 +2930,7 @@ class ChartersController extends AppController {
             $colorList = array_unique(array_merge(array_values($colorListPref), array_values($colorListTemp)));
             
             // Fetch the Charter Guest data
-            $charterGuestData = $this->CharterGuest->find('first', array('conditions' => array('users_UUID' => $charterHeadId)));
+            $charterGuestData = $this->CharterGuest->find('first', array('conditions' => array('users_UUID' => $charterHeadId,'charter_program_id'=>$selectedCharterProgramUUID)));
             // Fetch the Charter Associate data
             $charterAssocData = $this->CharterGuestAssociate->find('first', array('conditions' => array('UUID' => $charterHeadId)));
             // echo "<pre>";print_r($selectionCartData);
@@ -2483,10 +3084,14 @@ class ChartersController extends AppController {
             $charterHeadId = $sessionData['assocprefenceUUID'];
         }
         $charterAssocId = $sessionData['charterAssocId'];
+        $charter_program_id = $this->Session->read('selectedCharterProgramUUID');
 
         $this->loadModel('CharterGuestWinePreference');
 
         $prefConditions = array('is_deleted' => 0, 'guest_lists_UUID' => $charterHeadId);
+        if($charter_program_id != ''){
+            $prefConditions = array('is_deleted' => 0, 'guest_lists_UUID' => $charterHeadId, 'charter_program_id' => $charter_program_id);
+        }
         // Fetch the existing Wine Preferences
         $winePreferences = $this->CharterGuestWinePreference->find('all', array('conditions' => $prefConditions));
         // Color list
@@ -2554,6 +3159,54 @@ class ChartersController extends AppController {
         echo $output = $pdf->Output($file, 'D');
         
         exit;
+
+    }
+
+
+    function addPreviousWineToCart() {
+        if($this->request->is('ajax')){
+            $this->layout = 'ajax';
+            $this->autoRender = false;
+            $result = array();
+            
+            // Get Charter guest & assoc ids from session
+
+            $session = $this->Session->read();
+            //echo "<pre>";print_r($session); exit;
+            if(isset($session['ownerprefenceUUID']) && !empty($session['ownerprefenceUUID'])){
+                $charterHeadId = $session['ownerprefenceUUID'];
+            }
+
+            $selectedCharterProgramUUID = $session['selectedCharterProgramUUID'];
+            
+            if (isset($this->request->data['wineListId']) && $charterHeadId != 0) {
+                $insertData = array();
+                $checkData['wine_list_id'] = $insertData['wine_list_id'] = $wineListId = $this->request->data['wineListId'];
+                $checkData['guest_lists_UUID'] = $insertData['guest_lists_UUID'] = $charterHeadId;
+                $checkData['charter_program_id'] = $insertData['charter_program_id'] = $selectedCharterProgramUUID;
+                $insertData['quantity'] = $this->request->data['quantity'];
+                $insertData['created'] = date("Y-m-d H:i:s");
+                $insertData['modified'] = date("Y-m-d H:i:s");
+                
+                $this->loadModel('TempWineListSelection');
+                
+                // Check whether the wine already added to cart for this Guest
+                $rowCount = $this->TempWineListSelection->find('count', array('conditions' => $checkData));
+                if (!$rowCount) {
+                    // Adding the selected wine into the temp table
+                    $this->TempWineListSelection->create();
+                    if ($this->TempWineListSelection->save($insertData)) {
+                        $result['status'] = "success";
+                    } else {
+                        $result['status'] = "fail";
+                    }
+                }
+            }
+
+            echo json_encode($result);
+            exit;
+            
+        }
 
     }
     
@@ -2920,7 +3573,7 @@ class ChartersController extends AppController {
             $typeList = array_unique(array_merge(array_values($typeListPref), array_values($typeListTemp)));
             
             // Fetch the Charter Guest data
-            $charterGuestData = $this->CharterGuest->find('first', array('conditions' => array('users_UUID' => $charterHeadId)));
+            $charterGuestData = $this->CharterGuest->find('first', array('conditions' => array('users_UUID' => $charterHeadId,'charter_program_id'=>$selectedCharterProgramUUID)));
             // Fetch the Charter Associate data
             $charterAssocData = $this->CharterGuestAssociate->find('first', array('conditions' => array('UUID' => $charterHeadId)));
             //echo "<pre>";print_r($selectionCartData); //exit;
@@ -2964,18 +3617,26 @@ class ChartersController extends AppController {
 
         // Get Charter guest & assoc ids from session
         $sessionData = $this->Session->read();
-        //echo "<pre>";print_r($sessionData);exit;
+        // echo "<pre>";print_r($sessionData);exit;
         if(isset($sessionData['ownerprefenceUUID']) && !empty($sessionData['ownerprefenceUUID'])){
             $charterHeadId = $sessionData['ownerprefenceUUID'];
         }else if(isset($sessionData['assocprefenceUUID']) && !empty($sessionData['assocprefenceUUID'])){
             $charterHeadId = $sessionData['assocprefenceUUID'];
         }
         
-        $charterAssocId = $sessionData['charterAssocId'];
+        // $charterAssocId = $sessionData['charterAssocId'];
+        // $charter_program_id = $sessionData['charter_info']['CharterGuest']['charter_program_id'];
+        $charter_program_id = $this->Session->read('selectedCharterProgramUUID');
+
+        // echo "<pre>";print_r($charter_program_id);exit;
 
         $this->loadModel('CharterGuestSpiritPreference');
 
         $prefConditions = array('is_deleted' => 0, 'guest_lists_UUID' => $charterHeadId);
+        if($charter_program_id != ''){
+            $prefConditions = array('is_deleted' => 0, 'guest_lists_UUID' => $charterHeadId, 'charter_program_id' => $charter_program_id);
+        }
+        // echo "<pre>";print_r($prefConditions);exit;
         // Fetch the existing Wine Preferences
         $spiritPreferences = $this->CharterGuestSpiritPreference->find('all', array('conditions' => $prefConditions));
         // Color list
@@ -3045,6 +3706,50 @@ class ChartersController extends AppController {
         exit;
 
     }
+
+
+    function addPreviousSpiritToCart() {
+        if($this->request->is('ajax')){
+            $this->layout = 'ajax';
+            $this->autoRender = false;
+            $result = array();
+            
+            $session = $this->Session->read();
+            //echo "<pre>";print_r($session); exit;
+            if(isset($session['ownerprefenceUUID']) && !empty($session['ownerprefenceUUID'])){
+                $charterHeadId = $session['ownerprefenceUUID'];
+            }
+            $selectedCharterProgramUUID = $session['selectedCharterProgramUUID']; //exit;
+            if (isset($this->request->data['productListId']) && $charterHeadId != 0) {
+                $insertData = array();
+                $checkData['product_list_id'] = $insertData['product_list_id'] = $productListId = $this->request->data['productListId'];
+                $checkData['guest_lists_UUID'] = $insertData['guest_lists_UUID'] = $charterHeadId;
+                $checkData['charter_program_id'] = $insertData['charter_program_id'] =  $selectedCharterProgramUUID;
+                $checkData['quantity'] = $insertData['quantity'] = $this->request->data['quantity'];
+                $insertData['created'] = date("Y-m-d H:i:s");
+                $insertData['modified'] = date("Y-m-d H:i:s");
+                
+                $this->loadModel('TempProductListSelection');
+                
+                // Check whether the wine already added to cart for this Guest
+                $rowCount = $this->TempProductListSelection->find('count', array('conditions' => $checkData));
+                if (!$rowCount) {
+                    // Adding the selected product into the temp table
+                    $this->TempProductListSelection->create();
+                    if ($this->TempProductListSelection->save($insertData)) {
+                        $result['status'] = "success";
+                    } else {
+                        $result['status'] = "fail";
+                    }
+                }
+            }
+
+            echo json_encode($result);
+            exit;
+            
+        }
+
+    }
     
     
     /*
@@ -3068,41 +3773,44 @@ class ChartersController extends AppController {
         if (!empty($guestData)) {
             $input = array();
             $input = $guestData['CharterGuest'];
-            $checkGuestExists = $this->CharterGuest->query("SELECT id FROM $yDBName.charter_programs WHERE UUID='$charterHeadProgramId' AND is_deleted = 0");
-            // if (empty($checkGuestExists)) { // INSERT
-            //     $input['is_head_charterer'] = empty($input['is_head_charterer']) ? 0 : 1;
-            //     $input['is_email_sent'] = empty($input['is_email_sent']) ? 0 : 1;
-            //     $input['is_psheets_done'] = empty($input['is_psheets_done']) ? 0 : 1;
-            //     $inputchid = "'".$input['charter_program_id']."'";
-            //     $this->CharterGuest->query("INSERT INTO $yDBName.charter_programs (UUID,users_UUID,preference_UUID,charter_name,salutation,is_head_charterer,first_name,last_name,email,charter_from_date,embarkation,charter_to_date,debarkation,no_of_guests,yacht_id,token,send_mail,is_psheets_done,created,send_wine_quotation,send_spirit_quotation) VALUES (".$inputchid.","."'".$input['users_UUID']."'".","."'".$input['preference_UUID']."'".",'".$input['charter_name']."','".$input['salutation']."',".$input['is_head_charterer'].",'".$input['first_name']."','".$input['last_name']."','".$input['email']."','".$input['charter_from_date']."','".$input['embarkation']."','".$input['charter_to_date']."','".$input['debarkation']."',".$input['no_of_guests'].",".$input['yacht_id'].",'".$input['token']."',".$input['is_email_sent'].",".$input['is_psheets_done'].",'".$created."','".$input['send_wine_quotation']."','".$input['send_spirit_quotation']."')");
-            // } else {
-                $inputusers_UUID = "'".$input['users_UUID']."'";
-                $this->CharterGuest->query("UPDATE $yDBName.charter_programs SET is_psheets_done=1,users_UUID =".$inputusers_UUID.",send_wine_quotation='".$input['send_wine_quotation']."',send_spirit_quotation='".$input['send_spirit_quotation']."' WHERE UUID='$charterHeadProgramId'");
-            //}
+            if($guestData['CharterGuest']['is_psheets_done'] == 1){
+                $checkGuestExists = $this->CharterGuest->query("SELECT id FROM $yDBName.charter_programs WHERE UUID='$charterHeadProgramId' AND is_deleted = 0");
+                // if (empty($checkGuestExists)) { // INSERT
+                //     $input['is_head_charterer'] = empty($input['is_head_charterer']) ? 0 : 1;
+                //     $input['is_email_sent'] = empty($input['is_email_sent']) ? 0 : 1;
+                //     $input['is_psheets_done'] = empty($input['is_psheets_done']) ? 0 : 1;
+                //     $inputchid = "'".$input['charter_program_id']."'";
+                //     $this->CharterGuest->query("INSERT INTO $yDBName.charter_programs (UUID,users_UUID,preference_UUID,charter_name,salutation,is_head_charterer,first_name,last_name,email,charter_from_date,embarkation,charter_to_date,debarkation,no_of_guests,yacht_id,token,send_mail,is_psheets_done,created,send_wine_quotation,send_spirit_quotation) VALUES (".$inputchid.","."'".$input['users_UUID']."'".","."'".$input['preference_UUID']."'".",'".$input['charter_name']."','".$input['salutation']."',".$input['is_head_charterer'].",'".$input['first_name']."','".$input['last_name']."','".$input['email']."','".$input['charter_from_date']."','".$input['embarkation']."','".$input['charter_to_date']."','".$input['debarkation']."',".$input['no_of_guests'].",".$input['yacht_id'].",'".$input['token']."',".$input['is_email_sent'].",".$input['is_psheets_done'].",'".$created."','".$input['send_wine_quotation']."','".$input['send_spirit_quotation']."')");
+                // } else {
+                    $inputusers_UUID = "'".$input['users_UUID']."'";
+                    $this->CharterGuest->query("UPDATE $yDBName.charter_programs SET is_psheets_done=1,salutation='".$input['salutation']."',users_UUID =$inputusers_UUID,send_wine_quotation='".$input['send_wine_quotation']."',send_spirit_quotation='".$input['send_spirit_quotation']."' WHERE UUID='".$charterHeadProgramId."'");
+                //}
+            }
         }
 
         // charter_guest_associates table
         //echo $charterAssocId;
-        $guestAssocData = $this->CharterGuestAssociate->find('first', array('conditions' => array('id' => $charterAssocId)));
+        $guestAssocData = $this->CharterGuestAssociate->find('first', array('conditions' => array('charter_guest_id' => $charterHeadProgramId,'UUID'=>$guest_uuid)));
         //echo "<pre>"; print_r($guestAssocData); exit;
         if (!empty($guestAssocData)) {
             $input = array();
             $input = $guestAssocData['CharterGuestAssociate'];
-            $checkGuestAssocExists = $this->CharterGuest->query("SELECT id FROM $yDBName.charter_guest_associates WHERE assoc_row_id=$charterAssocId");
+            $checkGuestAssocExists = $this->CharterGuest->query("SELECT id FROM $yDBName.charter_guest_associates WHERE charter_guest_id='$charterHeadProgramId' and UUID='$guest_uuid'");
             //echo "<pre>"; print_r($checkGuestAssocExists);
-            // if (empty($checkGuestAssocExists)) { // INSERT  
-            //     //echo "insert"; exit;
-            //     $input['is_head_charterer'] = empty($input['is_head_charterer']) ? 0 : 1;
-            //     $input['is_email_sent'] = empty($input['is_email_sent']) ? 0 : 1;
-            //     $input['is_psheets_done'] = empty($input['is_psheets_done']) ? 0 : 1;
-            //     $this->CharterGuest->query("INSERT INTO $yDBName.charter_guest_associates (UUID,charter_guest_id,salutation,is_head_charterer,first_name,last_name,email,token,is_email_sent,is_psheets_done,created,assoc_row_id,charter_program_id,send_wine_quotation,send_spirit_quotation) VALUES ("."'".$input['UUID']."'".",'".$input['charter_guest_id']."','".$input['salutation']."',".$input['is_head_charterer'].",'".$input['first_name']."','".$input['last_name']."','".$input['email']."','".$input['token']."',".$input['is_email_sent'].",".$input['is_psheets_done'].",'".$created."',".$charterAssocId.","."'".$input['charter_program_id']."'".",'".$input['send_wine_quotation']."','".$input['send_spirit_quotation']."')");
-            // } else {
+            if (empty($checkGuestAssocExists)) { // INSERT  
+                //echo "insert"; exit;
+                $input['is_head_charterer'] = empty($input['is_head_charterer']) ? 0 : 1;
+                $input['is_email_sent'] = empty($input['is_email_sent']) ? 0 : 1;
+                $input['is_psheets_done'] = empty($input['is_psheets_done']) ? 0 : 1;
+                $this->CharterGuest->query("INSERT INTO $yDBName.charter_guest_associates (UUID,charter_guest_id,salutation,is_head_charterer,first_name,last_name,email,token,is_email_sent,is_psheets_done,created,assoc_row_id,charter_program_id,send_wine_quotation,send_spirit_quotation,fleetcompany_id) VALUES ("."'".$input['UUID']."'".",'".$input['charter_guest_id']."','".$input['salutation']."',".$input['is_head_charterer'].",'".$input['first_name']."','".$input['last_name']."','".$input['email']."','".$input['token']."',".$input['is_email_sent'].",".$input['is_psheets_done'].",'".$created."',".$charterAssocId.","."'".$input['charter_program_id']."'".",'".$input['send_wine_quotation']."','".$input['send_spirit_quotation']."','".$input['fleetcompany_id']."')");
+            } else {
                 //echo "update"; exit;
                 $inputusers_UUID = "'".$input['UUID']."'";
                 $inputcharter_guest_id = "'".$input['charter_guest_id']."'";
-                $inputc_token = "'".$input['token']."'";
-                $this->CharterGuest->query("UPDATE $yDBName.charter_guest_associates SET is_psheets_done=1,UUID=".$inputusers_UUID.",token=".$inputc_token.",send_wine_quotation='".$input['send_wine_quotation']."',send_spirit_quotation='".$input['send_spirit_quotation']."' WHERE UUID=$inputusers_UUID and charter_guest_id = $inputcharter_guest_id");
-            //}
+                $inputc_token = "'".$input['token']."'"; //echo "tset"; exit;
+                //echo "UPDATE $yDBName.charter_guest_associates SET is_psheets_done=1,UUID='$inputusers_UUID',token=".$inputc_token.",send_wine_quotation='".$input['send_wine_quotation']."',send_spirit_quotation='".$input['send_spirit_quotation']."' WHERE UUID='$inputusers_UUID' and charter_guest_id = '$inputcharter_guest_id'"; exit;
+                $this->CharterGuest->query("UPDATE $yDBName.charter_guest_associates SET is_psheets_done=1,fleetcompany_id='".$input['fleetcompany_id']."',salutation='".$input['salutation']."',UUID=$inputusers_UUID,token=".$inputc_token.",send_wine_quotation='".$input['send_wine_quotation']."',send_spirit_quotation='".$input['send_spirit_quotation']."' WHERE UUID=$inputusers_UUID and charter_guest_id = $inputcharter_guest_id");
+            }
         }
 
         // charter_guest_personal_details table
@@ -3130,9 +3838,9 @@ class ChartersController extends AppController {
             $input = $mealData['CharterGuestMealPreference'];
             $checkMealExists = $this->CharterGuest->query("SELECT id FROM $yDBName.charter_guest_meal_preferences WHERE guest_lists_UUID='$guest_uuid' AND is_deleted = 0");
             if (empty($checkMealExists)) { // INSERT
-                $this->CharterGuest->query("INSERT INTO $yDBName.charter_guest_meal_preferences (guest_lists_UUID,charter_assoc_id,is_breakfast,breakfast_likes,other_breakfast_likes,lunch_type,is_lunch_desert,lunch_style,is_dining_ashore,restaurant1,restaurant2,restaurant3,restaurant_date1,restaurant_date2,restaurant_date3,restaurant_time1,restaurant_time2,restaurant_time3,is_hors_deovres,deovres_preference,deovres_comments,is_dinner_desert,created) VALUES ("."'".$input['guest_lists_UUID']."'".",".$input['charter_assoc_id'].",'".$input['is_breakfast']."','".$input['breakfast_likes']."','".addslashes($input['other_breakfast_likes'])."','".$input['lunch_type']."','".$input['is_lunch_desert']."','".$input['lunch_style']."','".$input['is_dining_ashore']."','".addslashes($input['restaurant1'])."','".addslashes($input['restaurant2'])."','".addslashes($input['restaurant3'])."','".$input['restaurant_date1']."','".$input['restaurant_date2']."','".$input['restaurant_date3']."','".$input['restaurant_time1']."','".$input['restaurant_time2']."','".$input['restaurant_time3']."','".$input['is_hors_deovres']."','".$input['deovres_preference']."','".addslashes($input['deovres_comments'])."','".$input['is_dinner_desert']."','".$created."')");
+                $this->CharterGuest->query("INSERT INTO $yDBName.charter_guest_meal_preferences (guest_lists_UUID,charter_assoc_id,is_breakfast,breakfast_likes,other_breakfast_likes,lunch_type,is_lunch_desert,lunch_style,is_dining_ashore,restaurant1,restaurant2,restaurant3,restaurant_date1,restaurant_date2,restaurant_date3,restaurant_time1,restaurant_time2,restaurant_time3,is_hors_deovres,deovres_preference,deovres_comments,is_dinner_desert,is_dinner_coffee,created) VALUES ("."'".$input['guest_lists_UUID']."'".",".$input['charter_assoc_id'].",'".$input['is_breakfast']."','".$input['breakfast_likes']."','".addslashes($input['other_breakfast_likes'])."','".$input['lunch_type']."','".$input['is_lunch_desert']."','".$input['lunch_style']."','".$input['is_dining_ashore']."','".addslashes($input['restaurant1'])."','".addslashes($input['restaurant2'])."','".addslashes($input['restaurant3'])."','".$input['restaurant_date1']."','".$input['restaurant_date2']."','".$input['restaurant_date3']."','".$input['restaurant_time1']."','".$input['restaurant_time2']."','".$input['restaurant_time3']."','".$input['is_hors_deovres']."','".$input['deovres_preference']."','".addslashes($input['deovres_comments'])."','".$input['is_dinner_desert']."','".$input['is_dinner_coffee']."','".$created."')");
             } else { // UPDATE
-                $this->CharterGuest->query("UPDATE $yDBName.charter_guest_meal_preferences SET is_breakfast='".$input['is_breakfast']."',breakfast_likes='".$input['breakfast_likes']."',other_breakfast_likes='".addslashes($input['other_breakfast_likes'])."',lunch_type='".$input['lunch_type']."',is_lunch_desert='".$input['is_lunch_desert']."',lunch_style='".$input['lunch_style']."',is_dining_ashore='".$input['is_dining_ashore']."',restaurant1='".addslashes($input['restaurant1'])."',restaurant2='".addslashes($input['restaurant2'])."',restaurant3='".addslashes($input['restaurant3'])."',restaurant_date1='".$input['restaurant_date1']."',restaurant_date2='".$input['restaurant_date2']."',restaurant_date3='".$input['restaurant_date3']."',restaurant_time1='".$input['restaurant_time1']."',restaurant_time2='".$input['restaurant_time2']."',restaurant_time3='".$input['restaurant_time3']."',is_hors_deovres='".$input['is_hors_deovres']."',deovres_preference='".$input['deovres_preference']."',deovres_comments='".addslashes($input['deovres_comments'])."',is_dinner_desert='".$input['is_dinner_desert']."' WHERE guest_lists_UUID='$guest_uuid'");
+                $this->CharterGuest->query("UPDATE $yDBName.charter_guest_meal_preferences SET is_breakfast='".$input['is_breakfast']."',breakfast_likes='".$input['breakfast_likes']."',other_breakfast_likes='".addslashes($input['other_breakfast_likes'])."',lunch_type='".$input['lunch_type']."',is_lunch_desert='".$input['is_lunch_desert']."',lunch_style='".$input['lunch_style']."',is_dining_ashore='".$input['is_dining_ashore']."',restaurant1='".addslashes($input['restaurant1'])."',restaurant2='".addslashes($input['restaurant2'])."',restaurant3='".addslashes($input['restaurant3'])."',restaurant_date1='".$input['restaurant_date1']."',restaurant_date2='".$input['restaurant_date2']."',restaurant_date3='".$input['restaurant_date3']."',restaurant_time1='".$input['restaurant_time1']."',restaurant_time2='".$input['restaurant_time2']."',restaurant_time3='".$input['restaurant_time3']."',is_hors_deovres='".$input['is_hors_deovres']."',deovres_preference='".$input['deovres_preference']."',deovres_comments='".addslashes($input['deovres_comments'])."',is_dinner_desert='".$input['is_dinner_desert']."',is_dinner_coffee='".$input['is_dinner_coffee']."' WHERE guest_lists_UUID='$guest_uuid'");
             }
         }
 
@@ -3163,30 +3871,30 @@ class ChartersController extends AppController {
         }
         
         // charter_guest_spirit_preferences table
-        $spiritData = $this->CharterGuestSpiritPreference->find('all', array('conditions' => array('guest_lists_UUID' => $guest_uuid,'is_deleted' => 0)));
+        $spiritData = $this->CharterGuestSpiritPreference->find('all', array('conditions' => array('guest_lists_UUID' => $guest_uuid,'charter_program_id'=>$charterHeadProgramId)));
         foreach ($spiritData as $item) {
             $input = array();
             $input = $item['CharterGuestSpiritPreference'];
             $isDeleted = ($input['is_deleted']) ? 1 : 0;
-            $checkSpiritExists = $this->CharterGuest->query("SELECT id FROM $yDBName.charter_guest_spirit_preferences WHERE guest_lists_UUID='$guest_uuid' AND is_deleted = 0 AND row_id=".$input['id']);
+            $checkSpiritExists = $this->CharterGuest->query("SELECT id FROM $yDBName.charter_guest_spirit_preferences WHERE guest_lists_UUID='$guest_uuid' AND charter_program_id = '$charterHeadProgramId' AND is_deleted = 0 AND row_id=".$input['id']);
             if (empty($checkSpiritExists)) { // INSERT
-                $this->CharterGuest->query("INSERT INTO $yDBName.charter_guest_spirit_preferences (guest_lists_UUID,charter_assoc_id,product_list_id,product_id,is_dead,name,tags,price_in_cents,stock_type,primary_category,secondary_category,origin,description,varietal,style,tertiary_category,quantity,is_deleted,created,row_id) VALUES ("."'".$input['guest_lists_UUID']."'".",".$input['charter_assoc_id'].",".$input['product_list_id'].",".$input['product_id'].",'".$input['is_dead']."','".addslashes($input['name'])."','".addslashes($input['tags'])."','".$input['price_in_cents']."','".$input['stock_type']."','".$input['primary_category']."','".$input['secondary_category']."','".$input['origin']."','".addslashes($input['description'])."','".$input['varietal']."','".$input['style']."','".$input['tertiary_category']."','".$input['quantity']."',".$isDeleted.",'".$created."',".$input['id'].")");
+                $this->CharterGuest->query("INSERT INTO $yDBName.charter_guest_spirit_preferences (guest_lists_UUID,charter_program_id,charter_assoc_id,product_list_id,product_id,is_dead,name,tags,price_in_cents,stock_type,primary_category,secondary_category,origin,description,varietal,style,tertiary_category,quantity,is_deleted,created,row_id) VALUES ("."'".$input['guest_lists_UUID']."'".","."'".$input['charter_program_id']."'".",".$input['charter_assoc_id'].",".$input['product_list_id'].",".$input['product_id'].",'".$input['is_dead']."','".addslashes($input['name'])."','".addslashes($input['tags'])."','".$input['price_in_cents']."','".$input['stock_type']."','".$input['primary_category']."','".$input['secondary_category']."','".$input['origin']."','".addslashes($input['description'])."','".$input['varietal']."','".$input['style']."','".$input['tertiary_category']."','".$input['quantity']."',".$isDeleted.",'".$created."',".$input['id'].")");
             } else { // UPDATE
-                $this->CharterGuest->query("UPDATE $yDBName.charter_guest_spirit_preferences SET is_deleted=".$isDeleted.",quantity='".$input['quantity']."' WHERE guest_lists_UUID='$guest_uuid' AND row_id=".$input['id']);
+                $this->CharterGuest->query("UPDATE $yDBName.charter_guest_spirit_preferences SET is_deleted=".$isDeleted.",quantity='".$input['quantity']."' WHERE guest_lists_UUID='$guest_uuid' AND charter_program_id = '$charterHeadProgramId' AND row_id=".$input['id']);
             }
         }
         
         // charter_guest_wine_preferences table
-        $wineData = $this->CharterGuestWinePreference->find('all', array('conditions' => array('guest_lists_UUID' => $guest_uuid,'is_deleted' => 0)));
+        $wineData = $this->CharterGuestWinePreference->find('all', array('conditions' => array('guest_lists_UUID' => $guest_uuid,'charter_program_id'=>$charterHeadProgramId)));
         foreach ($wineData as $item) {
             $input = array();
             $input = $item['CharterGuestWinePreference'];
             $isDeleted = ($input['is_deleted']) ? 1 : 0;
-            $checkWineExists = $this->CharterGuest->query("SELECT id FROM $yDBName.charter_guest_wine_preferences WHERE guest_lists_UUID='$guest_uuid' AND is_deleted = 0 AND row_id=".$input['id']);
+            $checkWineExists = $this->CharterGuest->query("SELECT id FROM $yDBName.charter_guest_wine_preferences WHERE guest_lists_UUID='$guest_uuid' AND charter_program_id = '$charterHeadProgramId' AND is_deleted = 0 AND row_id=".$input['id']);
             if (empty($checkWineExists)) { // INSERT
-                $this->CharterGuest->query("INSERT INTO $yDBName.charter_guest_wine_preferences (guest_lists_UUID,charter_assoc_id,wine_list_id,wine,wine_id,appellation,color,wine_type,country,vintage,score,quantity,region,is_deleted,created,row_id) VALUES ("."'".$input['guest_lists_UUID']."'".",".$input['charter_assoc_id'].",".$input['wine_list_id'].",'".addslashes($input['wine'])."','".$input['wine_id']."','".addslashes($input['appellation'])."','".$input['color']."','".$input['wine_type']."','".$input['country']."','".$input['vintage']."','".$input['score']."','".$input['quantity']."','".$input['region']."',".$isDeleted.",'".$created."',".$input['id'].")");
+                $this->CharterGuest->query("INSERT INTO $yDBName.charter_guest_wine_preferences (guest_lists_UUID,charter_program_id,charter_assoc_id,wine_list_id,wine,wine_id,appellation,color,wine_type,country,vintage,score,quantity,region,is_deleted,created,row_id) VALUES ("."'".$input['guest_lists_UUID']."'".","."'".$input['charter_program_id']."'".",".$input['charter_assoc_id'].",".$input['wine_list_id'].",'".addslashes($input['wine'])."','".$input['wine_id']."','".addslashes($input['appellation'])."','".$input['color']."','".$input['wine_type']."','".$input['country']."','".$input['vintage']."','".$input['score']."','".$input['quantity']."','".$input['region']."',".$isDeleted.",'".$created."',".$input['id'].")");
             } else { // UPDATE
-                $this->CharterGuest->query("UPDATE $yDBName.charter_guest_wine_preferences SET is_deleted=".$isDeleted.",quantity='".$input['quantity']."' WHERE guest_lists_UUID='$guest_uuid' AND row_id=".$input['id']);
+                $this->CharterGuest->query("UPDATE $yDBName.charter_guest_wine_preferences SET is_deleted=".$isDeleted.",quantity='".$input['quantity']."' WHERE guest_lists_UUID='$guest_uuid' AND charter_program_id = '$charterHeadProgramId' AND row_id=".$input['id']);
             }
         }
 
@@ -3218,9 +3926,10 @@ class ChartersController extends AppController {
         if($this->request->is('ajax')){
             $this->layout = false;
             $this->autoRender = false;
+            $this->loadModel('Yacht');
             $result = array();
             $sessiondata = $this->Session->read();
-            //echo "<pre>";print_r(($this->request->data)); //exit;
+            //echo "<pre>";print_r(($this->request->data)); exit;
 
             // not resending the mail to that guest, 
             //so on very first time clicking send button will take any other row of guest data typed that also insert to the table without duplication
@@ -3228,7 +3937,11 @@ class ChartersController extends AppController {
             if(isset($this->request->data['resend']) && $this->request->data['resend'] == 0){
                 parse_str($this->request->data['Otherrowdata'], $Otherrowdata);
             }
-            
+            $yachtData = $this->Yacht->find('first', array('conditions' => array('id' => $this->request->data['yachtId'])));
+            $yachtDbName = $yachtData['Yacht']['ydb_name'];
+            if(isset($this->request->data['charter_company_id'])){
+                $fleetcompany_id = $this->request->data['charter_company_id'];
+            }
             //
             if (isset($this->request->data['headChartererId']) && !empty($this->request->data['headChartererId'])) {
                 $insertData = array();
@@ -3242,6 +3955,7 @@ class ChartersController extends AppController {
                 $charterAssocId = $this->request->data['charterAssocId']; // Existing charter associate's id
                 
                 $this->loadModel('CharterGuest');
+                
                 $this->CharterGuest->set($this->request->data);
                 if (!$this->CharterGuest->validates(array('fieldList' => array('email')))) {
                     $result['status'] = "invalid_email";
@@ -3249,15 +3963,16 @@ class ChartersController extends AppController {
                     
                     // Generate unique token
                     $userToken = $this->uniqueToken(8);
-                    if (!empty($insertData['existCharterHeadId'])) {
+                    if (!empty($insertData['existCharterHeadId'])) { //echo "hhh"; exit;
                         // Updating the Head Charterer details
                         $insertData['id'] = $insertData['existCharterHeadId'];
                         //echo "<pre>"; print_r($insertData); exit;
                         if ($this->CharterGuest->save($insertData)) {
                             //Update the Charter in corresponding yacht database
-                            $yachtDb = $this->Session->read('charter_info.CharterGuest.ydb_name');
+                            
+                            $yachtDb = $yachtDbName;
                             $charterProgId = $this->Session->read('charter_info.CharterGuest.charter_program_id');
-                            $this->CharterGuest->query("UPDATE $yachtDb.charter_programs SET first_name='".$insertData['first_name']."',last_name='".$insertData['last_name']."',email='".$insertData['email']."' WHERE UUID='$charterProgId'");
+                            $this->CharterGuest->query("UPDATE $yachtDb.charter_programs SET first_name='".$insertData['first_name']."',salutation='".$insertData['salutation']."',last_name='".$insertData['last_name']."',email='".$insertData['email']."' WHERE UUID='$charterProgId'");
                                     
                             // Fetching the existing token (Existing Head charterer)
                             $tokenData = $this->CharterGuest->find('first', array('conditions' => array('id' => $insertData['existCharterHeadId'])));
@@ -3272,7 +3987,7 @@ class ChartersController extends AppController {
                             $this->sendCharterNotifyMail($insertData,$userToken);
                             if(isset($this->request->data['resend']) && $this->request->data['resend'] == 0){
                                 //echo "<pre>";print_r(($Otherrowdata)); exit;
-                                $this->saveOtherRowRecord($Otherrowdata);
+                                $this->saveOtherRowRecord($Otherrowdata,$fleetcompany_id);
                             }
                             // Update email status
                             $this->CharterGuest->save(array('id' => $insertData['id'], 'is_email_sent' => 1));
@@ -3282,57 +3997,82 @@ class ChartersController extends AppController {
                             $result['status'] = "fail";
                             $result['message'] = "Updation failed.";
                         }
-                    } else {
+                    } else { //echo "aaaa"; exit;
                         $Guestlistuuid = String::uuid();
                         $this->loadModel('CharterGuestAssociate');
                         $insertData['token'] = $userToken;
                         $insertData['charter_guest_id'] = $this->request->data['charterProgramId'];
                         $insertData['charter_program_id'] = $this->request->data['charterProgramId'];
                         $insertData['yacht_id'] = $this->request->data['yachtId'];
+                        $insertData['salutation'] = $this->request->data['salutation'];
+                        $insertData['fleetcompany_id'] = $this->request->data['charter_company_id'];
+
                         if (!empty($charterAssocId)) {
                             $insertData['id'] = $charterAssocId;
                         } else {
                             $insertData['UUID'] = $Guestlistuuid;
-                            // on send mail save in guest_list as like charter associates
-                            $this->loadModel('GuestList');
-                            $guestlistData = array();
-                            $guestlistData['last_name'] = $insertData['last_name'];
-                            $guestlistData['first_name'] = $insertData['first_name'];
-                            $guestlistData['email'] = $insertData['email'];
-                            $guestlistData['fleetcompany_id'] = $sessiondata['fleetCompanyID'];
-                            $guestlistData['yacht_id'] = $sessiondata['yachtID'];
-                            $guestlistData['token'] = $insertData['token'];
-                            $guestlistData['type'] = "Guest";
-                            $guestlistData['UUID'] = $Guestlistuuid;
-                            $this->GuestList->create();
-                            $this->GuestList->save($guestlistData);
-                                // on send mail save in guest_list as like charter associates
                             $this->CharterGuestAssociate->create();
                         }
 
-                               
+                            $this->loadModel('GuestList');
+                            $guestExistdata = $this->GuestList->find('first', array('conditions' => array('first_name' => $insertData['first_name'],'last_name'=>$insertData['last_name'],'email'=>$insertData['email'])));
+                            //echo "<pre>"; print_r($guestExistdata); exit;
+                            if(empty($guestExistdata)){
+                                $guestlistData = array();
+                                $guestlistData['last_name'] = $insertData['last_name'];
+                                $guestlistData['first_name'] = $insertData['first_name'];
+                                $guestlistData['email'] = $insertData['email'];
+                                $guestlistData['fleetcompany_id'] = $this->request->data['charter_company_id'];
+                                $guestlistData['yacht_id'] = $this->request->data['yachtId'];
+                                $guestlistData['token'] = $userToken;
+                                $guestlistData['guest_type'] = "Guest";
+                                $guestlistData['salutation'] = $insertData['salutation'];
+                                $guestlistData['UUID'] = $Guestlistuuid;
+                                $this->GuestList->create();
+                                //echo "<pre>"; print_r($guestlistData);
+                                $this->GuestList->save($guestlistData);
+                            }else{
+                                if(isset($guestExistdata['GuestList']['token']) && !empty($guestExistdata['GuestList']['token'])){
+                                    $insertData['token'] = $guestExistdata['GuestList']['token'];
+                                    $userToken = $guestExistdata['GuestList']['token'];
+                                }
+                                $insertData['UUID'] = $guestExistdata['GuestList']['UUID'];
+
+                                $guestlistData = array();
+                                $guestlistData['guest_type'] = "Guest";
+                                $guestlistData['salutation'] = $insertData['salutation'];
+                                $guestlistData['id'] = $guestExistdata['GuestList']['id'];
+                                if(empty($guestExistdata['GuestList']['token'])){
+                                    $guestlistData['token'] =$userToken;
+                                }else{
+                                    $guestlistData['token'] =$guestExistdata['GuestList']['token'];
+                                } 
+                                //echo "<pre>"; print_r($guestlistData); exit;
+                                $this->GuestList->save($guestlistData);
+                            }       
 
                         //echo "here";
-                        //echo "<pre>"; print_r($insertData); exit;
+                        //echo "<pre>"; print_r($insertData);
+                        //echo "<pre>"; print_r($userToken); exit;
                         // Saving the Charter guest associates
                         if ($this->CharterGuestAssociate->save($insertData)) {
                             if (empty($charterAssocId)) {
                                 $charterAssocId = $this->CharterGuestAssociate->getLastInsertId();
                             }
 
-                           $existassocdata = $this->CharterGuestAssociate->find('first',array('conditions'=>array('id'=>$charterAssocId)));
-                           $existassocdataUUID = $existassocdata['CharterGuestAssociate']['UUID'];
-                            if(isset($existassocdataUUID) && !empty($existassocdataUUID)){
-                                $this->CharterGuest->query("UPDATE guest_lists SET first_name='".$insertData['first_name']."',last_name='".$insertData['last_name']."',email='".$insertData['email']."',token='".$insertData['token']."' WHERE UUID='$existassocdataUUID'");
-                            }
+                        //    $existassocdata = $this->CharterGuestAssociate->find('first',array('conditions'=>array('id'=>$charterAssocId)));
+                        //    $existassocdataUUID = $existassocdata['CharterGuestAssociate']['UUID'];
+                        //     if(isset($existassocdataUUID) && !empty($existassocdataUUID)){
+                        //         $this->CharterGuest->query("UPDATE guest_lists SET first_name='".$insertData['first_name']."',last_name='".$insertData['last_name']."',email='".$insertData['email']."' WHERE UUID='$existassocdataUUID'");
+                        //     }
                             if (!isset($this->request->data['mailSending'])) {
                                 // Send an email notification to the user
-                                $this->sendCharterNotifyMail($insertData,$userToken);
+                                $this->sendCharterNotifyAssociateGuestMail($insertData,$userToken);
                                 // Update email status
                                 $this->CharterGuestAssociate->save(array('id' => $charterAssocId, 'is_email_sent' => 1));
                                 if(isset($this->request->data['resend']) && $this->request->data['resend'] == 0){
                                     //echo "<pre>";print_r(($Otherrowdata)); exit;
-                                    $this->saveOtherRowRecord($Otherrowdata);
+                                    $this->saveOtherRowRecord($Otherrowdata,$fleetcompany_id);
                                 }
                             }
                             
@@ -3358,7 +4098,7 @@ class ChartersController extends AppController {
     //so on very first time clicking send button will take any other row of guest data typed that also insert to the table without duplication
     // for that this Otherrowdata is added in ajax call, it should work only the first time clicking email button not on resend.
     // on send email button on each row of guest this function will call from saveAndSendMail function
-    function saveOtherRowRecord($data){
+    function saveOtherRowRecord($data,$fleetcompany_id){
         
         if (!empty($data['charter_program_id']) && !empty($data['yacht_id']) && !empty($data['charter_guest_id'])) {
             $charterProgramId = $data['charter_program_id'];
@@ -3389,7 +4129,7 @@ class ChartersController extends AppController {
                     // }
                     
                 } else {
-                    //$chkduplicate = $this->GuestList->find('all', array('conditions' => array('last_name' => $data['last_name'][$i],'first_name' => $data['first_name'][$i],'email' => $data['email'][$i])));
+                    $chkduplicate = $this->GuestList->find('all', array('conditions' => array('last_name' => $data['last_name'][$i],'first_name' => $data['first_name'][$i],'email' => $data['email'][$i])));
                     //if((!empty($data['last_name'][$i]) != $Rlastname) && (!empty($data['first_name'][$i]) != $Rfirstname) && (!empty($data['email'][$i]) != $Remail)){ //echo "ffff"; exit;
                             // Associates
                             //guest_lists table save
@@ -3398,12 +4138,12 @@ class ChartersController extends AppController {
                             $guestlistData['last_name'] = $data['last_name'][$i];
                             $guestlistData['first_name'] = $data['first_name'][$i];
                             $guestlistData['email'] = $data['email'][$i];
-                            $guestlistData['fleetcompany_id'] = $sessiondata['fleetCompanyID'];
-                            $guestlistData['yacht_id'] = $sessiondata['yachtID'];
+                            $guestlistData['fleetcompany_id'] = $fleetcompany_id;
+                            $guestlistData['yacht_id'] = $yachtId;
                             $guestlistData['type'] = "Guest";
                             $existCharterassocData = $this->CharterGuestAssociate->find('all', array('conditions' => array('last_name' => $data['last_name'][$i],'first_name' => $data['first_name'][$i],'email' => $data['email'][$i])));
-
-                        if(empty($existCharterassocData)){
+                            $guestlistData['salutation'] =$data['salutation'][$i];
+                        if(empty($chkduplicate)){
                                 $Guestlistuuid = String::uuid();
                                 $guestlistData['UUID'] = $Guestlistuuid;
                                 
@@ -3411,7 +4151,7 @@ class ChartersController extends AppController {
                                 $this->GuestList->create();
                         }else{
 
-                                $existcharterassocUUID = $existCharterassocData[0]['CharterGuestAssociate']['UUID'];
+                                $existcharterassocUUID = $chkduplicate[0]['GuestList']['UUID'];
                                 $guestExistdata = $this->GuestList->find('first', array('conditions' => array('UUID' => $existcharterassocUUID)));
                                 $existingGuestListPrimaryId = $guestExistdata['GuestList']['id'];
                                 $guestlistData['id'] = $existingGuestListPrimaryId;
@@ -3442,7 +4182,7 @@ class ChartersController extends AppController {
                             } else {
                                 $insertDataOther['charter_program_id'] = $charterProgramId;
                                 $insertDataOther['yacht_id'] = $yachtId;
-                                $insertDataOther['fleetcompany_id'] = $sessiondata['fleetCompanyID'];
+                                $insertDataOther['fleetcompany_id'] = $fleetcompany_id;
                                 $insertDataOther['charter_guest_id'] = $charterProgramId;
                                 if(isset($savedGuestdata['GuestList']['UUID'])){
                                     $insertDataOther['UUID'] = $savedGuestdata['GuestList']['UUID'];
@@ -3506,6 +4246,7 @@ class ChartersController extends AppController {
                 $charterProgramId = $this->request->data['charter_program_id'];
                 $yachtId = $this->request->data['yacht_id'];
                 $charterGuestHeadId = $this->request->data['charter_guest_id'];
+                $charter_company_id = $this->request->data['charter_company_id'];
                 
                 $data = $this->request->data;
                 
@@ -3529,7 +4270,7 @@ class ChartersController extends AppController {
                         
                         if ($this->CharterGuest->save($updateData)) {
                             // Update to the corresponding Yacht DB
-                            $this->CharterGuest->query("UPDATE $yachtDbName.charter_guests SET salutation='$headSalutation' WHERE guest_row_id=$charterGuestHeadId");
+                            $this->CharterGuest->query("UPDATE $yachtDbName.charter_programs SET salutation='$headSalutation' WHERE UUID='$charterProgramId'");
                         }
                         
                     } else { // Associates
@@ -3539,13 +4280,20 @@ class ChartersController extends AppController {
                         $guestlistData['last_name'] = $data['last_name'][$i];
                         $guestlistData['first_name'] = $data['first_name'][$i];
                         $guestlistData['email'] = $data['email'][$i];
-                        $guestlistData['fleetcompany_id'] = $sessiondata['fleetCompanyID'];
-                        $guestlistData['yacht_id'] = $sessiondata['yachtID'];
+                        $guestlistData['fleetcompany_id'] = $charter_company_id;
+                        $guestlistData['yacht_id'] = $yachtId;
                         $guestlistData['type'] = "Guest";
+                        $guestlistData['salutation'] = $data['salutation'][$i];
                         if(empty($data['charter_assoc_id'][$i])){
-                            $Guestlistuuid = String::uuid();
-                            $guestlistData['UUID'] = $Guestlistuuid;
-                            
+                            $guestExistdata = $this->GuestList->find('first', array('conditions' => array('first_name' => $data['first_name'][$i],'last_name'=>$data['last_name'][$i],'email'=>$data['email'][$i])));
+                            if(isset($guestExistdata) && !empty($guestExistdata)){
+                                $Guestlistuuid = $guestExistdata['GuestList']['UUID'];
+                                $guestlistData['UUID'] = $Guestlistuuid;
+                                $guestlistData['id'] = $guestExistdata['GuestList']['id'];
+                            }else{
+                                $Guestlistuuid = String::uuid();
+                                $guestlistData['UUID'] = $Guestlistuuid;
+                            }
                             
                             $this->GuestList->create();
                        }else{
@@ -3580,7 +4328,7 @@ class ChartersController extends AppController {
                         } else {
                             $insertData['charter_program_id'] = $charterProgramId;
                             $insertData['yacht_id'] = $yachtId;
-                            $insertData['fleetcompany_id'] = $sessiondata['fleetCompanyID'];
+                            $insertData['fleetcompany_id'] = $charter_company_id;
                             $insertData['charter_guest_id'] = $charterProgramId;
                             if(isset($savedGuestdata['GuestList']['UUID'])){
                                 $insertData['UUID'] = $savedGuestdata['GuestList']['UUID'];
@@ -3630,7 +4378,7 @@ class ChartersController extends AppController {
      * Created date - 28-May-2018
      * Modified date - 
      */
-    function charter_program_map_app($prgUUID,$yachtdb) {
+    function charter_program_map_app($prgUUID = null,$yachtdb = null) {
         //        echo "<pre>";print_r($this->Session->read());exit;
                 Configure::write('debug',0);
                 $session = $this->Session->read('charter_info');
@@ -3831,7 +4579,11 @@ class ChartersController extends AppController {
                             //exit;
                         }
                         //echo "<pre>";print_r($scheduleData);
-                        //echo "<pre>";print_r($markertotal); exit;
+                        //echo "<pre>";print_r($markertitle); exit;
+                        $first = reset($markertitle);
+                        $last = end($markertitle);
+                        $this->set('startloc', $first);
+                        $this->set('endloc', $last);
                         $this->set('charterProgramId', $charterProgramId);
                         $this->set('charterProgData', $charterProgData[0]);
                         $this->set('diffDays', $diffDays);
@@ -3856,7 +4608,8 @@ class ChartersController extends AppController {
                     }
                     
                 } else {
-                    $this->redirect(array('action' => 'view'));
+                    $no_cruising_select  = "NO CRUISING SCHEDULE IS SELECTED";
+                    $this->set('no_cruising_select', $no_cruising_select);
                 }
                 
             }
@@ -3868,17 +4621,20 @@ class ChartersController extends AppController {
      * Created date - 28-May-2018
      * Modified date - 
      */
-    function charter_program_map($prgUUID,$yachtdb) {
+    function charter_program_map($prgUUID,$yachtdb,$guesttype) {
 //        echo "<pre>";print_r($this->Session->read());exit;
         Configure::write('debug',0);
         $session = $this->Session->read('charter_info');
         $yachtDbName = $yachtdb;
         $charterProgramId = $prgUUID;
         if (!empty($yachtDbName)) {
-           
+            $this->loadModel('CharterProgramFile');
             $this->loadModel('CharterGuest');
+            
             $charterProgData = $this->CharterGuest->query("SELECT * FROM $yachtDbName.charter_programs CharterProgram WHERE UUID = '$charterProgramId' AND is_deleted = 0 LIMIT 1");
             
+            $charterGuestDataToMenu = $this->CharterGuest->find("first",array('conditions'=>array('charter_program_id'=>$charterProgramId)));
+
             if (count($charterProgData) != 0) {
                 $startDate = $charterProgData[0]['CharterProgram']['charter_from_date'];
                 $endDate = $charterProgData[0]['CharterProgram']['charter_to_date'];
@@ -4068,9 +4824,24 @@ class ChartersController extends AppController {
                    }
                     //exit;
                 }
+
+                $this->loadModel('Fleetcompany');
+                $companyData = $this->Fleetcompany->find('first', array('fields' => array('management_company_name','logo','fleetname'), 'conditions' => array('id' => $charterProgData[0]['CharterProgram']['charter_company_id'])));
+                if (isset($companyData['Fleetcompany']['logo']) && !empty($companyData['Fleetcompany']['logo'])) {
+                    $fleetLogoUrl = $SITE_URL.'/'."charterguest/img/logo/thumb/".$companyData['Fleetcompany']['logo'];
+                } else{
+                    $fleetLogoUrl = $SITE_URL.'/'."charterguest/img/logo/thumb/charter_guest_logo.png";
+                }
+                $this->Session->write("fleetLogoUrl", $fleetLogoUrl);
+                
                 //echo "<pre>";print_r($scheduleData);
                 //echo "<pre>";print_r($markertotal); exit;
+                $first = reset($markertitle);
+                $last = end($markertitle);
+                $this->set('startloc', $first);
+                $this->set('endloc', $last);
                 $this->set('charterProgramId', $charterProgramId);
+                $this->set('charter_company_id_val', $charterProgData[0]['CharterProgram']['charter_company_id']);
                 $this->set('charterProgData', $charterProgData[0]);
                 $this->set('diffDays', $diffDays);
                 $this->set('scheduleData', $scheduleData);
@@ -4083,12 +4854,61 @@ class ChartersController extends AppController {
                 $this->set('markertitle', $markertitle);
                 $this->set('markertotal', $markertotal);
                 $this->set('yacht_id_fromyachtDB', $yacht_id_fromyachtDB);
+                $this->set('guesttype', $guesttype);
+                $this->set('charterGuestDataToMenu', $charterGuestDataToMenu);
                 
                 $this->set('cruising_speed', $cruising_speed);
                 $this->set('cruising_fuel', $cruising_fuel);
                 if(isset($cruising_unit) && !empty($cruising_unit)){
                 $this->set('cruising_unit', $cruising_unit);
                 }
+                $usersUUID = $this->Session->read("guestListUUID");
+                $CharterGuestConditions = array('users_UUID' => $usersUUID);
+                $charterGuestData = $this->CharterGuest->find('all', array('conditions' => $CharterGuestConditions, 'order' => 'CharterGuest.charter_from_date desc'));
+        
+                    $programFiles  = array();
+                    $mapdetails = array();
+                    $SITE_URL = Configure::read('BASE_URL');
+                // echo "<pre>";print_r($guestListData); //exit;
+                    // echo "<pre>";print_r($charterGuestData); exit;
+                    if(isset($charterGuestData) && !empty($charterGuestData)){
+                    
+                        foreach($charterGuestData as $key => $value){
+
+                            $programFilesCond = array('CharterProgramFile.charter_program_id' => $value['CharterGuest']['charter_program_id'],'CharterProgramFile.yacht_id' => $value['CharterGuest']['yacht_id'],'CharterProgramFile.is_deleted'=>0);
+                            $programFiledata = $this->CharterProgramFile->find('all', array('conditions' => $programFilesCond));
+                            $charter_from_date = date("d M Y", strtotime($value['CharterGuest']['charter_from_date']));
+                            if(isset($programFiledata)){
+                                $programFiles[$charter_from_date]['attachment'] = $programFiledata;
+                                //$programFiles[]['startdate'] = $charter_from_date;
+                            }
+                            
+                            
+                            
+                        }//exit;
+                        //echo "<pre>";print_r($programFiles); exit;
+
+                        
+
+                        $fleetname = $this->Session->read('fleetname');
+                        if(isset($programFiles) && !empty($programFiles) ){
+                            $attachment = array();
+                            $SITE_URL = Configure::read('BASE_URL');
+                            foreach($programFiles as $startdate => $filedata){ 
+                                foreach($filedata['attachment'] as $file){ 
+                                    $sourceImagePath = $SITE_URL.'/'.$fleetname."/app/webroot/img/charter_program_files/".$file['CharterProgramFile']['file_name'];
+                                    $attachment[$startdate] = $sourceImagePath;
+                
+                                    }
+                            } 
+                        }
+
+                    }
+                    //echo "<pre>";print_r($attachment); exit;
+                    if(isset($attachment) && !empty($attachment)){
+                        $this->set('programFiles', $attachment);
+                    }
+
             } else {
                 $this->redirect(array('action' => 'view'));
             }
@@ -4115,6 +4935,9 @@ class ChartersController extends AppController {
             if (isset($this->request->data['scheduleId']) && !empty($this->request->data['scheduleId']) && !empty($this->request->data['diffDays'])) {
                 $scheduleId = $this->request->data['scheduleId'];
                 $diffDays = $this->request->data['diffDays'];
+                if(isset($this->request->data['guesttype'])){
+                    $guesttype = $this->request->data['guesttype'];
+                }
 
                 $tablepId = $this->request->data['tablepId'];
                 $popupHtml = '';
@@ -4150,11 +4973,11 @@ class ChartersController extends AppController {
                     if(isset($attachment) && !empty($attachment)){
                         $noteimg = "style='display:block;'";
                         if($yname == "yacht"){
-                            $targetFullPath = BASE_URL.'/SOS/app/webroot/betayacht/app/webroot/img/cruising_map_files/'.$attachment;
+                            $targetFullPath = BASE_URL.'/SOS/app/webroot/betayacht/app/webroot/img/charter_program_files/itinerary_photos/'.$attachment;
                         }else{
-                            $targetFullPath = BASE_URL.'/'.$yname."/app/webroot/img/cruising_map_files/'.$attachment";
+                            $targetFullPath = BASE_URL.'/'.$yname."/app/webroot/img/charter_program_files/itinerary_photos/'.$attachment";
                             if (!empty($fleetSiteName)) { // IF yacht is under any Fleet
-                                $targetFullPath = BASE_URL.'/'.$fleetSiteName."/app/webroot/".$yname."/app/webroot/img/cruising_map_files/'.$attachment";
+                                $targetFullPath = BASE_URL.'/'.$fleetSiteName."/app/webroot/".$yname."/app/webroot/img/charter_program_files/itinerary_photos/'.$attachment";
                             }
                         }
 
@@ -4166,7 +4989,7 @@ class ChartersController extends AppController {
                         $fancybox = "";
                     }
 
-                    $CruisingMapCommentConditons = "activity_id = '$programScheduleUUID' AND activity_name = '$title' AND type = 'schedule'";
+                    $CruisingMapCommentConditons = "activity_id = '$programScheduleUUID' AND activity_name = '$title' AND type = 'schedule' AND publish_map = '1'";
                          $commentdatatitle = $this->CharterGuest->getCruisingMapComment($yachtDbName, $CruisingMapCommentConditons);
                     //}
                       if(isset($commentdatatitle[0]) && !empty($commentdatatitle[0])){
@@ -4177,11 +5000,11 @@ class ChartersController extends AppController {
                       }
                       $colorcodetitle = "";  
                       if($commentcounttitle > 0){ //echo "kkkk";
-                          $colorcodetitle = "green";
+                          $colorcodetitle = "color:green;";
                           //echo $is_fleet;
                           
                                 if(trim($scheduleData[0]['CharterProgramSchedule']['is_crew_commented']) == 1 || trim($scheduleData[0]['CharterProgramSchedule']['is_fleet_commented']) == 1){  //echo "lll";
-                                    $colorcodetitle = "red";
+                                    $colorcodetitle = "color:red;";
                                 }
                            
                       }else{
@@ -4190,17 +5013,24 @@ class ChartersController extends AppController {
 
                     $popupHtml = '';
                     $readonly = "readonly";
+                    if(isset($guesttype) && $guesttype == "guest"){
+                            $displaynone = "display:none;";
+                    }else{
+                            $displaynone = "display:block;";
+                    }
                     $popupHtml .= '<div class="mapPopup sp-mp-detailsrow sp-modal-600" data-schuuid="'.$scheduleData[0]['CharterProgramSchedule']['UUID'].'">
                     <div class="sp-modal-hd"><h1>Day '.$dayNum.'&nbsp;&nbsp;&nbsp;&nbsp;<span class="day_dates"></span></h1></div>
                     <form id="scheduleFormEdit"><div class="inputContainerdiv">
                     <div class="sp-divrow">
                     <div class="sp-60-w">
                     <input type="text" name="title" value="'.$title.'" placeholder="Enter the Title" class="" '.$readonly.' style="color: #000;font-size: 15px;border: solid 1px #ccc;width:100%;margin: 0px;padding: 8px 5px;font-weight: 600;">
-                    <textarea class="form-control" name="messagestitle" '.$readonly.' rows="4" cols="50">'.$notes.'</textarea>
+                    <textarea class="form-control textareacontmarker" style="background: #eee !important;color: #000!important;border: solid 1px rgb(243 243 243 / 70%)!important;" name="messagestitle" '.$readonly.' rows="4" cols="50">'.$notes.'</textarea>
                     </div>
                     <div class="sp-40-w">
-                    <div class="sp-upload-img"></div>
-                    <ul class="action-icon"><li><i class="fa fa-comments crew_comment_cruisingmaptitle"  style="color:'.$colorcodetitle.'" data-rel="'.$scheduleData[0]['CharterProgramSchedule']['UUID'].'" data-yachtid="'.$yacht_id.'" data-tempname="'.$scheduleData[0]['CharterProgramSchedule']['title'].'"><input type="hidden" name=commentstitle value="" class="messagecommentstitle" /></i></li></ul>
+                    <div class="sp-upload-img">
+                    <a href="'.$titleimage.'" class="'.$fancybox.'"><img src="'.$titleimage.'" style="object-fit: fill; height: 150px;" alt="Forest" ></a>
+                    </div>
+                    <ul class="action-icon"><li><i class="fa fa-comments crew_comment_cruisingmaptitle"  style="'.$colorcodetitle.$displaynone.'" data-rel="'.$scheduleData[0]['CharterProgramSchedule']['UUID'].'" data-yachtid="'.$yacht_id.'" data-tempname="'.$scheduleData[0]['CharterProgramSchedule']['title'].'"><input type="hidden" name=commentstitle value="" class="messagecommentstitle" /></i></li></ul>
                     </div>
                     </div>';
                     $popupHtml .= '<input type="hidden" name="schedule_id" value="'.$scheduleId.'"><input type="hidden" class="form-control" name="day_num" id="dayNum" value="'.$dayNum.'">';
@@ -4250,36 +5080,36 @@ class ChartersController extends AppController {
                     if (count($activityData) != 0) {
                         foreach ($activityData as $activity) {
 
-                            // $activitynotes = $activity['CharterProgramScheduleActivity']['notes'];
-                            // if(isset($activitynotes) && !empty($activitynotes)){
-                            //     $activitynotesgreen = "style='display:block;'";
-                            // }else{
-                            //     $activitynotesgreen = "style='display:none;'";
-                            // }
-                            // $activityattachment = $activity['CharterProgramScheduleActivity']['attachment'];
-                            // if(isset($activityattachment) && !empty($activityattachment)){
-                            //     $activityattachmentimg = "style='display:block;'";
-                            //     if($yname == "yacht"){
-                            //         $targetFullPath = BASE_URL.'/SOS/app/webroot/betayacht/app/webroot/img/cruising_map_files/'.$activityattachment;
-                            //     }else{
-                            //             $targetFullPath = BASE_URL.'/'.$yname."/app/webroot/img/cruising_map_files/'.$activityattachment";
-                            //             if (!empty($fleetSiteName)) { // IF yacht is under any Fleet
-                            //                 $targetFullPath = BASE_URL.'/'.$fleetSiteName."/app/webroot/".$yname."/app/webroot/img/cruising_map_files/'.$activityattachment";
-                            //             }
-                            //     }
+                            $activitynotes = $activity['CharterProgramScheduleActivity']['notes'];
+                            if(isset($activitynotes) && !empty($activitynotes)){
+                                $activitynotesgreen = "style='display:block;'";
+                            }else{
+                                $activitynotesgreen = "style='display:none;'";
+                            }
+                            $activityattachment = $activity['CharterProgramScheduleActivity']['attachment'];
+                            if(isset($activityattachment) && !empty($activityattachment)){
+                                $activityattachmentimg = "style='display:block;'";
+                                if($yname == "yacht"){
+                                    $targetFullPath = BASE_URL.'/SOS/app/webroot/betayacht/app/webroot/img/charter_program_files/itinerary_photos/'.$activityattachment;
+                                }else{
+                                        $targetFullPath = BASE_URL.'/'.$yname."/app/webroot/img/charter_program_files/itinerary_photos/'.$activityattachment";
+                                        if (!empty($fleetSiteName)) { // IF yacht is under any Fleet
+                                            $targetFullPath = BASE_URL.'/'.$fleetSiteName."/app/webroot/".$yname."/app/webroot/img/charter_program_files/itinerary_photos/'.$activityattachment";
+                                        }
+                                }
 
-                            //     $activityattachmentimage = $targetFullPath;
-                            //     $activityfancybox = "fancybox";
-                            // }else{
-                            //     $activityattachmentimg = "style='display:none;'";
-                            //     $activityattachmentimage = "#";
-                            //     $activityfancybox = "";
-                            // }
+                                $activityattachmentimage = $targetFullPath;
+                                $activityfancybox = "fancybox";
+                            }else{
+                                $activityattachmentimg = "style='display:none;'";
+                                $activityattachmentimage = "#";
+                                $activityfancybox = "";
+                            }
 
                             $activity_id_chk = $activity['CharterProgramScheduleActivity']['id']; 
                             $activity_UUID_chk = $activity['CharterProgramScheduleActivity']['UUID'];  
                             $activity_name_id_chk = $activity['CharterProgramScheduleActivity']['activity_name'];        
-                            $CruisingMapCommentConditons = "activity_id = '$activity_UUID_chk' AND activity_name = '$activity_name_id_chk' AND type = 'activity'";
+                            $CruisingMapCommentConditons = "activity_id = '$activity_UUID_chk' AND activity_name = '$activity_name_id_chk' AND type = 'activity' AND publish_map = '1'";
                             $commentdata = $this->CharterGuest->getCruisingMapComment($yachtDbName, $CruisingMapCommentConditons);                 
                             //}
                                 $commentcount = 0;
@@ -4291,10 +5121,10 @@ class ChartersController extends AppController {
                               }
                               $colorcode = "";
                               if($commentcount > 0){
-                                $colorcode = "green";
+                                $colorcode = "color:green;";
                                
                                     if(trim($activity['CharterProgramScheduleActivity']['is_crew_commented']) == 1 || trim($activity['CharterProgramScheduleActivity']['is_fleet_commented']) == 1){  
-                                        $colorcode = "red";
+                                        $colorcode = "color:red;";
                                     }
                                 
                                   
@@ -4302,7 +5132,7 @@ class ChartersController extends AppController {
                                 $colorcode = "";
                               }
 
-                            $popupHtml .= '<div class="sp-divrow"><div class="sp-60-w"><input type="text" name="activity_name[]" '.$readonly.' style="color: #000;font-size: 15px;border: solid 1px #ccc;width:100%;margin: 0px;padding: 8px 5px;font-weight: 600;" value="'.$activity['CharterProgramScheduleActivity']['activity_name'].'"><input type="hidden" name="activity_id[]" value="'.$activity['CharterProgramScheduleActivity']['UUID'].'"><textarea class="form-control" '.$readonly.' name="messages[]" rows="4" cols="50">'.$activity['CharterProgramScheduleActivity']['notes'].'</textarea></div><div class="sp-40-w"><div class="sp-upload-img"></div><ul class="action-icon"><li><i class="fa fa-comments crew_comment_cruisingmap" style="color:'.$colorcode.'" data-rel="'.$activity['CharterProgramScheduleActivity']['UUID'].'" data-yachtid="'.$yacht_id.'" data-tempname="'.$activity['CharterProgramScheduleActivity']['activity_name'].'" title="Comments & Feedback"><input type="hidden" name=comments[] value="" class="messagecomments" /></i></li></ul></div></div>
+                            $popupHtml .= '<div class="sp-divrow"><div class="sp-60-w"><input type="text" name="activity_name[]" '.$readonly.' style="color: #000;font-size: 15px;border: solid 1px #ccc;width:100%;margin: 0px;padding: 8px 5px;font-weight: 600;" value="'.$activity['CharterProgramScheduleActivity']['activity_name'].'"><input type="hidden" name="activity_id[]" value="'.$activity['CharterProgramScheduleActivity']['UUID'].'"><textarea class="form-control textareacontmarker" '.$readonly.' style="background: #eee !important;color: #000!important;border: solid 1px rgb(243 243 243 / 70%)!important;" name="messages[]" rows="4" cols="50">'.$activity['CharterProgramScheduleActivity']['notes'].'</textarea></div><div class="sp-40-w"><div class="sp-upload-img"><a href="'.$activityattachmentimage.'" class="'.$activityfancybox.'"><img src="'.$activityattachmentimage.'" style="object-fit: fill; height: 150px;" alt="Forest"></a></div><ul class="action-icon"><li><i class="fa fa-comments crew_comment_cruisingmap" style="'.$colorcode.$displaynone.'" data-rel="'.$activity['CharterProgramScheduleActivity']['UUID'].'" data-yachtid="'.$yacht_id.'" data-tempname="'.$activity['CharterProgramScheduleActivity']['activity_name'].'" title="Comments & Feedback"><input type="hidden" name=comments[] value="" class="messagecomments" /></i></li></ul></div></div>
                              ';
                         }
                     }
@@ -4316,6 +5146,116 @@ class ChartersController extends AppController {
                     
                     $result['status'] = "success";
                     $result['popupHtml'] = $popupHtml;
+                }
+                
+            }
+            echo json_encode($result);
+            exit;
+        }
+    }
+
+
+
+        /*
+     * Load the Charter Program Schedules for Edit
+     * Functionality -  Loading the Charter program schedules with existing details
+     * Developer - Nagarajan
+     * Created date - 28-May-2018
+     * Modified date - 
+     */
+    function getIpadViewCharterProgramSchedules() {
+        
+        if($this->request->is('ajax')){
+            $session = $this->Session->read('charter_info');
+            //$yachtDbName = $session['CharterGuest']['ydb_name'];
+            //echo "<pre>";print_r($this->request->data);
+            $result = array();
+            if (isset($this->request->data['scheduleId']) && !empty($this->request->data['scheduleId'])) {
+              $scheduleId = $this->request->data['scheduleId'];
+                
+                $popupHtml = '';
+                $this->loadModel('CharterGuest');
+                $this->loadModel('Yacht');
+                $chprgdata = $this->CharterGuest->find('first',array('conditions'=>array('CharterGuest.charter_program_id'=>$scheduleId)));
+                //echo "<pre>";print_r($chprgdata); exit;
+                $yacht_id = $chprgdata['CharterGuest']['yacht_id'];
+                $yachtCond = array('Yacht.id' => $yacht_id);
+                $Ydata = $this->Yacht->find('first', array('conditions' => $yachtCond));
+                $yachtDbName = $Ydata['Yacht']['ydb_name'];
+                $yname = $Ydata['Yacht']['yname'];
+                $fleetcompanyid = $Ydata['Yacht']['fleetcompany_id'];
+                        $this->loadModel("Fleetcompany");
+                        $fleetcompanydetails = $this->Fleetcompany->find('first',array('conditions'=>array('id'=>$fleetcompanyid)));
+                        $fleetSiteName = $fleetcompanydetails['Fleetcompany']['fleetname'];
+                $scheduleAllData = $this->CharterGuest->query("SELECT * FROM $yachtDbName.charter_program_schedules CharterProgramSchedule WHERE charter_program_id = '$scheduleId' AND is_deleted = 0");
+               // echo "<pre>";print_r($scheduleData); exit;
+                $basefolder = $this->request->base;
+                if (count($scheduleAllData) != 0) {
+                    $popupHtml = '';
+                    foreach($scheduleAllData as $scheduleData){
+                        $title = $scheduleData['CharterProgramSchedule']['title'];
+                        $dayNum = $scheduleData['CharterProgramSchedule']['day_num'];
+                        $programScheduleUUID = $scheduleData['CharterProgramSchedule']['UUID'];
+                        $isFleetUser = $this->Session->read('loggedUserInfo.is_fleet');
+                        $userType = $this->Session->read('loggedUserInfo.user_type');
+
+                        $notes = $scheduleData['CharterProgramSchedule']['notes'];
+                        $attachment = $scheduleData['CharterProgramSchedule']['attachment'];
+                        if(isset($notes) && !empty($notes)){
+                            $noteexist = "style='display:block;'";
+                        }else{
+                            $noteexist = "style='display:none;'";
+                        }
+                        if(isset($attachment) && !empty($attachment)){
+                            $noteimg = "style='display:block;'";
+                            if($yname == "yacht"){
+                                $targetFullPath = BASE_URL.'/SOS/app/webroot/betayacht/app/webroot/img/charter_program_files/itinerary_photos/'.$attachment;
+                            }else{
+                                $targetFullPath = BASE_URL.'/'.$yname."/app/webroot/img/charter_program_files/itinerary_photos/'.$attachment";
+                                if (!empty($fleetSiteName)) { // IF yacht is under any Fleet
+                                    $targetFullPath = BASE_URL.'/'.$fleetSiteName."/app/webroot/".$yname."/app/webroot/img/charter_program_files/itinerary_photos/'.$attachment";
+                                }
+                            }
+
+                            $titleimage = $targetFullPath;
+                            $fancybox = "fancybox";
+                        }else{
+                            $noteimg = "style='display:none;'";
+                            $titleimage = "#";
+                            $fancybox = "";
+                        }
+
+                        
+
+                        
+                        $readonly = "readonly";
+                        $popupHtml .= '<div class="mapPopup sp-mp-detailsrow sp-modal-600" data-schuuid="'.$scheduleData['CharterProgramSchedule']['UUID'].'">
+                       
+                        <form id="scheduleFormEdit"><div class="inputContainerdiv">
+                        <div class="sp-divrow">
+                        <div class="sp-60-w"><h1 style="float:left;border:none;">Day '.$dayNum.'&nbsp;&nbsp;&nbsp;&nbsp;</h1>
+                        <input type="text" name="title" value="'.$title.'" placeholder="Enter the Title" class="" '.$readonly.' style="color: #000;float:right;font-size: 15px;border: solid 1px #ccc;width:68%;margin: 0px;padding: 8px 5px;font-weight: 600;background-color: #ddd;">
+                        <textarea class="form-control textareacont" name="messagestitle" '.$readonly.' rows="4" cols="50" style="margin-top:42px;background: #eee !important;color: #000!important;border: solid 1px rgb(243 243 243 / 70%)!important;">'.$notes.'</textarea>
+                        </div>
+                        <div class="sp-40-w">
+                        <div class="sp-upload-img">
+                        <a href="'.$titleimage.'" class="'.$fancybox.'"><img src="'.$titleimage.'" style="object-fit: fill; height: 150px;" alt="Forest" ></a>
+                        </div>
+                        <ul class="action-icon"></ul>
+                        </div>
+                        </div>';
+                        $popupHtml .= '<input type="hidden" name="schedule_id" value="'.$scheduleId.'"><input type="hidden" class="form-control" name="day_num" id="dayNum" value="'.$dayNum.'">';
+                        $popupHtml .= '<input type="hidden" name="yacht_id" value="'.$yacht_id.'">';
+                        $popupHtml .= '<input type="hidden" id="charterprogramuuid" value="'.$scheduleData['CharterProgramSchedule']['charter_program_id'].'">';
+                        $popupHtml .= '</div></form>';
+                        
+                        
+                        
+                        
+                        //echo "<pre>";print_r($result); exit;
+                    }
+                    $result['status'] = "success";
+                        $result['popupHtml'] = $popupHtml;
                 }
                 
             }
@@ -4354,6 +5294,62 @@ class ChartersController extends AppController {
         <body>
         <div style='font-size:14px; font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif;'>
         <p>Dear <b>".$salutation." ".$firstName." ".$lastName."</b>,</p>
+        <p>You have been invited to join $headChartererName for a cruise onboard the $yachtName.</p>
+        <p>To tailor our services so we can provide you a 7 star experience we kindly request that you login to the below secure website with your email and token and complete your preference sheets.</p>
+        
+	<p><a href='".$cloudURL."'>$cloudURL</a></p>
+        <p>Email Address : <b>".$to."</b></p>
+        <p>Token : <b>".$userToken."</b></p>
+        
+        <p>When you complete your preference sheets $headChartererName will be notified by email and your completed preference sheets and personal details will be automatically made available to the Captain of the $yachtName.</p>
+	<p>Please watch this 60 sec video to learn how to use the charter guest program.</p> 
+        <p>We look forward to welcoming you onboard soon.</p>
+        </br>
+        <p>Kind regards,</p>        
+        <p>$captainName</p>       
+        <p>$yachtName</p>         
+        </div>
+        </body>
+        </html>";
+        
+        $headers= "MIME-version: 1.0\n";
+        $headers.= "Content-type: text/html; charset= iso-8859-1\n";
+        $headers .= 'From: TotalSuperyacht <mail@totalsuperyacht.com>' . "\r\n";
+        $this->chkSMTPEmail($to,$subject,$message,$headers);
+        
+    }
+
+
+    /*
+     * Mail notification
+     * Functionality -  Send login notification mail to the Charter guest
+     * Developer - Nagarajan
+     * Created date - 24-May-2018
+     * Modified date - 
+     */
+    function sendCharterNotifyAssociateGuestMail($data,$userToken) {
+        
+        $salutation = $data['salutation'];
+        $firstName = $data['first_name'];
+        $lastName = $data['last_name'];
+        $to = $data['email'];
+        //$to = "vignesh@ceruleaninfotech.com";
+        $yachtName = $this->Session->read('charter_info.CharterGuest.yacht_name');
+        $captainName = $this->Session->read('charter_info.CharterGuest.captain_name');
+        $this->loadModel('CharterGuest');
+        $headCharterData = $this->CharterGuest->find('first', array('conditions' => array('id' => $data['charter_guest_id'])));
+        $headChartererName = $headCharterData['CharterGuest']['first_name']." ".$headCharterData['CharterGuest']['last_name'];
+        $cloudURL = Configure::read('cloudUrl')."charterguest";
+        
+        $subject = "Welcome to the charter guest program for the $yachtName";
+        $message="
+        <html>
+        <head>
+        <title></title>
+        </head>
+        <body>
+        <div style='font-size:14px; font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif;'>
+        <p>Hi <b>".$firstName."</b>,</p>
         <p>You have been invited to join $headChartererName for a cruise onboard the $yachtName.</p>
         <p>To tailor our services so we can provide you a 7 star experience we kindly request that you login to the below secure website with your email and token and complete your preference sheets.</p>
         
@@ -4635,7 +5631,7 @@ class ChartersController extends AppController {
  
          $activity_id_chk = $activityId;      
          if(isset($activity_id_chk) && !empty($activity_id_chk)){
-             $CruisingMapCommentConditons = "activity_id = '$activity_id_chk' AND activity_name = '$activity_name' AND type = '$type'";
+             $CruisingMapCommentConditons = "activity_id = '$activity_id_chk' AND activity_name = '$activity_name' AND type = '$type' AND publish_map = 1";
              $comments = $this->CharterGuest->getCruisingMapComment($yachtDbName, $CruisingMapCommentConditons);
          }
  
@@ -4776,6 +5772,14 @@ if($type == "schedule"){
     //$updateValues = "title='$title',day_num=$dayNum,is_deleted=$isDeleted,notes='$notes',attachment='$attachment',is_crew_commented='$crew_newlyaddedcomment',is_fleet_commented='$fleet_newlyaddedcomment'";
     $scheduleUpdateStatus = $this->CharterGuest->updateCharterProgramScheduleData($yachtDbName, $updateConditions, $updateValues);
     
+
+    $scheduleConditions = "UUID = '$activityId'";
+    $chkpublishscheduleData = $this->CharterGuest->getCharterProgramScheduleData($yachtDbName, $scheduleConditions);
+    if (!empty($chkpublishscheduleData)) {
+        $scheduleData = $chkpublishscheduleData[0];
+        $publish_map = $scheduleData['CharterProgramSchedule']['publish_map'];
+
+    }
     if(isset($comments) && !empty($comments)){ //echo "lllll"; exit;
         $loggedUserFullName = $this->Session->read('login_username');
         $loggedUserInfouser_type = "Guest";
@@ -4787,8 +5791,8 @@ if($type == "schedule"){
         
             
             $created = date("Y-m-d H:i:s");
-            $insertValuescommenttitle = "(activity_id,activity_name,user_name,user_type,comment,crew_newlyaddedcomment,fleet_newlyaddedcomment,guest_newlyaddedcomment,type,created) "
-                    . "VALUES ('$activityId','$activity_name','$loggedUserFullName','$loggedUserInfouser_type','$comments','$crew_newlyaddedcomment','$fleet_newlyaddedcomment','$guest_newlyaddedcomment','schedule','$created')";
+            $insertValuescommenttitle = "(activity_id,activity_name,user_name,user_type,comment,crew_newlyaddedcomment,fleet_newlyaddedcomment,guest_newlyaddedcomment,type,created,publish_map) "
+                    . "VALUES ('$activityId','$activity_name','$loggedUserFullName','$loggedUserInfouser_type','$comments','$crew_newlyaddedcomment','$fleet_newlyaddedcomment','$guest_newlyaddedcomment','schedule','$created','$publish_map')";
             $this->CharterGuest->insertCruisingMapComment($yachtDbName, $insertValuescommenttitle);          
     }
 
@@ -4806,6 +5810,14 @@ if($type == "schedule"){
             $activityConditions = "UUID = '$activityId'";
             $activityUpdateStatus = $this->CharterGuest->updateCharterProgramScheduleActivityData($yachtDbName, $activityConditions, $activityValues);
 
+    $scheduleConditions = "UUID = '$activityId'";
+    $chkpublishscheduleData = $this->CharterGuest->getCharterProgramScheduleData($yachtDbName, $scheduleConditions);
+    if (!empty($chkpublishscheduleData)) {
+        $scheduleData = $chkpublishscheduleData[0];
+        $publish_map = $scheduleData['CharterProgramSchedule']['publish_map'];
+
+    }
+
         if(isset($comments) && !empty($comments)){
             $loggedUserFullName = $this->Session->read('login_username');
             $loggedUserInfouser_type = "Guest";
@@ -4814,8 +5826,8 @@ if($type == "schedule"){
             $guest_newlyaddedcomment = 1;
                 
                 $created = date("Y-m-d H:i:s");
-                $insertValuesActivity = "(activity_id,activity_name,user_name,user_type,comment,crew_newlyaddedcomment,fleet_newlyaddedcomment,guest_newlyaddedcomment,type,created) "
-                    . "VALUES ('$activityId','$activity_name','$loggedUserFullName','$loggedUserInfouser_type','$comments','$crew_newlyaddedcomment','$fleet_newlyaddedcomment','$guest_newlyaddedcomment','activity','$created')";
+                $insertValuesActivity = "(activity_id,activity_name,user_name,user_type,comment,crew_newlyaddedcomment,fleet_newlyaddedcomment,guest_newlyaddedcomment,type,created,publish_map) "
+                    . "VALUES ('$activityId','$activity_name','$loggedUserFullName','$loggedUserInfouser_type','$comments','$crew_newlyaddedcomment','$fleet_newlyaddedcomment','$guest_newlyaddedcomment','activity','$created','$publish_map')";
             $this->CharterGuest->insertCruisingMapComment($yachtDbName, $insertValuesActivity);    
                     
         }
@@ -4901,6 +5913,263 @@ function markCommentUnread() {
 }
 
 
+function getPreviousCharterProgramSelections() {
+    // echo "<pre>";
+     //print_r($this->request->data);exit;
+    
+     $this->loadModel('Yacht');
+     $this->loadModel('CharterGuestSpiritPreference');
+     $this->loadModel('CharterGuestWinePreference');
+     $this->loadModel('CharterGuest');
+     $postData = $this->request->data;
+     //echo "<pre>";print_r($this->Session->read());
+      //echo "<pre>";
+     //print_r($postData); exit;
+     $type = $postData['type'];
+     $ownerprefenceUUID = $this->Session->read('ownerprefenceUUID');
+
+     $session = $this->Session->read();
+     $selectedCharterProgramUUID = $session['selectedCharterProgramUUID'];
+
+    //  if($type == "spirit"){
+    //     $spiritData = $this->CharterGuestSpiritPreference->find('all', array('conditions' => array('is_deleted' => 0,'guest_lists_UUID'=>$ownerprefenceUUID,'charter_program_id !='=>$selectedCharterProgramUUID),'group' => array('charter_program_id'),'fields'=>array('charter_program_id','id','guest_lists_UUID')));
+    //     $charterProgramData = array();
+    //     if(isset($spiritData) && !empty($spiritData)){
+            
+    //         foreach($spiritData as $value){
+    //            $charterProgramData[] =  $this->CharterGuest->find('first', array('conditions' => array('charter_program_id'=>$value['CharterGuestSpiritPreference']['charter_program_id'],'is_deleted' => 0),'fields'=>array('charter_program_id','id','charter_name','charter_from_date','charter_to_date','embarkation','debarkation'),'order'=>array('charter_from_date DESC')));
+    //         }
+    //     }
+    //  }else if($type == "wine"){
+    //     $WineData = $this->CharterGuestWinePreference->find('all', array('conditions' => array('is_deleted' => 0,'guest_lists_UUID'=>$ownerprefenceUUID,'charter_program_id !='=>$selectedCharterProgramUUID),'group' => array('charter_program_id'),'fields'=>array('charter_program_id','id','guest_lists_UUID')));
+    //     $charterProgramData = array();
+    //     if(isset($WineData) && !empty($WineData)){
+            
+    //         foreach($WineData as $value){
+        //'users_UUID'=>$ownerprefenceUUID,
+               $charterProgramData =  $this->CharterGuest->find('all', array('conditions' => array('users_UUID'=>$ownerprefenceUUID,'charter_program_id !='=>$selectedCharterProgramUUID,'is_deleted' => 0),'fields'=>array('charter_program_id','id','charter_name','charter_from_date','charter_to_date','embarkation','debarkation'),'order'=>array('charter_from_date DESC')));
+    //         }
+    //     }
+    //  }
+     //echo "<pre>"; print_r($charterProgramData); exit;
+    
+     
+     $r = array();
+     $view = new View();
+     $view->layout = 'ajax'; // Optional, use if you want a "clean" view
+     
+     $r['view'] = $view->element('previous_charter_program_list', array('charterProgramData' => $charterProgramData,'type'=>$type));
+     
+     echo json_encode($r);
+     exit;
+ }
+
+ function getPreviousSelectedBeerWine() {
+    // echo "<pre>";
+     //print_r($this->request->data);exit;
+     $this->layout = 'ajax';
+     $this->autoRender = false;
+     
+
+     $this->loadModel('Yacht');
+     $this->loadModel('CharterGuestSpiritPreference');
+     $this->loadModel('CharterGuestWinePreference');
+     $this->loadModel('CharterGuest');
+     $postData = $this->request->data;
+     //echo "<pre>";print_r($this->Session->read());
+      //echo "<pre>";
+     //print_r($postData); exit;
+     $type = $postData['type'];
+     $programuuid = $postData['programuuid'];
+     
+     $session = $this->Session->read();
+     //echo "<pre>";print_r($session); exit;
+
+     if($type == "spirit"){
+           
+           
+          
+            if(isset($session['ownerprefenceUUID']) && !empty($session['ownerprefenceUUID'])){
+                $charterHeadId = $session['ownerprefenceUUID'];
+            }
+            $selectedCharterProgramUUID = $programuuid;
+            //echo $charterHeadId.'>>>>';
+            //echo $selectedCharterProgramUUID;
+            $this->loadModel('CharterGuestSpiritPreference');
+            $this->loadModel('TempProductListSelection');
+            $this->loadModel('ProductList');
+            $this->loadModel('CharterGuest');
+            $this->loadModel('CharterGuestAssociate');
+            //'guest_lists_UUID'=>$charterHeadId
+            $selectConditions = array('charter_program_id'=>$selectedCharterProgramUUID,'guest_lists_UUID'=>$charterHeadId);
+            $prefConditions = array_merge(array('is_deleted' => 0), $selectConditions);
+            // Fetch the existing Spirit Preferences
+            $spiritPreferences = $this->CharterGuestSpiritPreference->find('all', array('conditions' => $prefConditions));
+            //echo $this->CharterGuestSpiritPreference->getLastQuery();
+            // Fetch the selected products from Cart
+            //$tempselectConditions = array('charter_guest_id' => $charterHeadId, 'charter_assoc_id' => $charterAssocId);
+            $selectedProductList = $this->TempProductListSelection->find('list', array('fields' => array('product_list_id','product_list_id'), 'conditions' => $selectConditions));
+            
+            $conditions = array('id' => array_values($selectedProductList));
+            // Selected products
+            $selectionCartData = $this->ProductList->find('all', array('conditions' => $conditions));
+            // Type list
+            $typeListPref = $this->CharterGuestSpiritPreference->find('list', array('fields' => array('primary_category','primary_category'), 'conditions' => $prefConditions, 'group' => array('primary_category')));
+            $typeListTemp = $this->ProductList->find('list', array('fields' => array('primary_category','primary_category'), 'conditions' => $conditions, 'group' => array('primary_category')));
+            $typeList = array_unique(array_merge(array_values($typeListPref), array_values($typeListTemp)));
+            
+            // Fetch the Charter Guest data
+            $charterGuestData = $this->CharterGuest->find('first', array('conditions' => array('charter_program_id' => $selectedCharterProgramUUID)));
+            // Fetch the Charter Associate data
+            $charterAssocData = $this->CharterGuestAssociate->find('first', array('conditions' => array('charter_guest_id' => $selectedCharterProgramUUID)));
+            //echo "<pre>";print_r($selectionCartData); //exit;
+            //echo "<pre>";print_r($spiritPreferences); //exit;
+            //echo "<pre>";print_r($selectionCartData);
+             //exit;
+            // Load Element view
+            $view = new View();
+            $element = "previous_beer_list";
+            $productListView  = $view->element($element, array('productSelectionCartData' => $selectionCartData, 'typeList' => $typeList, 'spiritPreferences' => $spiritPreferences, 'charterGuestData' => $charterGuestData, 'charterAssocData' => $charterAssocData));
+            $result = array();
+            $result['status'] = "success";
+            $result['type'] = $type;
+            $result['view'] = $productListView;
+            $result['chartername'] = $charterGuestData['CharterGuest']['charter_name'];
+            $result['cartRecordCount'] = count($selectionCartData);
+            $result['preferenceRecordCount'] = count($spiritPreferences);
+
+            echo json_encode($result);
+            exit;
+            
+        
+     }else if($type == "wine"){
+             // Get the Wine list
+         if(isset($session['ownerprefenceUUID']) && !empty($session['ownerprefenceUUID'])){
+             $charterHeadId = $session['ownerprefenceUUID'];
+         }
+         //$charterHeadId = $sessionData['charterHeadId'];
+         //$charterAssocId = $sessionData['charterAssocId'];
+         $selectedCharterProgramUUID = $programuuid;
+             
+             $this->loadModel('CharterGuestWinePreference');
+             $this->loadModel('TempWineListSelection');
+             $this->loadModel('WineList');
+             $this->loadModel('CharterGuest');
+             $this->loadModel('CharterGuestAssociate');
+             //,'guest_lists_UUID'=>$charterHeadId
+             $selectConditions = array('charter_program_id' => $selectedCharterProgramUUID,'guest_lists_UUID'=>$charterHeadId);
+             $prefConditions = array_merge(array('is_deleted' => 0), $selectConditions);
+             // Fetch the existing Wine Preferences
+             $winePreferences = $this->CharterGuestWinePreference->find('all', array('conditions' => $prefConditions));
+ //            echo "<pre>";print_r($winePreferences);exit;
+             // Fetch the selected wines from Cart
+             $selectedWineList = $this->TempWineListSelection->find('list', array('fields' => array('wine_list_id','wine_list_id'), 'conditions' => $selectConditions));
+             
+             $conditions = array('id' => array_values($selectedWineList));
+             // Selected wines
+             $selectionCartData = $this->WineList->find('all', array('conditions' => $conditions));
+             // Color list
+             $colorListPref = $this->CharterGuestWinePreference->find('list', array('fields' => array('color','color'), 'conditions' => $prefConditions, 'group' => array('color')));
+             $colorListTemp = $this->WineList->find('list', array('fields' => array('color','color'), 'conditions' => $conditions, 'group' => array('color')));
+             $colorList = array_unique(array_merge(array_values($colorListPref), array_values($colorListTemp)));
+             
+             // Fetch the Charter Guest data
+             $charterGuestData = $this->CharterGuest->find('first', array('conditions' => array('charter_program_id' => $selectedCharterProgramUUID)));
+             // Fetch the Charter Associate data
+             $charterAssocData = $this->CharterGuestAssociate->find('first', array('conditions' => array('charter_guest_id' => $selectedCharterProgramUUID)));
+             // echo "<pre>";print_r($selectionCartData);
+             // echo "<pre>";print_r($colorList);
+             // echo "<pre>";print_r($winePreferences);
+             // echo "<pre>";print_r($charterGuestData);
+             // echo "<pre>";print_r($charterAssocData);
+             // exit;
+             // Load Element view
+             $view = new View();
+             $element = "previous_wine_list_table";
+             $wineListView  = $view->element($element, array('selectionCartData' => $selectionCartData, 'colorList' => $colorList, 'winePreferences' => $winePreferences, 'charterGuestData' => $charterGuestData, 'charterAssocData' => $charterAssocData));
+             $result = array();
+             $result['status'] = "success";
+             $result['type'] = $type;
+             $result['view'] = $wineListView;
+             $result['chartername'] = $charterGuestData['CharterGuest']['charter_name'];
+              $result['cartRecordCount'] = count($selectionCartData);
+              $result['preferenceRecordCount'] = count($winePreferences);
+ 
+             echo json_encode($result);
+             exit;
+     }
+     //echo "<pre>"; print_r($charterProgramData); exit;
+    
+     
+     $r = array();
+     $view = new View();
+     $view->layout = 'ajax'; // Optional, use if you want a "clean" view
+     
+     $r['view'] = $view->element('previous_charter_program_list', array('charterProgramData' => $charterProgramData,'type'=>$type));
+     
+     echo json_encode($r);
+     exit;
+ }
+
+
+ function saveusesubmittedpreferences() {
+        
+    if($this->request->is('ajax')){
+        $this->layout = false;
+        $this->autoRender = false;
+        $this->loadModel('Yacht');
+        $result = array();
+        $sessiondata = $this->Session->read();
+        $guestListUUID = $this->request->data['guestListUUID'];
+        $selectedCharterProgramUUID = $this->request->data['selectedCharterProgramUUID'];
+           
+            $this->loadModel('GuestList');
+            $this->loadModel('CharterGuest');
+            $guestExistdata = $this->GuestList->find('first', array('conditions' => array('UUID' => $guestListUUID)));
+            //echo "<pre>"; print_r($guestExistdata); exit;
+            if(!empty($guestExistdata)){
+                $guestlistData = array();
+                $guestlistData['id'] = $guestExistdata['GuestList']['id'];
+                $guestlistData['use_submitted_preferences'] = 1;
+                $this->GuestList->save($guestlistData);
+                // Fetch the Charter Guest data
+                $charterGuestData = $this->CharterGuest->find('first', array('conditions' => array('charter_program_id' => $selectedCharterProgramUUID)));
+
+                //echo "<pre>";print_r($chprgdata); exit;
+                $yacht_id = $charterGuestData['CharterGuest']['yacht_id'];
+                $yachtCond = array('Yacht.id' => $yacht_id);
+                $Ydata = $this->Yacht->find('first', array('conditions' => $yachtCond));
+                $yachtDbName = $Ydata['Yacht']['ydb_name'];
+                $yname = $Ydata['Yacht']['yname'];
+                $fleetcompanyid = $Ydata['Yacht']['fleetcompany_id'];
+                    $this->loadModel("Fleetcompany");
+                    $fleetcompanydetails = $this->Fleetcompany->find('first',array('conditions'=>array('id'=>$fleetcompanyid)));
+                    $fleetSiteName = $fleetcompanydetails['Fleetcompany']['fleetname'];
+
+                    $selectQuery = "SELECT id FROM $yachtDbName.passenger_lists WHERE UUID='$guestListUUID' AND is_deleted=0";
+                    $checkCharterExists = $this->CharterGuest->query($selectQuery);
+                    
+                    if (!empty($checkCharterExists)) {
+                        // Updation
+                        $updateQuery = "UPDATE $yachtDbName.passenger_lists SET use_submitted_preferences='1' WHERE UUID='$guestListUUID'";
+                        $this->CharterGuest->query($updateQuery);
+                    }
+
+                    $result['status'] = "success";
+
+            }else {
+                $result['status'] = "fail";
+                
+            }            
+        } 
+                
+            
+    echo json_encode($result);
+    exit;
+    
+}
+
+
 function getIndividualmsgcountMarer() {
     //echo "<pre>";print_r($this->request->data);exit;
     if($this->request->is('ajax')){
@@ -4927,5 +6196,22 @@ function getIndividualmsgcountMarer() {
     
 }
 
+    /*
+        * Load The Privacy Policy page and Terms of Use page based on the request.
+        * Functionality -  Loading the The Privacy Policy page and Terms of Use page based on the request.
+        * Developer - Arsalan
+        * Created date - 09-June-2022
+        * Modified date - 
+    */
+    function privacytermsofuse() {    
+        $actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";    
+        $str_arr = explode ("/", $actual_link); 
+        $id = $str_arr[count($str_arr)-1];
+        $conditions = "id= $id";
+        $this->loadModel('Yacht');
+        $details = $this->Yacht->getLeagalDocumentsData($conditions);
+        $this->set('details', $details[0]);
+        // print_r($details);exit;
+    }
     
 }

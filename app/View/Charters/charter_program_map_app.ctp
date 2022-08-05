@@ -14,7 +14,7 @@ $schedulePeriod = "";
 $charterName = "";
 $scheduleLocation = "";
 if (isset($charterProgData) && !empty($charterProgData)) {
-    $schedulePeriod = date_format(date_create($charterProgData['CharterProgram']['charter_from_date']), "M dS")." - ".date_format(date_create($charterProgData['CharterProgram']['charter_to_date']), "M dS");
+    $schedulePeriod = date_format(date_create($charterProgData['CharterProgram']['charter_from_date']), "d M Y")." - ".date_format(date_create($charterProgData['CharterProgram']['charter_to_date']), "d M Y");
     $charterName = $charterProgData['CharterProgram']['charter_name'];
     $scheduleLocation = $charterProgData['CharterProgram']['embarkation']." to ".$charterProgData['CharterProgram']['debarkation'];
 }
@@ -34,34 +34,216 @@ echo $this->Html->script('leaflet/route');
  echo $this->Html->script('leaflet/leaflet.draw.js'); 
 
 ?>
-<style>
-    body {
-background-color: #000 !important; 
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-  height: 100%;
-  background-position: 0px 110px;
-  background:none;
-}
-body {
-    padding: 0;
-    margin: 0;
-}
-html, body, #map {
-    height: 100%;
-    width: 100vw;
-}
- .container {
-    width:100vw;
-    height:100%;
-} 
 
+<style>
+.map-userlabelp{
+position: absolute;
+    left: 73px;
+    top: 9px;
+}
+.fancybox-overlay{
+background: none!important;
+}
+.fancybox-opened {
+    z-index: 99999999999!important;
+}
+
+.frmclass {
+    /* background: #000!important; */
+    color: #000!important;
+    border: solid 1px rgb(243 243 243 / 70%)!important;
+}
+    /* ----------- iPhone 6, 6S, 7 and 8 ----------- */
+
+/* Portrait and Landscape */
+@media only screen 
+  and (min-device-width: 375px) 
+  and (max-device-width: 667px) 
+  and (-webkit-min-device-pixel-ratio: 2) { 
+
+    .form-control {
+    background: none !important;
+    color: #000 !important;
+    border: solid 1px rgb(243 243 243 / 70%)!important;
+    overflow-wrap: break-word;
+    }
+    .sp-upload-img {
+        margin-top:5px;
+    }
+}
+
+/* Portrait */
+@media only screen 
+  and (min-device-width: 375px) 
+  and (max-device-width: 667px) 
+  and (-webkit-min-device-pixel-ratio: 2)
+  and (orientation: portrait) { 
+    .form-control {
+    background: none !important;
+    color: #000 !important;
+    border: solid 1px rgb(243 243 243 / 70%)!important;
+    overflow-wrap: break-word;
+    }
+    .sp-upload-img {
+        margin-top:5px;
+    }
+}
+
+/* Landscape */
+@media only screen 
+  and (min-device-width: 375px) 
+  and (max-device-width: 667px) 
+  and (-webkit-min-device-pixel-ratio: 2)
+  and (orientation: landscape) { 
+    .form-control {
+    background: none !important;
+    color: #000 !important;
+    border: solid 1px rgb(243 243 243 / 70%)!important;
+    overflow-wrap: break-word;
+    }
+    .sp-upload-img {
+        margin-top:5px;
+    }
+}
+
+/* ----------- iPhone 6+, 7+ and 8+ ----------- */
+
+/* Portrait and Landscape */
+@media only screen 
+  and (min-device-width: 414px) 
+  and (max-device-width: 736px) 
+  and (-webkit-min-device-pixel-ratio: 3) { 
+    .form-control {
+    background: none !important;
+    color: #000 !important;
+    border: solid 1px rgb(243 243 243 / 70%)!important;
+    overflow-wrap: break-word;
+    }
+    .sp-upload-img {
+        margin-top:5px;
+    }
+}
+
+/* Portrait */
+@media only screen 
+  and (min-device-width: 414px) 
+  and (max-device-width: 736px) 
+  and (-webkit-min-device-pixel-ratio: 3)
+  and (orientation: portrait) { 
+
+    .form-control {
+    background: none !important;
+    color: #000 !important;
+    border: solid 1px rgb(243 243 243 / 70%)!important;
+    overflow-wrap: break-word;
+    }
+    .sp-upload-img {
+        margin-top:5px;
+    }
+}
+
+/* Landscape */
+@media only screen 
+  and (min-device-width: 414px) 
+  and (max-device-width: 736px) 
+  and (-webkit-min-device-pixel-ratio: 3)
+  and (orientation: landscape) { 
+
+    .form-control {
+    background: none !important;
+    color: #000 !important;
+    border: solid 1px rgb(243 243 243 / 70%)!important;
+    overflow-wrap: break-word;
+    }
+    .sp-upload-img {
+        margin-top:5px;
+    }
+}
+
+/* ----------- iPhone X ----------- */
+
+/* Portrait and Landscape */
+@media only screen 
+  and (min-device-width: 375px) 
+  and (max-device-width: 812px) 
+  and (-webkit-min-device-pixel-ratio: 3) { 
+
+    .form-control {
+    background: none !important;
+    color: #000 !important;
+    border: solid 1px rgb(243 243 243 / 70%)!important;
+    overflow-wrap: break-word;
+    }
+    .sp-upload-img {
+        margin-top:5px;
+    }
+}
+
+/* Portrait */
+@media only screen 
+  and (min-device-width: 375px) 
+  and (max-device-width: 812px) 
+  and (-webkit-min-device-pixel-ratio: 3)
+  and (orientation: portrait) { 
+
+    .form-control {
+    background: none !important;
+    color: #000 !important;
+    border: solid 1px rgb(243 243 243 / 70%)!important;
+    overflow-wrap: break-word;
+    }
+    .sp-upload-img {
+        margin-top:5px;
+    }
+
+}
+
+/* Landscape */
+@media only screen 
+  and (min-device-width: 375px) 
+  and (max-device-width: 812px) 
+  and (-webkit-min-device-pixel-ratio: 3)
+  and (orientation: landscape) { 
+
+
+    
+.form-control {
+    background: none !important;
+    color: #000 !important;
+    border: solid 1px rgb(243 243 243 / 70%)!important;
+    overflow-wrap: break-word;
+}
+
+.sp-upload-img {
+        margin-top:5px;
+    }
+
+}
+@media only screen and (min-width: 767px) and (max-width: 800px){
+.custom-popup{
+    height: 100vh!important;
+}
+}
+    </style>
+
+<?php
+echo $this->Html->script('leaflet/leaflet'); 
+echo $this->Html->css('leaflet/dist/leaflet');
+
+echo $this->Html->script('leaflet/route'); 
+ 
+ echo $this->Html->script('leaflet/leaflet-geoman.min'); 
+ echo $this->Html->css('leaflet/leaflet-geoman');
+
+ echo $this->Html->css('leaflet/leaflet.draw.css');
+ echo $this->Html->script('leaflet/leaflet.draw.js'); 
+
+?>
+<style>
 .wrapper{overflow: hidden;}
 .footer{height: 0px;line-height: 0;padding: 0px;}
 .common-form-row{
-    margin-top:30px;margin-bottom: 10px;font-weight: bold!important;}
+    margin-top:10px;margin-bottom: 10px;font-weight: bold!important;}
 /*.back-btn button {
     float: right;
     margin-right: 20px;
@@ -83,7 +265,7 @@ html, body, #map {
   color: #fff!important;
 }
 .sp-mp-detailsrow h2{
-color: #fff;
+color: #000;
     font-size: 18px;
     font-weight: 600;
 }
@@ -121,10 +303,10 @@ float: left;
     width:176px!important;
         margin-left: 10px;
 }
-.sp-upload-img img{
-  width: 100%;
-  height: 100%;
-}
+/* .sp-upload-img img{
+    margin-left: -150%;
+    margin-top: -60%;
+} */
 .sp-upload-img{
     float: left;
     border: solid 1px #ccc;
@@ -248,7 +430,7 @@ display: block;
     margin-right: 8px;
 }
 .fleetAdminIcon-note.crusingmapnotegreen{
-		background-position:-55px -50px;
+        background-position:-55px -50px;
 }
 
 .custom-popup .actionClass button {
@@ -330,12 +512,7 @@ display: block;
     top: 143px;
 
 }
-.nav-side-menu-full-container .nav-side-menu .sidebar-btn{
-top: 102px;
-    right: 11px;
-    left: 0px;
 
-}
 .leaflet-marker-icon:hover{
     z-index: 99999999;
 }
@@ -465,13 +642,13 @@ float: right;
   width: 320px;
 }
 
-/* .leaflet-control-attribution {
+.leaflet-control-attribution {
 
 height: 42px;
-width: 284px;
+width: 160px;
 
 
-} */
+}
 
 .leaflet-container .leaflet-control-attribution {
 background: #fff;
@@ -534,7 +711,10 @@ margin: 10px;
 .leaflet-tooltip-bottom {
     display: none;
 }
-
+.btn-warning, .btn-default, .btn-warning-bg{
+    background-color: #f0ad4e;
+    border-color: #eea236;
+}
 hr {
     margin-top: 6px;
     margin-bottom: 6px;
@@ -542,27 +722,184 @@ hr {
     border-top-color: #000;
     border-top: 1px solid #000;
 }
-
-.certificat-modal-container .modal-content{width:600px;}
 .certificat-modal-container .modal-body{
 margin: 0px;padding: 0px;
 }
 .certificat-modal-container .modal-dialog{
   padding-left: 0px;
+  width: 600px;
 }
 .certificat-modal-container .inbox-widget .inbox-item {
     border-bottom: 1px solid #d6d4d4;
 }
-#map {
-    width:100%;
-    height:100%;
+@media only screen and (max-width:1024px){
+.common-form-row {
+    margin-top:0px;
+        padding: 0px 15px;
+}
+.container {
+    width: 100%;
+}
+.yachtHeaderName {
+    margin-top: 4px!important;
+}
+body .mydemolabel {
+    top: 57px!important;
 }
 
-.common-form-row {
-    margin-top: 0px; 
-     margin-bottom: 0px;
-    font-weight: bold!important;
+
 }
+@media only screen and (max-width:767px){
+
+body .mydemolabel {
+    top: 44px!important;
+}
+body span.sp-leftalign {
+    font-size: 15px!important;
+}
+
+.map-container{
+    margin-top: 40px!important;
+}
+.map-header{
+    margin-top: 17px;
+}
+
+.nav-side-menu-full-container .nav-side-menu .sidebar {
+top: 115px;
+}
+.certificat-modal-container .modal-dialog{
+width: 90%;
+    margin: 0 auto;
+    margin-top: 15px;
+}
+.chat-send button{
+width: 126px;
+    margin-right: 10px;
+}
+.chat-send {
+    display: flex;
+    justify-content: center;
+}
+.chat-inputbar textarea{
+    width: 100%;
+    height: 93px;
+}
+.chat-inputbar{
+padding-left: 15px!important;
+    padding-right: 15px;
+}
+.sp-modal-600 {
+    width: 100%;
+}
+}
+
+#CruisingButton {
+  position: fixed;
+  top: 100px;
+  right: 125px;
+  padding: 10px;
+  color:#000;
+  z-index: 9999;
+  font-weight:bold;
+}
+
+.fancybox-overlay {
+    z-index: 99999999 !important;
+}
+span.sp-leftalign {
+    width: 300px;
+    text-align: left;
+    font-size: 18px!important;
+    position: relative;
+    padding-left: 15px;
+}
+.yacht-centerlabel {
+    position: absolute;
+    left: 0px;
+    font-size: 18px!important;
+    right: 0;
+    font-weight: bold;
+    text-align: center;
+}
+span.sp-rightalign {
+    float: right;
+    padding-right: 15px;
+    width: 20%;
+    text-align: right;
+    overflow: hidden;
+    font-size: 18px!important;
+    position: relative;
+}
+
+@media only screen and (max-width: 1030px){
+.common-form-row.map-form-rwo {
+    margin-top: 50px;
+    margin-bottom: 20px;
+}
+.w-33{ 
+    width: 50%;
+}
+.w-20 {
+position: absolute;
+    left: 0;
+    margin-top: -24px;
+    right: 0;
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+
+}
+@media only screen and (max-width:767px){
+.sp-rightalign{
+    display: none;
+}
+.sp-40-w{
+    margin-top: 10px;
+    margin-left: 0px;
+}
+
+
+.sp-divrow {
+    padding-bottom: 15px;
+    margin-bottom: 10px;
+    padding: 10px 11px;
+    border-bottom: solid 1px #eee;
+}
+span.sp-leftalign {
+    width: 100%;
+    padding-left: 15px;
+    margin-top: 29px;
+    display: block;
+    padding-left: 78px;
+}
+.position-mobile-head{
+        left: 80px;
+}
+.map-container {
+    margin-top: 18px!important;
+}
+}
+
+.leaflet-tooltip{
+    pointer-events: inherit !important;
+}
+
+.textareacontmarker{
+   
+   overflow:scroll !important;
+} 
+@media only screen and (max-width:400px){
+   .sp-60-w  input{
+    width: 100%!important;
+    margin-bottom: 8px!important;
+   }
+}
+
+
+
 </style>  
 
 <?php    echo $this->Html->script('jquery-1.7.2.min');
@@ -596,15 +933,74 @@ margin: 0px;padding: 0px;
     </div>
 </div><!-- /.modal-content -->
 
+<!--help modal start here-->
+<div id="mapquestionmodal" class="modal uplaod-modal" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Help Tips</h4>
+      </div>
+      
+      <div class="modal-body">
+        <div class="form-group">
+          1. Tap the location marker to display the days activities.
+        </div>
+        <div class="form-group">
+          2. Tap the activities text to expand the field.
+        </div>
+        <div class="form-group">
+          3. Tap the image to enlarge it.
+        </div>
+        <div class="form-group">
+          4. The Cruising Schedule button lists all the locations.
+        </div>
+        <div class="form-group">
+          5. Hide the location cards by taping on the info icon.
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="mapquestionmodalclose btn btn-success ">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+<!--help modal end here--> 
+
+<!-- sample modal content -->
+<div id="cruisinglocationModal" class="modal certificat-modal-container"  role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content" style="width:620px;">
+            <div class="modal-header">
+                <button type="button" class="close" id="cruisinglocationModalclose" aria-hidden="true" style="margin-right: 5px;">×</button>
+                <h4 class="modal-title" id="myModalLabel" style="text-align: center;font-weight: bold;"><?php echo $startloc; ?> to <?php echo $endloc; ?></h4>
+            </div>
+            <div class="modal-body" style="max-height: 495px;
+    overflow-y: scroll;overflow-x: hidden;">
+                <div id="cruisinglocationModal_load" style="margin:5px 10px 5px 8px;">
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div><!-- /.modal-content -->
+
 <div class="row common-form-row">
-    <div class="col-lg-4 col-md-4 col-sm-4 mob-none">  
+    <div class="w-33 col-lg-4 col-md-4 col-sm-4 mob-none">  
         <span style="font-size: 18px;color:#fff;"><?php echo $schedulePeriod; ?></span>
     </div>
-    <div class="col-lg-4 col-md-4 col-sm-4 text-center mob-none">  
-        <span style="font-size: 18px;color:#fff;"><?php echo $charterName; ?></span>
+    <div class="w-20 col-lg-4 col-md-4 col-sm-4 text-center mob-none">  
+    <span style="font-size: 18px;color:#fff;"><?php echo $scheduleLocation; ?>
+        
     </div>
-    <div class="col-lg-4 col-md-4 col-sm-4"> 
-        <span style="font-size: 18px;color:#fff;float:right;"><?php echo $scheduleLocation; ?>
+    <div class="w-33 col-lg-4 col-md-4 col-sm-4">
+        <span style="font-size: 18px;color:#fff;float:right;"><?php echo $charterName; ?></span>
+        <?php if(empty($charterName)){ ?>
+        <span style="font-size: 16px;color:#fff;float:right;"><?php echo $no_cruising_select; ?></span>
+        <?php } ?>
 <!--         <a>
             <span style="margin-left: 10%;" class="mob-none">   
                 <?php echo $this->Html->link('Back','view',array('id' => 'charterProgramView', 'class' => 'btn btn-warning','title' => '<< Back'));?> 
@@ -613,9 +1009,14 @@ margin: 0px;padding: 0px;
     </div>
 </div> 
 
-<div class="custom-popup" id="map" style="height: 1000px;position:relative;outline:none;"></div>
+<div class="custom-popup" id="map" style="height: 600px;position:relative;outline:none;">
+    <button id="CruisingButton">Cruising Schedule</button>
+</div>
+<?php if(empty($no_cruising_select)){?>
+<?php } ?>
 
 <input type="hidden" id="yachtId" value="<?php echo $yacht_id_fromyachtDB; ?>">
+<input type="hidden" id="charterProgramId" value="<?php echo $charterProgramId; ?>">
 <script>
 var sidebar = (function() {
     "use strict";
@@ -664,7 +1065,7 @@ var vessel = new L.LayerGroup();
 var markerArray = [];
 var markerCount = 0;
      
-var mbAttr ='';
+var mbAttr = '<table width=100%><thead><tr style="font-size:12px;font-weight:bold;text-align:center;"><td style="width:50%">Distance</td><td style="width:50%">Duration</td></tr></thead><tbody><tr style="font-size:12px;color:#3388ff;font-weight:bold;text-align:center;"><td ><?php echo $RouteDatadisplaydistancevalue; ?></td><td ><?php echo $RouteDatadisplayduration; ?></td></tr></tbody></table>';
 mbUrl = 'https://api.mapbox.com/styles/v1/superyachtos/{id}/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1Ijoic3VwZXJ5YWNodG9zIiwiYSI6ImNpdW54eHV5bjAxNmMzMG1sMGpkamVma2cifQ.Y9kj-j0RGCFSE6khFVPyOw';
 var satellite   =   L.tileLayer(mbUrl, {
     id: 'ciurvui5100uz2iqqe929nrlr', 
@@ -697,7 +1098,7 @@ var zoom = 3;
 var day1 = 0;
 var latlngs = [];
 // Generating the markers for existing records
-<?php foreach ($scheduleData as $schedule) { 
+<?php foreach ($scheduleData as $key => $schedule) { 
     $schuuid = $schedule['CharterProgramSchedule']['UUID'];
     if($schedule['CharterProgramSchedule']['marker_msg_count'] == 0){
         $marker_msg_count = "style='display:none;'";
@@ -744,7 +1145,7 @@ var latlngs = [];
         zoom = 7;
         
         var marker = L.marker(["<?php echo $schedule['CharterProgramSchedule']['lattitude']; ?>", "<?php echo $schedule['CharterProgramSchedule']['longitude']; ?>"],{pmIgnore: true})
-        .bindTooltip("<?php echo "<b style='font-size: 12px;'>Day ".$schedule['CharterProgramSchedule']['day_num']."&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;".$schedule['CharterProgramSchedule']['day_dates']."&nbsp;</b><br><b style='font-size: 12px;'>".$schedule['CharterProgramSchedule']['title']."<hr>".$endplace."</b><br><b style='font-size: 12px;'>".$distance.$bar.$duration."</b>"?>", 
+        .bindTooltip("<?php echo "<span class='owntooltip' id=".$key."><b style='font-size: 12px;'>Day ".$schedule['CharterProgramSchedule']['day_num']."&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;".$schedule['CharterProgramSchedule']['day_dates']."&nbsp;</b><br><b style='font-size: 12px;'>".$schedule['CharterProgramSchedule']['title']."<hr>".$endplace."</b><br><b style='font-size: 12px;'>".$distance.$bar.$duration."</b></span>"?>", 
                     {
                         permanent: true, 
                         direction: 'right',
@@ -771,12 +1172,12 @@ var latlngs = [];
 // Making the Centre point
 if (day1) {
     map.setView(new L.LatLng(centerLatDay1, centerLngDay1), zoom);
-    if(latlngs){
+    if(latlngs.length > 0){
         map.fitBounds(latlngs);
     }
 } else {
     map.setView(new L.LatLng(centerLat, centerLng), zoom);
-    if(latlngs){
+    if(latlngs.length > 0){
         map.fitBounds(latlngs);
     }
 }
@@ -860,7 +1261,7 @@ L.Control.MarkerControl = L.Control.extend({
             if (disp == "block") {
                 $(".Tooltip").css("display", "none");
                 el.innerHTML =
-                    '<div class="button-container" title="Hide / Show Location Cards" style="text-align: center;margin-top: -6px;font-size: 20px;"><i class="fa fa-info"></i></div>';
+                    '<div class="button-container" title="Hide / Show Location Cards" style="text-align: center;margin-top: -6px;font-size: 20px;color:#000;"><i class="fa fa-info"></i></div>';
 
             } else {
                 $(".Tooltip").css("display", "block");
@@ -886,8 +1287,68 @@ L.control.markerControl({
     position: 'topleft'
 }).addTo(map);
 
+
+/***********************************************Help icon************/
+L.Control.MarkerControl = L.Control.extend({
+    onAdd: function(map) {
+        var el = L.DomUtil.create('div', 'leaflet-pm-toolbar leaflet-pm-draw leaflet-bar my-control');
+
+        el.innerHTML =
+            '<div class="button-container" title="Hide / Show Location Cards" style="text-align: center;margin-top: -6px;font-size: 20px;color:#3388ff;"><i class="fa fa-question-circle"></i></div>';
+
+        el.onclick = function() {
+            mapClickEvent = false; // this is for condition to disable the map click function
+
+            openhelpmodal();
+            
+        }
+
+        return el;
+    },
+
+    onRemove: function(map) {
+        // Nothing to do here
+    }
+});
+
+L.control.markerControl = function(opts) {
+    return new L.Control.MarkerControl(opts);
+}
+
+L.control.markerControl({
+    position: 'topleft'
+}).addTo(map);
+
+function openhelpmodal(e){
+    $('#mapquestionmodal').show();
+}
+
+$(document).on("click", ".mapquestionmodalclose", function(e) {
+    $('#mapquestionmodal').hide();
+});
+
+
+/***********************************************Help icon************/
+
+/***********************************On clicking marker tooltip open modal of that specific marker */
+// added the custom classname to marker and id to tooltip and then onclicking the tooltip found that id and matches with marker classname.
+// then opened the modal using same markerclick function
+if(markerCount > 0){
+$('.leaflet-marker-icon').each(function(i, obj) {
+    $(this).addClass('myownmarker'+i);
+});
+}
+$(document).on("click", ".Tooltip", function(e) {
+    var myowntooltip = $(this).find('.owntooltip').attr('id');
+    $(".myownmarker"+myowntooltip).click();
+    
+});
+/***********************************On clicking marker tooltip open modal of that specific marker */
+
+
 var mapmarkerglobalObj = null;
 var fitzoommap = [];
+<?php if(isset($scheduleData)){ ?>
 function markerOnClick(e) {
     mapmarkerglobalObj = e;
     var scheduleUUId = e.target.scheduleUUId;
@@ -911,11 +1372,23 @@ function markerOnClick(e) {
             success:function(result) {
                 $("#hideloader").hide();
                 if (result.status == 'success') {
+
+                    map.setView(e.latlng);
+                    $(".leaflet-control-attribution").hide();
+                    $("#CruisingButton").hide();
                     var popLocation= e.latlng;
-                    var popup = L.popup()
+                    var popup = L.popup({keepInView:true,maxHeight:500})
                     .setLatLng(popLocation)
                     .setContent(result.popupHtml)
-                    .openOn(map);
+                    .openOn(map)
+                    .on("remove", function () {
+                            msgcount();
+                            $(".leaflet-control-attribution").show();
+                            $("#CruisingButton").show();
+                            
+                        });
+                    window.scrollTo(0, 0);
+                    $(".leaflet-control-attribution").hide();
                     $(".leaflet-popup-close-button").addClass('updateCommentscount');
                     $('.day_dates').text(day_dates);
 
@@ -926,6 +1399,8 @@ function markerOnClick(e) {
                      // to get reduce msgcount
                      $(popup._closeButton).one('click', function(e){
                         msgcount();
+                        $("#CruisingButton").show();
+                        $(".leaflet-control-attribution").show();
                     });
                 }
             },
@@ -936,10 +1411,46 @@ function markerOnClick(e) {
     }
         
 }
-
+<?php } ?>
 // Closing the popup
 $(document).on("click", "#closeSchedule", function(e) {
     $(".leaflet-popup-close-button")[0].click();
+    $(".leaflet-control-attribution").show();
+    $("#CruisingButton").show();
+});
+
+$(document).on("click", "#CruisingButton", function(e) {
+
+    var scheduleId = $("#charterProgramId").val();
+    $("#hideloader").show();
+        $.ajax({
+            type: "POST",
+            url: basefolder+"/"+"charters/getIpadViewCharterProgramSchedules",
+            dataType: 'json',
+            data: { "scheduleId": scheduleId},
+            success:function(result) {
+                $("#hideloader").hide();
+                if (result.status == 'success') {
+
+                    $("#cruisinglocationModal_load").html(result.popupHtml);
+                    $("#cruisinglocationModal").show();
+                    $(".leaflet-control-attribution").hide();
+
+                    $(".leaflet-popup-close-button").addClass('updateCommentscount');
+                    //$('.day_dates').text(day_dates);
+
+                    $("#closeSchedule").remove();
+                    $(".crew_comment_cruisingmaptitle").remove();
+                    $(".crew_comment_cruisingmap").remove();
+                    $(".leaflet-popup-close-button").remove();
+                     
+                }
+            },
+            error: function(jqxhr) { 
+                $("#hideloader").hide();
+            }
+        });
+
 });
 
 
@@ -989,7 +1500,7 @@ $(document).ready(function() { //alert();
             
 
     $(".leaflet-control-attribution ").html(function(i, html) {
-        //return html.replace("|", "");
+        return html.replace("|", "");
     });
     $('.leaflet-control-attribution ').find('a').remove();
    
@@ -1142,6 +1653,12 @@ $(document).on("click", "#CruisingCommentSave" ,function() {
         $('#cruisingmsgmyModal').hide();
     });
 
+    $(document).on("click", "#cruisinglocationModalclose" ,function() {
+        $('#cruisinglocationModal').hide();
+        $(".leaflet-control-attribution").show();
+    });
+
+    
     function hexc(colorval) {
     var parts = colorval.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
     delete(parts[0]);
@@ -1213,5 +1730,82 @@ $(document).on("click", ".CruisingCommentMarkUnread" ,function() {
                 }
        }); 
     });
+
+    $(document).on("focus", ".textareacont" ,function() {
+        //console.log('testse');
+        $(this).animate({
+                 height: "14em"
+                }, 500);
+
+                $(this).css({
+                    overflow:"scroll"
+                });
+                
+    });
+
+    $(document).on("blur", ".textareacont" ,function() {
+        //console.log('sss');
+        $(this).animate({
+                 height: "7em"
+                }, 500);
+
+                $(this).css({
+                    overflow:"scroll"
+                });
+    });
+
+    
+
+    $(document).on("click", ".textareacontmarker" ,function() {
+        
+        var valuetxt = $(this).val();
+
+        if(valuetxt != ""){
+                //console.log("webopen");
+                $(this).animate({
+                        height: "14em"
+                        }, 500);
+
+                        // $(this).css({
+                        //     overflow:"scroll"
+                        // });
+            }
+                
+    });
+
+
+    // $(document).on("mouseleave", ".textareacontmarker" ,function() {
+    //     var valuetxt = $(this).val();
+
+    //     if(valuetxt != ""){
+    //             //console.log("llllllllllll");
+    //             $(this).animate({
+    //                     height: "7em"
+    //             }, 500);
+
+    //             $(this).css({
+    //                 overflow:"scroll"
+    //             });
+    //     }
+    // });
+
+    $(document).on("click", function(event){
+        if(!$(event.target).closest(".textareacontmarker").length){
+            $(".textareacontmarker").animate({
+                            height: "7em"
+                    }, 500);
+
+                    // $(".textareacontmarker").css({
+                    //     overflow:"scroll"
+                    // });
+            
+            
+        }
+    });
+
+
+
+        
+    
 </script>
   

@@ -3,6 +3,18 @@
     $cloudUrl = Configure::read('cloudUrl');
     $session = $this->Session->read('charter_info.CharterGuest');
     $sessionData = $this->Session->read();
+    //print_r($sessionData["pSheetsColor"]);
+    if(isset($sessionData["pSheetsColor"]) && !empty($sessionData["pSheetsColor"])) { ?>
+        <script>
+            // var elements = document.querySelectorAll(".active .in");
+            // console.log(" elements = ",elements);
+            document.getElementsByClassName(".a.nav-anch").style.color="<?php echo $sessionData["pSheetsColor"]; ?>";
+            console.log(" elements = ",elements);
+            // var allOrangeJuiceQuery = document.querySelectorAll('.a.nav-anch');
+            // document.body.style.backgroundImage = "url('<?php echo $sessionData["cgBackgroundImage"]; ?>')";
+        </script>
+    <?php
+        }    
     $salutationList = array(
         "" => "",
         "Mr." => "Mr.",
@@ -24,6 +36,39 @@
     );
 ?>
 <style>
+#loadMore{
+    width: 320px;
+    float: left;
+    display: flex;
+    align-items: center;
+    height: 443px;
+    justify-content: center;
+}
+#loadMore a{
+    border: solid 3px #fff;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    text-align: center;
+    justify-content: center;
+    font-size: 20px;
+    text-decoration: none;
+    color: #fff;
+    display: flex;
+    align-items: center;
+}
+#loadMore a:hover{
+    background: #fff;
+    color:#000;
+}
+
+
+.ch-card{
+  display:none;
+}
+.load-more{
+    
+}
 .footer-mob-row .btn-success {
     color: #000;
     background-color: rgba(5, 156, 226, 0.83);
@@ -38,6 +83,7 @@ font-size: 21px;
 }
 .md-bt-flex img{
     height: 34px;
+    width: 46px;
 }
 .md-bt-flex{
     margin-right: 0px!important;
@@ -124,6 +170,7 @@ font-weight: bold;
     align-items: center;
     display: flex;
     justify-content: center;
+    margin-top: -48px;
 
 }
 
@@ -155,7 +202,6 @@ font-weight: bold;
     opacity: 40!important;
     padding: 6px 20px;
     border-radius: 0px;
-    margin: 0px 5px;
      height: 30px!important;
 }
 
@@ -167,7 +213,6 @@ font-weight: bold;
     opacity: 40!important;
     padding: 6px 20px;
     border-radius: 0px;
-    margin: 0px 5px;
      height: 34px!important;
 }
 .newGuestAssoc{display: none;}
@@ -185,13 +230,11 @@ font-weight: bold;
 .menu .menu__item a {
   text-decoration: none;
   padding: 10px 20px;
-    background: rgb(229 224 224 / 70%)!important;  color: #000;
+  color: #000;
   transition: 0.5s;
-  border: 2px solid transparent;
 }
 .menu .menu__item {
   list-style: none;
-  font-size: 13px;
 }
 .nav-side-menu-full-container .nav-side-menu .sidebar.show{
     overflow-y: inherit;
@@ -208,20 +251,14 @@ font-weight: bold;
         width: 100%;
 }
 .menu .submenu .menu__item a{
-        margin-bottom: 1px;
     display: inline-block;
-    width: 200px;
-    border: solid 1px #356173;
         word-break: break-all;
 }
-.menu .menu__item a:hover{
+.menu .submenu .menu__item a:hover{
+    color:#fff !important;
+    background: #149be9 !important;
+}
 
-}
-.menu .submenu .menu__item a:hover, .menu .submenu .menu__item a:focus {
-    color: #fffefe!important;
-    background-color: rgba(16, 16, 16, 0.51)!important;
-    transition: 0.5s;
-}
 
 .md-left-text{    text-align: left!important;
     padding: -3px;
@@ -410,7 +447,6 @@ font-weight: bold;
 }
 .nav-justified > li > a{
     color: #000!important;
-           background: rgba(255, 255, 255, 0.7)!important;
     transition: 0.3s;
         border-radius: 0px;cursor: pointer;
 }
@@ -476,6 +512,8 @@ font-weight: bold;
 .n-mob{
     display: none;
 }
+
+
 .header-row .md-row-hd-18{
 left: 0px;
     width: 70%;
@@ -553,6 +591,29 @@ position: relative;
     width: 35%;
 }
 }
+@media (min-width: 1400px){
+.container {
+    width: 100%;
+}
+}
+
+
+input:focus {
+    outline: solid 1px #ccc !important;
+}
+
+.cardbell-icon {
+    right: 3px !important;
+}
+
+.menu .submenu{
+    right:-162px !important;
+}
+
+.menu .submenu .menu__item a {
+    width: 160px !important;
+    
+}
 </style>
 <?php 
     $baseFolder = $this->request->base;
@@ -591,23 +652,31 @@ position: relative;
             <?php } ?>
     
         </li>    
-        <?php if(empty($mapdetails)){ 
+        <!-- <?php if(empty($mapdetails)){ 
                 $title  = "Not published";
         }else if(!empty($mapdetails)){
                 $title  = "";
-        } ?>
-        <li class="menu__item"> <a href="#" title="<?php echo $title; ?>">Cruising Map <span class="acti-countnav"><?php echo $this->Session->read('commentcounttotal'); ?></span> </a>
+        } ?> -->
+        <!-- <li class="menu__item"> <a href="#" title="<?php echo $title; ?>">Cruising Map <span class="acti-countnav"><?php echo $this->Session->read('commentcounttotal'); ?></span> </a>
             <?php if(isset($mapdetails)){ ?>
                 <ul class="submenu">
                     <?php foreach($mapdetails as $startdate => $data){ ?>
-                    <li class="menu__item"><a href="<?php echo $baseFolder."/charters/charter_program_map/".$data['programid'].'/'.$data['dbname']; ?>" target="_blank"><?php echo $startdate; ?> <span class="acti-countnav"><?php echo $data['count']; ?></span></a></li>
+                    <li class="menu__item"><a href="<?php echo $baseFolder."/charters/charter_program_map/".$data['programid'].'/'.$data['dbname'].'/owner'; ?>" target="_blank"><?php echo $startdate; ?> <span class="acti-countnav"><?php echo $data['count']; ?></span></a></li>
                     <?php
                             
                         } ?>
                 </ul>
             <?php } ?>
     
-        </li>    
+        </li>     -->
+        <li class="menu__item" ><a>How To Video</a>
+           <ul class="submenu">
+                   <li class="menu__item" id="MenuHowToVideo"><a href="#">Preference Sheets</a></li>
+                   <li class="menu__item" id="MenuHowToVideoCharterHead"><a href="#">Head Charterer</a></li>
+                </ul>
+            </li>
+        <li> <a href="<?php echo $baseFolder."/charters/privacytermsofuse/1" ?>" target="blank">Terms of Use</a></li>
+        <li> <a href="<?php echo $baseFolder."/charters/privacytermsofuse/2" ?>" target="blank">Privacy Policy</a></li>
         <?php } ?>
          <!-- <li class="guest-list"> <a href="#">Guest List</a></li>
            <li><a href="charter_program_map">Cruising Map</a></li>
@@ -620,7 +689,192 @@ position: relative;
 </div>
 </div>
 <span class="label-bold md-block" style="font-size: 35px;color: #fff;"> <?php echo isset($companyData['Fleetcompany']['management_company_name']) ? $companyData['Fleetcompany']['management_company_name'] : ""; ?></span>
-<div id="content" class="list-page-container">
+
+
+<div class="two">
+        <div class="bigitem md-row-space">
+           
+             <!--  <span class="label-bold"><?php 
+                    if(isset($guestListData) && !empty($guestListData)){
+                       echo $guestListData['GuestList']['first_name'].' '.$guestListData['GuestList']['last_name'];
+                    }
+              ?></span><br> -->
+               <span class="label-bold hhd-mrg-02">CHARTER PROGRAMS</span><br>
+        <!--    <span class="label-bold"><?php
+                    if(isset($guestListData) && !empty($guestListData)){
+                       echo $guestListData['GuestList']['email'];
+                    } ?></span> -->
+        </div>
+
+    </div>
+
+<div class="ch-card-aligncenter">     
+<div class="ch-card-container">
+<?php 
+   // Owner & head charterer
+if(isset($charterGuestData) && !empty($charterGuestData)){
+    
+    //foreach (range(1, 20) as $i) {
+        foreach($charterGuestData as $data){
+        
+            $charterName = $data['CharterGuest']['charter_name'];
+            $embarkation = $data['CharterGuest']['embarkation'];
+            $debarkation = $data['CharterGuest']['debarkation'];
+            $id = $data['CharterGuest']['id'];
+            $charter_program_id = $data['CharterGuest']['charter_program_id'];
+            $charter_company_id = $data['CharterGuest']['charter_company_id'];
+            $charter_from_date = date("d M Y", strtotime($data['CharterGuest']['charter_from_date']));
+            $charter_to_date = date("d M Y", strtotime($data['CharterGuest']['charter_to_date']));
+
+            $yacht_id = $data['CharterGuest']['yacht_id'];
+            $yname = $yfullName[$data['CharterGuest']['yacht_id']];
+            $website = "#";
+            if(isset($data['websitedetails']['YachtWeblink']['weblink'])){
+                $weblink = $data['websitedetails']['YachtWeblink']['weblink'];
+                if(isset($weblink)){
+                    $website = $weblink;
+                }else{
+                    $website = "#";
+                }
+            }
+            if(isset($programFiles[$charter_from_date])){
+                $filepath =  $programFiles[$charter_from_date];
+            }else{
+                $filepath = "#";
+            }
+
+            if(isset($data['msg_count'])){
+                $msg_count =  $data['msg_count'];
+            }
+
+            
+                        
+    ?>
+ <div class="ch-card">
+   <div class="ch-card-body">  
+   <p><?php echo $charterName; ?></p>
+    <p><?php echo $charter_from_date; ?> to <?php echo $charter_to_date; ?></p>
+    <p><?php echo $embarkation; ?> to <?php echo $debarkation; ?></p>
+     
+      <p><?php echo $yname; ?></p>
+    <div class="card-img">
+        <img src="<?php echo $data['program_image']; ?>">
+    </div>
+    <div class="body-divid">
+       <div class="col-11">
+           <img src="<?php echo $data['charter_logo']; ?>" alt="">
+       </div> 
+       <div class="col-11">
+        <ul>
+            <li><a href="<?php echo $website; ?>" target="_blank" style="text-decoration:none;">Yachts Website</a></li>
+            <li><a href="<?php echo $basefolder."/charters/view/".$id."/".$charter_program_id."/".$charter_company_id; ?>">Guest List</a></li>
+            <?php if($data['map_url'] == "link"){ ?>
+                <li><a href="<?php echo $baseFolder."/charters/charter_program_map/".$charter_program_id.'/'.$data['ydb_name'].'/owner'; ?>" title="Map is Published">Cruising Map</a>  <?php if(isset($msg_count) && $msg_count > 0){ ?><span class="cardbell-icon"><span class="avacard-cunt"><?php echo $msg_count; ?></span><i class="fa fa-bell"></i></span><?php } ?></li>
+                <!-- target="_blank" -->
+                <?php }else if($data['map_url'] == "nolink"){ ?>
+                <li><a href="#" role="button" title="Map is Not Published" >Cruising Map</a></li>
+            <?php } ?>
+
+            <li><a href="#"><span class="existingCheckFunction" data-guestype="owner" data-associd ="<?php echo $id; ?>">Preference Sheets</span></a></li>
+        </ul>   
+
+
+       </div> 
+    </div>
+   
+
+
+   </div>
+ </div>
+<?php 
+     
+    //}
+     
+}
+
+        }?>
+
+
+<?php 
+// Guest
+if(isset($charterAssocData) && !empty($charterAssocData)){
+        foreach($charterAssocData as $data){
+            $charterName = $data['charterDetails']['CharterGuest']['charter_name'];
+            $embarkation = $data['charterDetails']['CharterGuest']['embarkation'];
+            $debarkation = $data['charterDetails']['CharterGuest']['debarkation'];
+            $id = $data['charterDetails']['CharterGuest']['id'];
+            $charter_program_id = $data['charterDetails']['CharterGuest']['charter_program_id'];
+            $fleetcompany_id = $data['charterDetails']['CharterGuest']['charter_company_id'];
+            $charter_from_date = date("d M Y", strtotime($data['charterDetails']['CharterGuest']['charter_from_date']));
+            $charter_to_date = date("d M Y", strtotime($data['charterDetails']['CharterGuest']['charter_to_date']));
+            
+            $openButtonLink = "/charters/existingCheckFunction";
+
+            $associd = $data['CharterGuestAssociate']['id'];
+            $yname = $yfullName[$data['charterDetails']['CharterGuest']['yacht_id']];
+
+            $website = "#";
+            if(isset($data['websitedetails']['YachtWeblink']['weblink'])){
+                $weblink = $data['websitedetails']['YachtWeblink']['weblink'];
+                if(isset($weblink)){
+                    $website = $weblink;
+                }else{
+                    $website = "#";
+                }
+            }
+
+           $ch_image = $data['charterDetails']['ch_image'];
+
+           $msg_count_assc = $data['charterDetails']['msg_count'];
+    ?>
+<div class="ch-card">
+   <div class="ch-card-body">  
+   <p><?php echo $charterName; ?></p>
+    <p><?php echo $charter_from_date; ?> to <?php echo $charter_to_date; ?></p>
+    <p><?php echo $embarkation; ?> to <?php echo $debarkation; ?></p>
+     
+      <p><?php echo $yname; ?></p>
+    <div class="card-img">
+    <img src="<?php echo $ch_image; ?>">
+    </div>
+    <div class="body-divid">
+       <div class="col-11">
+           <img src="<?php echo $data['charterDetails']['charter_logo']; ?>" alt="">
+       </div> 
+       <div class="col-11">
+        <ul>
+            <li><a href="<?php echo $website; ?>" target="_blank" style="text-decoration:none;">Yachts Website</a></li>
+            <li><a href="<?php echo $basefolder."/charters/view_guest/".$charter_program_id."/".$fleetcompany_id; ?>">Guest List</a></li>
+            <?php if($data['charterDetails']['map_url'] == "link"){ ?>
+            <li><a href="<?php echo $baseFolder."/charters/charter_program_map/".$charter_program_id.'/'.$data['charterDetails']['ydb_name'].'/guest'; ?>" title="Map is Published" target="_blank">Cruising Map</a> </li>
+            <?php }else if($data['charterDetails']['map_url'] == "nolink"){  ?>
+            <li><a href="#" role="button" title="Map is Not Published">Cruising Map</a> </li>
+            <?php } ?>
+            <li><a href="#"><span class="existingCheckFunction" data-guestype="guest" data-associd ="<?php echo $associd; ?>">Preference Sheets</span></a></li>
+            
+        </ul>   
+
+
+       </div> 
+    </div>
+   
+
+
+   </div>
+ </div>
+
+ <?php }
+ 
+        }?>
+        <div>
+<div id="loadMore"><a href="#">Show More</a></div>
+</div>
+</div></div>
+
+
+
+
+<!-- <div id="content" class="list-page-container">
     <div class="two">
         <div class="bigitem md-row-space">
             <span class="label-bold">CHARTER PROGRAMS</span><br>
@@ -737,7 +991,7 @@ if(isset($charterAssocData) && !empty($charterAssocData)){
         }
 } 
 ?>
-</div>
+</div> -->
 
 </div></div></div></div>
 </div>
@@ -844,3 +1098,23 @@ $('.menu > .menu__item').hover(function(){
 });
 
 </script> 
+
+<script>
+$(".ch-card")
+  .slice(0, 10) // select the first 2
+  .show();
+if ($(".ch-card:hidden").length != 0) {
+  $("#loadMore").show();
+}
+
+$("#loadMore").on("click", function(e) {
+  e.preventDefault();
+  $(".ch-card:hidden")
+    .slice(0, 10) // select next hidden 2 & show them
+    .slideDown();
+  if ($(".ch-card:hidden").length == 0) { // check if any hidden divs still exist
+    $("#loadMore").fadeOut("slow");
+  }
+});
+
+</script>
