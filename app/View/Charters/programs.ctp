@@ -641,7 +641,7 @@ input:focus {
             <?php if(isset($sessionCharterGuest) && !empty($sessionCharterGuest)){?>
         <li> <a href="<?php echo $baseFolder."/charters/programs/".$sessionCharterGuest['users_UUID']; ?>">Charter Programs</a>
         <li class="menu__item"> <a href="#">Charter Contracts</a>
-            <?php if(isset($programFiles)){ ?>
+            <?php if(isset($programFiles) && !empty($programFiles)){ ?>
                 <ul class="submenu">
                     <?php foreach($programFiles as $startdate => $filepath){ ?>
                     <li class="menu__item"><a href="<?php echo $filepath; ?>" target="_blank"><?php echo $startdate; ?></a></li>
@@ -846,7 +846,7 @@ if(isset($charterAssocData) && !empty($charterAssocData)){
             <li><a href="<?php echo $website; ?>" target="_blank" style="text-decoration:none;">Yachts Website</a></li>
             <li><a href="<?php echo $basefolder."/charters/view_guest/".$charter_program_id."/".$fleetcompany_id; ?>">Guest List</a></li>
             <?php if($data['charterDetails']['map_url'] == "link"){ ?>
-            <li><a href="<?php echo $baseFolder."/charters/charter_program_map/".$charter_program_id.'/'.$data['charterDetails']['ydb_name'].'/guest'; ?>" title="Map is Published" target="_blank">Cruising Map</a> </li>
+            <li><a href="<?php echo $baseFolder."/charters/charter_program_map/".$charter_program_id.'/'.$data['charterDetails']['ydb_name'].'/guest'; ?>" title="Map is Published">Cruising Map</a> </li>
             <?php }else if($data['charterDetails']['map_url'] == "nolink"){  ?>
             <li><a href="#" role="button" title="Map is Not Published">Cruising Map</a> </li>
             <?php } ?>
