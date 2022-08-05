@@ -268,7 +268,7 @@ body .menu .submenu .menu__item a {
                 <li class="menu__item"><a href="<?php echo $baseFolder."/charters/view_guest/".$selectedCharterProgramUUID."/".$sessionCharterGuest['charter_company_id']; ?>">Guest List</a></li>
                 <?php } ?>    
             <li class="menu__item"> <a href="#" title="<?php echo $title; ?>">Cruising Map</a>
-                <?php if(isset($mapdetails)){ ?>
+                <?php if(isset($ownerprefenceID) && !empty($ownerprefenceID)){ if(isset($mapdetails)){ ?>
                     <ul class="submenu">
                         <?php foreach($mapdetails as $startdate => $data){ ?>
                             <li class="menu__item pagleave"><a href="<?php echo $baseFolder."/charters/charter_program_map/".$data['programid'].'/'.$data['dbname'].'/owner'; ?>" target="blank"><?php echo $startdate; ?></a></li>
@@ -276,7 +276,7 @@ body .menu .submenu .menu__item a {
                                 
                             } ?>
                     </ul>
-                <?php } ?>
+                <?php } }?>
             </li>   
             <li class="menu__item"> <a href="#">Charter Contracts</a>
             <?php 
