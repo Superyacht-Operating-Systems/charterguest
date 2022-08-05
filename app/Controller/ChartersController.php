@@ -59,7 +59,7 @@ class ChartersController extends AppController {
                     $guestassConditions = array('UUID' => $GuestListData['GuestList']['UUID']);
                     $GuestAssListData = $this->CharterGuestAssociate->find('first', array('conditions' => $guestassConditions));
                    
-                    echo "<pre>"; print_r($GuestAssListData); exit;
+                    //echo "<pre>"; print_r($GuestAssListData); exit;
                     if (count($GuestListData) != 0) {
                         // user exit
                         $sesstion = $this->Session->read();
