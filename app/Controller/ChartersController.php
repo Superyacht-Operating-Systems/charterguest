@@ -54,11 +54,12 @@ class ChartersController extends AppController {
                     $guestConditions = array('email' => $email);
 
                     $GuestListData = $this->GuestList->find('first', array('conditions' => $guestConditions));
+                    if(count($GuestListData) > 0){
                     $this->loadModel('CharterGuestAssociate');
                     $guestassConditions = array('UUID' => $GuestListData['GuestList']['UUID']);
                     $GuestAssListData = $this->CharterGuestAssociate->find('first', array('conditions' => $guestassConditions));
                    
-                    //echo "<pre>"; print_r($GuestAssListData); exit;
+                    echo "<pre>"; print_r($GuestAssListData); exit;
                     if (count($GuestListData) != 0) {
                         // user exit
                         $sesstion = $this->Session->read();
@@ -112,6 +113,10 @@ class ChartersController extends AppController {
                          
                     } else {
                         // exit('ddddd');
+                        $result['status'] = "invalid_email";
+                        $result['message'] = "Sorry no email address was found.";
+                    }
+                    }else{
                         $result['status'] = "invalid_email";
                         $result['message'] = "Sorry no email address was found.";
                     }
