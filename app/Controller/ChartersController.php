@@ -32,7 +32,7 @@ class ChartersController extends AppController {
          //$this->redirect(array('action' => 'forgot_password'));
     }
     
-    function verifyEmail() {
+   function verifyEmail() {
         //echo "<pre>"; print_r($this->request->data); exit;
         if ($this->request->is('ajax')) {
             $this->layout = false;
@@ -121,6 +121,7 @@ class ChartersController extends AppController {
             }
         }
     }
+
 
     /*
         * Token verification

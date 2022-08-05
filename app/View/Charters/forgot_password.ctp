@@ -83,13 +83,17 @@ $("#verifyemailSubmit").on("click", function(e) {
             dataType: 'json',
             data: data,
             success:function(result) {
+                console.log(result);
                 $("#hideloader").hide();
+                if (result.status == 'invalid_email') {  
+                    $("#emailError").text(result.message).slideDown('slow').delay(3000).slideUp(); 
+                }else{
                 var Base_url = '<?php echo $basefolder; ?>';
                 $("#emailsuccess").text("A reset password email has been sent.").slideDown('slow').delay(3000).slideUp();
                 setTimeout(function(){       
                     window.location.href = Base_url;
                 }, 3000);
-               
+            }
             },
             error: function(jqxhr) { 
                 $("#hideloader").hide();
