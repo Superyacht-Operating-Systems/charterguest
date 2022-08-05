@@ -99,7 +99,7 @@ class ChartersController extends AppController {
                         //exit;
                         $sendMail = $this->chkSMTPEmail($to, $subject, $message, $headers);
                         //echo $sendMail; exit;
-                         $this->loadModel('GuestList');
+                            $this->loadModel('GuestList');
                             $updateData['GuestList']['id'] = $GuestListData['GuestList']['id'];;
                             $updateData['GuestList']['password'] = NULL;
                             $this->GuestList->save($updateData);
