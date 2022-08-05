@@ -2201,10 +2201,10 @@ class ChartersController extends AppController {
         $mapdetails = array();
         $ydb_name = $session['CharterGuest']['ydb_name'];
         $charter_from_date = date("d M Y", strtotime($session['CharterGuest']['charter_from_date']));
-        echo "<pre>";print_r($guestAssocData);exit;
-        if(isset($guestAssocData) && !empty($guestAssocData))
+        //echo "<pre>";print_r($guestAssocData);exit;
+        if(isset($guestAssocData['CharterGuest']['charter_from_date']) && !empty($guestAssocData['CharterGuest']['charter_from_date'])){
             $charter_from_date = date("d M Y", strtotime($guestAssocData['CharterGuest']['charter_from_date']));
-
+        }
         $this->loadModel('CharterProgramFile');
         $scheduleData = $this->CharterProgramFile->query("SELECT * FROM $ydb_name.charter_program_schedules CharterProgramSchedule WHERE charter_program_id = '$charterHeadProgramId' AND is_deleted = 0");
         // echo "<pre>";print_r($scheduleData);exit;
