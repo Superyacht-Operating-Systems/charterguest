@@ -4636,6 +4636,14 @@ class ChartersController extends AppController {
             
             $charterGuestDataToMenu = $this->CharterGuest->find("first",array('conditions'=>array('charter_program_id'=>$charterProgramId)));
 
+            if(isset($guesttype) && ($guesttype == "owner")){ 
+                    $guestlink = "/charters/view/".$charterGuestDataToMenu['CharterGuest']['id']."/".$charterGuestDataToMenu['CharterGuest']['charter_program_id']."/".$charterGuestDataToMenu['CharterGuest']['charter_company_id'];
+            }else if(isset($guesttype) && ($guesttype == "guest")){ 
+                    $guestlink = "/charters/view_guest/".$charterGuestDataToMenu['CharterGuest']['charter_program_id']."/".$charterGuestDataToMenu['CharterGuest']['charter_company_id'];
+            }
+
+            $this->set('guestlink', $guestlink);
+
             if (count($charterProgData) != 0) {
                 $startDate = $charterProgData[0]['CharterProgram']['charter_from_date'];
                 $endDate = $charterProgData[0]['CharterProgram']['charter_to_date'];
