@@ -266,18 +266,22 @@ body .menu .submenu .menu__item a {
             <li class="menu__item pagleave"><a href="<?php echo $baseFolder."/charters/view/".$ownerprefenceID."/".$selectedCharterProgramUUID."/".$sessionCharterGuest['charter_company_id']; ?>">Guest List</a></li>
             <?php }else if(isset($assocprefenceID) && !empty($assocprefenceID)){ ?>
                 <li class="menu__item pagleave"><a href="<?php echo $baseFolder."/charters/view_guest/".$selectedCharterProgramUUID."/".$sessionCharterGuest['charter_company_id']; ?>">Guest List</a></li>
-                <?php } ?>    
-            <li class="menu__item"> <a href="#" title="<?php echo $title; ?>">Cruising Map</a>
-                <?php if(isset($ownerprefenceID) && !empty($ownerprefenceID)){ if(isset($mapdetails)){ ?>
-                    <ul class="submenu">
-                        <?php foreach($mapdetails as $startdate => $data){ ?>
-                            <li class="menu__item pagleave"><a href="<?php echo $baseFolder."/charters/charter_program_map/".$data['programid'].'/'.$data['dbname'].'/owner'; ?>" target="blank"><?php echo $startdate; ?></a></li>
-                        <?php
-                                
-                            } ?>
-                    </ul>
-                <?php } }?>
-            </li>   
+                <?php } ?>   
+                <?php if(isset($ownerprefenceID) && !empty($ownerprefenceID)){ ?> 
+                <li class="menu__item"> <a href="#" title="<?php echo $title; ?>">Cruising Map</a>
+                    <?php  if(isset($mapdetails)){ ?>
+                        <ul class="submenu">
+                            <?php foreach($mapdetails as $startdate => $data){ ?>
+                                <li class="menu__item pagleave"><a href="<?php echo $baseFolder."/charters/charter_program_map/".$data['programid'].'/'.$data['dbname'].'/owner'; ?>" target="blank"><?php echo $startdate; ?></a></li>
+                            <?php
+                                    
+                                } ?>
+                        </ul>
+                    <?php } ?>
+                </li>  
+            <?php }else if(isset($assocprefenceID) && !empty($assocprefenceID)){ ?>
+            <li class="menu__item pagleave"><a href="<?php echo $baseFolder."/charters/charter_program_map/".$charterHeadProgramId.'/'.$ydb_name.'/guest'; ?>" target="blank">Cruising Map</a></li>
+            <?php } ?>
             <li class="menu__item"> <a href="#">Charter Contracts</a>
             <?php 
             if(isset($ownerprefenceID) && !empty($ownerprefenceID)){ 
@@ -345,8 +349,9 @@ body .menu .submenu .menu__item a {
             }else if(!empty($mapdetails)){
                     $title  = "";
             } ?>
+            <?php if(isset($ownerprefenceID) && !empty($ownerprefenceID)){ ?>
                 <li class="none-vew menu__item"> <a href="#" title="<?php echo $title; ?>">Cruising Map</a>
-                <?php if(isset($ownerprefenceID) && !empty($ownerprefenceID)){ ?>
+                
                 <?php if(isset($mapdetails)){ ?>
                     <ul class="submenu">
                         <?php foreach($mapdetails as $startdate => $data){ ?>
@@ -355,8 +360,12 @@ body .menu .submenu .menu__item a {
                                 
                             } ?>
                     </ul>
-                <?php } }?>
+                <?php } ?>
             </li>   
+            <?php } ?>
+            <?php if(isset($assocprefenceID) && !empty($assocprefenceID)){ ?>
+            <li class="none-vew pagleave"><a class="nav-anch" href="<?php echo $baseFolder."/charters/charter_program_map/".$charterHeadProgramId.'/'.$ydb_name.'/guest'; ?>" target="blank">Cruising Map</a></li>
+            <?php } ?>
           <li class="none-vew menu__item"> <a href="#">Charter Contracts</a>
             <?php 
               if(isset($ownerprefenceID) && !empty($ownerprefenceID)){ 

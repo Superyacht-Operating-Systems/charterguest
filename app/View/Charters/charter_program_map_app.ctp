@@ -798,10 +798,32 @@ padding-left: 15px!important;
   position: fixed;
   top: 100px;
   right: 125px;
-  padding: 10px;
+  padding: 6px;
   color:#000;
   z-index: 9999;
   font-weight:bold;
+}
+
+#HideDetails {
+  position: fixed;
+  top: 120px;
+  right: 111px;
+  padding: 6px;
+  color:#000;
+  z-index: 9999;
+  font-weight:bold;
+  min-width: 121px;
+}
+
+#HelpfulTips {
+  position: fixed;
+  top: 157px;
+  right: 111px;
+  padding: 6px;
+  color:#000;
+  z-index: 9999;
+  font-weight:bold;
+  min-width: 121px;
 }
 
 .fancybox-overlay {
@@ -850,6 +872,17 @@ position: absolute;
     overflow: hidden;
 }
 
+#HideDetails {
+    top: 110px;
+    right: 13px;
+    min-width: 137px;
+}
+
+#HelpfulTips {
+    top: 150px;
+    right: 13px;
+    min-width: 137px;
+}
 
 }
 @media only screen and (max-width:767px){
@@ -1011,6 +1044,8 @@ span.sp-leftalign {
 
 <div class="custom-popup" id="map" style="height: 600px;position:relative;outline:none;">
     <button id="CruisingButton">Cruising Schedule</button>
+    <button id="HideDetails">Hide Details</button>
+    <button id="HelpfulTips">Helpful Tips</button>
 </div>
 <?php if(empty($no_cruising_select)){?>
 <?php } ?>
@@ -1247,77 +1282,96 @@ for (let layer of polyLayers) { //console.log(layer);
    
 } ?>
 
-L.Control.MarkerControl = L.Control.extend({
-    onAdd: function(map) {
-        var el = L.DomUtil.create('div', 'leaflet-pm-toolbar leaflet-pm-draw leaflet-bar my-control');
+// L.Control.MarkerControl = L.Control.extend({
+//     onAdd: function(map) {
+//         var el = L.DomUtil.create('div', 'leaflet-pm-toolbar leaflet-pm-draw leaflet-bar my-control');
 
-        el.innerHTML =
-            '<div class="button-container" title="Hide / Show Location Cards" style="text-align: center;margin-top: -6px;font-size: 20px;color:#3388ff;"><i class="fa fa-info"></i></div>';
+//         el.innerHTML =
+//             '<div class="button-container" title="Hide / Show Location Cards" style="text-align: center;margin-top: -6px;font-size: 20px;color:#3388ff;"><i class="fa fa-info"></i></div>';
 
-        el.onclick = function() {
-            mapClickEvent = false; // this is for condition to disable the map click function
+//         el.onclick = function() {
+//             mapClickEvent = false; // this is for condition to disable the map click function
 
-            var disp = $(".Tooltip").css("display");
-            if (disp == "block") {
-                $(".Tooltip").css("display", "none");
-                el.innerHTML =
-                    '<div class="button-container" title="Hide / Show Location Cards" style="text-align: center;margin-top: -6px;font-size: 20px;color:#000;"><i class="fa fa-info"></i></div>';
+//             var disp = $(".Tooltip").css("display");
+//             if (disp == "block") {
+//                 $(".Tooltip").css("display", "none");
+//                 el.innerHTML =
+//                     '<div class="button-container" title="Hide / Show Location Cards" style="text-align: center;margin-top: -6px;font-size: 20px;color:#000;"><i class="fa fa-info"></i></div>';
 
-            } else {
-                $(".Tooltip").css("display", "block");
-                el.innerHTML =
-                    '<div class="button-container" title="Hide / Show Location Cards" style="text-align: center;margin-top: -6px;font-size: 20px;color:#3388ff;"><i class="fa fa-info"></i></div>';
+//             } else {
+//                 $(".Tooltip").css("display", "block");
+//                 el.innerHTML =
+//                     '<div class="button-container" title="Hide / Show Location Cards" style="text-align: center;margin-top: -6px;font-size: 20px;color:#3388ff;"><i class="fa fa-info"></i></div>';
 
-            }
-        }
+//             }
+//         }
 
-        return el;
-    },
+//         return el;
+//     },
 
-    onRemove: function(map) {
-        // Nothing to do here
-    }
-});
+//     onRemove: function(map) {
+//         // Nothing to do here
+//     }
+// });
 
-L.control.markerControl = function(opts) {
-    return new L.Control.MarkerControl(opts);
-}
+// L.control.markerControl = function(opts) {
+//     return new L.Control.MarkerControl(opts);
+// }
 
-L.control.markerControl({
-    position: 'topleft'
-}).addTo(map);
+// L.control.markerControl({
+//     position: 'topleft'
+// }).addTo(map);
 
 
 /***********************************************Help icon************/
-L.Control.MarkerControl = L.Control.extend({
-    onAdd: function(map) {
-        var el = L.DomUtil.create('div', 'leaflet-pm-toolbar leaflet-pm-draw leaflet-bar my-control');
+// L.Control.MarkerControl = L.Control.extend({
+//     onAdd: function(map) {
+//         var el = L.DomUtil.create('div', 'leaflet-pm-toolbar leaflet-pm-draw leaflet-bar my-control');
 
-        el.innerHTML =
-            '<div class="button-container" title="Hide / Show Location Cards" style="text-align: center;margin-top: -6px;font-size: 20px;color:#3388ff;"><i class="fa fa-question-circle"></i></div>';
+//         el.innerHTML =
+//             '<div class="button-container" title="Hide / Show Location Cards" style="text-align: center;margin-top: -6px;font-size: 20px;color:#3388ff;"><i class="fa fa-question-circle"></i></div>';
 
-        el.onclick = function() {
-            mapClickEvent = false; // this is for condition to disable the map click function
+//         el.onclick = function() {
+//             mapClickEvent = false; // this is for condition to disable the map click function
 
-            openhelpmodal();
+//             openhelpmodal();
             
-        }
+//         }
 
-        return el;
-    },
+//         return el;
+//     },
 
-    onRemove: function(map) {
-        // Nothing to do here
+//     onRemove: function(map) {
+//         // Nothing to do here
+//     }
+// });
+
+// L.control.markerControl = function(opts) {
+//     return new L.Control.MarkerControl(opts);
+// }
+
+// L.control.markerControl({
+//     position: 'topleft'
+// }).addTo(map);
+
+$(document).on("click", "#HideDetails", function(e) {
+    mapClickEvent = false; // this is for condition to disable the map click function
+    var disp = $(".Tooltip").css("display");
+    if (disp == "block") {
+        $(".Tooltip").css("display", "none");  
+        $("#HideDetails").text("Show Details");
+    } else {
+        $(".Tooltip").css("display", "block");
+        $("#HideDetails").text("Hide Details");
+
     }
 });
 
-L.control.markerControl = function(opts) {
-    return new L.Control.MarkerControl(opts);
-}
+$(document).on("click", "#HelpfulTips", function(e) {
+    mapClickEvent = false; // this is for condition to disable the map click function
 
-L.control.markerControl({
-    position: 'topleft'
-}).addTo(map);
+            openhelpmodal();
+});
 
 function openhelpmodal(e){
     $('#mapquestionmodal').show();
@@ -1326,7 +1380,6 @@ function openhelpmodal(e){
 $(document).on("click", ".mapquestionmodalclose", function(e) {
     $('#mapquestionmodal').hide();
 });
-
 
 /***********************************************Help icon************/
 
@@ -1376,6 +1429,8 @@ function markerOnClick(e) {
                     map.setView(e.latlng);
                     $(".leaflet-control-attribution").hide();
                     $("#CruisingButton").hide();
+                    $("#HideDetails").hide();
+                    $("#HelpfulTips").hide();
                     var popLocation= e.latlng;
                     var popup = L.popup({keepInView:true,maxHeight:500})
                     .setLatLng(popLocation)
@@ -1385,6 +1440,8 @@ function markerOnClick(e) {
                             msgcount();
                             $(".leaflet-control-attribution").show();
                             $("#CruisingButton").show();
+                            $("#HideDetails").show();
+                            $("#HelpfulTips").show();
                             
                         });
                     window.scrollTo(0, 0);
@@ -1400,6 +1457,8 @@ function markerOnClick(e) {
                      $(popup._closeButton).one('click', function(e){
                         msgcount();
                         $("#CruisingButton").show();
+                        $("#HideDetails").show();
+                        $("#HelpfulTips").show();
                         $(".leaflet-control-attribution").show();
                     });
                 }
@@ -1417,6 +1476,8 @@ $(document).on("click", "#closeSchedule", function(e) {
     $(".leaflet-popup-close-button")[0].click();
     $(".leaflet-control-attribution").show();
     $("#CruisingButton").show();
+    $("#HideDetails").show();
+    $("#HelpfulTips").show();
 });
 
 $(document).on("click", "#CruisingButton", function(e) {
@@ -1494,10 +1555,15 @@ $(document).ready(function() { //alert();
                 type : "image"
             });
 
+            //When page opens do not display location cards until 2 seconds after page loads. 
+            $(".leaflet-tooltip").css("opacity", "0");  
             //$('.fancybox').fancybox();
 
-            
-            
+            setTimeout(function(){
+                $(".leaflet-tooltip").css("opacity", "1");  
+            },2000);
+
+            //When page opens do not display location cards until 2 seconds after page loads. 
 
     $(".leaflet-control-attribution ").html(function(i, html) {
         return html.replace("|", "");

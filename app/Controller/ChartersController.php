@@ -753,6 +753,8 @@ class ChartersController extends AppController {
         $Ydata = $this->Yacht->find('first', array('conditions' => $yachtCond));
         $ydb_name = $Ydata['Yacht']['ydb_name'];
         
+        $this->set('ydb_name', $ydb_name);
+        $this->set('charter_program_id', $charter_program_id);
 
         $pid = $charterData['CharterGuest']['charter_program_id'];
         //echo "SELECT * FROM $ydb_name.charter_program_schedules CharterProgramSchedule WHERE charter_program_id = '$pid' AND is_deleted = 0";
@@ -2218,6 +2220,9 @@ class ChartersController extends AppController {
             }
         }
         $this->set('mapdetails', $mapdetails);
+
+        $this->set('ydb_name', $ydb_name);
+        $this->set('charterHeadProgramId', $charterHeadProgramId);
 
         $programFiles  = array();
         // $this->Session->read('selectedCharterProgramUUID')
@@ -4997,10 +5002,12 @@ class ChartersController extends AppController {
                         }
 
                         $titleimage = $targetFullPath;
+                        $titleimagehref = $targetFullPath;
                         $fancybox = "fancybox";
                     }else{
                         $noteimg = "style='display:none;'";
-                        $titleimage = "#";
+                        $titleimage = BASE_URL.'/charterguest/app/webroot/img/noimage.png';
+                        $titleimagehref = "#";
                         $fancybox = "";
                     }
 
@@ -5043,7 +5050,7 @@ class ChartersController extends AppController {
                     </div>
                     <div class="sp-40-w">
                     <div class="sp-upload-img">
-                    <a href="'.$titleimage.'" class="'.$fancybox.'"><img src="'.$titleimage.'" style="object-fit: fill; height: 150px;" alt="Forest" ></a>
+                    <a href="'.$titleimagehref.'" class="'.$fancybox.'"><img src="'.$titleimage.'" style="object-fit: fill; height: 150px;" alt="" ></a>
                     </div>
                     <ul class="action-icon"><li><i class="fa fa-comments crew_comment_cruisingmaptitle"  style="'.$colorcodetitle.$displaynone.'" data-rel="'.$scheduleData[0]['CharterProgramSchedule']['UUID'].'" data-yachtid="'.$yacht_id.'" data-tempname="'.$scheduleData[0]['CharterProgramSchedule']['title'].'"><input type="hidden" name=commentstitle value="" class="messagecommentstitle" /></i></li></ul>
                     </div>
@@ -5114,10 +5121,12 @@ class ChartersController extends AppController {
                                 }
 
                                 $activityattachmentimage = $targetFullPath;
+                                $activityattachmentimagehref = $targetFullPath;
                                 $activityfancybox = "fancybox";
                             }else{
                                 $activityattachmentimg = "style='display:none;'";
-                                $activityattachmentimage = "#";
+                                $activityattachmentimage = BASE_URL.'/charterguest/app/webroot/img/noimage.png';
+                                $activityattachmentimagehref = "#";
                                 $activityfancybox = "";
                             }
 
@@ -5147,7 +5156,7 @@ class ChartersController extends AppController {
                                 $colorcode = "";
                               }
 
-                            $popupHtml .= '<div class="sp-divrow"><div class="sp-60-w"><input type="text" name="activity_name[]" '.$readonly.' style="color: #000;font-size: 15px;border: solid 1px #ccc;width:100%;margin: 0px;padding: 8px 5px;font-weight: 600;" value="'.$activity['CharterProgramScheduleActivity']['activity_name'].'"><input type="hidden" name="activity_id[]" value="'.$activity['CharterProgramScheduleActivity']['UUID'].'"><textarea class="form-control textareacontmarker" '.$readonly.' style="background: #eee !important;color: #000!important;border: solid 1px rgb(243 243 243 / 70%)!important;" name="messages[]" rows="4" cols="50">'.$activity['CharterProgramScheduleActivity']['notes'].'</textarea></div><div class="sp-40-w"><div class="sp-upload-img"><a href="'.$activityattachmentimage.'" class="'.$activityfancybox.'"><img src="'.$activityattachmentimage.'" style="object-fit: fill; height: 150px;" alt="Forest"></a></div><ul class="action-icon"><li><i class="fa fa-comments crew_comment_cruisingmap" style="'.$colorcode.$displaynone.'" data-rel="'.$activity['CharterProgramScheduleActivity']['UUID'].'" data-yachtid="'.$yacht_id.'" data-tempname="'.$activity['CharterProgramScheduleActivity']['activity_name'].'" title="Comments & Feedback"><input type="hidden" name=comments[] value="" class="messagecomments" /></i></li></ul></div></div>
+                            $popupHtml .= '<div class="sp-divrow"><div class="sp-60-w"><input type="text" name="activity_name[]" '.$readonly.' style="color: #000;font-size: 15px;border: solid 1px #ccc;width:100%;margin: 0px;padding: 8px 5px;font-weight: 600;" value="'.$activity['CharterProgramScheduleActivity']['activity_name'].'"><input type="hidden" name="activity_id[]" value="'.$activity['CharterProgramScheduleActivity']['UUID'].'"><textarea class="form-control textareacontmarker" '.$readonly.' style="background: #eee !important;color: #000!important;border: solid 1px rgb(243 243 243 / 70%)!important;" name="messages[]" rows="4" cols="50">'.$activity['CharterProgramScheduleActivity']['notes'].'</textarea></div><div class="sp-40-w"><div class="sp-upload-img"><a href="'.$activityattachmentimagehref.'" class="'.$activityfancybox.'"><img src="'.$activityattachmentimage.'" style="object-fit: fill; height: 150px;" alt=""></a></div><ul class="action-icon"><li><i class="fa fa-comments crew_comment_cruisingmap" style="'.$colorcode.$displaynone.'" data-rel="'.$activity['CharterProgramScheduleActivity']['UUID'].'" data-yachtid="'.$yacht_id.'" data-tempname="'.$activity['CharterProgramScheduleActivity']['activity_name'].'" title="Comments & Feedback"><input type="hidden" name=comments[] value="" class="messagecomments" /></i></li></ul></div></div>
                              ';
                         }
                     }
@@ -5233,10 +5242,12 @@ class ChartersController extends AppController {
                             }
 
                             $titleimage = $targetFullPath;
+                            $titleimagehref = $targetFullPath;
                             $fancybox = "fancybox";
                         }else{
                             $noteimg = "style='display:none;'";
-                            $titleimage = "#";
+                            $titleimage = BASE_URL.'/charterguest/app/webroot/img/noimage.png';
+                            $titleimagehref = "#";
                             $fancybox = "";
                         }
 
@@ -5254,7 +5265,7 @@ class ChartersController extends AppController {
                         </div>
                         <div class="sp-40-w">
                         <div class="sp-upload-img">
-                        <a href="'.$titleimage.'" class="'.$fancybox.'"><img src="'.$titleimage.'" style="object-fit: fill; height: 150px;" alt="Forest" ></a>
+                        <a href="'.$titleimagehref.'" class="'.$fancybox.'"><img src="'.$titleimage.'" style="object-fit: fill; height: 150px;" alt="" ></a>
                         </div>
                         <ul class="action-icon"></ul>
                         </div>

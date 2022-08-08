@@ -718,21 +718,12 @@ color: #000;
         </li>    
         <?php if(empty($mapdetails)){ 
                 $title  = "Not published";
+                $maplink = $baseFolder."/charters/charter_program_map/".$charter_program_id.'/'.$ydb_name.'/guest';
         }else if(!empty($mapdetails)){
                 $title  = "";
+                $maplink = "#";
         } ?>
-        <li class="menu__item"> <a href="#" title="<?php echo $title; ?>">Cruising Map</a>
-            <?php /*if(isset($mapdetails)){ ?>
-                <ul class="submenu">
-                    <?php foreach($mapdetails as $startdate => $data){ ?>
-                        <!-- <li class="menu__item"><a href="<?php echo $baseFolder."/charters/charter_program_map/".$data['programid'].'/'.$data['dbname'].'/owner'; ?>" target="_blank"><?php echo $startdate; ?></a></li> -->
-                        <li class="menu__item"><a href="<?php echo $baseFolder."/charters/charter_program_map/".$data['programid'].'/'.$data['dbname'].'/owner'; ?>"><?php echo $startdate; ?></a></li>
-                    <?php
-                            
-                        } ?>
-                </ul>
-            <?php }*/ ?>
-    
+        <li class="menu__item"> <a href="<?php echo $maplink; ?>" title="<?php echo $title; ?>">Cruising Map</a>
         </li>    
         <li class="menu__item" ><a>How To Video</a>
            <ul class="submenu">

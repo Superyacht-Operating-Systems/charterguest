@@ -960,7 +960,7 @@ span.sp-leftalign {
     </div>
  -->
 <br>
-<?php if(isset($sessionCharterGuest) && !empty($sessionCharterGuest)){?>
+<?php //if(isset($sessionCharterGuest) && !empty($sessionCharterGuest)){?>
  <div class="nav-side-menu-full-container">
 <div class="nav-side-menu">
 <div class="base-margin">
@@ -1002,7 +1002,7 @@ span.sp-leftalign {
 </div>
 </div>
 </div>
-<?php } ?>
+<?php //} ?>
 <!--modal start here-->
 <div id="mapnotemodal" class="modal uplaod-modal" role="dialog">
   <div class="modal-dialog">
