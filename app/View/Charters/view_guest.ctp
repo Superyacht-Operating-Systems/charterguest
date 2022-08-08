@@ -718,10 +718,11 @@ color: #000;
         </li>    
         <?php if(empty($mapdetails)){ 
                 $title  = "Not published";
-                $maplink = $baseFolder."/charters/charter_program_map/".$charter_program_id.'/'.$ydb_name.'/guest';
+                $maplink = "#";
         }else if(!empty($mapdetails)){
                 $title  = "";
-                $maplink = "#";
+                $maplink = $baseFolder."/charters/charter_program_map/".$charter_program_id.'/'.$ydb_name.'/guest';
+
         } ?>
         <li class="menu__item"> <a href="<?php echo $maplink; ?>" title="<?php echo $title; ?>">Cruising Map</a>
         </li>    
