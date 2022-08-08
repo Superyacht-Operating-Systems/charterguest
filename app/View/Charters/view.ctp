@@ -33,6 +33,10 @@ content: "SENT";
  content: "RESEND";
 }
 
+.emailSentClass:hover {
+    background: #1AB200 !important;
+}
+
 .footer-mob-row {
     /* width: 26%; */
     width: 81px;
@@ -611,6 +615,7 @@ color: #000;
     width: 160px !important;
     
 }
+
 </style>
   <div class="modal fade info-modal-pop" id="info-modal" role="dialog">
     <div class="modal-dialog">

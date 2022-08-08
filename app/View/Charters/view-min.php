@@ -129,7 +129,7 @@
                                                 $textPreferenceSheet = "WAITING";
                                                 $openPreferenceSheetClass = "";
                                             }else{
-                                                $textPreferenceSheet = "OPEN";
+                                                $textPreferenceSheet = "COMPLETE";
                                                 $openPreferenceSheetClass = "existingCheckFunction";
                                             }
                                             $style = "padding:0;";
@@ -265,7 +265,7 @@
                                            <button type="button" data-charterHeadId=""  data-charterAssocId="" class="btn btn-danger btn-eml-send sendMailClass">EMAIL</button>
                                         <button type="button" data-charterHeadId=""  data-charterAssocId="" class="sent-btnr btn btn-success btn-eml-send emailSentClass displayNone"></button>
 
-                                         <button type="button" data-charterHeadId=""  data-charterAssocId="" class="sent-btnr btn btn-success complete-btn">COMPLETE</button>
+                                         <button type="button" data-charterHeadId=""  data-charterAssocId="" class="sent-btnr btn btn-success complete-btn" style="opacity:0;pointer-events:none;">COMPLETE</button>
                                                  
                                               
 

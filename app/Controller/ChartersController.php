@@ -195,16 +195,16 @@ class ChartersController extends AppController {
                             $this->Session->write("fleetLogoUrl", $fleetLogoUrl);
                         }
                         
-                        $yachtDBData = $this->Yacht->getYachtData('yacht');
-                        $image = $yachtDBData[0]['yachts']['cg_background_image'];
-                        $pSheetsColor = $yachtDBData[0]['yachts']['psheets_color'];
-                        if($image){
-                            $cgBackgroundImage = BASE_URL.'/SOS/app/webroot/betayacht/app/webroot/img/charter_program_files/'.$image;
-                        }else{
-                            $cgBackgroundImage = "https://totalsuperyacht.com:8080/charterguest/css/admin/images/full-charter.png";
-                        }
-                        $this->Session->write("cgBackgroundImage", $cgBackgroundImage);
-                        $this->Session->write("pSheetsColor", $pSheetsColor);
+                        // $yachtDBData = $this->Yacht->getYachtData('yacht');
+                        // $image = $yachtDBData[0]['yachts']['cg_background_image'];
+                        // $pSheetsColor = $yachtDBData[0]['yachts']['psheets_color'];
+                        // if($image){
+                        //     $cgBackgroundImage = BASE_URL.'/SOS/app/webroot/betayacht/app/webroot/img/charter_program_files/'.$image;
+                        // }else{
+                        //     $cgBackgroundImage = "https://totalsuperyacht.com:8080/charterguest/css/admin/images/full-charter.png";
+                        // }
+                        // $this->Session->write("cgBackgroundImage", $cgBackgroundImage);
+                        // $this->Session->write("pSheetsColor", $pSheetsColor);
                         
                         // Check whether the Password is already created
                         $passwordExists = $this->CharterGuest->find('first', array('conditions' => array('id' => $charterData['CharterGuest']['id'], 'password IS NOT NULL', 'password != ""')));
