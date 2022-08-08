@@ -974,27 +974,27 @@ span.sp-leftalign {
         <ul class="menu menu-level1 no-style nav nav-pills nav-justified">
         
         <li> <a href="<?php echo $basefolder."/charters/programs/".$this->Session->read('guestListUUID');?>">Charter Programs</a> 
-        <!-- <li class="menu__item"> <a href="#">Charter Contracts</a>
-            <?php if(isset($programFiles)){ ?>
+        <li class="menu__item"> <a href="#">Charter Contracts</a>
+            <?php if(isset($guesttype) && $guesttype == "owner"){ if(isset($programFiles)){ ?>
                 <ul class="submenu">
-                    <?php foreach($programFiles as $startdate => $filepath){ ?>
+                    <?php  foreach($programFiles as $startdate => $filepath){ ?>
                     <li class="menu__item"><a href="<?php echo $filepath; ?>" target="_blank"><?php echo $startdate; ?></a></li>
                     <?php
                             
                         } ?>
                 </ul>
-            <?php } ?>
+            <?php } } ?>
     
-        </li>     -->
-        <li class="menu__item"> <a href="">Guest list</a></li>
+        </li>    
+        <li class="menu__item"> <a href="<?php echo $basefolder.$guestlink; ?>">Guest list</a></li>
         <li class="menu__item" ><a>How To Video</a>
            <ul class="submenu">
                    <li class="menu__item" id="MenuHowToVideo"><a href="#">Preference Sheets</a></li>
                    <li class="menu__item" id="MenuHowToVideoCharterHead"><a href="#">Head Charterer</a></li>
                 </ul>
             </li>
-            <li> <a href="<?php echo $baseFolder."/charters/privacytermsofuse/1" ?>" target="blank">Terms of Use</a></li>
-        <li> <a href="<?php echo $baseFolder."/charters/privacytermsofuse/2" ?>" target="blank">Privacy Policy</a></li>
+            <li> <a href="<?php echo $basefolder."/charters/privacytermsofuse/1" ?>" target="blank">Terms of Use</a></li>
+        <li> <a href="<?php echo $basefolder."/charters/privacytermsofuse/2" ?>" target="blank">Privacy Policy</a></li>
          <li class="list-logout-row row-hide-btn"><?php echo $this->Html->link($this->Html->image("admin/table.png", array("alt" => "","title" => "Logout")).'Logout','/',array('escape' =>false,'title' => 'Logout'));?></li>
         </ul>
     </nav>

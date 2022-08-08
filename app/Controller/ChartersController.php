@@ -2201,9 +2201,10 @@ class ChartersController extends AppController {
         $mapdetails = array();
         $ydb_name = $session['CharterGuest']['ydb_name'];
         $charter_from_date = date("d M Y", strtotime($session['CharterGuest']['charter_from_date']));
-        if($guestAssocData)
+        //echo "<pre>";print_r($guestAssocData);exit;
+        if(isset($guestAssocData['CharterGuest']['charter_from_date']) && !empty($guestAssocData['CharterGuest']['charter_from_date'])){
             $charter_from_date = date("d M Y", strtotime($guestAssocData['CharterGuest']['charter_from_date']));
-
+        }
         $this->loadModel('CharterProgramFile');
         $scheduleData = $this->CharterProgramFile->query("SELECT * FROM $ydb_name.charter_program_schedules CharterProgramSchedule WHERE charter_program_id = '$charterHeadProgramId' AND is_deleted = 0");
         // echo "<pre>";print_r($scheduleData);exit;
@@ -4640,6 +4641,14 @@ class ChartersController extends AppController {
             $charterProgData = $this->CharterGuest->query("SELECT * FROM $yachtDbName.charter_programs CharterProgram WHERE UUID = '$charterProgramId' AND is_deleted = 0 LIMIT 1");
             
             $charterGuestDataToMenu = $this->CharterGuest->find("first",array('conditions'=>array('charter_program_id'=>$charterProgramId)));
+
+            if(isset($guesttype) && ($guesttype == "owner")){ 
+                    $guestlink = "/charters/view/".$charterGuestDataToMenu['CharterGuest']['id']."/".$charterGuestDataToMenu['CharterGuest']['charter_program_id']."/".$charterGuestDataToMenu['CharterGuest']['charter_company_id'];
+            }else if(isset($guesttype) && ($guesttype == "guest")){ 
+                    $guestlink = "/charters/view_guest/".$charterGuestDataToMenu['CharterGuest']['charter_program_id']."/".$charterGuestDataToMenu['CharterGuest']['charter_company_id'];
+            }
+
+            $this->set('guestlink', $guestlink);
 
             if (count($charterProgData) != 0) {
                 $startDate = $charterProgData[0]['CharterProgram']['charter_from_date'];

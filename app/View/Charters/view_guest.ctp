@@ -704,7 +704,36 @@ color: #000;
         <ul class="menu menu-level1 no-style nav nav-pills nav-justified">
             <?php //if(isset($charter_assoc_info) && !empty($charter_assoc_info)){?>
         <li> <a href="<?php echo $baseFolder."/charters/programs/".$sessionData['guestListUUID'];  ?>">Charter Programs</a>
-        
+        <li class="menu__item"> <a href="#">Charter Contracts</a>
+            <?php /*if(isset($programFiles)){ ?>
+                <ul class="submenu">
+                    <?php foreach($programFiles as $startdate => $filepath){ ?>
+                    <li class="menu__item"><a href="<?php echo $filepath; ?>" target="_blank"><?php echo $startdate; ?></a></li>
+                    <?php
+                            
+                        } ?>
+                </ul>
+            <?php } */?>
+    
+        </li>    
+        <?php if(empty($mapdetails)){ 
+                $title  = "Not published";
+        }else if(!empty($mapdetails)){
+                $title  = "";
+        } ?>
+        <li class="menu__item"> <a href="#" title="<?php echo $title; ?>">Cruising Map</a>
+            <?php /*if(isset($mapdetails)){ ?>
+                <ul class="submenu">
+                    <?php foreach($mapdetails as $startdate => $data){ ?>
+                        <!-- <li class="menu__item"><a href="<?php echo $baseFolder."/charters/charter_program_map/".$data['programid'].'/'.$data['dbname'].'/owner'; ?>" target="_blank"><?php echo $startdate; ?></a></li> -->
+                        <li class="menu__item"><a href="<?php echo $baseFolder."/charters/charter_program_map/".$data['programid'].'/'.$data['dbname'].'/owner'; ?>"><?php echo $startdate; ?></a></li>
+                    <?php
+                            
+                        } ?>
+                </ul>
+            <?php }*/ ?>
+    
+        </li>    
         <li class="menu__item" ><a>How To Video</a>
            <ul class="submenu">
                    <li class="menu__item" id="MenuHowToVideo"><a href="#">Preference Sheets</a></li>

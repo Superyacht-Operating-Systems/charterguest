@@ -263,12 +263,12 @@ body .menu .submenu .menu__item a {
                     $title  = "";
             } ?>
              <?php if(isset($ownerprefenceID) && !empty($ownerprefenceID)){ ?>
-            <li class="menu__item"><a href="<?php echo $baseFolder."/charters/view/".$ownerprefenceID."/".$selectedCharterProgramUUID."/".$sessionCharterGuest['charter_company_id']; ?>">Guest List</a></li>
+            <li class="menu__item pagleave"><a href="<?php echo $baseFolder."/charters/view/".$ownerprefenceID."/".$selectedCharterProgramUUID."/".$sessionCharterGuest['charter_company_id']; ?>">Guest List</a></li>
             <?php }else if(isset($assocprefenceID) && !empty($assocprefenceID)){ ?>
-                <li class="menu__item"><a href="<?php echo $baseFolder."/charters/view_guest/".$selectedCharterProgramUUID."/".$sessionCharterGuest['charter_company_id']; ?>">Guest List</a></li>
+                <li class="menu__item pagleave"><a href="<?php echo $baseFolder."/charters/view_guest/".$selectedCharterProgramUUID."/".$sessionCharterGuest['charter_company_id']; ?>">Guest List</a></li>
                 <?php } ?>    
             <li class="menu__item"> <a href="#" title="<?php echo $title; ?>">Cruising Map</a>
-                <?php if(isset($mapdetails)){ ?>
+                <?php if(isset($ownerprefenceID) && !empty($ownerprefenceID)){ if(isset($mapdetails)){ ?>
                     <ul class="submenu">
                         <?php foreach($mapdetails as $startdate => $data){ ?>
                             <li class="menu__item pagleave"><a href="<?php echo $baseFolder."/charters/charter_program_map/".$data['programid'].'/'.$data['dbname'].'/owner'; ?>" target="blank"><?php echo $startdate; ?></a></li>
@@ -276,10 +276,12 @@ body .menu .submenu .menu__item a {
                                 
                             } ?>
                     </ul>
-                <?php } ?>
+                <?php } }?>
             </li>   
             <li class="menu__item"> <a href="#">Charter Contracts</a>
-            <?php if(isset($programFiles)){ ?>
+            <?php 
+            if(isset($ownerprefenceID) && !empty($ownerprefenceID)){ 
+            if(isset($programFiles)){ ?>
                 <ul class="submenu">
                     <?php foreach($programFiles as $startdate => $filepath){ ?>
                     <li class="menu__item"><a href="<?php echo $filepath; ?>" target="_blank"><?php echo $startdate; ?></a></li>
@@ -287,7 +289,8 @@ body .menu .submenu .menu__item a {
                             
                         } ?>
                 </ul>
-            <?php } ?>
+            <?php }
+            } ?>
         </li>   
         <li class="menu__item" ><a>How To Video</a>
            <ul class="submenu">
@@ -331,23 +334,42 @@ body .menu .submenu .menu__item a {
           
           <li class="<?php echo $itineraryPreferenceTab; ?>"><a data-toggle="tab" href="#itinerary" class="nav-anch">Itinerary</a></li>
           
-          <li class="none-vew"> <a href="<?php echo $baseFolder."/charters/programs/".$session['guestListUUID'];  ?>">Charter Programs</a></li>
+          <li class="none-vew pagleave"> <a href="<?php echo $baseFolder."/charters/programs/".$session['guestListUUID'];  ?>">Charter Programs</a></li>
           <?php if(isset($ownerprefenceID) && !empty($ownerprefenceID)){ ?>
-            <li class="none-vew"><a href="<?php echo $baseFolder."/charters/view/".$ownerprefenceID."/".$selectedCharterProgramUUID."/".$sessionCharterGuest['charter_company_id']; ?>">Guest List</a></li>
+            <li class="none-vew pagleave"><a href="<?php echo $baseFolder."/charters/view/".$ownerprefenceID."/".$selectedCharterProgramUUID."/".$sessionCharterGuest['charter_company_id']; ?>">Guest List</a></li>
             <?php }else if(isset($assocprefenceID) && !empty($assocprefenceID)){ ?>
-                <li class="none-vew"><a href="<?php echo $baseFolder."/charters/view_guest/".$selectedCharterProgramUUID."/".$sessionCharterGuest['charter_company_id']; ?>">Guest List</a></li>
+                <li class="none-vew pagleave"><a href="<?php echo $baseFolder."/charters/view_guest/".$selectedCharterProgramUUID."/".$sessionCharterGuest['charter_company_id']; ?>">Guest List</a></li>
                 <?php } ?>    
-          <li class="none-vew"><a href="<?php echo $baseFolder."/charters/charter_program_map/".$mapcharterprogramid.'/'.$mapydb_name; ?>" class="nav-anch" target="_blank">Cruising Map</a></li>
+                <?php if(empty($mapdetails)){ 
+                $title  = "Not published";
+            }else if(!empty($mapdetails)){
+                    $title  = "";
+            } ?>
+                <li class="none-vew menu__item"> <a href="#" title="<?php echo $title; ?>">Cruising Map</a>
+                <?php if(isset($ownerprefenceID) && !empty($ownerprefenceID)){ ?>
+                <?php if(isset($mapdetails)){ ?>
+                    <ul class="submenu">
+                        <?php foreach($mapdetails as $startdate => $data){ ?>
+                            <li class="none-vew menu__item pagleave"><a href="<?php echo $baseFolder."/charters/charter_program_map/".$data['programid'].'/'.$data['dbname'].'/owner'; ?>" target="blank"><?php echo $startdate; ?></a></li>
+                        <?php
+                                
+                            } ?>
+                    </ul>
+                <?php } }?>
+            </li>   
           <li class="none-vew menu__item"> <a href="#">Charter Contracts</a>
-            <?php if(isset($programFiles)){ ?>
-                <ul class="submenu">
-                    <?php foreach($programFiles as $startdate => $filepath){ ?>
-                    <li class="none-vew menu__item"><a href="<?php echo $filepath; ?>" target="_blank"><?php echo $startdate; ?></a></li>
-                    <?php
-                            
-                        } ?>
-                </ul>
-            <?php } ?>
+            <?php 
+              if(isset($ownerprefenceID) && !empty($ownerprefenceID)){ 
+                    if(isset($programFiles)){ ?>
+                        <ul class="submenu">
+                            <?php foreach($programFiles as $startdate => $filepath){ ?>
+                            <li class="none-vew menu__item"><a href="<?php echo $filepath; ?>" target="_blank"><?php echo $startdate; ?></a></li>
+                            <?php
+                                    
+                                } ?>
+                        </ul>
+                    <?php } 
+                }?>
         </li>  
         <li class="none-vew menu__item" ><a>How To Video</a>
            <ul class="submenu">
