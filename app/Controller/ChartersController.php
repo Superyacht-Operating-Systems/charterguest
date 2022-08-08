@@ -759,7 +759,7 @@ class ChartersController extends AppController {
         $pid = $charterData['CharterGuest']['charter_program_id'];
         //echo "SELECT * FROM $ydb_name.charter_program_schedules CharterProgramSchedule WHERE charter_program_id = '$pid' AND is_deleted = 0";
         $scheduleData = $this->CharterProgramFile->query("SELECT * FROM $ydb_name.charter_program_schedules CharterProgramSchedule WHERE charter_program_id = '$pid' AND is_deleted = 0");
-        //echo "<pre>";print_r($scheduleData);exit;
+        echo "<pre>";print_r($scheduleData);exit;
         if(isset($scheduleData) && !empty($scheduleData)){
             if(($scheduleData[0]['CharterProgramSchedule']['publish_map'] == 1)){
                 $map = array();
