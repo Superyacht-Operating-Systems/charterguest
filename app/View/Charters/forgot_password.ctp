@@ -28,7 +28,7 @@ position: relative;
 
 
 <?php $basefolder = $this->request->base; ?>
-<span class="text-small red successMsg" id="emailsuccess" style="text-align: center; color: blue"></span>
+<b><span class="text-small red successMsg" id="emailsuccess" style="text-align: center; color: lightgreen;"></span></b>
 <div id="tokenDiv" class="panel-body" style="height: 250px;">        
             <?php echo $this->Form->create('CharterGuest', array('url' => array('controller' => 'charters', 'action' => 'verifyEmail'),'id'=>'verifyemailForm'));?>
     <fieldset style="padding-top:10px;">
