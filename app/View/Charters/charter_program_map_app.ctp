@@ -795,9 +795,9 @@ padding-left: 15px!important;
 }
 
 #CruisingButton {
-  position: fixed;
-  top: 100px;
-  right: 125px;
+    position: absolute!important;
+    top: 18px!important;
+    right: 13px!important;
   padding: 6px;
   color:#000;
   z-index: 9999;
@@ -805,9 +805,9 @@ padding-left: 15px!important;
 }
 
 #HideDetails {
-  position: fixed;
-  top: 120px;
-  right: 111px;
+    position: absolute!important;
+    top: 56px!important;
+    right: 13px!important;
   padding: 6px;
   color:#000;
   z-index: 9999;
@@ -816,16 +816,40 @@ padding-left: 15px!important;
 }
 
 #HelpfulTips {
-  position: fixed;
-  top: 157px;
-  right: 111px;
+    position: absolute!important;
+    top: 94px!important;
+    right: 13px!important;
   padding: 6px;
   color:#000;
   z-index: 9999;
   font-weight:bold;
   min-width: 121px;
 }
+@media(max-width: 1092px){
+#HideDetails, #HelpfulTips {
+    width: 137px;
+    font-size: 12px;
+    height: 32px;
+    padding: 0px!important;
+}
+}
+@media (max-width: 767px){
+#HideDetails, #HelpfulTips {
 
+    width: 108px;
+    height: 25px;
+    padding: 0px!important;
+    font-size: 11px!important;
+    min-width: inherit!important;
+}
+#HideDetails {
+    top: 46px!important;
+}
+#HelpfulTips {
+    top: 74px!important;
+}
+
+}
 .fancybox-overlay {
     z-index: 99999999 !important;
 }
@@ -990,7 +1014,7 @@ span.sp-leftalign {
           4. The Cruising Schedule button lists all the locations.
         </div>
         <div class="form-group">
-          5. Hide the location cards by taping on the info icon.
+          5. Tap the Hide Details button to hide the location cards.
         </div>
       </div>
       <div class="modal-footer">

@@ -857,13 +857,59 @@ padding-left: 15px!important;
 }
 
 #CruisingButton {
-  position: fixed;
-  top: 100px;
-  right: 125px;
-  padding: 10px;
+    position: absolute!important;
+    top: 18px!important;
+    right: 13px!important;
+  padding: 6px;
   color:#000;
-  z-index: 400;
+  z-index: 9999;
   font-weight:bold;
+}
+
+#HideDetails {
+    position: absolute!important;
+    top: 56px!important;
+    right: 13px!important;
+  padding: 6px;
+  color:#000;
+  z-index: 9999;
+  font-weight:bold;
+  min-width: 139px;
+}
+
+#HelpfulTips {
+    position: absolute!important;
+    top: 94px!important;
+    right: 13px!important;
+  padding: 6px;
+  color:#000;
+  z-index: 9999;
+  font-weight:bold;
+  min-width: 139px;
+}
+@media(max-width: 1092px){
+#HideDetails, #HelpfulTips {
+    width: 137px;
+    font-size: 12px;
+    height: 32px;
+    padding: 0px!important;
+}
+}
+@media (max-width: 767px){
+#HideDetails, #HelpfulTips {
+
+    width: 108px;
+    height: 25px;
+    padding: 0px!important;
+    font-size: 11px!important;
+    min-width: inherit;
+}
+#HideDetails {
+    top: 47px!important;
+}
+#HelpfulTips {
+    top: 76px!important;
+}
 }
 
 .fancybox-overlay {
@@ -1052,7 +1098,7 @@ span.sp-leftalign {
           4. The Cruising Schedule button lists all the locations.
         </div>
         <div class="form-group">
-          5. Hide the location cards by taping on the info icon.
+        5. Tap the Hide Details button to hide the location cards.
         </div>
       </div>
       <div class="modal-footer">
@@ -1119,6 +1165,8 @@ span.sp-leftalign {
  <div class="form-group base-margin">
 <div class="custom-popup " id="map" style="height: calc(100vh - 100px);"></div>
 <button id="CruisingButton">Cruising Schedule</button>
+<button id="HideDetails">Hide Details</button>
+<button id="HelpfulTips">Helpful Tips</button>
 </div></div>
 </div>
 <input type="hidden" id="yachtId" value="<?php echo $yacht_id_fromyachtDB; ?>">
@@ -1369,77 +1417,96 @@ for (let layer of polyLayers) { //console.log(layer);
 } ?>
 
 
-L.Control.MarkerControl = L.Control.extend({
-    onAdd: function(map) {
-        var el = L.DomUtil.create('div', 'leaflet-pm-toolbar leaflet-pm-draw leaflet-bar my-control');
+// L.Control.MarkerControl = L.Control.extend({
+//     onAdd: function(map) {
+//         var el = L.DomUtil.create('div', 'leaflet-pm-toolbar leaflet-pm-draw leaflet-bar my-control');
 
-        el.innerHTML =
-            '<div class="button-container" title="Hide / Show Location Cards" style="text-align: center;margin-top: -6px;font-size: 20px;color:#3388ff;"><i class="fa fa-info"></i></div>';
+//         el.innerHTML =
+//             '<div class="button-container" title="Hide / Show Location Cards" style="text-align: center;margin-top: -6px;font-size: 20px;color:#3388ff;"><i class="fa fa-info"></i></div>';
 
-        el.onclick = function() {
-            mapClickEvent = false; // this is for condition to disable the map click function
+//         el.onclick = function() {
+//             mapClickEvent = false; // this is for condition to disable the map click function
 
-            var disp = $(".Tooltip").css("display");
-            if (disp == "block") {
-                $(".Tooltip").css("display", "none");
-                el.innerHTML =
-                    '<div class="button-container" title="Hide / Show Location Cards" style="text-align: center;margin-top: -6px;font-size: 20px;color:#000;"><i class="fa fa-info"></i></div>';
+//             var disp = $(".Tooltip").css("display");
+//             if (disp == "block") {
+//                 $(".Tooltip").css("display", "none");
+//                 el.innerHTML =
+//                     '<div class="button-container" title="Hide / Show Location Cards" style="text-align: center;margin-top: -6px;font-size: 20px;color:#000;"><i class="fa fa-info"></i></div>';
 
-            } else {
-                $(".Tooltip").css("display", "block");
-                el.innerHTML =
-                    '<div class="button-container" title="Hide / Show Location Cards" style="text-align: center;margin-top: -6px;font-size: 20px;color:#3388ff;"><i class="fa fa-info"></i></div>';
+//             } else {
+//                 $(".Tooltip").css("display", "block");
+//                 el.innerHTML =
+//                     '<div class="button-container" title="Hide / Show Location Cards" style="text-align: center;margin-top: -6px;font-size: 20px;color:#3388ff;"><i class="fa fa-info"></i></div>';
 
-            }
-        }
+//             }
+//         }
 
-        return el;
-    },
+//         return el;
+//     },
 
-    onRemove: function(map) {
-        // Nothing to do here
+//     onRemove: function(map) {
+//         // Nothing to do here
+//     }
+// });
+
+// L.control.markerControl = function(opts) {
+//     return new L.Control.MarkerControl(opts);
+// }
+
+// L.control.markerControl({
+//     position: 'topleft'
+// }).addTo(map);
+
+
+// /***********************************************Help icon************/
+// L.Control.MarkerControl = L.Control.extend({
+//     onAdd: function(map) {
+//         var el = L.DomUtil.create('div', 'leaflet-pm-toolbar leaflet-pm-draw leaflet-bar my-control');
+
+//         el.innerHTML =
+//             '<div class="button-container" title="Hide / Show Location Cards" style="text-align: center;margin-top: -6px;font-size: 20px;color:#3388ff;"><i class="fa fa-question-circle"></i></div>';
+
+//         el.onclick = function() {
+//             mapClickEvent = false; // this is for condition to disable the map click function
+
+//             openhelpmodal();
+            
+//         }
+
+//         return el;
+//     },
+
+//     onRemove: function(map) {
+//         // Nothing to do here
+//     }
+// });
+
+// L.control.markerControl = function(opts) {
+//     return new L.Control.MarkerControl(opts);
+// }
+
+// L.control.markerControl({
+//     position: 'topleft'
+// }).addTo(map);
+
+$(document).on("click", "#HideDetails", function(e) {
+    mapClickEvent = false; // this is for condition to disable the map click function
+    var disp = $(".Tooltip").css("display");
+    if (disp == "block") {
+        $(".Tooltip").css("display", "none");  
+        $("#HideDetails").text("Show Details");
+    } else {
+        $(".Tooltip").css("display", "block");
+        $("#HideDetails").text("Hide Details");
+
     }
 });
 
-L.control.markerControl = function(opts) {
-    return new L.Control.MarkerControl(opts);
-}
-
-L.control.markerControl({
-    position: 'topleft'
-}).addTo(map);
-
-
-/***********************************************Help icon************/
-L.Control.MarkerControl = L.Control.extend({
-    onAdd: function(map) {
-        var el = L.DomUtil.create('div', 'leaflet-pm-toolbar leaflet-pm-draw leaflet-bar my-control');
-
-        el.innerHTML =
-            '<div class="button-container" title="Hide / Show Location Cards" style="text-align: center;margin-top: -6px;font-size: 20px;color:#3388ff;"><i class="fa fa-question-circle"></i></div>';
-
-        el.onclick = function() {
-            mapClickEvent = false; // this is for condition to disable the map click function
+$(document).on("click", "#HelpfulTips", function(e) {
+    mapClickEvent = false; // this is for condition to disable the map click function
 
             openhelpmodal();
-            
-        }
-
-        return el;
-    },
-
-    onRemove: function(map) {
-        // Nothing to do here
-    }
 });
-
-L.control.markerControl = function(opts) {
-    return new L.Control.MarkerControl(opts);
-}
-
-L.control.markerControl({
-    position: 'topleft'
-}).addTo(map);
 
 function openhelpmodal(e){
     $('#mapquestionmodal').show();
@@ -1494,7 +1561,9 @@ function markerOnClick(e) {
                 if (result.status == 'success') {
                     $(".leaflet-control-attribution").hide();
                     $("#CruisingButton").hide();
-                    $(".leaflet-control-container").hide();
+                    $("#HideDetails").hide();
+                    $("#HelpfulTips").hide();
+                    // $(".leaflet-control-container").hide();
                     // open popup center to map
                     map.setView(e.latlng);
 
@@ -1510,7 +1579,9 @@ function markerOnClick(e) {
                             msgcount();
                             $(".leaflet-control-attribution").show();
                             $("#CruisingButton").show();
-                            $(".leaflet-control-container").show();
+                            $("#HideDetails").show();
+                            $("#HelpfulTips").show();
+                            // $(".leaflet-control-container").show();
                             
                         });
                     // display popup from top
@@ -1539,7 +1610,9 @@ $(document).on("click", "#closeSchedule", function(e) {
     $(".leaflet-popup-close-button")[0].click();
     $(".leaflet-control-attribution").show();
     $("#CruisingButton").show();
-    $(".leaflet-control-container").show();
+    $("#HideDetails").show();
+    $("#HelpfulTips").show();
+    // $(".leaflet-control-container").show();
 });
 
 
