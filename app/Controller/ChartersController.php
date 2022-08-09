@@ -9,7 +9,6 @@
 class ChartersController extends AppController {
     var $name = 'Charters';    
     public $components = array('Paginator');
-
     /*
         * Load Token verify page
         * Functionality -  Loading the Token verify page
