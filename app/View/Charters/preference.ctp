@@ -41,7 +41,6 @@
     .modalmsg {
     text-align: center;
     padding: 20px 0px!important;
-    color:red;
 }
 .nav-side-menu{display: block!important;}
 .yachtHeaderName{font-weight: bold;}
