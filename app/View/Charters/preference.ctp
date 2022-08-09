@@ -40,7 +40,7 @@
 <style>
     .modalmsg {
     text-align: center;
-    padding: 20px 0px;
+    padding: 20px 0px!important;
 }
 .nav-side-menu{display: block!important;}
 .yachtHeaderName{font-weight: bold;}
