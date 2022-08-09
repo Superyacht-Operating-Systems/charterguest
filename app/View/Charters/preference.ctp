@@ -38,6 +38,10 @@
 ?>
 
 <style>
+    .modalmsg {
+    text-align: center;
+    padding: 20px 0px;
+}
 .nav-side-menu{display: block!important;}
 .yachtHeaderName{font-weight: bold;}
 .form-control{
@@ -414,7 +418,7 @@ body .menu .submenu .menu__item a {
   <div class="modal-dialog" role="document">
     <div class="modal-content mc-bord">
       <div class="modal-body">
-      <div class="modalmsg" style="margin-left: 50px;"> 
+      <div class="modalmsg" > 
         <p>Would you like to save or submit your</p>
         <p>preferences before leaving this page?</p>
       </div>
