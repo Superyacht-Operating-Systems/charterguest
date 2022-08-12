@@ -21,6 +21,32 @@ if (isset($charterProgData) && !empty($charterProgData)) {
     $scheduleLocation = $charterProgData['CharterProgram']['embarkation']." to ".$charterProgData['CharterProgram']['debarkation'];
 }
 
+if(empty($scheduleData)){
+    $no_of_days_loc_options = "";
+    $no_of_days_loc_options .= '<option value="current" title="Location to visit in current Day">Current</option>';
+    for ($s = 0; $s < $diffDays; $s++) {
+        $p = $s + 1;
+        $no_of_days_loc_options .= '<option value="'.$p.'">'.$p.' Days</option>';
+    }
+}else{
+    $day_num_arr = array();
+    foreach($scheduleData as $val){
+              $day_num_arr[] = $val['CharterProgramSchedule']['day_num'];
+    }
+    if(count($day_num_arr)){
+        $days_num_count = array_unique($day_num_arr); 
+    }
+    $schcount = count($days_num_count);
+    $no_of_days_loc_options = "";
+    $z = 0;
+    $no_of_days_loc_options .= '<option value="current" title="Location to visit in current Day">Current</option>';
+    for ($s = $schcount; $s < $diffDays; $s++) {
+        $z++;
+        $p = $s + 1;
+        $no_of_days_loc_options .= '<option value="'.$p.'">'.$z.' Days</option>';
+    }
+
+}
 ?>
 <style>
     .leaflet-popup-content {
@@ -677,7 +703,7 @@ float: right;
     color: #fff;
     margin-top: -15px;
     position: absolute;
-    margin-left: 20px;
+    margin-left: 120px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -991,6 +1017,17 @@ span.sp-leftalign {
     margin-bottom: 8px!important;
    }
 }
+
+.no_of_days_loc{
+    width:30%;
+    float:right;
+}
+
+.label_days{
+    color:#555;
+    font-size:12px;
+    padding: 10px;
+}
 </style>  
 
 <?php    echo $this->Html->script('jquery-1.7.2.min');
@@ -1259,13 +1296,24 @@ var centerLngDay1 = -35.85937500000001;
 var zoom = 4;
 var day1 = 0;
 var latlngs = [];
+var globaldropdownvarAddOption = "";
 // Generating the markers for existing records
 <?php foreach ($scheduleData as $key => $schedule) { 
+
+if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !empty($samelocations[$schedule['CharterProgramSchedule']['lattitude']])){
+    $counttitle = count($samelocations[$schedule['CharterProgramSchedule']['lattitude']]);
+        $SumDaytitle = "";
+        foreach($samelocations[$schedule['CharterProgramSchedule']['lattitude']] as $val){
+            $SumDaytitle.= $val.'<br>';
+        }
+
+
     $schuuid = $schedule['CharterProgramSchedule']['UUID'];
-    if($schedule['CharterProgramSchedule']['marker_msg_count'] == 0){
+    if($samemarkercommentcount[$schedule['CharterProgramSchedule']['lattitude']] == 0){
         $marker_msg_count = "style='display:none;'";
-    }else if($schedule['CharterProgramSchedule']['marker_msg_count'] != 0){
+    }else if($samemarkercommentcount[$schedule['CharterProgramSchedule']['lattitude']] != 0){
         $marker_msg_count = "";
+        $samemkrcount = $samemarkercommentcount[$schedule['CharterProgramSchedule']['lattitude']];
         if(isset($guesttype) && !empty($guesttype)){ //echo $guesttype; exit;
             if($guesttype == "guest"){
                     $marker_msg_count = "style='display:none;'";
@@ -1315,7 +1363,7 @@ var latlngs = [];
         zoom = 7;
         
         var marker = L.marker(["<?php echo $schedule['CharterProgramSchedule']['lattitude']; ?>", "<?php echo $schedule['CharterProgramSchedule']['longitude']; ?>"],{pmIgnore: true})
-        .bindTooltip("<?php echo "<span class='owntooltip' id=".$key.">Day ".$schedule['CharterProgramSchedule']['day_num']."&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;".$schedule['CharterProgramSchedule']['day_dates']."&nbsp;<span id='".$schuuid."'   class='acti-count' ".$marker_msg_count." >".$schedule['CharterProgramSchedule']['marker_msg_count']."</span><br><b style='font-size: 10px;'>".$schedule['CharterProgramSchedule']['title']."<hr>".$endplace."</b><br><b style='font-size: 10px;'>".$distance.$bar.$duration."</b></span>"?>", 
+        .bindTooltip("<?php echo "<span class='owntooltip' id=".$key.">".$SumDaytitle."&nbsp;<span id='".$schuuid."'   class='acti-count' ".$marker_msg_count." >".$samemkrcount."</span><br><b style='font-size: 10px;'>".$schedule['CharterProgramSchedule']['title']."<hr>".$endplace."</b><br><b style='font-size: 10px;'>".$distance.$bar.$duration."</b></span>"?>", 
                     {
                         permanent: true, 
                         direction: 'right',
@@ -1332,11 +1380,15 @@ var latlngs = [];
         marker.daytitle = "<?php echo $schedule['CharterProgramSchedule']['title']; ?>";
         marker.day_dates = "<?php echo $schedule['CharterProgramSchedule']['day_dates']; ?>";
         marker.marker_msg_count = "<?php echo $schedule['CharterProgramSchedule']['marker_msg_count']; ?>";
+        marker.counttitle = "<?php echo $counttitle; ?>";
+        marker.scheduleSameLocationUUID = "<?php echo implode(',',$samelocationsScheduleUUID[$schedule['CharterProgramSchedule']['title']]); ?>";
+        marker.samelocationsDates = "<?php echo implode(',',$samelocationsDates[$schedule['CharterProgramSchedule']['title']]); ?>";
+        marker.labeldayanddate = "<?php echo $SumDaytitle; ?>";
         marker.markerNum = markerCount; 
         markerArray.push(marker);
         marker.addTo(map);
         markerCount++;
-<?php } ?>
+<?php } } ?>
 
 // Making the Centre point
 if (day1) {
@@ -1549,13 +1601,19 @@ function markerOnClick(e) {
     //console.log(consumptiontotal);
     var day_dates = e.target.day_dates;
     var tablepId = e.target.tablepId;
+
+    var counttitle = e.target.counttitle;
+    var daytitle = e.target.daytitle;
+    var scheduleSameLocationUUID = e.target.scheduleSameLocationUUID;
+    var samelocationsDates = e.target.samelocationsDates;
+
     if (scheduleId != "") {
         $("#hideloader").show();
         $.ajax({
             type: "POST",
             url: basefolder+"/"+"charters/editCharterProgramSchedules",
             dataType: 'json',
-            data: { "scheduleId": scheduleId,"tablepId":tablepId ,"diffDays": <?php echo $diffDays; ?>, "markerNum": markerNum, "lattitude": lattitude, "longitude": longitude,"guesttype":guesttype },
+            data: { "programId": scheduleId,"scheduleId":scheduleUUId,"tablepId":tablepId ,"diffDays": <?php echo $diffDays; ?>, "markerNum": markerNum, "lattitude": lattitude, "longitude": longitude,"guesttype":guesttype,"counttitle":counttitle, "daytitle":daytitle, "scheduleSameLocationUUID":scheduleSameLocationUUID, "samelocationsDates":samelocationsDates, "from":'locationcard' },
             success:function(result) {
                 $("#hideloader").hide();
                 if (result.status == 'success') {
@@ -1576,7 +1634,7 @@ function markerOnClick(e) {
                     .setContent(result.popupHtml)
                     .openOn(map)
                         .on("remove", function () {
-                            msgcount();
+                            msgcount(scheduleSameLocationUUID);
                             $(".leaflet-control-attribution").show();
                             $("#CruisingButton").show();
                             $("#HideDetails").show();
@@ -1586,7 +1644,8 @@ function markerOnClick(e) {
                         });
                     // display popup from top
                     window.scrollTo(0, 0);
-                    $('.day_dates').text(day_dates);
+                    //$('.day_dates').text(day_dates);
+                    $('.noofdayscard').html(result.no_of_days_options);
                 }, 1000);
                     $(".leaflet-popup-close-button").addClass('updateCommentscount');
                    // alert(day_dates);
@@ -1604,6 +1663,58 @@ function markerOnClick(e) {
     }
         
 }
+
+$(document).on("change", ".noofdayscard", function(e) {
+    var scheduleUUId = mapmarkerglobalObj.target.scheduleUUId;
+    var scheduleId = mapmarkerglobalObj.target.scheduleId;
+    var tablepId = mapmarkerglobalObj.target.tablepId;
+    var counttitle = mapmarkerglobalObj.target.counttitle;
+    var daytitle = mapmarkerglobalObj.target.daytitle;
+    var scheduleSameLocationUUID = mapmarkerglobalObj.target.scheduleSameLocationUUID;
+    var samelocationsDates = mapmarkerglobalObj.target.samelocationsDates;
+   var selectedschuuid = $(this).val();
+   var selecteddatetext = $(".noofdayscard option:selected").text();
+   var yachtId = $("#yachtId").val();
+   $("#hideloader").show();
+        $.ajax({
+            type: "POST",
+            url: basefolder+"/"+"charters/editCharterProgramSchedules",
+            dataType: 'json',
+            data: {"programId":scheduleId,"tablepId":tablepId ,"scheduleId": selectedschuuid, "diffDays": <?php echo $diffDays; ?>, "yachtId": yachtId,"counttitle":counttitle, "daytitle":daytitle, "scheduleSameLocationUUID":scheduleSameLocationUUID, "samelocationsDates":samelocationsDates, "from":'daysselection','selecteddatetext':selecteddatetext },
+            success:function(result) {
+                $("#hideloader").hide();
+                if (result.status == 'success') {
+                    //console.log(mapmarkerglobalObj);
+                    map.setView(mapmarkerglobalObj.latlng);
+                    var popLocation= mapmarkerglobalObj.latlng;
+                    setTimeout(function() {
+                    var popup = L.popup({
+                        autoPan: true
+                        })
+                    .setLatLng(popLocation)
+                    .setContent(result.popupHtml)
+                    .openOn(map)
+                    .on("remove", function () {
+                            msgcount(scheduleSameLocationUUID);
+                        });
+                        window.scrollTo(0, 0);
+                        //$('.day_dates').text(day_dates);
+                        $('.noofdayscard').html(result.no_of_days_options);
+                    }, 1000);
+                    $(".leaflet-popup-close-button").addClass('updateCommentscount');
+                   
+                    
+                    $('.expandField').autoResize();
+                     
+                }
+            },
+            error: function(jqxhr) { 
+                $("#hideloader").hide();
+            }
+        });
+
+});
+
 
 // Closing the popup
 $(document).on("click", "#closeSchedule", function(e) {
@@ -1828,14 +1939,14 @@ $(document).on("click", "#CruisingCommentSave" ,function() {
 }
 
 
-    function msgcount(){
+    function msgcount(scheduleSameLocationUUID){
     //console.log(e);
     var charterpgid = $(".mapPopup").attr('data-schuuid'); 
     //alert(charterpgid);
     var yachtId = $("#yachtId").val();
     if(charterpgid){
                     $("#hideloader").show();
-                    var data = { "charterpgid": charterpgid,'yachtId':yachtId};
+                    var data = { "charterpgid": charterpgid,'yachtId':yachtId,'scheduleSameLocationUUID':scheduleSameLocationUUID};
                     $.ajax({
                     type: "POST",
                     url: basefolder+"/"+"charters/getIndividualmsgcountMarer",
@@ -1844,9 +1955,10 @@ $(document).on("click", "#CruisingCommentSave" ,function() {
                     success:function(result) {
                         $("#hideloader").hide();
                         var mcount = result.status;
-                        $("#"+charterpgid).text(mcount);
+                        var schuuidtoupdateintooltip = result.schuuidtoupdateintooltip;
+                        $("#"+schuuidtoupdateintooltip).text(mcount);
                         if(mcount == 0){
-                            $("#"+charterpgid).css('display','none');
+                            $("#"+schuuidtoupdateintooltip).css('display','none');
                         }
                         $(".leaflet-popup-close-button").removeClass('updateCommentscount');
                     },

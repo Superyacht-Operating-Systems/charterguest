@@ -194,16 +194,16 @@ class ChartersController extends AppController {
                             $this->Session->write("fleetLogoUrl", $fleetLogoUrl);
                         }
                         
-                        // $yachtDBData = $this->Yacht->getYachtData('yacht');
-                        // $image = $yachtDBData[0]['yachts']['cg_background_image'];
-                        // $pSheetsColor = $yachtDBData[0]['yachts']['psheets_color'];
-                        // if($image){
-                        //     $cgBackgroundImage = BASE_URL.'/SOS/app/webroot/betayacht/app/webroot/img/charter_program_files/'.$image;
-                        // }else{
-                        //     $cgBackgroundImage = "https://totalsuperyacht.com:8080/charterguest/css/admin/images/full-charter.png";
-                        // }
-                        // $this->Session->write("cgBackgroundImage", $cgBackgroundImage);
-                        // $this->Session->write("pSheetsColor", $pSheetsColor);
+                        $yachtDBData = $this->Yacht->getYachtData('yacht');
+                        $image = $yachtDBData[0]['yachts']['cg_background_image'];
+                        $pSheetsColor = $yachtDBData[0]['yachts']['psheets_color'];
+                        if($image){
+                            $cgBackgroundImage = BASE_URL.'/SOS/app/webroot/betayacht/app/webroot/img/charter_program_files/'.$image;
+                        }else{
+                            $cgBackgroundImage = "https://totalsuperyacht.com:8080/charterguest/css/admin/images/full-charter.png";
+                        }
+                        $this->Session->write("cgBackgroundImage", $cgBackgroundImage);
+                        $this->Session->write("pSheetsColor", $pSheetsColor);
                         
                         // Check whether the Password is already created
                         $passwordExists = $this->CharterGuest->find('first', array('conditions' => array('id' => $charterData['CharterGuest']['id'], 'password IS NOT NULL', 'password != ""')));
@@ -4692,6 +4692,10 @@ class ChartersController extends AppController {
                 //echo "<pre>";print_r($scheduleData); exit;
                 $markertitle = array();
                 $markername = array();
+                $samelocations = array();
+                $samelocationsScheduleUUID = array();
+                $samelocationsDates = array();
+                $samemarkercommentcount = array();
                 if(isset($scheduleData)){
                     foreach($scheduleData as $key => $publishmap){
                             if($publishmap['CharterProgramSchedule']['publish_map'] == 1){
@@ -4708,6 +4712,11 @@ class ChartersController extends AppController {
 
                            $markertitle[$publishmap['CharterProgramSchedule']['id']] = $publishmap['CharterProgramSchedule']['title'];
                            $markername[$publishmap['CharterProgramSchedule']['title']] = $publishmap['CharterProgramSchedule']['title'];
+
+                            $samelocations[$publishmap['CharterProgramSchedule']['lattitude']][] = "Day ".$scheduleData[$key]['CharterProgramSchedule']['day_num']."&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;".$scheduleData[$key]['CharterProgramSchedule']['day_dates']; //same location
+                            $samelocationsScheduleUUID[$publishmap['CharterProgramSchedule']['title']][] = $publishmap['CharterProgramSchedule']['UUID']; //same location
+                            $samelocationsDates[$publishmap['CharterProgramSchedule']['title']][] = $scheduleData[$key]['CharterProgramSchedule']['day_dates']; //same location
+                            $samemarkercommentcount[$publishmap['CharterProgramSchedule']['lattitude']] += $scheduleData[$key]['CharterProgramSchedule']['marker_msg_count']; //same location
                     
                         }
                 }
@@ -4855,10 +4864,25 @@ class ChartersController extends AppController {
                 
                 //echo "<pre>";print_r($scheduleData);
                 //echo "<pre>";print_r($markertotal); exit;
-                $first = reset($markertitle);
-                $last = end($markertitle);
+                $fromtoConditions = "charter_program_id = '$charterProgramId' AND is_deleted = 0";
+                $fromtoquery = "SELECT * FROM $yachtDbName.charter_program_schedules CharterProgramSchedule WHERE $fromtoConditions order by day_num";
+                $fromtoresult = $this->CharterGuest->query($fromtoquery);
+                $crusingModaltitle = array();
+                foreach($fromtoresult as $key => $title){
+                    $crusingModaltitle[$title['CharterProgramSchedule']['id']] = htmlspecialchars($title['CharterProgramSchedule']['title']);
+                }
+                //echo "<pre>";print_r($crusingModaltitle);  exit;
+                $first = reset($crusingModaltitle);
+                $last = end($crusingModaltitle);
                 $this->set('startloc', $first);
                 $this->set('endloc', $last);
+                $this->set('Datesarray', $Datesarray);
+
+                $this->set('samelocations', $samelocations);
+                $this->set('samelocationsScheduleUUID', $samelocationsScheduleUUID);
+                $this->set('samelocationsDates', $samelocationsDates);
+                $this->set('samemarkercommentcount', $samemarkercommentcount);
+
                 $this->set('charterProgramId', $charterProgramId);
                 $this->set('charter_company_id_val', $charterProgData[0]['CharterProgram']['charter_company_id']);
                 $this->set('charterProgData', $charterProgData[0]);
@@ -4951,7 +4975,8 @@ class ChartersController extends AppController {
             $session = $this->Session->read('charter_info');
             //$yachtDbName = $session['CharterGuest']['ydb_name'];
             $result = array();
-            if (isset($this->request->data['scheduleId']) && !empty($this->request->data['scheduleId']) && !empty($this->request->data['diffDays'])) {
+            if (isset($this->request->data['programId']) && !empty($this->request->data['programId']) && !empty($this->request->data['diffDays'])) {
+                $programId = $this->request->data['programId'];
                 $scheduleId = $this->request->data['scheduleId'];
                 $diffDays = $this->request->data['diffDays'];
                 if(isset($this->request->data['guesttype'])){
@@ -4959,10 +4984,19 @@ class ChartersController extends AppController {
                 }
 
                 $tablepId = $this->request->data['tablepId'];
+
+                $daytitle = $this->request->data['daytitle'];
+                $counttitle = $this->request->data['counttitle'];
+                $scheduleSameLocationUUID = $this->request->data['scheduleSameLocationUUID'];
+                $samelocationsDates = $this->request->data['samelocationsDates'];
+                $fromlocationcard = $this->request->data['from'];
+                //$selecteddatetext = $this->request->data['selecteddatetext'];
+
+
                 $popupHtml = '';
                 $this->loadModel('CharterGuest');
                 $this->loadModel('Yacht');
-                $chprgdata = $this->CharterGuest->find('first',array('conditions'=>array('CharterGuest.charter_program_id'=>$scheduleId)));
+                $chprgdata = $this->CharterGuest->find('first',array('conditions'=>array('CharterGuest.charter_program_id'=>$programId)));
                 $yacht_id = $chprgdata['CharterGuest']['yacht_id'];
                 $yachtCond = array('Yacht.id' => $yacht_id);
                 $Ydata = $this->Yacht->find('first', array('conditions' => $yachtCond));
@@ -4972,7 +5006,31 @@ class ChartersController extends AppController {
                         $this->loadModel("Fleetcompany");
                         $fleetcompanydetails = $this->Fleetcompany->find('first',array('conditions'=>array('id'=>$fleetcompanyid)));
                         $fleetSiteName = $fleetcompanydetails['Fleetcompany']['fleetname'];
-                $scheduleData = $this->CharterGuest->query("SELECT * FROM $yachtDbName.charter_program_schedules CharterProgramSchedule WHERE charter_program_id = '$scheduleId' AND id='$tablepId' AND is_deleted = 0 LIMIT 1");
+                        $schUUIDs  =  explode(",",$scheduleSameLocationUUID);
+                        $samelocationsDatesarr  =  explode(",",$samelocationsDates);
+                        //$samelocationsDatestext = $samelocationsDatesarr[0]; 
+                if($fromlocationcard == "locationcard"){ //clicking from marker or location card
+                    if($counttitle > 1){
+                        $scheduleId = $schUUIDs[0]; 
+                    }
+                }elseif($fromlocationcard == "daysselection"){ // selection from marker popup
+                    //$samelocationsDatestext = $selecteddatetext;
+                }
+                        
+                        
+                        $no_of_days_options = "";
+                        foreach($schUUIDs as $key => $uuid){
+                            $scheduleConditionschk = "UUID = '$uuid' AND is_deleted = 0";
+                            $scheduleDataGetNum = $this->CharterGuest->getCharterProgramScheduleData($yachtDbName, $scheduleConditionschk);
+                            $scheduleDataNum = $scheduleDataGetNum[0]['CharterProgramSchedule']['day_num'];
+                            if($scheduleId ==  $uuid){
+                                $no_of_days_options .= '<option value="'.$uuid.'" selected>Day '.$scheduleDataNum.'&nbsp;&nbsp;&nbsp;&nbsp;'.$samelocationsDatesarr[$key].'</option>';
+                            }else{
+                                $no_of_days_options .= '<option value="'.$uuid.'">Day '.$scheduleDataNum.'&nbsp;&nbsp;&nbsp;&nbsp;'.$samelocationsDatesarr[$key].'</option>';
+                            }
+                        }
+
+                $scheduleData = $this->CharterGuest->query("SELECT * FROM $yachtDbName.charter_program_schedules CharterProgramSchedule WHERE UUID = '$scheduleId' AND is_deleted = 0 LIMIT 1");
                 //echo "<pre>";print_r($scheduleData); exit;
                 $basefolder = $this->request->base;
                 if (count($scheduleData) != 0) {
@@ -5039,8 +5097,8 @@ class ChartersController extends AppController {
                     }else{
                             $displaynone = "display:block;";
                     }
-                    $popupHtml .= '<div class="mapPopup sp-mp-detailsrow sp-modal-600" data-schuuid="'.$scheduleData[0]['CharterProgramSchedule']['UUID'].'">
-                    <div class="sp-modal-hd"><h1>Day '.$dayNum.'&nbsp;&nbsp;&nbsp;&nbsp;<span class="day_dates"></span></h1></div>
+                    $popupHtml .= '<div class="mapPopup sp-mp-detailsrow sp-modal-600" data-schuuid="'.$scheduleId.'">
+                    <div class="sp-modal-hd"><div class="row"><div class="col-md-8"><select name="noofdayscard" class="form-control noofdayscard" style="width:60%;font-size: 17px !important;font-weight: bold;background:none !important;color:#000 !important;border:solid 1px #ddd !important;"></select></div></div></div>
                     <form id="scheduleFormEdit"><div class="inputContainerdiv">
                     <div class="sp-divrow">
                     <div class="sp-60-w">
@@ -5169,6 +5227,9 @@ class ChartersController extends AppController {
                     
                     $result['status'] = "success";
                     $result['popupHtml'] = $popupHtml;
+                    $result['no_of_days_options'] = $no_of_days_options;
+                    $result['fromlocationcard'] = $fromlocationcard;
+                    //echo "<pre>";print_r($result); exit;
                 }
                 
             }
@@ -5210,7 +5271,7 @@ class ChartersController extends AppController {
                         $this->loadModel("Fleetcompany");
                         $fleetcompanydetails = $this->Fleetcompany->find('first',array('conditions'=>array('id'=>$fleetcompanyid)));
                         $fleetSiteName = $fleetcompanydetails['Fleetcompany']['fleetname'];
-                $scheduleAllData = $this->CharterGuest->query("SELECT * FROM $yachtDbName.charter_program_schedules CharterProgramSchedule WHERE charter_program_id = '$scheduleId' AND is_deleted = 0");
+                $scheduleAllData = $this->CharterGuest->query("SELECT * FROM $yachtDbName.charter_program_schedules CharterProgramSchedule WHERE charter_program_id = '$scheduleId' AND is_deleted = 0 order by day_num");
                // echo "<pre>";print_r($scheduleData); exit;
                 $basefolder = $this->request->base;
                 if (count($scheduleAllData) != 0) {
@@ -6202,19 +6263,29 @@ function getIndividualmsgcountMarer() {
         $result = array();
         $session = $this->Session->read();
         $postData = $this->request->data;
-        $charterpgid = $postData['charterpgid'];
+        $schuuid = $postData['charterpgid'];
         $yachtId = $postData['yachtId'];
         $this->loadModel('Yacht');
         $yachtData = $this->Yacht->find("first", array('fields' => array('yfullName','ydb_name'), 'conditions' => array('id' => $yachtId))); 
         $yachtDbName = $yachtData['Yacht']['ydb_name'];
 
-        $mcount = $this->CharterGuest->getCharterMarkerCommentCount($yachtDbName,$charterpgid);
-        
+        $scheduleSameLocationUUID = explode(",",$postData['scheduleSameLocationUUID']);
+
+        if($scheduleSameLocationUUID > 1){
+            $lastschuuid = reset($scheduleSameLocationUUID);
+            foreach($scheduleSameLocationUUID as $schuuid){
+                $mcount += $this->CharterGuest->getCharterMarkerCommentCount($yachtDbName,$schuuid);
+            }
+        }else{
+                $mcount = $this->CharterGuest->getCharterMarkerCommentCount($yachtDbName,$schuuid);
+                $lastschuuid = $schuuid;
+        }
         //echo "<pre>";print_r($mcount);exit;
         
     }         
 
     $result['status'] = $mcount;
+    $result['schuuidtoupdateintooltip'] = $lastschuuid;
 
     echo json_encode($result);
     exit;
