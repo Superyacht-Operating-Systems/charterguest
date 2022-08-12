@@ -5114,9 +5114,9 @@ class ChartersController extends AppController {
                     </div>';
                     $popupHtml .= '<input type="hidden" name="schedule_id" value="'.$scheduleId.'"><input type="hidden" class="form-control" name="day_num" id="dayNum" value="'.$dayNum.'">';
                     $popupHtml .= '<input type="hidden" name="yacht_id" value="'.$yacht_id.'">';
-                    $popupHtml .= '<input type="hidden" name="markerNum" id="markerNum" value="'.$this->request->data['markerNum'].'">';
-                    $popupHtml .= '<input type="hidden" id="lattitude" value="'.$this->request->data['lattitude'].'">';
-                    $popupHtml .= '<input type="hidden" id="longitude" value="'.$this->request->data['longitude'].'">';
+                    // $popupHtml .= '<input type="hidden" name="markerNum" id="markerNum" value="'.$this->request->data['markerNum'].'">';
+                    // $popupHtml .= '<input type="hidden" id="lattitude" value="'.$this->request->data['lattitude'].'">';
+                    // $popupHtml .= '<input type="hidden" id="longitude" value="'.$this->request->data['longitude'].'">';
                     $popupHtml .= '<input type="hidden" id="charterprogramuuid" value="'.$scheduleData[0]['CharterProgramSchedule']['charter_program_id'].'">';
 
             //         $readonly = "readonly";
