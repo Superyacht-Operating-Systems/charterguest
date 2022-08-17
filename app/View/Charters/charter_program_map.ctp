@@ -1069,7 +1069,7 @@ span.sp-leftalign {
             <?php } } ?>
     
         </li>    
-        <li class="menu__item"> <a href="<?php echo $basefolder.$guestlink; ?>">Guest list</a></li>
+        <li class="menu__item"> <a href="<?php echo $basefolder.$guestlink; ?>">Guest List</a></li>
         <li class="menu__item" ><a>How To Video</a>
            <ul class="submenu">
                    <li class="menu__item" id="MenuHowToVideo"><a href="#">Preference Sheets</a></li>
