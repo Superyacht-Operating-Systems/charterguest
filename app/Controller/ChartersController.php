@@ -4393,13 +4393,13 @@ class ChartersController extends AppController {
         //        echo "<pre>";print_r($this->Session->read());exit;
                 Configure::write('debug',0);
                 $session = $this->Session->read('charter_info');
-                $yachtDbName = $yachtdb;
-                $charterProgramId = $prgUUID;
+              echo  $yachtDbName = $yachtdb;
+              echo  $charterProgramId = $prgUUID;
                 if (!empty($yachtDbName)) {
                    
                     $this->loadModel('CharterGuest');
                     $charterProgData = $this->CharterGuest->query("SELECT * FROM $yachtDbName.charter_programs CharterProgram WHERE UUID = '$charterProgramId' AND is_deleted = 0 LIMIT 1");
-                    
+                    echo "<pre>";print_r($charterProgData);exit;
                     if (count($charterProgData) != 0) {
                         $startDate = $charterProgData[0]['CharterProgram']['charter_from_date'];
                         $endDate = $charterProgData[0]['CharterProgram']['charter_to_date'];
