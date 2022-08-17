@@ -4442,6 +4442,7 @@ class ChartersController extends AppController {
                         $samelocationsScheduleUUID = array();
                         $samelocationsDates = array();
                         $samemarkercommentcount = array();
+                        $samedayrouteorder = array();
                         if(isset($scheduleData)){
                             foreach($scheduleData as $key => $publishmap){
                                     if($publishmap['CharterProgramSchedule']['publish_map'] == 1){
@@ -4452,7 +4453,7 @@ class ChartersController extends AppController {
                                     if($Datesarray[$publishmap['CharterProgramSchedule']['day_num']]){
                                         $scheduleData[$key]['CharterProgramSchedule']['day_dates'] = $Datesarray[$publishmap['CharterProgramSchedule']['day_num']];
                                     }
-        
+                                    $samedayrouteorder[$publishmap['CharterProgramSchedule']['title']] = $publishmap['CharterProgramSchedule']['day_num'];
                                    //$mcount = $this->getmsgnotifycountForMarker($publishmap['CharterProgramSchedule']['UUID']);
                                    $scheduleData[$key]['CharterProgramSchedule']['marker_msg_count'] = $this->CharterGuest->getCharterMarkerCommentCount($yachtDbName,$publishmap['CharterProgramSchedule']['UUID']);
         
@@ -4478,9 +4479,12 @@ class ChartersController extends AppController {
                         }
                         //echo "<pre>";print_r($markername); exit;
                         $Routeorderdata = array();
-                        if(isset($markername) && !empty($markername)){
-                            foreach($markername as $key => $value){
-                                $fetchData = $this->CharterGuest->query("SELECT * FROM $yachtDbName.charter_program_schedule_routes CharterProgramScheduleRoute WHERE charter_program_schedule_uuid = '$charterProgramId' AND is_deleted = 0  AND start_location= '$value'");
+                        if(isset($samedayrouteorder) && !empty($samedayrouteorder)){
+                            asort($samedayrouteorder);
+                            }
+                        if(isset($samedayrouteorder) && !empty($samedayrouteorder)){
+                            foreach($samedayrouteorder as $title => $value){
+                                $fetchData = $this->CharterGuest->query("SELECT * FROM $yachtDbName.charter_program_schedule_routes CharterProgramScheduleRoute WHERE charter_program_schedule_uuid = '$charterProgramId' AND is_deleted = 0  AND start_location= '$title'");
                                 //echo "<pre>";print_r($fetchData); exit;
                                 //$fetchData = $this->CharterProgramScheduleRoute->find('all', array('conditions' => array('charter_program_schedule_uuid' => $charterProgramId, 'is_deleted' => 0,'start_location'=>$value)));
                                 $Routeorderdata[] = $fetchData;
@@ -4514,7 +4518,7 @@ class ChartersController extends AppController {
                                     // $unit = "nmi";
                                    $distance = $RouteData[$key]['CharterProgramScheduleRoute']['distance'];
                                    if(isset($distance) && !empty($distance)){
-                                        $d_res = preg_replace("/[^0-9]/", "", $distance);
+                                    $d_res = floatval($distance);
                                    }
                                    $markerdistance[$RouteData[$key]['CharterProgramScheduleRoute']['start_location']][] = $d_res;
                                    $markertotal[$RouteData[$key]['CharterProgramScheduleRoute']['start_location']]['distance'] = $RouteData[$key]['CharterProgramScheduleRoute']['distance'];
@@ -4722,6 +4726,7 @@ class ChartersController extends AppController {
                 $samelocationsScheduleUUID = array();
                 $samelocationsDates = array();
                 $samemarkercommentcount = array();
+                $samedayrouteorder = array();
                 if(isset($scheduleData)){
                     foreach($scheduleData as $key => $publishmap){
                             if($publishmap['CharterProgramSchedule']['publish_map'] == 1){
@@ -4732,7 +4737,7 @@ class ChartersController extends AppController {
                             if($Datesarray[$publishmap['CharterProgramSchedule']['day_num']]){
                                 $scheduleData[$key]['CharterProgramSchedule']['day_dates'] = $Datesarray[$publishmap['CharterProgramSchedule']['day_num']];
                             }
-
+                            $samedayrouteorder[$publishmap['CharterProgramSchedule']['title']] = $publishmap['CharterProgramSchedule']['day_num'];
                            //$mcount = $this->getmsgnotifycountForMarker($publishmap['CharterProgramSchedule']['UUID']);
                            $scheduleData[$key]['CharterProgramSchedule']['marker_msg_count'] = $this->CharterGuest->getCharterMarkerCommentCount($yachtDbName,$publishmap['CharterProgramSchedule']['UUID']);
 
@@ -4758,9 +4763,12 @@ class ChartersController extends AppController {
                 }
                 //echo "<pre>";print_r($markername); exit;
                 $Routeorderdata = array();
-                if(isset($markername) && !empty($markername)){
-                    foreach($markername as $key => $value){
-                        $fetchData = $this->CharterGuest->query("SELECT * FROM $yachtDbName.charter_program_schedule_routes CharterProgramScheduleRoute WHERE charter_program_schedule_uuid = '$charterProgramId' AND is_deleted = 0  AND start_location= '$value'");
+                if(isset($samedayrouteorder) && !empty($samedayrouteorder)){
+                    asort($samedayrouteorder);
+                    }
+                if(isset($samedayrouteorder) && !empty($samedayrouteorder)){
+                    foreach($samedayrouteorder as $title => $value){
+                        $fetchData = $this->CharterGuest->query("SELECT * FROM $yachtDbName.charter_program_schedule_routes CharterProgramScheduleRoute WHERE charter_program_schedule_uuid = '$charterProgramId' AND is_deleted = 0  AND start_location= '$title'");
                         //echo "<pre>";print_r($fetchData); exit;
                         //$fetchData = $this->CharterProgramScheduleRoute->find('all', array('conditions' => array('charter_program_schedule_uuid' => $charterProgramId, 'is_deleted' => 0,'start_location'=>$value)));
                         $Routeorderdata[] = $fetchData;
@@ -4794,7 +4802,7 @@ class ChartersController extends AppController {
                             // $unit = "nmi";
                            $distance = $RouteData[$key]['CharterProgramScheduleRoute']['distance'];
                            if(isset($distance) && !empty($distance)){
-                                $d_res = preg_replace("/[^0-9]/", "", $distance);
+                            $d_res = floatval($distance);
                            }
                            $markerdistance[$RouteData[$key]['CharterProgramScheduleRoute']['start_location']][] = $d_res;
                            $markertotal[$RouteData[$key]['CharterProgramScheduleRoute']['start_location']]['distance'] = $RouteData[$key]['CharterProgramScheduleRoute']['distance'];
@@ -5076,7 +5084,7 @@ class ChartersController extends AppController {
                     }
                     if(isset($attachment) && !empty($attachment)){
                         $noteimg = "style='display:block;'";
-                        if($yname == "yacht"){
+                        if($yname == "yacht" || $yname == "betayacht"){
                             $targetFullPath = BASE_URL.'/SOS/app/webroot/betayacht/app/webroot/img/charter_program_files/itinerary_photos/'.$attachment;
                         }else{
                             $targetFullPath = BASE_URL.'/'.$yname."/app/webroot/img/charter_program_files/itinerary_photos/'.$attachment";
@@ -5195,7 +5203,7 @@ class ChartersController extends AppController {
                             $activityattachment = $activity['CharterProgramScheduleActivity']['attachment'];
                             if(isset($activityattachment) && !empty($activityattachment)){
                                 $activityattachmentimg = "style='display:block;'";
-                                if($yname == "yacht"){
+                                if($yname == "yacht" || $yname == "betayacht"){
                                     $targetFullPath = BASE_URL.'/SOS/app/webroot/betayacht/app/webroot/img/charter_program_files/itinerary_photos/'.$activityattachment;
                                 }else{
                                         $targetFullPath = BASE_URL.'/'.$yname."/app/webroot/img/charter_program_files/itinerary_photos/'.$activityattachment";
@@ -5319,7 +5327,7 @@ class ChartersController extends AppController {
                         }
                         if(isset($attachment) && !empty($attachment)){
                             $noteimg = "style='display:block;'";
-                            if($yname == "yacht"){
+                            if($yname == "yacht" || $yname == "betayacht"){
                                 $targetFullPath = BASE_URL.'/SOS/app/webroot/betayacht/app/webroot/img/charter_program_files/itinerary_photos/'.$attachment;
                             }else{
                                 $targetFullPath = BASE_URL.'/'.$yname."/app/webroot/img/charter_program_files/itinerary_photos/'.$attachment";
