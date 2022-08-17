@@ -4438,6 +4438,10 @@ class ChartersController extends AppController {
                         //echo "<pre>";print_r($scheduleData); exit;
                         $markertitle = array();
                         $markername = array();
+                        $samelocations = array();
+                        $samelocationsScheduleUUID = array();
+                        $samelocationsDates = array();
+                        $samemarkercommentcount = array();
                         if(isset($scheduleData)){
                             foreach($scheduleData as $key => $publishmap){
                                     if($publishmap['CharterProgramSchedule']['publish_map'] == 1){
@@ -4454,6 +4458,11 @@ class ChartersController extends AppController {
         
                                    $markertitle[$publishmap['CharterProgramSchedule']['id']] = $publishmap['CharterProgramSchedule']['title'];
                                    $markername[$publishmap['CharterProgramSchedule']['title']] = $publishmap['CharterProgramSchedule']['title'];
+
+                                    $samelocations[$publishmap['CharterProgramSchedule']['lattitude']][] = "Day ".$scheduleData[$key]['CharterProgramSchedule']['day_num']."&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;".$scheduleData[$key]['CharterProgramSchedule']['day_dates']; //same location
+                                    $samelocationsScheduleUUID[$publishmap['CharterProgramSchedule']['title']][] = $publishmap['CharterProgramSchedule']['UUID']; //same location
+                                    $samelocationsDates[$publishmap['CharterProgramSchedule']['title']][] = $scheduleData[$key]['CharterProgramSchedule']['day_dates']; //same location
+                                    $samemarkercommentcount[$publishmap['CharterProgramSchedule']['lattitude']] += $scheduleData[$key]['CharterProgramSchedule']['marker_msg_count']; //same location
                             
                                 }
                         }
@@ -4591,10 +4600,26 @@ class ChartersController extends AppController {
                         }
                         //echo "<pre>";print_r($scheduleData);
                         //echo "<pre>";print_r($markertitle); exit;
-                        $first = reset($markertitle);
-                        $last = end($markertitle);
+                        $fromtoConditions = "charter_program_id = '$charterProgramId' AND is_deleted = 0";
+                        $fromtoquery = "SELECT * FROM $yachtDbName.charter_program_schedules CharterProgramSchedule WHERE $fromtoConditions order by day_num";
+                        $fromtoresult = $this->CharterGuest->query($fromtoquery);
+                        $crusingModaltitle = array();
+                        foreach($fromtoresult as $key => $title){
+                            $crusingModaltitle[$title['CharterProgramSchedule']['id']] = htmlspecialchars($title['CharterProgramSchedule']['title']);
+                        }
+                        //echo "<pre>";print_r($crusingModaltitle);  exit;
+                        $first = reset($crusingModaltitle);
+                        $last = end($crusingModaltitle);
+                      
                         $this->set('startloc', $first);
                         $this->set('endloc', $last);
+                        $this->set('Datesarray', $Datesarray);
+    
+                        $this->set('samelocations', $samelocations);
+                        $this->set('samelocationsScheduleUUID', $samelocationsScheduleUUID);
+                        $this->set('samelocationsDates', $samelocationsDates);
+                        $this->set('samemarkercommentcount', $samemarkercommentcount);
+
                         $this->set('charterProgramId', $charterProgramId);
                         $this->set('charterProgData', $charterProgData[0]);
                         $this->set('diffDays', $diffDays);
@@ -4609,6 +4634,7 @@ class ChartersController extends AppController {
                         $this->set('markertotal', $markertotal);
                         $this->set('yacht_id_fromyachtDB', $yacht_id_fromyachtDB);
                         
+                        $this->set('guesttype', "guest");
                         $this->set('cruising_speed', $cruising_speed);
                         $this->set('cruising_fuel', $cruising_fuel);
                         if(isset($cruising_unit) && !empty($cruising_unit)){
@@ -4972,6 +4998,7 @@ class ChartersController extends AppController {
     function editCharterProgramSchedules() {
         
         if($this->request->is('ajax')){
+            //echo "<pre>";print_r($this->request->data); exit;
             $session = $this->Session->read('charter_info');
             //$yachtDbName = $session['CharterGuest']['ydb_name'];
             $result = array();

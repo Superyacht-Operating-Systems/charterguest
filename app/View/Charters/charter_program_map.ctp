@@ -1770,7 +1770,15 @@ $(document).ready(function() { //alert();
             //$('.fancybox').fancybox();
 
             
+            //When page opens do not display location cards until 2 seconds after page loads. 
+            $(".leaflet-tooltip").css("opacity", "0");  
+            //$('.fancybox').fancybox();
 
+            setTimeout(function(){
+                $(".leaflet-tooltip").css("opacity", "1");  
+            },2000);
+
+            //When page opens do not display location cards until 2 seconds after page loads. 
 
     $(".leaflet-control-attribution ").html(function(i, html) {
         return html.replace("|", "");
