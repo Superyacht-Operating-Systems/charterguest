@@ -663,7 +663,7 @@ color: #000;
 }
 
 .menu .submenu{
-    right:-162px !important;
+    right:-170px !important;
 }
 
 /* .menu .submenu .menu__item {
