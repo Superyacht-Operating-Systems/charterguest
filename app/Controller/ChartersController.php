@@ -5058,10 +5058,15 @@ class ChartersController extends AppController {
                             $scheduleConditionschk = "UUID = '$uuid' AND is_deleted = 0";
                             $scheduleDataGetNum = $this->CharterGuest->getCharterProgramScheduleData($yachtDbName, $scheduleConditionschk);
                             $scheduleDataNum = $scheduleDataGetNum[0]['CharterProgramSchedule']['day_num'];
-                            if($scheduleId ==  $uuid){
-                                $no_of_days_options .= '<option value="'.$uuid.'" selected>Day '.$scheduleDataNum.'&nbsp;&nbsp;&nbsp;&nbsp;'.$samelocationsDatesarr[$key].'</option>';
+                            if($scheduleDataNum > 9){
+                                $space = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
                             }else{
-                                $no_of_days_options .= '<option value="'.$uuid.'">Day '.$scheduleDataNum.'&nbsp;&nbsp;&nbsp;&nbsp;'.$samelocationsDatesarr[$key].'</option>';
+                                $space = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+                            }
+                            if($scheduleId ==  $uuid){
+                                $no_of_days_options .= '<option value="'.$uuid.'" selected>Day '.$scheduleDataNum.$space.$samelocationsDatesarr[$key].'</option>';
+                            }else{
+                                $no_of_days_options .= '<option value="'.$uuid.'">Day '.$scheduleDataNum.$space.$samelocationsDatesarr[$key].'</option>';
                             }
                         }
 
