@@ -1101,16 +1101,18 @@ $('.menu > .menu__item').hover(function(){
 
 <script>
 $(".ch-card")
-  .slice(0, 10) // select the first 2
+  .slice(0, 12) // select the first 12
   .show();
 if ($(".ch-card:hidden").length != 0) {
   $("#loadMore").show();
+}else {
+    $("#loadMore").fadeOut("slow");
 }
 
 $("#loadMore").on("click", function(e) {
   e.preventDefault();
   $(".ch-card:hidden")
-    .slice(0, 10) // select next hidden 2 & show them
+    .slice(0, 12) // select next hidden 12 & show them
     .slideDown();
   if ($(".ch-card:hidden").length == 0) { // check if any hidden divs still exist
     $("#loadMore").fadeOut("slow");
