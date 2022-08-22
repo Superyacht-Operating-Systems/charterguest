@@ -915,7 +915,7 @@ span.sp-rightalign {
 .w-20 {
 position: absolute;
     left: 0;
-    margin-top: -24px;
+    margin-top: 0px;
     right: 0;
     width: 100%;
     white-space: nowrap;
