@@ -194,16 +194,16 @@ class ChartersController extends AppController {
                             $this->Session->write("fleetLogoUrl", $fleetLogoUrl);
                         }
                         
-                        $yachtDBData = $this->Yacht->getYachtData('yacht');
-                        $image = $yachtDBData[0]['yachts']['cg_background_image'];
-                        $pSheetsColor = $yachtDBData[0]['yachts']['psheets_color'];
-                        if($image){
-                            $cgBackgroundImage = BASE_URL.'/SOS/app/webroot/betayacht/app/webroot/img/charter_program_files/'.$image;
-                        }else{
-                            $cgBackgroundImage = "https://totalsuperyacht.com:8080/charterguest/css/admin/images/full-charter.png";
-                        }
-                        $this->Session->write("cgBackgroundImage", $cgBackgroundImage);
-                        $this->Session->write("pSheetsColor", $pSheetsColor);
+                        // $yachtDBData = $this->Yacht->getYachtData('yacht');
+                        // $image = $yachtDBData[0]['yachts']['cg_background_image'];
+                        // $pSheetsColor = $yachtDBData[0]['yachts']['psheets_color'];
+                        // if($image){
+                        //     $cgBackgroundImage = BASE_URL.'/SOS/app/webroot/betayacht/app/webroot/img/charter_program_files/'.$image;
+                        // }else{
+                        //     $cgBackgroundImage = "https://totalsuperyacht.com:8080/charterguest/css/admin/images/full-charter.png";
+                        // }
+                        // $this->Session->write("cgBackgroundImage", $cgBackgroundImage);
+                        // $this->Session->write("pSheetsColor", $pSheetsColor);
                         
                         // Check whether the Password is already created
                         $passwordExists = $this->CharterGuest->find('first', array('conditions' => array('id' => $charterData['CharterGuest']['id'], 'password IS NOT NULL', 'password != ""')));
@@ -833,7 +833,8 @@ class ChartersController extends AppController {
         $this->loadModel('CharterGuest');
         $this->loadModel('Yacht');
         $this->loadModel('CharterGuestAssociate');
-        
+        $this->loadModel('CharterGuestPersonalDetail');
+       
         // When main Head charterer opens other guest(if Head charterer checked) and Update the Preference sheets
         if (isset($this->request->query['assocId']) && !empty($this->request->query['assocId'])) {
             $charterAssocId = base64_decode($this->request->query['assocId']);
@@ -857,6 +858,15 @@ class ChartersController extends AppController {
             $this->set("mapcharterprogramid", $guestAssocData['CharterGuestAssociate']['charter_program_id']);
             $this->set("mapydb_name", $mapydb_name);
 
+            $deletedPersoanlDetail = $this->CharterGuestPersonalDetail->find('first', array('conditions' => array('guest_lists_UUID' => $charterGuestAssociateUUID, 'is_deleted'=>1)));
+
+            if(isset($deletedPersoanlDetail) && !empty($deletedPersoanlDetail)){
+                $deletedPersoanlDetail['CharterGuestPersonalDetail']['dob'] = (!empty($deletedPersoanlDetail['CharterGuestPersonalDetail']['dob']) && $deletedPersoanlDetail['CharterGuestPersonalDetail']['dob'] != '0000-00-00') ? date_format(date_create($deletedPersoanlDetail['CharterGuestPersonalDetail']['dob']), 'd M Y') : '';
+                $deleteddob = $deletedPersoanlDetail['CharterGuestPersonalDetail']['dob'];
+                $deletedpob = $deletedPersoanlDetail['CharterGuestPersonalDetail']['pob'];
+                $this->set("deleteddob", $deleteddob);
+                $this->set("deletedpob", $deletedpob);
+            }
             $this->set("defaultFirstName", $charterGuestAssociatefirst_name);
             $this->set("defaultLastName", $charterGuestAssociatelast_name);
 
@@ -885,6 +895,16 @@ class ChartersController extends AppController {
                 $charterGuestAssociateUUID = $chedkAss['CharterGuestAssociate']['UUID'];
                 $charterGuestAssociatefirst_name = $chedkAss['CharterGuestAssociate']['first_name'];
                 $charterGuestAssociatelast_name = $chedkAss['CharterGuestAssociate']['last_name'];
+
+                $deletedPersoanlDetail = $this->CharterGuestPersonalDetail->find('first', array('conditions' => array('guest_lists_UUID' => $charterGuestAssociateUUID, 'is_deleted'=>1)));
+
+                if(isset($deletedPersoanlDetail) && !empty($deletedPersoanlDetail)){
+                    $deletedPersoanlDetail['CharterGuestPersonalDetail']['dob'] = (!empty($deletedPersoanlDetail['CharterGuestPersonalDetail']['dob']) && $deletedPersoanlDetail['CharterGuestPersonalDetail']['dob'] != '0000-00-00') ? date_format(date_create($deletedPersoanlDetail['CharterGuestPersonalDetail']['dob']), 'd M Y') : '';
+                    $deleteddob = $deletedPersoanlDetail['CharterGuestPersonalDetail']['dob'];
+                    $deletedpob = $deletedPersoanlDetail['CharterGuestPersonalDetail']['pob'];
+                    $this->set("deleteddob", $deleteddob);
+                    $this->set("deletedpob", $deletedpob);
+                }
 
                 $this->set("defaultFirstName", $charterGuestAssociatefirst_name);
                 $this->set("defaultLastName", $charterGuestAssociatelast_name);
@@ -923,9 +943,20 @@ class ChartersController extends AppController {
         if (isset($this->request->query['CharterGuestId']) && !empty($this->request->query['CharterGuestId'])) {
            $charterGuestId = base64_decode($this->request->query['CharterGuestId']);
             $guestAssocData = $this->CharterGuest->find('first', array('conditions' => array('id' => $charterGuestId)));
-
+            $charterGuestAssociateusers_UUID_val = $guestAssocData['CharterGuest']['users_UUID'];
             $charterGuestAssociatefirst_name = $guestAssocData['CharterGuest']['first_name'];
             $charterGuestAssociatelast_name = $guestAssocData['CharterGuest']['last_name'];
+
+
+            $deletedPersoanlDetail = $this->CharterGuestPersonalDetail->find('first', array('conditions' => array('guest_lists_UUID' => $charterGuestAssociateusers_UUID_val, 'is_deleted'=>1)));
+
+            if(isset($deletedPersoanlDetail) && !empty($deletedPersoanlDetail)){
+                $deletedPersoanlDetail['CharterGuestPersonalDetail']['dob'] = (!empty($deletedPersoanlDetail['CharterGuestPersonalDetail']['dob']) && $deletedPersoanlDetail['CharterGuestPersonalDetail']['dob'] != '0000-00-00') ? date_format(date_create($deletedPersoanlDetail['CharterGuestPersonalDetail']['dob']), 'd M Y') : '';
+                $deleteddob = $deletedPersoanlDetail['CharterGuestPersonalDetail']['dob'];
+                $deletedpob = $deletedPersoanlDetail['CharterGuestPersonalDetail']['pob'];
+                $this->set("deleteddob", $deleteddob);
+                $this->set("deletedpob", $deletedpob);
+            }
 
             $this->set("defaultFirstName", $charterGuestAssociatefirst_name);
             $this->set("defaultLastName", $charterGuestAssociatelast_name);
@@ -2515,12 +2546,20 @@ class ChartersController extends AppController {
                 // Fetch the existing Wine Preferences
                 $GLData = $this->GuestList->find('first', array('conditions' => $cConditions));
 
-                if($GLData['GuestList']['type'] == 'Guest'){
+                $ownerprefenceID = $this->Session->read('ownerprefenceID');
+                $ownerprefenceUUID = $this->Session->read('ownerprefenceUUID');
+
+                $selectedCharterProgramUUID = $this->Session->read('selectedCharterProgramUUID');
+
+                $assocprefenceID = $this->Session->read('assocprefenceID');
+                $assocprefenceUUID = $this->Session->read('assocprefenceUUID');
+
+                if(isset($assocprefenceID) && !empty($assocprefenceID)){
                     $existdata = $this->CharterGuestAssociate->find('first',array('conditions'=>array('CharterGuestAssociate.UUID'=>$guuid)));
 
                     $openButtonLink = "/charters/preference?assocId=". base64_encode($assid); 
                     $result['redirectUrl'] = $openButtonLink; 
-                }else{
+                }else if(isset($ownerprefenceID) && !empty($ownerprefenceID)){
 
                     $CharterGuestexistdata = $this->CharterGuest->find('first',array('conditions'=>array('CharterGuest.users_UUID'=>$guuid)));
                     if(isset($CharterGuestexistdata)){

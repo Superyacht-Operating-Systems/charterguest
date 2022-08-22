@@ -31,6 +31,9 @@
 
             //echo "<pre>"; print_r($this->Session->read()); 
     //exit;
+
+    $iti_guestListUUID_beforeleave = $this->Session->read('guestListUUID');
+ $iti_selectedCharterProgramUUID_beforeleave = $this->Session->read('selectedCharterProgramUUID'); 
 ?>
 
 <?php 
@@ -179,6 +182,14 @@ body .menu .submenu .menu__item a {
     width: 160px !important;
     
 }
+
+@media screen and (max-width:375px)  { /* smartphones, iPhone, portrait 480x320 phones */ 
+    .tt-menu{
+        position:initial !important;
+    }
+}
+
+
 </style>
 
 <?php
@@ -403,16 +414,27 @@ body .menu .submenu .menu__item a {
 
 
 <?php 
-// if(isset($defaultFirstName)){
-// $defaultFirstName = $defaultFirstName;
-// }else{
-//     $defaultFirstName = "";  
-// } 
-// if(isset($defaultLastName)){
-//     $defaultLastName = $defaultLastName;
-//     }else{
-//         $defaultLastName = "";  
-//     }
+if(isset($defaultFirstName) && !empty($defaultFirstName)){
+$defaultFirstName = $defaultFirstName;
+}else{
+    $defaultFirstName = "";  
+} 
+if(isset($defaultLastName) && !empty($defaultLastName)){
+    $defaultLastName = $defaultLastName;
+    }else{
+        $defaultLastName = "";  
+    }
+
+    if(isset($deleteddob) && !empty($deleteddob)){
+        $deleteddob = $deleteddob;
+    }else{
+        $deleteddob = "";  
+    } 
+    if(isset($deletedpob) && !empty($deletedpob)){
+        $deletedpob = $deletedpob;
+    }else{
+            $deletedpob = "";  
+    }
 ?>
 <div id="pageleavemodal" class="modal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" >
   <div class="modal-dialog" role="document">
@@ -433,10 +455,37 @@ body .menu .submenu .menu__item a {
     </div>
   </div>
 </div>
+
+
+<div id="successPreferenceAlertBeforeLeave" class="modal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" >
+  <div class="modal-dialog" role="document">
+
+    <div class="modal-content mc-bord" id="successUsePreferenceBeforeLeave">
+      <div class="modal-body">
+      <div class="modalmsg" style="margin-left: 30px;"> 
+        <p>Would you like to allow your preferences to</p>
+        <p>be provided to future charter programs</p>
+        <p>without you having to submit them again?</p>
+      </div>
+        <div class="text-center">
+          <input class="btn btn-success" style="background-color: #5cb85c;
+    border-color: #4cae4c;" type="button" name="yes_please" id="yes_pleaseBeforeLeave" value="Yes please" />
+          <input class="btn btn-danger" type="button" name="no_thanks" id="no_thanksBeforeLeave" value="No thanks" />
+        </div>   
+        <div class="modalmsg" style="margin-left: 30px;"> 
+        <p>You can login to Charter Guest and make</p>
+        <p>changes to your preferences at any time.</p>
+        </div> 
+      </div>
+    </div>
+
+  </div>
+</div>
+
 <!-- Tab content -->
     <div class="tab-content container tab-md-row-container">    
         <!-- Personal details -->
-        <?php echo $this->element('personal_details', array('session' => $session, 'sessionAssoc' => $sessionAssoc,'setdefaultFirstName'=>$defaultFirstName,'setdefaultLastName'=>$defaultLastName)); ?>
+        <?php echo $this->element('personal_details', array('session' => $session, 'sessionAssoc' => $sessionAssoc,'setdefaultFirstName'=>$defaultFirstName,'setdefaultLastName'=>$defaultLastName,'deleteddob'=>$deleteddob,'deletedpob'=>$deletedpob)); ?>
         
         <!-- Meal Preferences -->
         <?php echo $this->element('meal_preferences'); ?>
@@ -544,7 +593,9 @@ $(document).on("click","#pageleave_submit",function(e) {
                 success: function(data) {
                     $("#hideloader").hide();
                     // Ajax call completed successfully
-                    window.location.href = urltogo;
+                    //window.location.href = urltogo;
+                    $("#successPreferenceAlertBeforeLeave").modal("show");
+                    
                 },
                 error: function(data) {
                     $("#hideloader").hide();
@@ -557,6 +608,46 @@ $(document).on("click","#pageleave_submit",function(e) {
     //}
         //console.log(ref_this);
 });
+
+
+$(document).on("click", "#yes_pleaseBeforeLeave", function(e) {     //alert();
+  
+  var data = {
+      "guestListUUID": "<?php echo $iti_guestListUUID_beforeleave; ?>",
+      "selectedCharterProgramUUID": "<?php echo $iti_selectedCharterProgramUUID_beforeleave; ?>"
+  };
+  
+  
+      $("#hideloader").show();
+      $.ajax({
+          type: "POST",
+          url: BASE_FOLDER+'/charters/saveusesubmittedpreferences',
+          dataType: 'json',
+          data: data,
+          success:function(result) {
+              $("#hideloader").hide();
+              if (result.status == 'success') {
+                window.location.href = urltogo;
+                return false;
+              }else if(result.status == 'fail'){
+                window.location.href = urltogo;
+                return false;
+              }   
+          },
+          error: function(jqxhr) { 
+              $("#hideloader").hide();
+          }
+      });
+      return false;
+});
+
+$(document).on("click", "#no_thanksBeforeLeave", function(e) {
+
+    window.location.href = urltogo;
+          return false;
+
+});
+
 
     
 // Submit Guests with mail sending
@@ -812,5 +903,15 @@ if ('scrollRestoration' in history) {
 window.scrollTo(0,0);
      });  
 
+
+//      var BASE_FOLDER = "<?php echo $baseFolder; ?>";
+// $(document).ready(function (e) {
+//     <?php //if (isset($showPopup)) { ?>
+//             //$("#usesubmittedpreferences").modal('show');
+//             $("#successPreferenceAlert").modal("show");
+//             $("#successUsePreference").show();
+//             $("#successbody").hide();
+//     <?php //} ?> 
+// });    
 
 </script> 

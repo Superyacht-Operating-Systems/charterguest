@@ -150,6 +150,8 @@ $sessionData = $this->Session->read();
         // } else { //echo "AAAAAA";
             $defaultFirstName = $setdefaultFirstName;
             $defaultLastName = $setdefaultLastName;
+            $deleteddob = $deleteddob;
+            $deletedpob = $deletedpob;
         //}
     }
     
@@ -662,7 +664,7 @@ and (max-device-width : 667px) {
           <label class="pdd-none txt-right">Date of Birth</label>
         </div>
         <div class="col-xs-7 col-md-5 form-group col-sm-7 mob-w-70">
-          <?php echo $this->Form->input("dob",array("label"=>false,'class'=>'form-control dobDatePicker nonEditable','type' => 'text')); ?>
+          <?php echo $this->Form->input("dob",array("label"=>false,'class'=>'form-control dobDatePicker nonEditable','type' => 'text','default'=>$deleteddob)); ?>
         </div>
       </div></div>
       <div class="clearfix"></div>
@@ -672,7 +674,7 @@ and (max-device-width : 667px) {
           <label class="pdd-none txt-right">Place of Birth</label>
         </div>
         <div class="col-xs-7 col-md-5 form-group col-sm-7 mob-w-70">
-           <?php echo $this->Form->input("pob",array("label"=>false,'class'=>'form-control','type' => 'text')); ?>
+           <?php echo $this->Form->input("pob",array("label"=>false,'class'=>'form-control','type' => 'text','default'=>$deletedpob)); ?>
         </div>
       </div></div>
       <div class="clearfix"></div>
