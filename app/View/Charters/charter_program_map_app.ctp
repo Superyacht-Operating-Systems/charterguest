@@ -253,16 +253,16 @@ background: none!important;
     </style>
 
 <?php
-echo $this->Html->script('leaflet/leaflet'); 
-echo $this->Html->css('leaflet/dist/leaflet');
+// echo $this->Html->script('leaflet/leaflet'); 
+// echo $this->Html->css('leaflet/dist/leaflet');
 
-echo $this->Html->script('leaflet/route'); 
+// echo $this->Html->script('leaflet/route'); 
  
- echo $this->Html->script('leaflet/leaflet-geoman.min'); 
- echo $this->Html->css('leaflet/leaflet-geoman');
+//  echo $this->Html->script('leaflet/leaflet-geoman.min'); 
+//  echo $this->Html->css('leaflet/leaflet-geoman');
 
- echo $this->Html->css('leaflet/leaflet.draw.css');
- echo $this->Html->script('leaflet/leaflet.draw.js'); 
+//  echo $this->Html->css('leaflet/leaflet.draw.css');
+//  echo $this->Html->script('leaflet/leaflet.draw.js'); 
 
 ?>
 <style>

@@ -189,6 +189,24 @@ body .menu .submenu .menu__item a {
     }
 }
 
+@media screen and (max-width:411px)  { /* smartphones, iPhone, portrait 480x320 phones */ 
+    .tt-menu{
+        position:initial !important;
+    }
+}
+
+@media screen and (max-width:414px)  { /* smartphones, iPhone, portrait 480x320 phones */ 
+    .tt-menu{
+        position:initial !important;
+    }
+}
+
+@media screen and (max-width:540px)  { /* smartphones, iPhone, portrait 480x320 phones */ 
+    .tt-menu{
+        position:initial !important;
+    }
+}
+
 
 </style>
 
