@@ -1205,7 +1205,7 @@ $("#saveBtn").on("click", function(e) {
 
 </script>
 
-
+<?php //print_r($buttoncls); ?>
 <script type="text/javascript">
     $(document).ready(function() {
   $('.owl-carousel').owlCarousel({
@@ -1245,11 +1245,45 @@ $("#saveBtn").on("click", function(e) {
     //         touchDrag:false
     //     },
     // }
-})
-
-
- 
 });
+
+
+// $(".owl-dots:nth-child(6)").addClass("myactive"); 
+// //$('.owl-carousel').trigger('to.owl.carousel', 6 );
+
+
+var dotclassarr = [];
+        $('.owl-carousel .owl-stage .owl-item').each(function(index){
+            console.log(index);
+            var dotclass = $(this).find('.owlbtnflag').attr('data-owldotclass');
+            
+            dotclassarr.push(dotclass);
+            
+        });
+
+       // console.log(dotclassarr);
+checkClasses();
+$('.owl-carousel').on('translated.owl.carousel', function(event) {
+        checkClasses();
+    });
+
+    function checkClasses(){
+        var total = $('.owl-carousel .owl-dots .owl-dot').length;
+        $('.owl-carousel .owl-dots .owl-dot').each(function(index){
+            //console.log(index);
+           
+            if(dotclassarr[index] != "undefined"){
+                $(this).css({"background": dotclassarr[index]});
+            }
+            
+        });
+    }
+
+
+
+
+
+ });
 
 </script>
 

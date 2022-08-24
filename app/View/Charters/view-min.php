@@ -68,14 +68,14 @@
                                                  $openButtonLink = "/charters/preference?CharterGuestId=". base64_encode($charterData['CharterGuest']['id']);
 
                                                 // as per the client showing the btn in warning color @07 Aug 2020
-                                                
+                                                $owldotclass = "btn-open1";
                                                 $adminopenbutColor = "btn-open1 btn-warning btn-warning-bg";
                                                 if (isset($charterData['CharterGuest']['is_psheets_done']) && $charterData['CharterGuest']['is_psheets_done'] == 1) {
                                                     $adminopenbutColor = "btn-open";
                                                     $textPreferenceSheet = "OPEN";
                                                     $style = "";
                                                     $waitingclass = "";
-                                                    
+                                                    $owldotclass = "btn-open";
                                                 }else{
                                                     $textPreferenceSheet = "WAITING";
                                                     $style = "style='padding:0;'";
@@ -88,7 +88,7 @@
                                                  <button type="button" data-charterHeadId="<?php echo $charterData['CharterGuest']['id']; ?>" data-charterAssocId="" class="btn btn-eml-send1 sent-btnr emailSentClass <?php echo ($charterData['CharterGuest']['is_email_sent']) ? "" : "displayNone"; ?>"><a></a></button>
                                           <a href="#">
                                              
-                                              <button type="button" <?php echo $style; ?> class="btn <?php echo $waitingclass; ?> <?php echo $adminopenbutColor; ?> existingCheckFunction" data-guestype="owner" data-associd ="<?php echo $charterData['CharterGuest']['id']; ?>"><?php echo $textPreferenceSheet; ?></button>
+                                              <button type="button" <?php echo $style; ?> class="owlbtnflag btn <?php echo $waitingclass; ?> <?php echo $adminopenbutColor; ?> existingCheckFunction" data-guestype="owner" data-owldotclass="<?php echo $owldotclass; ?>" data-associd ="<?php echo $charterData['CharterGuest']['id']; ?>"><?php echo $textPreferenceSheet; ?></button>
                                           </a>
                                           
          
@@ -98,6 +98,7 @@
                             <?php 
                             $i = 2;
                             //echo "<pre>"; print_r($charterAssocData); exit;
+                            $buttonclassarray = array();
                             foreach ($charterAssocData as $charterAssoc) { ?>  
                                 <!-- Existing Guest associates -->
                                 <div class="charterRow">
@@ -120,6 +121,8 @@
                                             $style = "";
                                             $waitingclass = "";
                                             $openPreferenceSheetClass = "existingCheckFunction";
+                                            $owlbtnflag = "owlbtnflag";
+                                            $buttoncls = "#1eabfc";
                                         }else if($charterAssoc['CharterGuestAssociate']['is_head_charterer'] == 1){
                                             
                                             $yesClass = "gry-btn";
@@ -128,12 +131,15 @@
                                             if (isset($charterAssoc['CharterGuestAssociate']['is_psheets_done']) && $charterAssoc['CharterGuestAssociate']['is_psheets_done'] == 0) {
                                                 $textPreferenceSheet = "WAITING";
                                                 $openPreferenceSheetClass = "";
+                                                
                                             }else{
                                                 $textPreferenceSheet = "COMPLETE";
                                                 $openPreferenceSheetClass = "existingCheckFunction";
                                             }
+                                            $owlbtnflag = "owlbtnflag";
                                             $style = "padding:0;";
                                             $waitingclass = "ch-waiting-btn";
+                                            $buttoncls = "#ffaf0f";
                                         }else{
                                             $yesClass = "gry-btn";
                                             $noClass = "gry-btn";
@@ -184,6 +190,7 @@
                                                // $openBtnColor = " btn-open btn-default";
                                                 $openBtnColor = "btn-open1 btn-warning hideshow";
                                                 $openBtnDisable = "disabled";
+                                                
                                                //echo $charterAssoc['CharterGuestAssociate']['is_psheets_done'];
                                                 // Enabling the button and will be editable pages If Head Charterer is checked
                                                 if (isset($charterAssoc['CharterGuestAssociate']['is_head_charterer']) && $charterAssoc['CharterGuestAssociate']['is_head_charterer'] !=1) {
@@ -192,11 +199,13 @@
                                                     // as per client btn color shoud be yellow when it created new user. 
                                                     $openBtnColor = "btn-open1 btn-warning hideshow";
                                                     $openBtnDisable = "";
+                                                    
                                                 }
                                                 if (isset($charterAssoc['CharterGuestAssociate']['is_email_sent']) && $charterAssoc['CharterGuestAssociate']['is_email_sent'] ==1) {
                                                     $openButtonLink = "/charters/preference?assocId=". base64_encode($charterAssoc['CharterGuestAssociate']['id']);
                                                     $openBtnDisable = "";
                                                     $openBtnColor = "btn-open1 btn-warning hideshow";
+                                                    
                                                 }
                                                  // Enabling the button and will be read-only pages If P-sheets done
                                                 if (isset($charterAssoc['CharterGuestAssociate']['is_psheets_done']) && $charterAssoc['CharterGuestAssociate']['is_psheets_done'] == 1) {
@@ -204,16 +213,19 @@
                                                     $openBtnColor = "btn-open btn-primary hideshow";
                                                     $openBtnDisable = "";
                                                     
+                                                    
                                                 }else{
                                                     
                                                 }
+
+                                                $buttonclassarray[] = $buttoncls;
                                                 
                                             ?>
                                             <?php //echo $baseFolder.$openButtonLink; ?>
                                             <button type="button" data-charterHeadId=""  data-charterAssocId="<?php echo $charterAssoc['CharterGuestAssociate']['id']; ?>" class="btn btn-danger btn-eml-send sendMailClass <?php echo ($charterAssoc['CharterGuestAssociate']['is_email_sent']) ? "displayNone" : ""; ?>" <?php echo $sendMailBtnDisable; ?>>EMAIL</button>
                                                                 <button type="button" data-charterHeadId=""  data-charterAssocId="<?php echo $charterAssoc['CharterGuestAssociate']['id']; ?>"  class="btn btn-success btn-eml-send1 sent-btnr emailSentClass <?php echo ($charterAssoc['CharterGuestAssociate']['is_email_sent']) ? "" : "displayNone"; ?>"></button>
 
-                                            <a href="#"><button type="button" class="btn <?php echo $waitingclass; ?> <?php echo $openBtnColor; ?> <?php echo $openPreferenceSheetClass; ?>" data-guestype="guest" data-associd ="<?php echo $charterAssoc['CharterGuestAssociate']['id']; ?>" style="<?php echo $displayOpen; ?><?php echo $style; ?>" <?php echo $openBtnDisable; ?>><?php echo $textPreferenceSheet; ?></button></a>
+                                            <a href="#"><button type="button" class="<?php echo $owlbtnflag; ?> btn <?php echo $waitingclass; ?> <?php echo $openBtnColor; ?> <?php echo $openPreferenceSheetClass; ?>" data-guestype="guest" data-owldotclass="<?php echo $buttoncls; ?>" data-associd ="<?php echo $charterAssoc['CharterGuestAssociate']['id']; ?>" style="<?php echo $displayOpen; ?><?php echo $style; ?>" <?php echo $openBtnDisable; ?>><?php echo $textPreferenceSheet; ?></button></a>
 
 
 
