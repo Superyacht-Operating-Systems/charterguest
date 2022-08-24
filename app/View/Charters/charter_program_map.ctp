@@ -1621,7 +1621,7 @@ function markerOnClick(e) {
                     $("#CruisingButton").hide();
                     $("#HideDetails").hide();
                     $("#HelpfulTips").hide();
-                    // $(".leaflet-control-container").hide();
+                     $(".leaflet-control-container").hide();
                     // open popup center to map
                     map.setView(e.latlng);
 
@@ -1639,7 +1639,7 @@ function markerOnClick(e) {
                             $("#CruisingButton").show();
                             $("#HideDetails").show();
                             $("#HelpfulTips").show();
-                            // $(".leaflet-control-container").show();
+                            $(".leaflet-control-container").show();
                             
                         });
                     // display popup from top
@@ -1723,7 +1723,7 @@ $(document).on("click", "#closeSchedule", function(e) {
     $("#CruisingButton").show();
     $("#HideDetails").show();
     $("#HelpfulTips").show();
-    // $(".leaflet-control-container").show();
+    $(".leaflet-control-container").show();
 });
 
 
@@ -2024,7 +2024,7 @@ $("#hideloader").show();
                 $("#cruisinglocationModal").show();
                 
                 $(".leaflet-control-attribution").hide();
-                
+                $(".leaflet-control-container").hide();
                 //$(".leaflet-popup-close-button").addClass('updateCommentscount');
                 //$('.day_dates').text(day_dates);
 
@@ -2045,6 +2045,7 @@ $("#hideloader").show();
 $(document).on("click", "#cruisinglocationModalclose" ,function() {
         $('#cruisinglocationModal').hide();
         $(".leaflet-control-attribution").show();
+        $(".leaflet-control-container").show();
     });
 
     $(document).on("focus", ".textareacont" ,function() {

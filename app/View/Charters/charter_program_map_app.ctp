@@ -1171,6 +1171,12 @@ var satellite   =   L.tileLayer(mbUrl, {
     attribution: mbAttr
 });
 
+// satellite.on('loading', function (event) {
+//   console.log('start loading tiles');
+// });
+// satellite.on('load', function (event) {
+//   console.log('all tiles loaded');
+// });
 var map = L.map('map', {
     //center: [39.73, -104.99],
     'zoom': 6,
@@ -1276,6 +1282,8 @@ if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !e
         marker.addTo(map);
         markerCount++;
 <?php } } ?>
+
+
 
 // Making the Centre point
 if (day1) {
@@ -1510,6 +1518,8 @@ function markerOnClick(e) {
                     $("#CruisingButton").hide();
                     $("#HideDetails").hide();
                     $("#HelpfulTips").hide();
+                    $(".leaflet-control-container").hide();
+                    
                     var popLocation= e.latlng;
                     var popup = L.popup({keepInView:true,maxHeight:500})
                     .setLatLng(popLocation)
@@ -1521,6 +1531,7 @@ function markerOnClick(e) {
                             $("#CruisingButton").show();
                             $("#HideDetails").show();
                             $("#HelpfulTips").show();
+                            $(".leaflet-control-container").show();
                             
                         });
                     window.scrollTo(0, 0);
@@ -1539,6 +1550,7 @@ function markerOnClick(e) {
                         $("#HideDetails").show();
                         $("#HelpfulTips").show();
                         $(".leaflet-control-attribution").show();
+                        $(".leaflet-control-container").show();
                     });
                 }
             },
@@ -1584,6 +1596,7 @@ $(document).on("change", ".noofdayscard", function(e) {
                     $("#CruisingButton").hide();
                     $("#HideDetails").hide();
                     $("#HelpfulTips").hide();
+                    $(".leaflet-control-container").hide();
                     setTimeout(function() {
                         
                     var popup = L.popup({
@@ -1598,6 +1611,7 @@ $(document).on("change", ".noofdayscard", function(e) {
                             $("#CruisingButton").show();
                             $("#HideDetails").show();
                             $("#HelpfulTips").show();
+                            $(".leaflet-control-container").show();
                         });
                         window.scrollTo(0, 0);
                         //$('.day_dates').text(day_dates);
@@ -1616,6 +1630,7 @@ $(document).on("change", ".noofdayscard", function(e) {
                         $("#HideDetails").show();
                         $("#HelpfulTips").show();
                         $(".leaflet-control-attribution").show();
+                        $(".leaflet-control-container").show();
                     });
                     }, 1000);
                      
@@ -1635,6 +1650,7 @@ $(document).on("click", "#closeSchedule", function(e) {
     $("#CruisingButton").show();
     $("#HideDetails").show();
     $("#HelpfulTips").show();
+    $(".leaflet-control-container").show();
 });
 
 $(document).on("click", "#CruisingButton", function(e) {
@@ -1653,7 +1669,7 @@ $(document).on("click", "#CruisingButton", function(e) {
                     $("#cruisinglocationModal_load").html(result.popupHtml);
                     $("#cruisinglocationModal").show();
                     $(".leaflet-control-attribution").hide();
-
+                    $(".leaflet-control-container").hide();
                     $(".leaflet-popup-close-button").addClass('updateCommentscount');
                     //$('.day_dates').text(day_dates);
 
@@ -1726,6 +1742,10 @@ $(document).ready(function() { //alert();
         return html.replace("|", "");
     });
     $('.leaflet-control-attribution ').find('a').remove();
+
+    setTimeout(() => {
+        map.invalidateSize();
+    }, 0);
    
     });
 
@@ -1879,6 +1899,7 @@ $(document).on("click", "#CruisingCommentSave" ,function() {
     $(document).on("click", "#cruisinglocationModalclose" ,function() {
         $('#cruisinglocationModal').hide();
         $(".leaflet-control-attribution").show();
+        $(".leaflet-control-container").show();
     });
 
     
