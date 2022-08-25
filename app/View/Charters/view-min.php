@@ -139,15 +139,17 @@
                                             if (isset($charterAssoc['CharterGuestAssociate']['is_psheets_done']) && $charterAssoc['CharterGuestAssociate']['is_psheets_done'] == 0) {
                                                 $textPreferenceSheet = "WAITING";
                                                 $openPreferenceSheetClass = "";
+                                                $buttoncls = "#ffaf0f";
                                                 
                                             }else{
                                                 $textPreferenceSheet = "COMPLETE";
                                                 $openPreferenceSheetClass = "existingCheckFunction";
+                                                $buttoncls = "#1eabfc";
                                             }
                                             $owlbtnflag = "owlbtnflag";
                                             $style = "padding:0;";
                                             $waitingclass = "ch-waiting-btn";
-                                            $buttoncls = "#ffaf0f";
+                                            
                                         }else{
                                             $yesClass = "gry-btn";
                                             $noClass = "gry-btn";

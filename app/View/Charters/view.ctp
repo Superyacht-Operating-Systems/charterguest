@@ -221,7 +221,7 @@ font-weight: bold;
     float: initial;
     font-weight: bold;
     opacity: 40!important;
-    padding: 6px 20px;
+    padding: 6px 8px;
     border-radius: 0px;
      height: 30px!important;
 }
