@@ -1743,6 +1743,10 @@ $(document).ready(function() { //alert();
                 autoSize	: true,
                 closeClick	: false,
                 autoScale   : true,
+                transitionIn: 'none',
+                transitionOut: 'none',
+                openEffect: 'none',
+                closeEffect: 'none',
                 // transitionIn : 'fade',
                 // transitionOut: 'fade',
                 type : "image"
