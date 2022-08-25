@@ -1190,20 +1190,21 @@ var satellite   =   L.tileLayer(mbUrl, {
     attribution: mbAttr
 });
 
-// satellite.on('loading', function (event) {
-//   console.log('start loading tiles');
-// });
-// satellite.on('load', function (event) {
-//   console.log('all tiles loaded');
-// });
+satellite.on('loading', function (event) {
+  console.log('start loading tiles');
+});
+satellite.on('load', function (event) {
+  console.log('all tiles loaded');
+});
 var map = L.map('map', {
     //center: [39.73, -104.99],
     'zoom': 6,
     'measureControl': true,
     'worldCopyJump': false,
     'layers': [satellite],
+    'inertia' : '*',
     'inertiaDecelartion' : 3000,
-    'inertiaMaxSpeed'    : 1500,
+    'inertiaMaxSpeed'    : 'Infinity',
     'inertiaThershold'   : 32,
     //'crs': L.CRS.Simple,
 });
