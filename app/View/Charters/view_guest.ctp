@@ -753,7 +753,7 @@ color: #000;
 
           <!--   <span class="label-bold top-align-md-class"> <?php echo $session['yacht_name']; ?></span> -->
             <span class="label-bold sp-rightalign"><?php echo $charterData['CharterGuest']['charter_name']; ?></span>
-            <span class="label-bold sp-leftalign"><?php echo date_format(date_create($charterData['CharterGuest']['charter_from_date']), 'dS F Y')." to ".date_format(date_create($charterData['CharterGuest']['charter_to_date']), 'dS F Y'); ?></span>
+            <span class="label-bold sp-leftalign"><?php echo date_format(date_create($charterData['CharterGuest']['charter_from_date']), 'd M Y')." to ".date_format(date_create($charterData['CharterGuest']['charter_to_date']), 'd M Y'); ?></span>
             <span class="label-bold username-p yacht-centerlabel">Antiqua to Anguilla</span>
            <!--  <span>Enter the name and email of the guest and press the button to send them their preference forms.</span> -->
         </div>

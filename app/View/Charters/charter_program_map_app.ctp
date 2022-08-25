@@ -11,9 +11,11 @@ for ($i = 0; $i < $diffDays; $i++) {
 }
 
 $schedulePeriod = "";
+$schedulePeriodWithOutYear = "";
 $charterName = "";
 $scheduleLocation = "";
 if (isset($charterProgData) && !empty($charterProgData)) {
+    $schedulePeriodWithOutYear = date_format(date_create($charterProgData['CharterProgram']['charter_from_date']), "d M")." - ".date_format(date_create($charterProgData['CharterProgram']['charter_to_date']), "d M");
     $schedulePeriod = date_format(date_create($charterProgData['CharterProgram']['charter_from_date']), "d M Y")." - ".date_format(date_create($charterProgData['CharterProgram']['charter_to_date']), "d M Y");
     $charterName = $charterProgData['CharterProgram']['charter_name'];
     $scheduleLocation = $charterProgData['CharterProgram']['embarkation']." to ".$charterProgData['CharterProgram']['debarkation'];
@@ -991,7 +993,22 @@ span.sp-leftalign {
     font-size:12px;
     padding: 10px;
 }
-
+@media only screen and (max-width:900px){
+.mddev{
+    display:block;
+}
+.lgdev{
+    display:none;
+}
+}
+@media only screen and (min-width: 900px) and (max-width: 3000px){
+    .lgdev{
+        display:block;
+    }
+    .mddev{
+    display:none;
+}
+}
 </style>  
 
 <?php    echo $this->Html->script('jquery-1.7.2.min');
@@ -1082,7 +1099,9 @@ span.sp-leftalign {
 
 <div class="row common-form-row">
     <div class="w-33 col-lg-4 col-md-4 col-sm-4 mob-none">  
-        <span style="font-size: 18px;color:#fff;"><?php echo $schedulePeriod; ?></span>
+        <span class="lgdev" style="font-size: 18px;color:#fff;"><?php echo $schedulePeriod; ?></span>
+        <span class="mddev" style="font-size: 18px;color:#fff;"><?php echo $schedulePeriodWithOutYear; ?></span>
+        
     </div>
     <div class="w-20 col-lg-4 col-md-4 col-sm-4 text-center mob-none">  
     <span style="font-size: 18px;color:#fff;"><?php echo $scheduleLocation; ?>
