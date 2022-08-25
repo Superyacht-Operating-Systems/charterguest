@@ -76,7 +76,7 @@
                                                     $textPreferenceSheetCharterGuest = "COMPLETE";
                                                     $style = "";
                                                     $waitingclass = "";
-                                                    $owldotclass = "btn-open";
+                                                    $owldotclass = "#1eabfc";
                                                 }else{
                                                     $textPreferenceSheetCharterGuest = "WAITING";
                                                     $style = "style='padding:0;'";
@@ -121,14 +121,16 @@
                                             $textPreferenceSheet = "OPEN";
                                             if (isset($charterAssoc['CharterGuestAssociate']['is_psheets_done']) && $charterAssoc['CharterGuestAssociate']['is_psheets_done'] == 0) {
                                                 $textPreferenceSheet = "WAITING";
+                                                $buttoncls = "#ffaf0f";
                                             }else{
                                                 $textPreferenceSheet = "COMPLETE";
+                                                $buttoncls = "#1eabfc";
                                             }
                                             $style = "";
                                             $waitingclass = "ch-waiting-btn";
                                             $openPreferenceSheetClass = "existingCheckFunction";
                                             $owlbtnflag = "owlbtnflag";
-                                            $buttoncls = "#1eabfc";
+                                            
                                         }else if($charterAssoc['CharterGuestAssociate']['is_head_charterer'] == 1){
                                             
                                             $yesClass = "gry-btn";

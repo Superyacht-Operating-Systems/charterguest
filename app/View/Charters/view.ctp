@@ -1254,7 +1254,7 @@ $("#saveBtn").on("click", function(e) {
 
 var dotclassarr = [];
         $('.owl-carousel .owl-stage .owl-item').each(function(index){
-            console.log(index);
+            //console.log(index);
             var dotclass = $(this).find('.owlbtnflag').attr('data-owldotclass');
             
             dotclassarr.push(dotclass);
