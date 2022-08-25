@@ -1383,6 +1383,10 @@ for (let layer of polyLayers) { //console.log(layer);
    
 } ?>
 
+setTimeout(() => {
+        map.invalidateSize();
+    }, 0);
+    
 // L.Control.MarkerControl = L.Control.extend({
 //     onAdd: function(map) {
 //         var el = L.DomUtil.create('div', 'leaflet-pm-toolbar leaflet-pm-draw leaflet-bar my-control');
@@ -1767,9 +1771,7 @@ $(document).ready(function() { //alert();
     });
     $('.leaflet-control-attribution ').find('a').remove();
 
-    setTimeout(() => {
-        map.invalidateSize();
-    }, 0);
+    
    
     });
 
