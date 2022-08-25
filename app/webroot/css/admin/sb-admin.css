@@ -3697,7 +3697,7 @@ width: 33%;float: left;margin-bottom: 0px;
 }
 .owl-theme .owl-dots .owl-dot.active ,
 .owl-theme .owl-dots .owl-dot:hover {
-    background: #1eabfc;
+/*    background: #1eabfc;*/
 }
 
 }
