@@ -271,7 +271,7 @@ background: none!important;
 .wrapper{overflow: hidden;}
 .footer{height: 0px;line-height: 0;padding: 0px;}
 .common-form-row{
-    margin-top:10px;margin-bottom: 10px;font-weight: bold!important;}
+    margin-top:0px;margin-bottom: 10px;font-weight: bold!important;}
 /*.back-btn button {
     float: right;
     margin-right: 20px;
@@ -772,7 +772,7 @@ margin: 0px;padding: 0px;
     margin-top: 4px!important;
 }
 body .mydemolabel {
-    top: 57px!important;
+    top: 46px!important;
 }
 
 
@@ -1743,8 +1743,8 @@ $(document).ready(function() { //alert();
                 autoSize	: true,
                 closeClick	: false,
                 autoScale   : true,
-                transitionIn : 'fade',
-                transitionOut: 'fade',
+                // transitionIn : 'fade',
+                // transitionOut: 'fade',
                 type : "image"
             });
 
