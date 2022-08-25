@@ -3693,7 +3693,7 @@ width: 33%;float: left;margin-bottom: 0px;
     border-radius: 30px
 }
 .owl-theme .owl-dots .owl-dot:first-child{
-   background: #fff!important;
+   /* background: #fff!important; */
 }
 .owl-theme .owl-dots .owl-dot.active ,
 .owl-theme .owl-dots .owl-dot:hover {

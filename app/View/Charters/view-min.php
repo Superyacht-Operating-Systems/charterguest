@@ -70,14 +70,15 @@
                                                 // as per the client showing the btn in warning color @07 Aug 2020
                                                 $owldotclass = "btn-open1";
                                                 $adminopenbutColor = "btn-open1 btn-warning btn-warning-bg";
+                                                $textPreferenceSheetCharterGuest = "OPEN";
                                                 if (isset($charterData['CharterGuest']['is_psheets_done']) && $charterData['CharterGuest']['is_psheets_done'] == 1) {
                                                     $adminopenbutColor = "btn-open";
-                                                    $textPreferenceSheet = "OPEN";
+                                                    $textPreferenceSheetCharterGuest = "COMPLETE";
                                                     $style = "";
                                                     $waitingclass = "";
                                                     $owldotclass = "btn-open";
                                                 }else{
-                                                    $textPreferenceSheet = "WAITING";
+                                                    $textPreferenceSheetCharterGuest = "WAITING";
                                                     $style = "style='padding:0;'";
                                                     $waitingclass = "ch-waiting-btn";
                                                    
@@ -88,7 +89,7 @@
                                                  <button type="button" data-charterHeadId="<?php echo $charterData['CharterGuest']['id']; ?>" data-charterAssocId="" class="btn btn-eml-send1 sent-btnr emailSentClass <?php echo ($charterData['CharterGuest']['is_email_sent']) ? "" : "displayNone"; ?>"><a></a></button>
                                           <a href="#">
                                              
-                                              <button type="button" <?php echo $style; ?> class="owlbtnflag btn <?php echo $waitingclass; ?> <?php echo $adminopenbutColor; ?> existingCheckFunction" data-guestype="owner" data-owldotclass="<?php echo $owldotclass; ?>" data-associd ="<?php echo $charterData['CharterGuest']['id']; ?>"><?php echo $textPreferenceSheet; ?></button>
+                                              <button type="button" <?php echo $style; ?> class="owlbtnflag btn <?php echo $waitingclass; ?> <?php echo $adminopenbutColor; ?> existingCheckFunction" data-guestype="owner" data-owldotclass="<?php echo $owldotclass; ?>" data-associd ="<?php echo $charterData['CharterGuest']['id']; ?>"><?php echo $textPreferenceSheetCharterGuest; ?></button>
                                           </a>
                                           
          
@@ -118,8 +119,13 @@
                                             $noClass = "gry-btn";
                                             $displayOpen = "display:inline-block;";
                                             $textPreferenceSheet = "OPEN";
+                                            if (isset($charterAssoc['CharterGuestAssociate']['is_psheets_done']) && $charterAssoc['CharterGuestAssociate']['is_psheets_done'] == 0) {
+                                                $textPreferenceSheet = "WAITING";
+                                            }else{
+                                                $textPreferenceSheet = "COMPLETE";
+                                            }
                                             $style = "";
-                                            $waitingclass = "";
+                                            $waitingclass = "ch-waiting-btn";
                                             $openPreferenceSheetClass = "existingCheckFunction";
                                             $owlbtnflag = "owlbtnflag";
                                             $buttoncls = "#1eabfc";
