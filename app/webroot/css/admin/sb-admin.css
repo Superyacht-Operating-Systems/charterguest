@@ -3432,13 +3432,6 @@ display:none!important  ;
 }
 
 }
-
-
-
-
-
-
-
 @media screen and (max-width: 990px) {
 .ipadport-can-you-block .col-md-2 {
         width: 25%!important;
@@ -3472,13 +3465,13 @@ display:none!important  ;
     content: "";
     width: 11px;
     height: 2px;
-    background: #000;
+    background: #fff;
     display: block;
     position: absolute;
     text-align: center;
     align-items: center;
-    margin-left: 2px;
-    margin-top: 0px;
+    margin-left: -1px;
+   margin-top: 12px;
 }
 .charterRow{width: 100%;}
 
@@ -3689,20 +3682,21 @@ width: 33%;float: left;margin-bottom: 0px;
         width: 6.5%;
 }
 
-.owl-theme .owl-dots .owl-dot span {
+.owl-theme .owl-dots .owl-dot {
         width: 11px;
     height: 11px;
-    margin: 2px 2px;
+    margin: 2px 3px;
     background: #959595e8;
     border: solid 1px #000;
-    display: block;
     -webkit-backface-visibility: visible;
     transition: opacity .2s ease;
     border-radius: 30px
 }
-
-.owl-theme .owl-dots .owl-dot.active span,
-.owl-theme .owl-dots .owl-dot:hover span {
+.owl-theme .owl-dots .owl-dot:first-child{
+   background: #fff!important;
+}
+.owl-theme .owl-dots .owl-dot.active ,
+.owl-theme .owl-dots .owl-dot:hover {
     background: #1eabfc;
 }
 
