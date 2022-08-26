@@ -3685,9 +3685,8 @@ width: 33%;float: left;margin-bottom: 0px;
 .owl-theme .owl-dots .owl-dot {
         width: 11px;
     height: 11px;
-    margin: 2px 3px;
+    margin: 2px 5px;
     background: #959595e8;
-    border: solid 1px #000;
     -webkit-backface-visibility: visible;
     transition: opacity .2s ease;
     border-radius: 30px
@@ -3730,6 +3729,7 @@ border:none;
 .sp-nonemob{
   display: none!important;
 }
+
 .foodpreferences-container table.table tbody tr{
 position: relative;
 
@@ -5682,4 +5682,33 @@ body .mydemolabel {
     width: 23%!important;
 }
 }
-
+@media screen and (max-width: 767px) {
+  .owl-dots {
+  width: 300px!important;
+  border: none;
+      top: -52px;
+}
+.owl-dot.active::after {
+    content: "";
+    margin-left: 2px;
+    margin-top: 19px;
+}
+.rowm-md-mob-resize {
+    display: inline-block;
+    width: 100%;
+    margin-top: 27px!important;
+}
+.md-row-h-8 {
+    top: 230px!important;
+}
+#charterguest {
+    border-top: solid 1px #eee;
+   margin-top: 72px;
+   overflow: inherit;
+}
+.owl-theme .owl-dots .owl-dot {
+    width: 13px;
+    height: 13px;
+    margin: 2px 6px;
+}
+}
