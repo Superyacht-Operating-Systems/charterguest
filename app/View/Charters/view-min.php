@@ -122,12 +122,14 @@
                                             if (isset($charterAssoc['CharterGuestAssociate']['is_psheets_done']) && $charterAssoc['CharterGuestAssociate']['is_psheets_done'] == 0) {
                                                 $textPreferenceSheet = "WAITING";
                                                 $buttoncls = "#ffaf0f";
+                                                $waitingclass = "ch-waiting-btn";
                                             }else{
                                                 $textPreferenceSheet = "COMPLETE";
                                                 $buttoncls = "#1eabfc";
+                                                $waitingclass = "";
                                             }
                                             $style = "";
-                                            $waitingclass = "ch-waiting-btn";
+                                            
                                             $openPreferenceSheetClass = "existingCheckFunction";
                                             $owlbtnflag = "owlbtnflag";
                                             
@@ -146,6 +148,7 @@
                                                 $textPreferenceSheet = "COMPLETE";
                                                 $openPreferenceSheetClass = "existingCheckFunction";
                                                 $buttoncls = "#1eabfc";
+                                                $waitingclass = "";
                                             }
                                             $owlbtnflag = "owlbtnflag";
                                             $style = "padding:0;cursor:not-allowed;";
