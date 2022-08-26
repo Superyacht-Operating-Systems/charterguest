@@ -31,6 +31,7 @@ content: "SENT";
 }
 .emailSentClass:hover::after {
  content: "RESEND";
+ color: #fff;
 }
 
 .emailSentClass:hover {

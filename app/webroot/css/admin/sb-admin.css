@@ -501,11 +501,15 @@ body .complete-btn:hover{
 display: flex;
 }*/
 .md-row-h-8 button:hover,
-.btn-eml-send:hover,
 .btn-success:hover,
 .btn-open:hover{
 background: #01d0ff!important;
 color:#fff;
+}
+
+.btn-eml-send:hover{
+  background: #5ec94c!important;
+  color:#fff;
 }
 .helpModal .modal-body{
 	color: #000;
@@ -715,9 +719,19 @@ table.table tbody td {
 	background: #1AB200;
     color: #fff;
 }
+
 .ch-waiting-btn{
 	background: #ffaf0f;
 }
+
+.ch-waiting-btn-no{
+	background: #ffaf0f;
+}
+
+.ch-waiting-btn-no:hover{
+	background: #ffaf0f !important;
+}
+
 .yes-btn{    
     background: #1eabfc;
     color: #fff;

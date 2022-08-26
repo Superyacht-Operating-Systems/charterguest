@@ -140,6 +140,7 @@
                                                 $textPreferenceSheet = "WAITING";
                                                 $openPreferenceSheetClass = "";
                                                 $buttoncls = "#ffaf0f";
+                                                $waitingclass = "ch-waiting-btn-no";
                                                 
                                             }else{
                                                 $textPreferenceSheet = "COMPLETE";
@@ -147,8 +148,8 @@
                                                 $buttoncls = "#1eabfc";
                                             }
                                             $owlbtnflag = "owlbtnflag";
-                                            $style = "padding:0;";
-                                            $waitingclass = "ch-waiting-btn";
+                                            $style = "padding:0;cursor:not-allowed;";
+                                            
                                             
                                         }else{
                                             $yesClass = "gry-btn";
