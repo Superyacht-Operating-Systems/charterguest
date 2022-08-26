@@ -64,6 +64,9 @@ echo $this->Html->script('leaflet/route');
 ?>
 
 <style>
+    html, body {
+  background: #000!important;
+}
 .map-userlabelp{
 position: absolute;
     left: 73px;
@@ -1022,7 +1025,7 @@ span.sp-leftalign {
         </button></a>
     </div>
  -->
-<br>
+<!-- <br> -->
 
 <!-- sample modal content -->
 <div id="cruisingmsgmyModal" class="modal certificat-modal-container"  role="dialog">
