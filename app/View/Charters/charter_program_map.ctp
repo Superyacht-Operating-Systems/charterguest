@@ -887,6 +887,7 @@ padding-left: 15px!important;
     top: 18px!important;
     right: 13px!important;
   padding: 5px;
+  height: 32px;
   color:#000;
   z-index: 9999;
   font-weight:bold;
@@ -898,6 +899,7 @@ padding-left: 15px!important;
     top: 56px!important;
     right: 13px!important;
   padding: 5px;
+  height: 32px;
   color:#000;
   z-index: 9999;
   font-weight:bold;
@@ -906,9 +908,10 @@ padding-left: 15px!important;
 
 #HelpfulTips {
     position: absolute!important;
-    top: 94px!important;
+    top: 93.5px!important;
     right: 13px!important;
   padding: 5px;
+  height: 32px;
   color:#000;
   z-index: 9999;
   font-weight:bold;
@@ -918,14 +921,14 @@ padding-left: 15px!important;
     #CruisingButton {
   width: 138px !important;
   font-size: 14px;
-  height: inherit;
+  height: 32px;
   padding: 5px !important;
   top: 18px !important;
 }
 #HideDetails, #HelpfulTips {
     min-width: 138px;
     font-size: 14px;
-    height: inherit;
+    height: 32px;
     padding: 5px!important;
 }
 }
@@ -935,12 +938,13 @@ padding-left: 15px!important;
 #HideDetails, #HelpfulTips {
 
     width: 108px;
-    height: 25px;
+    height: 24px;
     padding: 0px!important;
     font-size: 11px!important;
     min-width: inherit;
 }
 #CruisingButton {
+    height: 24px;
     width: 108px;
   top: 18px !important;
 }
