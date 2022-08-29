@@ -5700,7 +5700,7 @@ body .mydemolabel {
   .owl-dots {
   width: 300px!important;
   border: none;
-      top: -52px;
+      top: -72px;
 }
 .owl-dot.active::after {
     content: "";
@@ -5713,7 +5713,7 @@ body .mydemolabel {
     margin-top: 27px!important;
 }
 .md-row-h-8 {
-    top: 230px!important;
+    top: 217px!important;
 }
 #charterguest {
     border-top: solid 1px #eee;

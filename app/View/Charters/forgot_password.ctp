@@ -1,5 +1,9 @@
 <?php ?>
 <style> 
+.terms-userow{
+    float: left;
+}
+
     .terms-userow a{
 margin: 0px 5px;
     }
@@ -19,6 +23,13 @@ position: relative;
  .form-group {
     margin-bottom: 0px!important;
 }
+.login-panel .btn-default{
+    width: auto!important;
+    margin: 0;
+    float: right;
+}
+
+
  }
 
 
@@ -40,7 +51,7 @@ position: relative;
             <span class="text-small red errorMsg" id="emailError" style="color: red"></span>
         </div>
         
-        <div class="terms-userow-row">
+        <div class="terms-userow-row ">
              <label class="terms-userow">
                 <?php echo $this->Form->button('Return to Login',array('class' => 'btn btn-default', 'id' => 'returntologin'));?>                
             </label> 
