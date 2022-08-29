@@ -886,41 +886,51 @@ padding-left: 15px!important;
     position: absolute!important;
     top: 18px!important;
     right: 13px!important;
-  padding: 6px;
+  padding: 5px;
   color:#000;
   z-index: 9999;
   font-weight:bold;
+  width: 138px;
 }
 
 #HideDetails {
     position: absolute!important;
     top: 56px!important;
     right: 13px!important;
-  padding: 6px;
+  padding: 5px;
   color:#000;
   z-index: 9999;
   font-weight:bold;
-  min-width: 139px;
+  min-width: 138px;
 }
 
 #HelpfulTips {
     position: absolute!important;
     top: 94px!important;
     right: 13px!important;
-  padding: 6px;
+  padding: 5px;
   color:#000;
   z-index: 9999;
   font-weight:bold;
-  min-width: 139px;
+  min-width: 138px;
 }
-@media(max-width: 1092px){
+@media only screen and (min-width: 768px) and (max-width: 1092px){
+    #CruisingButton {
+  width: 138px !important;
+  font-size: 14px;
+  height: inherit;
+  padding: 5px !important;
+  top: 18px !important;
+}
 #HideDetails, #HelpfulTips {
-    width: 137px;
-    font-size: 12px;
-    height: 32px;
-    padding: 0px!important;
+    min-width: 138px;
+    font-size: 14px;
+    height: inherit;
+    padding: 5px!important;
 }
 }
+
+
 @media (max-width: 767px){
 #HideDetails, #HelpfulTips {
 
@@ -930,6 +940,11 @@ padding-left: 15px!important;
     font-size: 11px!important;
     min-width: inherit;
 }
+#CruisingButton {
+    width: 108px;
+  top: 18px !important;
+}
+
 #HideDetails {
     top: 47px!important;
 }
