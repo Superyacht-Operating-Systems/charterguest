@@ -1,7 +1,9 @@
-<div class="owl-carousel owl-theme">
+<div class="owl-theme owl-dotsrow">
+<div class="owl-dots ">
 </div>
-
-<div class="owl-carousel owl-theme">
+</div>
+<div class="owl-mobilecontainer">
+<div class="owl-carousel owl-theme ">
 <!-- Head Charterer info -->
                                 <div class="charterRow">
                                    <div class="container-row-column">
@@ -303,4 +305,85 @@
                             <?php } ?>     
    
 
-</div>
+</div></div>
+<script type="text/javascript">
+    $(document).ready(function() {
+  $('.owl-carousel').owlCarousel({
+    stagePadding:0,/*the little visible images at the end of the carousel*/
+     
+    loop:false,
+    rtl: false,
+    lazyLoad:true,
+    margin:0,
+    dots:true,
+      dotsContainer: '.owl-dots',
+    singleItem:true,
+    responsiveClass:true,
+    nav:false,
+    items : 1, 
+      responsive : {
+            480 : { items : 1  }, // from zero to 480 screen width 4 items
+            768 : { items : 1,
+                    touchDrag:true,
+                    mouseDrag:false,
+             }, // from 480 screen widthto 768 6 items
+        },
+        900:{
+            items:0,
+            mouseDrag:false,
+            touchDrag:false,
+            nav:false,
+        },
+    // responsive:{
+    //     0:{
+    //         items:1,
+    //          mouseDrag:true,
+    //         touchDrag:true
+    //     },
+    //     1024:{
+    //         items:0,
+    //         mouseDrag:false,
+    //         touchDrag:false
+    //     },
+    // }
+});
+
+
+// $(".owl-dots:nth-child(6)").addClass("myactive"); 
+// //$('.owl-carousel').trigger('to.owl.carousel', 6 );
+
+
+var dotclassarr = [];
+        $('.owl-carousel .owl-stage .owl-item').each(function(index){
+            //console.log(index);
+            var dotclass = $(this).find('.owlbtnflag').attr('data-owldotclass');
+            
+            dotclassarr.push(dotclass);
+            
+        });
+
+       // console.log(dotclassarr);
+checkClasses();
+$('.owl-theme').on('translated.owl.carousel', function(event) {
+        checkClasses();
+    });
+
+    function checkClasses(){
+        var total = $('.owl-theme .owl-dots .owl-dot').length;
+        $('.owl-theme .owl-dots .owl-dot').each(function(index){
+            //console.log(index);
+           
+            if(dotclassarr[index] != "undefined"){
+                $(this).css({"background": dotclassarr[index]});
+            }
+            
+        });
+    }
+
+
+
+
+
+ });
+
+</script>
