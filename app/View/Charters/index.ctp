@@ -1,5 +1,19 @@
 <?php ?>
 <style> 
+::placeholder {
+  color: gray!important;
+  opacity: 1; /* Firefox */
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+
+  color: gray!important;
+}
+
+::-ms-input-placeholder { /* Microsoft Edge */
+  color: gray!important;
+}
+
     .terms-userow a{
 margin: 0px 5px;
     }

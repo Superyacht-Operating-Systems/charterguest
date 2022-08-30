@@ -1,4 +1,7 @@
 <div class="owl-carousel owl-theme">
+</div>
+
+<div class="owl-carousel owl-theme">
 <!-- Head Charterer info -->
                                 <div class="charterRow">
                                    <div class="container-row-column">
