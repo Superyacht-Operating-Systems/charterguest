@@ -402,6 +402,10 @@ class ChartersController extends AppController {
                 $programFiledata = $this->CharterProgramFile->find('all', array('conditions' => $programFilesCond));
 
                 if(isset($YachtWeblinkdata)){
+                    $isValid = preg_match("@^https?://@", $YachtWeblinkdata['YachtWeblink']['weblink']);
+                    if($isValid == 0){
+                        $YachtWeblinkdata['YachtWeblink']['weblink'] = 'https://'.$YachtWeblinkdata['YachtWeblink']['weblink'];
+                    }
                     $charterGuestData[$key]['websitedetails'] = $YachtWeblinkdata;
                 }
                 $charter_from_date = date("d M Y", strtotime($value['CharterGuest']['charter_from_date']));
@@ -545,6 +549,10 @@ class ChartersController extends AppController {
                     $YachtWeblinkConditions = array('YachtWeblink.charter_company_id' => $value['CharterGuestAssociate']['fleetcompany_id'],'YachtWeblink.yacht_id' => $value['CharterGuestAssociate']['yacht_id'],'YachtWeblink.is_deleted'=>0);
                     $YachtWeblink = $this->YachtWeblink->find('first', array('conditions' => $YachtWeblinkConditions));
                     if(isset($YachtWeblink)){
+                        $isValid = preg_match("@^https?://@", $YachtWeblink['YachtWeblink']['weblink']);
+                        if($isValid == 0){
+                            $YachtWeblink['YachtWeblink']['weblink'] = 'https://'.$YachtWeblink['YachtWeblink']['weblink'];
+                        }
                         $charterAssocData[$key]['websitedetails'] = $YachtWeblink;
                     }
 
