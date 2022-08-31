@@ -614,6 +614,13 @@ input:focus {
     width: 160px !important;
     
 }
+
+[aria-current="mapnolink"] {
+  pointer-events: none;
+  cursor: default;
+  text-decoration: none;
+  color: black;
+}
 </style>
 <?php 
     $baseFolder = $this->request->base;
@@ -772,7 +779,7 @@ if(isset($charterGuestData) && !empty($charterGuestData)){
                 <li><a href="<?php echo $baseFolder."/charters/charter_program_map/".$charter_program_id.'/'.$data['ydb_name'].'/owner'; ?>" title="Map is Published">Cruising Map</a>  <?php if(isset($msg_count) && $msg_count > 0){ ?><span class="cardbell-icon"><span class="avacard-cunt"><?php echo $msg_count; ?></span><i class="fa fa-bell"></i></span><?php } ?></li>
                 <!-- target="_blank" -->
                 <?php }else if($data['map_url'] == "nolink"){ ?>
-                <li><a href="#" role="button" title="Map is Not Published" >Cruising Map</a></li>
+                <li><span datahover="Map is Not Published" title="Map is Not Published"><a href="#" role="button" title="Map is Not Published" aria-current="mapnolink">Cruising Map</a></span></li>
             <?php } ?>
 
             <li><a href="#"><span class="existingCheckFunction" data-guestype="owner" data-associd ="<?php echo $id; ?>">Preference Sheets</span></a></li>
@@ -848,7 +855,7 @@ if(isset($charterAssocData) && !empty($charterAssocData)){
             <?php if($data['charterDetails']['map_url'] == "link"){ ?>
             <li><a href="<?php echo $baseFolder."/charters/charter_program_map/".$charter_program_id.'/'.$data['charterDetails']['ydb_name'].'/guest'; ?>" title="Map is Published">Cruising Map</a> </li>
             <?php }else if($data['charterDetails']['map_url'] == "nolink"){  ?>
-            <li><a href="#" role="button" title="Map is Not Published">Cruising Map</a> </li>
+            <li><span datahover="Map is Not Published" title="Map is Not Published"><a href="#" role="button" title="Map is Not Published" aria-current="mapnolink">Cruising Map</a></span> </li>
             <?php } ?>
             <li><a href="#"><span class="existingCheckFunction" data-guestype="guest" data-associd ="<?php echo $associd; ?>">Preference Sheets</span></a></li>
             

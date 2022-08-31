@@ -49,6 +49,7 @@
                                         <div class="md-row-h-12"> 
                                         <label>Title</label> 
                                             <?php echo $this->Form->input("salutation",array("id" => "headCharterSalutation", "label"=>false,'name' => 'salutation[]','options' => $salutationList,'class'=>'form-control form-two tinput rowInput validateInput','default' => $charterData['CharterGuest']['salutation'])); ?>
+                                            <span class="error validateMessage" style="display: none;">Enter Title</span>
                                         </div>
 
 
@@ -178,6 +179,7 @@
                                         
                                   
                                             <?php echo $this->Form->input("salutation",array("label"=>false,'name' => 'salutation[]','options' => $salutationList,'class'=>'form-control tinput rowInput validateInput','default' => $charterAssoc['CharterGuestAssociate']['salutation'])); ?>
+                                            <span class="error validateMessage" style="display: none;">Enter Title</span>
                                         </div>
                                         <div class="md-row-h-10">
                                             <label>First Name</label>

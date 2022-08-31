@@ -622,6 +622,9 @@ color: #000;
     <div class="modal-dialog">
       <!-- Modal content-->
       <div class="modal-content">
+        <div class="modal-header" style="border: none;">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
         <div class="modal-body">
           <p>If Yes is selected then you will be able to complete the preference sheets for the guest which is ideal for children or spouse.
           </p>
@@ -1144,12 +1147,15 @@ $("#saveBtn").on("click", function(e) {
         var empty = 0;
         var divobj = $(this);
         divobj.find('.charterRow').each(function () {
+            var validateMessage = $(this).find(".validateMessage");
+                $(validateMessage).css({ display: "none" });
                 $(this).find(".validateInput").each(function () {
                     //console.log($(this).val());
                     if ($(this).val().trim() == "") {
                         $(this).addClass("inputError").blur();
                         empty++;
                         error = 1;
+                        $(validateMessage).css({ display: "block" });
                     } else {
                         $(this).removeClass("inputError");
                     }
