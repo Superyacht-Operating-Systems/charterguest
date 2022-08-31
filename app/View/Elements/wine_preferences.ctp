@@ -454,6 +454,16 @@ $(document).on("click", ".removeWineFromCart", function(e) {
                 $("#hideloader").hide();
                 if (result.status == 'success') {
                     rowObj.remove();
+                    $(".selectWineRow").each(function (i,e) { 
+                        if($(this).attr('data-winelistid') == wineListId){ 
+                            $(this).css('display', 'block');
+                        };   
+                    });
+                    $(".removeWineRow").each(function (i,e) {
+                        if($(this).attr('data-winelistid') == wineListId){
+                            $(this).css('display', 'none');
+                        };   
+                    });
                     // Calculate the Total quantity per type
                     calculateTotalQuantity();
                 }  

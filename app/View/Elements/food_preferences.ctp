@@ -17,7 +17,7 @@
         13 => 'Pigeon',
         14 => 'Salads',
         15 => 'Vegitables',
-        16 => 'Vegitarian cuisine',
+        16 => 'Vegetarian cuisine',
         17 => 'Pasta Rice',
         18 => 'Mussels',
         19 => 'Fish:Black cod',
@@ -91,7 +91,7 @@
         2 => 'Russian',
         3 => 'Asian Fusion',
         4 => 'Gluten Free',
-        5 => 'Vegitarian',
+        5 => 'Vegetarian',
         6 => 'Greek',
         7 => 'French',
         8 => 'American',
@@ -466,7 +466,7 @@ table.fd-table tr>td {
         <div class="col-md-2 col-sm-2  fs-wd">
                          <div class="checkbox">
                          <input type="checkbox" class="foodstylechk" name="data[CharterGuestFoodPreference][food_style][]" value="5" <?php echo $foodStyleChecked[5]; ?>>
-               <label class="pdd-none">Vegitarian</label>
+               <label class="pdd-none">Vegetarian</label>
           </div>
         </div>
         <div class="col-md-2 col-sm-1  fs-wd">

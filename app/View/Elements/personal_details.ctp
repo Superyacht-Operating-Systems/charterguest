@@ -707,6 +707,7 @@ and (max-device-width : 667px) {
         </div>
         <div class="col-xs-7 col-md-5 col-sm-7 form-group mob-w-70">
            <?php echo $this->Form->input("issued_date",array("label"=>false,'class'=>'form-control datePicker nonEditable','type' => 'text')); ?>
+           <span class="error" id="IssuedDateErrorMessage" style="display: none;">Enter valid date</span>
         </div>
       </div></div>
       <div class="clearfix"></div>
@@ -717,6 +718,7 @@ and (max-device-width : 667px) {
         </div>
         <div class="col-xs-7 col-md-5 col-sm-7 form-group mob-w-70">
           <?php echo $this->Form->input("expiry_date",array("label"=>false,'class'=>'form-control datePicker nonEditable','type' => 'text')); ?>
+           <span class="error" id="ExpiryDateErrorMessage" style="display: none;">Enter valid date</span>
         </div>
       </div></div>
       <div class="clearfix"></div>
@@ -1310,4 +1312,30 @@ and (max-device-width : 667px) {
               all = 0;
                
      });
+
+$("#CharterGuestPersonalDetailIssuedDate").on("change", function(e) {
+  var issued = $('#CharterGuestPersonalDetailIssuedDate').val();
+  var expired = $('#CharterGuestPersonalDetailExpiryDate').val();
+  $('#IssuedDateErrorMessage').css({ display: "none" });
+
+  var issued1 = new Date(issued);
+  var expired1 = new Date(expired);
+
+  if(issued1 > expired1){
+    $('#IssuedDateErrorMessage').css({ display: "block" });
+    $('#CharterGuestPersonalDetailIssuedDate').val('');
+  }
+});
+$("#CharterGuestPersonalDetailExpiryDate").on("change", function(e) {
+  var issued = $('#CharterGuestPersonalDetailIssuedDate').val();
+  var expired = $('#CharterGuestPersonalDetailExpiryDate').val();
+  $('#ExpiryDateErrorMessage').css({ display: "none" });
+  var issued1 = new Date(issued);
+  var expired1 = new Date(expired);
+  if(issued1 > expired1){
+    $('#ExpiryDateErrorMessage').css({ display: "block" });
+    $('#CharterGuestPersonalDetailExpiryDate').val('');
+  }
+});
 </script>
+
