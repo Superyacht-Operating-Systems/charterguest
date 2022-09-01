@@ -516,15 +516,14 @@ $(document).on('keyup', '.productQuantity', function (e) {
 function calculateTotalProductQuantityOnKeyup(typeClass) {
     var total = 0;
     var totalQuantity = 0;
-    console.log('typeClass=',typeClass)
     
     $("#selectedProductListTableId tr").find("."+typeClass).each(function (e) {
         var value = $(this).val().trim();
         if (value != "") {
             var quantity = parseInt(value);
             total += quantity;
-            $("#totalProductQuantityTableId tr").find("."+typeClass).text(total);
-        }   
+        }
+        $("#totalProductQuantityTableId tr").find("."+typeClass).text(total);
     });
     
     $("#totalProductQuantityTableId tr").find(".totalTypeQuantity").each(function (e) {
@@ -614,11 +613,13 @@ $(document).on("click", "#wlinputsave", function(e) {
             dataType: 'json',
             data: data,
             success:function(result) {
+                console.log('result=',result)
                 $("#hideloader").hide();
                 if (result.status == 'success') {
                     $(".wlinput").val('');
                     $("#winePreference-modal").modal("hide");
-                    //location.reload();
+                    $("#wineListDiv").html(result.view);
+                    // location.reload();
                 } else {
 
                 }   

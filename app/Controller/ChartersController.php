@@ -671,6 +671,20 @@ class ChartersController extends AppController {
         $Ydata = $this->Yacht->find('first', array('conditions' => $yachtCond));
         $ydb_name = $Ydata['Yacht']['ydb_name'];
         
+        // Background image
+        $image = $Ydata['Yacht']['cg_background_image'];
+        if($image){
+            $fleetSiteName = $Ydata['Yacht']['fleetname'];
+            $yachtSiteName = $Ydata['Yacht']['yname'];
+            $cgBackgroundImage = BASE_URL.'/SOS/app/webroot/betayacht/app/webroot/img/charter_program_files/'.$image;
+            if (!empty($fleetSiteName)) { // IF yacht is under any Fleet
+                $cgBackgroundImage = BASE_URL."/".$fleetSiteName."/app/webroot/".$yachtSiteName."/app/webroot/img/charter_program_files/".$image;
+            }
+        }else{
+            $cgBackgroundImage = "https://totalsuperyacht.com:8080/charterguest/css/admin/images/full-charter.png";
+        }
+        $this->Session->write("cgBackgroundImage", $cgBackgroundImage);
+        // Background image
 
         $pid = $charterData['CharterGuest']['charter_program_id'];
         //echo "SELECT * FROM $ydb_name.charter_program_schedules CharterProgramSchedule WHERE charter_program_id = '$pid' AND is_deleted = 0";
@@ -831,6 +845,7 @@ class ChartersController extends AppController {
         }
         //echo "<pre>";print_r($this->Session->read()); exit;
         //echo $this->Session->read("selectedCharterProgramUUID"); exit;
+        $associatePrimaryid = 0;
         $charterHeadId = isset($session['CharterGuest']['id']) ? $session['CharterGuest']['id'] : 0;
         $charterAssocId = isset($sessionAssoc['CharterGuestAssociate']['id']) ? $sessionAssoc['CharterGuestAssociate']['id'] : 0;
         if(isset($sessionAssoc['CharterGuestAssociate']['UUID'])){
@@ -2742,7 +2757,7 @@ class ChartersController extends AppController {
                         'conditions' => array('TWLS.wine_list_id = WineList.id','TWLS.guest_lists_UUID ='.'"'.$CGID.'"')
                     )
                 );
-        //print_r($conditions); exit;
+        // print_r($conditions); exit;
         // Paginator settings
         $this->Paginator->settings = array('conditions' => $conditions,
             'limit' => $limit,
@@ -2928,11 +2943,20 @@ class ChartersController extends AppController {
                 $insertData['created'] = date("Y-m-d H:i:s");
                 $insertData['modified'] = date("Y-m-d H:i:s");
                 $this->TempWineListSelection->create();
-                    if ($this->TempWineListSelection->save($insertData)) {
-                        $result['status'] = "success";
-                    } else {
-                        $result['status'] = "fail";
-                    }
+                if ($this->TempWineListSelection->save($insertData)) {
+                    $result['status'] = "success";
+                    $filterData = array();
+                    // $filterData['wineName'] = $this->request->data['product_name'];
+                    $wineList = $this->fetchWineList($filterData); // Fetch wine list by filters
+                    $selectedWineList = $this->selectedWineList(); // Fetch wine list from Cart
+                    // echo "<pre>"; print_r($filterData); print_r($wineList); exit;
+                    $view = new View();
+                    $element = "wine_list_table";
+                    $wineListView  = $view->element($element, array('wineList' => $wineList, 'paginationPanel' => 'wineListDiv', 'filterData' => $filterData, 'selectedWineList' => $selectedWineList));
+                    $result['view'] = $wineListView;
+                } else {
+                    $result['status'] = "fail";
+                }
                 echo json_encode($result);
                 exit;
             }
