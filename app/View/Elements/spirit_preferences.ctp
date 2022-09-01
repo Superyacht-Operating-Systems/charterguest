@@ -383,6 +383,7 @@ $(document).on("click", ".removeProductFromCart", function(e) {
     var productListId = obj.data("productlistid");
     
     if (productListId != "") {
+        if(confirm("Are you sure you wish to delete this item")==true){
         $("#hideloader").show();
         $.ajax({
             type: "POST",
@@ -401,6 +402,7 @@ $(document).on("click", ".removeProductFromCart", function(e) {
                 $("#hideloader").hide();
             }
         });
+    }
     }  
 	
 });
@@ -514,6 +516,7 @@ $(document).on('keyup', '.productQuantity', function (e) {
 function calculateTotalProductQuantityOnKeyup(typeClass) {
     var total = 0;
     var totalQuantity = 0;
+    console.log('typeClass=',typeClass)
     
     $("#selectedProductListTableId tr").find("."+typeClass).each(function (e) {
         var value = $(this).val().trim();

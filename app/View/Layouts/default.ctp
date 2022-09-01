@@ -615,12 +615,13 @@ width: max-content;
       </div>
       <div class="modal-body">
         <div class="form-group">
-            <label>Product Name</label>
-            <input type="text" name="product name" class="form-control bsinput">
+            <label>Product Name <span style="color:red;"> * </span></label>
+            <input type="text" name="product name" id="product_name" class="form-control bsinput">
+            <span id="span_product_name" style="color:red;"> </span>
         </div>
         <div class="col-xs-12 col-sm-9 col-md-9 md-space-12">
         <div class="form-group">
-            <label>Product Type</label>
+            <label>Product Type <span style="color:red;"> * </span></label>
             <!--
             <select class="form-control">
             <option>Reposado Tequila</option>
@@ -629,9 +630,10 @@ width: max-content;
             </select>
             -->
             <?php echo $this->Form->input("product_type",array("id" => "product_type", "label"=>false,'options' => $typeList,'class'=>'form-control bsinput','empty'=>'Select')); ?>
+            <span id="span_product_type" style="color:red;"> </span>
         </div>
          <div class="form-group">
-            <label>Product Category</label>
+            <label>Product Category <span style="color:red;"> * </span></label>
             <!--<select class="form-control ">
             <option>Red Raspberry</option>
             <option>Sorrento Lemon</option>
@@ -639,12 +641,15 @@ width: max-content;
             </select>
             -->
             <?php echo $this->Form->input("category_list",array("id" => "category_list", "label"=>false,'options' => $categoryList,'class'=>'form-control bsinput','empty'=>'Select')); ?>
+            <span id="span_category_list" style="color:red;"> </span>
         </div>
     </div>
       </div>
       <div class="modal-footer">
           <input type="hidden" class="bsinput" id="CGID" name="CGID" value="<?php echo $session['charter_info']['CharterGuest']['id']; ?>">
-        <button id="save_bs_product" type="button" class="btn btn-save">Save</button>
+        <!-- <button id="save_bs_product" type="button" class="btn btn-save" onClick="fbsproductsubmit()">Save</button> -->
+        <button id="save_bs_product" type="button" class="btn btn-save" style="display:none">Save</button>
+        <button type="button" class="btn btn-save" onClick="fbsproductsubmit()">Save</button>
       </div>
     </div>
 
@@ -986,6 +991,50 @@ $confModal.on('hidden', function() {
 
 $confModal.modal({ backdrop : false });
 /// existing preference
+
+  function fbsproductsubmit(){
+    if(validate() == true){
+      $("#save_bs_product").trigger("click");
+    }
+  }
+
+  function validate()
+  {	
+    var isError = 0;
+    if($("#product_name").val()=='')
+    {
+      errorSpanText('product_name','Product name cannot be null');
+      isError = 1;
+    }else{
+      errorSpanText('product_name','');
+    }
+
+    if($("#product_type").val()=='')
+    {
+      errorSpanText('product_type','Product type cannot be null');
+      isError = 1;
+    }else{
+      errorSpanText('product_type','');
+    }
+
+    if($("#category_list").val()=='')
+    {
+      errorSpanText('category_list','Product category cannot be null');
+      isError = 1;
+    }else{
+      errorSpanText('category_list','');
+    }
+
+    if(isError == 0){
+      return true;
+    }
+    return false;
+  }
+
+  function errorSpanText(id,text)
+  {
+    $("#span_"+id).html(text);
+  }
 </script>
 </body>
 </html>

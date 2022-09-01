@@ -199,7 +199,7 @@ table#selectedWineListTableId tr td input {
                                     </div>
                             </div>
 
-                    <?php echo $this->Form->input('country', array('placeholder' => "Choose countries", 'id' => 'country', 'type' => 'select', 'multiple' => true, 'options' => $countryList, 'selected' => array(), 'class' => "multipleSelect form-control", 'label' => false, 'div' => false)); ?>
+                    <?php echo $this->Form->input('country', array('placeholder' => "Choose countries", 'id' => 'wine_country', 'type' => 'select', 'multiple' => true, 'options' => $countryList, 'selected' => array(), 'class' => "multipleSelect form-control", 'label' => false, 'div' => false)); ?>
 			</div> 
 		</div>
 		
@@ -550,7 +550,7 @@ $(document).on("change", "#showLimit", function(e) {
 
 // Filter handling
 function filterRequest() {
-    var country = $("#country").val();
+    var country = $("#wine_country").val();
     var region = $("#region").val();
     var appellation = $("#appellation").val();
     var color = $("#color").val();
