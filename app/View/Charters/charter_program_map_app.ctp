@@ -250,21 +250,21 @@ background: none!important;
     }
 
 }
-@media only screen and (min-width: 767px) and (max-width: 900px){
+@media only screen and (min-width: 700px) and (max-width: 900px){
 .custom-popup{
     height: 100vh!important;
 }
 }
-@media only screen and (min-width: 375px) and (max-width: 800px){
+@media only screen and (min-width: 768px) and (max-width: 800px){
 .leaflet-bottom {
   bottom: 15px;
 }
 }
-/* @media only screen and (min-width: 768px) and (max-width: 800px){
+@media only screen and (min-width: 375px) and (max-width: 768px){
     .leaflet-bottom {
-    bottom: 100px;
+    bottom: 20px;
 }
-} */
+}
     </style>
 
 <?php
