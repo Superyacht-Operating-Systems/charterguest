@@ -1223,6 +1223,20 @@ var sidebar = (function() {
 
 
 <script>
+/* orientationchange start */
+document.addEventListener('orientationchange', () => {
+  document.documentElement.style.height = `initial`;
+  setTimeout(() => {
+    document.documentElement.style.height = `100%`;
+      setTimeout(() => {
+        // this line prevents the content
+        // from hiding behind the address bar
+        window.scrollTo(0, 1);
+      }, 500);
+  }, 500);
+});
+/* orientationchange end */
+
  var guesttype = '<?php echo $guesttype;?>';
 var basefolder = '<?php echo $basefolder;?>';
 var vessel = new L.LayerGroup();
