@@ -250,7 +250,7 @@ background: none!important;
     }
 
 }
-@media only screen and (min-width: 767px) and (max-width: 800px){
+@media only screen and (min-width: 767px) and (max-width: 900px){
 .custom-popup{
     height: 100vh!important;
 }
