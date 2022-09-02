@@ -259,14 +259,18 @@ and (orientation : portrait) {
     height: 100vh!important;
 }
 .leaflet-bottom {
-    bottom: 20px;
+    bottom: 40px;
 }
 }
-/* @media only screen and (min-width: 700px) and (max-width: 900px){
+@media only screen and (min-width: 500px) and (max-width: 768px){
 .custom-popup{
     height: 100vh!important;
 }
-} */
+.leaflet-bottom {
+    bottom: 40px;
+}
+}
+
 @media only screen and (min-width: 768px) and (max-width: 800px){
 .leaflet-bottom {
   bottom: 15px;
