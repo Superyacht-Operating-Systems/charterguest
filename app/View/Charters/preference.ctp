@@ -29,11 +29,31 @@
 
             $base = $this->request->base;
 
-            //echo "<pre>"; print_r($this->Session->read()); 
+            // echo "<pre>"; print_r($this->Session->read()); 
     //exit;
 
     $iti_guestListUUID_beforeleave = $this->Session->read('guestListUUID');
  $iti_selectedCharterProgramUUID_beforeleave = $this->Session->read('selectedCharterProgramUUID'); 
+
+ $isgenerateWineOrderPdf = $this->Session->read('isgenerateWineOrderPdf'); 
+ if($isgenerateWineOrderPdf==true){
+    ?>
+    <script>
+        console.log("filepath jhghjg")
+        var filepath = "<?php echo $baseFolder; ?>/charters/generateWineOrderPdf";
+        console.log("filepath=",filepath)
+        console.log("isgenerateWineOrderPdf=",<?php echo $isgenerateWineOrderPdf; ?>)
+        downloadFile(filepath);
+
+        function downloadFile(filePath){
+            var link=document.createElement('a');
+            link.href = filePath;
+            link.download = filePath.substr(filePath.lastIndexOf('/') + 1);
+            link.click();
+        }
+    </script>
+    <?php
+ }
 ?>
 
 <?php 

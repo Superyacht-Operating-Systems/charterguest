@@ -1710,6 +1710,12 @@ class ChartersController extends AppController {
                 $this->CharterGuest->save(array('id' => $ownerprefenceID, 'send_wine_quotation' => $sendWineQuotation));
             }
             
+            $isgenerateWineOrderPdf = $data['isgenerateWineOrderPdf'];
+            $this->Session->write("isgenerateWineOrderPdf", false);
+            if($isgenerateWineOrderPdf){
+                $this->Session->write("isgenerateWineOrderPdf", $isgenerateWineOrderPdf);
+            }
+            
             $personalDetailsTab = '';
             $mealPreferenceTab = '';
             $foodPreferenceTab = '';
@@ -3151,7 +3157,8 @@ class ChartersController extends AppController {
         * Modified date - 
     */
     function generateWineOrderPdf() {
-        
+
+        $this->Session->write("isgenerateWineOrderPdf", false);        
         $this->layout = 'ajax';
         $this->autoRender = false;
         $result = array();
@@ -3163,7 +3170,7 @@ class ChartersController extends AppController {
 
         // Get Charter guest & assoc ids from session
         $sessionData = $this->Session->read();
-        echo "<pre>";print_r($sessionData);exit;
+        // echo "<pre>";print_r($sessionData);exit;
         if(isset($sessionData['ownerprefenceUUID']) && !empty($sessionData['ownerprefenceUUID'])){
             $charterHeadId = $sessionData['ownerprefenceUUID'];
         }else if(isset($sessionData['assocprefenceUUID']) && !empty($sessionData['assocprefenceUUID'])){
@@ -3187,6 +3194,22 @@ class ChartersController extends AppController {
         $this->CharterGuestWinePreference->virtualFields = array();
 
         $totalQuantity = isset($totalQuantitySum['CharterGuestWinePreference']['color_quantity_sum']) ? $totalQuantitySum['CharterGuestWinePreference']['color_quantity_sum'] : 0;
+
+        // $personalDetailsTab = '';
+        // $mealPreferenceTab = '';
+        // $foodPreferenceTab = '';
+        // $beveragePreferenceTab = '';
+        // $spiritPreferenceTab = '';
+        $winePreferenceTab = 'active in';
+        $itineraryPreferenceTab = '';
+        // Active/Inactive tabs
+        // $this->set('personalDetailsTab', $personalDetailsTab);
+        // $this->set('mealPreferenceTab', $mealPreferenceTab);
+        // $this->set('foodPreferenceTab', $foodPreferenceTab);
+        // $this->set('beveragePreferenceTab', $beveragePreferenceTab);
+        // $this->set('spiritPreferenceTab', $spiritPreferenceTab);
+        $this->set('winePreferenceTab', $winePreferenceTab);
+        $this->set('itineraryPreferenceTab', $itineraryPreferenceTab);
 
         // Load Element view
         $view = new View();

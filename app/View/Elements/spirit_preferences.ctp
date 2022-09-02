@@ -592,9 +592,18 @@ $(document).on("click", "#save_bs_product", function(e) {
                 if (result.status == 'success') {
                     $(".bsinput").val('');
                     $("#dont-click-modal").modal("hide");
+                    $('html, body').animate({
+                        'scrollTop': $("#responseAlert").position().top - 50
+                    });
+                    $("#responseAlert").removeClass("alert-danger").addClass("alert-success").css('display', 'block');
+                    $("#responseAlert").html(result.message).slideDown('fast').delay(3000).slideUp();
                     //location.reload();
                 } else {
-
+                    $('html, body').animate({
+                        'scrollTop': $("#responseAlert").position().top - 50
+                    });
+                    $("#responseAlert").removeClass("alert-success").addClass("alert-danger").css('display', 'block');
+                    $("#responseAlert").html(result.message).slideDown('fast').delay(3000).slideUp();
                 }   
             },
             error: function(jqxhr) { 
@@ -619,9 +628,18 @@ $(document).on("click", "#wlinputsave", function(e) {
                     $(".wlinput").val('');
                     $("#winePreference-modal").modal("hide");
                     $("#wineListDiv").html(result.view);
+                    $('html, body').animate({
+                        'scrollTop': $("#responseAlert").position().top - 50
+                    });
+                    $("#responseAlert").removeClass("alert-danger").addClass("alert-success").css('display', 'block');
+                    $("#responseAlert").html(result.message).slideDown('fast').delay(3000).slideUp();
                     // location.reload();
                 } else {
-
+                    $('html, body').animate({
+                        'scrollTop': $("#responseAlert").position().top - 50
+                    });
+                    $("#responseAlert").removeClass("alert-success").addClass("alert-danger").css('display', 'block');
+                    $("#responseAlert").html(result.message).slideDown('fast').delay(3000).slideUp();
                 }   
             },
             error: function(jqxhr) { 

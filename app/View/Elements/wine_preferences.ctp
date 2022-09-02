@@ -636,14 +636,19 @@ function calculateTotalQuantity() {
 
 // Generate PDF
 $(document).on("click", "#generateWineOrderPdf", function(e) {
-    $("#hideloader").show();
-    var filepath = "<?php echo $baseFolder; ?>/charters/generateWineOrderPdf";
-    
-    downloadFile(filepath);
+    $('#isgenerateWineOrderPdf').val(true)
 
-                    setTimeout(function () {
-                        $("#hideloader").hide();
-                 }, 3000);
+    $("#hideloader").show();
+    $("#winePreferenceForm").trigger("submit");
+
+    // var filepath = "<?php echo $baseFolder; ?>/charters/generateWineOrderPdf";
+    
+    // downloadFile(filepath);
+
+    // setTimeout(function () {
+    //     $("#hideloader").hide();
+    // }, 3000);
+                
 });
 
 

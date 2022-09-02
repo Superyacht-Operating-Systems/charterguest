@@ -4,6 +4,7 @@ $charterAssocIdByHeaderEdit = $this->Session->read('charterAssocIdByHeaderEdit')
 ?>
 
 <?php echo $this->Form->create('CharterGuestWinePreference', array('url' => array('controller' => 'charters','action' => 'preference'),'id'=>'winePreferenceForm'));     
+    echo $this->Form->hidden("isgenerateWineOrderPdf", array('value' => false, 'id' => 'isgenerateWineOrderPdf'));
     // When main Head charterer opens other guest(if Head charterer checked) and Update the Preference sheets
     if (isset($charterAssocIdByHeaderEdit) && !empty($charterAssocIdByHeaderEdit)) {
         echo $this->Form->hidden("charterAssocIdByHeaderEdit", array('value' => $charterAssocIdByHeaderEdit));
