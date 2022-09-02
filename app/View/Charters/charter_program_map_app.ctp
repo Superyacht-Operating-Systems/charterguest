@@ -64,7 +64,9 @@ echo $this->Html->script('leaflet/route');
 ?>
 
 <style>
+
     html, body {
+        height: 100vh !important;
   background: #000!important;
 }
 .map-userlabelp{
@@ -250,19 +252,81 @@ background: none!important;
     }
 
 }
-@media only screen and (min-width: 767px) and (max-width: 800px){
+@media only screen 
+and (min-device-width : 768px) 
+and (max-device-width : 1024px) 
+and (orientation : portrait) {
+
+    .custom-popup{
+    height: 98vh!important;
+}
+.leaflet-bottom {
+    bottom: 40px;
+}
+}
+
+
+@media only screen 
+and (min-device-width : 768px) 
+and (max-device-width : 1024px) 
+and (orientation : landscape) {
+
+    .custom-popup{
+    width: 100%!important;
+}
 .custom-popup{
     height: 100vh!important;
 }
+.leaflet-bottom {
+    bottom: 40px;
 }
-@media only screen and (min-width: 375px) and (max-width: 800px){
+}
+
+@media only screen 
+and (min-device-width : 810px) 
+and (max-device-width : 1080px) 
+and (orientation : portrait) {
+
+    .custom-popup{
+    height: 98vh!important;
+}
+.leaflet-bottom {
+    bottom: 40px;
+}
+}
+@media only screen 
+and (min-device-width : 810px) 
+and (max-device-width : 1080px) 
+and (orientation : landscape) {
+
+    .custom-popup{
+    width: 100%!important;
+}
+.custom-popup{
+    height: 100vh!important;
+}
+.leaflet-bottom {
+    bottom: 40px;
+}
+}
+
+/* @media only screen and (min-width: 500px) and (max-width: 768px){
+.custom-popup{
+    height: 100vh!important;
+}
+.leaflet-bottom {
+    bottom: 40px;
+}
+} */
+
+@media only screen and (min-width: 768px) and (max-width: 800px){
 .leaflet-bottom {
   bottom: 15px;
 }
 }
-/* @media only screen and (min-width: 768px) and (max-width: 800px){
+/* @media only screen and (min-width: 375px) and (max-width: 768px){
     .leaflet-bottom {
-    bottom: 100px;
+    bottom: 20px;
 }
 } */
     </style>
@@ -1185,6 +1249,20 @@ var sidebar = (function() {
 
 
 <script>
+/* orientationchange start */
+document.addEventListener('orientationchange', () => {
+  document.documentElement.style.height = `initial`;
+  setTimeout(() => {
+    document.documentElement.style.height = `100%`;
+      setTimeout(() => {
+        // this line prevents the content
+        // from hiding behind the address bar
+        window.scrollTo(0, 1);
+      }, 500);
+  }, 500);
+});
+/* orientationchange end */
+
  var guesttype = '<?php echo $guesttype;?>';
 var basefolder = '<?php echo $basefolder;?>';
 var vessel = new L.LayerGroup();
