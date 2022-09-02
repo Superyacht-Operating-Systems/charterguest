@@ -280,9 +280,35 @@ and (orientation : landscape) {
 .leaflet-bottom {
     bottom: 40px;
 }
-
 }
 
+@media only screen 
+and (min-device-width : 810px) 
+and (max-device-width : 1080px) 
+and (orientation : portrait) {
+
+    .custom-popup{
+    height: 98vh!important;
+}
+.leaflet-bottom {
+    bottom: 40px;
+}
+}
+@media only screen 
+and (min-device-width : 810px) 
+and (max-device-width : 1080px) 
+and (orientation : landscape) {
+
+    .custom-popup{
+    width: 100%!important;
+}
+.custom-popup{
+    height: 100vh!important;
+}
+.leaflet-bottom {
+    bottom: 40px;
+}
+}
 
 /* @media only screen and (min-width: 500px) and (max-width: 768px){
 .custom-popup{
