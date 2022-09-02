@@ -255,6 +255,16 @@ background: none!important;
     height: 100vh!important;
 }
 }
+@media only screen and (min-width: 375px) and (max-width: 800px){
+.leaflet-bottom {
+  bottom: 15px;
+}
+}
+/* @media only screen and (min-width: 768px) and (max-width: 800px){
+    .leaflet-bottom {
+    bottom: 100px;
+}
+} */
     </style>
 
 <?php
