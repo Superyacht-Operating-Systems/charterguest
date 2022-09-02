@@ -272,6 +272,9 @@ and (orientation : landscape) {
     .custom-popup{
     width: 100%!important;
 }
+.custom-popup{
+    height: 98vh!important;
+}
 .leaflet-bottom {
     bottom: 40px;
 }
