@@ -25,14 +25,14 @@
         3 => 'Skim',
         4 => 'Soy',
         5 => 'Rice',
-        6 => 'Armond'
+        6 => 'Almond'
     );
     // Soda items
     $sodaItems = array(
         1 => 'Diet Coke',
         2 => 'Coke',
         3 => 'Sprite',
-        4 => 'Gingerale',
+        4 => 'Ginger Ale',
         5 => 'Orange',
         6 => 'Pepsi',
         7 => 'Club Soda',
@@ -355,7 +355,7 @@ hr.divmar{
               <div class="be-col-3 be-col-sm-2">
                <div class="checkbox bev-chbox">
                <input type="checkbox" class="milkchk" name="data[CharterGuestBeveragePreference][milk_items][]" value="6" <?php echo $milkItemsChecked[6]; ?>>
-                <label class="pdd-none"><span class="sp-lab">Armond</span></label>
+                <label class="pdd-none"><span class="sp-lab">Almond</span></label>
               </div></div>
               <div>
               <input type="hidden" name="data[CharterGuestBeveragePreference][milk_hidden][]" id="milk_hidden" value="" />
@@ -388,7 +388,7 @@ hr.divmar{
               <div class="be-col-3 be-col-8">
                <div class="checkbox bev-chbox">
                <input type="checkbox" class="sodachk" name="data[CharterGuestBeveragePreference][soda_items][]" value="4" <?php echo $sodaItemsChecked[4]; ?>>
-                <label class="pdd-none"><span class="sp-lab">Gingerale</span></label>
+                <label class="pdd-none"><span class="sp-lab">Ginger Ale</span></label>
               </div></div>
               <div class="be-col-3 be-col-sm-2">
                <div class="checkbox bev-chbox">

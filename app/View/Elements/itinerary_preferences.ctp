@@ -9,7 +9,7 @@ $sessionData = $this->Session->read();
         1 => 'Swimming',
         2 => 'Water Skiing',
         3 => 'Sightseeing',
-        4 => 'Inland excusions',
+        4 => 'Inland excursions',
         5 => 'Music/dancing',
         6 => 'Trail blazing',
         7 => 'Night life/Clubs',
@@ -28,7 +28,7 @@ $sessionData = $this->Session->read();
         20 => 'Parasailing/gliding',
         21 => 'Water toys',
         22 => 'Rock climbing',
-        23 => 'Beachcombing/beach activites',
+        23 => 'Beachcombing/beach activities',
         24 => 'Wave runners/jet skis',
         25 => 'Active cruising',
         26 => 'Sailing/surfing',
@@ -170,7 +170,7 @@ $sessionData = $this->Session->read();
              <div class="be-col-6">
             <div class="checkbox bev-chbox">
             <input type="checkbox" class="itinerary" name="data[CharterGuestItineraryPreference][itinerary][]" value="4" <?php echo $itineraryListChecked[4]; ?>>
-              <label class="pdd-none"><span class="sp-lab">Inland excusions</span></label>
+              <label class="pdd-none"><span class="sp-lab">Inland excursions</span></label>
             </div>
             </div>
             <div class="be-col-6">
@@ -272,7 +272,7 @@ $sessionData = $this->Session->read();
             <div class="be-col-6">
              <div class="checkbox">
              <input type="checkbox" class="itinerary" name="data[CharterGuestItineraryPreference][itinerary][]" value="23" <?php echo $itineraryListChecked[23]; ?>>
-              <label class="pdd-none"><span class="sp-lab">Beach activites</span></label>
+              <label class="pdd-none"><span class="sp-lab">Beach activities</span></label>
             </div></div>
             <div class="be-col-6">
             <div class="checkbox bev-chbox">
@@ -423,7 +423,7 @@ $sessionData = $this->Session->read();
                <label>Special Considerations:</label>
              </div>
              <div class="col-md-10 ">
-               <p>Scuba diving may only be avialable when arranged in conjuction <span class="ipadport-break"></span>with a local dive operator at  additional change.</p>
+               <p>Scuba diving may only be available when arranged in conjuction <span class="ipadport-break"></span>with a local dive operator at additional charge.</p>
                <br>
              </div>
            </div>

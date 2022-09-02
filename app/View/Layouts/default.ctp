@@ -375,12 +375,13 @@ width: max-content;
       </div>
       <div class="modal-body">
         <div class="form-group">
-            <label>Product Name</label>
-            <input type="text" name="product name" class="form-control wlinput">
+            <label>Product Name <span style="color:red;"> * </span></label>
+            <input type="text" name="product name" id="wine_product_name" class="form-control wlinput">
+            <span id="span_wine_product_name" style="color:red;"> </span>
         </div>
         <div class="col-xs-12 col-sm-9 col-md-9 md-space-12">
         <div class="form-group">
-            <label>Product Type</label>
+            <label>Product Color <span style="color:red;"> * </span></label>
             <!--
             <select class="form-control">
             <option>Reposado Tequila</option>
@@ -389,9 +390,10 @@ width: max-content;
             </select>
             -->
             <?php echo $this->Form->input("wine_color_list",array("id" => "wine_color_list", "label"=>false,'options' => $colorList,'class'=>'form-control wlinput','empty'=>'Select')); ?>
+            <span id="span_wine_color_list" style="color:red;"> </span>
         </div>
          <div class="form-group">
-            <label>Product Category</label>
+            <label>Vintage <span style="color:red;"> * </span></label>
             <!--
             <select class="form-control ">
             <option>Red Raspberry</option>
@@ -399,13 +401,16 @@ width: max-content;
             <option>O'Clock Gin</option>
             </select>
             -->
-            <input type="text" name="Vintage" class="form-control wlinput">
+            <input type="number" name="Vintage" id="wine_vintage" class="form-control wlinput">
+            <span id="span_wine_vintage" style="color:red;"> </span>
         </div>
     </div>
       </div>
       <div class="modal-footer">
         <input type="hidden" class="wlinput" id="CGID" name="CGID" value="<?php echo $session['charter_info']['CharterGuest']['id']; ?>">
-        <button id="wlinputsave" type="button" class="btn btn-save">Save</button>
+        <!-- <button id="wlinputsave" type="button" class="btn btn-save">Save</button> -->
+        <button id="wlinputsave" type="button" class="btn btn-save" style="display:none">Save</button>
+        <button type="button" class="btn btn-save" onClick="fwlinputsavesubmit()">Save</button>
       </div>
     </div>
 
@@ -1034,6 +1039,45 @@ $confModal.modal({ backdrop : false });
   function errorSpanText(id,text)
   {
     $("#span_"+id).html(text);
+  }
+
+  function fwlinputsavesubmit(){
+    if(validateWlinput() == true){
+      $("#wlinputsave").trigger("click");
+    }
+  }
+
+  function validateWlinput()
+  {	
+    var isError = 0;
+    if($("#wine_product_name").val()=='')
+    {
+      errorSpanText('wine_product_name','Product name cannot be null');
+      isError = 1;
+    }else{
+      errorSpanText('wine_product_name','');
+    }
+
+    if($("#wine_color_list").val()=='')
+    {
+      errorSpanText('wine_color_list','Product color cannot be null');
+      isError = 1;
+    }else{
+      errorSpanText('wine_color_list','');
+    }
+
+    if($("#wine_vintage").val()=='')
+    {
+      errorSpanText('wine_vintage','Vintage cannot be null');
+      isError = 1;
+    }else{
+      errorSpanText('wine_vintage','');
+    }
+
+    if(isError == 0){
+      return true;
+    }
+    return false;
   }
 </script>
 </body>
