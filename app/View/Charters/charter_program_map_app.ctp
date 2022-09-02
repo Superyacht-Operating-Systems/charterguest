@@ -278,6 +278,9 @@ and (orientation : landscape) {
 .leaflet-bottom {
     bottom: 40px;
 }
+html, body {
+    height: 100vh !important;
+}
 }
 
 
