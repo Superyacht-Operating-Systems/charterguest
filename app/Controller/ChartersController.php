@@ -2904,8 +2904,10 @@ class ChartersController extends AppController {
                 $this->TempProductListSelection->create();
                     if ($this->TempProductListSelection->save($insertData)) {
                         $result['status'] = "success";
+                        $result['message'] = "Successfully created.";
                     } else {
                         $result['status'] = "fail";
+                        $result['message'] = "Failed.";
                     }
                 echo json_encode($result);
                 exit;
@@ -2945,6 +2947,7 @@ class ChartersController extends AppController {
                 $this->TempWineListSelection->create();
                 if ($this->TempWineListSelection->save($insertData)) {
                     $result['status'] = "success";
+                    $result['message'] = "Successfully created.";
                     $filterData = array();
                     // $filterData['wineName'] = $this->request->data['product_name'];
                     $wineList = $this->fetchWineList($filterData); // Fetch wine list by filters
@@ -2956,6 +2959,7 @@ class ChartersController extends AppController {
                     $result['view'] = $wineListView;
                 } else {
                     $result['status'] = "fail";
+                    $result['message'] = "Failed.";
                 }
                 echo json_encode($result);
                 exit;
@@ -3159,7 +3163,7 @@ class ChartersController extends AppController {
 
         // Get Charter guest & assoc ids from session
         $sessionData = $this->Session->read();
-        //echo "<pre>";print_r($sessionData);exit;
+        echo "<pre>";print_r($sessionData);exit;
         if(isset($sessionData['ownerprefenceUUID']) && !empty($sessionData['ownerprefenceUUID'])){
             $charterHeadId = $sessionData['ownerprefenceUUID'];
         }else if(isset($sessionData['assocprefenceUUID']) && !empty($sessionData['assocprefenceUUID'])){

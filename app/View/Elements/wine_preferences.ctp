@@ -444,6 +444,7 @@ $(document).on("click", ".removeWineFromCart", function(e) {
     var wineListId = obj.data("winelistid");
     
     if (wineListId != "") {
+        if(confirm("Are you sure you wish to delete this item")==true){
         $("#hideloader").show();
         $.ajax({
             type: "POST",
@@ -472,6 +473,7 @@ $(document).on("click", ".removeWineFromCart", function(e) {
                 $("#hideloader").hide();
             }
         });
+    }
     }  
 	
 });
@@ -595,8 +597,8 @@ function calculateTotalQuantityOnKeyup(colorClass) {
         if (value != "") {
             var quantity = parseInt(value);
             total += quantity;
-            $("#totalQuantityTableId tr").find("."+colorClass).text(total);
         }   
+        $("#totalQuantityTableId tr").find("."+colorClass).text(total);
     });
     
     $("#totalQuantityTableId tr").find(".totalColorQuantity").each(function (e) {
