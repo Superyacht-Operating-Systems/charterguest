@@ -41,6 +41,9 @@
 ?>
 
 <style>
+    .occDate .form-control {
+    padding: 6px 8px;
+}
     .modalmsg {
     text-align: center;
     padding: 20px 0px!important;
