@@ -432,7 +432,13 @@ body .menu .submenu .menu__item a {
 </div>
 </div>
 
-
+<div class="row">
+    <div class="col-lg-4">
+        <?php echo $this->Session->flash();?>
+        <div id="responseAlert" class="alert alert-success top strong-font" style="display:none;">
+        </div>
+    </div>
+</div>
 
 <?php 
 if(isset($defaultFirstName) && !empty($defaultFirstName)){
