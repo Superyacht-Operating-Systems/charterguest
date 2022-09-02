@@ -250,21 +250,33 @@ background: none!important;
     }
 
 }
-@media only screen and (min-width: 700px) and (max-width: 900px){
+@media only screen 
+and (min-device-width : 768px) 
+and (max-device-width : 1024px) 
+and (orientation : portrait) {
+
+    .custom-popup{
+    height: 100vh!important;
+}
+.leaflet-bottom {
+    bottom: 20px;
+}
+}
+/* @media only screen and (min-width: 700px) and (max-width: 900px){
 .custom-popup{
     height: 100vh!important;
 }
-}
+} */
 @media only screen and (min-width: 768px) and (max-width: 800px){
 .leaflet-bottom {
   bottom: 15px;
 }
 }
-@media only screen and (min-width: 375px) and (max-width: 768px){
+/* @media only screen and (min-width: 375px) and (max-width: 768px){
     .leaflet-bottom {
     bottom: 20px;
 }
-}
+} */
     </style>
 
 <?php
