@@ -64,7 +64,9 @@ echo $this->Html->script('leaflet/route');
 ?>
 
 <style>
+
     html, body {
+        height: 100vh !important;
   background: #000!important;
 }
 .map-userlabelp{
@@ -273,14 +275,12 @@ and (orientation : landscape) {
     width: 100%!important;
 }
 .custom-popup{
-    height: 98vh!important;
+    height: 100vh!important;
 }
 .leaflet-bottom {
     bottom: 40px;
 }
-html, body {
-    height: 100vh !important;
-}
+
 }
 
 
