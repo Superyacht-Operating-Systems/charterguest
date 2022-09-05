@@ -316,6 +316,7 @@ $("body").on("click", ".close-filter-button", function () {
 
 </script>
 <script type="text/javascript">
+var countryList =  <?php echo json_encode($countryList); ?>;
 
 // Initialize the Multi select dropdown
 $('.multipleSelect').fastselect();
@@ -481,13 +482,16 @@ $(document).on("change", "#showProductLimit", function(e) {
 
 // Filter handling
 function productFilterRequest() {
+    // Removing the characters that are not present in the dropdown or not selected from the list.
+    $(".fstQueryInput").val('');
+
     var country = $("#country").val();
     var type = $("#type").val();
     var style = $("#style").val();
     var category = $("#category").val();
     var showLimit = $("#showProductLimit").val();
     var productName = $("#productName").val();
-    
+
     $("#hideloader").show();
     $.ajax({
         type: "POST",
@@ -561,14 +565,17 @@ function calculateTotalProductQuantity() {
 
 // Generate PDF
 $(document).on("click", "#generateProductOrderPdf", function(e) {
+    $('#isgenerateProductOrderPdf').val(true)
 
     $("#hideloader").show();
-var filepath = "<?php echo $baseFolder; ?>/charters/generateProductOrderPdf";
-downloadFile(filepath);
+    $("#spiritPreferenceForm").trigger("submit");
 
-                    setTimeout(function () {
-                        $("#hideloader").hide();
-                 }, 3000);
+// var filepath = "<?php echo $baseFolder; ?>/charters/generateProductOrderPdf";
+// downloadFile(filepath);
+
+//                     setTimeout(function () {
+//                         $("#hideloader").hide();
+//                  }, 3000);
 });
 
 function downloadFile(filePath){

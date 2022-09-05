@@ -54,6 +54,25 @@
     </script>
     <?php
  }
+
+ $isgenerateProductOrderPdf = $this->Session->read('isgenerateProductOrderPdf'); 
+ if($isgenerateProductOrderPdf==true){
+    ?>
+    <script>
+        console.log("filepath jhghjg")
+        var filepath = "<?php echo $baseFolder; ?>/charters/generateProductOrderPdf";
+        console.log("filepath=",filepath)
+        downloadFile(filepath);
+
+        function downloadFile(filePath){
+            var link=document.createElement('a');
+            link.href = filePath;
+            link.download = filePath.substr(filePath.lastIndexOf('/') + 1);
+            link.click();
+        }
+</script>
+    <?php
+ }
 ?>
 
 <?php 
@@ -961,4 +980,25 @@ window.scrollTo(0,0);
 //     <?php //} ?> 
 // });    
 
+function validateHhMm(inputField) {
+    var isValid = /^([0-1]?[0-9]|2[0-4]):([0-5][0-9])(:[0-5][0-9])?$/.test(inputField.value);
+
+    if (isValid) {
+        inputField.style.backgroundColor = '#bfa';
+    } else {
+        inputField.style.backgroundColor = '#fba';
+        inputField.value = '';
+    }
+
+    return isValid;
+}
+function validateDate(id) {
+    console.log("validateDate id=",id);
+    var date = $('#'+id).val;
+
+    console.log("date=",date);
+    var d = new Date(date);
+    var valid = (d.getTime() === d.getTime());
+    console.log("valid=",valid);
+}
 </script> 

@@ -1293,7 +1293,8 @@ input[type="checkbox"] {
                             </div>
                             <div class="col-xs-6 col-md-2 col-sm-2 pdd-none md-marg-div md-no-padd">
                                 <!--<input ttype="text" class="form-control" name="data[CharterGuestMealPreference][restaurant_time1]" placeholder="Time">-->
-                                <?php echo $this->Form->input("restaurant_time1",array("label"=>false,'class'=>'form-control timePicker','type' => 'text', 'placeholder' => 'Time')); ?>
+                                <?php echo $this->Form->input("restaurant_time1",array("label"=>false,'class'=>'form-control timePicker','type' => 'text', 'placeholder' => 'Time', 'onchange' => "validateHhMm(this)")); ?>
+                                <!-- //, 'onkeyup' => "validateDate('CharterGuestMealPreferenceRestaurantTime1')")); ?> -->
                             </div> <br><br>
                             <div class="col-xs-12 col-md-4 col-sm-7 pdd-none md-marg-div">
                                 <!--<input type="text" class="form-control" name="data[CharterGuestMealPreference][restaurant2]"  placeholder="Restaurant Name and Town">-->
@@ -1305,7 +1306,7 @@ input[type="checkbox"] {
                             </div>
                             <div class="col-xs-6 col-md-2 col-sm-2 pdd-none md-marg-div md-no-padd">
                                 <!--<input ttype="text" class="form-control" name="data[CharterGuestMealPreference][restaurant_time2]" placeholder="Time">-->
-                                <?php echo $this->Form->input("restaurant_time2",array("label"=>false,'class'=>'form-control timePicker','type' => 'text', 'placeholder' => 'Time')); ?>
+                                <?php echo $this->Form->input("restaurant_time2",array("label"=>false,'class'=>'form-control timePicker','type' => 'text', 'placeholder' => 'Time', 'onchange' => "validateHhMm(this)")); ?>
                             </div> <br><br>
                             <div class="col-xs-12 col-md-4 col-sm-7 pdd-none md-marg-div">
                                 <!--<input type="text" class="form-control" name="data[CharterGuestMealPreference][restaurant3]"  placeholder="Restaurant Name and Town">-->
@@ -1317,7 +1318,7 @@ input[type="checkbox"] {
                             </div>
                             <div class="col-xs-6 col-md-2 col-sm-2 pdd-none md-marg-div md-no-padd">
                                 <!--<input ttype="text" class="form-control" name="data[CharterGuestMealPreference][restaurant_time3]" placeholder="Time">-->
-                                <?php echo $this->Form->input("restaurant_time3",array("label"=>false,'class'=>'form-control timePicker','type' => 'text', 'placeholder' => 'Time')); ?>
+                                <?php echo $this->Form->input("restaurant_time3",array("label"=>false,'class'=>'form-control timePicker','type' => 'text', 'placeholder' => 'Time', 'onchange' => "validateHhMm(this)")); ?>
                             </div>
                         </div>
                     </div>

@@ -838,6 +838,8 @@ class ChartersController extends AppController {
     */
     function preference() {
 
+        $this->Session->write("isgenerateProductOrderPdf", false);
+        $this->Session->write("isgenerateWineOrderPdf", false);        
         $session = $this->Session->read('charter_info');
         $sessionAssoc = $this->Session->read('charter_assoc_info');
         if (empty($session)) {
@@ -1612,6 +1614,12 @@ class ChartersController extends AppController {
                 $this->CharterGuest->save(array('id' => $ownerprefenceID, 'send_spirit_quotation' => $sendSpiritQuotation));
             }
             
+            $isgenerateProductOrderPdf = $data['isgenerateProductOrderPdf'];
+            $this->Session->write("isgenerateProductOrderPdf", false);
+            if($isgenerateProductOrderPdf){
+                $this->Session->write("isgenerateProductOrderPdf", $isgenerateProductOrderPdf);
+            }
+
             $personalDetailsTab = '';
             $mealPreferenceTab = '';
             $foodPreferenceTab = '';
@@ -3715,6 +3723,7 @@ class ChartersController extends AppController {
     */
     function generateProductOrderPdf() {
         
+        $this->Session->write("isgenerateProductOrderPdf", false);
         $this->layout = 'ajax';
         $this->autoRender = false;
         $result = array();
