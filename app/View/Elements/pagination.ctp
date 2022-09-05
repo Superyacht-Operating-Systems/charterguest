@@ -27,8 +27,7 @@ $this->Js->JqueryEngine->jQueryObject = 'jQuery';
 														    'class' => 'number'
 														    )); ?>
                	<?php echo $this->Paginator->next(__('<span>&raquo;</span>'), array('tag' => 'li', 'escape' => false)); ?>
-               	
-               	
+               	<?= $this->Paginator->counter() ?>               	
 </ul>
 
 <?php
