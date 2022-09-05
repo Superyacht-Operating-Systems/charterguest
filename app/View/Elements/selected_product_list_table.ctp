@@ -121,6 +121,9 @@ padding-right: 8px;
 margin-left: 10px;
 }
 }
+.table tbody > tr > .wordbreak {
+    word-break: break-all;
+}
 
 </style>
 <div class="">
@@ -203,13 +206,13 @@ margin-left: 10px;
                         <?php foreach ($typeList as $key => $type) { ?>
                             <tr>
                                     <th>Total <?php echo !empty($type) ? $type : 'Non-type'; ?></th>  
-                                    <td class="al-cent totalTypeQuantity type_<?php echo $key; ?>" data-typeClass="type_<?php echo $key; ?>">0</td>
+                                    <td class="al-cent totalTypeQuantity wordbreak type_<?php echo $key; ?>" data-typeClass="type_<?php echo $key; ?>">0</td>
                                     <td class="al-cent">Bottles</td>
                             </tr>
                         <?php } ?>    
             <tr>
                 <th>Total Quantity</th>  
-                                <td id="totalProductQuantity" class="al-cent">0</td>
+                                <td id="totalProductQuantity" class="al-cent wordbreak">0</td>
                 <td class="al-cent">Bottles</td>
             </tr>
              </table>

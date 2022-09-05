@@ -121,7 +121,9 @@ padding-right: 8px;
 margin-left: 10px;
 }
 }
-
+.table tbody > tr > .wordbreak {
+    word-break: break-all;
+}
 </style>
 
 
@@ -208,13 +210,13 @@ margin-left: 10px;
                         <?php foreach ($colorList as $color) { ?>
                             <tr>
                                     <th>Total <?php echo !empty($color) ? $color : 'Non-type'; ?></th>  
-                                    <td class="al-cent totalColorQuantity color_<?php echo !empty($color) ? strtolower($color) : 'nontype'; ?>" data-colorClass="color_<?php echo !empty($color) ? strtolower($color) : 'nontype'; ?>">0</td>
+                                    <td class="al-cent totalColorQuantity wordbreak color_<?php echo !empty($color) ? strtolower($color) : 'nontype'; ?>" data-colorClass="color_<?php echo !empty($color) ? strtolower($color) : 'nontype'; ?>">0</td>
                                     <td class="al-cent">Bottles</td>
                             </tr>
                         <?php } ?>    
             <tr>
                 <th>Total Quantity</th>  
-                <td id="totalWineQuantity" class="al-cent">0</td>
+                <td id="totalWineQuantity" class="al-cent wordbreak">0</td>
                 <td class="al-cent">Bottles</td>
             </tr>
              </table>
