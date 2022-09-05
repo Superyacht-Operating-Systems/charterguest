@@ -152,7 +152,7 @@ margin-left: 10px;
                         ?>
                         <input type="hidden" name="data[CharterGuestSpiritPreference][product_preference_id][]" value="<?php echo $preferenceItem['CharterGuestSpiritPreference']['id']; ?>">
                         <input type="hidden" name="data[CharterGuestSpiritPreference][product_id][]" value="<?php echo $preferenceItem['CharterGuestSpiritPreference']['product_list_id']; ?>">
-                        <input type="text" name="data[CharterGuestSpiritPreference][product_quantity][]" value="<?php echo $preferenceItem['CharterGuestSpiritPreference']['quantity']; ?>" class="form-control numericInput productQuantity text-center type_<?php echo $typeName; ?>" data-typeClass="type_<?php echo $typeName; ?>"> 
+                        <input type="text" name="data[CharterGuestSpiritPreference][product_quantity][]" value="<?php echo $preferenceItem['CharterGuestSpiritPreference']['quantity']; ?>" class="form-control numericInput productQuantity text-center type_<?php echo $typeName; ?>" data-typeClass="type_<?php echo $typeName; ?>" maxlength="4"> 
                     </div>
                 </td>
                 <td class="th-md-60"><?php echo $preferenceItem['CharterGuestSpiritPreference']['name']; ?></td>

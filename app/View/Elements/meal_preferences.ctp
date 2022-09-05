@@ -1289,7 +1289,7 @@ input[type="checkbox"] {
                             </div>
                             <div class="col-xs-6 col-md-3 col-sm-3 md-marg-div md-no-padd">
                                 <!--<input ttype="text" class="form-control datePicker" name="data[CharterGuestMealPreference][restaurant_date1]" placeholder="Select Date">-->
-                                <?php echo $this->Form->input("restaurant_date1",array("label"=>false,'class'=>'form-control datePicker','type' => 'text', 'placeholder' => 'Select Date')); ?>
+                                <?php echo $this->Form->input("restaurant_date1",array("label"=>false,'class'=>'form-control datePicker','type' => 'text', 'placeholder' => 'Select Date', 'onchange' => "isValidDate(this)")); ?>
                             </div>
                             <div class="col-xs-6 col-md-2 col-sm-2 pdd-none md-marg-div md-no-padd">
                                 <!--<input ttype="text" class="form-control" name="data[CharterGuestMealPreference][restaurant_time1]" placeholder="Time">-->
@@ -1302,7 +1302,7 @@ input[type="checkbox"] {
                             </div>
                             <div class="col-xs-6 col-md-3 col-sm-3 md-marg-div md-no-padd">
                                 <!--<input ttype="text" class="form-control datePicker" name="data[CharterGuestMealPreference][restaurant_date2]" placeholder="Select Date">-->
-                                <?php echo $this->Form->input("restaurant_date2",array("label"=>false,'class'=>'form-control datePicker','type' => 'text', 'placeholder' => 'Select Date')); ?>
+                                <?php echo $this->Form->input("restaurant_date2",array("label"=>false,'class'=>'form-control datePicker','type' => 'text', 'placeholder' => 'Select Date', 'onchange' => "isValidDate(this)")); ?>
                             </div>
                             <div class="col-xs-6 col-md-2 col-sm-2 pdd-none md-marg-div md-no-padd">
                                 <!--<input ttype="text" class="form-control" name="data[CharterGuestMealPreference][restaurant_time2]" placeholder="Time">-->
@@ -1314,7 +1314,7 @@ input[type="checkbox"] {
                             </div>
                             <div class="col-xs-6 col-md-3 col-sm-3 md-marg-div md-no-padd">
                                 <!--<input ttype="text" class="form-control datePicker" name="data[CharterGuestMealPreference][restaurant_date3]" placeholder="Select Date">-->
-                                <?php echo $this->Form->input("restaurant_date3",array("label"=>false,'class'=>'form-control datePicker','type' => 'text', 'placeholder' => 'Select Date')); ?>
+                                <?php echo $this->Form->input("restaurant_date3",array("label"=>false,'class'=>'form-control datePicker','type' => 'text', 'placeholder' => 'Select Date', 'onchange' => "isValidDate(this)")); ?>
                             </div>
                             <div class="col-xs-6 col-md-2 col-sm-2 pdd-none md-marg-div md-no-padd">
                                 <!--<input ttype="text" class="form-control" name="data[CharterGuestMealPreference][restaurant_time3]" placeholder="Time">-->

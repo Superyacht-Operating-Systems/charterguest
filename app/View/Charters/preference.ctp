@@ -992,6 +992,17 @@ function validateHhMm(inputField) {
 
     return isValid;
 }
+// Validates that the input string is a valid date
+function isValidDate(inputField)
+{
+    var dateString = inputField.value;
+    var date = new Date(dateString);    
+    var valid = (date.getTime() === date.getTime());
+
+    if(!valid){
+        inputField.value = '';
+    }
+};
 function validateDate(id) {
     console.log("validateDate id=",id);
     var date = $('#'+id).val;

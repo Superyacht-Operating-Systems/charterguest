@@ -341,7 +341,7 @@ table.fd-table tr>td {
           <div class="col-lg-1 col-sm-2 ipadport-middle label-rigt-align"><label class="control-label ma-b ">Breakfast</label></div>
           <div class="col-lg-2 rt-nospacesp col-sm-2 ipadport-input-padding-vertical input-mobile-width">
             <!--<input type="text" class="form-control input-wid">-->
-            <?php echo $this->Form->input("breakfast_time",array("label"=>false, 'placeholder' => 'Time','class'=>'form-control input-wid breakfast_time_timePicker','type' => 'text')); ?>
+            <?php echo $this->Form->input("breakfast_time",array("label"=>false, 'placeholder' => 'Time','class'=>'form-control input-wid breakfast_time_timePicker','type' => 'text', 'onchange' => "validateHhMm(this)")); ?>
           </div>
           <div class="col-lg-2 col-sm-2 md-radio-column-box">
             <div class="radio ma-t-check">
@@ -369,7 +369,7 @@ table.fd-table tr>td {
           <div class="col-lg-1 col-sm-2 ipadport-middle label-rigt-align"><label class="control-label ma-b">Lunch</label></div>
           <div class="col-lg-2 rt-nospacesp col-sm-2 ipadport-input-padding-vertical input-mobile-width">
             <!--<input type="text" class="form-control input-wid">-->
-            <?php echo $this->Form->input("lunch_time",array("label"=>false, 'placeholder' => 'Time','class'=>'form-control input-wid lunch_time_timePicker','type' => 'text')); ?>
+            <?php echo $this->Form->input("lunch_time",array("label"=>false, 'placeholder' => 'Time','class'=>'form-control input-wid lunch_time_timePicker','type' => 'text', 'onchange' => "validateHhMm(this)")); ?>
           </div>
           <div class="col-lg-2 col-sm-2 md-radio-column-box">
             <div class="radio ma-t-check">
@@ -397,7 +397,7 @@ table.fd-table tr>td {
           <div class="col-lg-1 col-sm-2 ipadport-middle label-rigt-align"><label class="control-label ma-b">Dinner</label></div>
           <div class="col-lg-2 rt-nospacesp col-sm-2 ipadport-input-padding-vertical input-mobile-width">
             <!--<input type="text" class="form-control input-wid">-->
-            <?php echo $this->Form->input("dinner_time",array("label"=>false, 'placeholder' => 'Time','class'=>'form-control input-wid dinner_time_timePicker','type' => 'text')); ?>
+            <?php echo $this->Form->input("dinner_time",array("label"=>false, 'placeholder' => 'Time','class'=>'form-control input-wid dinner_time_timePicker','type' => 'text', 'onchange' => "validateHhMm(this)")); ?>
           </div>
           <div class="col-lg-2 col-sm-2 md-radio-column-box">
             <div class="radio ma-t-check">

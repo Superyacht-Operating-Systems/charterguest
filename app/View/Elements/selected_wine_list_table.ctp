@@ -154,7 +154,7 @@ margin-left: 10px;
                         ?>
                         <input type="hidden" name="data[CharterGuestWinePreference][wine_preference_id][]" value="<?php echo $preferenceItem['CharterGuestWinePreference']['id']; ?>">
                         <input type="hidden" name="data[CharterGuestWinePreference][wine_id][]" value="<?php echo $preferenceItem['CharterGuestWinePreference']['wine_list_id']; ?>">
-                        <input type="text" name="data[CharterGuestWinePreference][wine_quantity][]" value="<?php echo $preferenceItem['CharterGuestWinePreference']['quantity']; ?>" class="form-control numericInput wineQuantity color_<?php echo $colorName; ?>" data-colorClass="color_<?php echo $colorName; ?>">  
+                        <input type="text" name="data[CharterGuestWinePreference][wine_quantity][]" value="<?php echo $preferenceItem['CharterGuestWinePreference']['quantity']; ?>" class="form-control numericInput wineQuantity color_<?php echo $colorName; ?>" data-colorClass="color_<?php echo $colorName; ?>" maxlength="4">  
                     </div>
                 </td>
                 <td class="th-md-60"><?php echo $preferenceItem['CharterGuestWinePreference']['wine']; ?></td>
