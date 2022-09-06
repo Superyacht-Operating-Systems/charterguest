@@ -201,7 +201,7 @@ width: 600px;
         </div>
       <h3>Dear <?php echo isset($data['salutation']) ? $data['salutation'] : ""; ?>,</h3>
       <h3>Please rate your experience onboard.<span><?php echo isset($data['yacht_name']) ? $data['yacht_name'] : ""; ?>.</span></h3>
-      <form method="post" action="<?php echo $base; ?>/chartersurveys/add_edit">
+      <form method="post" action="<?php echo $base; ?>/chartersurveys/add_edit" id="rateform">
           <input type="hidden" name="id" value="<?php echo isset($surveyData['CharterGuestSurvey']['id']) ? $surveyData['CharterGuestSurvey']['id'] : ""; ?>">
           <input type="hidden" name="charter_company_id" value="<?php echo isset($data['charter_company_id']) ? $data['charter_company_id'] : ""; ?>">
           <input type="hidden" name="charter_yacht_id" value="<?php echo isset($data['charter_yacht_id']) ? $data['charter_yacht_id'] : ""; ?>">
@@ -311,6 +311,7 @@ width: 600px;
                   </div>
                 </div>
           </div>
+            <span id="span_yacht_again" style="color:red;"> </span>
         </div>
       </div>
 
@@ -339,16 +340,18 @@ width: 600px;
                   </div>
                 </div>
           </div>
+            <span id="span_broker_again" style="color:red;"> </span>
         </div>
       </div>
 
       <div class="row flex-mdrow">
         <div class="col-md-12 form-textarea">
           <h5>Comments</h5>
-          <textarea class="form-control" rows="4" name="comments" value="<?php echo (isset($surveyData['CharterGuestSurvey']['comments']) ? $surveyData['CharterGuestSurvey']['comments'] : ""); ?>"><?php echo (isset($surveyData['CharterGuestSurvey']['comments']) ? $surveyData['CharterGuestSurvey']['comments'] : ""); ?></textarea>
+          <textarea class="form-control" rows="4" name="comments" id="comments" value="<?php echo (isset($surveyData['CharterGuestSurvey']['comments']) ? $surveyData['CharterGuestSurvey']['comments'] : ""); ?>"><?php echo (isset($surveyData['CharterGuestSurvey']['comments']) ? $surveyData['CharterGuestSurvey']['comments'] : ""); ?></textarea>
+            <span id="span_comments" style="color:red;"> </span>
           <br>
           <div class="sub-btn-su">
-          <input type="submit" class="btn btn-success" value="Submit">
+            <input type="button" class="btn btn-success" value="Submit" onClick="fsubmit()">
         </div>
         </div>
       </div>
@@ -446,6 +449,62 @@ width: 600px;
             $("#StartModal").modal('hide');
    });
     
+  function fsubmit(){
+    console.log('fsubmit')
+    if(validateFields() == true){
+      console.log('fsubmit true')
+      // return true;
+      // $("#rateform").trigger("click");
+      $( "#rateform" ).submit();
+    } else {
+      console.log('fsubmit false')
+      // return false;
+    }
+  }
+
+  function validateFields()
+  {	
+    var isError = 0;
+    var yacht_again = $('input[name=yacht_again]:checked').val() 
+    console.log('yacht_again=',yacht_again)
+
+    if(yacht_again=='' || yacht_again==undefined)
+    {
+      errorSpanText('yacht_again','This field is required.');
+      isError = 1;
+    }else{
+      errorSpanText('yacht_again','');
+    }
+
+    var broker_again = $('input[name=broker_again]:checked').val() 
+    if(broker_again=='' || broker_again==undefined)
+    {
+      errorSpanText('broker_again','This field is required.');
+      isError = 1;
+    }else{
+      errorSpanText('broker_again','');
+    }
+
+    console.log('comments=',$("#comments").val())
+    if($("#comments").val()=='')
+    {
+      errorSpanText('comments','This field is required.');
+      isError = 1;
+    }else{
+      errorSpanText('comments','');
+    }
+
+    console.log('isError=',isError)
+    if(isError == 0){
+      return true;
+    }
+    return false;
+  }
+
+  function errorSpanText(id,text)
+  {
+    $("#span_"+id).html(text);
+  }
 </script> 
 
 </body>
