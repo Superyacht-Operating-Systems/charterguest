@@ -280,6 +280,7 @@ width: 600px;
                     </div>
                   </div>
             </div>
+            <span id="span_question<?php echo $i; ?>" style="color:red;"> </span>
           </div>
         </div>
       <?php 
@@ -419,7 +420,8 @@ width: 600px;
 </div>
 
 <script>
-   
+   var questionCount = <?php echo count($questionData); ?>
+
    $(document).ready(function() {
     
      <?php if($modalshow == "startmodal"){ ?>
@@ -450,7 +452,7 @@ width: 600px;
    });
     
   function fsubmit(){
-    console.log('fsubmit')
+    console.log('questionCount=',questionCount)
     if(validateFields() == true){
       console.log('fsubmit true')
       // return true;
@@ -467,6 +469,22 @@ width: 600px;
     var isError = 0;
     var yacht_again = $('input[name=yacht_again]:checked').val() 
     console.log('yacht_again=',yacht_again)
+    
+
+    var count = 1;
+    while (count <= questionCount) {
+      console.log('count=',count)
+      var question = $('input[name="question['+count+']"]:checked').val() 
+      console.log('question8=',question)
+      if(question=='' || question==undefined)
+      {
+        errorSpanText('question'+count,'This field is required.');
+        isError = 1;
+      }else{
+        errorSpanText('question'+count,'');
+      }
+      count ++;
+    }
 
     if(yacht_again=='' || yacht_again==undefined)
     {
