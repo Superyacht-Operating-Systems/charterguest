@@ -955,7 +955,7 @@ input[type="checkbox"] {
                             <input type="checkbox" class="breakfastchk"
                                 name="data[CharterGuestMealPreference][breakfast_likes][]" value="40"
                                 <?php echo $breakfastLikesListChecked[40]; ?>>
-                            <label class="pdd-none">Almond</label>
+                            <label class="pdd-none">Almond Milk</label>
                         </div>
                     </div>
                     <div class="col-sm-2 pdd-none bf-width">
@@ -1328,12 +1328,12 @@ input[type="checkbox"] {
                 <hr class="divider" />
 
                 <div class="form-group frmgrp-mar">
-                    <label class="col-sm-4 col-md-3  mar-btm">Hors d'eovres</label>
+                    <label class="col-sm-4 col-md-3  mar-btm">Hors d’oeuvres</label>
                     <div class="col-sm-12"></div>
                     <div class="col-sm-12 ipadport-lastblock-one  md-no-padd">
                         <label
                             class="control-label col-xs-12 col-sm-5 col-md-3 mar-btm pdd-none hors-head md-txt-apce do-you-enjpy">Do
-                            you enjoy hors d'eovres before dinner?</label>
+                            you enjoy hors d’oeuvres before dinner?</label>
                         <div class="col-xs-3 col-md-1 col-sm-1  md-no-padd col-md-xs-radiobox xs-radio-mrg">
                             <div class="radio">
                                 <input type="radio" name="data[CharterGuestMealPreference][is_hors_deovres]" value="1"
