@@ -740,7 +740,7 @@ and (max-device-width : 667px) {
                 if (isset($personalDetails['CharterGuestPersonalDetail']['passport_image']) && !empty($personalDetails['CharterGuestPersonalDetail']['passport_image'])) {
                     $existImageName = $personalDetails['CharterGuestPersonalDetail']['passport_image'];
                     $passportUrl = $this->request->base."/img/passport_images/".$existImageName;
-                    $position = strrpos($existImageName, "_");
+                    $position = strpos($existImageName, "_");
                     if ($position == 12) {
                         $existImageName = substr($existImageName, $position+1);
                     }
