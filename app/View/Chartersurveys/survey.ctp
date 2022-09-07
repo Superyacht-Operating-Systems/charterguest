@@ -512,13 +512,13 @@ width: 600px;
     }
 
     console.log('comments=',$("#comments").val())
-    if($("#comments").val()=='')
-    {
-      errorSpanText('comments','This field is required.');
-      isError = 1;
-    }else{
-      errorSpanText('comments','');
-    }
+    // if($("#comments").val()=='')
+    // {
+    //   errorSpanText('comments','This field is required.');
+    //   isError = 1;
+    // }else{
+    //   errorSpanText('comments','');
+    // }
 
     console.log('isError=',isError)
     if(isError == 0){
