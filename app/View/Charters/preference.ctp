@@ -1,3 +1,6 @@
+<script>
+    $("#hideloader").show();
+</script>
 <?php
     $baseFolder = $this->request->base;
     $session = $this->Session->read('charter_info.CharterGuest'); 
@@ -577,7 +580,6 @@ if(isset($defaultLastName) && !empty($defaultLastName)){
 
 </div>
 <script> 
-$("#hideloader").show();
 var urltogo = "";
 var form = "";
 var url = "";
