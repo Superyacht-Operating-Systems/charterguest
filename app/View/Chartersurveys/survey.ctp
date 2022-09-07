@@ -4,7 +4,7 @@
 <head>
   <style type="text/css" media="screen">
 .flex-row .radio, .yes-nofld .radio{
-  margin-bottom:5px;
+  margin-bottom:0px;
 }
 .survey-contain-row .flex-row label span {
     top: 1.2px!important;
@@ -288,8 +288,8 @@ width: 600px;
             </div>
             
           </div>
-          <span id="span_question<?php echo $i; ?>" style="color:red;"> </span>
         </div>
+        <span id="span_question<?php echo $i; ?>" style="color:red;"> </span>
       <?php 
       $row++;
       } ?>
@@ -321,8 +321,8 @@ width: 600px;
           </div>
            
         </div>
-        <span id="span_yacht_again" style="color:red;"> </span>
       </div>
+      <span id="span_yacht_again" style="color:red;"> </span>
 
       <div class="row flex-mdrow row-fld-hText">
         <div class="col-md-12">
@@ -351,8 +351,8 @@ width: 600px;
           </div>
             
         </div>
-        <span id="span_broker_again" style="color:red;"> </span>
       </div>
+      <span id="span_broker_again" style="color:red;"> </span>
 
       <div class="row flex-mdrow">
         <div class="col-md-12 form-textarea">
