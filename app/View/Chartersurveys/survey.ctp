@@ -3,6 +3,12 @@
 ?>
 <head>
   <style type="text/css" media="screen">
+.flex-row .radio, .yes-nofld .radio{
+  margin-bottom:0px;
+}
+.survey-contain-row .flex-row label span {
+    top: 1.2px!important;
+}
     tbody.chechbox tr td {
       padding: 20px;
     }
@@ -280,9 +286,10 @@ width: 600px;
                     </div>
                   </div>
             </div>
+            
           </div>
-            <span id="span_question<?php echo $i; ?>" style="color:red;"> </span>
         </div>
+        <span id="span_question<?php echo $i; ?>" style="color:red;"> </span>
       <?php 
       $row++;
       } ?>
@@ -312,9 +319,10 @@ width: 600px;
                   </div>
                 </div>
           </div>
+           
         </div>
-            <span id="span_yacht_again" style="color:red;"> </span>
       </div>
+      <span id="span_yacht_again" style="color:red;"> </span>
 
       <div class="row flex-mdrow row-fld-hText">
         <div class="col-md-12">
@@ -342,14 +350,14 @@ width: 600px;
                 </div>
           </div>
         </div>
-            <span id="span_broker_again" style="color:red;"> </span>
       </div>
+      <span id="span_broker_again" style="color:red;"> </span>
 
       <div class="row flex-mdrow">
         <div class="col-md-12 form-textarea">
           <h5>Comments</h5>
           <textarea class="form-control" rows="4" name="comments" id="comments" value="<?php echo (isset($surveyData['CharterGuestSurvey']['comments']) ? $surveyData['CharterGuestSurvey']['comments'] : ""); ?>"><?php echo (isset($surveyData['CharterGuestSurvey']['comments']) ? $surveyData['CharterGuestSurvey']['comments'] : ""); ?></textarea>
-            <span id="span_comments" style="color:red;"> </span>
+            <!-- <span id="span_comments" style="color:red;"> </span> -->
           <br>
           <div class="sub-btn-su">
             <input type="button" class="btn btn-success" value="Submit" onClick="fsubmit()">
