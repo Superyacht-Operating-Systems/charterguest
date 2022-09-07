@@ -577,6 +577,7 @@ if(isset($defaultLastName) && !empty($defaultLastName)){
 
 </div>
 <script> 
+$("#hideloader").show();
 var urltogo = "";
 var form = "";
 var url = "";
@@ -1012,4 +1013,7 @@ function validateDate(id) {
     var valid = (d.getTime() === d.getTime());
     console.log("valid=",valid);
 }
+$(window).on('load', function () {
+    $('#hideloader').hide();
+}) 
 </script> 

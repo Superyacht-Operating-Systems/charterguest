@@ -280,8 +280,8 @@ width: 600px;
                     </div>
                   </div>
             </div>
-            <span id="span_question<?php echo $i; ?>" style="color:red;"> </span>
           </div>
+            <span id="span_question<?php echo $i; ?>" style="color:red;"> </span>
         </div>
       <?php 
       $row++;
@@ -312,8 +312,8 @@ width: 600px;
                   </div>
                 </div>
           </div>
-            <span id="span_yacht_again" style="color:red;"> </span>
         </div>
+            <span id="span_yacht_again" style="color:red;"> </span>
       </div>
 
       <div class="row flex-mdrow row-fld-hText">
@@ -341,8 +341,8 @@ width: 600px;
                   </div>
                 </div>
           </div>
-            <span id="span_broker_again" style="color:red;"> </span>
         </div>
+            <span id="span_broker_again" style="color:red;"> </span>
       </div>
 
       <div class="row flex-mdrow">

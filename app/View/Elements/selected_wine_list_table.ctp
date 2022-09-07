@@ -235,7 +235,7 @@ margin-left: 10px;
 <!--         <div class="col-md-3 fle-logo-img">
         <img src="<?php echo isset($session['fleetLogoUrl']) ? $session['fleetLogoUrl'] : ""; ?>" alt="">
         </div>  -->        
-    <div class="col-md-12 col-xs-12 btnsave_st" style="display:flex;justify-content: center;margin-top: 10px;">
+    <div class="col-md-12 col-xs-12 btnsave_st" style="display:flex;justify-content: center;margin-top: 10px;" id="wineorderbuttondiv">
         <?php if (!isset($charterAssocIdByHeaderView)) { ?>
                 <?php echo $this->Form->submit("Save and Continue", array('class' => 'btn btn-success'));?>
         <?php } ?>   

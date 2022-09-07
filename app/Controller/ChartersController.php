@@ -1639,7 +1639,7 @@ class ChartersController extends AppController {
             }
             
             $guestAssc = $this->CharterGuestAssociate->find('first', array('conditions' => array('id' => $charterAssocId)));
-            $associatePrimaryid = $guestAssc['CharterGuestAssociate']['id'];
+            $associatePrimaryid = isset($guestAssc['CharterGuestAssociate']['id']) ? $guestAssc['CharterGuestAssociate']['id'] : 0;
             //echo "<pre>";print_r($guestAssc);exit;
             $ownerprefenceID = $this->Session->read('ownerprefenceID');
             $ownerprefenceUUID = $this->Session->read('ownerprefenceUUID');
@@ -1651,7 +1651,7 @@ class ChartersController extends AppController {
                  
                  $data['guest_lists_UUID'] = $ownerprefenceUUID;
             }else{
-               $data['guest_lists_UUID'] = $guestAssc['CharterGuestAssociate']['UUID'];
+               $data['guest_lists_UUID'] = isset($guestAssc['CharterGuestAssociate']['UUID']) ? $guestAssc['CharterGuestAssociate']['UUID'] : 0;
             }
             $data['charter_assoc_id'] = $charterAssocId;
             $charterGuestAssociateUUID = $data['guest_lists_UUID'];
@@ -1836,7 +1836,7 @@ class ChartersController extends AppController {
                                 $guest_sourceImagePath = WWW_ROOT."img/charter_program_files/".$guest_file_name;
                                 $guest_targetImagePath = "crew_pages/crewfiles/passenger_docs";
                                 $DOC_ROOT = $_SERVER["DOCUMENT_ROOT"];
-            //                    $targetFileName = date("ymdHis")."_".$fileName;
+                                // $targetFileName = date("ymdHis")."_".$fileName;
                                 $guest_targetFileName = $guest_file_name;
                                 
                                 // echo "<pre>";print_r($guest_sourceImagePath);
@@ -1929,7 +1929,7 @@ class ChartersController extends AppController {
                     $sourceImagePath = WWW_ROOT."img/passport_images/".$fileName;
                     $targetImagePath = "crew_pages/crewfiles/passenger_docs";
                     $DOC_ROOT = $_SERVER["DOCUMENT_ROOT"];
-//                    $targetFileName = date("ymdHis")."_".$fileName;
+                    // $targetFileName = date("ymdHis")."_".$fileName;
                     if(!empty($fileName)){
                         $targetFileName = $fileName;
                     }
@@ -1951,6 +1951,8 @@ class ChartersController extends AppController {
                             mkdir($targetFullPath,0777,true);
                         }
 
+                        // echo "<pre>"; print($sourceImagePath); print($targetFullPath); exit;
+                        // Copying to yacht and fleet sites
                         // Copying the image file
                         copy($sourceImagePath, $targetFullPath."/".$targetFileName);
                     }
@@ -2005,7 +2007,7 @@ class ChartersController extends AppController {
                                 $guest_sourceImagePath = WWW_ROOT."img/charter_program_files/".$guest_file_name;
                                 $guest_targetImagePath = "crew_pages/crewfiles/passenger_docs";
                                 $DOC_ROOT = $_SERVER["DOCUMENT_ROOT"];
-            //                    $targetFileName = date("ymdHis")."_".$fileName;
+                                // $targetFileName = date("ymdHis")."_".$fileName;
                                 $guest_targetFileName = $guest_file_name;
                                 
 

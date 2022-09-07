@@ -467,6 +467,17 @@ $(document).on("click", ".removeWineFromCart", function(e) {
                     });
                     // Calculate the Total quantity per type
                     calculateTotalQuantity();
+                    var count = -1;
+                    $("#selectedWineListTableId").find("tr").each(function (e) {
+                        console.log('count=',count++)
+                    });
+                    if(count==0){
+                        console.log('valid count=',count)
+                        // wineorderbuttondiv
+                        // $("#generateWineOrderPdf").attr('disabled', true);
+                        $("#wineorderbuttondiv *").prop('disabled', true);
+                        $('#wineorderbuttondiv > span').addClass('disabled');
+                    }
                 }  
             },
             error: function(jqxhr) { 
