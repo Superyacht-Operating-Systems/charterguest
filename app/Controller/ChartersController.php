@@ -199,16 +199,19 @@ class ChartersController extends AppController {
                         $image = $yachtDBData[0]['yachts']['cg_background_image'];
                         $pSheetsColor = $yachtDBData[0]['yachts']['psheets_color'];
                         // echo "<pre>"; print_r($yachtDBData); exit;
-                        if($image){
-                            $fleetSiteName = $yachtDBData[0]['yachts']['fleetname'];
-                            $yachtSiteName = $yachtDBData[0]['yachts']['yname'];
-                            $cgBackgroundImage = BASE_URL.'/SOS/app/webroot/betayacht/app/webroot/img/charter_program_files/'.$image;
-                            if (!empty($fleetSiteName)) { // IF yacht is under any Fleet
-                                $cgBackgroundImage = BASE_URL."/".$fleetSiteName."/app/webroot/".$yachtSiteName."/app/webroot/img/charter_program_files/".$image;
-                            }
-                        }else{
-                            $cgBackgroundImage = "https://totalsuperyacht.com:8080/charterguest/css/admin/images/full-charter.png";
-                        }
+                        // if($image){
+                        //     $fleetSiteName = $yachtDBData[0]['yachts']['fleetname'];
+                        //     $yachtSiteName = $yachtDBData[0]['yachts']['yname'];
+                        //     $cgBackgroundImage = BASE_URL.'/SOS/app/webroot/betayacht/app/webroot/img/charter_program_files/'.$image;
+                        //     if (!empty($fleetSiteName)) { // IF yacht is under any Fleet
+                        //         $cgBackgroundImage = BASE_URL."/".$fleetSiteName."/app/webroot/".$yachtSiteName."/app/webroot/img/charter_program_files/".$image;
+                        //     }
+                        // }else{
+                        //     $cgBackgroundImage = "https://totalsuperyacht.com:8080/charterguest/css/admin/images/full-charter.png";
+                        // }
+                        $fleetname = $yachtDBData[0]['yachts']['fleetname'];
+                        $yachtname = $yachtDBData[0]['yachts']['yname'];
+                        $cgBackgroundImage = $this->getBackgroundImageUrl($image, $fleetname, $yachtname);
                         $this->Session->write("cgBackgroundImage", $cgBackgroundImage);
                         $this->Session->write("pSheetsColor", $pSheetsColor);
                         
@@ -673,16 +676,20 @@ class ChartersController extends AppController {
         
         // Background image
         $image = $Ydata['Yacht']['cg_background_image'];
-        if($image){
-            $fleetSiteName = $Ydata['Yacht']['fleetname'];
-            $yachtSiteName = $Ydata['Yacht']['yname'];
-            $cgBackgroundImage = BASE_URL.'/SOS/app/webroot/betayacht/app/webroot/img/charter_program_files/'.$image;
-            if (!empty($fleetSiteName)) { // IF yacht is under any Fleet
-                $cgBackgroundImage = BASE_URL."/".$fleetSiteName."/app/webroot/".$yachtSiteName."/app/webroot/img/charter_program_files/".$image;
-            }
-        }else{
-            $cgBackgroundImage = "https://totalsuperyacht.com:8080/charterguest/css/admin/images/full-charter.png";
-        }
+        // if($image){
+        //     $fleetSiteName = $Ydata['Yacht']['fleetname'];
+        //     $yachtSiteName = $Ydata['Yacht']['yname'];
+        //     $cgBackgroundImage = BASE_URL."/".$yachtSiteName.'/app/webroot/betayacht/app/webroot/img/charter_program_files/'.$image;
+        //     if (!empty($fleetSiteName)) { // IF yacht is under any Fleet
+        //         $cgBackgroundImage = BASE_URL."/".$fleetSiteName."/app/webroot/".$yachtSiteName."/app/webroot/img/charter_program_files/".$image;
+        //     }
+        // }else{
+        //     $cgBackgroundImage = "https://totalsuperyacht.com:8080/charterguest/css/admin/images/full-charter.png";
+        // }
+        $fleetname = $Ydata['Yacht']['fleetname'];
+        $yachtname = $Ydata['Yacht']['yname'];
+        $cgBackgroundImage = $this->getBackgroundImageUrl($image, $fleetname, $yachtname);
+        // echo "<pre>"; print_r($cgBackgroundImage); exit;
         $this->Session->write("cgBackgroundImage", $cgBackgroundImage);
         // Background image
 
@@ -826,7 +833,12 @@ class ChartersController extends AppController {
         $this->set('companyData', $companyData);
         
         $this->set('ismobile',$this->is_mobile);
-        
+
+        $image = $Ydata['Yacht']['cg_background_image'];
+        $fleetname = $Ydata['Yacht']['fleetname'];
+        $yachtname = $Ydata['Yacht']['yname'];
+        $cgBackgroundImage = $this->getBackgroundImageUrl($image, $fleetname, $yachtname);
+        $this->Session->write("cgBackgroundImage", $cgBackgroundImage);
     }
     
     /*
@@ -6457,6 +6469,18 @@ function getIndividualmsgcountMarer() {
         $details = $this->Yacht->getLeagalDocumentsData($conditions);
         $this->set('details', $details[0]);
         // print_r($details);exit;
+    }
+
+    function getBackgroundImageUrl($image, $fleetname, $yachtname){
+        if($image){
+            $cgBackgroundImage = BASE_URL.'/'.$yachtname.'/app/webroot/img/charter_program_files/'.$image;
+            if (!empty($fleetname)) { // IF yacht is under any Fleet
+                $cgBackgroundImage = BASE_URL."/".$fleetname."/app/webroot/".$yachtname."/app/webroot/img/charter_program_files/".$image;
+            }
+        }else{
+            $cgBackgroundImage = BASE_URL."/charterguest/css/admin/images/full-charter.png";
+        }
+        return $cgBackgroundImage;
     }
     
 }
