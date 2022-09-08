@@ -689,7 +689,6 @@ class ChartersController extends AppController {
         $fleetname = $Ydata['Yacht']['fleetname'];
         $yachtname = $Ydata['Yacht']['yname'];
         $cgBackgroundImage = $this->getBackgroundImageUrl($image, $fleetname, $yachtname);
-        // echo "<pre>"; print_r($cgBackgroundImage); exit;
         $this->Session->write("cgBackgroundImage", $cgBackgroundImage);
         // Background image
 
@@ -4880,9 +4879,9 @@ class ChartersController extends AppController {
                 $yacht_id_fromyachtDB = $YachtData[0]['Yacht']['id'];
                 //echo $YachtData['Yacht']['cruising_unit'];
                 
-                $image = $YachtData[0]['cg_background_image'];
-                $fleetname = $YachtData[0]['fleetname'];
-                $yachtname = $YachtData[0]['yname'];
+                $image = $YachtData[0]['Yacht']['cg_background_image'];
+                $fleetname = $YachtData[0]['Yacht']['fleetname'];
+                $yachtname = $YachtData[0]['Yacht']['yname'];
                 $cgBackgroundImage = $this->getBackgroundImageUrl($image, $fleetname, $yachtname);
                 $this->Session->write("cgBackgroundImage", $cgBackgroundImage);
                 
