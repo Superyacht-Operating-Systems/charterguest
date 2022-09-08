@@ -5216,7 +5216,7 @@ class ChartersController extends AppController {
                     }
                     if(isset($attachment) && !empty($attachment)){
                         $noteimg = "style='display:block;'";
-                        if($yname == "yacht" || $yname == "betayacht"){
+                        if($yname == "yacht"){
                             $targetFullPath = BASE_URL.'/SOS/app/webroot/betayacht/app/webroot/img/charter_program_files/itinerary_photos/'.$attachment;
                         }else{
                             $targetFullPath = BASE_URL.'/'.$yname."/app/webroot/img/charter_program_files/itinerary_photos/'.$attachment";
@@ -5335,7 +5335,7 @@ class ChartersController extends AppController {
                             $activityattachment = $activity['CharterProgramScheduleActivity']['attachment'];
                             if(isset($activityattachment) && !empty($activityattachment)){
                                 $activityattachmentimg = "style='display:block;'";
-                                if($yname == "yacht" || $yname == "betayacht"){
+                                if($yname == "yacht"){
                                     $targetFullPath = BASE_URL.'/SOS/app/webroot/betayacht/app/webroot/img/charter_program_files/itinerary_photos/'.$activityattachment;
                                 }else{
                                         $targetFullPath = BASE_URL.'/'.$yname."/app/webroot/img/charter_program_files/itinerary_photos/'.$activityattachment";
@@ -5459,7 +5459,7 @@ class ChartersController extends AppController {
                         }
                         if(isset($attachment) && !empty($attachment)){
                             $noteimg = "style='display:block;'";
-                            if($yname == "yacht" || $yname == "betayacht"){
+                            if($yname == "yacht"){
                                 $targetFullPath = BASE_URL.'/SOS/app/webroot/betayacht/app/webroot/img/charter_program_files/itinerary_photos/'.$attachment;
                             }else{
                                 $targetFullPath = BASE_URL.'/'.$yname."/app/webroot/img/charter_program_files/itinerary_photos/'.$attachment";
