@@ -4879,6 +4879,13 @@ class ChartersController extends AppController {
                 $cruising_fuel = $YachtData[0]['Yacht']['cruising_fuel'];
                 $yacht_id_fromyachtDB = $YachtData[0]['Yacht']['id'];
                 //echo $YachtData['Yacht']['cruising_unit'];
+                
+                $image = $YachtData[0]['cg_background_image'];
+                $fleetname = $YachtData[0]['fleetname'];
+                $yachtname = $YachtData[0]['yname'];
+                $cgBackgroundImage = $this->getBackgroundImageUrl($image, $fleetname, $yachtname);
+                $this->Session->write("cgBackgroundImage", $cgBackgroundImage);
+                
                 if(isset($YachtData[0]['Yacht']['cruising_unit']) && $YachtData[0]['Yacht']['cruising_unit'] != '0' ){
                  $cruising_unit = $YachtData[0]['Yacht']['cruising_unit'];
                 }
