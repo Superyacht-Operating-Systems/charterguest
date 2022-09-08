@@ -5338,9 +5338,9 @@ class ChartersController extends AppController {
                                 if($yname == "yacht"){
                                     $targetFullPath = BASE_URL.'/SOS/app/webroot/betayacht/app/webroot/img/charter_program_files/itinerary_photos/'.$activityattachment;
                                 }else{
-                                        $targetFullPath = BASE_URL.'/'.$yname."/app/webroot/img/charter_program_files/itinerary_photos/'.$activityattachment";
+                                        $targetFullPath = BASE_URL.'/'.$yname."/app/webroot/img/charter_program_files/itinerary_photos/".$activityattachment;
                                         if (!empty($fleetSiteName)) { // IF yacht is under any Fleet
-                                            $targetFullPath = BASE_URL.'/'.$fleetSiteName."/app/webroot/".$yname."/app/webroot/img/charter_program_files/itinerary_photos/'.$activityattachment";
+                                            $targetFullPath = BASE_URL.'/'.$fleetSiteName."/app/webroot/".$yname."/app/webroot/img/charter_program_files/itinerary_photos/".$activityattachment;
                                         }
                                 }
 
