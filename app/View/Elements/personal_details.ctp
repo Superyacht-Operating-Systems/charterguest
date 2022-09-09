@@ -706,7 +706,7 @@ and (max-device-width : 667px) {
           <label class="pdd-none txt-right">Issue Date</label>
         </div>
         <div class="col-xs-7 col-md-5 col-sm-7 form-group mob-w-70">
-           <?php echo $this->Form->input("issued_date",array("label"=>false,'class'=>'form-control datePicker nonEditable','type' => 'text')); ?>
+           <?php echo $this->Form->input("issued_date",array("label"=>false,'class'=>'form-control issuedatePicker nonEditable','type' => 'text')); ?>
            <span class="error" id="IssuedDateErrorMessage" style="display: none;">Enter valid date</span>
         </div>
       </div></div>
@@ -717,7 +717,7 @@ and (max-device-width : 667px) {
           <label class="pdd-none txt-right">Expiry Date</label>
         </div>
         <div class="col-xs-7 col-md-5 col-sm-7 form-group mob-w-70">
-          <?php echo $this->Form->input("expiry_date",array("label"=>false,'class'=>'form-control datePicker nonEditable','type' => 'text')); ?>
+          <?php echo $this->Form->input("expiry_date",array("label"=>false,'class'=>'form-control expirydatePicker nonEditable','type' => 'text')); ?>
            <span class="error" id="ExpiryDateErrorMessage" style="display: none;">Enter valid date</span>
         </div>
       </div></div>

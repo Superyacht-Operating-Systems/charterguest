@@ -807,6 +807,20 @@ $(".datePicker").datepicker({
     changeMonth:true,
     yearRange: "-100:+100"
 });
+$(".issuedatePicker").datepicker({
+    dateFormat: 'd M yy',
+    changeYear: true,
+    changeMonth:true,
+    yearRange: "c-12:c+0",
+    // yearRange: "-100:+100"
+});
+$(".expirydatePicker").datepicker({
+    dateFormat: 'd M yy',
+    changeYear: true,
+    changeMonth:true,
+    yearRange: "c-0:c+12",
+    // yearRange: "-100:+100"
+});
 var dateToday = new Date();
 var dobYearRange = "1900:" + dateToday.getFullYear();
 var occationYearRange = dateToday.getFullYear() + ":" + (dateToday.getFullYear() + 5);
