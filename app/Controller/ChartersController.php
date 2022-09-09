@@ -675,7 +675,7 @@ class ChartersController extends AppController {
         $ydb_name = $Ydata['Yacht']['ydb_name'];
         
         // Background image
-        $image = $Ydata['Yacht']['cg_background_image'];
+        // $image = $Ydata['Yacht']['cg_background_image'];
         // if($image){
         //     $fleetSiteName = $Ydata['Yacht']['fleetname'];
         //     $yachtSiteName = $Ydata['Yacht']['yname'];
@@ -686,8 +686,11 @@ class ChartersController extends AppController {
         // }else{
         //     $cgBackgroundImage = "https://totalsuperyacht.com:8080/charterguest/css/admin/images/full-charter.png";
         // }
-        $fleetname = $Ydata['Yacht']['fleetname'];
-        $yachtname = $Ydata['Yacht']['yname'];
+        $YachtData =  $this->CharterGuest->query("SELECT * FROM $ydb_name.yachts Yacht");
+        //echo "<pre>";print_r($YachtData); exit;
+        $image = $YachtData[0]['Yacht']['cg_background_image'];
+        $fleetname = $YachtData[0]['Yacht']['fleetname'];
+        $yachtname = $YachtData[0]['Yacht']['yname'];
         $cgBackgroundImage = $this->getBackgroundImageUrl($image, $fleetname, $yachtname);
         $this->Session->write("cgBackgroundImage", $cgBackgroundImage);
         // Background image
@@ -833,9 +836,11 @@ class ChartersController extends AppController {
         
         $this->set('ismobile',$this->is_mobile);
 
-        $image = $Ydata['Yacht']['cg_background_image'];
-        $fleetname = $Ydata['Yacht']['fleetname'];
-        $yachtname = $Ydata['Yacht']['yname'];
+        $YachtData =  $this->CharterGuest->query("SELECT * FROM $ydb_name.yachts Yacht");
+        //echo "<pre>";print_r($YachtData); exit;
+        $image = $YachtData[0]['Yacht']['cg_background_image'];
+        $fleetname = $YachtData[0]['Yacht']['fleetname'];
+        $yachtname = $YachtData[0]['Yacht']['yname'];
         $cgBackgroundImage = $this->getBackgroundImageUrl($image, $fleetname, $yachtname);
         $this->Session->write("cgBackgroundImage", $cgBackgroundImage);
     }
