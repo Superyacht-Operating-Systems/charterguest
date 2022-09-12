@@ -882,6 +882,12 @@ class ChartersController extends AppController {
         $this->loadModel('Yacht');
         $this->loadModel('CharterGuestAssociate');
         $this->loadModel('CharterGuestPersonalDetail');
+
+        $charter_company_id = isset($session['CharterGuest']['charter_company_id']) ? $session['CharterGuest']['charter_company_id'] : 0;
+        $this->loadModel('Fleetcompany');
+        $companyData = $this->Fleetcompany->find('first', array('fields' => array('ipad_hex_code'), 'conditions' => array('id' => $charter_company_id)));
+        $pSheetsColor = $companyData['Fleetcompany']['ipad_hex_code'];
+        $this->Session->write("pSheetsColor", $pSheetsColor);
        
         // When main Head charterer opens other guest(if Head charterer checked) and Update the Preference sheets
         if (isset($this->request->query['assocId']) && !empty($this->request->query['assocId'])) {
