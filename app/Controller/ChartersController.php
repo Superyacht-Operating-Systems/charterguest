@@ -1973,7 +1973,9 @@ class ChartersController extends AppController {
                             mkdir($targetFullPath,0777,true);
                         }
 
-                        // echo "<pre>"; print($sourceImagePath); print($targetFullPath); exit;
+                        echo "<pre>"; 
+                        // print($sourceImagePath); 
+                        print($targetFullPath."/".$targetFileName); exit;
                         // Copying to yacht and fleet sites
                         // Copying the image file
                         copy($sourceImagePath, $targetFullPath."/".$targetFileName);
