@@ -411,7 +411,7 @@ class ChartersController extends AppController {
                 $programFilesCond = array('CharterProgramFile.charter_program_id' => $value['CharterGuest']['charter_program_id'],'CharterProgramFile.yacht_id' => $value['CharterGuest']['yacht_id'],'CharterProgramFile.is_deleted'=>0);
                 $programFiledata = $this->CharterProgramFile->find('all', array('conditions' => $programFilesCond));
 
-                if(isset($YachtWeblinkdata)){
+                if(isset($YachtWeblinkdata) && !empty($YachtWeblinkdata)){
                     $isValid = preg_match("@^https?://@", $YachtWeblinkdata['YachtWeblink']['weblink']);
                     if($isValid == 0){
                         $YachtWeblinkdata['YachtWeblink']['weblink'] = 'https://'.$YachtWeblinkdata['YachtWeblink']['weblink'];
