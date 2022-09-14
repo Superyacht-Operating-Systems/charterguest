@@ -5278,7 +5278,7 @@ class ChartersController extends AppController {
                             $displaynone = "display:block;";
                     }
                     $popupHtml .= '<div class="mapPopup sp-mp-detailsrow sp-modal-600" data-schuuid="'.$scheduleId.'">
-                    <div class="sp-modal-hd"><div class="row"><div class="col-md-8"><select name="noofdayscard" class="form-control noofdayscard" style="width:60%;font-size: 17px !important;font-weight: bold;background:none !important;color:#000 !important;border:solid 1px #ddd !important;"></select></div></div></div>
+                    <div class="sp-modal-hd"><div class="row"><div class="col-md-8"><select name="noofdayscard" class="form-control noofdayscard wt-st" style="font-size: 17px !important;font-weight: bold;background:none !important;color:#000 !important;border:solid 1px #ddd !important;"></select></div></div></div>
                     <form id="scheduleFormEdit"><div class="inputContainerdiv">
                     <div class="sp-divrow">
                     <div class="sp-60-w">
