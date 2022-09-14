@@ -606,8 +606,15 @@ background: #01d0ff!important;
 .btn-warning:hover,
 .btn-default:hover{
 background: #01d0ff!important;
+border-color:#01d0ff!important;
     color: #fff;
 } 
+.btn-default:hover:focus:active {
+  border-color: #1ca0ef!important;
+}
+.btn-default.disabled:hover, .btn-default[disabled]:hover, fieldset[disabled] .btn-default:hover, .btn-default.disabled:focus, .btn-default[disabled]:focus, fieldset[disabled] .btn-default:focus, .btn-default.disabled.focus, .btn-default[disabled].focus, fieldset[disabled] .btn-default.focus {
+  border-color: #1ca0ef!important;
+}
 .btn-open1,
 .md-row-h-18 .btn{
 margin-right: 5px;
