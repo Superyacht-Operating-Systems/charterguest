@@ -609,6 +609,12 @@ background: #01d0ff!important;
 border-color:#01d0ff!important;
     color: #fff;
 } 
+button:hover, button:focus {
+  outline: none;
+}
+*:focus {
+    outline: 0 !important;
+}
 .btn-default:hover:focus:active {
   border-color: #1ca0ef!important;
 }
