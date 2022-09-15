@@ -1916,6 +1916,7 @@ class ChartersController extends AppController {
                                 // //echo "<pre>";print_r($guest_targetFileName);
                                 //  exit;
                         }
+                        $G_group_id = "";
                         if(isset($guest_group_id) && $guest_group_id != 0){
                                 $G_group_id = $guest_fleetcompany_id."_".$guest_group_id;
 
@@ -2026,6 +2027,8 @@ class ChartersController extends AppController {
                         $guest_file_name = $guestListData['GuestList']['file_name'];
                         $guest_file_path = $guestListData['GuestList']['file_path'];
                         //$salutation = $guestListData['GuestList']['salutation'];
+                        $guest_targetImagePath = "";
+                        $guest_targetFileName = "";
                         if($guest_file_name != ""){
                                 $guest_targetFullPath = "";
                                 $guest_sourceImagePath = WWW_ROOT."img/charter_program_files/".$guest_file_name;
