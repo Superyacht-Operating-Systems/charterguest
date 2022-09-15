@@ -1845,6 +1845,7 @@ class ChartersController extends AppController {
                     $this->loadModel('GuestGroup');
                     $guestListData = $this->GuestList->find('first', array('conditions' => array('UUID' => $guest_uuid,'is_deleted'=>0)));
                     //echo "<pre>";print_r($guestListData); exit;
+                    $targetFileName = "";
                     if(isset($guestListData)){
                         $guest_type = $guestListData['GuestList']['guest_type'];
                         $guest_group_id = $guestListData['GuestList']['group_id'];
