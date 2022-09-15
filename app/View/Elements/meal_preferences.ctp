@@ -1226,7 +1226,7 @@ input[type="checkbox"] {
                     <div class="col-xs-12 col-sm-12  md-no-padd">
                         <label
                             class="col-xs-12 control-label col-sm-5 col-md-4 col-lg-3 mar-btm pdd-none label-lunch">Do
-                            you enjoy desert served after lunch?</label>
+                            you enjoy Dessert served after lunch?</label>
                         <div class="col-xs-3 col-md-1 col-sm-1  md-no-padd col-md-xs-radiobox">
                             <div class="radio">
                                 <input type="radio" name="data[CharterGuestMealPreference][is_lunch_desert]" value="1"
@@ -1417,7 +1417,7 @@ input[type="checkbox"] {
                 <div class="form-group frmgrp-mar ">
                     <div class="col-xs-12 col-sm-12 ipadport-block-three  md-no-padd">
                         <label class="control-label col-sm-3 mar-btm pdd-none hors-head md-txt-apce doy-enjoy">Do you
-                            enjoy Desert after dinner?</label>
+                            enjoy Dessert after dinner?</label>
 
                         <div class="col-xs-3 col-md-1 col-sm-1  md-no-padd col-md-xs-radiobox xs-radio-mrg">
                             <div class="radio">
