@@ -49,7 +49,10 @@ if(empty($scheduleData)){
 }
 ?>
 <style>
-    .wt-st{width:60%}
+    .wt-st{
+        width: 225px;
+        margin: 5px 0px;
+    }
     .leaflet-popup-content {
   margin: 13px 10px!important;
   line-height: 1.4;
@@ -103,7 +106,7 @@ if(empty($scheduleData)){
 }
 
 @media only screen and (max-width: 767px){
-    .wt-st{width:80%}
+   
     .sp-close-modal, .mapnotemodalclose, .leaflet-container a.leaflet-popup-close-button {
   right: -4px!important;
   top: -5px!important;

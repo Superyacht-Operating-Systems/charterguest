@@ -64,7 +64,17 @@ echo $this->Html->script('leaflet/route');
 ?>
 
 <style>
+.wt-st{
+    width: 225px;
+    margin: 5px 0px;
+}
 
+.leaflet-popup-scrolled {
+  overflow-y: auto;
+  border-bottom: 1px solid #ddd;
+  border-top: 1px solid #ddd;
+  overflow-x: hidden;
+}
     html, body {
         height: 100vh !important;
   background: #000!important;
