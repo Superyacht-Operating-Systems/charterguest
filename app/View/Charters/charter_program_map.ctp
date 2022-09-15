@@ -496,9 +496,6 @@ display: block;
     margin-bottom: 10px;
 }
 
-.custom-popup .leaflet-popup-content select {
-    margin-bottom: 10px;
-}
 
 .custom-popup .actionClass {
     overflow: auto;
