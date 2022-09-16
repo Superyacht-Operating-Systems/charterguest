@@ -759,7 +759,7 @@ if(isset($charterGuestData) && !empty($charterGuestData)){
     ?>
  <div class="ch-card">
    <div class="ch-card-body">  
-   <p><?php echo $charterName.' '.$charter_company_id; ?></p>
+   <p><?php echo $charterName; ?></p>
     <p><?php echo $charter_from_date; ?> to <?php echo $charter_to_date; ?></p>
     <p><?php echo $embarkation; ?> to <?php echo $debarkation; ?></p>
      
