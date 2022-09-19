@@ -55,7 +55,7 @@
 }
 
 ::placeholder { /* Most modern browsers support this now. */
-   color:#fff!important;
+    color:gray!important;
 }
 
                                              .headerRightText{ 

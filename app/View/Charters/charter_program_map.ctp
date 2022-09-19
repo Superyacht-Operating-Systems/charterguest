@@ -49,6 +49,30 @@ if(empty($scheduleData)){
 }
 ?>
 <style>
+::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+    color:gray!important;
+    opacity: 1!important;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+   color:gray!important;
+     opacity: 1!important;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+   color:gray!important;
+     opacity: 1!important;
+}
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+   color:gray!important;
+     opacity: 1!important;
+}
+::-ms-input-placeholder { /* Microsoft Edge */
+   color:gray!important;
+     opacity: 1!important;
+}
+
+::placeholder { /* Most modern browsers support this now. */
+    color:gray!important;
+}
 
     .wt-st{
         width: 225px;

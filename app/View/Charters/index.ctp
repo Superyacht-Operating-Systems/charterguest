@@ -1,15 +1,18 @@
 <?php ?>
 <style> 
 ::placeholder {
+  color: gray!important;
   font-size: 12px !important;
   opacity: 1; /* Firefox */
 }
 
 :-ms-input-placeholder { /* Internet Explorer 10-11 */
     font-size: 12px !important;
+  color: gray!important;
 }
 
 ::-ms-input-placeholder { /* Microsoft Edge */
+  color: gray!important;
   font-size: 12px !important;
 }
 

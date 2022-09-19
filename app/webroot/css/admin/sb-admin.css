@@ -78,6 +78,30 @@ body .mydemolabel{
 .certificat-modal-container {
   z-index: 9999999;
 }
+::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+    color:    #fff!important;
+    opacity: 1!important;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+   color:    #fff!important;
+     opacity: 1!important;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+   color:    #fff!important;
+     opacity: 1!important;
+}
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+   color:    #fff!important;
+     opacity: 1!important;
+}
+::-ms-input-placeholder { /* Microsoft Edge */
+   color:    #fff!important;
+     opacity: 1!important;
+}
+
+::placeholder { /* Most modern browsers support this now. */
+   color:    #fff!important;
+}
 body .menu .menu__item a{
   background: rgb(179, 163, 163)!important;
 }
