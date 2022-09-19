@@ -34,23 +34,23 @@
             ?> 
             <style type="text/css">
 ::-webkit-input-placeholder { /* WebKit, Blink, Edge */
-    color:#fff!important;
+    color:gray!important;
     opacity: 1!important;
 }
 :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
-   color:#fff!important;
+   color:gray!important;
      opacity: 1!important;
 }
 ::-moz-placeholder { /* Mozilla Firefox 19+ */
-   color:#fff!important;
+   color:gray!important;
      opacity: 1!important;
 }
 :-ms-input-placeholder { /* Internet Explorer 10-11 */
-   color:#fff!important;
+   color:gray!important;
      opacity: 1!important;
 }
 ::-ms-input-placeholder { /* Microsoft Edge */
-   color:#fff!important;
+   color:gray!important;
      opacity: 1!important;
 }
 
