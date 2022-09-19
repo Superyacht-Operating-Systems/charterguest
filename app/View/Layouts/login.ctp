@@ -33,6 +33,31 @@
                  
             ?> 
             <style type="text/css">
+::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+    color:#fff!important;
+    opacity: 1!important;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+   color:#fff!important;
+     opacity: 1!important;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+   color:#fff!important;
+     opacity: 1!important;
+}
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+   color:#fff!important;
+     opacity: 1!important;
+}
+::-ms-input-placeholder { /* Microsoft Edge */
+   color:#fff!important;
+     opacity: 1!important;
+}
+
+::placeholder { /* Most modern browsers support this now. */
+   color:#fff!important;
+}
+
                                              .headerRightText{ 
                             left:0px;
                          font-size: 30px;}

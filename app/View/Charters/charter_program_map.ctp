@@ -49,6 +49,7 @@ if(empty($scheduleData)){
 }
 ?>
 <style>
+
     .wt-st{
         width: 225px;
         margin: 5px 0px;
@@ -832,6 +833,9 @@ margin: 0px;padding: 0px;
 }
 .certificat-modal-container .inbox-widget .inbox-item {
     border-bottom: 1px solid #d6d4d4;
+}
+.inbox-widget .inbox-item .inbox-item-text {
+    color: #000000!important;
 }
 @media only screen and (max-width:1024px){
 .common-form-row {
