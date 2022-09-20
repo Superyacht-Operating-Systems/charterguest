@@ -5183,8 +5183,10 @@ class ChartersController extends AppController {
                 $yname = $Ydata['Yacht']['yname'];
                 $fleetcompanyid = $Ydata['Yacht']['fleetcompany_id'];
                         $this->loadModel("Fleetcompany");
+                        if(isset($fleetcompanyid) && $fleetcompanyid != 0){
                         $fleetcompanydetails = $this->Fleetcompany->find('first',array('conditions'=>array('id'=>$fleetcompanyid)));
                         $fleetSiteName = $fleetcompanydetails['Fleetcompany']['fleetname'];
+                        }
                         $schUUIDs  =  explode(",",$scheduleSameLocationUUID);
                         $samelocationsDatesarr  =  explode(",",$samelocationsDates);
                         //$samelocationsDatestext = $samelocationsDatesarr[0]; 
