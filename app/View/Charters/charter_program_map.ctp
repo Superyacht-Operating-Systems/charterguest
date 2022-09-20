@@ -1478,7 +1478,7 @@ var polylineDB = [];
 var polylineTooltipDuration = [];
 var polylineTooltipConsumption = [];
 var polylineTooltipDistance = [];
-var modalrouteline = new Array();
+//var modalrouteline = new Array();
 <?php  if(isset($RouteData) && !empty($RouteData)){ 
     foreach($RouteData as $key => $value){
     ?>
@@ -1488,13 +1488,13 @@ polylineDB.push(new L.LatLng(<?php echo $value['CharterProgramScheduleRoute']['l
     <?php echo $value['CharterProgramScheduleRoute']['lattitude']; ?>));
 
 
-var latlongv = new L.LatLng(<?php echo $value['CharterProgramScheduleRoute']['longitude']; ?>,
-    <?php echo $value['CharterProgramScheduleRoute']['lattitude']; ?>);
-modalrouteline.push({
-    name: '<?php echo $value['CharterProgramScheduleRoute']['start_location']; ?>',
-    index: latlongv,
-    end_loc: '<?php echo $value['CharterProgramScheduleRoute']['end_location']; ?>'
-});
+// var latlongv = new L.LatLng(<?php echo $value['CharterProgramScheduleRoute']['longitude']; ?>,
+//     <?php echo $value['CharterProgramScheduleRoute']['lattitude']; ?>);
+// modalrouteline.push({
+//     name: '<?php echo $value['CharterProgramScheduleRoute']['start_location']; ?>',
+//     index: latlongv,
+//     end_loc: '<?php echo $value['CharterProgramScheduleRoute']['end_location']; ?>'
+// });
 
 
 
@@ -1502,7 +1502,7 @@ modalrouteline.push({
     }
 } ?>
 
-<?php if(isset($RouteData) && !empty($RouteData)){ ?>
+<?php /*if(isset($RouteData) && !empty($RouteData)){ ?>
 var drawnItems = new L.FeatureGroup();
 map.addLayer(drawnItems);
 var polyLayers = [];
@@ -1522,7 +1522,55 @@ for (let layer of polyLayers) { //console.log(layer);
 }
 <?php 
    
+} */?>
+
+var modalrouteline = new Array();
+<?php if(isset($temploc) && !empty($temploc)){ 
+    
+    foreach($temploc as $title => $latlongs){   
+          $templlocnames = explode('_',$title);
+          $startlocnameexplode = $templlocnames[0];
+          $endlocnameexplode = $templlocnames[1];
+        ?>
+
+var latlongstemp = [];
+
+
+        
+
+<?php    foreach($latlongs as $v){ ?>
+
+            var latlongs0 = <?php echo $v ?>;
+            latlongstemp.push(latlongs0);
+
+            var latlongv = <?php echo $v ?>;
+
+            modalrouteline.push({
+            name: '<?php echo $startlocnameexplode; ?>',
+            index: latlongv,
+            end_loc: '<?php echo $endlocnameexplode; ?>',
+        });
+
+<?php } ?>
+// middle line
+var polyline0 = new L.Polyline(latlongstemp).addTo(map);
+//map.fitBounds(latlngs);
+// drawnItems.on('pm:edit', function (e) {
+
+//     e.layer.setStyle({ pmIgnore: false });
+//     L.PM.reInitLayer(e.layer);
+//     var layer = e.layer;
+//     setPupup(layer);
+//     //alert('jjj');
+//     layer.on('pm:update', function(e) { 
+//         setPupup(e.layer);
+//     });
+// });
+<?php //}
+
+}
 } ?>
+console.log(modalrouteline);
 
 
 // L.Control.MarkerControl = L.Control.extend({
