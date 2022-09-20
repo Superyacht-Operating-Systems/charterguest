@@ -639,10 +639,10 @@ and (max-device-width : 667px) {
   <div class="p-inlineblock">       
           <div class="col-md-12">
           <div class="col-xs-5 col-md-4 col-sm-3 mob-w-30">
-            <label class="pdd-none txt-right">First Name</label>
+            <label class="pdd-none txt-right">First Name <span class="required"> * </span></label>
           </div>
           <div class="col-xs-7 col-md-5 col-sm-7 form-group mob-w-70">
-              <?php echo $this->Form->input("first_name",array("label"=>false,'class'=>'form-control','type' => 'text', 'default' => $defaultFirstName)); ?>
+              <?php echo $this->Form->input("first_name",array("label"=>false,'class'=>'form-control required','type' => 'text', 'default' => $defaultFirstName)); ?>
           </div>
       
       </div></div>
@@ -650,7 +650,7 @@ and (max-device-width : 667px) {
   <div class="p-inlineblock">   
       <div class="col-md-12 ">
         <div class="col-xs-5 col-md-4 col-sm-3 mob-w-30">
-          <label class="pdd-none txt-right">Family Name</label>
+          <label class="pdd-none txt-right">Family Name <span class="required"> * </span></label>
         </div>
         <div class="col-xs-7 col-md-5 col-sm-7 form-group mob-w-70">
           <?php echo $this->Form->input("family_name",array("label"=>false,'class'=>'form-control','type' => 'text', 'default' => $defaultLastName)); ?>
@@ -661,7 +661,7 @@ and (max-device-width : 667px) {
   <div class="p-inlineblock">   
       <div class="col-md-12 ">
         <div class="col-xs-5 col-md-4 col-sm-3 mob-w-30">
-          <label class="pdd-none txt-right">Date of Birth</label>
+          <label class="pdd-none txt-right">Date of Birth <span class="required"> * </span></label>
         </div>
         <div class="col-xs-7 col-md-5 form-group col-sm-7 mob-w-70">
           <?php echo $this->Form->input("dob",array("label"=>false,'class'=>'form-control dobDatePicker nonEditable','type' => 'text','default'=>$deleteddob)); ?>
@@ -671,7 +671,7 @@ and (max-device-width : 667px) {
   <div class="p-inlineblock">   
        <div class="col-md-12 ">
         <div class="col-xs-5 col-md-4 col-sm-3 mob-w-30">
-          <label class="pdd-none txt-right">Place of Birth</label>
+          <label class="pdd-none txt-right">Place of Birth <span class="required"> * </span></label>
         </div>
         <div class="col-xs-7 col-md-5 form-group col-sm-7 mob-w-70">
            <?php echo $this->Form->input("pob",array("label"=>false,'class'=>'form-control','type' => 'text','default'=>$deletedpob)); ?>
@@ -681,7 +681,7 @@ and (max-device-width : 667px) {
   <div class="p-inlineblock">   
       <div class="col-md-12 ">
         <div class="col-xs-5 col-md-4 col-sm-3 mob-w-30">
-          <label class="pdd-none txt-right">Nationality</label>
+          <label class="pdd-none txt-right">Nationality <span class="required"> * </span></label>
         </div>
         <div class="col-xs-7 col-md-5 col-sm-7 form-group mob-w-70">
          <?php echo $this->Form->input("nationality",array("label"=>false,'class'=>'form-control typeahead','type' => 'text')); ?>
@@ -693,7 +693,7 @@ and (max-device-width : 667px) {
   <div class="p-inlineblock passort-div">   
       <div class="col-md-12 ">
         <div class="col-xs-5 col-md-4 col-sm-3 mob-w-30">
-          <label class="pdd-none txt-right">Passport #</label>
+          <label class="pdd-none txt-right">Passport # <span class="required"> * </span></label>
         </div>
         <div class="col-xs-7 col-md-5 col-sm-7 form-group mob-w-70">
              <?php echo $this->Form->input("passport_num",array("label"=>false,'class'=>'form-control','type' => 'text')); ?>
@@ -703,7 +703,7 @@ and (max-device-width : 667px) {
   <div class="p-inlineblock">   
       <div class="col-md-12 ">
         <div class="col-xs-5 col-md-4 col-sm-3 mob-w-30">
-          <label class="pdd-none txt-right">Issue Date</label>
+          <label class="pdd-none txt-right">Issue Date <span class="required"> * </span></label>
         </div>
         <div class="col-xs-7 col-md-5 col-sm-7 form-group mob-w-70">
            <?php echo $this->Form->input("issued_date",array("label"=>false,'class'=>'form-control issuedatePicker nonEditable','type' => 'text')); ?>
@@ -714,7 +714,7 @@ and (max-device-width : 667px) {
   <div class="p-inlineblock">   
       <div class="col-md-12 ">
         <div class="col-xs-5 col-md-4 col-sm-3 mob-w-30">
-          <label class="pdd-none txt-right">Expiry Date</label>
+          <label class="pdd-none txt-right">Expiry Date <span class="required"> * </span></label>
         </div>
         <div class="col-xs-7 col-md-5 col-sm-7 form-group mob-w-70">
           <?php echo $this->Form->input("expiry_date",array("label"=>false,'class'=>'form-control expirydatePicker nonEditable','type' => 'text')); ?>
@@ -765,7 +765,7 @@ and (max-device-width : 667px) {
     
       <div class="col-md-12 ">
         <div class="col-xs-5 col-md-4 col-sm-3 mob-w-30">
-          <label class="txt-right p-t-02">Next of Kin</label>
+          <label class="txt-right p-t-02">Next of Kin <span class="required"> * </span></label>
         </div>
         <div class="col-xs-7 col-md-5 col-sm-7 form-group mob-w-70">
          <?php echo $this->Form->input("next_of_kin",array("label"=>false,'class'=>'form-control','type' => 'text')); ?>
@@ -773,7 +773,7 @@ and (max-device-width : 667px) {
       </div>
       <div class="col-md-12 d-inlineblockelements">
         <div class="col-xs-5 col-md-4 col-sm-3 mob-w-30">
-          <label class="txt-right p-t-02">NoK Phone</label>
+          <label class="txt-right p-t-02">NoK Phone <span class="required"> * </span></label>
         </div>
         <div class="col-xs-7 col-md-5 col-sm-7 form-group mob-w-70">
          <?php echo $this->Form->input("next_of_kin_phone",array("label"=>false,'class'=>'form-control','type' => 'text')); ?>
