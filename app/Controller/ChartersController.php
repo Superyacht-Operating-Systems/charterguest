@@ -2482,6 +2482,8 @@ class ChartersController extends AppController {
                             //     $openButtonLink = "/charters/preference?assocId=". base64_encode($existdata['CharterGuestAssociate']['id']);
                             // }
                                                 
+                            $fleetLogoUrl = $this->getFleetLogoUrl($existdata['CharterGuestAssociate']['fleetcompany_id']);
+                            $this->Session->write("fleetLogoUrl", $fleetLogoUrl);
                             $result['redirectUrl'] = $openButtonLink;      
                         }
                     }
@@ -2490,6 +2492,8 @@ class ChartersController extends AppController {
                     if(isset($filterData['associd']) && !empty($filterData['associd'])){
                         $CharterGuestexistdata = $this->CharterGuest->find('first',array('conditions'=>array('CharterGuest.users_UUID'=>$filterData['guest_list'],'CharterGuest.id'=>$filterData['associd'])));
                         if(isset($CharterGuestexistdata)){
+                            $fleetLogoUrl = $this->getFleetLogoUrl($CharterGuestexistdata['CharterGuest']['charter_company_id']);
+                            $this->Session->write("fleetLogoUrl", $fleetLogoUrl);
                             $updateData = array();
                             $updateData['id'] = $CharterGuestexistdata['CharterGuest']['id'];
                             $updateData['preference_UUID'] = $filterData['guest_list'];
@@ -6554,6 +6558,20 @@ function getIndividualmsgcountMarer() {
             $cgBackgroundImage = BASE_URL."/charterguest/css/admin/images/full-charter.png";
         }
         return $cgBackgroundImage;
+    }
+
+    function getFleetLogoUrl($fleetcompany_id){
+        $SITE_URL = Configure::read('BASE_URL');
+        $this->loadModel('Fleetcompany');
+        $companyData = $this->Fleetcompany->find('first', array('fields' => array('management_company_name','logo','fleetname'), 'conditions' => array('id' => $fleetcompany_id)));
+        
+        if (isset($companyData['Fleetcompany']['logo']) && !empty($companyData['Fleetcompany']['logo'])) {
+            $fleetLogoUrl = $SITE_URL.'/'."charterguest/img/logo/thumb/".$companyData['Fleetcompany']['logo'];
+        } else{
+            $fleetLogoUrl = $SITE_URL.'/'."charterguest/img/logo/thumb/charter_guest_logo.png";
+        }
+        $this->Session->write("fleetCompanyName", $companyData['Fleetcompany']['management_company_name']);
+        return $fleetLogoUrl;
     }
     
 }
