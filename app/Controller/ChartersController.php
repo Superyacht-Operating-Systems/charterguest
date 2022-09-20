@@ -5455,8 +5455,10 @@ class ChartersController extends AppController {
                 $yname = $Ydata['Yacht']['yname'];
                 $fleetcompanyid = $Ydata['Yacht']['fleetcompany_id'];
                         $this->loadModel("Fleetcompany");
+                        if(isset($fleetcompanyid) && $fleetcompanyid != 0){
                         $fleetcompanydetails = $this->Fleetcompany->find('first',array('conditions'=>array('id'=>$fleetcompanyid)));
                         $fleetSiteName = $fleetcompanydetails['Fleetcompany']['fleetname'];
+                        }
                 $scheduleAllData = $this->CharterGuest->query("SELECT * FROM $yachtDbName.charter_program_schedules CharterProgramSchedule WHERE charter_program_id = '$scheduleId' AND is_deleted = 0 order by day_num");
                // echo "<pre>";print_r($scheduleData); exit;
                 $basefolder = $this->request->base;
