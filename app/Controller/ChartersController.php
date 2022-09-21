@@ -2360,8 +2360,7 @@ class ChartersController extends AppController {
             $programFiles[$charter_from_date]['attachment'] = $programFiledata;
         }
 
-        // $fleetname = $this->Session->read('fleetname');
-        $fleetname = $companyData['Fleetcompany']['fleetname'];
+        $fleetname = $this->Session->read('fleetname');
         $attachment = array();
         if(isset($programFiles) ){
             $SITE_URL = Configure::read('BASE_URL');
@@ -6595,6 +6594,7 @@ function getIndividualmsgcountMarer() {
             $fleetLogoUrl = $SITE_URL.'/'."charterguest/img/logo/thumb/charter_guest_logo.png";
         }
         $this->Session->write("fleetCompanyName", $companyData['Fleetcompany']['management_company_name']);
+        $this->Session->write("fleetname", $companyData['Fleetcompany']['fleetname']);
         return $fleetLogoUrl;
     }
     
