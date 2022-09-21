@@ -196,24 +196,24 @@ class ChartersController extends AppController {
                         
                         $ydb_name = $yachtData['Yacht']['ydb_name'];
                         $yachtDBData = $this->Yacht->getYachtData($ydb_name);
-                        $image = $yachtDBData[0]['yachts']['cg_background_image'];
-                        $pSheetsColor = $yachtDBData[0]['yachts']['psheets_color'];
-                        // echo "<pre>"; print_r($yachtDBData); exit;
-                        // if($image){
-                        //     $fleetSiteName = $yachtDBData[0]['yachts']['fleetname'];
-                        //     $yachtSiteName = $yachtDBData[0]['yachts']['yname'];
-                        //     $cgBackgroundImage = BASE_URL.'/SOS/app/webroot/betayacht/app/webroot/img/charter_program_files/'.$image;
-                        //     if (!empty($fleetSiteName)) { // IF yacht is under any Fleet
-                        //         $cgBackgroundImage = BASE_URL."/".$fleetSiteName."/app/webroot/".$yachtSiteName."/app/webroot/img/charter_program_files/".$image;
-                        //     }
-                        // }else{
-                        //     $cgBackgroundImage = "https://totalsuperyacht.com:8080/charterguest/css/admin/images/full-charter.png";
-                        // }
-                        $fleetname = $yachtDBData[0]['yachts']['fleetname'];
-                        $yachtname = $yachtDBData[0]['yachts']['yname'];
-                        $cgBackgroundImage = $this->getBackgroundImageUrl($image, $fleetname, $yachtname);
-                        $this->Session->write("cgBackgroundImage", $cgBackgroundImage);
-                        $this->Session->write("pSheetsColor", $pSheetsColor);
+                        // $image = $yachtDBData[0]['yachts']['cg_background_image'];
+                        // $pSheetsColor = $yachtDBData[0]['yachts']['psheets_color'];
+                        // // echo "<pre>"; print_r($yachtDBData); exit;
+                        // // if($image){
+                        // //     $fleetSiteName = $yachtDBData[0]['yachts']['fleetname'];
+                        // //     $yachtSiteName = $yachtDBData[0]['yachts']['yname'];
+                        // //     $cgBackgroundImage = BASE_URL.'/SOS/app/webroot/betayacht/app/webroot/img/charter_program_files/'.$image;
+                        // //     if (!empty($fleetSiteName)) { // IF yacht is under any Fleet
+                        // //         $cgBackgroundImage = BASE_URL."/".$fleetSiteName."/app/webroot/".$yachtSiteName."/app/webroot/img/charter_program_files/".$image;
+                        // //     }
+                        // // }else{
+                        // //     $cgBackgroundImage = "https://totalsuperyacht.com:8080/charterguest/css/admin/images/full-charter.png";
+                        // // }
+                        // $fleetname = $yachtDBData[0]['yachts']['fleetname'];
+                        // $yachtname = $yachtDBData[0]['yachts']['yname'];
+                        // $cgBackgroundImage = $this->getBackgroundImageUrl($image, $fleetname, $yachtname);
+                        // $this->Session->write("cgBackgroundImage", $cgBackgroundImage);
+                        // $this->Session->write("pSheetsColor", $pSheetsColor);
                         
                         // Check whether the Password is already created
                         $passwordExists = $this->CharterGuest->find('first', array('conditions' => array('id' => $charterData['CharterGuest']['id'], 'password IS NOT NULL', 'password != ""')));
@@ -855,7 +855,8 @@ class ChartersController extends AppController {
     function preference() {
 
         $this->Session->write("isgenerateProductOrderPdf", false);
-        $this->Session->write("isgenerateWineOrderPdf", false);        
+        $this->Session->write("isgenerateWineOrderPdf", false); 
+            
         $session = $this->Session->read('charter_info');
         $sessionAssoc = $this->Session->read('charter_assoc_info');
         if (empty($session)) {
@@ -1980,7 +1981,10 @@ class ChartersController extends AppController {
                         // print($targetFullPath."/".$targetFileName); exit;
                         // Copying to yacht and fleet sites
                         // Copying the image file
+                        //echo $targetFileName; exit;
+                        if(file_exists($sourceImagePath)){
                         copy($sourceImagePath, $targetFullPath."/".$targetFileName);
+                        }
                     }
 
                     // Checks the yacht.passenger_lists table whether charter id is already exists
@@ -2110,16 +2114,19 @@ class ChartersController extends AppController {
                 $this->sendRecordsToYacht($yDBName,$charterHeadProgramId,$charterHeadId,$charterAssocId,$guest_uuid);
                 
             }
-            $personalDetailsTab = 'active in';
+            $personalDetailsTab = '';
             $mealPreferenceTab = '';
             $foodPreferenceTab = '';
             $beveragePreferenceTab = '';
             $spiritPreferenceTab = '';
             $winePreferenceTab = '';
-            $itineraryPreferenceTab = '';
+            $itineraryPreferenceTab = 'active in';
             
             // For showing popup
-            $this->set("showPopup", 1);
+            //$this->set("showPopup", 1);
+            $this->Session->write("showPopup", 1);
+            $sessionData = $this->Session->read();
+            $this->redirect(array('action' => 'preference'.$sessionData['preferenceParam']));
             
         } else {
             $personalDetailsTab = 'active in';
@@ -6446,7 +6453,7 @@ function getPreviousCharterProgramSelections() {
         $sessiondata = $this->Session->read();
         $guestListUUID = $this->request->data['guestListUUID'];
         $selectedCharterProgramUUID = $this->request->data['selectedCharterProgramUUID'];
-           
+        $this->Session->delete("showPopup");
             $this->loadModel('GuestList');
             $this->loadModel('CharterGuest');
             $guestExistdata = $this->GuestList->find('first', array('conditions' => array('UUID' => $guestListUUID)));
@@ -6491,6 +6498,18 @@ function getPreviousCharterProgramSelections() {
     echo json_encode($result);
     exit;
     
+}
+
+function sessionShowPopupDelete(){
+    if($this->request->is('ajax')){
+        $this->layout = false;
+        $this->autoRender = false;
+
+        $this->Session->delete("showPopup");
+        $result['status'] = "success";
+        echo json_encode($result);
+        exit;
+    }
 }
 
 

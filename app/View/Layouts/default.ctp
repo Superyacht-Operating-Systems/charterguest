@@ -575,7 +575,7 @@ width: max-content;
       </div>
         <div class="modal-body">
         <video width="100%" height="100%" controls class="videoclass" id="">
-        <source src="<?php echo  $this->request->base; ?>/app/webroot/210322061346_sample-mp4-file.mp4" type="video/mp4">
+        <source src="<?php echo  $this->request->base; ?>/app/webroot/Guest_how_to_video.mp4" type="video/mp4">
         </video>
                             
         </div>
@@ -597,7 +597,7 @@ width: max-content;
       </div>
         <div class="modal-body">
         <video width="100%" height="100%" controls class="videoclass" id="">
-        <source src="<?php echo  $this->request->base; ?>/app/webroot/210322061346_sample-mp4-file.mp4" type="video/mp4">
+        <source src="<?php echo  $this->request->base; ?>/app/webroot/Head_Charterer_how_to_video.mp4" type="video/mp4">
         </video>
                             
         </div>
