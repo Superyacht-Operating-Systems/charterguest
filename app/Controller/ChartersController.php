@@ -702,6 +702,10 @@ class ChartersController extends AppController {
         $this->Session->write("cgBackgroundImage", $cgBackgroundImage);
         // Background image
 
+        if(isset($programFiledata) && isset($fleetname) && !empty($fleetname)){
+            $programFiles[$charter_from_date]['fleetname'] = $fleetname;
+        }
+
         $pid = $charterData['CharterGuest']['charter_program_id'];
         //echo "SELECT * FROM $ydb_name.charter_program_schedules CharterProgramSchedule WHERE charter_program_id = '$pid' AND is_deleted = 0";
         $scheduleData = $this->CharterProgramFile->query("SELECT * FROM $ydb_name.charter_program_schedules CharterProgramSchedule WHERE charter_program_id = '$pid' AND is_deleted = 0");
@@ -721,10 +725,13 @@ class ChartersController extends AppController {
             $SITE_URL = Configure::read('BASE_URL');
             foreach($programFiles as $startdate => $filedata){ 
                 foreach($filedata['attachment'] as $file){ 
+                    $fleetname = $this->Session->read('fleetname');
+                    if(isset($filedata['fleetname'])){
+                        $fleetname = $filedata['fleetname'];
+                    }
                     $sourceImagePath = $SITE_URL.'/'.$fleetname."/app/webroot/img/charter_program_files/".$file['CharterProgramFile']['file_name'];
                     $attachment[$startdate] = $sourceImagePath;
-
-                    }
+                }
             } 
         }
 
@@ -800,6 +807,12 @@ class ChartersController extends AppController {
         $this->set('ydb_name', $ydb_name);
         $this->set('charter_program_id', $charter_program_id);
 
+        $YachtData =  $this->CharterGuest->query("SELECT * FROM $ydb_name.yachts Yacht");
+        $fleetname = $YachtData[0]['Yacht']['fleetname'];
+
+        if(isset($programFiledata) && isset($fleetname) && !empty($fleetname)){
+            $programFiles[$charter_from_date]['fleetname'] = $fleetname;
+        }
         $pid = $charterData['CharterGuest']['charter_program_id'];
         //echo "SELECT * FROM $ydb_name.charter_program_schedules CharterProgramSchedule WHERE charter_program_id = '$pid' AND is_deleted = 0";
         $scheduleData = $this->CharterProgramFile->query("SELECT * FROM $ydb_name.charter_program_schedules CharterProgramSchedule WHERE charter_program_id = '$pid' AND is_deleted = 0");
@@ -819,6 +832,10 @@ class ChartersController extends AppController {
             $SITE_URL = Configure::read('BASE_URL');
             foreach($programFiles as $startdate => $filedata){ 
                 foreach($filedata['attachment'] as $file){ 
+                    $fleetname = $this->Session->read('fleetname');
+                    if(isset($filedata['fleetname'])){
+                        $fleetname = $filedata['fleetname'];
+                    }
                     $sourceImagePath = $SITE_URL.'/'.$fleetname."/app/webroot/img/charter_program_files/".$file['CharterProgramFile']['file_name'];
                     $attachment[$startdate] = $sourceImagePath;
 
@@ -843,8 +860,6 @@ class ChartersController extends AppController {
         
         $this->set('ismobile',$this->is_mobile);
 
-        $YachtData =  $this->CharterGuest->query("SELECT * FROM $ydb_name.yachts Yacht");
-        //echo "<pre>";print_r($YachtData); exit;
         $image = $YachtData[0]['Yacht']['cg_background_image'];
         $fleetname = $YachtData[0]['Yacht']['fleetname'];
         $yachtname = $YachtData[0]['Yacht']['yname'];
