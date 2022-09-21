@@ -5161,24 +5161,33 @@ class ChartersController extends AppController {
                                 //$programFiles[]['startdate'] = $charter_from_date;
                             }
                             
-                            
-                            
+                            $charter_company_id = $value['CharterGuest']['charter_company_id'];
+                            if(isset($charter_company_id) && !empty($charter_company_id)){
+                                $companyData1 = $this->Fleetcompany->find('first', array('fields' => array('management_company_name','logo','fleetname'), 'conditions' => array('id' => $charter_company_id)));
+                                $fleetname1 = $companyData1['Fleetcompany']['fleetname'];
+                            }
+                            if(isset($programFiledata) && isset($fleetname1) && !empty($fleetname1)){
+                                $programFiles[$charter_from_date]['fleetname'] = $fleetname1;
+                            }
                         }//exit;
                         //echo "<pre>";print_r($programFiles); exit;
 
                         
 
-                        $fleetname = $companyData['Fleetcompany']['fleetname'];
                         // $fleetname = $this->Session->read('fleetname');
                         if(isset($programFiles) && !empty($programFiles) ){
                             $attachment = array();
                             $SITE_URL = Configure::read('BASE_URL');
                             foreach($programFiles as $startdate => $filedata){ 
                                 foreach($filedata['attachment'] as $file){ 
+                                    $fleetname = $this->Session->read('fleetname');
+                                    if(isset($filedata['fleetname'])){
+                                        $fleetname = $filedata['fleetname'];
+                                    }
                                     $sourceImagePath = $SITE_URL.'/'.$fleetname."/app/webroot/img/charter_program_files/".$file['CharterProgramFile']['file_name'];
                                     $attachment[$startdate] = $sourceImagePath;
                 
-                                    }
+                                }
                             } 
                         }
 
