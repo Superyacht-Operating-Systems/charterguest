@@ -360,10 +360,16 @@ input[type="checkbox"] {
     .doy-enjoy {
   width: 100% !important;
 }
+.anticipate-label {
+  top: 0px;
+}
 }
 @media screen and (max-width: 768px) {
     .doy-enjoy {
   width: 250px !important;
+}
+.anticipate-label {
+  top: -10px;
 }
     .md-txt-apce {
         padding-right: 15px !important;
