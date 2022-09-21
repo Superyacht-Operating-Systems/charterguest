@@ -83,6 +83,11 @@
 ?>
 
 <style>
+      @media only screen and (min-width: 300px) and (max-width: 1024px){
+label {
+  font-size: 14px !important;
+}
+}
     .occDate .form-control {
     padding: 6px 8px;
 }
