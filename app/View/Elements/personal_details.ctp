@@ -615,7 +615,10 @@ and (max-device-width : 667px) {
 .p-inlineblock .mob-w-70 {
     padding: 0px;
 }
+}
 
+.has-error{
+  border: 1px solid rgb(255 0 0)!important;
 }
 </style>
 <!-- personal details -->
@@ -642,7 +645,7 @@ and (max-device-width : 667px) {
             <label class="pdd-none txt-right">First Name <span class="required"> * </span></label>
           </div>
           <div class="col-xs-7 col-md-5 col-sm-7 form-group mob-w-70">
-              <?php echo $this->Form->input("first_name",array("label"=>false,'class'=>'form-control required','type' => 'text', 'default' => $defaultFirstName)); ?>
+              <?php echo $this->Form->input("first_name",array("label"=>false,'class'=>'form-control','type' => 'text', 'default' => $defaultFirstName)); ?>
           </div>
       
       </div></div>

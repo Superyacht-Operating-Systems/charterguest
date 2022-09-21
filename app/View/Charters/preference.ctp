@@ -1042,7 +1042,7 @@ $(document).ready(function()
 {
     jQuery("#personalDetailsForm").validate(
     {	
-        errorElement: "div",
+        // errorElement: "div",
         rules: {	                 
             "data[CharterGuestPersonalDetail][first_name]": {
                 required: true
@@ -1076,40 +1076,54 @@ $(document).ready(function()
             }
             
         },
-            messages: {
+        highlight: function(element) {
+            $(element).addClass('has-error');
+        },
+        unhighlight: function(element) {
+            $(element).removeClass('has-error');
+        },
+        messages: {
             "data[CharterGuestPersonalDetail][first_name]": {
-                required: "Please enter the first name."                    
+                required: ""
+                // required: "Please enter the first name."                    
             },
                 "data[CharterGuestPersonalDetail][family_name]": {
-                required: "Please enter the family name."
+                required: ""
+                // required: "Please enter the family name."
             },
             "data[CharterGuestPersonalDetail][dob]": {
-                required: "Please enter the valid dob."                    
+                required: ""
+                // required: "Please enter the valid dob."                    
             },
             "data[CharterGuestPersonalDetail][pob]": {
-                required: "Please enter place of birth."
-                
+                required: ""
+                // required: "Please enter place of birth."
             },
             "data[CharterGuestPersonalDetail][nationality]": {
-                required: "Please select a nationality."
+                required: ""
+                // required: "Please select a nationality."
             },
             "data[CharterGuestPersonalDetail][passport_num]": {
-                required: "Please enter passport number."
+                required: ""
+                // required: "Please enter passport number."
             },
             "data[CharterGuestPersonalDetail][issued_date]": {
-                required: "Please enter passport issue date."
+                required: ""
+                // required: "Please enter passport issue date."
             },
             "data[CharterGuestPersonalDetail][expiry_date]": {
-                required: "Please enter passport expiry date."
+                required: ""
+                // required: "Please enter passport expiry date."
             },
             "data[CharterGuestPersonalDetail][next_of_kin]": {
-                required: "Please enter Next of Kin."
+                required: ""
+                // required: "Please enter Next of Kin."
             },
             "data[CharterGuestPersonalDetail][next_of_kin_phone]": {
-                required: "Please enter NoK Phone."
+                required: ""
+                // required: "Please enter NoK Phone."
             }
         }
-        
     });
 }); 
 </script> 
