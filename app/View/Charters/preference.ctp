@@ -38,6 +38,11 @@
     $iti_guestListUUID_beforeleave = $this->Session->read('guestListUUID');
  $iti_selectedCharterProgramUUID_beforeleave = $this->Session->read('selectedCharterProgramUUID'); 
 
+ $iti_guestListUUID = $this->Session->read('guestListUUID');
+ $iti_selectedCharterProgramUUID = $this->Session->read('selectedCharterProgramUUID'); 
+
+ $showPopup = $this->Session->read('showPopup'); 
+
  $isgenerateWineOrderPdf = $this->Session->read('isgenerateWineOrderPdf'); 
  if($isgenerateWineOrderPdf==true){
     ?>
@@ -545,6 +550,52 @@ if(isset($defaultLastName) && !empty($defaultLastName)){
           <input class="btn btn-success" style="background-color: #5cb85c;
     border-color: #4cae4c;" type="button" name="yes_please" id="yes_pleaseBeforeLeave" value="Yes please" />
           <input class="btn btn-danger" type="button" name="no_thanks" id="no_thanksBeforeLeave" value="No thanks" />
+        </div>   
+        <div class="modalmsg" style="margin-left: 30px;"> 
+        <p>You can login to Charter Guest and make</p>
+        <p>changes to your preferences at any time.</p>
+        </div> 
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div id="successPreferenceAlert" class="modal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" >
+  <div class="modal-dialog" role="document">
+    <!---------------- login or logout-------------------->
+    <div class="modal-content mc-bord" id="successbody">
+      <div class="modal-body" >
+      <div class="modalmsg"> 
+        <p>Thank you for submitting your preference sheets.</p>
+        <p>All information will stay secure and confidential.</p>
+        <p>If you need to update any information you can login again using the same email address and password.</p>
+      </div>
+        <div class="text-center">
+            <?php if (isset($sessionData["fleetLogoUrl"]) && !empty($sessionData["fleetLogoUrl"])) { ?>
+                <img src="<?php echo $sessionData["fleetLogoUrl"]; ?>" alt="">
+            <?php } ?> 
+                <h3><?php echo !empty($sessionData["fleetCompanyName"]) ? $sessionData["fleetCompanyName"] : ""; ?></h3>
+        </div>    
+      </div>
+      <div class="modal-footer" style="text-align: center;">
+          <input class="btn btn-success"type="button" name="stay_log_in" id="stay_log_in" value="Stay Logged in">
+          <a href="<?php echo $base; ?>" class="btn btn-success" style="width: 103px; margin-left: 70px;">Log Out</a>
+      </div>
+    </div>
+              <!------------------login or logout----------------->
+
+    <div class="modal-content mc-bord" id="successUsePreference">
+      <div class="modal-body">
+      <div class="modalmsg" style="margin-left: 30px;"> 
+        <p>Would you like to allow your preferences to</p>
+        <p>be provided to future charter programs</p>
+        <p>without you having to submit them again?</p>
+      </div>
+        <div class="text-center">
+          <input class="btn btn-success" style="background-color: #5cb85c;
+    border-color: #4cae4c;" type="button" name="yes_please" id="yes_please" value="Yes please" />
+          <input class="btn btn-danger" type="button" name="no_thanks" id="no_thanks" value="No thanks" />
         </div>   
         <div class="modalmsg" style="margin-left: 30px;"> 
         <p>You can login to Charter Guest and make</p>
@@ -1126,4 +1177,78 @@ $(document).ready(function()
         }
     });
 }); 
+
+$(document).ready(function (e) {
+    <?php if (isset($showPopup) && $showPopup == 1) { ?>
+            //$("#usesubmittedpreferences").modal('show');
+            $("#successPreferenceAlert").modal("show");
+            $("#successUsePreference").show();
+            $("#successbody").hide();
+    <?php } ?> 
+});    
+<?php if (isset($showPopup) && $showPopup == 1) { //$this->Session->delete("showPopup");?>
+$(document).click('#stay_log_in',function(){
+    //alert();
+    $("#successPreferenceAlert").modal("hide");
+    sessionShowPopupDelete();
+});
+<?php } ?>
+
+
+$(document).on("click", "#yes_please", function(e) {     //alert();
+  
+  var data = {
+      "guestListUUID": "<?php echo $iti_guestListUUID; ?>",
+      "selectedCharterProgramUUID": "<?php echo $iti_selectedCharterProgramUUID; ?>"
+  };
+  
+  
+      $("#hideloader").show();
+      $.ajax({
+          type: "POST",
+          url: BASE_FOLDER+'/charters/saveusesubmittedpreferences',
+          dataType: 'json',
+          data: data,
+          success:function(result) {
+              $("#hideloader").hide();
+              if (result.status == 'success') {
+                $("#successUsePreference").hide();
+                $("#successbody").show();
+                return false;
+              }else if(result.status == 'fail'){
+                $("#successUsePreference").hide();
+                $("#successbody").show();
+                return false;
+              }   
+          },
+          error: function(jqxhr) { 
+              $("#hideloader").hide();
+          }
+      });
+      return false;
+});
+$(document).on("click", "#no_thanks", function(e) {
+
+$("#successUsePreference").hide();
+$("#successbody").show();
+          return false;
+
+});
+
+function sessionShowPopupDelete(){
+    $("#hideloader").show();
+    $.ajax({
+          type: "POST",
+          url: BASE_FOLDER+'/charters/sessionShowPopupDelete',
+          dataType: 'json',
+          data: '',
+          success:function(result) {
+              $("#hideloader").hide();
+              
+          },
+          error: function(jqxhr) { 
+              $("#hideloader").hide();
+          }
+      });
+    }
 </script> 

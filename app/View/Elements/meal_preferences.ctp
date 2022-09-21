@@ -416,7 +416,7 @@ input[type="checkbox"] {
         width: 100% !important;
         text-align: left;
         display: inline-block;
-        padding-bottom: 10px;
+        /* padding-bottom: 10px; */
     }
     .bf-width .checkbox {
         float: left;
@@ -1152,9 +1152,9 @@ input[type="checkbox"] {
                 <div class="clearfix"></div>
                 <hr class="divider" />
                 <div class="form-group mar-btm ipadpro-lunch">
-                    <label class="control-label col-sm-1 mar-btm ln-lab text-right">Lunch</label>
+                    <label class="control-label col-md-2 col-sm-1 mar-btm ln-lab text-right">Lunch</label>
 
-                    <div class="col-sm-12 two">
+                    <div class="col-md-10 col-sm-12 two">
                         <div class="col-sm-2 pdd-none ">
                             <div class="checkbox">
                                 <input type="checkbox" class="lunchtypechk"
@@ -1195,8 +1195,8 @@ input[type="checkbox"] {
                 <div class="clearfix"></div>
 
                 <div class="form-group frmgrp-mar">
-                    <label class="control-label col-sm-2 mar-btm ln-lab text-right">Lunch Style</label>
-                    <div class="col-xs-12 col-sm-12 md-no-padd">
+                    <label class="control-label col-md-2 col-sm-2 mar-btm ln-lab text-right">Lunch Style</label>
+                    <div class="col-md-10 col-xs-12 col-sm-12 md-no-padd">
                         <div class="col-xs-7 col-sm-3 col-md-3  pdd-none">
                             <div class="checkbox">
                                 <input type="checkbox" class="lunchstylechk"
