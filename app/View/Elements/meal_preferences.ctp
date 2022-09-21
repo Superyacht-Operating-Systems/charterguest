@@ -44,7 +44,7 @@
       39 => 'Skim Milk',
       40 => 'Almond Milk',
       41 => 'Soy Milk',
-      42 => 'Goats Milk',
+      42 => 'Oat Milk',
       43 => 'Greek Yogurt',
       44 => 'Natural Yogurt',
       45 => 'Vanilla Yogurt',
@@ -984,7 +984,7 @@ input[type="checkbox"] {
                             <input type="checkbox" class="breakfastchk"
                                 name="data[CharterGuestMealPreference][breakfast_likes][]" value="42"
                                 <?php echo $breakfastLikesListChecked[42]; ?>>
-                            <label class="pdd-none">Goats Milk</label>
+                            <label class="pdd-none">Oat Milk</label>
                         </div>
                     </div>
                 </div>
