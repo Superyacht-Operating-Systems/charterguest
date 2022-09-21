@@ -907,7 +907,7 @@ class ChartersController extends AppController {
 
         $charter_company_id = isset($session['CharterGuest']['charter_company_id']) ? $session['CharterGuest']['charter_company_id'] : 0;
         $this->loadModel('Fleetcompany');
-        $companyData = $this->Fleetcompany->find('first', array('fields' => array('ipad_hex_code'), 'conditions' => array('id' => $charter_company_id)));
+        $companyData = $this->Fleetcompany->find('first', array('fields' => array('ipad_hex_code','fleetname'), 'conditions' => array('id' => $charter_company_id)));
         $pSheetsColor = $companyData['Fleetcompany']['ipad_hex_code'];
         $this->Session->write("pSheetsColor", $pSheetsColor);
        
@@ -2360,7 +2360,8 @@ class ChartersController extends AppController {
             $programFiles[$charter_from_date]['attachment'] = $programFiledata;
         }
 
-        $fleetname = $this->Session->read('fleetname');
+        // $fleetname = $this->Session->read('fleetname');
+        $fleetname = $companyData['Fleetcompany']['fleetname'];
         $attachment = array();
         if(isset($programFiles) ){
             $SITE_URL = Configure::read('BASE_URL');
@@ -2368,7 +2369,7 @@ class ChartersController extends AppController {
                 foreach($filedata['attachment'] as $file){ 
                     $sourceImagePath = $SITE_URL.'/'.$fleetname."/app/webroot/img/charter_program_files/".$file['CharterProgramFile']['file_name'];
                     $attachment[$startdate] = $sourceImagePath;
-                }
+                } 
             } 
         }
         $this->set('programFiles', $attachment);
@@ -5183,7 +5184,8 @@ class ChartersController extends AppController {
 
                         
 
-                        $fleetname = $this->Session->read('fleetname');
+                        $fleetname = $companyData['Fleetcompany']['fleetname'];
+                        // $fleetname = $this->Session->read('fleetname');
                         if(isset($programFiles) && !empty($programFiles) ){
                             $attachment = array();
                             $SITE_URL = Configure::read('BASE_URL');
