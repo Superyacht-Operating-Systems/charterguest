@@ -252,7 +252,11 @@ width: 100%;
 }
   }
 
-
+  @media (max-width: 760px){
+    .fs-wd {
+    width: 50%;float: left;
+}
+}
 
   @media (max-width: 768px){
     .foodpreferences-row .label-comments-space{
@@ -262,9 +266,7 @@ width: 100%;
     width: 60%;
     float: left;
 }
-    .fs-wd {
-    width: 50%;float: left;
-}
+
     .cp-width{
       width:14% !important;
     }

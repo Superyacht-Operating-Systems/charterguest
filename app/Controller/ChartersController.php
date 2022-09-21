@@ -434,6 +434,9 @@ class ChartersController extends AppController {
                     $companyData = $this->Fleetcompany->find('first', array('fields' => array('management_company_name','logo','fleetname'), 'conditions' => array('id' => $charter_company_id)));
                     $fleetname = $companyData['Fleetcompany']['fleetname'];
                 }
+                if(isset($programFiledata) && isset($fleetname) && !empty($fleetname)){
+                    $programFiles[$charter_from_date]['fleetname'] = $fleetname;
+                }
                 if(isset($value['CharterGuest']['program_image']) && !empty($value['CharterGuest']['program_image'])){
                     if (!empty($fleetname)) {
                         if($fleetname == "fleetbeta" || $fleetname == "SOS"){
@@ -497,12 +500,16 @@ class ChartersController extends AppController {
                 $SITE_URL = Configure::read('BASE_URL');
                 foreach($programFiles as $startdate => $filedata){ 
                     foreach($filedata['attachment'] as $file){ 
+                        $fleetname = $this->Session->read('fleetname');
+                        if(isset($filedata['fleetname'])){
+                            $fleetname = $filedata['fleetname'];
+                        }
                         $sourceImagePath = $SITE_URL.'/'.$fleetname."/app/webroot/img/charter_program_files/".$file['CharterProgramFile']['file_name'];
                         $attachment[$startdate] = $sourceImagePath;
-    
-                        }
+                    }
                 } 
             }
+    //    echo "<pre>";print_r($attachment); echo "<pre>";print_r($programFiles); exit;
 
          }
 
@@ -708,20 +715,6 @@ class ChartersController extends AppController {
             }
         }
 
-        $fleetname = $this->Session->read('fleetname');
-        if(isset($programFiles) ){
-            $attachment = array();
-            $SITE_URL = Configure::read('BASE_URL');
-            foreach($programFiles as $startdate => $filedata){ 
-                foreach($filedata['attachment'] as $file){ 
-                    $sourceImagePath = $SITE_URL.'/'.$fleetname."/app/webroot/img/charter_program_files/".$file['CharterProgramFile']['file_name'];
-                    $attachment[$startdate] = $sourceImagePath;
-
-                    }
-            } 
-        }
-
-        $this->set('programFiles', $attachment);
         $this->set('mapdetails', $mapdetails);
         /*********************** */
         
@@ -737,6 +730,21 @@ class ChartersController extends AppController {
         $this->set('companyData', $companyData);
         $this->set('charter_company_id', $charter_company_id);
         $this->set('ismobile',$this->is_mobile);
+
+        $fleetname = $companyData['Fleetcompany']['fleetname'];
+        if(isset($programFiles) ){
+            $attachment = array();
+            $SITE_URL = Configure::read('BASE_URL');
+            foreach($programFiles as $startdate => $filedata){ 
+                foreach($filedata['attachment'] as $file){ 
+                    $sourceImagePath = $SITE_URL.'/'.$fleetname."/app/webroot/img/charter_program_files/".$file['CharterProgramFile']['file_name'];
+                    $attachment[$startdate] = $sourceImagePath;
+
+                }
+            } 
+        }
+
+        $this->set('programFiles', $attachment);
 
         // Logo url
         if (isset($companyData['Fleetcompany']['logo']) && !empty($companyData['Fleetcompany']['logo'])) {
@@ -806,20 +814,6 @@ class ChartersController extends AppController {
             }
         }
 
-        $fleetname = $this->Session->read('fleetname');
-        if(isset($programFiles) ){
-            $attachment = array();
-            $SITE_URL = Configure::read('BASE_URL');
-            foreach($programFiles as $startdate => $filedata){ 
-                foreach($filedata['attachment'] as $file){ 
-                    $sourceImagePath = $SITE_URL.'/'.$fleetname."/app/webroot/img/charter_program_files/".$file['CharterProgramFile']['file_name'];
-                    $attachment[$startdate] = $sourceImagePath;
-
-                    }
-            } 
-        }
-
-        $this->set('programFiles', $attachment);
         $this->set('mapdetails', $mapdetails);
         /*********************** */
         
@@ -833,11 +827,24 @@ class ChartersController extends AppController {
         $this->loadModel('Fleetcompany');
         $companyData = $this->Fleetcompany->find('first', array('fields' => array('management_company_name','logo','fleetname'), 'conditions' => array('id' => $charter_company_id)));
         $this->set('companyData', $companyData);
+
+        $fleetname = $companyData['Fleetcompany']['fleetname'];
+        if(isset($programFiles) ){
+            $attachment = array();
+            $SITE_URL = Configure::read('BASE_URL');
+            foreach($programFiles as $startdate => $filedata){ 
+                foreach($filedata['attachment'] as $file){ 
+                    $sourceImagePath = $SITE_URL.'/'.$fleetname."/app/webroot/img/charter_program_files/".$file['CharterProgramFile']['file_name'];
+                    $attachment[$startdate] = $sourceImagePath;
+
+                }
+            } 
+        }
+
+        $this->set('programFiles', $attachment);
         
         $this->set('ismobile',$this->is_mobile);
 
-        $YachtData =  $this->CharterGuest->query("SELECT * FROM $ydb_name.yachts Yacht");
-        //echo "<pre>";print_r($YachtData); exit;
         $image = $YachtData[0]['Yacht']['cg_background_image'];
         $fleetname = $YachtData[0]['Yacht']['fleetname'];
         $yachtname = $YachtData[0]['Yacht']['yname'];
@@ -886,7 +893,7 @@ class ChartersController extends AppController {
 
         $charter_company_id = isset($session['CharterGuest']['charter_company_id']) ? $session['CharterGuest']['charter_company_id'] : 0;
         $this->loadModel('Fleetcompany');
-        $companyData = $this->Fleetcompany->find('first', array('fields' => array('ipad_hex_code'), 'conditions' => array('id' => $charter_company_id)));
+        $companyData = $this->Fleetcompany->find('first', array('fields' => array('ipad_hex_code','fleetname'), 'conditions' => array('id' => $charter_company_id)));
         $pSheetsColor = $companyData['Fleetcompany']['ipad_hex_code'];
         $this->Session->write("pSheetsColor", $pSheetsColor);
        
@@ -2353,7 +2360,7 @@ class ChartersController extends AppController {
                 foreach($filedata['attachment'] as $file){ 
                     $sourceImagePath = $SITE_URL.'/'.$fleetname."/app/webroot/img/charter_program_files/".$file['CharterProgramFile']['file_name'];
                     $attachment[$startdate] = $sourceImagePath;
-                }
+                } 
             } 
         }
         $this->set('programFiles', $attachment);
@@ -5161,23 +5168,33 @@ class ChartersController extends AppController {
                                 //$programFiles[]['startdate'] = $charter_from_date;
                             }
                             
-                            
-                            
+                            $charter_company_id = $value['CharterGuest']['charter_company_id'];
+                            if(isset($charter_company_id) && !empty($charter_company_id)){
+                                $companyData1 = $this->Fleetcompany->find('first', array('fields' => array('management_company_name','logo','fleetname'), 'conditions' => array('id' => $charter_company_id)));
+                                $fleetname1 = $companyData1['Fleetcompany']['fleetname'];
+                            }
+                            if(isset($programFiledata) && isset($fleetname1) && !empty($fleetname1)){
+                                $programFiles[$charter_from_date]['fleetname'] = $fleetname1;
+                            }
                         }//exit;
                         //echo "<pre>";print_r($programFiles); exit;
 
                         
 
-                        $fleetname = $this->Session->read('fleetname');
+                        // $fleetname = $this->Session->read('fleetname');
                         if(isset($programFiles) && !empty($programFiles) ){
                             $attachment = array();
                             $SITE_URL = Configure::read('BASE_URL');
                             foreach($programFiles as $startdate => $filedata){ 
                                 foreach($filedata['attachment'] as $file){ 
+                                    $fleetname = $this->Session->read('fleetname');
+                                    if(isset($filedata['fleetname'])){
+                                        $fleetname = $filedata['fleetname'];
+                                    }
                                     $sourceImagePath = $SITE_URL.'/'.$fleetname."/app/webroot/img/charter_program_files/".$file['CharterProgramFile']['file_name'];
                                     $attachment[$startdate] = $sourceImagePath;
                 
-                                    }
+                                }
                             } 
                         }
 
@@ -6590,6 +6607,7 @@ function getIndividualmsgcountMarer() {
             $fleetLogoUrl = $SITE_URL.'/'."charterguest/img/logo/thumb/charter_guest_logo.png";
         }
         $this->Session->write("fleetCompanyName", $companyData['Fleetcompany']['management_company_name']);
+        $this->Session->write("fleetname", $companyData['Fleetcompany']['fleetname']);
         return $fleetLogoUrl;
     }
     
