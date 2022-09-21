@@ -416,7 +416,7 @@ input[type="checkbox"] {
         width: 100% !important;
         text-align: left;
         display: inline-block;
-        padding-bottom: 10px;
+        /* padding-bottom: 10px; */
     }
     .bf-width .checkbox {
         float: left;
