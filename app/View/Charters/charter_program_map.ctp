@@ -1379,29 +1379,29 @@ if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !e
         }
         
     }
-    if(isset($markertotal[$schedule['CharterProgramSchedule']['title']]['endplace']) && !empty($markertotal[$schedule['CharterProgramSchedule']['title']]['endplace'])){
-            $endplace = $markertotal[$schedule['CharterProgramSchedule']['title']]['endplace'];
+    if(isset($markertotal[$schedule['CharterProgramSchedule']['title'].' - Day '.$schedule['CharterProgramSchedule']['day_num']]['endplace']) && !empty($markertotal[$schedule['CharterProgramSchedule']['title'].' - Day '.$schedule['CharterProgramSchedule']['day_num']]['endplace'])){
+            $endplace = $markertotal[$schedule['CharterProgramSchedule']['title'].' - Day '.$schedule['CharterProgramSchedule']['day_num']]['endplace'];
             $bar = " / ";
     }else{
         $endplace = "";
         $bar = "";
     }
-    if(isset($markertotal[$schedule['CharterProgramSchedule']['title']]['distance']) && !empty($markertotal[$schedule['CharterProgramSchedule']['title']]['distance'])){
-        $distance = $markertotal[$schedule['CharterProgramSchedule']['title']]['distance'];
+    if(isset($markertotal[$schedule['CharterProgramSchedule']['title'].' - Day '.$schedule['CharterProgramSchedule']['day_num']]['distance']) && !empty($markertotal[$schedule['CharterProgramSchedule']['title'].' - Day '.$schedule['CharterProgramSchedule']['day_num']]['distance'])){
+        $distance = $markertotal[$schedule['CharterProgramSchedule']['title'].' - Day '.$schedule['CharterProgramSchedule']['day_num']]['distance'];
         
     }else{
         $distance = "";
     
     }
-    if(isset($markertotal[$schedule['CharterProgramSchedule']['title']]['duration']) && !empty($markertotal[$schedule['CharterProgramSchedule']['title']]['duration'])){
-        $duration = $markertotal[$schedule['CharterProgramSchedule']['title']]['duration'];
+    if(isset($markertotal[$schedule['CharterProgramSchedule']['title'].' - Day '.$schedule['CharterProgramSchedule']['day_num']]['duration']) && !empty($markertotal[$schedule['CharterProgramSchedule']['title'].' - Day '.$schedule['CharterProgramSchedule']['day_num']]['duration'])){
+        $duration = $markertotal[$schedule['CharterProgramSchedule']['title'].' - Day '.$schedule['CharterProgramSchedule']['day_num']]['duration'];
         
     }else{
     $duration = "";
     
     }
-    if(isset($markertotal[$schedule['CharterProgramSchedule']['title']]['consumption']) && !empty($markertotal[$schedule['CharterProgramSchedule']['title']]['consumption'])){
-        $consumption = $markertotal[$schedule['CharterProgramSchedule']['title']]['consumption'];
+    if(isset($markertotal[$schedule['CharterProgramSchedule']['title'].' - Day '.$schedule['CharterProgramSchedule']['day_num']]['consumption']) && !empty($markertotal[$schedule['CharterProgramSchedule']['title'].' - Day '.$schedule['CharterProgramSchedule']['day_num']]['consumption'])){
+        $consumption = $markertotal[$schedule['CharterProgramSchedule']['title'].' - Day '.$schedule['CharterProgramSchedule']['day_num']]['consumption'];
         
     }else{
     $consumption = "";
@@ -1440,6 +1440,7 @@ if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !e
         marker.scheduleSameLocationUUID = "<?php echo implode(',',$samelocationsScheduleUUID[$schedule['CharterProgramSchedule']['title']]); ?>";
         marker.samelocationsDates = "<?php echo implode(',',$samelocationsDates[$schedule['CharterProgramSchedule']['title']]); ?>";
         marker.labeldayanddate = "<?php echo $SumDaytitle; ?>";
+        marker.day_num = "<?php echo $schedule['CharterProgramSchedule']['day_num']; ?>";
         marker.markerNum = markerCount; 
         markerArray.push(marker);
         marker.addTo(map);
