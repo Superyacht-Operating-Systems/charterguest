@@ -204,7 +204,13 @@ body .menu .menu__item a{
     background: #a4a0a0!important;
   color: #000;
 }
+    /* .nav-side-menu .sidebar {
+  width: 190px;
+    } */
     .nav-side-menu .sidebar {
+  width: 139px;
+    }
+  .nav-side-menu .show {
   width: 190px;
     }
 
