@@ -196,24 +196,24 @@ class ChartersController extends AppController {
                         
                         $ydb_name = $yachtData['Yacht']['ydb_name'];
                         $yachtDBData = $this->Yacht->getYachtData($ydb_name);
-                        $image = $yachtDBData[0]['yachts']['cg_background_image'];
-                        $pSheetsColor = $yachtDBData[0]['yachts']['psheets_color'];
-                        // echo "<pre>"; print_r($yachtDBData); exit;
-                        // if($image){
-                        //     $fleetSiteName = $yachtDBData[0]['yachts']['fleetname'];
-                        //     $yachtSiteName = $yachtDBData[0]['yachts']['yname'];
-                        //     $cgBackgroundImage = BASE_URL.'/SOS/app/webroot/betayacht/app/webroot/img/charter_program_files/'.$image;
-                        //     if (!empty($fleetSiteName)) { // IF yacht is under any Fleet
-                        //         $cgBackgroundImage = BASE_URL."/".$fleetSiteName."/app/webroot/".$yachtSiteName."/app/webroot/img/charter_program_files/".$image;
-                        //     }
-                        // }else{
-                        //     $cgBackgroundImage = "https://totalsuperyacht.com:8080/charterguest/css/admin/images/full-charter.png";
-                        // }
-                        $fleetname = $yachtDBData[0]['yachts']['fleetname'];
-                        $yachtname = $yachtDBData[0]['yachts']['yname'];
-                        $cgBackgroundImage = $this->getBackgroundImageUrl($image, $fleetname, $yachtname);
-                        $this->Session->write("cgBackgroundImage", $cgBackgroundImage);
-                        $this->Session->write("pSheetsColor", $pSheetsColor);
+                        // $image = $yachtDBData[0]['yachts']['cg_background_image'];
+                        // $pSheetsColor = $yachtDBData[0]['yachts']['psheets_color'];
+                        // // echo "<pre>"; print_r($yachtDBData); exit;
+                        // // if($image){
+                        // //     $fleetSiteName = $yachtDBData[0]['yachts']['fleetname'];
+                        // //     $yachtSiteName = $yachtDBData[0]['yachts']['yname'];
+                        // //     $cgBackgroundImage = BASE_URL.'/SOS/app/webroot/betayacht/app/webroot/img/charter_program_files/'.$image;
+                        // //     if (!empty($fleetSiteName)) { // IF yacht is under any Fleet
+                        // //         $cgBackgroundImage = BASE_URL."/".$fleetSiteName."/app/webroot/".$yachtSiteName."/app/webroot/img/charter_program_files/".$image;
+                        // //     }
+                        // // }else{
+                        // //     $cgBackgroundImage = "https://totalsuperyacht.com:8080/charterguest/css/admin/images/full-charter.png";
+                        // // }
+                        // $fleetname = $yachtDBData[0]['yachts']['fleetname'];
+                        // $yachtname = $yachtDBData[0]['yachts']['yname'];
+                        // $cgBackgroundImage = $this->getBackgroundImageUrl($image, $fleetname, $yachtname);
+                        // $this->Session->write("cgBackgroundImage", $cgBackgroundImage);
+                        // $this->Session->write("pSheetsColor", $pSheetsColor);
                         
                         // Check whether the Password is already created
                         $passwordExists = $this->CharterGuest->find('first', array('conditions' => array('id' => $charterData['CharterGuest']['id'], 'password IS NOT NULL', 'password != ""')));
@@ -1083,7 +1083,7 @@ class ChartersController extends AppController {
                 $charterAssocId = $data['charterAssocIdByHeaderEdit'];
                 $this->set("charterAssocIdByHeaderEdit", $charterAssocId);
             }
-            //echo "<pre>";print_r($this->request->data); //exit;
+            //echo "<pre>";print_r($this->request->data); exit;
             //echo $charterAssocId; exit;
             $guestAssc = $this->CharterGuestAssociate->find('first', array('conditions' => array('id' => $charterAssocId)));
             //echo "<pre>";print_r($this->Session->read());exit;
@@ -1125,23 +1125,26 @@ class ChartersController extends AppController {
             
             $existPassportImage = $data['exist_passport_image'];
             // Check whether image uploaded
-            if ($data['passport_image']['error'] != 0) {
+            if ($data['passport_image']['name'] != "") {
                 $data['passport_image'] = $existPassportImage;
-            } else {
-                // $path = 'img';
-                // $folder_name = 'passport_images';
-                // $folder_url = WWW_ROOT.$path.DIRECTORY_SEPARATOR.$folder_name;
-                // $file = $data['passport_image'];
-                // $imageName = date("ymdHis").'_'.$file['name'];
-                // // create full filename                   
-                // $full_url = $folder_url.DIRECTORY_SEPARATOR.$imageName; 
-                // // upload the file
-                // if (move_uploaded_file($file['tmp_name'], $full_url)) {
-                //     $data['passport_image'] = $imageName;
-                // } else {
-                    $data['passport_image'] = $existPassportImage;
-                //}
+            }else{
+                unset($data['passport_image']);
             }
+            //  else {
+            //     // $path = 'img';
+            //     // $folder_name = 'passport_images';
+            //     // $folder_url = WWW_ROOT.$path.DIRECTORY_SEPARATOR.$folder_name;
+            //     // $file = $data['passport_image'];
+            //     // $imageName = date("ymdHis").'_'.$file['name'];
+            //     // // create full filename                   
+            //     // $full_url = $folder_url.DIRECTORY_SEPARATOR.$imageName; 
+            //     // // upload the file
+            //     // if (move_uploaded_file($file['tmp_name'], $full_url)) {
+            //     //     $data['passport_image'] = $imageName;
+            //     // } else {
+            //         $data['passport_image'] = $existPassportImage;
+            //     //}
+            // }
             
             $data['created'] = date('Y-m-d H:i:s');
             $data['dob'] = !empty($data['dob']) ? date_format(date_create($data['dob']), 'Y-m-d') : '';

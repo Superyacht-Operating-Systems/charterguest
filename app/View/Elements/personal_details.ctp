@@ -742,12 +742,12 @@ and (max-device-width : 667px) {
           <span class="required img-view-modal">only jpg, jpeg, png and pdf</span>
        
         <div class="upload-img-result">
-            <?php
+            <?php //echo $this->request->base;
                 $existImageName = "";
                 $passportUrl = "javascript:void(0);";
                 if (isset($personalDetails['CharterGuestPersonalDetail']['passport_image']) && !empty($personalDetails['CharterGuestPersonalDetail']['passport_image'])) {
                     $existImageName = $personalDetails['CharterGuestPersonalDetail']['passport_image'];
-                    $passportUrl = $this->request->base."/img/passport_images/".$existImageName;
+                    $passportUrl = BASE_URL.$this->request->base."/app/webroot/img/passport_images/".$personalDetails['CharterGuestPersonalDetail']['passport_image'];
                     $position = strpos($existImageName, "_");
                     if ($position == 12) {
                         $existImageName = substr($existImageName, $position+1);
