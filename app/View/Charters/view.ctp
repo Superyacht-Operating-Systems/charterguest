@@ -617,10 +617,10 @@ color: #000;
     
 }
 @media only screen and (max-width: 767px){
-    .nav-side-menu .sidebar {
+    .nav-side-menu-full-container .nav-side-menu .sidebar {
   width: 120px;
     }
-  .nav-side-menu .show {
+    .nav-side-menu-full-container .nav-side-menu .show {
   width: 180px;
     }
 }
