@@ -1257,4 +1257,38 @@ function sessionShowPopupDelete(){
           }
       });
     }
+   
+
+$(document).on('change','#passportImage',function(){
+        var property = document.getElementById('passportImage').files[0];
+        var image_name = property.name;
+        var image_extension = image_name.split('.').pop().toLowerCase();
+
+        if(jQuery.inArray(image_extension,['gif','jpg','jpeg','png','pdf']) == -1){
+          alert("Invalid image file");
+          $("#passportImage").val('');
+        }
+
+        var form_data = new FormData();
+        form_data.append("file",property);
+
+       
+    //alert(form_data);                             
+    $.ajax({
+        url: BASE_FOLDER+'/charters/uploadpassportimage', // <-- point to server-side PHP script 
+        dataType: 'json',
+        cache: false,
+        contentType: false,
+        processData: false,
+        data: form_data,                         
+        type: 'post',
+        success: function(php_script_response){
+            //alert(php_script_response.passport_image); 
+            $("#CharterGuestPersonalDetailExistPassportImage").val(php_script_response.passport_image);
+        }
+     });
+
+   
+});
+
 </script> 

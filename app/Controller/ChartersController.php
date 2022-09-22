@@ -863,10 +863,10 @@ class ChartersController extends AppController {
 
         $this->Session->write("isgenerateProductOrderPdf", false);
         $this->Session->write("isgenerateWineOrderPdf", false); 
-        ini_set('upload_max_filesize', '10M');
-        ini_set('post_max_size', '10M');
-        ini_set('max_input_time', 300);
-        ini_set('max_execution_time', 300);
+        // ini_set('upload_max_filesize', '10M');
+        // ini_set('post_max_size', '10M');
+        // ini_set('max_input_time', 300);
+        // ini_set('max_execution_time', 300);
         $session = $this->Session->read('charter_info');
         $sessionAssoc = $this->Session->read('charter_assoc_info');
         if (empty($session)) {
@@ -1128,19 +1128,19 @@ class ChartersController extends AppController {
             if ($data['passport_image']['error'] != 0) {
                 $data['passport_image'] = $existPassportImage;
             } else {
-                $path = 'img';
-                $folder_name = 'passport_images';
-                $folder_url = WWW_ROOT.$path.DIRECTORY_SEPARATOR.$folder_name;
-                $file = $data['passport_image'];
-                $imageName = date("ymdHis").'_'.$file['name'];
-                // create full filename                   
-                $full_url = $folder_url.DIRECTORY_SEPARATOR.$imageName; 
-                // upload the file
-                if (move_uploaded_file($file['tmp_name'], $full_url)) {
-                    $data['passport_image'] = $imageName;
-                } else {
+                // $path = 'img';
+                // $folder_name = 'passport_images';
+                // $folder_url = WWW_ROOT.$path.DIRECTORY_SEPARATOR.$folder_name;
+                // $file = $data['passport_image'];
+                // $imageName = date("ymdHis").'_'.$file['name'];
+                // // create full filename                   
+                // $full_url = $folder_url.DIRECTORY_SEPARATOR.$imageName; 
+                // // upload the file
+                // if (move_uploaded_file($file['tmp_name'], $full_url)) {
+                //     $data['passport_image'] = $imageName;
+                // } else {
                     $data['passport_image'] = $existPassportImage;
-                }
+                //}
             }
             
             $data['created'] = date('Y-m-d H:i:s');
@@ -6528,6 +6528,31 @@ function sessionShowPopupDelete(){
 
         $this->Session->delete("showPopup");
         $result['status'] = "success";
+        echo json_encode($result);
+        exit;
+    }
+}
+
+function uploadpassportimage(){
+    if($this->request->is('ajax')){
+        $this->layout = false;
+        $this->autoRender = false;
+        //echo "<pre>";print_r($this->request->form); exit;
+        $data = $this->request->form;
+        $path = 'img';
+                $folder_name = 'passport_images';
+                $folder_url = WWW_ROOT.$path.DIRECTORY_SEPARATOR.$folder_name;
+                $file = $data['file'];
+                $imageName = date("ymdHis").'_'.$file['name'];
+                // create full filename                   
+                $full_url = $folder_url.DIRECTORY_SEPARATOR.$imageName; 
+                // upload the file
+                if (move_uploaded_file($file['tmp_name'], $full_url)) {
+                    $data['passport_image'] = $imageName;
+                } 
+        //$this->Session->delete("showPopup");
+        $result['status'] = "success";
+        $result['passport_image'] = $imageName;
         echo json_encode($result);
         exit;
     }
