@@ -1326,13 +1326,8 @@ $("#CharterGuestPersonalDetailIssuedDate").on("change", function(e) {
   var expired = $('#CharterGuestPersonalDetailExpiryDate').val();
   $('#IssuedDateErrorMessage').css({ display: "none" });
 
-  // var issued1 = new Date(issued);
-  // var expired1 = new Date(expired);
-  
-  var issued1 = new Date(issued).toLocaleDateString();
-  var expired1 = new Date(expired).toLocaleDateString();
-  var issued2 = new Date(issued1);
-  var expired2 = new Date(expired1);
+   var issued1 = new Date(issued);
+   var expired1 = new Date(expired);
 
 
   if(issued2 > expired2){
