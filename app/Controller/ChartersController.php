@@ -2169,6 +2169,7 @@ class ChartersController extends AppController {
         // Fetch existing Meal preference details and send to view
         $mealPreferences = $this->CharterGuestMealPreference->find('first', array('conditions' => array('guest_lists_UUID' => $charterGuestAssociateUUID,'is_deleted'=>0)));
         $this->set('mealPreferences', $mealPreferences);
+        //echo "<pre>";print_r($mealPreferences); exit;
         if (!empty($mealPreferences)) {
             $this->request->data['CharterGuestMealPreference'] = $mealPreferences['CharterGuestMealPreference'];
             $this->request->data['CharterGuestMealPreference']['restaurant_date1'] = (!empty($mealPreferences['CharterGuestMealPreference']['restaurant_date1']) && $mealPreferences['CharterGuestMealPreference']['restaurant_date1'] != '0000-00-00') ? date_format(date_create($mealPreferences['CharterGuestMealPreference']['restaurant_date1']), 'd M Y') : '';
@@ -4004,9 +4005,9 @@ class ChartersController extends AppController {
             $input = $mealData['CharterGuestMealPreference'];
             $checkMealExists = $this->CharterGuest->query("SELECT id FROM $yDBName.charter_guest_meal_preferences WHERE guest_lists_UUID='$guest_uuid' AND is_deleted = 0");
             if (empty($checkMealExists)) { // INSERT
-                $this->CharterGuest->query("INSERT INTO $yDBName.charter_guest_meal_preferences (guest_lists_UUID,charter_assoc_id,is_breakfast,breakfast_likes,other_breakfast_likes,lunch_type,is_lunch_desert,lunch_style,is_dining_ashore,restaurant1,restaurant2,restaurant3,restaurant_date1,restaurant_date2,restaurant_date3,restaurant_time1,restaurant_time2,restaurant_time3,is_hors_deovres,deovres_preference,deovres_comments,is_dinner_desert,is_dinner_coffee,created) VALUES ("."'".$input['guest_lists_UUID']."'".",".$input['charter_assoc_id'].",'".$input['is_breakfast']."','".$input['breakfast_likes']."','".addslashes($input['other_breakfast_likes'])."','".$input['lunch_type']."','".$input['is_lunch_desert']."','".$input['lunch_style']."','".$input['is_dining_ashore']."','".addslashes($input['restaurant1'])."','".addslashes($input['restaurant2'])."','".addslashes($input['restaurant3'])."','".$input['restaurant_date1']."','".$input['restaurant_date2']."','".$input['restaurant_date3']."','".$input['restaurant_time1']."','".$input['restaurant_time2']."','".$input['restaurant_time3']."','".$input['is_hors_deovres']."','".$input['deovres_preference']."','".addslashes($input['deovres_comments'])."','".$input['is_dinner_desert']."','".$input['is_dinner_coffee']."','".$created."')");
+                $this->CharterGuest->query("INSERT INTO $yDBName.charter_guest_meal_preferences (guest_lists_UUID,charter_assoc_id,breakfast_time,lunch_time,dinner_time,breakfast_service_style,lunch_service_style,dinner_service_style,meal_time_service_comments,is_breakfast,breakfast_likes,other_breakfast_likes,lunch_type,is_lunch_desert,lunch_style,is_dining_ashore,restaurant1,restaurant2,restaurant3,restaurant_date1,restaurant_date2,restaurant_date3,restaurant_time1,restaurant_time2,restaurant_time3,is_hors_deovres,deovres_preference,deovres_comments,is_dinner_desert,is_dinner_coffee,created) VALUES ("."'".$input['guest_lists_UUID']."'".",".$input['charter_assoc_id'].",'".$input['breakfast_time']."','".$input['lunch_time']."','".$input['dinner_time']."','".$input['breakfast_service_style']."','".$input['lunch_service_style']."','".$input['dinner_service_style']."','".addslashes($input['meal_time_service_comments'])."','".$input['is_breakfast']."','".$input['breakfast_likes']."','".addslashes($input['other_breakfast_likes'])."','".$input['lunch_type']."','".$input['is_lunch_desert']."','".$input['lunch_style']."','".$input['is_dining_ashore']."','".addslashes($input['restaurant1'])."','".addslashes($input['restaurant2'])."','".addslashes($input['restaurant3'])."','".$input['restaurant_date1']."','".$input['restaurant_date2']."','".$input['restaurant_date3']."','".$input['restaurant_time1']."','".$input['restaurant_time2']."','".$input['restaurant_time3']."','".$input['is_hors_deovres']."','".$input['deovres_preference']."','".addslashes($input['deovres_comments'])."','".$input['is_dinner_desert']."','".$input['is_dinner_coffee']."','".$created."')");
             } else { // UPDATE
-                $this->CharterGuest->query("UPDATE $yDBName.charter_guest_meal_preferences SET is_breakfast='".$input['is_breakfast']."',breakfast_likes='".$input['breakfast_likes']."',other_breakfast_likes='".addslashes($input['other_breakfast_likes'])."',lunch_type='".$input['lunch_type']."',is_lunch_desert='".$input['is_lunch_desert']."',lunch_style='".$input['lunch_style']."',is_dining_ashore='".$input['is_dining_ashore']."',restaurant1='".addslashes($input['restaurant1'])."',restaurant2='".addslashes($input['restaurant2'])."',restaurant3='".addslashes($input['restaurant3'])."',restaurant_date1='".$input['restaurant_date1']."',restaurant_date2='".$input['restaurant_date2']."',restaurant_date3='".$input['restaurant_date3']."',restaurant_time1='".$input['restaurant_time1']."',restaurant_time2='".$input['restaurant_time2']."',restaurant_time3='".$input['restaurant_time3']."',is_hors_deovres='".$input['is_hors_deovres']."',deovres_preference='".$input['deovres_preference']."',deovres_comments='".addslashes($input['deovres_comments'])."',is_dinner_desert='".$input['is_dinner_desert']."',is_dinner_coffee='".$input['is_dinner_coffee']."' WHERE guest_lists_UUID='$guest_uuid'");
+                $this->CharterGuest->query("UPDATE $yDBName.charter_guest_meal_preferences SET breakfast_time='".$input['breakfast_time']."',lunch_time='".$input['lunch_time']."',dinner_time='".$input['dinner_time']."',breakfast_service_style='".$input['breakfast_service_style']."',lunch_service_style='".$input['lunch_service_style']."',dinner_service_style='".$input['dinner_service_style']."',meal_time_service_comments='".addslashes($input['meal_time_service_comments'])."',is_breakfast='".$input['is_breakfast']."',breakfast_likes='".$input['breakfast_likes']."',other_breakfast_likes='".addslashes($input['other_breakfast_likes'])."',lunch_type='".$input['lunch_type']."',is_lunch_desert='".$input['is_lunch_desert']."',lunch_style='".$input['lunch_style']."',is_dining_ashore='".$input['is_dining_ashore']."',restaurant1='".addslashes($input['restaurant1'])."',restaurant2='".addslashes($input['restaurant2'])."',restaurant3='".addslashes($input['restaurant3'])."',restaurant_date1='".$input['restaurant_date1']."',restaurant_date2='".$input['restaurant_date2']."',restaurant_date3='".$input['restaurant_date3']."',restaurant_time1='".$input['restaurant_time1']."',restaurant_time2='".$input['restaurant_time2']."',restaurant_time3='".$input['restaurant_time3']."',is_hors_deovres='".$input['is_hors_deovres']."',deovres_preference='".$input['deovres_preference']."',deovres_comments='".addslashes($input['deovres_comments'])."',is_dinner_desert='".$input['is_dinner_desert']."',is_dinner_coffee='".$input['is_dinner_coffee']."' WHERE guest_lists_UUID='$guest_uuid'");
             }
         }
 
@@ -4608,11 +4609,11 @@ class ChartersController extends AppController {
                                     if($Datesarray[$publishmap['CharterProgramSchedule']['day_num']]){
                                         $scheduleData[$key]['CharterProgramSchedule']['day_dates'] = $Datesarray[$publishmap['CharterProgramSchedule']['day_num']];
                                     }
-                                    $samedayrouteorder[$publishmap['CharterProgramSchedule']['title']] = $publishmap['CharterProgramSchedule']['day_num'];
+                                    $samedayrouteorder[$publishmap['CharterProgramSchedule']['title'].' - Day '.$publishmap['CharterProgramSchedule']['day_num']] = $publishmap['CharterProgramSchedule']['day_num'];
                                    //$mcount = $this->getmsgnotifycountForMarker($publishmap['CharterProgramSchedule']['UUID']);
                                    $scheduleData[$key]['CharterProgramSchedule']['marker_msg_count'] = $this->CharterGuest->getCharterMarkerCommentCount($yachtDbName,$publishmap['CharterProgramSchedule']['UUID']);
         
-                                   $markertitle[$publishmap['CharterProgramSchedule']['id']] = $publishmap['CharterProgramSchedule']['title'];
+                                   $markertitle[$publishmap['CharterProgramSchedule']['id']] = $publishmap['CharterProgramSchedule']['title'].' - Day '.$publishmap['CharterProgramSchedule']['day_num'];
                                    $markername[$publishmap['CharterProgramSchedule']['title']] = $publishmap['CharterProgramSchedule']['title'];
 
                                     $samelocations[$publishmap['CharterProgramSchedule']['lattitude']][] = "Day ".$scheduleData[$key]['CharterProgramSchedule']['day_num']."&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;".$scheduleData[$key]['CharterProgramSchedule']['day_dates']; //same location
@@ -4634,9 +4635,9 @@ class ChartersController extends AppController {
                         }
                         //echo "<pre>";print_r($markername); exit;
                         $Routeorderdata = array();
-                        if(isset($samedayrouteorder) && !empty($samedayrouteorder)){
-                            asort($samedayrouteorder);
-                            }
+                        // if(isset($samedayrouteorder) && !empty($samedayrouteorder)){
+                        //     asort($samedayrouteorder);
+                        //     }
                         if(isset($samedayrouteorder) && !empty($samedayrouteorder)){
                             foreach($samedayrouteorder as $title => $value){
                                 $fetchData = $this->CharterGuest->query("SELECT * FROM $yachtDbName.charter_program_schedule_routes CharterProgramScheduleRoute WHERE charter_program_schedule_uuid = '$charterProgramId' AND is_deleted = 0  AND start_location= '$title'");
@@ -4915,11 +4916,11 @@ class ChartersController extends AppController {
                             if($Datesarray[$publishmap['CharterProgramSchedule']['day_num']]){
                                 $scheduleData[$key]['CharterProgramSchedule']['day_dates'] = $Datesarray[$publishmap['CharterProgramSchedule']['day_num']];
                             }
-                            $samedayrouteorder[$publishmap['CharterProgramSchedule']['title']] = $publishmap['CharterProgramSchedule']['day_num'];
+                            $samedayrouteorder[$publishmap['CharterProgramSchedule']['title'].' - Day '.$publishmap['CharterProgramSchedule']['day_num']] = $publishmap['CharterProgramSchedule']['day_num'];
                            //$mcount = $this->getmsgnotifycountForMarker($publishmap['CharterProgramSchedule']['UUID']);
                            $scheduleData[$key]['CharterProgramSchedule']['marker_msg_count'] = $this->CharterGuest->getCharterMarkerCommentCount($yachtDbName,$publishmap['CharterProgramSchedule']['UUID']);
 
-                           $markertitle[$publishmap['CharterProgramSchedule']['id']] = $publishmap['CharterProgramSchedule']['title'];
+                           $markertitle[$publishmap['CharterProgramSchedule']['id']] = $publishmap['CharterProgramSchedule']['title'].' - Day '.$publishmap['CharterProgramSchedule']['day_num'];
                            $markername[$publishmap['CharterProgramSchedule']['title']] = $publishmap['CharterProgramSchedule']['title'];
 
                             $samelocations[$publishmap['CharterProgramSchedule']['lattitude']][] = "Day ".$scheduleData[$key]['CharterProgramSchedule']['day_num']."&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;".$scheduleData[$key]['CharterProgramSchedule']['day_dates']; //same location
@@ -6094,7 +6095,7 @@ class ChartersController extends AppController {
         $activity_name = $postData['activity_name'];
         // $user_type = $postData['user_type'];
         // $user_name = $postData['user_name'];
-        $comments = $postData['comments'];
+        $comments = strip_tags(addslashes(($postData['comments'])));
         $type = $postData['type'];
         $yachtId = $postData['yachtid'];
 
@@ -6140,7 +6141,7 @@ if($type == "schedule"){
             
             $created = date("Y-m-d H:i:s");
             $insertValuescommenttitle = "(activity_id,activity_name,user_name,user_type,comment,crew_newlyaddedcomment,fleet_newlyaddedcomment,guest_newlyaddedcomment,type,created,publish_map) "
-                    . "VALUES ('$activityId','$activity_name','$loggedUserFullName','$loggedUserInfouser_type','$comments','$crew_newlyaddedcomment','$fleet_newlyaddedcomment','$guest_newlyaddedcomment','schedule','$created','$publish_map')";
+                    . "VALUES ('$activityId','$activity_name','$loggedUserFullName','$loggedUserInfouser_type','$comments','$crew_newlyaddedcomment','$fleet_newlyaddedcomment','$guest_newlyaddedcomment','schedule','$created','1')";
             $this->CharterGuest->insertCruisingMapComment($yachtDbName, $insertValuescommenttitle);          
     }
 
@@ -6175,7 +6176,7 @@ if($type == "schedule"){
                 
                 $created = date("Y-m-d H:i:s");
                 $insertValuesActivity = "(activity_id,activity_name,user_name,user_type,comment,crew_newlyaddedcomment,fleet_newlyaddedcomment,guest_newlyaddedcomment,type,created,publish_map) "
-                    . "VALUES ('$activityId','$activity_name','$loggedUserFullName','$loggedUserInfouser_type','$comments','$crew_newlyaddedcomment','$fleet_newlyaddedcomment','$guest_newlyaddedcomment','activity','$created','$publish_map')";
+                    . "VALUES ('$activityId','$activity_name','$loggedUserFullName','$loggedUserInfouser_type','$comments','$crew_newlyaddedcomment','$fleet_newlyaddedcomment','$guest_newlyaddedcomment','activity','$created','1')";
             $this->CharterGuest->insertCruisingMapComment($yachtDbName, $insertValuesActivity);    
                     
         }
