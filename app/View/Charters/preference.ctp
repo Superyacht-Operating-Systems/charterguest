@@ -1273,7 +1273,8 @@ $(document).on('change','#passportImage',function(){
         form_data.append("file",property);
 
        
-    //alert(form_data);                             
+    //alert(form_data);   
+    $("#hideloader").show();                          
     $.ajax({
         url: BASE_FOLDER+'/charters/uploadpassportimage', // <-- point to server-side PHP script 
         dataType: 'json',
@@ -1283,6 +1284,7 @@ $(document).on('change','#passportImage',function(){
         data: form_data,                         
         type: 'post',
         success: function(php_script_response){
+            $("#hideloader").hide();
             //alert(php_script_response.passport_image); 
             $("#CharterGuestPersonalDetailExistPassportImage").val(php_script_response.passport_image);
         }
