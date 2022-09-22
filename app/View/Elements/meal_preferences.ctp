@@ -1164,7 +1164,7 @@ input[type="checkbox"] {
                     <label class="control-label col-md-2 col-sm-1 mar-btm ln-lab label_lr">Lunch</label>
 
                     <div class="col-md-10 col-sm-12 two">
-                        <div class="col-sm-2 col-xs-6 pdd-none ">
+                        <div class="col-sm-2 col-xs-6  ">
                             <div class="checkbox">
                                 <input type="checkbox" class="lunchtypechk"
                                     name="data[CharterGuestMealPreference][lunch_type][]" value="1"
@@ -1172,7 +1172,7 @@ input[type="checkbox"] {
                                 <label class="pdd-none">Hot</label>
                             </div>
                         </div>
-                        <div class="col-sm-2 col-xs-6 pdd-none ">
+                        <div class="col-sm-2 col-xs-6 ">
                             <div class="checkbox">
                                 <input type="checkbox" class="lunchtypechk"
                                     name="data[CharterGuestMealPreference][lunch_type][]" value="2"
@@ -1180,7 +1180,7 @@ input[type="checkbox"] {
                                 <label class="pdd-none">Cold</label>
                             </div>
                         </div>
-                        <div class="col-sm-2 col-xs-6 pdd-none ">
+                        <div class="col-sm-2 col-xs-6  ">
                             <div class="checkbox">
                                 <input type="checkbox" class="lunchtypechk"
                                     name="data[CharterGuestMealPreference][lunch_type][]" value="3"
@@ -1188,7 +1188,7 @@ input[type="checkbox"] {
                                 <label class="pdd-none">Hearty</label>
                             </div>
                         </div>
-                        <div class="col-sm-2 col-xs-6 pdd-none ">
+                        <div class="col-sm-2 col-xs-6  ">
                             <div class="checkbox">
                                 <input type="checkbox" class="lunchtypechk"
                                     name="data[CharterGuestMealPreference][lunch_type][]" value="4"
@@ -1203,10 +1203,10 @@ input[type="checkbox"] {
 
                 <div class="clearfix"></div>
 
-                <div class="form-group frmgrp-mar">
+                <div class="form-group mar-btm ipadpro-lunch">
                     <label class="control-label col-md-2 col-sm-2 mar-btm ln-lab label_lr">Lunch Style</label>
                     <div class="col-md-10 col-xs-12 col-sm-12 md-no-padd">
-                        <div class="col-xs-7 col-sm-3 col-md-3  pdd-none">
+                        <div class="col-xs-7 col-sm-3 col-md-3 ">
                             <div class="checkbox">
                                 <input type="checkbox" class="lunchstylechk"
                                     name="data[CharterGuestMealPreference][lunch_style][]" value="1"
@@ -1215,7 +1215,7 @@ input[type="checkbox"] {
                             </div>
                         </div>
 
-                        <div class="col-xs-5 col-sm-2 col-md-3 pdd-none">
+                        <div class="col-xs-5 col-sm-2 col-md-3 ">
                             <div class="checkbox">
                                 <input type="checkbox" class="lunchstylechk"
                                     name="data[CharterGuestMealPreference][lunch_style][]" value="4"
@@ -1223,7 +1223,7 @@ input[type="checkbox"] {
                                 <label class="pdd-none">Substantial</label>
                             </div>
                         </div>
-                        <div class="col-xs-7 col-sm-3 col-md-3 pdd-none">
+                        <div class="col-xs-7 col-sm-3 col-md-3 ">
                             <div class="checkbox">
                                 <input type="checkbox" class="lunchstylechk"
                                     name="data[CharterGuestMealPreference][lunch_style][]" value="2"
@@ -1231,7 +1231,7 @@ input[type="checkbox"] {
                                 <label class="pdd-none">Formal Plate Lunch</label>
                             </div>
                         </div>
-                        <div class="col-xs-5 col-sm-2 col-md-3 pdd-none">
+                        <div class="col-xs-5 col-sm-2 col-md-3 ">
                             <div class="checkbox">
                                 <input type="checkbox" class="lunchstylechk"
                                     name="data[CharterGuestMealPreference][lunch_style][]" value="3"
