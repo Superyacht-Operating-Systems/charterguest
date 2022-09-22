@@ -1151,7 +1151,7 @@ class ChartersController extends AppController {
             $data['other_occation_date'] = !empty($data['other_occation_date']) ? date_format(date_create($data['other_occation_date']), 'Y-m-d') : '';
             $data['event_date'] = !empty($data['event_date']) ? date_format(date_create($data['event_date']), 'Y-m-d') : '';
             
-            echo "<pre>";print_r($data);exit;
+           // echo "<pre>";print_r($data);exit;
             // Checks whether its CREATE or UPDATE
             if (empty($data['id'])) {
                 $this->CharterGuestPersonalDetail->create();
