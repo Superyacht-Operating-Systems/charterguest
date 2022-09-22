@@ -1074,7 +1074,7 @@ class ChartersController extends AppController {
         if (isset($this->request->data['CharterGuestPersonalDetail']) && !empty($this->request->data['CharterGuestPersonalDetail'])) {
             // Save personal details //
             $data = $this->request->data['CharterGuestPersonalDetail'];
-            
+            //echo "<pre>";print_r($this->request->data['CharterGuestPersonalDetail']);
             // When main Head charterer opens other guest(if Head charterer checked) and Update the Preference sheets
             if (isset($data['charterAssocIdByHeaderEdit'])) {
                 $charterAssocId = $data['charterAssocIdByHeaderEdit'];
@@ -1151,7 +1151,7 @@ class ChartersController extends AppController {
             $data['other_occation_date'] = !empty($data['other_occation_date']) ? date_format(date_create($data['other_occation_date']), 'Y-m-d') : '';
             $data['event_date'] = !empty($data['event_date']) ? date_format(date_create($data['event_date']), 'Y-m-d') : '';
             
-            //echo "<pre>";print_r($data);exit;
+            echo "<pre>";print_r($data);exit;
             // Checks whether its CREATE or UPDATE
             if (empty($data['id'])) {
                 $this->CharterGuestPersonalDetail->create();
