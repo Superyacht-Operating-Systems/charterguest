@@ -1326,10 +1326,11 @@ $("#CharterGuestPersonalDetailIssuedDate").on("change", function(e) {
   var expired = $('#CharterGuestPersonalDetailExpiryDate').val();
   $('#IssuedDateErrorMessage').css({ display: "none" });
 
-  var issued1 = new Date(issued);
-  var expired1 = new Date(expired);
+   var issued1 = new Date(issued);
+   var expired1 = new Date(expired);
 
-  if(issued1 > expired1){
+
+  if(issued2 > expired2){
     $('#IssuedDateErrorMessage').css({ display: "block" });
     $('#CharterGuestPersonalDetailIssuedDate').val('');
   }
