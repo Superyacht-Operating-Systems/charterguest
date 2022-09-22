@@ -616,7 +616,14 @@ color: #000;
     width: 160px !important;
     
 }
-
+@media only screen and (max-width: 767px){
+    .nav-side-menu-full-container .nav-side-menu .sidebar {
+  width: 120px;
+    }
+    .nav-side-menu-full-container .nav-side-menu .show {
+  width: 180px;
+    }
+}
 </style>
   <div class="modal fade info-modal-pop" id="info-modal" role="dialog">
     <div class="modal-dialog">

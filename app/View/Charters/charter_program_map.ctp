@@ -131,7 +131,12 @@ if(empty($scheduleData)){
 }
 
 @media only screen and (max-width: 767px){
-   
+    .nav-side-menu-full-container .nav-side-menu .sidebar {
+  width: 120px;
+    }
+    .nav-side-menu-full-container .nav-side-menu .show {
+  width: 180px;
+    }
     .sp-close-modal, .mapnotemodalclose, .leaflet-container a.leaflet-popup-close-button {
   right: -4px!important;
   top: -5px!important;
@@ -139,6 +144,7 @@ if(empty($scheduleData)){
     .leaflet-popup {
   left: -180px !important;
 }
+
 .nav-side-menu .sidebar.show {
   transform: translate(0);
   overflow-y: inherit;

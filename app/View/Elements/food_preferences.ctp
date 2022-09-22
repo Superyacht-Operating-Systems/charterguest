@@ -20,16 +20,16 @@
         16 => 'Vegetarian cuisine',
         17 => 'Pasta Rice',
         18 => 'Mussels',
-        19 => 'Fish:Black cod',
+        19 => 'Trout',
         20 => 'Halibut',
-        21 => 'Rockfish',
+        21 => 'Seabass',
         22 => 'Salmon',
         23 => 'Sole',
         24 => 'Tuna',
         25 => 'Shellfish: Crab',
         26 => 'King Crab',
         27 => 'Lobster',
-        28 => 'Prawns',
+        28 => 'Shrimp',
         29 => 'Scallops',
         30 => 'Caviar',
         31 => 'Foie gras',
@@ -802,7 +802,7 @@ table.fd-table tr>td {
            </div>
          </td>   
        </tr>
-       <tr>
+       <!-- <tr>
          <td class="fd-cent" >Caribou</td>
           <td align="center" class="md-radio-column-box">
            <div class="radio my-none">
@@ -822,8 +822,8 @@ table.fd-table tr>td {
              <label class="pdd-none"><span>Dislike</span></label>
            </div>
          </td>
-       </tr>
-       <tr>
+       </tr> -->
+       <!-- <tr>
          <td class="fd-cent" >Buffalo</td>
           <td align="center" class="md-radio-column-box">
            <div class="radio my-none">
@@ -843,7 +843,7 @@ table.fd-table tr>td {
              <label class="pdd-none"><span>Dislike</span></label>
            </div>
          </td>
-       </tr>
+       </tr> -->
       <tr>
          <td class="fd-cent" >Pork</td>
          <td align="center" class="md-radio-column-box">
@@ -1029,6 +1029,27 @@ table.fd-table tr>td {
          <td align="center" class="md-radio-column-box">
            <div class="radio my-none">
            <input type="radio" name="data[CharterGuestFoodPreference][food_17]" value="3" <?php echo $foodDislike[17]; ?>>
+             <label class="pdd-none"><span>Dislike</span></label>
+           </div>
+         </td>
+       </tr>
+       <tr>
+         <td class="fd-cent" >Rice</td>
+          <td align="center" class="md-radio-column-box">
+           <div class="radio my-none">
+           <input type="radio" name="data[CharterGuestFoodPreference][food_34]" value="1" <?php echo $foodLove[34]; ?>>
+             <label class="pdd-none"><span>Love</span></label>
+           </div>
+         </td>
+         <td align="center" class="md-radio-column-box">
+           <div class="radio my-none">
+           <input type="radio" name="data[CharterGuestFoodPreference][food_34]" value="2" <?php echo $foodLike[34]; ?>>
+             <label class="pdd-none"><span>Like</span></label>
+           </div>
+         </td>
+         <td align="center" class="md-radio-column-box">
+           <div class="radio my-none">
+           <input type="radio" name="data[CharterGuestFoodPreference][food_34]" value="3" <?php echo $foodDislike[34]; ?>>
              <label class="pdd-none"><span>Dislike</span></label>
            </div>
          </td>
@@ -1385,7 +1406,7 @@ table.fd-table tr>td {
          </td>
        </tr>
           <tr>
-         <td class="fd-cent" >Black cod</td>
+         <td class="fd-cent" >Trout</td>
                    <td align="center" class="md-radio-column-box">
            <div class="radio my-none" >
             <input type="radio" name="data[CharterGuestFoodPreference][food_19]" value="1" <?php echo $foodLove[19]; ?>>
@@ -1428,7 +1449,7 @@ table.fd-table tr>td {
          </td>
        </tr>
       <tr>
-         <td class="fd-cent" >Rockfish</td>
+         <td class="fd-cent" >Seabass</td>
           <td align="center" class="md-radio-column-box">
            <div class="radio my-none">
            <input type="radio" name="data[CharterGuestFoodPreference][food_21]" value="1" <?php echo $foodLove[21]; ?>>
@@ -1596,7 +1617,7 @@ table.fd-table tr>td {
          </td>
        </tr>
       <tr>
-         <td class="fd-cent" >Prawns</td>
+         <td class="fd-cent" >Shrimp</td>
           <td align="center" class="md-radio-column-box">
            <div class="radio my-none">
            <input type="radio" name="data[CharterGuestFoodPreference][food_29]" value="1" <?php echo $foodLove[29]; ?>>
@@ -1717,27 +1738,6 @@ table.fd-table tr>td {
          <td align="center" class="md-radio-column-box">
            <div class="radio my-none">
            <input type="radio" name="data[CharterGuestFoodPreference][food_33]" value="3" <?php echo $foodDislike[33]; ?>>
-             <label class="pdd-none"><span>Dislike</span></label>
-           </div>
-         </td>
-       </tr>
-      <tr>
-         <td class="fd-cent" >Rice</td>
-          <td align="center" class="md-radio-column-box">
-           <div class="radio my-none">
-           <input type="radio" name="data[CharterGuestFoodPreference][food_34]" value="1" <?php echo $foodLove[34]; ?>>
-             <label class="pdd-none"><span>Love</span></label>
-           </div>
-         </td>
-         <td align="center" class="md-radio-column-box">
-           <div class="radio my-none">
-           <input type="radio" name="data[CharterGuestFoodPreference][food_34]" value="2" <?php echo $foodLike[34]; ?>>
-             <label class="pdd-none"><span>Like</span></label>
-           </div>
-         </td>
-         <td align="center" class="md-radio-column-box">
-           <div class="radio my-none">
-           <input type="radio" name="data[CharterGuestFoodPreference][food_34]" value="3" <?php echo $foodDislike[34]; ?>>
              <label class="pdd-none"><span>Dislike</span></label>
            </div>
          </td>

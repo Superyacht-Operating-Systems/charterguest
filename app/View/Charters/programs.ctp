@@ -614,7 +614,14 @@ input:focus {
     width: 160px !important;
     
 }
-
+@media only screen and (max-width: 767px){
+    .nav-side-menu-full-container .nav-side-menu .sidebar {
+  width: 120px;
+    }
+    .nav-side-menu-full-container .nav-side-menu .show {
+  width: 180px;
+    }
+}
 [aria-current="mapnolink"] {
   pointer-events: none;
   cursor: default;

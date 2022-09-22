@@ -157,6 +157,11 @@ $sessionData = $this->Session->read();
     
 ?>
 <style>
+    @media screen and (max-width: 990px){
+.base-margin-botm .occDate input {
+  margin-bottom: 0px;
+}
+    }
   .m-flex-row label{
     padding: 0px;
   }

@@ -204,7 +204,13 @@ body .menu .menu__item a{
     background: #a4a0a0!important;
   color: #000;
 }
+    /* .nav-side-menu .sidebar {
+  width: 190px;
+    } */
     .nav-side-menu .sidebar {
+  width: 139px;
+    }
+  .nav-side-menu .show {
   width: 190px;
     }
 
@@ -862,21 +868,21 @@ $(".datePicker").datepicker({
     changeYear: true,
     changeMonth:true,
     yearRange: "-100:+100"
-});
+}).attr('readonly','readonly');
 $(".issuedatePicker").datepicker({
     dateFormat: 'd M yy',
     changeYear: true,
     changeMonth:true,
     yearRange: "c-12:c+0",
     // yearRange: "-100:+100"
-});
+}).attr('readonly','readonly');
 $(".expirydatePicker").datepicker({
     dateFormat: 'd M yy',
     changeYear: true,
     changeMonth:true,
     yearRange: "c-0:c+12",
     // yearRange: "-100:+100"
-});
+}).attr('readonly','readonly');
 var dateToday = new Date();
 var dobYearRange = "1900:" + dateToday.getFullYear();
 var occationYearRange = dateToday.getFullYear() + ":" + (dateToday.getFullYear() + 5);
@@ -886,14 +892,14 @@ $(".dobDatePicker").datepicker({
     changeYear: true,
     changeMonth:true,
     yearRange: dobYearRange
-});
+}).attr('readonly','readonly');
 // Special occations
 $(".occationDatePicker").datepicker({
     dateFormat: 'd M yy',
     changeYear: true,
     changeMonth:true,
     yearRange: occationYearRange
-});
+}).attr('readonly','readonly');
 
 // Timepicker
 $('.timePicker').timepicker({ 
