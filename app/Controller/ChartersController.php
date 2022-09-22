@@ -196,24 +196,24 @@ class ChartersController extends AppController {
                         
                         $ydb_name = $yachtData['Yacht']['ydb_name'];
                         $yachtDBData = $this->Yacht->getYachtData($ydb_name);
-                        // $image = $yachtDBData[0]['yachts']['cg_background_image'];
-                        // $pSheetsColor = $yachtDBData[0]['yachts']['psheets_color'];
-                        // // echo "<pre>"; print_r($yachtDBData); exit;
-                        // // if($image){
-                        // //     $fleetSiteName = $yachtDBData[0]['yachts']['fleetname'];
-                        // //     $yachtSiteName = $yachtDBData[0]['yachts']['yname'];
-                        // //     $cgBackgroundImage = BASE_URL.'/SOS/app/webroot/betayacht/app/webroot/img/charter_program_files/'.$image;
-                        // //     if (!empty($fleetSiteName)) { // IF yacht is under any Fleet
-                        // //         $cgBackgroundImage = BASE_URL."/".$fleetSiteName."/app/webroot/".$yachtSiteName."/app/webroot/img/charter_program_files/".$image;
-                        // //     }
-                        // // }else{
-                        // //     $cgBackgroundImage = "https://totalsuperyacht.com:8080/charterguest/css/admin/images/full-charter.png";
-                        // // }
-                        // $fleetname = $yachtDBData[0]['yachts']['fleetname'];
-                        // $yachtname = $yachtDBData[0]['yachts']['yname'];
-                        // $cgBackgroundImage = $this->getBackgroundImageUrl($image, $fleetname, $yachtname);
-                        // $this->Session->write("cgBackgroundImage", $cgBackgroundImage);
-                        // $this->Session->write("pSheetsColor", $pSheetsColor);
+                        $image = $yachtDBData[0]['yachts']['cg_background_image'];
+                        $pSheetsColor = $yachtDBData[0]['yachts']['psheets_color'];
+                        // echo "<pre>"; print_r($yachtDBData); exit;
+                        // if($image){
+                        //     $fleetSiteName = $yachtDBData[0]['yachts']['fleetname'];
+                        //     $yachtSiteName = $yachtDBData[0]['yachts']['yname'];
+                        //     $cgBackgroundImage = BASE_URL.'/SOS/app/webroot/betayacht/app/webroot/img/charter_program_files/'.$image;
+                        //     if (!empty($fleetSiteName)) { // IF yacht is under any Fleet
+                        //         $cgBackgroundImage = BASE_URL."/".$fleetSiteName."/app/webroot/".$yachtSiteName."/app/webroot/img/charter_program_files/".$image;
+                        //     }
+                        // }else{
+                        //     $cgBackgroundImage = "https://totalsuperyacht.com:8080/charterguest/css/admin/images/full-charter.png";
+                        // }
+                        $fleetname = $yachtDBData[0]['yachts']['fleetname'];
+                        $yachtname = $yachtDBData[0]['yachts']['yname'];
+                        $cgBackgroundImage = $this->getBackgroundImageUrl($image, $fleetname, $yachtname);
+                        $this->Session->write("cgBackgroundImage", $cgBackgroundImage);
+                        $this->Session->write("pSheetsColor", $pSheetsColor);
                         
                         // Check whether the Password is already created
                         $passwordExists = $this->CharterGuest->find('first', array('conditions' => array('id' => $charterData['CharterGuest']['id'], 'password IS NOT NULL', 'password != ""')));
