@@ -22,7 +22,7 @@ $sessionData = $this->Session->read();
         16 => 'Land tours/Shopping',
         17 => 'Small boat exeditions',
         18 => 'Golfing',
-        19 => 'Hunting',
+        19 => 'Relaxing',
         20 => 'Parasailing/gliding',
         21 => 'Water toys',
         22 => 'Rock climbing',
@@ -250,7 +250,7 @@ $sessionData = $this->Session->read();
             <div class="be-col-6">
             <div class="checkbox bev-chbox">
             <input type="checkbox" class="itinerary" name="data[CharterGuestItineraryPreference][itinerary][]" value="19" <?php echo $itineraryListChecked[19]; ?>>
-              <label class="pdd-none"><span class="sp-lab">Hunting</span></label>
+              <label class="pdd-none"><span class="sp-lab">Relaxing</span></label>
             </div></div>
             <div class="be-col-6">
             <div class="checkbox bev-chbox">
