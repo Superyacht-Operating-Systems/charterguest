@@ -230,6 +230,15 @@
 
 ?>
 <style>
+    .label_lr{
+        text-align: right;
+        padding: 0px;
+    }
+    @media (max-width: 1024px){
+        .label_lr{
+            text-align: left !important;
+        }
+    }
 .label-comt-12 {
     width: 350px;
 }
@@ -1151,11 +1160,11 @@ input[type="checkbox"] {
                 </div>
                 <div class="clearfix"></div>
                 <hr class="divider" />
-                <div class="form-group mar-btm ipadpro-lunch">
-                    <label class="control-label col-md-2 col-sm-1 mar-btm ln-lab text-right">Lunch</label>
+                <div class="form-group mar-btm ipadpro-lunch ">
+                    <label class="control-label col-md-2 col-sm-1 mar-btm ln-lab label_lr">Lunch</label>
 
                     <div class="col-md-10 col-sm-12 two">
-                        <div class="col-sm-2 pdd-none ">
+                        <div class="col-sm-2 col-xs-6 pdd-none ">
                             <div class="checkbox">
                                 <input type="checkbox" class="lunchtypechk"
                                     name="data[CharterGuestMealPreference][lunch_type][]" value="1"
@@ -1163,7 +1172,7 @@ input[type="checkbox"] {
                                 <label class="pdd-none">Hot</label>
                             </div>
                         </div>
-                        <div class="col-sm-2 pdd-none ">
+                        <div class="col-sm-2 col-xs-6 pdd-none ">
                             <div class="checkbox">
                                 <input type="checkbox" class="lunchtypechk"
                                     name="data[CharterGuestMealPreference][lunch_type][]" value="2"
@@ -1171,7 +1180,7 @@ input[type="checkbox"] {
                                 <label class="pdd-none">Cold</label>
                             </div>
                         </div>
-                        <div class="col-sm-2 pdd-none ">
+                        <div class="col-sm-2 col-xs-6 pdd-none ">
                             <div class="checkbox">
                                 <input type="checkbox" class="lunchtypechk"
                                     name="data[CharterGuestMealPreference][lunch_type][]" value="3"
@@ -1179,7 +1188,7 @@ input[type="checkbox"] {
                                 <label class="pdd-none">Hearty</label>
                             </div>
                         </div>
-                        <div class="col-sm-2 pdd-none ">
+                        <div class="col-sm-2 col-xs-6 pdd-none ">
                             <div class="checkbox">
                                 <input type="checkbox" class="lunchtypechk"
                                     name="data[CharterGuestMealPreference][lunch_type][]" value="4"
@@ -1195,7 +1204,7 @@ input[type="checkbox"] {
                 <div class="clearfix"></div>
 
                 <div class="form-group frmgrp-mar">
-                    <label class="control-label col-md-2 col-sm-2 mar-btm ln-lab text-right">Lunch Style</label>
+                    <label class="control-label col-md-2 col-sm-2 mar-btm ln-lab label_lr">Lunch Style</label>
                     <div class="col-md-10 col-xs-12 col-sm-12 md-no-padd">
                         <div class="col-xs-7 col-sm-3 col-md-3  pdd-none">
                             <div class="checkbox">
