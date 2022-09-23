@@ -1330,7 +1330,7 @@ $("#CharterGuestPersonalDetailIssuedDate").on("change", function(e) {
    var expired1 = new Date(expired);
 
 
-  if(issued2 > expired2){
+  if(issued1 > expired1){
     $('#IssuedDateErrorMessage').css({ display: "block" });
     $('#CharterGuestPersonalDetailIssuedDate').val('');
   }
