@@ -904,12 +904,26 @@ $(document).on("click", "#MenuHowToVideoCharterHead", function(e) {
 // alert("Start: " + vid.buffered.start(0)
 // + " End: " + vid.buffered.end(0));
 
-$('#howtovideo').on('shown.bs.modal', function () {
-  $('#preferencesheetvideo')[0].play();
-})
-$('#howtovideo').on('hidden.bs.modal', function () {
-  $('#preferencesheetvideo')[0].pause();
-})
+// $('#howtovideo').on('shown.bs.modal', function () {
+//   $('#preferencesheetvideo')[0].play();
+// })
+// $('#howtovideo').on('hidden.bs.modal', function () {
+//   $('#preferencesheetvideo')[0].pause();
+// })
+
+var options = {};
+
+var player = videojs('my-player', options, function onPlayerReady() {
+  videojs.log('Your player is ready!');
+
+  // In this context, `this` is the player that was created by Video.js.
+  this.play();
+
+  // How about an event listener?
+  this.on('ended', function() {
+    videojs.log('Awww...over so soon?!');
+  });
+});
 
 $('#howtovideocharterhead').on('shown.bs.modal', function () {
   $('#charterheadvideo')[0].play();
