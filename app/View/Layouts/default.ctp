@@ -81,8 +81,7 @@ $actual_link_defaultctp = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on
 		echo $this->fetch('css');
 		echo $this->fetch('script');
 ?>
-    <link href="//vjs.zencdn.net/7.10.2/video-js.min.css" rel="stylesheet">
-<script src="//vjs.zencdn.net/7.10.2/video.min.js"></script>
+    
 <style type="text/css">
 .modalmsg-container .modal-dialog{
 padding-left: 0px;
@@ -575,19 +574,10 @@ width: max-content;
         </button>
       </div>
         <div class="modal-body">
-        <!-- <video width="100%" height="100%" controls class="videoclass" preload="auto" id="preferencesheetvideo">
+        <video width="100%" height="100%" controls class="videoclass" preload="auto" id="preferencesheetvideo">
         <source src="<?php echo  $this->request->base; ?>/app/webroot/Guest_how_to_video.mp4" type="video/mp4">
-        </video> -->
-        <video
-    id="my-player"
-    class="video-js"
-    controls
-    preload="auto"
-   
-    data-setup='{}'>
-  <source src="<?php echo  $this->request->base; ?>/app/webroot/Guest_how_to_video.mp4" type="video/mp4"></source>
- 
-</video>               
+        </video>
+                            
         </div>
         <div class="modal-footer">
             
@@ -904,26 +894,12 @@ $(document).on("click", "#MenuHowToVideoCharterHead", function(e) {
 // alert("Start: " + vid.buffered.start(0)
 // + " End: " + vid.buffered.end(0));
 
-// $('#howtovideo').on('shown.bs.modal', function () {
-//   $('#preferencesheetvideo')[0].play();
-// })
-// $('#howtovideo').on('hidden.bs.modal', function () {
-//   $('#preferencesheetvideo')[0].pause();
-// })
-
-var options = {};
-
-var player = videojs('my-player', options, function onPlayerReady() {
-  videojs.log('Your player is ready!');
-
-  // In this context, `this` is the player that was created by Video.js.
-  this.play();
-
-  // How about an event listener?
-  this.on('ended', function() {
-    videojs.log('Awww...over so soon?!');
-  });
-});
+$('#howtovideo').on('shown.bs.modal', function () {
+  $('#preferencesheetvideo')[0].play();
+})
+$('#howtovideo').on('hidden.bs.modal', function () {
+  $('#preferencesheetvideo')[0].pause();
+})
 
 $('#howtovideocharterhead').on('shown.bs.modal', function () {
   $('#charterheadvideo')[0].play();
