@@ -210,11 +210,9 @@
             $isLunchDesertYes = ($mealPreferences['CharterGuestMealPreference']['is_lunch_desert'] == 1) ? 'checked' : '';
             $isLunchDesertNo = ($mealPreferences['CharterGuestMealPreference']['is_lunch_desert'] == 0) ? 'checked' : '';
         }
-        if(isset($CharterGuestMealPreResrant) && !empty($CharterGuestMealPreResrant)){
-            if (in_array($CharterGuestMealPreResrant['CharterGuestMealPreferenceRestaurant']['is_dining_ashore'], array(0,1))) {
-                $isDiningAshoreYes = ($CharterGuestMealPreResrant['CharterGuestMealPreferenceRestaurant']['is_dining_ashore'] == 1) ? 'checked' : '';
-                $isDiningAshoreNo = ($CharterGuestMealPreResrant['CharterGuestMealPreferenceRestaurant']['is_dining_ashore'] == 0) ? 'checked' : '';
-            }
+        if (in_array($mealPreferences['CharterGuestMealPreference']['is_dining_ashore'], array(0,1))) {
+            $isDiningAshoreYes = ($mealPreferences['CharterGuestMealPreference']['is_dining_ashore'] == 1) ? 'checked' : '';
+            $isDiningAshoreNo = ($mealPreferences['CharterGuestMealPreference']['is_dining_ashore'] == 0) ? 'checked' : '';
         }
         if (in_array($mealPreferences['CharterGuestMealPreference']['is_hors_deovres'], array(0,1))) {
             $isDeovresYes = ($mealPreferences['CharterGuestMealPreference']['is_hors_deovres'] == 1) ? 'checked' : '';
@@ -540,11 +538,24 @@ input[type="checkbox"] {
 }
 }
 
-  @media (min-width: 768px){
+@media (min-width: 768px){
 .wt-fix-st {
   width: 22.33% !important;
+  padding-left: 0px !important;
 }
 }
+  @media (max-width: 768px){
+.wt-fix-st {
+  padding-left: 10px !important;
+}
+      .label_lr{
+           padding-left: 10px !important;
+      }
+}
+.wt-fix-st {
+    padding-left: 0px;
+}
+
 
 @media (max-width: 1024px){
     .pdl_st {
@@ -1547,9 +1558,9 @@ input[type="checkbox"] {
                 <hr class="divider" />
 
                 <div class="form-group frmgrp-mar">
-                    <label class="col-sm-4 col-md-3  mar-btm">Hors d’oeuvres</label>
+                    <label class="col-sm-4 col-md-3  mar-btm mtmob">Hors d’oeuvres</label>
                     <div class="col-sm-12"></div>
-                    <div class="form-group frmgrp-mar mtmob">
+                    <div class="form-group frmgrp-mar">
                 <label class="control-label col-xs-12 col-sm-6 col-md-4 hors_wt mtb-12">Do
                             you enjoy hors d’oeuvres before dinner?</label>
                     <div class="check-mrg-top">
