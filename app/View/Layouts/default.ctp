@@ -574,7 +574,7 @@ width: max-content;
         </button>
       </div>
         <div class="modal-body">
-        <video width="100%" height="100%" controls class="videoclass" id="preferencesheetvideo">
+        <video width="100%" height="100%" controls class="videoclass" preload id="preferencesheetvideo">
         <source src="<?php echo  $this->request->base; ?>/app/webroot/Guest_how_to_video.mp4" type="video/mp4">
         </video>
                             
@@ -596,7 +596,7 @@ width: max-content;
         </button>
       </div>
         <div class="modal-body">
-        <video width="100%" height="100%" controls class="videoclass" id="charterheadvideo">
+        <video width="100%" height="100%" controls preload class="videoclass" id="charterheadvideo">
         <source src="<?php echo  $this->request->base; ?>/app/webroot/Head_Charterer_how_to_video.mp4" type="video/mp4">
         </video>
                             
