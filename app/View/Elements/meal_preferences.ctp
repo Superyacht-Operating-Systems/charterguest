@@ -210,9 +210,11 @@
             $isLunchDesertYes = ($mealPreferences['CharterGuestMealPreference']['is_lunch_desert'] == 1) ? 'checked' : '';
             $isLunchDesertNo = ($mealPreferences['CharterGuestMealPreference']['is_lunch_desert'] == 0) ? 'checked' : '';
         }
-        if (in_array($mealPreferences['CharterGuestMealPreference']['is_dining_ashore'], array(0,1))) {
-            $isDiningAshoreYes = ($mealPreferences['CharterGuestMealPreference']['is_dining_ashore'] == 1) ? 'checked' : '';
-            $isDiningAshoreNo = ($mealPreferences['CharterGuestMealPreference']['is_dining_ashore'] == 0) ? 'checked' : '';
+        if(isset($CharterGuestMealPreResrant) && !empty($CharterGuestMealPreResrant)){
+            if (in_array($CharterGuestMealPreResrant['CharterGuestMealPreferenceRestaurant']['is_dining_ashore'], array(0,1))) {
+                $isDiningAshoreYes = ($CharterGuestMealPreResrant['CharterGuestMealPreferenceRestaurant']['is_dining_ashore'] == 1) ? 'checked' : '';
+                $isDiningAshoreNo = ($CharterGuestMealPreResrant['CharterGuestMealPreferenceRestaurant']['is_dining_ashore'] == 0) ? 'checked' : '';
+            }
         }
         if (in_array($mealPreferences['CharterGuestMealPreference']['is_hors_deovres'], array(0,1))) {
             $isDeovresYes = ($mealPreferences['CharterGuestMealPreference']['is_hors_deovres'] == 1) ? 'checked' : '';
