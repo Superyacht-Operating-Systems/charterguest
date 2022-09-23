@@ -553,6 +553,12 @@ input[type="checkbox"] {
   padding-left: 15px;
 }
 
+.mtb-12{
+    margin: 12px 0px;
+}
+.mtb-8{
+    margin: 8px 0px;
+}
 /* Ramesh 10/08/2018 */
 /*@media only screen 
     and (min-device-width : 768px) 
@@ -1381,18 +1387,18 @@ input[type="checkbox"] {
                     id="lunch_style_hidden" value="" />
                 <div class="clearfix"></div>
                 <div class="form-group frmgrp-mar mtmob">
-                <label class="control-label col-xs-12 col-sm-6 col-md-4 label-comt-12">Do
+                <label class="control-label col-xs-12 col-sm-6 col-md-4 label-comt-12 mtb-12">Do
                             you enjoy Dessert served after lunch?</label>
                     <div class="check-mrg-top">
-                        <div class="col-xs-3 col-md-1 col-sm-1 md-no-padd col-md-xs-radiobox">
-                            <div class="radio" style="margin-top:0px">
+                        <div class="col-xs-3 col-md-1 col-sm-1 md-no-padd col-md-xs-radiobox mtb-8">
+                            <div class="radio" style="margin-top:0px;margin-bottom:0px!important;">
                             <input type="radio" name="data[CharterGuestMealPreference][is_lunch_desert]" value="1"
                                     <?php echo $isLunchDesertYes; ?>>
                                 <label class="pdd-none"><span>Yes</span></label>
                             </div>
                         </div>
-                        <div class="col-xs-3 col-md-1 col-sm-1 col-md-xs-radiobox">
-                            <div class="radio" style="margin-top:0px">
+                        <div class="col-xs-3 col-md-1 col-sm-1 col-md-xs-radiobox mtb-8">
+                            <div class="radio" style="margin-top:0px;margin-bottom:0px!important;">
                             <input type="radio" name="data[CharterGuestMealPreference][is_lunch_desert]" value="0"
                                     <?php echo $isLunchDesertNo; ?>>
                                 <label class="pdd-none"><span class="no-radio-btn">No</span></label>
@@ -1511,18 +1517,18 @@ input[type="checkbox"] {
                     <label class="col-sm-4 col-md-3  mar-btm">Hors d’oeuvres</label>
                     <div class="col-sm-12"></div>
                     <div class="form-group frmgrp-mar mtmob">
-                <label class="control-label col-xs-12 col-sm-6 col-md-4 label-comt-12">Do
+                <label class="control-label col-xs-12 col-sm-6 col-md-4 label-comt-12 mtb-12">Do
                             you enjoy hors d’oeuvres before dinner?</label>
                     <div class="check-mrg-top">
-                        <div class="col-xs-3 col-md-1 col-sm-1 md-no-padd col-md-xs-radiobox">
-                            <div class="radio" style="margin-top:0px">
+                        <div class="col-xs-3 col-md-1 col-sm-1 md-no-padd col-md-xs-radiobox mtb-8">
+                            <div class="radio" style="margin-top:0px;margin-bottom:0px!important">
                             <input type="radio" name="data[CharterGuestMealPreference][is_hors_deovres]" value="1"
                                     <?php echo $isDeovresYes; ?>>
                                 <label class="pdd-none"><span>Yes</span></label>
                             </div>
                         </div>
-                        <div class="col-xs-3 col-md-1 col-sm-1 col-md-xs-radiobox">
-                            <div class="radio" style="margin-top:0px">
+                        <div class="col-xs-3 col-md-1 col-sm-1 col-md-xs-radiobox mtb-8">
+                            <div class="radio" style="margin-top:0px;margin-bottom:0px!important">
                             <input type="radio" name="data[CharterGuestMealPreference][is_hors_deovres]" value="0"
                                     <?php echo $isDeovresNo; ?>>
                                 <label class="pdd-none"><span class="no-radio-btn">No</span></label>
@@ -1619,18 +1625,18 @@ input[type="checkbox"] {
                 </div>
 
                 <div class="form-group frmgrp-mar mtmob">
-                <label class="control-label col-xs-12 col-sm-6 col-md-4 label-comt-12">Do you
+                <label class="control-label col-xs-12 col-sm-6 col-md-4 label-comt-12 mtb-12">Do you
                             enjoy Dessert after dinner?</label>
                     <div class="check-mrg-top">
-                        <div class="col-xs-3 col-md-1 col-sm-1 md-no-padd col-md-xs-radiobox">
-                            <div class="radio" style="margin-top:0px">
+                        <div class="col-xs-3 col-md-1 col-sm-1 md-no-padd col-md-xs-radiobox mtb-8">
+                            <div class="radio" style="margin-top:0px;margin-bottom:0px!important">
                             <input type="radio" name="data[CharterGuestMealPreference][is_dinner_desert]" value="1"
                                     <?php echo $isDinnerDesertYes; ?>>
                                 <label class="pdd-none"><span>Yes</span></label>
                             </div>
                         </div>
-                        <div class="col-xs-3 col-md-1 col-sm-1 col-md-xs-radiobox">
-                            <div class="radio" style="margin-top:0px">
+                        <div class="col-xs-3 col-md-1 col-sm-1 col-md-xs-radiobox mtb-8">
+                            <div class="radio" style="margin-top:0px;margin-bottom:0px!important">
                             <input type="radio" name="data[CharterGuestMealPreference][is_dinner_desert]" value="0"
                                     <?php echo $isDinnerDesertNo; ?>>
                                 <label class="pdd-none"><span class="no-radio-btn">No</span></label>
@@ -1665,18 +1671,18 @@ input[type="checkbox"] {
                 </div> -->
 
                 <div class="form-group frmgrp-mar mtmob">
-                <label class="control-label col-xs-12 col-sm-6 col-md-4 label-comt-12">Do you
-                enjoy Coffee after dinner</label>
+                <label class="control-label col-xs-12 col-sm-6 col-md-4 label-comt-12 mtb-12">Do you
+                enjoy Coffee after dinner?</label>
                     <div class="check-mrg-top">
-                        <div class="col-xs-3 col-md-1 col-sm-1 md-no-padd col-md-xs-radiobox">
-                            <div class="radio" style="margin-top:0px">
+                        <div class="col-xs-3 col-md-1 col-sm-1 md-no-padd col-md-xs-radiobox mtb-8">
+                            <div class="radio" style="margin-top:0px;margin-bottom:0px!important">
                             <input type="radio" name="data[CharterGuestMealPreference][is_dinner_coffee]" value="1"
                                     <?php echo $isDinnerCoffeeYes; ?>>
                                 <label class="pdd-none"><span>Yes</span></label>
                             </div>
                         </div>
-                        <div class="col-xs-3 col-md-1 col-sm-1 col-md-xs-radiobox">
-                            <div class="radio" style="margin-top:0px">
+                        <div class="col-xs-3 col-md-1 col-sm-1 col-md-xs-radiobox mtb-8">
+                            <div class="radio" style="margin-top:0px;margin-bottom:0px!important">
                             <input type="radio" name="data[CharterGuestMealPreference][is_dinner_coffee]" value="0"
                                     <?php echo $isDinnerCoffeeNo; ?>>
                                 <label class="pdd-none"><span class="no-radio-btn">No</span></label>
