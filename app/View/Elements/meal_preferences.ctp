@@ -363,9 +363,7 @@ input[type="checkbox"] {
     }
 }
 @media screen and (max-width: 760px) {
-    .label-lunch {
-        width: 100%;
-    }
+  
     .doy-enjoy {
   width: 100% !important;
 }
@@ -1568,7 +1566,7 @@ input[type="checkbox"] {
                     <div class="col-xs-12 col-sm-12 ipadport-block-three  md-no-padd">
                         <label class="control-label col-sm-3 mar-btm pdd-none hors-head md-txt-apce doy-enjoy">Do you
                             enjoy Dessert after dinner?</label>
-
+                            <div class=" pdd-none space-top-0">
                         <div class="col-xs-3 col-md-1 col-sm-1  md-no-padd col-md-xs-radiobox xs-radio-mrg">
                             <div class="radio">
                                 <input type="radio" name="data[CharterGuestMealPreference][is_dinner_desert]" value="1"
@@ -1583,6 +1581,7 @@ input[type="checkbox"] {
                                     <?php echo $isDinnerDesertNo; ?>>
                                 <label class="pdd-none"><span class="no-radio-btn">No</span></label>
                             </div>
+                        </div>
                         </div>
                     </div>
                 </div>
