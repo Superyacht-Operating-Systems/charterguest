@@ -1328,9 +1328,12 @@ input[type="checkbox"] {
                 <div class="clearfix"></div>
                 <hr class="divider" />
                 <div class="form-group mar-btm ipadpro-lunch ">
-                    <label class="control-label col-md-2 col-sm-1 mar-btm ln-lab label_lr">Lunch</label>
-
-                    <div class="col-md-10 col-sm-12 two">
+                
+                    <!-- <label class="control-label col-md-2 col-sm-1 mar-btm ln-lab label_lr">Lunch</label> -->
+                    <div class="col-xs-12 col-sm-12 bf-head">
+                    <label class="control-label  ln-lab label_lr">Lunch</label>
+                    </div>
+                    <div class="col-md-10 col-sm-12 two" style="padding-left: 0px;">
                         <div class="col-sm-2 col-xs-6 wt-fix-st   ">
                             <div class="checkbox">
                                 <input type="checkbox" class="lunchtypechk"
@@ -1371,9 +1374,12 @@ input[type="checkbox"] {
                 <div class="clearfix"></div>
 
                 <div class="form-group mar-btm ipadpro-lunch">
-                    <label class="control-label col-md-2 col-sm-2 mar-btm ln-lab label_lr">Lunch Style</label>
+                <div class="col-xs-12 col-sm-12 bf-head">
+                    <label class="control-label  ln-lab label_lr">Lunch Style</label>
+                    </div>
+                    <!-- <label class="control-label col-md-2 col-sm-2 mar-btm ln-lab label_lr">Lunch Style</label> -->
                     <!-- <div class="col-md-10 col-xs-12 col-sm-12 md-no-padd"> -->
-                    <div class="col-md-10 col-sm-12 two">
+                    <div class="col-md-10 col-sm-12 two"  style="padding-left: 0px;">
                         <div class="col-sm-2 col-xs-6 wt-fix-st  ">
                             <div class="checkbox">
                                 <input type="checkbox" class="lunchstylechk"
