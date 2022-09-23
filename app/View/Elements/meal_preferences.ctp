@@ -515,6 +515,18 @@ input[type="checkbox"] {
     }
 
 }
+@media screen and (max-width: 767px){
+    .Comments-1024 {
+  padding-left: 0px;
+  padding-right: 0px;
+}
+}
+@media screen and (max-width: 768px){
+    .mtmob {
+  margin-top: 20px;
+}
+}
+
 
 
 /* Ramesh 10/08/2018 */
@@ -582,8 +594,8 @@ input[type="checkbox"] {
     <div class="personal-row-container meals-container mealsdetails-row">
         <h1 class="position-mobile-head">Meal Service</h1>
         <div class="fixed-row-container">
-        <div class="form-group frmgrp-mar">
-        <div class="col-md-12 md-col-nospace">
+        <div class="col-sm-12 md-columnn-mobile-size form-group frmgrp-mar">
+        <div class="md-col-nospace">
           <label>Meal Time Preferences and Service Style</label>
         </div>
         <div class="col-lg-12 pdd-none full-column-marg">
@@ -668,9 +680,9 @@ input[type="checkbox"] {
           </div>
         </div>
         <div class="clearfix"></div>
-
-        <div class="row ipadport-comments">
-          <div class="col-md-1 col-sm-2">
+        <!-- <div class="col-lg-12 pdd-none full-column-marg ipadport-comments"> -->
+        <div class="col-lg-12 pdd-none full-column-marg">
+          <div class="col-lg-1 col-sm-2 ipadport-middle label-rigt-align">
           <label class="control-label label-comments-space">Comments</label>
         </div>
         <div class="col-md-8 col-sm-9 Comments-1024">
@@ -682,7 +694,7 @@ input[type="checkbox"] {
 <div class="clearfix"></div>
 <hr class="divider divmar">
             <div class="col-sm-12 md-columnn-mobile-size">
-                <div class="form-group frmgrp-mar">
+                <div class="form-group frmgrp-mar mtmob">
                     <label class="control-label col-xs-12 col-sm-6 col-md-4 label-comt-12 ">Would you like a cooked
                         breakfast every day?</label>
                     <div class="check-mrg-top">
