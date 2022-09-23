@@ -683,7 +683,7 @@ $(".dobDatePickerexisting").datepicker({
     changeYear: true,
     changeMonth:true,
     yearRange: dobYearRange
-});
+}).attr('readonly','readonly');
 
 // Make Non-editable fields
 $(document).on("keypress", ".existingnonEditable", function(e) {
