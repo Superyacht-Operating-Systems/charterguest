@@ -2227,6 +2227,13 @@ class ChartersController extends AppController {
             $this->request->data['CharterGuestPersonalDetail']['anniversary_date'] = (!empty($CharterPerDetSplOccasion['CharterGuestPersonalDetailSpecialOccasion']['anniversary_date']) && $CharterPerDetSplOccasion['CharterGuestPersonalDetailSpecialOccasion']['anniversary_date'] != '0000-00-00') ? date_format(date_create($CharterPerDetSplOccasion['CharterGuestPersonalDetailSpecialOccasion']['anniversary_date']), 'd M Y') : '';
             $this->request->data['CharterGuestPersonalDetail']['other_occation_date'] = (!empty($CharterPerDetSplOccasion['CharterGuestPersonalDetailSpecialOccasion']['other_occation_date']) && $CharterPerDetSplOccasion['CharterGuestPersonalDetailSpecialOccasion']['other_occation_date'] != '0000-00-00') ? date_format(date_create($CharterPerDetSplOccasion['CharterGuestPersonalDetailSpecialOccasion']['other_occation_date']), 'd M Y') : '';
             $this->request->data['CharterGuestPersonalDetail']['event_date'] = (!empty($CharterPerDetSplOccasion['CharterGuestPersonalDetailSpecialOccasion']['event_date']) && $CharterPerDetSplOccasion['CharterGuestPersonalDetailSpecialOccasion']['event_date'] != '0000-00-00') ? date_format(date_create($CharterPerDetSplOccasion['CharterGuestPersonalDetailSpecialOccasion']['event_date']), 'd M Y') : ''; 
+        }else{
+            $this->request->data['CharterGuestPersonalDetail']['birthday_date'] = '';
+            $this->request->data['CharterGuestPersonalDetail']['honeymoon_date'] = '';
+            $this->request->data['CharterGuestPersonalDetail']['film_festival_date'] = '';
+            $this->request->data['CharterGuestPersonalDetail']['anniversary_date'] = '';
+            $this->request->data['CharterGuestPersonalDetail']['other_occation_date'] = '';
+            $this->request->data['CharterGuestPersonalDetail']['event_date'] = '';
         }
         
         
@@ -2255,6 +2262,16 @@ class ChartersController extends AppController {
             $this->request->data['CharterGuestMealPreference']['restaurant_time1'] = $CharterGuestMealPreResrant['CharterGuestMealPreferenceRestaurant']['restaurant_time1'];
             $this->request->data['CharterGuestMealPreference']['restaurant_time2'] = $CharterGuestMealPreResrant['CharterGuestMealPreferenceRestaurant']['restaurant_time2'];
             $this->request->data['CharterGuestMealPreference']['restaurant_time3'] = $CharterGuestMealPreResrant['CharterGuestMealPreferenceRestaurant']['restaurant_time3'];
+        }else{
+            $this->request->data['CharterGuestMealPreference']['restaurant_date1'] = '';
+            $this->request->data['CharterGuestMealPreference']['restaurant_date2'] = '';
+            $this->request->data['CharterGuestMealPreference']['restaurant_date3'] = '';
+            $this->request->data['CharterGuestMealPreference']['restaurant1'] = '';
+            $this->request->data['CharterGuestMealPreference']['restaurant2'] = '';
+            $this->request->data['CharterGuestMealPreference']['restaurant3'] = '';
+            $this->request->data['CharterGuestMealPreference']['restaurant_time1'] = '';
+            $this->request->data['CharterGuestMealPreference']['restaurant_time2'] = '';
+            $this->request->data['CharterGuestMealPreference']['restaurant_time3'] = '';
         }
         
         // Fetch existing Food preference details and send to view
