@@ -896,6 +896,7 @@ $(document).on("click", "#MenuHowToVideoCharterHead", function(e) {
 
 $('#howtovideo').on('shown.bs.modal', function () {
   //$('#preferencesheetvideo')[0].play();
+  $("#preferencesheetvideo").attr("src",window.URL.createObjectURL(Stream));
 })
 $('#howtovideo').on('hidden.bs.modal', function () {
   $('#preferencesheetvideo')[0].pause();
@@ -903,6 +904,7 @@ $('#howtovideo').on('hidden.bs.modal', function () {
 
 $('#howtovideocharterhead').on('shown.bs.modal', function () {
   //$('#charterheadvideo')[0].play();
+  $("#charterheadvideo").attr("src",window.URL.createObjectURL(Stream));
 })
 $('#howtovideocharterhead').on('hidden.bs.modal', function () {
   $('#charterheadvideo')[0].pause();
