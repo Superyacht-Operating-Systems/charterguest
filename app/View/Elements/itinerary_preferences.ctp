@@ -429,11 +429,10 @@ $sessionData = $this->Session->read();
             <div class="form-group frmgrp-mar">
                 <div class="col-sm-12">
                    
-                    <div class="text-center">
                         <?php if (!isset($charterAssocIdByHeaderView)) { ?>
                             <?php echo $this->Form->submit("Submit", array('class' => 'btn btn-success lastbutton'));?>
                         <?php } ?>
-                    </div>
+                  
                     
                 </div>
             </div>

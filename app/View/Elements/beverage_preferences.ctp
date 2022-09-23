@@ -656,13 +656,12 @@ hr.divmar{
           </div>  
           
         <div class="form-group frmgrp-mar">
-            <div class="col-sm-12">
-                <div class="col-sm-4"></div> 
-                <div class="col-sm-4">
+            <div class="col-sm-12" style="padding-left:0px">
+                
                     <?php if (!isset($charterAssocIdByHeaderView)) { ?>
                         <?php echo $this->Form->submit("Save and Continue", array('class' => 'btn btn-success lastbutton'));?>
                     <?php } ?>
-                </div>
+                
             </div>
         </div>
         <?php echo $this->Form->end(); ?></div>   </div></div>
