@@ -683,7 +683,7 @@ $(".dobDatePickerexisting").datepicker({
     changeYear: true,
     changeMonth:true,
     yearRange: dobYearRange
-}).attr('readonly','readonly');
+});
 
 // Make Non-editable fields
 $(document).on("keypress", ".existingnonEditable", function(e) {
@@ -895,14 +895,14 @@ $(document).on("click", "#MenuHowToVideoCharterHead", function(e) {
 // + " End: " + vid.buffered.end(0));
 
 $('#howtovideo').on('shown.bs.modal', function () {
-  //$('#preferencesheetvideo')[0].play();
+  $('#preferencesheetvideo')[0].play();
 })
 $('#howtovideo').on('hidden.bs.modal', function () {
   $('#preferencesheetvideo')[0].pause();
 })
 
 $('#howtovideocharterhead').on('shown.bs.modal', function () {
-  //$('#charterheadvideo')[0].play();
+  $('#charterheadvideo')[0].play();
 })
 $('#howtovideocharterhead').on('hidden.bs.modal', function () {
   $('#charterheadvideo')[0].pause();
