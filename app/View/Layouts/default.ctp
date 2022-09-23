@@ -889,12 +889,15 @@ $(document).on("click", "#MenuHowToVideoCharterHead", function(e) {
     
 
 });
-
+var preferencesheetvideo = document.getElementById( 'preferencesheetvideo' ),
 $('#howtovideo').on('shown.bs.modal', function () {
-  $('#preferencesheetvideo')[0].play();
+  preferencesheetvideo.addEventListener("canplaythrough", function() {
+        preferencesheetvideo.play();
+}, false);
+  
 })
 $('#howtovideo').on('hidden.bs.modal', function () {
-  $('#preferencesheetvideo')[0].pause();
+  video.pause();
 })
 
 $('#howtovideocharterhead').on('shown.bs.modal', function () {
