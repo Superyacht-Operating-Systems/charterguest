@@ -1274,10 +1274,12 @@ and (max-device-width : 667px) {
           <div class="form-group base-margin">
                 <div class="col-sm-12 "> 
                <div class="text-center footer-mob-row-inner">
+                <div class="submit">
                    <?php if (!isset($charterAssocIdByHeaderView)) { ?>
                         <button type="button" class="btn btn-success lastbutton" id="personalDetailsSubmit">Save and Continue</button>
                         <?php echo $this->Form->submit("Save and Continue", array('class' => 'btn btn-success', 'style' => 'display:none;', 'id' => 'personalDetailsSubmitOriginal'));?>
-                   <?php } ?>    
+                   <?php } ?> 
+                   </div>   
                 </div>
                 </div>
             </div>
