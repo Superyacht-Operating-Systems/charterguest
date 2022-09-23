@@ -81,7 +81,8 @@ $actual_link_defaultctp = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on
 		echo $this->fetch('css');
 		echo $this->fetch('script');
 ?>
-    
+    <link href="//vjs.zencdn.net/7.10.2/video-js.min.css" rel="stylesheet">
+<script src="//vjs.zencdn.net/7.10.2/video.min.js"></script>
 <style type="text/css">
 .modalmsg-container .modal-dialog{
 padding-left: 0px;
@@ -574,10 +575,19 @@ width: max-content;
         </button>
       </div>
         <div class="modal-body">
-        <video width="100%" height="100%" controls class="videoclass" preload="auto" id="preferencesheetvideo">
+        <!-- <video width="100%" height="100%" controls class="videoclass" preload="auto" id="preferencesheetvideo">
         <source src="<?php echo  $this->request->base; ?>/app/webroot/Guest_how_to_video.mp4" type="video/mp4">
-        </video>
-                            
+        </video> -->
+        <video
+    id="my-player"
+    class="video-js"
+    controls
+    preload="auto"
+   
+    data-setup='{}'>
+  <source src="<?php echo  $this->request->base; ?>/app/webroot/Guest_how_to_video.mp4" type="video/mp4"></source>
+ 
+</video>               
         </div>
         <div class="modal-footer">
             
@@ -683,7 +693,7 @@ $(".dobDatePickerexisting").datepicker({
     changeYear: true,
     changeMonth:true,
     yearRange: dobYearRange
-}).attr('readonly','readonly');
+});
 
 // Make Non-editable fields
 $(document).on("keypress", ".existingnonEditable", function(e) {
@@ -895,16 +905,14 @@ $(document).on("click", "#MenuHowToVideoCharterHead", function(e) {
 // + " End: " + vid.buffered.end(0));
 
 $('#howtovideo').on('shown.bs.modal', function () {
-  //$('#preferencesheetvideo')[0].play();
-  $("#preferencesheetvideo").attr("src",window.URL.createObjectURL(Stream));
+  $('#preferencesheetvideo')[0].play();
 })
 $('#howtovideo').on('hidden.bs.modal', function () {
   $('#preferencesheetvideo')[0].pause();
 })
 
 $('#howtovideocharterhead').on('shown.bs.modal', function () {
-  //$('#charterheadvideo')[0].play();
-  $("#charterheadvideo").attr("src",window.URL.createObjectURL(Stream));
+  $('#charterheadvideo')[0].play();
 })
 $('#howtovideocharterhead').on('hidden.bs.modal', function () {
   $('#charterheadvideo')[0].pause();
