@@ -4,6 +4,7 @@
 <?php
     $baseFolder = $this->request->base;
     $session = $this->Session->read('charter_info.CharterGuest'); 
+    $sessionData = $this->Session->read();
     $sessionAssoc = $this->Session->read('charter_assoc_info');
     $adminLogin = $this->Session->read('charter_info.CharterGuest.Adminlogin');
      $selectedCHID = $this->Session->read('selectedCHID');
