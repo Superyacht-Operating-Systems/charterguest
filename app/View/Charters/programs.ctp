@@ -771,8 +771,9 @@ if(isset($charterGuestData) && !empty($charterGuestData)){
     <p><?php echo $embarkation; ?> to <?php echo $debarkation; ?></p>
      
       <p><?php echo $yname; ?></p>
-    <div class="card-img">
+    <div class="card-img" style="position: relative;">
         <img src="<?php echo $data['program_image']; ?>">
+        <div class="bottom-left" id="Nolink_msg" style="position: absolute;bottom: 8px;left: 16px;background-color: #FED8B1;color: #333;padding: 5px 10px;"> Sorry this cruising map is not published yet.</div>
     </div>
     <div class="body-divid">
        <div class="col-11">
@@ -783,11 +784,12 @@ if(isset($charterGuestData) && !empty($charterGuestData)){
             <li><a href="<?php echo $website; ?>" target="_blank" style="text-decoration:none;">Yachts Website</a></li>
             <li><a href="<?php echo $basefolder."/charters/view/".$id."/".$charter_program_id."/".$charter_company_id; ?>">Guest List</a></li>
             <?php if($data['map_url'] == "link"){ ?>
-                <li><a href="<?php echo $baseFolder."/charters/charter_program_map/".$charter_program_id.'/'.$data['ydb_name'].'/owner'; ?>" title="Map is Published">Cruising Map</a>  <?php if(isset($msg_count) && $msg_count > 0){ ?><span class="cardbell-icon"><span class="avacard-cunt"><?php echo $msg_count; ?></span><i class="fa fa-bell"></i></span><?php } ?></li>
+                <!-- <li><a href="<?php echo $baseFolder."/charters/charter_program_map/".$charter_program_id.'/'.$data['ydb_name'].'/owner'; ?>" title="Map is Published">Cruising Map</a>  <?php if(isset($msg_count) && $msg_count > 0){ ?><span class="cardbell-icon"><span class="avacard-cunt"><?php echo $msg_count; ?></span><i class="fa fa-bell"></i></span><?php } ?></li> -->
+                <li><span datahover="Map is Not Published" title="Map is Not Published"><a id="btn_NoLink"  role="button" title="Map is Not Published" aria-current="mapnolink">Cruising Map</a></span></li>
                 <!-- target="_blank" -->
                 <?php }else if($data['map_url'] == "nolink"){ ?>
                 <!-- <li><span datahover="Map is Not Published" title="Map is Not Published"><a href="#" role="button" title="Map is Not Published" aria-current="mapnolink">Cruising Map</a></span></li> -->
-                <li><span datahover="Map is Not Published" title="Map is Not Published"><a href="#"  role="button" title="Map is Not Published" aria-current="mapnolink">Cruising Map</a></span></li>
+                <li><span datahover="Map is Not Published" title="Map is Not Published"><a id="btn_NoLink"  role="button" title="Map is Not Published" aria-current="mapnolink">Cruising Map</a></span></li>
             <?php } ?>
 
             <li><a href="#"><span class="existingCheckFunction" data-guestype="owner" data-associd ="<?php echo $id; ?>">Preference Sheets</span></a></li>
@@ -1133,5 +1135,16 @@ $("#loadMore").on("click", function(e) {
     $("#loadMore").fadeOut("slow");
   }
 });
+
+function hideAlert(){
+	jQuery('#Nolink_msg').hide();
+}
+		
+				jQuery(document.body).on('click', '#btn_NoLink', function(event)
+	{
+	jQuery('#Nolink_msg').show();
+				jQuery('#Nolink_msg').fadeIn( "slow");
+				setTimeout(hideAlert, 2000);
+	}
 
 </script>
