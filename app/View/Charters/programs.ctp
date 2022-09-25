@@ -789,7 +789,7 @@ if(isset($charterGuestData) && !empty($charterGuestData)){
                 <!-- target="_blank" -->
                 <?php }else if($data['map_url'] == "nolink"){ ?>
                 <!-- <li><span datahover="Map is Not Published" title="Map is Not Published"><a href="#" role="button" title="Map is Not Published" aria-current="mapnolink">Cruising Map</a></span></li> -->
-                <li><span datahover="Map is Not Published" title="Map is Not Published"><a id="btn_NoLink"  role="button" title="Map is Not Published" aria-current="mapnolink">Cruising Map</a></span></li>
+                <li><span datahover="Map is Not Published" title="Map is Not Published" id="btn_NoLink"><a   role="button" title="Map is Not Published" aria-current="mapnolink">Cruising Map</a></span></li>
             <?php } ?>
 
             <li><a href="#"><span class="existingCheckFunction" data-guestype="owner" data-associd ="<?php echo $id; ?>">Preference Sheets</span></a></li>
@@ -851,8 +851,9 @@ if(isset($charterAssocData) && !empty($charterAssocData)){
     <p><?php echo $embarkation; ?> to <?php echo $debarkation; ?></p>
      
       <p><?php echo $yname; ?></p>
-    <div class="card-img">
+    <div class="card-img" style="position: relative;">
     <img src="<?php echo $ch_image; ?>">
+    <div class="bottom-left" id="Nolink_msg" style="display:none;position: absolute;bottom: 8px;left: 16px;background-color: #FED8B1;color: #333;padding: 5px 10px;"> Sorry this cruising map is not published yet.</div>
     </div>
     <div class="body-divid">
        <div class="col-11">
@@ -865,7 +866,8 @@ if(isset($charterAssocData) && !empty($charterAssocData)){
             <?php if($data['charterDetails']['map_url'] == "link"){ ?>
             <li><a href="<?php echo $baseFolder."/charters/charter_program_map/".$charter_program_id.'/'.$data['charterDetails']['ydb_name'].'/guest'; ?>" title="Map is Published">Cruising Map</a> </li>
             <?php }else if($data['charterDetails']['map_url'] == "nolink"){  ?>
-            <li><span datahover="Map is Not Published" title="Map is Not Published"><a href="#" role="button" title="Map is Not Published" aria-current="mapnolink">Cruising Map</a></span> </li>
+            <!-- <li><span datahover="Map is Not Published" title="Map is Not Published"><a href="#" role="button" title="Map is Not Published" aria-current="mapnolink">Cruising Map</a></span> </li> -->
+            <li><span datahover="Map is Not Published" title="Map is Not Published" id="btn_NoLink"><a   role="button" title="Map is Not Published" aria-current="mapnolink">Cruising Map</a></span></li>
             <?php } ?>
             <li><a href="#"><span class="existingCheckFunction" data-guestype="guest" data-associd ="<?php echo $associd; ?>">Preference Sheets</span></a></li>
             
