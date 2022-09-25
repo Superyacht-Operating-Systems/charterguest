@@ -1138,12 +1138,12 @@ $("#loadMore").on("click", function(e) {
 function hideAlert(){
 	jQuery('#Nolink_msg').hide();
 }
-		
-				jQuery(document.body).on('click', '#btn_NoLink', function(event)
-	{
-	jQuery('#Nolink_msg').show();
+	
+$("#btn_NoLink").on("click", function(e) {
+    jQuery('#Nolink_msg').show();
 				jQuery('#Nolink_msg').fadeIn( "slow");
 				setTimeout(hideAlert, 2000);
-	}
+});
+		
 
 </script>
