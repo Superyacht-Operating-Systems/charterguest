@@ -421,7 +421,7 @@ table.fd-table tr>td {
         </div>
         <input type="hidden" name="data[CharterGuestFoodPreference][food_style_hidden][]" id="food_style_hidden" value="" />
         <div class="clearfix"></div>
-        <div class="row ipadport-comments">
+        <div class="ipadport-comments">
           <div class="col-md-1 col-sm-2">
             <label class="control-label label-comments-space">Comments</label>
           </div>

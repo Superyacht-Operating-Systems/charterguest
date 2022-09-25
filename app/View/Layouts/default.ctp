@@ -541,16 +541,15 @@ width: max-content;
         </button>
       </div>-->
         <div class="modal-body">
-          <div class="modalmsg"> 
+          <div class="modalmsg" style="margin: auto;text-align: center;"> 
             <p>Enter your birthday to confirm your identity.</p>
           </div>
             <div class="text-center">
             <?php //echo $this->Form->input("dob",array("label"=>false,'class'=>'form-control dobDatePicker nonEditable','type' => 'text')); ?>
-            <input type="text" name="checkdob" id="checkdob" style="width: 50%;text-align: center;margin-left: 80px;" class="form-control dobDatePickerexisting existingnonEditable" />
+            <input type="text" name="checkdob" id="checkdob" style="width: 50%;text-align: center;margin: auto;" class="form-control dobDatePickerexisting existingnonEditable" />
             <p id="confirmpreferencesuccess" style="color:green;">Confirmed - Loading your preference now</p>
             <p id="confirmpreferencefail" style="color:red;">Wrong DOB - Please try again or create new</p>
-            <input class="btn btn-success" style="margin-top: 10px;
-    margin-left: 20px;" type="button" name="confirm" id="confirmPreference" data-assid=""  data-chkuuid ="" data-gtype="" value="CONFIRM" />
+            <input class="btn btn-success" style="margin: 10px auto;" type="button" name="confirm" id="confirmPreference" data-assid=""  data-chkuuid ="" data-gtype="" value="CONFIRM" />
                
            
             </div>    
@@ -683,7 +682,7 @@ $(".dobDatePickerexisting").datepicker({
     changeYear: true,
     changeMonth:true,
     yearRange: dobYearRange
-});
+}).attr('readonly','readonly');
 
 // Make Non-editable fields
 $(document).on("keypress", ".existingnonEditable", function(e) {
