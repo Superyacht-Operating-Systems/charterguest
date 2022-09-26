@@ -773,7 +773,12 @@ if(isset($charterGuestData) && !empty($charterGuestData)){
       <p><?php echo $yname; ?></p>
     <div class="card-img" style="position: relative;">
         <img src="<?php echo $data['program_image']; ?>">
-        <div class="bottom-left" id="Nolink_msg" style="display:none;position: absolute;bottom: 8px;left: 16px;background-color: #FED8B1;color: #333;padding: 5px 10px;"> Sorry this cruising map is not published yet.</div>
+            <?php if($data['map_url'] == "link"){ ?>
+                
+                <?php }else if($data['map_url'] == "nolink"){ ?>
+                    <div class="bottom-left" id="Nolink_msg" style="display:none;position: absolute;bottom: 8px;left: 16px;background-color: #FED8B1;color: #333;padding: 5px 10px;"> Sorry this cruising map is not published yet.</div>
+            <?php } ?>
+        
     </div>
     <div class="body-divid">
        <div class="col-11">
@@ -852,7 +857,11 @@ if(isset($charterAssocData) && !empty($charterAssocData)){
       <p><?php echo $yname; ?></p>
     <div class="card-img" style="position: relative;">
     <img src="<?php echo $ch_image; ?>">
-    <div class="bottom-left" id="Nolink_msg" style="display:none;position: absolute;bottom: 8px;left: 16px;background-color: #FED8B1;color: #333;padding: 5px 10px;"> Sorry this cruising map is not published yet.</div>
+    <?php if($data['map_url'] == "link"){ ?>
+                
+                <?php }else if($data['map_url'] == "nolink"){ ?>
+                    <div class="bottom-left" id="Nolink_msg" style="display:none;position: absolute;bottom: 8px;left: 16px;background-color: #FED8B1;color: #333;padding: 5px 10px;"> Sorry this cruising map is not published yet.</div>
+            <?php } ?>
     </div>
     <div class="body-divid">
        <div class="col-11">
