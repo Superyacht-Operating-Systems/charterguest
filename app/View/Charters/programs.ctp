@@ -1150,18 +1150,14 @@ $("#loadMore").on("click", function(e) {
 function display(el) {
         var id = $(el).attr('id');
         var new_id=$(el).attr('customattr');
-        // var myInput = document.getElementById(id);
-    //    var new_id=myInput.attributes.customattr.nodeValue;
-    // $(".bottom-left", this).attr("id", "Nolink_msg_" + myInput.customAttr);
         jQuery('#Nolink_msg_'+ new_id).show();
                     jQuery('#Nolink_msg_'+ new_id).fadeIn( "slow");
-                    setTimeout(hideAlert(new_id),2000);
-                        // function(){ jQuery('#Nolink_msg_'+ new_id).hide(); },2000);
-                        // jQuery('#Nolink_msg_'+ new_id).hide(), 2000);
+                    // setTimeout(hideAlert(new_id),2000);
+                    setTimeout( function(){ jQuery('#Nolink_msg_'+ new_id).hide(); },2000);
     }
 
-	function hideAlert(msg){
-        jQuery('#Nolink_msg_'+ msg).hide();
-}
+// 	function hideAlert(msg){
+//         jQuery('#Nolink_msg_'+ msg).hide();
+// }
 	
 </script>
