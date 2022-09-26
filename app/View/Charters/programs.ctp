@@ -774,7 +774,7 @@ if(isset($charterGuestData) && !empty($charterGuestData)){
     <div class="card-img" style="position: relative;">
         <img src="<?php echo $data['program_image']; ?>">
             <?php if($data['map_url'] == "link"){ ?>
-                <div class="bottom-left "  style="display:none;position: absolute;bottom: 8px;left: 16px;background-color: #FED8B1;color: #333;padding: 5px 10px;"> Sorry this cruising map is not published yet.</div>
+                <div class="bottom-left" id="Nolink_msg_<?php echo $id; ?>"  style="display:none;position: absolute;bottom: 8px;left: 16px;background-color: #FED8B1;color: #333;padding: 5px 10px;"> Sorry this cruising map is not published yet.</div>
                 <?php }else if($data['map_url'] == "nolink"){ ?>
                  
             <?php } ?>
@@ -859,7 +859,7 @@ if(isset($charterAssocData) && !empty($charterAssocData)){
     <div class="card-img" style="position: relative;">
     <img src="<?php echo $ch_image; ?>">
     <?php if($data['charterDetails']['map_url'] == "link"){ ?>
-        <div class="bottom-left"  style="display:none;position: absolute;bottom: 8px;left: 16px;background-color: #FED8B1;color: #333;padding: 5px 10px;"> Sorry this cruising map is not published yet.</div>
+        <div class="bottom-left" id="Nolink_msg_<?php echo $id; ?>"  style="display:none;position: absolute;bottom: 8px;left: 16px;background-color: #FED8B1;color: #333;padding: 5px 10px;"> Sorry this cruising map is not published yet.</div>
         <?php }else if($data['charterDetails']['map_url'] == "nolink"){  ?>
                    
             <?php } ?>
@@ -1152,11 +1152,11 @@ $("#loadMore").on("click", function(e) {
 function display(el) {
         var id = $(el).attr('id');
         var myInput = document.getElementById(id);
-    
-    $(".bottom-left", this).attr("id", "Nolink_msg_" + myInput.customAttr);
-        jQuery('#Nolink_msg_'+ myInput.customAttr).show();
-                    jQuery('#Nolink_msg_'+ myInput.customAttr).fadeIn( "slow");
-                    setTimeout(jQuery('#Nolink_msg_'+ myInput.customAttr).hide(), 2000);
+       var new_id=myInput.attributes.customattr;
+    // $(".bottom-left", this).attr("id", "Nolink_msg_" + myInput.customAttr);
+        jQuery('#Nolink_msg_'+ new_id).show();
+                    jQuery('#Nolink_msg_'+ new_id).fadeIn( "slow");
+                    setTimeout(jQuery('#Nolink_msg_'+ new_id).hide(), 2000);
     }
 
 // $("#btn_NoLink").on("click", function(e) {
