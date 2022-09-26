@@ -1152,7 +1152,7 @@ $("#loadMore").on("click", function(e) {
 function display(el) {
         var id = $(el).attr('id');
         var myInput = document.getElementById(id);
-       var new_id=myInput.attributes.customattr;
+       var new_id=myInput.attributes.customattr.nodeValue;
     // $(".bottom-left", this).attr("id", "Nolink_msg_" + myInput.customAttr);
         jQuery('#Nolink_msg_'+ new_id).show();
                     jQuery('#Nolink_msg_'+ new_id).fadeIn( "slow");
