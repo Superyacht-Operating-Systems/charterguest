@@ -1483,7 +1483,9 @@ for (let layer of polyLayers) { //console.log(layer);
 } */?>
 
 var modalrouteline = new Array();
-<?php if(isset($temploc) && !empty($temploc)){ 
+<?php 
+echo "<pre>"; print($temploc); exit;
+if(isset($temploc) && !empty($temploc)){ 
     
     foreach($temploc as $title => $latlongs){   
           $templlocnames = explode('_',$title);
