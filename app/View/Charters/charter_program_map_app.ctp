@@ -10,6 +10,8 @@ for ($i = 0; $i < $diffDays; $i++) {
     $options .= '<option value="'.$j.'">Day '.$j.'</option>';
 }
 
+echo "<pre>"; print($temploc); exit;
+
 $schedulePeriod = "";
 $schedulePeriodWithOutYear = "";
 $charterName = "";
@@ -1483,9 +1485,7 @@ for (let layer of polyLayers) { //console.log(layer);
 } */?>
 
 var modalrouteline = new Array();
-<?php 
-echo "<pre>"; print($temploc); exit;
-if(isset($temploc) && !empty($temploc)){ 
+<?php if(isset($temploc) && !empty($temploc)){ 
     
     foreach($temploc as $title => $latlongs){   
           $templlocnames = explode('_',$title);
