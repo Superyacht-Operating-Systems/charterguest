@@ -10,7 +10,7 @@ for ($i = 0; $i < $diffDays; $i++) {
     $options .= '<option value="'.$j.'">Day '.$j.'</option>';
 }
 
-echo "<pre>"; print_r($temploc); exit;
+// echo "<pre>"; print_r($temploc); exit;
 
 $schedulePeriod = "";
 $schedulePeriodWithOutYear = "";
