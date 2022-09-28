@@ -573,9 +573,12 @@ width: max-content;
         </button>
       </div>
         <div class="modal-body">
-        <video class="videoclass" autoplay loop muted playsinline id="preferencesheetvideo">
+        <div class="embed-responsive embed-responsive-4by3">
+  <iframe class="embed-responsive-item" src="<?php echo  $this->request->base; ?>/app/webroot/Guest_how_to_video.mp4"></iframe>
+</div>
+        <!-- <video width="100%" height="100%" class="video videoclass" playsinline autoplay muted loop controls="true"  preload="auto" id="preferencesheetvideo">
         <source src="<?php echo  $this->request->base; ?>/app/webroot/Guest_how_to_video.mp4" type="video/mp4">
-        </video>
+        </video> -->
                             
         </div>
         <div class="modal-footer">
@@ -595,9 +598,12 @@ width: max-content;
         </button>
       </div>
         <div class="modal-body">
-        <video class="videoclass" autoplay loop muted playsinline  id="charterheadvideo">
+        <div class="embed-responsive embed-responsive-4by3">
+  <iframe class="embed-responsive-item" src="<?php echo  $this->request->base; ?>/app/webroot/Head_Charterer_how_to_video.mp4"></iframe>
+</div>
+        <!-- <video width="100%" height="100%" class="video videoclass" playsinline autoplay muted loop controls="true"  preload="auto" id="charterheadvideo">
         <source src="<?php echo  $this->request->base; ?>/app/webroot/Head_Charterer_how_to_video.mp4" type="video/mp4">
-        </video>
+        </video> -->
                             
         </div>
         <div class="modal-footer">
