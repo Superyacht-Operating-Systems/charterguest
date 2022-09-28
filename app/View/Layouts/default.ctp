@@ -573,9 +573,8 @@ width: max-content;
         </button>
       </div>
         <div class="modal-body">
-        <div class="embed-responsive embed-responsive-4by3">
-  <iframe class="embed-responsive-item" src="<?php echo  $this->request->base; ?>/app/webroot/Guest_how_to_video.mp4"></iframe>
-</div>
+        
+  <iframe class="videoclass" src="<?php echo  $this->request->base; ?>/app/webroot/Guest_how_to_video.mp4"></iframe>
         <!-- <video width="100%" height="100%" class="video videoclass" playsinline autoplay muted loop controls="true"  preload="auto" id="preferencesheetvideo">
         <source src="<?php echo  $this->request->base; ?>/app/webroot/Guest_how_to_video.mp4" type="video/mp4">
         </video> -->
@@ -598,9 +597,9 @@ width: max-content;
         </button>
       </div>
         <div class="modal-body">
-        <div class="embed-responsive embed-responsive-4by3">
-  <iframe class="embed-responsive-item" src="<?php echo  $this->request->base; ?>/app/webroot/Head_Charterer_how_to_video.mp4"></iframe>
-</div>
+       
+  <iframe class="videoclass" src="<?php echo  $this->request->base; ?>/app/webroot/Head_Charterer_how_to_video.mp4"></iframe>
+
         <!-- <video width="100%" height="100%" class="video videoclass" playsinline autoplay muted loop controls="true"  preload="auto" id="charterheadvideo">
         <source src="<?php echo  $this->request->base; ?>/app/webroot/Head_Charterer_how_to_video.mp4" type="video/mp4">
         </video> -->
@@ -899,19 +898,19 @@ $(document).on("click", "#MenuHowToVideoCharterHead", function(e) {
 // alert("Start: " + vid.buffered.start(0)
 // + " End: " + vid.buffered.end(0));
 
-$('#howtovideo').on('shown.bs.modal', function () {
-  $('#preferencesheetvideo')[0].play();
-})
-$('#howtovideo').on('hidden.bs.modal', function () {
-  $('#preferencesheetvideo')[0].pause();
-})
+// $('#howtovideo').on('shown.bs.modal', function () {
+//   $('#preferencesheetvideo')[0].play();
+// })
+// $('#howtovideo').on('hidden.bs.modal', function () {
+//   $('#preferencesheetvideo')[0].pause();
+// })
 
-$('#howtovideocharterhead').on('shown.bs.modal', function () {
-  $('#charterheadvideo')[0].play();
-})
-$('#howtovideocharterhead').on('hidden.bs.modal', function () {
-  $('#charterheadvideo')[0].pause();
-})
+// $('#howtovideocharterhead').on('shown.bs.modal', function () {
+//   $('#charterheadvideo')[0].play();
+// })
+// $('#howtovideocharterhead').on('hidden.bs.modal', function () {
+//   $('#charterheadvideo')[0].pause();
+// })
 
 
 
