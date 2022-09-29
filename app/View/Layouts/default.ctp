@@ -627,8 +627,8 @@ width: max-content;
     controls
     preload="auto"
     poster=""
-    data-setup='{}'>
-  <source src="//vjs.zencdn.net/v/oceans.mp4" type="video/mp4"></source>
+    data-setup='{"controls": true, "autoplay": false, "preload": "auto"}'>
+  <source src="<?php echo  $this->request->base; ?>/app/webroot/Guest_how_to_video.mp4" type="video/mp4"></source>
   <!-- <source src="//vjs.zencdn.net/v/oceans.webm" type="video/webm"></source>
   <source src="//vjs.zencdn.net/v/oceans.ogv" type="video/ogg"></source> -->
   <p class="vjs-no-js">
@@ -667,8 +667,8 @@ width: max-content;
     controls
     preload="auto"
     poster=""
-    data-setup='{}'>
-  <source src="//vjs.zencdn.net/v/oceans.mp4" type="video/mp4"></source>
+    data-setup='{"controls": true, "autoplay": false, "preload": "auto"}'>
+  <source src="<?php echo  $this->request->base; ?>/app/webroot/Head_Charterer_how_to_video.mp4" type="video/mp4"></source>
   <!-- <source src="//vjs.zencdn.net/v/oceans.webm" type="video/webm"></source>
   <source src="//vjs.zencdn.net/v/oceans.ogv" type="video/ogg"></source> -->
   <p class="vjs-no-js">
@@ -1012,7 +1012,7 @@ $('#howtovideo').on('hidden.bs.modal', function () {
 
 var headoptions = {};
 
-var headplayer = videojs('preferencesheetvideo', headoptions, function onPlayerReady() {
+var headplayer = videojs('charterheadvideo', headoptions, function onPlayerReady() {
   //videojs.log('Your player is ready!');
 
   // In this context, `this` is the player that was created by Video.js.
