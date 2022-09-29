@@ -246,6 +246,45 @@ width: max-content;
 
 }
 
+@media only screen and (device-width: 768px) {
+  /* For general iPad layouts */
+  .videomodalcontent{
+      width: 482px !important;
+      
+    }
+
+    .videoclass{
+      width: 450px !important;
+      height : 250px !important;
+    }
+}
+
+@media only screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:portrait) {
+  /* For portrait layouts only */
+  .videomodalcontent{
+      width: 482px !important;
+      
+    }
+
+    .videoclass{
+      width: 450px !important;
+      height : 250px !important;
+    }
+}
+
+@media only screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:landscape) {
+  /* For landscape layouts only */
+  .videomodalcontent{
+      width: 482px !important;
+      
+    }
+
+    .videoclass{
+      width: 450px !important;
+      height : 250px !important;
+    }
+}
+
 			</style>              
 </head>
 <body>
@@ -589,7 +628,7 @@ width: max-content;
     preload="auto"
     poster=""
     data-setup='{}'>
-  <source src="<?php echo  $this->request->base; ?>/app/webroot/Guest_how_to_video.mp4" type="video/mp4"></source>
+  <source src="//vjs.zencdn.net/v/oceans.mp4" type="video/mp4"></source>
   <!-- <source src="//vjs.zencdn.net/v/oceans.webm" type="video/webm"></source>
   <source src="//vjs.zencdn.net/v/oceans.ogv" type="video/ogg"></source> -->
   <p class="vjs-no-js">
@@ -629,7 +668,7 @@ width: max-content;
     preload="auto"
     poster=""
     data-setup='{}'>
-  <source src="<?php echo  $this->request->base; ?>/app/webroot/Head_Charterer_how_to_video.mp4" type="video/mp4"></source>
+  <source src="//vjs.zencdn.net/v/oceans.mp4" type="video/mp4"></source>
   <!-- <source src="//vjs.zencdn.net/v/oceans.webm" type="video/webm"></source>
   <source src="//vjs.zencdn.net/v/oceans.ogv" type="video/ogg"></source> -->
   <p class="vjs-no-js">
@@ -956,7 +995,7 @@ var player = videojs('preferencesheetvideo', options, function onPlayerReady() {
   //videojs.log('Your player is ready!');
 
   // In this context, `this` is the player that was created by Video.js.
-  this.play();
+  //this.play();
 
   // How about an event listener?
   // this.on('ended', function() {
@@ -977,7 +1016,7 @@ var headplayer = videojs('preferencesheetvideo', headoptions, function onPlayerR
   //videojs.log('Your player is ready!');
 
   // In this context, `this` is the player that was created by Video.js.
-  this.play();
+  //this.play();
 
   // // How about an event listener?
   // this.on('ended', function() {
