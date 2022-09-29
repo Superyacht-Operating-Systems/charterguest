@@ -81,7 +81,9 @@ $actual_link_defaultctp = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on
 		echo $this->fetch('css');
 		echo $this->fetch('script');
 ?>
-    
+    <link href="//vjs.zencdn.net/7.10.2/video-js.min.css" rel="stylesheet">
+<script src="//vjs.zencdn.net/7.10.2/video.min.js"></script>
+
 <style type="text/css">
 .modalmsg-container .modal-dialog{
 padding-left: 0px;
@@ -574,10 +576,27 @@ width: max-content;
       </div>
         <div class="modal-body">
         
-  
-        <video width="100%" height="100%" class="video videoclass" playsinline autoplay muted loop controls="true"  preload="metadata" id="preferencesheetvideo">
+        <video
+    id="preferencesheetvideo"
+    class="video-js videoclass"
+    controls
+    preload="auto"
+    poster=""
+    data-setup='{}'>
+  <source src="<?php echo  $this->request->base; ?>/app/webroot/Guest_how_to_video.mp4" type="video/mp4"></source>
+  <!-- <source src="//vjs.zencdn.net/v/oceans.webm" type="video/webm"></source>
+  <source src="//vjs.zencdn.net/v/oceans.ogv" type="video/ogg"></source> -->
+  <p class="vjs-no-js">
+    To view this video please enable JavaScript, and consider upgrading to a
+    web browser that
+    <a href="https://videojs.com/html5-video-support/" target="_blank">
+      supports HTML5 video
+    </a>
+  </p>
+</video>
+        <!-- <video width="100%" height="100%" class="video videoclass" playsinline autoplay muted loop controls="true"  preload="metadata" id="preferencesheetvideo">
         <source src="<?php echo  $this->request->base; ?>/app/webroot/Guest_how_to_video.mp4" type="video/mp4">
-        </video>
+        </video> -->
                             
         </div>
         <div class="modal-footer">
@@ -597,10 +616,27 @@ width: max-content;
         </button>
       </div>
         <div class="modal-body">
-
-        <video width="100%" height="100%" class="video videoclass" playsinline autoplay muted loop controls="true"  preload="metadata" id="charterheadvideo">
+        <video
+    id="charterheadvideo"
+    class="video-js videoclass"
+    controls
+    preload="auto"
+    poster=""
+    data-setup='{}'>
+  <source src="<?php echo  $this->request->base; ?>/app/webroot/Head_Charterer_how_to_video.mp4" type="video/mp4"></source>
+  <!-- <source src="//vjs.zencdn.net/v/oceans.webm" type="video/webm"></source>
+  <source src="//vjs.zencdn.net/v/oceans.ogv" type="video/ogg"></source> -->
+  <p class="vjs-no-js">
+    To view this video please enable JavaScript, and consider upgrading to a
+    web browser that
+    <a href="https://videojs.com/html5-video-support/" target="_blank">
+      supports HTML5 video
+    </a>
+  </p>
+</video>
+        <!-- <video width="100%" height="100%" class="video videoclass" playsinline autoplay muted loop controls="true"  preload="metadata" id="charterheadvideo">
         <source src="<?php echo  $this->request->base; ?>/app/webroot/Head_Charterer_how_to_video.mp4" type="video/mp4">
-        </video>
+        </video> -->
                             
         </div>
         <div class="modal-footer">
@@ -899,9 +935,7 @@ $(document).on("click", "#MenuHowToVideoCharterHead", function(e) {
 // $('#howtovideo').on('shown.bs.modal', function () {
 //   $('#preferencesheetvideo')[0].play();
 // })
-// $('#howtovideo').on('hidden.bs.modal', function () {
-//   $('#preferencesheetvideo')[0].pause();
-// })
+
 
 // $('#howtovideocharterhead').on('shown.bs.modal', function () {
 //   $('#charterheadvideo')[0].play();
@@ -910,7 +944,45 @@ $(document).on("click", "#MenuHowToVideoCharterHead", function(e) {
 //   $('#charterheadvideo')[0].pause();
 // })
 
+var options = {};
 
+var player = videojs('preferencesheetvideo', options, function onPlayerReady() {
+  //videojs.log('Your player is ready!');
+
+  // In this context, `this` is the player that was created by Video.js.
+  this.play();
+
+  // How about an event listener?
+  // this.on('ended', function() {
+  //   videojs.log('Awww...over so soon?!');
+  // });
+});
+
+$('#howtovideo').on('hidden.bs.modal', function () {
+  //$('#preferencesheetvideo')[0].pause();
+  
+  player.pause();  
+
+})
+
+var headoptions = {};
+
+var headplayer = videojs('preferencesheetvideo', headoptions, function onPlayerReady() {
+  //videojs.log('Your player is ready!');
+
+  // In this context, `this` is the player that was created by Video.js.
+  this.play();
+
+  // // How about an event listener?
+  // this.on('ended', function() {
+  //   videojs.log('Awww...over so soon?!');
+  // });
+});
+
+$('#howtovideocharterhead').on('hidden.bs.modal', function () {
+  //$('#charterheadvideo')[0].pause();
+  headplayer.pause();  
+})
 
 $(document).on("click", ".previousSelectionButton", function(e) { 
 
