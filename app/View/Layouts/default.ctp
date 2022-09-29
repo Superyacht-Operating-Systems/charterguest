@@ -195,6 +195,7 @@ width: max-content;
 
     .videoclass{
       width: 450px !important;
+      height : 250px !important;
     }
 }
 
@@ -208,6 +209,7 @@ width: max-content;
 
     .videoclass{
       width: 450px !important;
+      height : 250px !important;
     }
 
 }
@@ -218,10 +220,12 @@ width: max-content;
 
     .videomodalcontent{
       width: 482px !important;
+      
     }
 
     .videoclass{
       width: 450px !important;
+      height : 250px !important;
     }
 
 }
@@ -232,10 +236,12 @@ width: max-content;
 
     .videomodalcontent{
       width: 482px !important;
+      
     }
 
     .videoclass{
       width: 450px !important;
+      height : 250px !important;
     }
 
 }
