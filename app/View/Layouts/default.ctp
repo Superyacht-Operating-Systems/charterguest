@@ -628,7 +628,7 @@ width: max-content;
     preload="auto"
     poster=""
     data-setup='{"controls": true, "autoplay": false, "preload": "auto"}'>
-  <source src="<?php echo  $this->request->base; ?>/app/webroot/Guest_how_to_video.mp4" type="video/mp4"></source>
+  <source src="<?php echo  $this->request->base; ?>/app/webroot/Guest_how_to_video_converted.mp4" type="video/mp4"></source>
   <!-- <source src="//vjs.zencdn.net/v/oceans.webm" type="video/webm"></source>
   <source src="//vjs.zencdn.net/v/oceans.ogv" type="video/ogg"></source> -->
   <p class="vjs-no-js">
