@@ -1002,7 +1002,7 @@ var player = videojs('preferencesheetvideo', options, function onPlayerReady() {
   //   videojs.log('Awww...over so soon?!');
   // });
 });
-
+player.responsive(true);
 $('#howtovideo').on('hidden.bs.modal', function () {
   //$('#preferencesheetvideo')[0].pause();
   
@@ -1023,7 +1023,7 @@ var headplayer = videojs('charterheadvideo', headoptions, function onPlayerReady
   //   videojs.log('Awww...over so soon?!');
   // });
 });
-
+headplayer.responsive(true);
 $('#howtovideocharterhead').on('hidden.bs.modal', function () {
   //$('#charterheadvideo')[0].pause();
   headplayer.pause();  
