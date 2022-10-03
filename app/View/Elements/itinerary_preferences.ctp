@@ -140,7 +140,7 @@ $sessionData = $this->Session->read();
         ?>
 
 <div class="personal-row-container beverage-menu-row">
-<!-- <h1 class="position-mobile-head">Itinerary</h1> -->
+<h1 class="position-mobile-head">Itinerary</h1>
 <div class="fixed-row-container itinerary-row">
   <div class="col-md-12">
       <div class="form-group frmgrp-mar">

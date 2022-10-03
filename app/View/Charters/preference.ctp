@@ -286,29 +286,71 @@ justify-content: center;
   width: 100%;
 }
 @media only screen and (max-width: 767px){
+    .nav-side-menu-full-container .nav-side-menu .sidebar-btn{
+        top: 75px;
+    }
     .container-row-all-innerpages .nav-justified2 {
         margin-bottom: 0px;
   justify-content: inherit;
   overflow: auto;
     }
     .container-row-all-innerpages {
-  top: 115px;
+  top: 55px;
 }
 .fixed-row-container {
-  margin-top: 0px;
+  margin-top: 40px;
 }
 .nav-pills > li{
+    margin: 0px 0px 5px 0px!important;
+    width: inherit;
+}
+.nav-pills > li > a.nav-anch {
+  background: #fff;
+  /* width: 95px; */
+}
+.nav-side-menu-full-container .nav-side-menu .sidebar {
+    top: 110px;
+}
+.position-mobile-head {
+  margin-top: 5px;
+}
+.mobwt-95{
+    width: 95px;
+}
+.pl-wt{
+    width: 72px;
+}
+.food_wt{
+    width: 43px;
+}
+.beverage-wt{
+    width: 72px;
+}
+.wine_wt{
+    width: 93px;
+}
+.itinerary_wt{
+    width: 93px;
+}
+}
+@media only screen and (min-width: 767px) and (max-width: 1024px){
+.container-row-all-innerpages{
+margin-top: 50px;
+}
+}
+@media only screen and (min-width: 767px) and (max-width: 991px){
+    /* .nav-pills > li{
     margin: 0px 10px 10px 10px!important;
     width: inherit;
 }
-
 .nav-pills > li > a.nav-anch {
   background: #fff;
   width: 95px;
 }
-.nav-side-menu-full-container .nav-side-menu .sidebar {
-  top: 65px;
-}
+.container-row-all-innerpages .nav-justified2 {
+  justify-content: inherit;
+  overflow: auto;
+    } */
 }
 
 </style>
@@ -452,21 +494,21 @@ justify-content: center;
 
     <nav class="menu"> 
         <ul class="menu menu-level1 no-style nav nav-pills nav-justified2">
-          <li class="<?php echo $personalDetailsTab; ?>"><a data-toggle="tab" href="#personal_det" class="nav-anch">Personal</a></li>
-          <li class="<?php echo $mealPreferenceTab; ?>"><a data-toggle="tab" href="#meals" class="nav-anch">Meal Service</a></li>
-          <li class="<?php echo $foodPreferenceTab; ?>"><a data-toggle="tab" href="#food" class="nav-anch">Food</a></li>
-          <li class="<?php echo $beveragePreferenceTab; ?>"><a data-toggle="tab" href="#beverage" class="nav-anch">Beverage</a></li>
+          <li class="<?php echo $personalDetailsTab; ?>"><a data-toggle="tab" href="#personal_det" class="nav-anch pl-wt">Personal</a></li>
+          <li class="<?php echo $mealPreferenceTab; ?>"><a data-toggle="tab" href="#meals" class="nav-anch mobwt-95">Meal Service</a></li>
+          <li class="<?php echo $foodPreferenceTab; ?>"><a data-toggle="tab" href="#food" class="nav-anch food_wt">Food</a></li>
+          <li class="<?php echo $beveragePreferenceTab; ?>"><a data-toggle="tab" href="#beverage" class="nav-anch beverage-wt">Beverage</a></li>
           <?php if(isset($ownerprefenceID)){
               //if($sessionCH == 2){ ?>
-          <li class="<?php echo $spiritPreferenceTab; ?>"><a data-toggle="tab" href="#spirit" class="nav-anch">Beer & Spirit</a></li>
-          <li class="<?php echo $winePreferenceTab; ?>"><a data-toggle="tab" id="wineTab" href="#wine" class="nav-anch">Wine List</a></li>
+          <li class="<?php echo $spiritPreferenceTab; ?>"><a data-toggle="tab" href="#spirit" class="nav-anch mobwt-95">Beer & Spirit</a></li>
+          <li class="<?php echo $winePreferenceTab; ?>"><a data-toggle="tab" id="wineTab" href="#wine" class="nav-anch wine_wt">Wine List</a></li>
           <?php } //} else{ ?>
            <!-- <li class="<?php echo $spiritPreferenceTab; ?>"><a data-toggle="tab" href="#spirit" class="nav-anch">Beer & Spirit</a></li>
            <li class="<?php echo $winePreferenceTab; ?>"><a data-toggle="tab" id="wineTab" href="#wine" class="nav-anch">Wine List</a></li> -->
         
           <?php //} ?>
           
-          <li class="<?php echo $itineraryPreferenceTab; ?>"><a data-toggle="tab" href="#itinerary" class="nav-anch">Itinerary</a></li>
+          <li class="<?php echo $itineraryPreferenceTab; ?>"><a data-toggle="tab" href="#itinerary" class="nav-anch itinerary_wt">Itinerary</a></li>
           
           </ul>
     </nav>

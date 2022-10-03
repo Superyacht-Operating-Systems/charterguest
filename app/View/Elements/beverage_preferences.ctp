@@ -234,7 +234,7 @@ hr.divmar{
            }
         ?>
 <div class="personal-row-container beverage-menu-row">
-<!-- <h1 class="position-mobile-head">Beverage</h1> -->
+<h1 class="position-mobile-head">Beverage</h1>
 <div class="fixed-row-container">
   <div class="col-md-12">
           <div class="form-group frmgrp-mar">

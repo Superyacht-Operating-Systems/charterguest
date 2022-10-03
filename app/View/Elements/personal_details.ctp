@@ -640,7 +640,7 @@ and (max-device-width : 667px) {
        ?>
 
 <div class="personal-row-container personaldetails-row">
-  <!-- <h1 class="position-mobile-head">Personal</h1> -->
+  <h1 class="position-mobile-head">Personal</h1>
 <div class="fixed-row-container personaldetails-row-md">  
  <div class="form-group base-margin">
   <div class="md-unblock-container">        
