@@ -328,6 +328,9 @@ justify-content: center;
 .pl-wt{
     width: 72px;
 }
+.meal-wt{
+    width: 98px;
+}
 .food_wt{
     width: 43px;
 }
@@ -526,7 +529,7 @@ margin-top: 50px;
     <nav class="menu"> 
         <ul class="menu menu-level1 no-style nav nav-pills nav-justified2">
           <li class="<?php echo $personalDetailsTab; ?>"><a data-toggle="tab" href="#personal_det" class="nav-anch pl-wt">Personal</a></li>
-          <li class="<?php echo $mealPreferenceTab; ?>"><a data-toggle="tab" href="#meals" class="nav-anch meal-wt mobwt-95">Meal Service</a></li>
+          <li class="<?php echo $mealPreferenceTab; ?>"><a data-toggle="tab" href="#meals" class="nav-anch meal-wt">Meal Service</a></li>
           <li class="<?php echo $foodPreferenceTab; ?>"><a data-toggle="tab" href="#food" class="nav-anch food_wt">Food</a></li>
           <li class="<?php echo $beveragePreferenceTab; ?>"><a data-toggle="tab" href="#beverage" class="nav-anch beverage-wt">Beverage</a></li>
           <?php if(isset($ownerprefenceID)){
