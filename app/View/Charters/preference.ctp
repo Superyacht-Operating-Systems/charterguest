@@ -308,8 +308,9 @@ justify-content: center;
     
 }
 .nav-pills > li > a.nav-anch {
-  background: #fff;
-  /* width: 95px; */
+    padding: 6px 4px;
+  /* background: #fff;
+   width: 95px;  */
 }
 .nav-side-menu-full-container .nav-side-menu .sidebar {
     top: 110px;
