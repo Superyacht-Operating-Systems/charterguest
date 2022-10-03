@@ -314,6 +314,9 @@ justify-content: center;
 .position-mobile-head {
   margin-top: 5px;
 }
+.nav-pills > li {
+  width: inherit;
+}
 .mobwt-95{
     width: 95px;
 }
@@ -331,6 +334,11 @@ justify-content: center;
 }
 .itinerary_wt{
     width: 93px;
+}
+}
+@media only screen and (min-width: 560px) and (max-width: 767px){
+.container-row-all-innerpages .nav-justified2 {
+  justify-content: center;
 }
 }
 @media only screen and (min-width: 767px) and (max-width: 1024px){
