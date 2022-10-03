@@ -684,9 +684,10 @@ var form = "";
 var url = "";
 
 $(document).on("click", ".nav-justified2 li a", function(e) { 
-            var outerContent = $('.nav-justified2');
-            var innerContent = $('.nav-justified2 > li > nav-anch');
-            outerContent.scrollLeft( (innerContent.width() - outerContent.width()) / 2);
+           var divscroll=$('.nav-justified2');
+            var outerContent =$('.nav-justified2')[0].clientWidth;
+            var innerContent = $('.nav-justified2 > .active > .nav-anch')[0].clientWidth;
+            divscroll.scrollLeft( (innerContent - outerContent) / 2);
             });
            
 
