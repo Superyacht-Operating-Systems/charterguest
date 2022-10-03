@@ -302,7 +302,7 @@ justify-content: center;
 }
 .nav-pills > li{
     margin: 0px 0px 5px 0px!important;
-    width: inherit;
+    width: auto;
 }
 .nav-pills > li > a.nav-anch {
   background: #fff;
