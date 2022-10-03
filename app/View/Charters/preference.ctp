@@ -290,7 +290,7 @@ justify-content: center;
   z-index: auto;
     }
     .nav-side-menu-full-container .nav-side-menu .sidebar-btn{
-        top: 75px;
+        top: 65px;
     }
     .container-row-all-innerpages .nav-justified2 {
         margin-bottom: 0px;
@@ -304,7 +304,7 @@ justify-content: center;
   margin-top: 40px;
 }
 .nav-pills > li{
-    margin: 0px 0px 5px 0px!important;
+    margin: 0px 0px 0px 0px!important;
     
 }
 .nav-pills > li > a.nav-anch {
@@ -313,10 +313,11 @@ justify-content: center;
    width: 95px;  */
 }
 .nav-side-menu-full-container .nav-side-menu .sidebar {
-    top: 110px;
+    top: 100px;
 }
 .position-mobile-head {
-  margin-top: 5px;
+  margin-top: 10px;
+  top: 38px;
 }
 .nav-pills > li {
     width: auto;
