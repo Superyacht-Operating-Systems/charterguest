@@ -302,7 +302,7 @@ justify-content: center;
 }
 .nav-pills > li{
     margin: 0px 0px 5px 0px!important;
-    width: auto;
+    
 }
 .nav-pills > li > a.nav-anch {
   background: #fff;
@@ -315,7 +315,7 @@ justify-content: center;
   margin-top: 5px;
 }
 .nav-pills > li {
-  width: inherit;
+    width: auto;
 }
 .mobwt-95{
     width: 95px;
