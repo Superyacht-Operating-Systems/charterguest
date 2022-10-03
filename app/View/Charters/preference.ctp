@@ -710,7 +710,7 @@ $(document).on("click", ".nav-justified2 li .pl-wt , .nav-justified2 li .meal-wt
 $(document).on("click", ".nav-justified2 li .BS-wt, .nav-justified2 li .wine_wt, .nav-justified2 li .itinerary_wt", function(e) { 
             var outerContent =$('.nav-justified2')[0].clientWidth;
             var innerContent = $('.nav-justified2 > .active > .nav-anch')[0].clientWidth;
-            $('.nav-justified2').scrollLeft( (innerContent + outerContent) / 2 + " px");
+            $('.nav-justified2').scrollLeft(  outerContent + " px");
             });
 $(document).on("click", ".pagleave", function(e) { 
     $("#pageleavemodal").modal("show");
