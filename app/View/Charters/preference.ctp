@@ -286,6 +286,9 @@ justify-content: center;
   width: 100%;
 }
 @media only screen and (max-width: 767px){
+    .navbar-absalute-top {
+  z-index: auto;
+    }
     .nav-side-menu-full-container .nav-side-menu .sidebar-btn{
         top: 75px;
     }
