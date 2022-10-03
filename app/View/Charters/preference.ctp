@@ -526,12 +526,12 @@ margin-top: 50px;
     <nav class="menu"> 
         <ul class="menu menu-level1 no-style nav nav-pills nav-justified2">
           <li class="<?php echo $personalDetailsTab; ?>"><a data-toggle="tab" href="#personal_det" class="nav-anch pl-wt">Personal</a></li>
-          <li class="<?php echo $mealPreferenceTab; ?>"><a data-toggle="tab" href="#meals" class="nav-anch mobwt-95">Meal Service</a></li>
+          <li class="<?php echo $mealPreferenceTab; ?>"><a data-toggle="tab" href="#meals" class="nav-anch meal-wt mobwt-95">Meal Service</a></li>
           <li class="<?php echo $foodPreferenceTab; ?>"><a data-toggle="tab" href="#food" class="nav-anch food_wt">Food</a></li>
           <li class="<?php echo $beveragePreferenceTab; ?>"><a data-toggle="tab" href="#beverage" class="nav-anch beverage-wt">Beverage</a></li>
           <?php if(isset($ownerprefenceID)){
               //if($sessionCH == 2){ ?>
-          <li class="<?php echo $spiritPreferenceTab; ?>"><a data-toggle="tab" href="#spirit" class="nav-anch mobwt-95">Beer & Spirit</a></li>
+          <li class="<?php echo $spiritPreferenceTab; ?>"><a data-toggle="tab" href="#spirit" class="nav-anch BS-wt mobwt-95">Beer & Spirit</a></li>
           <li class="<?php echo $winePreferenceTab; ?>"><a data-toggle="tab" id="wineTab" href="#wine" class="nav-anch wine_wt">Wine List</a></li>
           <?php } //} else{ ?>
            <!-- <li class="<?php echo $spiritPreferenceTab; ?>"><a data-toggle="tab" href="#spirit" class="nav-anch">Beer & Spirit</a></li>
@@ -701,13 +701,17 @@ var urltogo = "";
 var form = "";
 var url = "";
 
-$(document).on("click", ".nav-justified2 li a", function(e) { 
+$(document).on("click", ".nav-justified2 li .pl-wt , .nav-justified2 li .meal-wt, .nav-justified2 li .food_wt, .nav-justified2 li .beverage-wt", function(e) { 
             var outerContent =$('.nav-justified2')[0].clientWidth;
             var innerContent = $('.nav-justified2 > .active > .nav-anch')[0].clientWidth;
             $('.nav-justified2').scrollLeft( (innerContent - outerContent) / 2 + " px");
             });
-           
 
+$(document).on("click", ".nav-justified2 li .BS-wt, .nav-justified2 li .wine_wt, .nav-justified2 li .itinerary_wt", function(e) { 
+            var outerContent =$('.nav-justified2')[0].clientWidth;
+            var innerContent = $('.nav-justified2 > .active > .nav-anch')[0].clientWidth;
+            $('.nav-justified2').scrollRight( (innerContent - outerContent) / 2 + " px");
+            });
 $(document).on("click", ".pagleave", function(e) { 
     $("#pageleavemodal").modal("show");
      urltogo = $(this).find('a').attr('href');
