@@ -336,6 +336,11 @@ justify-content: center;
     width: 93px;
 }
 }
+@media only screen and (min-width: 560px) and (max-width: 767px){
+.container-row-all-innerpages .nav-justified2 {
+  justify-content: center;
+}
+}
 @media only screen and (min-width: 767px) and (max-width: 1024px){
 .container-row-all-innerpages{
 margin-top: 50px;
