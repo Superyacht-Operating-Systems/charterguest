@@ -682,6 +682,14 @@ if(isset($defaultLastName) && !empty($defaultLastName)){
 var urltogo = "";
 var form = "";
 var url = "";
+
+$(document).on("click", ".nav-justified2 li a", function(e) { 
+            var outerContent = $('.nav-justified2');
+            var innerContent = $('.nav-justified2 > li > nav-anch');
+            outerContent.scrollLeft( (innerContent.width() - outerContent.width()) / 2);
+            });
+           
+
 $(document).on("click", ".pagleave", function(e) { 
     $("#pageleavemodal").modal("show");
      urltogo = $(this).find('a').attr('href');
