@@ -332,7 +332,7 @@ table.fd-table tr>td {
         ?>
 
 <div class="personal-row-container foodpreferences-container">
-<h1 class="position-mobile-head">Food</h1>
+<!-- <h1 class="position-mobile-head">Food</h1> -->
 <div class="fixed-row-container"> 
         <div class="col-md-12 foodpreferences-row">
       

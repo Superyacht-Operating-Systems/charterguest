@@ -648,7 +648,7 @@ input[type="checkbox"] {
            }
         ?>
     <div class="personal-row-container meals-container mealsdetails-row">
-        <h1 class="position-mobile-head">Meal Service</h1>
+        <!-- <h1 class="position-mobile-head">Meal Service</h1> -->
         <div class="fixed-row-container">
         <div class="col-sm-12 md-columnn-mobile-size form-group frmgrp-mar">
         <div class="md-col-nospace">

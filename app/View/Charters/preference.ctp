@@ -269,6 +269,47 @@ body .menu .submenu .menu__item a {
     }
 }
 
+.nav-justified2 > li > a {
+  margin-bottom: 5px;
+  text-align: center;
+}
+.container-row-all-innerpages{
+    margin-top:30px;
+}
+.container-row-all-innerpages .nav-justified2{
+    margin-bottom: 40px;
+display: flex;
+justify-content: center;
+
+}
+.nav-justified2 {
+  width: 100%;
+}
+@media only screen and (max-width: 767px){
+    .container-row-all-innerpages .nav-justified2 {
+        margin-bottom: 0px;
+  justify-content: inherit;
+  overflow: auto;
+    }
+    .container-row-all-innerpages {
+  top: 115px;
+}
+.fixed-row-container {
+  margin-top: 0px;
+}
+.nav-pills > li{
+    margin: 0px 10px 10px 10px!important;
+    width: inherit;
+}
+
+.nav-pills > li > a.nav-anch {
+  background: #fff;
+  width: 95px;
+}
+.nav-side-menu-full-container .nav-side-menu .sidebar {
+  top: 65px;
+}
+}
 
 </style>
 
@@ -327,10 +368,10 @@ body .menu .submenu .menu__item a {
         </button></a>
     </div>
 <?php } ?>
-<div class="nav-side-menu-full-container hidden-mob-view">
+<div class="nav-side-menu-full-container">
  <div class="nav-side-menu">
 <div class="base-margin">
-<div  class="sidebar-btn">
+<div  class="sidebar-btn ">
     <div class="menu-stripes"></div>
     <div class="menu-stripes"></div>
     <div class="menu-stripes"></div>
@@ -406,17 +447,11 @@ body .menu .submenu .menu__item a {
 </div>
 </div>   
 </div>
+
 <div class="container-row-all-innerpages">
-<div class="nav-side-menu">
-<div class="base-margin">
-<div id="sidebar-btn" class="sidebar-btn">
-    <div class="menu-stripes"></div>
-    <div class="menu-stripes"></div>
-    <div class="menu-stripes"></div>
-</div>
-<section id="sidebar" class="sidebar">
+
     <nav class="menu"> 
-        <ul class="menu menu-level1 no-style nav nav-pills nav-justified">
+        <ul class="menu menu-level1 no-style nav nav-pills nav-justified2">
           <li class="<?php echo $personalDetailsTab; ?>"><a data-toggle="tab" href="#personal_det" class="nav-anch">Personal</a></li>
           <li class="<?php echo $mealPreferenceTab; ?>"><a data-toggle="tab" href="#meals" class="nav-anch">Meal Service</a></li>
           <li class="<?php echo $foodPreferenceTab; ?>"><a data-toggle="tab" href="#food" class="nav-anch">Food</a></li>
@@ -433,63 +468,9 @@ body .menu .submenu .menu__item a {
           
           <li class="<?php echo $itineraryPreferenceTab; ?>"><a data-toggle="tab" href="#itinerary" class="nav-anch">Itinerary</a></li>
           
-          <li class="none-vew pagleave"> <a href="<?php echo $baseFolder."/charters/programs/".$session['guestListUUID'];  ?>">Charter Programs</a></li>
-          <?php if(isset($ownerprefenceID) && !empty($ownerprefenceID)){ ?>
-            <li class="none-vew pagleave"><a href="<?php echo $baseFolder."/charters/view/".$ownerprefenceID."/".$selectedCharterProgramUUID."/".$sessionCharterGuest['charter_company_id']; ?>">Guest List</a></li>
-            <?php }else if(isset($assocprefenceID) && !empty($assocprefenceID)){ ?>
-                <li class="none-vew pagleave"><a href="<?php echo $baseFolder."/charters/view_guest/".$selectedCharterProgramUUID."/".$sessionCharterGuest['charter_company_id']; ?>">Guest List</a></li>
-                <?php } ?>    
-                <?php if(empty($mapdetails)){ 
-                $title  = "Not published";
-            }else if(!empty($mapdetails)){
-                    $title  = "";
-            } ?>
-            <?php if(isset($ownerprefenceID) && !empty($ownerprefenceID)){ ?>
-                <li class="none-vew menu__item"> <a href="#" title="<?php echo $title; ?>">Cruising Map</a>
-                
-                <?php if(isset($mapdetails)){ ?>
-                    <ul class="submenu">
-                        <?php foreach($mapdetails as $startdate => $data){ ?>
-                            <li class="none-vew menu__item pagleave"><a href="<?php echo $baseFolder."/charters/charter_program_map/".$data['programid'].'/'.$data['dbname'].'/owner'; ?>" target="blank"><?php echo $startdate; ?></a></li>
-                        <?php
-                                
-                            } ?>
-                    </ul>
-                <?php } ?>
-            </li>   
-            <?php } ?>
-            <?php if(isset($assocprefenceID) && !empty($assocprefenceID)){ ?>
-            <li class="none-vew pagleave"><a class="nav-anch" href="<?php echo $baseFolder."/charters/charter_program_map/".$charterHeadProgramId.'/'.$ydb_name.'/guest'; ?>" target="blank">Cruising Map</a></li>
-            <?php } ?>
-          <li class="none-vew menu__item"> <a href="#">Charter Contracts</a>
-            <?php 
-              if(isset($ownerprefenceID) && !empty($ownerprefenceID)){ 
-                    if(isset($programFiles)){ ?>
-                        <ul class="submenu">
-                            <?php foreach($programFiles as $startdate => $filepath){ ?>
-                            <li class="none-vew menu__item"><a href="<?php echo $filepath; ?>" target="_blank"><?php echo $startdate; ?></a></li>
-                            <?php
-                                    
-                                } ?>
-                        </ul>
-                    <?php } 
-                }?>
-        </li>  
-        <li class="none-vew menu__item" ><a>How To Video</a>
-           <ul class="submenu">
-                   <li class="menu__item" id="MenuHowToVideo"><a href="#">Preference Sheets</a></li>
-                   <li class="menu__item" id="MenuHowToVideoCharterHead"><a href="#">Head Charterer</a></li>
-                </ul>
-            </li> 
-           
-           <li class="none-vew"> <a class="nav-anch" href="<?php echo $baseFolder."/charters/privacytermsofuse/1" ?>" target="blank">Terms of Use</a></li>
-           <li class="none-vew"> <a class="nav-anch" href="<?php echo $baseFolder."/charters/privacytermsofuse/2" ?>" target="blank">Privacy Policy</a></li>
-         <li class="list-logout-row-inner none-vew"><?php echo $this->Html->link($this->Html->image("admin/table.png", array("alt" => "","title" => "Logout")).'  Logout','/',array('escape' =>false,'title' => 'Logout'));?></li>
-        </ul>
+          </ul>
     </nav>
-</section>
-</div>
-</div>
+
 
 <div class="row">
     <div class="col-lg-4">

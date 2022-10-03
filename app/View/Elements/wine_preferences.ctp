@@ -150,7 +150,7 @@ table#selectedWineListTableId tr td input {
 
 <div id="wine" class="tab-pane fade <?php echo $winePreferenceTab; ?>">
 <div class="personal-row-container beverage-menu-row">
-<h1 class="position-mobile-head">WINE LIST</h1>   
+<!-- <h1 class="position-mobile-head">WINE LIST</h1>    -->
 <div class="fixed-row-container">  
 <div class="container-fluid no-space">
     

@@ -165,7 +165,7 @@ table#selectedProductListTableId tr td input {
 
 <div id="spirit" class="tab-pane fade <?php echo $spiritPreferenceTab; ?>">
     <div class="personal-row-container beverage-menu-row">
-         <h1 class="position-mobile-head">BEER & SPIRITS</h1>   
+         <!-- <h1 class="position-mobile-head">BEER & SPIRITS</h1>    -->
  <div class="fixed-row-container">       
 <div class="container-fluid no-space">
     <?php if (isset($charterAssocIdByHeaderView)) { 
