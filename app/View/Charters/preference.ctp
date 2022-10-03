@@ -289,7 +289,7 @@ justify-content: center;
     .container-row-all-innerpages .nav-justified2 {
         margin-bottom: 0px;
   justify-content: inherit;
-  overflow: auto;
+  overflow: scroll;
     }
     .container-row-all-innerpages {
   top: 115px;
@@ -310,7 +310,25 @@ justify-content: center;
   top: 65px;
 }
 }
-
+@media only screen and (min-width: 767px) and (max-width: 1024px){
+.container-row-all-innerpages{
+margin-top: 50px;
+}
+}
+@media only screen and (min-width: 767px) and (max-width: 991px){
+    /* .nav-pills > li{
+    margin: 0px 10px 10px 10px!important;
+    width: inherit;
+}
+.nav-pills > li > a.nav-anch {
+  background: #fff;
+  width: 95px;
+}
+.container-row-all-innerpages .nav-justified2 {
+  justify-content: inherit;
+  overflow: auto;
+    } */
+}
 </style>
 
 <?php
