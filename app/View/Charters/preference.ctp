@@ -314,6 +314,9 @@ justify-content: center;
 .position-mobile-head {
   margin-top: 5px;
 }
+.nav-pills > li {
+  width: inherit;
+}
 .mobwt-95{
     width: 95px;
 }
