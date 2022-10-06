@@ -144,10 +144,9 @@ $ownerprefenceID = $this->Session->read('ownerprefenceID');
 <!-- <h1 class="position-mobile-head">Itinerary</h1> -->
 <?php if(isset($ownerprefenceID)){
               ?>
-         <h1 class="position-mobile-head">PREFERENCES   7 of 7</h1>
+         <h1 class="position-mobile-head">PREFERENCES<span style="padding-left:20px;">7 of 7</span></h1>
           <?php }  else{ ?>
-          
-            <h1 class="position-mobile-head">PREFERENCES   5 of 5</h1>
+            <h1 class="position-mobile-head">PREFERENCES<span style="padding-left:20px;">5 of 5</span></h1>
           <?php } ?>
 
 <div class="fixed-row-container itinerary-row">

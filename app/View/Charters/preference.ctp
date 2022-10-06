@@ -316,7 +316,7 @@ justify-content: center;
    width: 95px;  */
 }
 .nav-side-menu-full-container .nav-side-menu .sidebar {
-    top: 100px;
+    top: 53px;
 }
 .position-mobile-head {
   margin-top: 10px;

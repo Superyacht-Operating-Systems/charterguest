@@ -238,10 +238,9 @@ hr.divmar{
 <!-- <h1 class="position-mobile-head">Beverage</h1> -->
 <?php if(isset($ownerprefenceID)){
               ?>
-         <h1 class="position-mobile-head">PREFERENCES   4 of 7</h1>
+              <h1 class="position-mobile-head">PREFERENCES<span style="padding-left:20px;">4 of 7</span></h1>
           <?php }  else{ ?>
-          
-            <h1 class="position-mobile-head">PREFERENCES   4 of 5</h1>
+            <h1 class="position-mobile-head">PREFERENCES<span style="padding-left:20px;">4 of 5</span></h1>
           <?php } ?>
 <div class="fixed-row-container">
   <div class="col-md-12">

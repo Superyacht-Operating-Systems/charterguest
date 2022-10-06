@@ -153,7 +153,7 @@ table#selectedWineListTableId tr td input {
 <!-- <h1 class="position-mobile-head">WINE LIST</h1>    -->
 <?php if(isset($ownerprefenceID)){
               ?>
-         <h1 class="position-mobile-head">PREFERENCES   6 of 7</h1>
+         <h1 class="position-mobile-head">PREFERENCES<span style="padding-left:20px;">6 of 7</span></h1>
           <?php }  else{ ?>
           
           <?php } ?> 

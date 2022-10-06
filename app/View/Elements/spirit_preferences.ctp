@@ -169,7 +169,7 @@ table#selectedProductListTableId tr td input {
          
          <?php if(isset($ownerprefenceID)){
               ?>
-         <h1 class="position-mobile-head">PREFERENCES   5 of 7</h1>
+         <h1 class="position-mobile-head">PREFERENCES<span style="padding-left:20px;">5 of 7</span></h1>
           <?php }  else{ ?>
           
           <?php } ?>
