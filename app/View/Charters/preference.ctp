@@ -319,6 +319,7 @@ justify-content: center;
     top: 53px;
 }
 .position-mobile-head {
+    text-transform: inherit;
   margin-top: 10px;
   top: -40px;
 }
