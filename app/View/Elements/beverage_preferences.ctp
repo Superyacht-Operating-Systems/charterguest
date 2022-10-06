@@ -1,6 +1,7 @@
 <?php
 
     // Coffee items
+    $ownerprefenceID = $this->Session->read('ownerprefenceID');
     $coffeeItems = array(
         1 => 'Espresso',
         2 => 'Decaf',
@@ -234,7 +235,14 @@ hr.divmar{
            }
         ?>
 <div class="personal-row-container beverage-menu-row">
-<h1 class="position-mobile-head">Beverage</h1>
+<!-- <h1 class="position-mobile-head">Beverage</h1> -->
+<?php if(isset($ownerprefenceID)){
+              ?>
+         <h1 class="position-mobile-head">PREFERENCES   4 of 7</h1>
+          <?php }  else{ ?>
+          
+            <h1 class="position-mobile-head">PREFERENCES   4 of 5</h1>
+          <?php } ?>
 <div class="fixed-row-container">
   <div class="col-md-12">
           <div class="form-group frmgrp-mar">

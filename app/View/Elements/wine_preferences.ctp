@@ -2,7 +2,7 @@
 <?php
 $baseFolder = $this->request->base;
 $session = $this->Session->read();
-
+$ownerprefenceID = $this->Session->read('ownerprefenceID');
 ?>
 <style>
 .card {
@@ -150,7 +150,13 @@ table#selectedWineListTableId tr td input {
 
 <div id="wine" class="tab-pane fade <?php echo $winePreferenceTab; ?>">
 <div class="personal-row-container beverage-menu-row">
-<h1 class="position-mobile-head">WINE LIST</h1>   
+<!-- <h1 class="position-mobile-head">WINE LIST</h1>    -->
+<?php if(isset($ownerprefenceID)){
+              ?>
+         <h1 class="position-mobile-head">PREFERENCES   6 of 7</h1>
+          <?php }  else{ ?>
+          
+          <?php } ?> 
 <div class="fixed-row-container">  
 <div class="container-fluid no-space">
     
