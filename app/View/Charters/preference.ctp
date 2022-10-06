@@ -709,22 +709,17 @@ $(document).on("click", ".nav-justified2 li .BS-wt, .nav-justified2 li .wine_wt,
             $('.nav-justified2').scrollLeft( + outerContent);
             });
 $(document).on("click", ".nav-justified2 li .beverage-wt", function(e) { 
-             var outerContent =$('.nav-justified2')[0].clientWidth;
-             if($('.nav-justified2').scrollLeft( - outerContent)){
-                $('.nav-justified2').scrollLeft( + outerContent);
-             }else{
-                $('.nav-justified2').scrollLeft( - outerContent);
-             }
-             var $elem=$('.nav-justified2');
-var newScrollLeft = $elem.scrollLeft(),
-    width=$elem.outerWidth(),
-    scrollWidth=$elem.get(0).scrollWidth;
-if (scrollWidth-newScrollLeft==width) {
-    $('.nav-justified2').scrollLeft( + outerContent);
-}
-else{
-    $('.nav-justified2').scrollLeft( - outerContent);
-}
+    // var outerContent =$('.nav-justified2')[0].clientWidth;
+    var $width = $('.nav-justified2').outerWidth()
+        var $scrollWidth = $('.nav-justified2')[0].scrollWidth; 
+        var $scrollLeft = $('.nav-justified2').scrollLeft();
+
+        if ($scrollWidth - $width === $scrollLeft){
+            $('.nav-justified2').scrollLeft( + outerContent);
+        }
+        else{
+            $('.nav-justified2').scrollLeft( - outerContent);
+        }
             
             });       
 $(document).on("click", ".pagleave", function(e) { 
