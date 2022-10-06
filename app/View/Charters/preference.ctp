@@ -353,7 +353,7 @@ justify-content: center;
     width: 98px;
 }
 }
-@media only screen and (min-width: 560px) and (max-width: 767px){
+@media only screen and (min-width: 690px) and (max-width: 767px){
 .container-row-all-innerpages .nav-justified2 {
   justify-content: center;
 }
