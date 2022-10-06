@@ -712,7 +712,8 @@ $(document).on("click", ".nav-justified2 li .beverage-wt", function(e) {
      var outerContent =$('.nav-justified2')[0].clientWidth;
    // var $width = $('.nav-justified2').outerWidth()
         var $scrollWidth = $('.nav-justified2')[0].scrollWidth; 
-        var $scrollLeft = $('.nav-justified2').scrollLeft();
+        // var $scrollLeft = $('.nav-justified2').scrollLeft();
+        var scrollLeft = Math.round($('#scrollquestion').scrollLeft());
 
         if ($scrollWidth - outerContent === $scrollLeft){
             $('.nav-justified2').scrollLeft( - outerContent);
