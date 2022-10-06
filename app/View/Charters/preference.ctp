@@ -715,8 +715,16 @@ $(document).on("click", ".nav-justified2 li .beverage-wt", function(e) {
              }else{
                 $('.nav-justified2').scrollLeft( - outerContent);
              }
-            // var innerContent = $('.nav-justified2 > .active > .nav-anch')[0].clientWidth;
-            // $('.nav-justified2').scrollLeft( (innerContent - outerContent) / 2 + " px");
+             var $elem=$('.nav-justified2');
+var newScrollLeft = $elem.scrollLeft(),
+    width=$elem.outerWidth(),
+    scrollWidth=$elem.get(0).scrollWidth;
+if (scrollWidth-newScrollLeft==width) {
+    $('.nav-justified2').scrollLeft( + outerContent);
+}
+else{
+    $('.nav-justified2').scrollLeft( - outerContent);
+}
             
             });       
 $(document).on("click", ".pagleave", function(e) { 
