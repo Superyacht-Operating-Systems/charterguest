@@ -1,6 +1,7 @@
 <?php
 $base = $this->request->base;
 $sessionData = $this->Session->read();
+$ownerprefenceID = $this->Session->read('ownerprefenceID');
 //echo "<pre>";print_r($sessionData); exit;
 // Itineraries
     $itineraryList = array(
@@ -140,7 +141,15 @@ $sessionData = $this->Session->read();
         ?>
 
 <div class="personal-row-container beverage-menu-row">
-<h1 class="position-mobile-head">Itinerary</h1>
+<!-- <h1 class="position-mobile-head">Itinerary</h1> -->
+<?php if(isset($ownerprefenceID)){
+              ?>
+         <h1 class="position-mobile-head">PREFERENCES   7 of 7</h1>
+          <?php }  else{ ?>
+          
+            <h1 class="position-mobile-head">PREFERENCES   5 of 5</h1>
+          <?php } ?>
+
 <div class="fixed-row-container itinerary-row">
   <div class="col-md-12">
       <div class="form-group frmgrp-mar">

@@ -1,6 +1,7 @@
 <?php
 $base = $this->request->base;
 $sessionData = $this->Session->read();
+$ownerprefenceID = $this->Session->read('ownerprefenceID');
 // Personal deatils page
     $rainJacketSizeList = array(
         '' => 'Select Size',
@@ -640,7 +641,14 @@ and (max-device-width : 667px) {
        ?>
 
 <div class="personal-row-container personaldetails-row">
-  <h1 class="position-mobile-head">Personal</h1>
+  <!-- <h1 class="position-mobile-head">Personal</h1> -->
+  <?php if(isset($ownerprefenceID)){
+              ?>
+         <h1 class="position-mobile-head">PREFERENCES   1 of 7</h1>
+          <?php }  else{ ?>
+          
+            <h1 class="position-mobile-head">PREFERENCES   1 of 5</h1>
+          <?php } ?>
 <div class="fixed-row-container personaldetails-row-md">  
  <div class="form-group base-margin">
   <div class="md-unblock-container">        

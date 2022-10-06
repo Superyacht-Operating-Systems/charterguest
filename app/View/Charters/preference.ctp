@@ -290,7 +290,7 @@ justify-content: center;
   z-index: auto;
     }
     .nav-side-menu-full-container .nav-side-menu .sidebar-btn{
-        top: 65px;
+        top: 20px;
     }
     .container-row-all-innerpages .nav-justified2 {
         margin-bottom: 0px;
@@ -298,10 +298,13 @@ justify-content: center;
   overflow: auto;
     }
     .container-row-all-innerpages {
-  top: 55px;
+  top: 88px;
 }
 .fixed-row-container {
-  margin-top: 40px;
+  margin-top: 0px;
+}
+.personal-row-container{
+    margin-top: 0px;
 }
 .nav-pills > li{
     margin: 0px 0px 0px 0px!important;
@@ -317,7 +320,7 @@ justify-content: center;
 }
 .position-mobile-head {
   margin-top: 10px;
-  top: 38px;
+  top: -40px;
 }
 .nav-pills > li {
     width: auto;

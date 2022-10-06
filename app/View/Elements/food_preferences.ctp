@@ -1,6 +1,7 @@
 <?php
 
 // Food Preferences
+$ownerprefenceID = $this->Session->read('ownerprefenceID');
     $foodList = array(
         1 => 'Soups',
         2 => 'Beef',
@@ -332,7 +333,15 @@ table.fd-table tr>td {
         ?>
 
 <div class="personal-row-container foodpreferences-container">
-<h1 class="position-mobile-head">Food</h1>
+<!-- <h1 class="position-mobile-head">Food</h1> -->
+<?php if(isset($ownerprefenceID)){
+              ?>
+         <h1 class="position-mobile-head">PREFERENCES   3 of 7</h1>
+          <?php }  else{ ?>
+          
+            <h1 class="position-mobile-head">PREFERENCES   3 of 5</h1>
+          <?php } ?>
+
 <div class="fixed-row-container"> 
         <div class="col-md-12 foodpreferences-row">
       
