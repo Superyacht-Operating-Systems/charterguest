@@ -290,7 +290,7 @@ justify-content: center;
   z-index: auto;
     }
     .nav-side-menu-full-container .nav-side-menu .sidebar-btn{
-        top: 20px;
+        top: 27px;
     }
     .container-row-all-innerpages .nav-justified2 {
         margin-bottom: 0px;
@@ -298,7 +298,7 @@ justify-content: center;
   overflow: scroll;
     }
     .container-row-all-innerpages {
-  top: 88px;
+  top: 95px;
 }
 .fixed-row-container {
   margin-top: 0px;
@@ -316,12 +316,13 @@ justify-content: center;
    width: 95px;  */
 }
 .nav-side-menu-full-container .nav-side-menu .sidebar {
-    top: 53px;
+    top: 60px;
 }
 .position-mobile-head {
     text-transform: inherit;
   margin-top: 10px;
   top: -40px;
+  left: 75px;
 }
 .nav-pills > li {
     width: auto;
