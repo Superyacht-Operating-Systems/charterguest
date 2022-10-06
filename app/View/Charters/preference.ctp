@@ -715,10 +715,10 @@ $(document).on("click", ".nav-justified2 li .beverage-wt", function(e) {
         var $scrollLeft = $('.nav-justified2').scrollLeft();
 
         if ($scrollWidth - outerContent === $scrollLeft){
-            $('.nav-justified2').scrollLeft( + outerContent);
+            $('.nav-justified2').scrollLeft( - outerContent);
         }
         else{
-            $('.nav-justified2').scrollLeft( - outerContent);
+            $('.nav-justified2').scrollLeft( + outerContent);
         }
             
             });       
