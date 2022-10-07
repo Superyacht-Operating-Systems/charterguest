@@ -321,8 +321,8 @@ justify-content: center;
 .position-mobile-head {
     text-transform: inherit;
   margin-top: 10px;
-  top: -40px;
-  left: 79px;
+  top: -41px;
+  left: 80px;
   font-size: 16px;
 }
 .nav-pills > li {
