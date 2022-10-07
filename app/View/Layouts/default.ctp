@@ -273,13 +273,13 @@ width: max-content;
 }
 
 @media screen 
-  and (max-device-width: 1600px)  and (orientation:landscape) 
+  and (max-device-width: 1366px)  and (orientation:landscape) 
   { 
 
-    /* .videomodalcontent{
+    .videomodalcontent{
       width: 560px !important;
       
-    } */
+    }
 
     .videoclass{
       width: 450px !important;
