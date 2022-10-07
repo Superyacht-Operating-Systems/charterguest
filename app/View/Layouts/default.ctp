@@ -267,7 +267,7 @@ width: max-content;
     }
 
     .videoclass{
-      width: 400px !important;
+      width: 375px !important;
       height : 250px !important;
     }
 }
@@ -282,7 +282,7 @@ width: max-content;
     }
 
     .videoclass{
-      width: 400px !important;
+      width: 375px !important;
       height : 250px !important;
     }
 
