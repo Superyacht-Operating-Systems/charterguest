@@ -250,12 +250,12 @@ width: max-content;
 @media only screen and (device-width: 768px) {
   /* For general iPad layouts */
   .videomodalcontent{
-      width: 482px !important;
+      width: 510px !important;
       
     }
 
     .videoclass{
-      width: 425px !important;
+      width: 450px !important;
       height : 250px !important;
     }
 }
@@ -263,12 +263,12 @@ width: max-content;
 @media only screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:portrait) {
   /* For portrait layouts only */
   .videomodalcontent{
-      width: 482px !important;
+      width: 510px !important;
       
     }
 
     .videoclass{
-      width: 425px !important;
+      width: 450px !important;
       height : 250px !important;
     }
 }
@@ -276,12 +276,12 @@ width: max-content;
 @media only screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:landscape) {
   /* For landscape layouts only */
   .videomodalcontent{
-      width: 482px !important;
+      width: 510px !important;
       
     }
 
     .videoclass{
-      width: 425px !important;
+      width: 450px !important;
       height : 250px !important;
     }
 }
