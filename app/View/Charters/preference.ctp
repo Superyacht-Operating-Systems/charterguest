@@ -321,6 +321,7 @@ justify-content: center;
 .position-mobile-head {
     text-transform: inherit;
   margin-top: 10px;
+  top: -40px;
   left: 79px;
   font-size: 16px;
 }
