@@ -202,7 +202,7 @@ label {
   color: #000;
 }
 body .menu .menu__item a{
-    background: #a4a0a0!important;
+    /* background: #a4a0a0!important; */
   color: #000;
 }
     /* .nav-side-menu .sidebar {
