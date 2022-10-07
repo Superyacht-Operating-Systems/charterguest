@@ -36,6 +36,15 @@
     );
 ?>
 <style>
+      @media only screen and (max-width: 767px){
+        .navbar-absalute-top {
+  z-index: auto;
+    }
+.bigitem .label-bold.hhd-mrg-02 {
+  padding-left: 80px;
+  margin-top: -6px;
+}
+}
 #loadMore{
     width: 320px;
     float: left;
