@@ -628,7 +628,7 @@ width: max-content;
     preload="auto"
     poster=""
     data-setup='{"controls": true, "autoplay": false, "preload": "auto"}'>
-  <source src="<?php echo  $this->request->base; ?>/app/webroot/Guest_how_to_video.mp4" type="video/mp4"></source>
+  <source src="https://youtu.be/4aMP61dg-cQ" type="video/mp4"></source>
   
   <p class="vjs-no-js">
     To view this video please enable JavaScript, and consider upgrading to a
@@ -638,12 +638,10 @@ width: max-content;
     </a>
   </p>
 </video> -->
-        <!-- <video width="100%" height="100%" class="video videoclass" playsinline autoplay muted loop controls="true"  preload="metadata" id="preferencesheetvideo">
-        <source src="<?php echo  $this->request->base; ?>/app/webroot/Guest_how_to_video.mp4" type="video/mp4">
-        </video> -->
-        <iframe 
-src="https://youtu.be/4aMP61dg-cQ">
-</iframe>              
+        <video width="100%" height="100%" class="video videoclass" playsinline autoplay muted loop controls="true"  preload="metadata" id="preferencesheetvideo">
+        <source src="https://youtu.be/4aMP61dg-cQ" type="video/mp4">
+        </video>
+        <!-- <iframe class="videomodalcontent" src="https://youtu.be/4aMP61dg-cQ" frameborder="0" allowfullscreen></iframe>                  -->
         </div>
         <div class="modal-footer">
             
@@ -669,7 +667,7 @@ src="https://youtu.be/4aMP61dg-cQ">
     preload="auto"
     poster=""
     data-setup='{"controls": true, "autoplay": false, "preload": "auto"}'>
-  <source src="<?php echo  $this->request->base; ?>/app/webroot/Head_Charterer_how_to_video.mp4" type="video/mp4"></source>
+  <source src="https://youtu.be/ExAG5mRmGAU" type="video/mp4"></source>
   
   <p class="vjs-no-js">
     To view this video please enable JavaScript, and consider upgrading to a
@@ -679,13 +677,9 @@ src="https://youtu.be/4aMP61dg-cQ">
     </a>
   </p>
 </video> -->
-<iframe 
-src="https://youtu.be/ExAG5mRmGAU">
-</iframe>        
-
-        <!-- <video width="100%" height="100%" class="video videoclass" playsinline autoplay muted loop controls="true"  preload="metadata" id="charterheadvideo">
-        <source src="<?php echo  $this->request->base; ?>/app/webroot/Head_Charterer_how_to_video.mp4" type="video/mp4">
-        </video> -->
+        <video width="100%" height="100%" class="video videoclass" playsinline autoplay muted loop controls="true"  preload="metadata" id="charterheadvideo">
+        <source src="https://youtu.be/ExAG5mRmGAU" type="video/mp4">
+        </video>
                             
         </div>
         <div class="modal-footer">
@@ -993,45 +987,45 @@ $(document).on("click", "#MenuHowToVideoCharterHead", function(e) {
 //   $('#charterheadvideo')[0].pause();
 // })
 
-var options = {};
+// var options = {};
 
-var player = videojs('preferencesheetvideo', options, function onPlayerReady() {
-  //videojs.log('Your player is ready!');
+// var player = videojs('preferencesheetvideo', options, function onPlayerReady() {
+//   //videojs.log('Your player is ready!');
 
-  // In this context, `this` is the player that was created by Video.js.
-  //this.play();
+//   // In this context, `this` is the player that was created by Video.js.
+//   //this.play();
 
-  // How about an event listener?
-  // this.on('ended', function() {
-  //   videojs.log('Awww...over so soon?!');
-  // });
-});
-player.responsive(true);
-$('#howtovideo').on('hidden.bs.modal', function () {
-  //$('#preferencesheetvideo')[0].pause();
+//   // How about an event listener?
+//   // this.on('ended', function() {
+//   //   videojs.log('Awww...over so soon?!');
+//   // });
+// });
+// player.responsive(true);
+// $('#howtovideo').on('hidden.bs.modal', function () {
+//   //$('#preferencesheetvideo')[0].pause();
   
-  player.pause();  
+//   player.pause();  
 
-})
+// })
 
-var headoptions = {};
+// var headoptions = {};
 
-var headplayer = videojs('charterheadvideo', headoptions, function onPlayerReady() {
-  //videojs.log('Your player is ready!');
+// var headplayer = videojs('charterheadvideo', headoptions, function onPlayerReady() {
+//   //videojs.log('Your player is ready!');
 
-  // In this context, `this` is the player that was created by Video.js.
-  //this.play();
+//   // In this context, `this` is the player that was created by Video.js.
+//   //this.play();
 
-  // // How about an event listener?
-  // this.on('ended', function() {
-  //   videojs.log('Awww...over so soon?!');
-  // });
-});
-headplayer.responsive(true);
-$('#howtovideocharterhead').on('hidden.bs.modal', function () {
-  //$('#charterheadvideo')[0].pause();
-  headplayer.pause();  
-})
+//   // // How about an event listener?
+//   // this.on('ended', function() {
+//   //   videojs.log('Awww...over so soon?!');
+//   // });
+// });
+// headplayer.responsive(true);
+// $('#howtovideocharterhead').on('hidden.bs.modal', function () {
+//   //$('#charterheadvideo')[0].pause();
+//   headplayer.pause();  
+// })
 
 $(document).on("click", ".previousSelectionButton", function(e) { 
 
