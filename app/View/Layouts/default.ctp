@@ -231,21 +231,7 @@ width: max-content;
 
 }
 
-@media screen 
-  and (max-device-width: 1600px) 
-  { 
 
-    .videomodalcontent{
-      width: 482px !important;
-      
-    }
-
-    .videoclass{
-      width: 450px !important;
-      height : 250px !important;
-    }
-
-}
 
 @media only screen and (device-width: 768px) {
   /* For general iPad layouts */
@@ -284,6 +270,22 @@ width: max-content;
       width: 450px !important;
       height : 250px !important;
     }
+}
+
+@media screen 
+  and (max-device-width: 1600px)  and (orientation:landscape) 
+  { 
+
+    .videomodalcontent{
+      width: 560px !important;
+      
+    }
+
+    .videoclass{
+      width: 450px !important;
+      height : 250px !important;
+    }
+
 }
 
 			</style>              
