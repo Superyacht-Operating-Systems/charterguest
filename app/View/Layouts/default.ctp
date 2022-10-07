@@ -621,7 +621,7 @@ width: max-content;
       </div>
         <div class="modal-body">
         
-        <video
+        <!-- <video
     id="preferencesheetvideo"
     class="video-js videoclass"
     controls
@@ -629,8 +629,7 @@ width: max-content;
     poster=""
     data-setup='{"controls": true, "autoplay": false, "preload": "auto"}'>
   <source src="<?php echo  $this->request->base; ?>/app/webroot/Guest_how_to_video.mp4" type="video/mp4"></source>
-  <!-- <source src="//vjs.zencdn.net/v/oceans.webm" type="video/webm"></source>
-  <source src="//vjs.zencdn.net/v/oceans.ogv" type="video/ogg"></source> -->
+  
   <p class="vjs-no-js">
     To view this video please enable JavaScript, and consider upgrading to a
     web browser that
@@ -638,11 +637,13 @@ width: max-content;
       supports HTML5 video
     </a>
   </p>
-</video>
+</video> -->
         <!-- <video width="100%" height="100%" class="video videoclass" playsinline autoplay muted loop controls="true"  preload="metadata" id="preferencesheetvideo">
         <source src="<?php echo  $this->request->base; ?>/app/webroot/Guest_how_to_video.mp4" type="video/mp4">
         </video> -->
-                            
+        <iframe 
+src="https://youtu.be/4aMP61dg-cQ">
+</iframe>              
         </div>
         <div class="modal-footer">
             
@@ -661,7 +662,7 @@ width: max-content;
         </button>
       </div>
         <div class="modal-body">
-        <video
+        <!-- <video
     id="charterheadvideo"
     class="video-js videoclass"
     controls
@@ -669,8 +670,7 @@ width: max-content;
     poster=""
     data-setup='{"controls": true, "autoplay": false, "preload": "auto"}'>
   <source src="<?php echo  $this->request->base; ?>/app/webroot/Head_Charterer_how_to_video.mp4" type="video/mp4"></source>
-  <!-- <source src="//vjs.zencdn.net/v/oceans.webm" type="video/webm"></source>
-  <source src="//vjs.zencdn.net/v/oceans.ogv" type="video/ogg"></source> -->
+  
   <p class="vjs-no-js">
     To view this video please enable JavaScript, and consider upgrading to a
     web browser that
@@ -678,7 +678,11 @@ width: max-content;
       supports HTML5 video
     </a>
   </p>
-</video>
+</video> -->
+<iframe 
+src="https://youtu.be/ExAG5mRmGAU">
+</iframe>        
+
         <!-- <video width="100%" height="100%" class="video videoclass" playsinline autoplay muted loop controls="true"  preload="metadata" id="charterheadvideo">
         <source src="<?php echo  $this->request->base; ?>/app/webroot/Head_Charterer_how_to_video.mp4" type="video/mp4">
         </video> -->
