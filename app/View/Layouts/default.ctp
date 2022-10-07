@@ -262,7 +262,7 @@ width: max-content;
 @media only screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:landscape) {
   /* For landscape layouts only */
   .videomodalcontent{
-      width: 525px !important;
+      width: 560px !important;
       
     }
 
@@ -276,10 +276,10 @@ width: max-content;
   and (max-device-width: 1600px)  and (orientation:landscape) 
   { 
 
-    .videomodalcontent{
+    /* .videomodalcontent{
       width: 560px !important;
       
-    }
+    } */
 
     .videoclass{
       width: 450px !important;
