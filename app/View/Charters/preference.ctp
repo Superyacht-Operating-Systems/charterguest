@@ -321,8 +321,8 @@ justify-content: center;
 .position-mobile-head {
     text-transform: inherit;
   margin-top: 10px;
-  top: -40px;
-  left: 75px;
+  left: 79px;
+  font-size: 16px;
 }
 .nav-pills > li {
     width: auto;
@@ -541,7 +541,7 @@ margin-top: 50px;
     </nav>
 
 
-<div class="row">
+<div class="row" style="margin-right: 0px;">
     <div class="col-lg-4">
         <?php echo $this->Session->flash();?>
         <div id="responseAlert" class="alert alert-success top strong-font" style="display:none;">
