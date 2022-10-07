@@ -84,6 +84,7 @@ $actual_link_defaultctp = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on
     <link href="//vjs.zencdn.net/7.10.2/video-js.min.css" rel="stylesheet">
 <script src="//vjs.zencdn.net/7.10.2/video.min.js"></script>
 
+<?php  echo $this->Html->script('Youtube'); ?>
 <style type="text/css">
 .modalmsg-container .modal-dialog{
 padding-left: 0px;
@@ -621,13 +622,15 @@ width: max-content;
       </div>
         <div class="modal-body">
         
-        <!-- <video
+        <video
     id="preferencesheetvideo"
     class="video-js videoclass"
     controls
     preload="auto"
     poster=""
-    data-setup='{"controls": true, "autoplay": false, "preload": "auto"}'>
+    data-setup='{ "techOrder": ["youtube"], "sources": [{ "type": "video/youtube", "src": "https://youtu.be/4aMP61dg-cQ"}] }'
+   
+    >
   <source src="https://youtu.be/4aMP61dg-cQ" type="video/mp4"></source>
   
   <p class="vjs-no-js">
@@ -637,10 +640,10 @@ width: max-content;
       supports HTML5 video
     </a>
   </p>
-</video> -->
-        <video width="100%" height="100%" class="video videoclass" playsinline autoplay muted loop controls="true"  preload="metadata" id="preferencesheetvideo">
+</video>
+        <!-- <video width="100%" height="100%" class="video videoclass" playsinline autoplay muted loop controls="true"  preload="metadata" id="preferencesheetvideo">
         <source src="https://youtu.be/4aMP61dg-cQ" type="video/mp4">
-        </video>
+        </video> -->
         <!-- <iframe class="videomodalcontent" src="https://youtu.be/4aMP61dg-cQ" frameborder="0" allowfullscreen></iframe>                  -->
         </div>
         <div class="modal-footer">
@@ -660,13 +663,13 @@ width: max-content;
         </button>
       </div>
         <div class="modal-body">
-        <!-- <video
+        <video
     id="charterheadvideo"
     class="video-js videoclass"
     controls
     preload="auto"
     poster=""
-    data-setup='{"controls": true, "autoplay": false, "preload": "auto"}'>
+    data-setup='{ "techOrder": ["youtube"], "sources": [{ "type": "video/youtube", "src": "https://youtu.be/ExAG5mRmGAU"}]}'>
   <source src="https://youtu.be/ExAG5mRmGAU" type="video/mp4"></source>
   
   <p class="vjs-no-js">
@@ -676,10 +679,10 @@ width: max-content;
       supports HTML5 video
     </a>
   </p>
-</video> -->
-        <video width="100%" height="100%" class="video videoclass" playsinline autoplay muted loop controls="true"  preload="metadata" id="charterheadvideo">
+</video>
+        <!-- <video width="100%" height="100%" class="video videoclass" playsinline autoplay muted loop controls="true"  preload="metadata" id="charterheadvideo">
         <source src="https://youtu.be/ExAG5mRmGAU" type="video/mp4">
-        </video>
+        </video> -->
                             
         </div>
         <div class="modal-footer">
@@ -987,45 +990,45 @@ $(document).on("click", "#MenuHowToVideoCharterHead", function(e) {
 //   $('#charterheadvideo')[0].pause();
 // })
 
-// var options = {};
+var options = {};
 
-// var player = videojs('preferencesheetvideo', options, function onPlayerReady() {
-//   //videojs.log('Your player is ready!');
+var player = videojs('preferencesheetvideo', options, function onPlayerReady() {
+  //videojs.log('Your player is ready!');
 
-//   // In this context, `this` is the player that was created by Video.js.
-//   //this.play();
+  // In this context, `this` is the player that was created by Video.js.
+  //this.play();
 
-//   // How about an event listener?
-//   // this.on('ended', function() {
-//   //   videojs.log('Awww...over so soon?!');
-//   // });
-// });
-// player.responsive(true);
-// $('#howtovideo').on('hidden.bs.modal', function () {
-//   //$('#preferencesheetvideo')[0].pause();
+  // How about an event listener?
+  // this.on('ended', function() {
+  //   videojs.log('Awww...over so soon?!');
+  // });
+});
+player.responsive(true);
+$('#howtovideo').on('hidden.bs.modal', function () {
+  //$('#preferencesheetvideo')[0].pause();
   
-//   player.pause();  
+  player.pause();  
 
-// })
+})
 
-// var headoptions = {};
+var headoptions = {};
 
-// var headplayer = videojs('charterheadvideo', headoptions, function onPlayerReady() {
-//   //videojs.log('Your player is ready!');
+var headplayer = videojs('charterheadvideo', headoptions, function onPlayerReady() {
+  //videojs.log('Your player is ready!');
 
-//   // In this context, `this` is the player that was created by Video.js.
-//   //this.play();
+  // In this context, `this` is the player that was created by Video.js.
+  //this.play();
 
-//   // // How about an event listener?
-//   // this.on('ended', function() {
-//   //   videojs.log('Awww...over so soon?!');
-//   // });
-// });
-// headplayer.responsive(true);
-// $('#howtovideocharterhead').on('hidden.bs.modal', function () {
-//   //$('#charterheadvideo')[0].pause();
-//   headplayer.pause();  
-// })
+  // // How about an event listener?
+  // this.on('ended', function() {
+  //   videojs.log('Awww...over so soon?!');
+  // });
+});
+headplayer.responsive(true);
+$('#howtovideocharterhead').on('hidden.bs.modal', function () {
+  //$('#charterheadvideo')[0].pause();
+  headplayer.pause();  
+})
 
 $(document).on("click", ".previousSelectionButton", function(e) { 
 
