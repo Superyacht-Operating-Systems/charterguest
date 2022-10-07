@@ -286,6 +286,9 @@ justify-content: center;
   width: 100%;
 }
 @media only screen and (max-width: 767px){
+    .mob_mr_0{
+        margin-right: 0px;
+    }
     .navbar-absalute-top {
   z-index: auto;
     }
@@ -560,7 +563,7 @@ margin-top: 50px;
     </nav>
 
 
-<div class="row" style="margin-right: 0px;">
+<div class="row mob_mr_0">
     <div class="col-lg-4">
         <?php echo $this->Session->flash();?>
         <div id="responseAlert" class="alert alert-success top strong-font" style="display:none;">
