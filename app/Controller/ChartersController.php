@@ -844,12 +844,13 @@ class ChartersController extends AppController {
         $this->set('programFiles', $attachment);
         
         $this->set('ismobile',$this->is_mobile);
-
-        $image = $YachtData[0]['Yacht']['cg_background_image'];
-        $fleetname = $YachtData[0]['Yacht']['fleetname'];
-        $yachtname = $YachtData[0]['Yacht']['yname'];
-        $cgBackgroundImage = $this->getBackgroundImageUrl($image, $fleetname, $yachtname);
-        $this->Session->write("cgBackgroundImage", $cgBackgroundImage);
+        if(isset($YachtData) && !empty($YachtData)){
+                $image = $YachtData[0]['Yacht']['cg_background_image'];
+                $fleetname = $YachtData[0]['Yacht']['fleetname'];
+                $yachtname = $YachtData[0]['Yacht']['yname'];
+                $cgBackgroundImage = $this->getBackgroundImageUrl($image, $fleetname, $yachtname);
+                $this->Session->write("cgBackgroundImage", $cgBackgroundImage);
+        }
     }
     
     /*
