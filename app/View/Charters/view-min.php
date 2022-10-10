@@ -152,7 +152,7 @@
                                                 
                                             }else{
                                                 $textPreferenceSheet = "COMPLETE";
-                                                $openPreferenceSheetClass = "existingCheckFunction";
+                                                $openPreferenceSheetClass = "";
                                                 $buttoncls = "#1eabfc";
                                                 $waitingclass = "";
                                             }
