@@ -1086,7 +1086,7 @@ class ChartersController extends AppController {
                 $charterAssocId = $data['charterAssocIdByHeaderEdit'];
                 $this->set("charterAssocIdByHeaderEdit", $charterAssocId);
             }
-            echo "<pre>";print_r($this->request->data); exit;
+            //echo "<pre>";print_r($this->request->data); exit;
             //echo $charterAssocId; exit;
             $guestAssc = $this->CharterGuestAssociate->find('first', array('conditions' => array('id' => $charterAssocId)));
             //echo "<pre>";print_r($this->Session->read());exit;
