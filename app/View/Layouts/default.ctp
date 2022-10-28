@@ -630,10 +630,10 @@ width: max-content;
     controls
     preload="auto"
     poster=""
-    data-setup='{ "techOrder": ["youtube"], "sources": [{ "type": "video/youtube", "src": "https://youtu.be/uLBICcPhNeE"}] }'
+    data-setup='{ "techOrder": ["youtube"], "sources": [{ "type": "video/youtube", "src": "https://www.youtube.com/watch?v=uLBICcPhNeE&feature=youtu.be"}] }'
    
     >
-  <source src="https://youtu.be/uLBICcPhNeE" type="video/mp4"></source>
+  <source src="https://www.youtube.com/watch?v=uLBICcPhNeE&feature=youtu.be" type="video/mp4"></source>
   
   <p class="vjs-no-js">
     To view this video please enable JavaScript, and consider upgrading to a
