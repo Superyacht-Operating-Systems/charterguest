@@ -630,10 +630,10 @@ width: max-content;
     controls
     preload="auto"
     poster=""
-    data-setup='{ "techOrder": ["youtube"], "sources": [{ "type": "video/youtube", "src": "https://youtu.be/1JrP38CXlSQ"}] }'
+    data-setup='{ "techOrder": ["youtube"], "sources": [{ "type": "video/youtube", "src": "https://youtu.be/4aMP61dg-cQ"}] }'
    
     >
-  <source src="https://youtu.be/1JrP38CXlSQ" type="video/mp4"></source>
+  <source src="https://youtu.be/4aMP61dg-cQ" type="video/mp4"></source>
   
   <p class="vjs-no-js">
     To view this video please enable JavaScript, and consider upgrading to a
@@ -644,9 +644,9 @@ width: max-content;
   </p>
 </video>
         <!-- <video width="100%" height="100%" class="video videoclass" playsinline autoplay muted loop controls="true"  preload="metadata" id="preferencesheetvideo">
-        <source src="https://youtu.be/1JrP38CXlSQ" type="video/mp4">
+        <source src="https://youtu.be/4aMP61dg-cQ" type="video/mp4">
         </video> -->
-        <!-- <iframe class="videomodalcontent" src="https://youtu.be/1JrP38CXlSQ" frameborder="0" allowfullscreen></iframe>                  -->
+        <!-- <iframe class="videomodalcontent" src="https://youtu.be/4aMP61dg-cQ" frameborder="0" allowfullscreen></iframe>                  -->
         </div>
         <div class="modal-footer">
             
@@ -671,8 +671,8 @@ width: max-content;
     controls
     preload="auto"
     poster=""
-    data-setup='{ "techOrder": ["youtube"], "sources": [{ "type": "video/youtube", "src": "https://youtu.be/uLBICcPhNeE"}]}'>
-  <source src="https://youtu.be/uLBICcPhNeE" type="video/mp4"></source>
+    data-setup='{ "techOrder": ["youtube"], "sources": [{ "type": "video/youtube", "src": "https://youtu.be/ExAG5mRmGAU"}]}'>
+  <source src="https://youtu.be/ExAG5mRmGAU" type="video/mp4"></source>
   
   <p class="vjs-no-js">
     To view this video please enable JavaScript, and consider upgrading to a
@@ -683,7 +683,7 @@ width: max-content;
   </p>
 </video>
         <!-- <video width="100%" height="100%" class="video videoclass" playsinline autoplay muted loop controls="true"  preload="metadata" id="charterheadvideo">
-        <source src="https://youtu.be/uLBICcPhNeE" type="video/mp4">
+        <source src="https://youtu.be/ExAG5mRmGAU" type="video/mp4">
         </video> -->
                             
         </div>
