@@ -630,10 +630,10 @@ width: max-content;
     controls
     preload="auto"
     poster=""
-    data-setup='{ "techOrder": ["youtube"], "sources": [{ "type": "video/youtube", "src": "https://www.youtube.com/watch?v=uLBICcPhNeE&feature=youtu.be"}] }'
+    data-setup='{ "techOrder": ["youtube"], "sources": [{ "type": "video/youtube", "src": "https://youtu.be/uLBICcPhNeE"}] }'
    
     >
-  <source src="https://www.youtube.com/watch?v=uLBICcPhNeE&feature=youtu.be" type="video/mp4"></source>
+  <source src="https://youtu.be/uLBICcPhNeE" type="video/mp4"></source>
   
   <p class="vjs-no-js">
     To view this video please enable JavaScript, and consider upgrading to a
@@ -671,8 +671,8 @@ width: max-content;
     controls
     preload="auto"
     poster=""
-    data-setup='{ "techOrder": ["youtube"], "sources": [{ "type": "video/youtube", "src": "https://youtu.be/ExAG5mRmGAU"}]}'>
-  <source src="https://youtu.be/ExAG5mRmGAU" type="video/mp4"></source>
+    data-setup='{ "techOrder": ["youtube"], "sources": [{ "type": "video/youtube", "src": "https://youtu.be/1JrP38CXlSQ"}]}'>
+  <source src="https://youtu.be/1JrP38CXlSQ" type="video/mp4"></source>
   
   <p class="vjs-no-js">
     To view this video please enable JavaScript, and consider upgrading to a
