@@ -373,6 +373,13 @@ class ChartersController extends AppController {
      * 
      */
     function programs() {
+        $session = $this->Session->read('charter_info');
+        
+        // echo "<pre>";print_r($sessionAssoc);exit;
+        if (empty($session)) {
+            $this->redirect(array('controller' => 'Charters', 'action' => 'index'));
+        }
+
         $actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
         //echo "<pre>";print_r($this->Session->read());exit;
         //echo $actual_link."<br>"; 
@@ -767,6 +774,12 @@ class ChartersController extends AppController {
         //echo "<pre>";print_r($this->is_mobile);exit;
 
         //echo "<pre>";print_r($explodepath);
+        $session = $this->Session->read('charter_info');
+        
+        // echo "<pre>";print_r($sessionAssoc);exit;
+        if (empty($session)) {
+            $this->redirect(array('controller' => 'Charters', 'action' => 'index'));
+        }
         
         $charter_program_id = $charter_program_id;
         $charter_company_id = $charter_company_id;
@@ -4976,6 +4989,11 @@ class ChartersController extends AppController {
 //        echo "<pre>";print_r($this->Session->read());exit;
         Configure::write('debug',0);
         $session = $this->Session->read('charter_info');
+        
+        // echo "<pre>";print_r($sessionAssoc);exit;
+        if (empty($session)) {
+            $this->redirect(array('controller' => 'Charters', 'action' => 'index'));
+        }
         $yachtDbName = $yachtdb;
         $charterProgramId = $prgUUID;
         if (!empty($yachtDbName)) {
