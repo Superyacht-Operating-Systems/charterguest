@@ -33,6 +33,12 @@ App::uses('Controller', 'Controller');
 class AppController extends Controller {
     var $helpers = array('Form', 'Html');
     var $components = array('RequestHandler', 'Session','Cookie');
+
+	function beforeRender() {
+		if ($this->name == 'CakeError') {
+			$this->redirect(array('controller' => 'Charters', 'action' => 'index'));
+		}
+	}
     
     function beforeFilter() {
        // echo "<pre>"; print_r($this->params); exit;
