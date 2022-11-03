@@ -47,7 +47,7 @@
     // Juice items
     $juiceItems = array(
         1 => 'Grapefruit',
-        2 => 'Fanta',
+        2 => 'Orange',
         3 => 'Apple',
         4 => 'Pineapple',
         5 => 'Tomato',
@@ -466,7 +466,7 @@ hr.divmar{
               <div class="be-col-3 be-col-sm-2">
                <div class="checkbox bev-chbox">
                <input type="checkbox" class="juicechk" name="data[CharterGuestBeveragePreference][juice_items][]" value="2" <?php echo $juiceItemsChecked[2]; ?>>
-                <label class="pdd-none"><span class="sp-lab">Fanta</span></label>
+                <label class="pdd-none"><span class="sp-lab">Orange</span></label>
               </div></div>
                 <div class="be-col-3 be-col-sm-2">
                <div class="checkbox bev-chbox">
