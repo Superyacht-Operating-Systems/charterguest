@@ -883,9 +883,9 @@ class ChartersController extends AppController {
         // ini_set('max_execution_time', 300);
         $session = $this->Session->read('charter_info');
         $sessionAssoc = $this->Session->read('charter_assoc_info');
-        // if (empty($session)) {
-        //     $this->redirect(array('action' => 'index'));
-        // }
+        if (empty($session)) {
+            $this->redirect(array('action' => 'index'));
+        }
         //echo "<pre>";print_r($this->Session->read()); exit;
         //echo $this->Session->read("selectedCharterProgramUUID"); exit;
         $associatePrimaryid = 0;
@@ -912,8 +912,10 @@ class ChartersController extends AppController {
         $charter_company_id = isset($session['CharterGuest']['charter_company_id']) ? $session['CharterGuest']['charter_company_id'] : 0;
         $this->loadModel('Fleetcompany');
         $companyData = $this->Fleetcompany->find('first', array('fields' => array('ipad_hex_code','fleetname'), 'conditions' => array('id' => $charter_company_id)));
-        $pSheetsColor = $companyData['Fleetcompany']['ipad_hex_code'];
-        $this->Session->write("pSheetsColor", $pSheetsColor);
+        if(isset($companyData) && !empty($companyData)){
+            $pSheetsColor = $companyData['Fleetcompany']['ipad_hex_code'];
+            $this->Session->write("pSheetsColor", $pSheetsColor);
+        }
        
         // When main Head charterer opens other guest(if Head charterer checked) and Update the Preference sheets
         if (isset($this->request->query['assocId']) && !empty($this->request->query['assocId'])) {
@@ -1042,7 +1044,9 @@ class ChartersController extends AppController {
             $this->set("defaultLastName", $charterGuestAssociatelast_name);
 
             $this->Session->write("ownerprefenceID", $charterGuestId);
-            $this->Session->write("ownerprefenceUUID", $charterGuestAssociateUUID);
+            if(isset($charterGuestAssociateusers_UUID_val)){
+            $this->Session->write("ownerprefenceUUID", $charterGuestAssociateusers_UUID_val);
+            }
             $this->Session->write("selectedCharterProgramUUID", $guestAssocData['CharterGuest']['charter_program_id']);
 
             $this->Session->write("preferenceParam", "?CharterGuestId=".$this->request->query['CharterGuestId']);
