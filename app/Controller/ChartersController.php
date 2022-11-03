@@ -883,9 +883,9 @@ class ChartersController extends AppController {
         // ini_set('max_execution_time', 300);
         $session = $this->Session->read('charter_info');
         $sessionAssoc = $this->Session->read('charter_assoc_info');
-        if (empty($session)) {
-            $this->redirect(array('action' => 'index'));
-        }
+        // if (empty($session)) {
+        //     $this->redirect(array('action' => 'index'));
+        // }
         //echo "<pre>";print_r($this->Session->read()); exit;
         //echo $this->Session->read("selectedCharterProgramUUID"); exit;
         $associatePrimaryid = 0;
