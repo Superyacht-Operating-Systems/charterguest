@@ -2611,9 +2611,10 @@ class ChartersController extends AppController {
                             // if (isset($existdata['CharterGuestAssociate']['is_psheets_done']) && $existdata['CharterGuestAssociate']['is_psheets_done'] == 1) {
                             //     $openButtonLink = "/charters/preference?assocId=". base64_encode($existdata['CharterGuestAssociate']['id']);
                             // }
-                                                
+                           if(isset($existdata['CharterGuestAssociate']['fleetcompany_id']) && !empty($existdata['CharterGuestAssociate']['fleetcompany_id']) && $existdata['CharterGuestAssociate']['fleetcompany_id'] != 0){               
                             $fleetLogoUrl = $this->getFleetLogoUrl($existdata['CharterGuestAssociate']['fleetcompany_id']);
                             $this->Session->write("fleetLogoUrl", $fleetLogoUrl);
+                           }
                             $result['redirectUrl'] = $openButtonLink;      
                         }
                     }
@@ -2622,8 +2623,10 @@ class ChartersController extends AppController {
                     if(isset($filterData['associd']) && !empty($filterData['associd'])){
                         $CharterGuestexistdata = $this->CharterGuest->find('first',array('conditions'=>array('CharterGuest.users_UUID'=>$filterData['guest_list'],'CharterGuest.id'=>$filterData['associd'])));
                         if(isset($CharterGuestexistdata)){
+                            if(isset($CharterGuestexistdata['CharterGuest']['charter_company_id']) && !empty($CharterGuestexistdata['CharterGuest']['charter_company_id']) && $CharterGuestexistdata['CharterGuest']['charter_company_id'] != 0){     
                             $fleetLogoUrl = $this->getFleetLogoUrl($CharterGuestexistdata['CharterGuest']['charter_company_id']);
                             $this->Session->write("fleetLogoUrl", $fleetLogoUrl);
+                            }
                             $updateData = array();
                             $updateData['id'] = $CharterGuestexistdata['CharterGuest']['id'];
                             $updateData['preference_UUID'] = $filterData['guest_list'];
