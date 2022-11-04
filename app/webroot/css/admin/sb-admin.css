@@ -75,6 +75,9 @@ body .mydemolabel{
   z-index: 1;
 }
 
+.certificat-modal-container {
+  z-index: 9999999;
+}
 ::-webkit-input-placeholder { /* WebKit, Blink, Edge */
     color:    #fff!important;
     opacity: 1!important;
@@ -98,9 +101,6 @@ body .mydemolabel{
 
 ::placeholder { /* Most modern browsers support this now. */
    color:    #fff!important;
-}
-.certificat-modal-container {
-  z-index: 9999999;
 }
 body .menu .menu__item a{
   background: rgb(179, 163, 163)!important;

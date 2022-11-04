@@ -1,6 +1,7 @@
 <?php
 $base = $this->request->base;
 $sessionData = $this->Session->read();
+$ownerprefenceID = $this->Session->read('ownerprefenceID');
 // Personal deatils page
     $rainJacketSizeList = array(
         '' => 'Select Size',
@@ -157,6 +158,11 @@ $sessionData = $this->Session->read();
     
 ?>
 <style>
+    @media screen and (max-width: 990px){
+.base-margin-botm .occDate input {
+  margin-bottom: 0px;
+}
+    }
   .m-flex-row label{
     padding: 0px;
   }
@@ -615,7 +621,10 @@ and (max-device-width : 667px) {
 .p-inlineblock .mob-w-70 {
     padding: 0px;
 }
+}
 
+.has-error{
+  border: 1px solid rgb(255 0 0)!important;
 }
 </style>
 <!-- personal details -->
@@ -632,14 +641,20 @@ and (max-device-width : 667px) {
        ?>
 
 <div class="personal-row-container personaldetails-row">
-  <h1 class="position-mobile-head">Personal</h1>
+  <!-- <h1 class="position-mobile-head">Personal</h1> -->
+  <?php if(isset($ownerprefenceID)){
+              ?>
+        <h1 class="position-mobile-head">PREFERENCES<span style="padding-left:20px;">1 of 7</span></h1>
+          <?php }  else{ ?>
+            <h1 class="position-mobile-head">PREFERENCES<span style="padding-left:20px;">1 of 5</span></h1>
+          <?php } ?>
 <div class="fixed-row-container personaldetails-row-md">  
  <div class="form-group base-margin">
   <div class="md-unblock-container">        
   <div class="p-inlineblock">       
           <div class="col-md-12">
           <div class="col-xs-5 col-md-4 col-sm-3 mob-w-30">
-            <label class="pdd-none txt-right">First Name</label>
+            <label class="pdd-none txt-right">First Name <span class="required"> * </span></label>
           </div>
           <div class="col-xs-7 col-md-5 col-sm-7 form-group mob-w-70">
               <?php echo $this->Form->input("first_name",array("label"=>false,'class'=>'form-control','type' => 'text', 'default' => $defaultFirstName)); ?>
@@ -650,7 +665,7 @@ and (max-device-width : 667px) {
   <div class="p-inlineblock">   
       <div class="col-md-12 ">
         <div class="col-xs-5 col-md-4 col-sm-3 mob-w-30">
-          <label class="pdd-none txt-right">Family Name</label>
+          <label class="pdd-none txt-right">Family Name <span class="required"> * </span></label>
         </div>
         <div class="col-xs-7 col-md-5 col-sm-7 form-group mob-w-70">
           <?php echo $this->Form->input("family_name",array("label"=>false,'class'=>'form-control','type' => 'text', 'default' => $defaultLastName)); ?>
@@ -661,7 +676,7 @@ and (max-device-width : 667px) {
   <div class="p-inlineblock">   
       <div class="col-md-12 ">
         <div class="col-xs-5 col-md-4 col-sm-3 mob-w-30">
-          <label class="pdd-none txt-right">Date of Birth</label>
+          <label class="pdd-none txt-right">Date of Birth <span class="required"> * </span></label>
         </div>
         <div class="col-xs-7 col-md-5 form-group col-sm-7 mob-w-70">
           <?php echo $this->Form->input("dob",array("label"=>false,'class'=>'form-control dobDatePicker nonEditable','type' => 'text','default'=>$deleteddob)); ?>
@@ -671,7 +686,7 @@ and (max-device-width : 667px) {
   <div class="p-inlineblock">   
        <div class="col-md-12 ">
         <div class="col-xs-5 col-md-4 col-sm-3 mob-w-30">
-          <label class="pdd-none txt-right">Place of Birth</label>
+          <label class="pdd-none txt-right">Place of Birth <span class="required"> * </span></label>
         </div>
         <div class="col-xs-7 col-md-5 form-group col-sm-7 mob-w-70">
            <?php echo $this->Form->input("pob",array("label"=>false,'class'=>'form-control','type' => 'text','default'=>$deletedpob)); ?>
@@ -681,7 +696,7 @@ and (max-device-width : 667px) {
   <div class="p-inlineblock">   
       <div class="col-md-12 ">
         <div class="col-xs-5 col-md-4 col-sm-3 mob-w-30">
-          <label class="pdd-none txt-right">Nationality</label>
+          <label class="pdd-none txt-right">Nationality <span class="required"> * </span></label>
         </div>
         <div class="col-xs-7 col-md-5 col-sm-7 form-group mob-w-70">
          <?php echo $this->Form->input("nationality",array("label"=>false,'class'=>'form-control typeahead','type' => 'text')); ?>
@@ -693,7 +708,7 @@ and (max-device-width : 667px) {
   <div class="p-inlineblock passort-div">   
       <div class="col-md-12 ">
         <div class="col-xs-5 col-md-4 col-sm-3 mob-w-30">
-          <label class="pdd-none txt-right">Passport #</label>
+          <label class="pdd-none txt-right">Passport # <span class="required"> * </span></label>
         </div>
         <div class="col-xs-7 col-md-5 col-sm-7 form-group mob-w-70">
              <?php echo $this->Form->input("passport_num",array("label"=>false,'class'=>'form-control','type' => 'text')); ?>
@@ -703,7 +718,7 @@ and (max-device-width : 667px) {
   <div class="p-inlineblock">   
       <div class="col-md-12 ">
         <div class="col-xs-5 col-md-4 col-sm-3 mob-w-30">
-          <label class="pdd-none txt-right">Issue Date</label>
+          <label class="pdd-none txt-right">Issue Date <span class="required"> * </span></label>
         </div>
         <div class="col-xs-7 col-md-5 col-sm-7 form-group mob-w-70">
            <?php echo $this->Form->input("issued_date",array("label"=>false,'class'=>'form-control issuedatePicker nonEditable','type' => 'text')); ?>
@@ -714,7 +729,7 @@ and (max-device-width : 667px) {
   <div class="p-inlineblock">   
       <div class="col-md-12 ">
         <div class="col-xs-5 col-md-4 col-sm-3 mob-w-30">
-          <label class="pdd-none txt-right">Expiry Date</label>
+          <label class="pdd-none txt-right">Expiry Date <span class="required"> * </span></label>
         </div>
         <div class="col-xs-7 col-md-5 col-sm-7 form-group mob-w-70">
           <?php echo $this->Form->input("expiry_date",array("label"=>false,'class'=>'form-control expirydatePicker nonEditable','type' => 'text')); ?>
@@ -734,12 +749,12 @@ and (max-device-width : 667px) {
           <span class="required img-view-modal">only jpg, jpeg, png and pdf</span>
        
         <div class="upload-img-result">
-            <?php
+            <?php //echo $this->request->base;
                 $existImageName = "";
                 $passportUrl = "javascript:void(0);";
                 if (isset($personalDetails['CharterGuestPersonalDetail']['passport_image']) && !empty($personalDetails['CharterGuestPersonalDetail']['passport_image'])) {
                     $existImageName = $personalDetails['CharterGuestPersonalDetail']['passport_image'];
-                    $passportUrl = $this->request->base."/img/passport_images/".$existImageName;
+                    $passportUrl = BASE_URL.$this->request->base."/app/webroot/img/passport_images/".$personalDetails['CharterGuestPersonalDetail']['passport_image'];
                     $position = strpos($existImageName, "_");
                     if ($position == 12) {
                         $existImageName = substr($existImageName, $position+1);
@@ -765,7 +780,7 @@ and (max-device-width : 667px) {
     
       <div class="col-md-12 ">
         <div class="col-xs-5 col-md-4 col-sm-3 mob-w-30">
-          <label class="txt-right p-t-02">Next of Kin</label>
+          <label class="txt-right p-t-02">Next of Kin <span class="required"> * </span></label>
         </div>
         <div class="col-xs-7 col-md-5 col-sm-7 form-group mob-w-70">
          <?php echo $this->Form->input("next_of_kin",array("label"=>false,'class'=>'form-control','type' => 'text')); ?>
@@ -773,7 +788,7 @@ and (max-device-width : 667px) {
       </div>
       <div class="col-md-12 d-inlineblockelements">
         <div class="col-xs-5 col-md-4 col-sm-3 mob-w-30">
-          <label class="txt-right p-t-02">NoK Phone</label>
+          <label class="txt-right p-t-02">NoK Phone <span class="required"> * </span></label>
         </div>
         <div class="col-xs-7 col-md-5 col-sm-7 form-group mob-w-70">
          <?php echo $this->Form->input("next_of_kin_phone",array("label"=>false,'class'=>'form-control','type' => 'text')); ?>
@@ -1266,10 +1281,12 @@ and (max-device-width : 667px) {
           <div class="form-group base-margin">
                 <div class="col-sm-12 "> 
                <div class="text-center footer-mob-row-inner">
+                <div class="submit">
                    <?php if (!isset($charterAssocIdByHeaderView)) { ?>
                         <button type="button" class="btn btn-success lastbutton" id="personalDetailsSubmit">Save and Continue</button>
                         <?php echo $this->Form->submit("Save and Continue", array('class' => 'btn btn-success', 'style' => 'display:none;', 'id' => 'personalDetailsSubmitOriginal'));?>
-                   <?php } ?>    
+                   <?php } ?> 
+                   </div>   
                 </div>
                 </div>
             </div>
@@ -1318,8 +1335,9 @@ $("#CharterGuestPersonalDetailIssuedDate").on("change", function(e) {
   var expired = $('#CharterGuestPersonalDetailExpiryDate').val();
   $('#IssuedDateErrorMessage').css({ display: "none" });
 
-  var issued1 = new Date(issued);
-  var expired1 = new Date(expired);
+   var issued1 = new Date(issued);
+   var expired1 = new Date(expired);
+
 
   if(issued1 > expired1){
     $('#IssuedDateErrorMessage').css({ display: "block" });

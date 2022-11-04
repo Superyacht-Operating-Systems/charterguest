@@ -373,6 +373,13 @@ class ChartersController extends AppController {
      * 
      */
     function programs() {
+        $session = $this->Session->read('charter_info');
+        
+        // echo "<pre>";print_r($sessionAssoc);exit;
+        // if (empty($session)) {
+        //     $this->redirect(array('controller' => 'Charters', 'action' => 'index'));
+        // }
+
         $actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
         //echo "<pre>";print_r($this->Session->read());exit;
         //echo $actual_link."<br>"; 
@@ -433,6 +440,9 @@ class ChartersController extends AppController {
                 if(isset($charter_company_id) && !empty($charter_company_id)){
                     $companyData = $this->Fleetcompany->find('first', array('fields' => array('management_company_name','logo','fleetname'), 'conditions' => array('id' => $charter_company_id)));
                     $fleetname = $companyData['Fleetcompany']['fleetname'];
+                }
+                if(isset($programFiledata) && isset($fleetname) && !empty($fleetname)){
+                    $programFiles[$charter_from_date]['fleetname'] = $fleetname;
                 }
                 if(isset($value['CharterGuest']['program_image']) && !empty($value['CharterGuest']['program_image'])){
                     if (!empty($fleetname)) {
@@ -497,12 +507,16 @@ class ChartersController extends AppController {
                 $SITE_URL = Configure::read('BASE_URL');
                 foreach($programFiles as $startdate => $filedata){ 
                     foreach($filedata['attachment'] as $file){ 
+                        $fleetname = $this->Session->read('fleetname');
+                        if(isset($filedata['fleetname'])){
+                            $fleetname = $filedata['fleetname'];
+                        }
                         $sourceImagePath = $SITE_URL.'/'.$fleetname."/app/webroot/img/charter_program_files/".$file['CharterProgramFile']['file_name'];
                         $attachment[$startdate] = $sourceImagePath;
-    
-                        }
+                    }
                 } 
             }
+    //    echo "<pre>";print_r($attachment); echo "<pre>";print_r($programFiles); exit;
 
          }
 
@@ -558,7 +572,7 @@ class ChartersController extends AppController {
                     $charterAssocData[$key]['charterDetails']['ydb_name'] = $ydb_name;
                     $YachtWeblinkConditions = array('YachtWeblink.charter_company_id' => $value['CharterGuestAssociate']['fleetcompany_id'],'YachtWeblink.yacht_id' => $value['CharterGuestAssociate']['yacht_id'],'YachtWeblink.is_deleted'=>0);
                     $YachtWeblink = $this->YachtWeblink->find('first', array('conditions' => $YachtWeblinkConditions));
-                    if(isset($YachtWeblink)){
+                    if(isset($YachtWeblink) && !empty($YachtWeblink['YachtWeblink']['weblink'])){
                         $isValid = preg_match("@^https?://@", $YachtWeblink['YachtWeblink']['weblink']);
                         if($isValid == 0){
                             $YachtWeblink['YachtWeblink']['weblink'] = 'https://'.$YachtWeblink['YachtWeblink']['weblink'];
@@ -708,20 +722,6 @@ class ChartersController extends AppController {
             }
         }
 
-        $fleetname = $this->Session->read('fleetname');
-        if(isset($programFiles) ){
-            $attachment = array();
-            $SITE_URL = Configure::read('BASE_URL');
-            foreach($programFiles as $startdate => $filedata){ 
-                foreach($filedata['attachment'] as $file){ 
-                    $sourceImagePath = $SITE_URL.'/'.$fleetname."/app/webroot/img/charter_program_files/".$file['CharterProgramFile']['file_name'];
-                    $attachment[$startdate] = $sourceImagePath;
-
-                    }
-            } 
-        }
-
-        $this->set('programFiles', $attachment);
         $this->set('mapdetails', $mapdetails);
         /*********************** */
         
@@ -737,6 +737,21 @@ class ChartersController extends AppController {
         $this->set('companyData', $companyData);
         $this->set('charter_company_id', $charter_company_id);
         $this->set('ismobile',$this->is_mobile);
+
+        $fleetname = $companyData['Fleetcompany']['fleetname'];
+        if(isset($programFiles) ){
+            $attachment = array();
+            $SITE_URL = Configure::read('BASE_URL');
+            foreach($programFiles as $startdate => $filedata){ 
+                foreach($filedata['attachment'] as $file){ 
+                    $sourceImagePath = $SITE_URL.'/'.$fleetname."/app/webroot/img/charter_program_files/".$file['CharterProgramFile']['file_name'];
+                    $attachment[$startdate] = $sourceImagePath;
+
+                }
+            } 
+        }
+
+        $this->set('programFiles', $attachment);
 
         // Logo url
         if (isset($companyData['Fleetcompany']['logo']) && !empty($companyData['Fleetcompany']['logo'])) {
@@ -759,6 +774,12 @@ class ChartersController extends AppController {
         //echo "<pre>";print_r($this->is_mobile);exit;
 
         //echo "<pre>";print_r($explodepath);
+        $session = $this->Session->read('charter_info');
+        
+        // echo "<pre>";print_r($sessionAssoc);exit;
+        // if (empty($session)) {
+        //     $this->redirect(array('controller' => 'Charters', 'action' => 'index'));
+        // }
         
         $charter_program_id = $charter_program_id;
         $charter_company_id = $charter_company_id;
@@ -806,20 +827,6 @@ class ChartersController extends AppController {
             }
         }
 
-        $fleetname = $this->Session->read('fleetname');
-        if(isset($programFiles) ){
-            $attachment = array();
-            $SITE_URL = Configure::read('BASE_URL');
-            foreach($programFiles as $startdate => $filedata){ 
-                foreach($filedata['attachment'] as $file){ 
-                    $sourceImagePath = $SITE_URL.'/'.$fleetname."/app/webroot/img/charter_program_files/".$file['CharterProgramFile']['file_name'];
-                    $attachment[$startdate] = $sourceImagePath;
-
-                    }
-            } 
-        }
-
-        $this->set('programFiles', $attachment);
         $this->set('mapdetails', $mapdetails);
         /*********************** */
         
@@ -833,16 +840,30 @@ class ChartersController extends AppController {
         $this->loadModel('Fleetcompany');
         $companyData = $this->Fleetcompany->find('first', array('fields' => array('management_company_name','logo','fleetname'), 'conditions' => array('id' => $charter_company_id)));
         $this->set('companyData', $companyData);
+
+        $fleetname = $companyData['Fleetcompany']['fleetname'];
+        if(isset($programFiles) ){
+            $attachment = array();
+            $SITE_URL = Configure::read('BASE_URL');
+            foreach($programFiles as $startdate => $filedata){ 
+                foreach($filedata['attachment'] as $file){ 
+                    $sourceImagePath = $SITE_URL.'/'.$fleetname."/app/webroot/img/charter_program_files/".$file['CharterProgramFile']['file_name'];
+                    $attachment[$startdate] = $sourceImagePath;
+
+                }
+            } 
+        }
+
+        $this->set('programFiles', $attachment);
         
         $this->set('ismobile',$this->is_mobile);
-
-        $YachtData =  $this->CharterGuest->query("SELECT * FROM $ydb_name.yachts Yacht");
-        //echo "<pre>";print_r($YachtData); exit;
-        $image = $YachtData[0]['Yacht']['cg_background_image'];
-        $fleetname = $YachtData[0]['Yacht']['fleetname'];
-        $yachtname = $YachtData[0]['Yacht']['yname'];
-        $cgBackgroundImage = $this->getBackgroundImageUrl($image, $fleetname, $yachtname);
-        $this->Session->write("cgBackgroundImage", $cgBackgroundImage);
+        if(isset($YachtData) && !empty($YachtData)){
+                $image = $YachtData[0]['Yacht']['cg_background_image'];
+                $fleetname = $YachtData[0]['Yacht']['fleetname'];
+                $yachtname = $YachtData[0]['Yacht']['yname'];
+                $cgBackgroundImage = $this->getBackgroundImageUrl($image, $fleetname, $yachtname);
+                $this->Session->write("cgBackgroundImage", $cgBackgroundImage);
+        }
     }
     
     /*
@@ -855,7 +876,11 @@ class ChartersController extends AppController {
     function preference() {
 
         $this->Session->write("isgenerateProductOrderPdf", false);
-        $this->Session->write("isgenerateWineOrderPdf", false);        
+        $this->Session->write("isgenerateWineOrderPdf", false); 
+        // ini_set('upload_max_filesize', '10M');
+        // ini_set('post_max_size', '10M');
+        // ini_set('max_input_time', 300);
+        // ini_set('max_execution_time', 300);
         $session = $this->Session->read('charter_info');
         $sessionAssoc = $this->Session->read('charter_assoc_info');
         if (empty($session)) {
@@ -882,12 +907,15 @@ class ChartersController extends AppController {
         $this->loadModel('Yacht');
         $this->loadModel('CharterGuestAssociate');
         $this->loadModel('CharterGuestPersonalDetail');
+        
 
         $charter_company_id = isset($session['CharterGuest']['charter_company_id']) ? $session['CharterGuest']['charter_company_id'] : 0;
         $this->loadModel('Fleetcompany');
-        $companyData = $this->Fleetcompany->find('first', array('fields' => array('ipad_hex_code'), 'conditions' => array('id' => $charter_company_id)));
-        $pSheetsColor = $companyData['Fleetcompany']['ipad_hex_code'];
-        $this->Session->write("pSheetsColor", $pSheetsColor);
+        $companyData = $this->Fleetcompany->find('first', array('fields' => array('ipad_hex_code','fleetname'), 'conditions' => array('id' => $charter_company_id)));
+        if(isset($companyData) && !empty($companyData)){
+            $pSheetsColor = $companyData['Fleetcompany']['ipad_hex_code'];
+            $this->Session->write("pSheetsColor", $pSheetsColor);
+        }
        
         // When main Head charterer opens other guest(if Head charterer checked) and Update the Preference sheets
         if (isset($this->request->query['assocId']) && !empty($this->request->query['assocId'])) {
@@ -1016,7 +1044,9 @@ class ChartersController extends AppController {
             $this->set("defaultLastName", $charterGuestAssociatelast_name);
 
             $this->Session->write("ownerprefenceID", $charterGuestId);
-            $this->Session->write("ownerprefenceUUID", $charterGuestAssociateUUID);
+            if(isset($charterGuestAssociateusers_UUID_val)){
+            $this->Session->write("ownerprefenceUUID", $charterGuestAssociateusers_UUID_val);
+            }
             $this->Session->write("selectedCharterProgramUUID", $guestAssocData['CharterGuest']['charter_program_id']);
 
             $this->Session->write("preferenceParam", "?CharterGuestId=".$this->request->query['CharterGuestId']);
@@ -1061,18 +1091,19 @@ class ChartersController extends AppController {
         $this->loadModel('WineListRegion');
         $this->loadModel('ProductList');
         $this->loadModel('TempProductListSelection');
-        
+        $this->loadModel('CharterGuestPersonalDetailSpecialOccasion');
+        $this->loadModel('CharterGuestMealPreferenceRestaurant');
         
         if (isset($this->request->data['CharterGuestPersonalDetail']) && !empty($this->request->data['CharterGuestPersonalDetail'])) {
             // Save personal details //
             $data = $this->request->data['CharterGuestPersonalDetail'];
-            
+            //echo "<pre>";print_r($this->request->data['CharterGuestPersonalDetail']);
             // When main Head charterer opens other guest(if Head charterer checked) and Update the Preference sheets
             if (isset($data['charterAssocIdByHeaderEdit'])) {
                 $charterAssocId = $data['charterAssocIdByHeaderEdit'];
                 $this->set("charterAssocIdByHeaderEdit", $charterAssocId);
             }
-            //echo "<pre>";print_r($this->request->data); //exit;
+            //echo "<pre>";print_r($this->request->data); exit;
             //echo $charterAssocId; exit;
             $guestAssc = $this->CharterGuestAssociate->find('first', array('conditions' => array('id' => $charterAssocId)));
             //echo "<pre>";print_r($this->Session->read());exit;
@@ -1114,23 +1145,26 @@ class ChartersController extends AppController {
             
             $existPassportImage = $data['exist_passport_image'];
             // Check whether image uploaded
-            if ($data['passport_image']['error'] != 0) {
+            if ($data['passport_image']['name'] != "") {
                 $data['passport_image'] = $existPassportImage;
-            } else {
-                $path = 'img';
-                $folder_name = 'passport_images';
-                $folder_url = WWW_ROOT.$path.DIRECTORY_SEPARATOR.$folder_name;
-                $file = $data['passport_image'];
-                $imageName = date("ymdHis").'_'.$file['name'];
-                // create full filename                   
-                $full_url = $folder_url.DIRECTORY_SEPARATOR.$imageName; 
-                // upload the file
-                if (move_uploaded_file($file['tmp_name'], $full_url)) {
-                    $data['passport_image'] = $imageName;
-                } else {
-                    $data['passport_image'] = $existPassportImage;
-                }
+            }else{
+                unset($data['passport_image']);
             }
+            //  else {
+            //     // $path = 'img';
+            //     // $folder_name = 'passport_images';
+            //     // $folder_url = WWW_ROOT.$path.DIRECTORY_SEPARATOR.$folder_name;
+            //     // $file = $data['passport_image'];
+            //     // $imageName = date("ymdHis").'_'.$file['name'];
+            //     // // create full filename                   
+            //     // $full_url = $folder_url.DIRECTORY_SEPARATOR.$imageName; 
+            //     // // upload the file
+            //     // if (move_uploaded_file($file['tmp_name'], $full_url)) {
+            //     //     $data['passport_image'] = $imageName;
+            //     // } else {
+            //         $data['passport_image'] = $existPassportImage;
+            //     //}
+            // }
             
             $data['created'] = date('Y-m-d H:i:s');
             $data['dob'] = !empty($data['dob']) ? date_format(date_create($data['dob']), 'Y-m-d') : '';
@@ -1143,7 +1177,26 @@ class ChartersController extends AppController {
             $data['other_occation_date'] = !empty($data['other_occation_date']) ? date_format(date_create($data['other_occation_date']), 'Y-m-d') : '';
             $data['event_date'] = !empty($data['event_date']) ? date_format(date_create($data['event_date']), 'Y-m-d') : '';
             
-            //echo "<pre>";print_r($data);exit;
+            $specialOccasion = array();
+            $selectedCharterProgramUUID = $this->Session->read('selectedCharterProgramUUID');
+            $specialOccasion['CharterGuestPersonalDetailSpecialOccasion']['guest_lists_UUID'] = $data['guest_lists_UUID'];
+            $specialOccasion['CharterGuestPersonalDetailSpecialOccasion']['charter_program_id'] = $selectedCharterProgramUUID;
+            $specialOccasion['CharterGuestPersonalDetailSpecialOccasion']['birthday_date'] = !empty($data['birthday_date']) ? date_format(date_create($data['birthday_date']), 'Y-m-d') : '';
+            $specialOccasion['CharterGuestPersonalDetailSpecialOccasion']['honeymoon_date'] = !empty($data['honeymoon_date']) ? date_format(date_create($data['honeymoon_date']), 'Y-m-d') : '';
+            $specialOccasion['CharterGuestPersonalDetailSpecialOccasion']['film_festival_date'] = !empty($data['film_festival_date']) ? date_format(date_create($data['film_festival_date']), 'Y-m-d') : '';
+            $specialOccasion['CharterGuestPersonalDetailSpecialOccasion']['anniversary_date'] = !empty($data['anniversary_date']) ? date_format(date_create($data['anniversary_date']), 'Y-m-d') : '';
+            $specialOccasion['CharterGuestPersonalDetailSpecialOccasion']['other_occation_date'] = !empty($data['other_occation_date']) ? date_format(date_create($data['other_occation_date']), 'Y-m-d') : '';
+            $specialOccasion['CharterGuestPersonalDetailSpecialOccasion']['event_date'] = !empty($data['event_date']) ? date_format(date_create($data['event_date']), 'Y-m-d') : '';
+             
+            $PersonalDetailSpecialOccasion = $this->CharterGuestPersonalDetailSpecialOccasion->find('first',array('conditions'=>array('charter_program_id' => $selectedCharterProgramUUID,'is_deleted'=>0,'guest_lists_UUID'=>$data['guest_lists_UUID'])));
+            
+            if(isset($PersonalDetailSpecialOccasion) && !empty($PersonalDetailSpecialOccasion)){
+                $specialOccasion['CharterGuestPersonalDetailSpecialOccasion']['id'] = $PersonalDetailSpecialOccasion['CharterGuestPersonalDetailSpecialOccasion']['id'];
+            }else{
+                $this->CharterGuestPersonalDetailSpecialOccasion->create();
+            }
+            $this->CharterGuestPersonalDetailSpecialOccasion->save($specialOccasion);
+            // echo "<pre>";print_r($data);exit;
             // Checks whether its CREATE or UPDATE
             if (empty($data['id'])) {
                 $this->CharterGuestPersonalDetail->create();
@@ -1233,6 +1286,32 @@ class ChartersController extends AppController {
             $data['restaurant_date2'] = !empty($data['restaurant_date2']) ? date_format(date_create($data['restaurant_date2']), 'Y-m-d') : '';
             $data['restaurant_date3'] = !empty($data['restaurant_date3']) ? date_format(date_create($data['restaurant_date3']), 'Y-m-d') : '';
             
+
+            $restaurant = array();
+            $selectedCharterProgramUUID = $this->Session->read('selectedCharterProgramUUID');
+            $restaurant['CharterGuestMealPreferenceRestaurant']['guest_lists_UUID'] = $data['guest_lists_UUID'];
+            $restaurant['CharterGuestMealPreferenceRestaurant']['charter_program_id'] = $selectedCharterProgramUUID;
+            $restaurant['CharterGuestMealPreferenceRestaurant']['restaurant_date1'] = !empty($data['restaurant_date1']) ? date_format(date_create($data['restaurant_date1']), 'Y-m-d') : '';
+            $restaurant['CharterGuestMealPreferenceRestaurant']['restaurant_date2'] = !empty($data['restaurant_date2']) ? date_format(date_create($data['restaurant_date2']), 'Y-m-d') : '';
+            $restaurant['CharterGuestMealPreferenceRestaurant']['restaurant_date3'] = !empty($data['restaurant_date3']) ? date_format(date_create($data['restaurant_date3']), 'Y-m-d') : '';
+            $restaurant['CharterGuestMealPreferenceRestaurant']['is_dining_ashore'] = $data['is_dining_ashore'];
+            $restaurant['CharterGuestMealPreferenceRestaurant']['restaurant1'] = $data['restaurant1'];
+            $restaurant['CharterGuestMealPreferenceRestaurant']['restaurant2'] = $data['restaurant2'];
+            $restaurant['CharterGuestMealPreferenceRestaurant']['restaurant3'] = $data['restaurant3'];
+            $restaurant['CharterGuestMealPreferenceRestaurant']['restaurant_time1'] = $data['restaurant_time1'];
+            $restaurant['CharterGuestMealPreferenceRestaurant']['restaurant_time2'] = $data['restaurant_time2'];
+            $restaurant['CharterGuestMealPreferenceRestaurant']['restaurant_time3'] = $data['restaurant_time3'];
+             
+            $CharterGuestMealPreferenceRestaurant = $this->CharterGuestMealPreferenceRestaurant->find('first',array('conditions'=>array('charter_program_id' => $selectedCharterProgramUUID,'is_deleted'=>0,'guest_lists_UUID'=>$data['guest_lists_UUID'])));
+            
+            if(isset($CharterGuestMealPreferenceRestaurant) && !empty($CharterGuestMealPreferenceRestaurant)){
+                $restaurant['CharterGuestMealPreferenceRestaurant']['id'] = $CharterGuestMealPreferenceRestaurant['CharterGuestMealPreferenceRestaurant']['id'];
+            }else{
+                $this->CharterGuestMealPreferenceRestaurant->create();
+            }
+            $this->CharterGuestMealPreferenceRestaurant->save($restaurant);
+
+
 //            echo "<pre>";print_r($data);exit;
             // Checks whether its CREATE or UPDATE
             if (empty($data['id'])) {
@@ -1980,7 +2059,10 @@ class ChartersController extends AppController {
                         // print($targetFullPath."/".$targetFileName); exit;
                         // Copying to yacht and fleet sites
                         // Copying the image file
+                        //echo $targetFileName; exit;
+                        if(file_exists($sourceImagePath)){
                         copy($sourceImagePath, $targetFullPath."/".$targetFileName);
+                        }
                     }
 
                     // Checks the yacht.passenger_lists table whether charter id is already exists
@@ -2110,16 +2192,19 @@ class ChartersController extends AppController {
                 $this->sendRecordsToYacht($yDBName,$charterHeadProgramId,$charterHeadId,$charterAssocId,$guest_uuid);
                 
             }
-            $personalDetailsTab = 'active in';
+            $personalDetailsTab = '';
             $mealPreferenceTab = '';
             $foodPreferenceTab = '';
             $beveragePreferenceTab = '';
             $spiritPreferenceTab = '';
             $winePreferenceTab = '';
-            $itineraryPreferenceTab = '';
+            $itineraryPreferenceTab = 'active in';
             
             // For showing popup
-            $this->set("showPopup", 1);
+            //$this->set("showPopup", 1);
+            $this->Session->write("showPopup", 1);
+            $sessionData = $this->Session->read();
+            $this->redirect(array('action' => 'preference'.$sessionData['preferenceParam']));
             
         } else {
             $personalDetailsTab = 'active in';
@@ -2151,15 +2236,60 @@ class ChartersController extends AppController {
             $this->request->data['CharterGuestPersonalDetail']['event_date'] = (!empty($personalDetails['CharterGuestPersonalDetail']['event_date']) && $personalDetails['CharterGuestPersonalDetail']['event_date'] != '0000-00-00') ? date_format(date_create($personalDetails['CharterGuestPersonalDetail']['event_date']), 'd M Y') : '';
             //$this->request->data['CharterGuestPersonalDetail']['passport_image']['name'] = $personalDetails['CharterGuestPersonalDetail']['passport_image'];
         }
+        $selectedCharterProgramUUID = $this->Session->read('selectedCharterProgramUUID');
+        $CharterPerDetSplOccasion = $this->CharterGuestPersonalDetailSpecialOccasion->find('first', array('conditions' => array('guest_lists_UUID' => $charterGuestAssociateUUID,'is_deleted'=>0,'charter_program_id'=>$selectedCharterProgramUUID)));
+        if (isset($CharterPerDetSplOccasion) && !empty($CharterPerDetSplOccasion)) {
+            $this->request->data['CharterGuestPersonalDetail']['birthday_date'] = (!empty($CharterPerDetSplOccasion['CharterGuestPersonalDetailSpecialOccasion']['birthday_date']) && $CharterPerDetSplOccasion['CharterGuestPersonalDetailSpecialOccasion']['birthday_date'] != '0000-00-00') ? date_format(date_create($CharterPerDetSplOccasion['CharterGuestPersonalDetailSpecialOccasion']['birthday_date']), 'd M Y') : '';
+            $this->request->data['CharterGuestPersonalDetail']['honeymoon_date'] = (!empty($CharterPerDetSplOccasion['CharterGuestPersonalDetailSpecialOccasion']['honeymoon_date']) && $CharterPerDetSplOccasion['CharterGuestPersonalDetailSpecialOccasion']['honeymoon_date'] != '0000-00-00') ? date_format(date_create($CharterPerDetSplOccasion['CharterGuestPersonalDetailSpecialOccasion']['honeymoon_date']), 'd M Y') : '';
+            $this->request->data['CharterGuestPersonalDetail']['film_festival_date'] = (!empty($CharterPerDetSplOccasion['CharterGuestPersonalDetailSpecialOccasion']['film_festival_date']) && $CharterPerDetSplOccasion['CharterGuestPersonalDetailSpecialOccasion']['film_festival_date'] != '0000-00-00') ? date_format(date_create($CharterPerDetSplOccasion['CharterGuestPersonalDetailSpecialOccasion']['film_festival_date']), 'd M Y') : '';
+            $this->request->data['CharterGuestPersonalDetail']['anniversary_date'] = (!empty($CharterPerDetSplOccasion['CharterGuestPersonalDetailSpecialOccasion']['anniversary_date']) && $CharterPerDetSplOccasion['CharterGuestPersonalDetailSpecialOccasion']['anniversary_date'] != '0000-00-00') ? date_format(date_create($CharterPerDetSplOccasion['CharterGuestPersonalDetailSpecialOccasion']['anniversary_date']), 'd M Y') : '';
+            $this->request->data['CharterGuestPersonalDetail']['other_occation_date'] = (!empty($CharterPerDetSplOccasion['CharterGuestPersonalDetailSpecialOccasion']['other_occation_date']) && $CharterPerDetSplOccasion['CharterGuestPersonalDetailSpecialOccasion']['other_occation_date'] != '0000-00-00') ? date_format(date_create($CharterPerDetSplOccasion['CharterGuestPersonalDetailSpecialOccasion']['other_occation_date']), 'd M Y') : '';
+            $this->request->data['CharterGuestPersonalDetail']['event_date'] = (!empty($CharterPerDetSplOccasion['CharterGuestPersonalDetailSpecialOccasion']['event_date']) && $CharterPerDetSplOccasion['CharterGuestPersonalDetailSpecialOccasion']['event_date'] != '0000-00-00') ? date_format(date_create($CharterPerDetSplOccasion['CharterGuestPersonalDetailSpecialOccasion']['event_date']), 'd M Y') : ''; 
+        }else{
+            $this->request->data['CharterGuestPersonalDetail']['birthday_date'] = '';
+            $this->request->data['CharterGuestPersonalDetail']['honeymoon_date'] = '';
+            $this->request->data['CharterGuestPersonalDetail']['film_festival_date'] = '';
+            $this->request->data['CharterGuestPersonalDetail']['anniversary_date'] = '';
+            $this->request->data['CharterGuestPersonalDetail']['other_occation_date'] = '';
+            $this->request->data['CharterGuestPersonalDetail']['event_date'] = '';
+        }
+        
         
         // Fetch existing Meal preference details and send to view
         $mealPreferences = $this->CharterGuestMealPreference->find('first', array('conditions' => array('guest_lists_UUID' => $charterGuestAssociateUUID,'is_deleted'=>0)));
         $this->set('mealPreferences', $mealPreferences);
+        //echo "<pre>";print_r($mealPreferences); exit;
         if (!empty($mealPreferences)) {
             $this->request->data['CharterGuestMealPreference'] = $mealPreferences['CharterGuestMealPreference'];
             $this->request->data['CharterGuestMealPreference']['restaurant_date1'] = (!empty($mealPreferences['CharterGuestMealPreference']['restaurant_date1']) && $mealPreferences['CharterGuestMealPreference']['restaurant_date1'] != '0000-00-00') ? date_format(date_create($mealPreferences['CharterGuestMealPreference']['restaurant_date1']), 'd M Y') : '';
             $this->request->data['CharterGuestMealPreference']['restaurant_date2'] = (!empty($mealPreferences['CharterGuestMealPreference']['restaurant_date2']) && $mealPreferences['CharterGuestMealPreference']['restaurant_date2'] != '0000-00-00') ? date_format(date_create($mealPreferences['CharterGuestMealPreference']['restaurant_date2']), 'd M Y') : '';
             $this->request->data['CharterGuestMealPreference']['restaurant_date3'] = (!empty($mealPreferences['CharterGuestMealPreference']['restaurant_date3']) && $mealPreferences['CharterGuestMealPreference']['restaurant_date3'] != '0000-00-00') ? date_format(date_create($mealPreferences['CharterGuestMealPreference']['restaurant_date3']), 'd M Y') : '';
+        }
+        
+        //$this->loadModel('CharterGuestMealPreferenceRestaurant');
+        $CharterGuestMealPreResrant = $this->CharterGuestMealPreferenceRestaurant->find('first', array('conditions' => array('guest_lists_UUID' => $charterGuestAssociateUUID,'is_deleted'=>0,'charter_program_id'=>$selectedCharterProgramUUID)));
+        $this->set('CharterGuestMealPreResrant', $CharterGuestMealPreResrant);
+        //echo "<pre>";print_r($CharterGuestMealPreResrant); exit;
+        if (isset($CharterGuestMealPreResrant) && !empty($CharterGuestMealPreResrant)) {
+            $this->request->data['CharterGuestMealPreference']['restaurant_date1'] = (!empty($CharterGuestMealPreResrant['CharterGuestMealPreferenceRestaurant']['restaurant_date1']) && $CharterGuestMealPreResrant['CharterGuestMealPreferenceRestaurant']['restaurant_date1'] != '0000-00-00') ? date_format(date_create($CharterGuestMealPreResrant['CharterGuestMealPreferenceRestaurant']['restaurant_date1']), 'd M Y') : '';
+            $this->request->data['CharterGuestMealPreference']['restaurant_date2'] = (!empty($CharterGuestMealPreResrant['CharterGuestMealPreferenceRestaurant']['restaurant_date2']) && $CharterGuestMealPreResrant['CharterGuestMealPreferenceRestaurant']['restaurant_date2'] != '0000-00-00') ? date_format(date_create($CharterGuestMealPreResrant['CharterGuestMealPreferenceRestaurant']['restaurant_date2']), 'd M Y') : '';
+            $this->request->data['CharterGuestMealPreference']['restaurant_date3'] = (!empty($CharterGuestMealPreResrant['CharterGuestMealPreferenceRestaurant']['restaurant_date3']) && $CharterGuestMealPreResrant['CharterGuestMealPreferenceRestaurant']['restaurant_date3'] != '0000-00-00') ? date_format(date_create($CharterGuestMealPreResrant['CharterGuestMealPreferenceRestaurant']['restaurant_date3']), 'd M Y') : '';
+            $this->request->data['CharterGuestMealPreference']['restaurant1'] = $CharterGuestMealPreResrant['CharterGuestMealPreferenceRestaurant']['restaurant1'];
+            $this->request->data['CharterGuestMealPreference']['restaurant2'] = $CharterGuestMealPreResrant['CharterGuestMealPreferenceRestaurant']['restaurant2'];
+            $this->request->data['CharterGuestMealPreference']['restaurant3'] = $CharterGuestMealPreResrant['CharterGuestMealPreferenceRestaurant']['restaurant3'];
+            $this->request->data['CharterGuestMealPreference']['restaurant_time1'] = $CharterGuestMealPreResrant['CharterGuestMealPreferenceRestaurant']['restaurant_time1'];
+            $this->request->data['CharterGuestMealPreference']['restaurant_time2'] = $CharterGuestMealPreResrant['CharterGuestMealPreferenceRestaurant']['restaurant_time2'];
+            $this->request->data['CharterGuestMealPreference']['restaurant_time3'] = $CharterGuestMealPreResrant['CharterGuestMealPreferenceRestaurant']['restaurant_time3'];
+        }else{
+            $this->request->data['CharterGuestMealPreference']['restaurant_date1'] = '';
+            $this->request->data['CharterGuestMealPreference']['restaurant_date2'] = '';
+            $this->request->data['CharterGuestMealPreference']['restaurant_date3'] = '';
+            $this->request->data['CharterGuestMealPreference']['restaurant1'] = '';
+            $this->request->data['CharterGuestMealPreference']['restaurant2'] = '';
+            $this->request->data['CharterGuestMealPreference']['restaurant3'] = '';
+            $this->request->data['CharterGuestMealPreference']['restaurant_time1'] = '';
+            $this->request->data['CharterGuestMealPreference']['restaurant_time2'] = '';
+            $this->request->data['CharterGuestMealPreference']['restaurant_time3'] = '';
         }
         
         // Fetch existing Food preference details and send to view
@@ -2346,7 +2476,7 @@ class ChartersController extends AppController {
                 foreach($filedata['attachment'] as $file){ 
                     $sourceImagePath = $SITE_URL.'/'.$fleetname."/app/webroot/img/charter_program_files/".$file['CharterProgramFile']['file_name'];
                     $attachment[$startdate] = $sourceImagePath;
-                }
+                } 
             } 
         }
         $this->set('programFiles', $attachment);
@@ -2378,7 +2508,7 @@ class ChartersController extends AppController {
                         //echo "<pre>";print_r($existdata); //exit;
                         $personalDetails = $this->CharterGuestPersonalDetail->find('first', array('conditions' => array('guest_lists_UUID' => $existdata['CharterGuestAssociate']['UUID'],'is_deleted'=>0)));
                         //echo "<pre>"; print_r($personalDetails); exit;
-                        if(($existdata['CharterGuestAssociate']['is_psheets_done'] == 1 && !empty($personalDetails)) || ((empty($existdata['CharterGuestAssociate']['is_psheets_done']) || $existdata['CharterGuestAssociate']['is_psheets_done'] == 0) && !empty($personalDetails))){
+                        if(($existdata['CharterGuestAssociate']['is_psheets_done'] == 1 && !empty($personalDetails['CharterGuestPersonalDetail']['dob'])) || ((empty($existdata['CharterGuestAssociate']['is_psheets_done']) || $existdata['CharterGuestAssociate']['is_psheets_done'] == 0) && !empty($personalDetails['CharterGuestPersonalDetail']['dob']))){
                             
                             
                             $result['status'] = "success";
@@ -2417,7 +2547,7 @@ class ChartersController extends AppController {
                         
                         $personalDetails = $this->CharterGuestPersonalDetail->find('first', array('conditions' => array('guest_lists_UUID' => $CharterGuestexistdata['CharterGuest']['users_UUID'],'is_deleted'=>0)));
 
-                        if(($CharterGuestexistdata['CharterGuest']['is_psheets_done'] == 1 && !empty($personalDetails)) || ((empty($CharterGuestexistdata['CharterGuest']['is_psheets_done']) || $CharterGuestexistdata['CharterGuest']['is_psheets_done'] == 0) && !empty($personalDetails))){
+                        if(($CharterGuestexistdata['CharterGuest']['is_psheets_done'] == 1 && !empty($personalDetails['CharterGuestPersonalDetail']['dob'])) || ((empty($CharterGuestexistdata['CharterGuest']['is_psheets_done']) || $CharterGuestexistdata['CharterGuest']['is_psheets_done'] == 0) && !empty($personalDetails['CharterGuestPersonalDetail']['dob']))){ 
                                 
                                 $result['status'] = "success";
                                 $result['preferenceExistFirstName'] = $CharterGuestexistdata['CharterGuest']['first_name'];
@@ -2481,7 +2611,10 @@ class ChartersController extends AppController {
                             // if (isset($existdata['CharterGuestAssociate']['is_psheets_done']) && $existdata['CharterGuestAssociate']['is_psheets_done'] == 1) {
                             //     $openButtonLink = "/charters/preference?assocId=". base64_encode($existdata['CharterGuestAssociate']['id']);
                             // }
-                                                
+                           if(isset($existdata['CharterGuestAssociate']['fleetcompany_id']) && !empty($existdata['CharterGuestAssociate']['fleetcompany_id']) && $existdata['CharterGuestAssociate']['fleetcompany_id'] != 0){               
+                            $fleetLogoUrl = $this->getFleetLogoUrl($existdata['CharterGuestAssociate']['fleetcompany_id']);
+                            $this->Session->write("fleetLogoUrl", $fleetLogoUrl);
+                           }
                             $result['redirectUrl'] = $openButtonLink;      
                         }
                     }
@@ -2490,6 +2623,10 @@ class ChartersController extends AppController {
                     if(isset($filterData['associd']) && !empty($filterData['associd'])){
                         $CharterGuestexistdata = $this->CharterGuest->find('first',array('conditions'=>array('CharterGuest.users_UUID'=>$filterData['guest_list'],'CharterGuest.id'=>$filterData['associd'])));
                         if(isset($CharterGuestexistdata)){
+                            if(isset($CharterGuestexistdata['CharterGuest']['charter_company_id']) && !empty($CharterGuestexistdata['CharterGuest']['charter_company_id']) && $CharterGuestexistdata['CharterGuest']['charter_company_id'] != 0){     
+                            $fleetLogoUrl = $this->getFleetLogoUrl($CharterGuestexistdata['CharterGuest']['charter_company_id']);
+                            $this->Session->write("fleetLogoUrl", $fleetLogoUrl);
+                            }
                             $updateData = array();
                             $updateData['id'] = $CharterGuestexistdata['CharterGuest']['id'];
                             $updateData['preference_UUID'] = $filterData['guest_list'];
@@ -3969,6 +4106,7 @@ class ChartersController extends AppController {
             $input = $personalData['CharterGuestPersonalDetail'];
             $checkPersonalExists = $this->CharterGuest->query("SELECT id FROM $yDBName.charter_guest_personal_details WHERE guest_lists_UUID='$guest_uuid' AND is_deleted = 0");
             //echo "<pre>"; print_r($checkPersonalExists);
+
             if (empty($checkPersonalExists)) { // INSERT
                 //echo "INSERT INTO $yDBName.charter_guest_personal_details (guest_lists_UUID,charter_assoc_id,first_name,family_name,dob,pob,nationality,passport_num,issued_date,expiry_date,passport_image,medical_conditions,special_occations,birthday_date,film_festival_date,honeymoon_date,anniversary_date,other_occation_date,event_date,dietries,dietry_comments,allergies,allergy_comments,rain_jacket_size,foot_size,pillow_type,extra_pillow,created) VALUES (".$input['guest_lists_UUID'].",".$input['charter_assoc_id'].",'".mysql_real_escape_string($input['first_name'])."','".mysql_real_escape_string($input['family_name'])."','".$input['dob']."','".$input['pob']."','".$input['nationality']."','".$input['passport_num']."','".$input['issued_date']."','".$input['expiry_date']."','".$input['passport_image']."','".mysql_real_escape_string($input['medical_conditions'])."','".mysql_real_escape_string(input['special_occations'])."','".$input['birthday_date']."','".$input['film_festival_date']."','".$input['honeymoon_date']."','".$input['anniversary_date']."','".$input['other_occation_date']."','".$input['event_date']."','".$input['dietries']."','".mysql_real_escape_string($input['dietry_comments'])."','".mysql_real_escape_string($input['allergies'])."','".mysql_real_escape_string($input['allergy_comments'])."','".$input['rain_jacket_size']."','".$input['foot_size']."','".$input['pillow_type']."','".$input['extra_pillow']."','".$created."')"; exit;
                 $this->CharterGuest->query("INSERT INTO $yDBName.charter_guest_personal_details (guest_lists_UUID,charter_assoc_id,first_name,family_name,dob,pob,nationality,passport_num,issued_date,expiry_date,passport_image,medical_conditions,special_occations,birthday_date,film_festival_date,honeymoon_date,anniversary_date,other_occation_date,event_date,dietries,dietry_comments,allergies,allergy_comments,rain_jacket_size,foot_size,pillow_type,extra_pillow,created,next_of_kin,next_of_kin_phone) VALUES ("."'".$input['guest_lists_UUID']."'".",".$input['charter_assoc_id'].",'".addslashes($input['first_name'])."','".addslashes($input['family_name'])."','".$input['dob']."','".$input['pob']."','".$input['nationality']."','".$input['passport_num']."','".$input['issued_date']."','".$input['expiry_date']."','".$input['passport_image']."','".addslashes($input['medical_conditions'])."','".$input['special_occations']."','".$input['birthday_date']."','".$input['film_festival_date']."','".$input['honeymoon_date']."','".$input['anniversary_date']."','".$input['other_occation_date']."','".$input['event_date']."','".$input['dietries']."','".addslashes($input['dietry_comments'])."','".$input['allergies']."','".addslashes($input['allergy_comments'])."','".$input['rain_jacket_size']."','".$input['foot_size']."','".$input['pillow_type']."','".$input['extra_pillow']."','".$created."','".$input['next_of_kin']."','".$input['next_of_kin_phone']."')");
@@ -3976,6 +4114,22 @@ class ChartersController extends AppController {
                 //echo "<pre>"; print_r($input);
                 //echo "UPDATE $yDBName.charter_guest_personal_details SET first_name='".$input['first_name']."',family_name='".$input['family_name']."',dob='".$input['dob']."',pob='".$input['pob']."',nationality='".$input['nationality']."',passport_num='".$input['passport_num']."',issued_date='".$input['issued_date']."',expiry_date='".$input['expiry_date']."',passport_image='".$input['passport_image']."',medical_conditions='".addslashes($input['medical_conditions'])."',special_occations='".$input['special_occations']."',birthday_date='".$input['birthday_date']."',film_festival_date='".$input['film_festival_date']."',honeymoon_date='".$input['honeymoon_date']."',anniversary_date='".$input['anniversary_date']."',other_occation_date='".$input['other_occation_date']."',event_date='".$input['event_date']."',dietries='".$input['dietries']."',dietry_comments='".mysqli_real_escape_string($input['dietry_comments'])."',allergies='".$input['allergies']."',allergy_comments='".mysqli_real_escape_string($input['allergy_comments'])."',rain_jacket_size='".$input['rain_jacket_size']."',foot_size='".$input['foot_size']."',pillow_type='".$input['pillow_type']."',extra_pillow='".$input['extra_pillow']."' WHERE charter_guest_id=$charterHeadId AND charter_assoc_id=$charterAssocId"; exit;
                 $this->CharterGuest->query("UPDATE $yDBName.charter_guest_personal_details SET first_name='".$input['first_name']."',family_name='".$input['family_name']."',dob='".$input['dob']."',pob='".$input['pob']."',nationality='".$input['nationality']."',passport_num='".$input['passport_num']."',issued_date='".$input['issued_date']."',expiry_date='".$input['expiry_date']."',passport_image='".$input['passport_image']."',medical_conditions='".addslashes($input['medical_conditions'])."',special_occations='".$input['special_occations']."',birthday_date='".$input['birthday_date']."',film_festival_date='".$input['film_festival_date']."',honeymoon_date='".$input['honeymoon_date']."',anniversary_date='".$input['anniversary_date']."',other_occation_date='".$input['other_occation_date']."',event_date='".$input['event_date']."',dietries='".$input['dietries']."',dietry_comments='".addslashes($input['dietry_comments'])."',allergies='".$input['allergies']."',allergy_comments='".addslashes($input['allergy_comments'])."',rain_jacket_size='".$input['rain_jacket_size']."',foot_size='".$input['foot_size']."',pillow_type='".$input['pillow_type']."',extra_pillow='".$input['extra_pillow']."',next_of_kin='".$input['next_of_kin']."',next_of_kin_phone='".$input['next_of_kin_phone']."' WHERE guest_lists_UUID='$guest_uuid'");
+            }
+
+            
+            $checkPersonalSpecialOccasionsExists = $this->CharterGuestPersonalDetailSpecialOccasion->find('first', array('conditions' => array('guest_lists_UUID' => $guest_uuid,'charter_program_id'=>$charterHeadProgramId,'is_deleted' => 0)));
+            if (!empty($checkPersonalSpecialOccasionsExists)) {
+                $input = array();
+                $input = $checkPersonalSpecialOccasionsExists['CharterGuestPersonalDetailSpecialOccasion'];
+                //echo "<pre>"; print_r($input);
+                $PersonalSpecialOccasionsYacht = $this->CharterGuest->query("SELECT id FROM $yDBName.charter_guest_personal_detail_special_occasions WHERE guest_lists_UUID='$guest_uuid' AND charter_program_id = '$charterHeadProgramId' AND is_deleted = 0");
+                if (empty($PersonalSpecialOccasionsYacht)) { // INSERT
+                    //echo "INSERT INTO $yDBName.charter_guest_personal_detail_special_occasions (guest_lists_UUID,charter_program_id,is_deleted,special_occations,birthday_date,film_festival_date,honeymoon_date,anniversary_date,other_occation_date,event_date,created) VALUES ("."'".$input['guest_lists_UUID']."'".",".$input['charter_program_id'].",'".($input['is_deleted'])."','".addslashes($input['special_occations'])."','".$input['birthday_date']."','".$input['film_festival_date']."','".$input['honeymoon_date']."','".$input['anniversary_date']."','".$input['other_occation_date']."','".$input['event_date']."','".$created."')"; exit;
+                    $this->CharterGuest->query("INSERT INTO $yDBName.charter_guest_personal_detail_special_occasions (guest_lists_UUID,charter_program_id,is_deleted,special_occations,birthday_date,film_festival_date,honeymoon_date,anniversary_date,other_occation_date,event_date,created) VALUES ("."'".$input['guest_lists_UUID']."'".","."'".$input['charter_program_id']."'".",'".($input['is_deleted'])."','".addslashes($input['special_occations'])."','".$input['birthday_date']."','".$input['film_festival_date']."','".$input['honeymoon_date']."','".$input['anniversary_date']."','".$input['other_occation_date']."','".$input['event_date']."','".$created."')");
+                }else{ // UPDATE
+                    $this->CharterGuest->query("UPDATE $yDBName.charter_guest_personal_detail_special_occasions SET special_occations='".addslashes($input['special_occations'])."',birthday_date='".$input['birthday_date']."',film_festival_date='".($input['film_festival_date'])."',honeymoon_date='".$input['honeymoon_date']."',anniversary_date='".$input['anniversary_date']."',other_occation_date='".$input['other_occation_date']."',event_date='".$input['event_date']."' WHERE guest_lists_UUID='$guest_uuid' AND charter_program_id = '$charterHeadProgramId'");
+
+                }
             }
         }
 
@@ -3986,10 +4140,26 @@ class ChartersController extends AppController {
             $input = $mealData['CharterGuestMealPreference'];
             $checkMealExists = $this->CharterGuest->query("SELECT id FROM $yDBName.charter_guest_meal_preferences WHERE guest_lists_UUID='$guest_uuid' AND is_deleted = 0");
             if (empty($checkMealExists)) { // INSERT
-                $this->CharterGuest->query("INSERT INTO $yDBName.charter_guest_meal_preferences (guest_lists_UUID,charter_assoc_id,is_breakfast,breakfast_likes,other_breakfast_likes,lunch_type,is_lunch_desert,lunch_style,is_dining_ashore,restaurant1,restaurant2,restaurant3,restaurant_date1,restaurant_date2,restaurant_date3,restaurant_time1,restaurant_time2,restaurant_time3,is_hors_deovres,deovres_preference,deovres_comments,is_dinner_desert,is_dinner_coffee,created) VALUES ("."'".$input['guest_lists_UUID']."'".",".$input['charter_assoc_id'].",'".$input['is_breakfast']."','".$input['breakfast_likes']."','".addslashes($input['other_breakfast_likes'])."','".$input['lunch_type']."','".$input['is_lunch_desert']."','".$input['lunch_style']."','".$input['is_dining_ashore']."','".addslashes($input['restaurant1'])."','".addslashes($input['restaurant2'])."','".addslashes($input['restaurant3'])."','".$input['restaurant_date1']."','".$input['restaurant_date2']."','".$input['restaurant_date3']."','".$input['restaurant_time1']."','".$input['restaurant_time2']."','".$input['restaurant_time3']."','".$input['is_hors_deovres']."','".$input['deovres_preference']."','".addslashes($input['deovres_comments'])."','".$input['is_dinner_desert']."','".$input['is_dinner_coffee']."','".$created."')");
+                $this->CharterGuest->query("INSERT INTO $yDBName.charter_guest_meal_preferences (guest_lists_UUID,charter_assoc_id,breakfast_time,lunch_time,dinner_time,breakfast_service_style,lunch_service_style,dinner_service_style,meal_time_service_comments,is_breakfast,breakfast_likes,other_breakfast_likes,lunch_type,is_lunch_desert,lunch_style,is_dining_ashore,restaurant1,restaurant2,restaurant3,restaurant_date1,restaurant_date2,restaurant_date3,restaurant_time1,restaurant_time2,restaurant_time3,is_hors_deovres,deovres_preference,deovres_comments,is_dinner_desert,is_dinner_coffee,created) VALUES ("."'".$input['guest_lists_UUID']."'".",".$input['charter_assoc_id'].",'".$input['breakfast_time']."','".$input['lunch_time']."','".$input['dinner_time']."','".$input['breakfast_service_style']."','".$input['lunch_service_style']."','".$input['dinner_service_style']."','".addslashes($input['meal_time_service_comments'])."','".$input['is_breakfast']."','".$input['breakfast_likes']."','".addslashes($input['other_breakfast_likes'])."','".$input['lunch_type']."','".$input['is_lunch_desert']."','".$input['lunch_style']."','".$input['is_dining_ashore']."','".addslashes($input['restaurant1'])."','".addslashes($input['restaurant2'])."','".addslashes($input['restaurant3'])."','".$input['restaurant_date1']."','".$input['restaurant_date2']."','".$input['restaurant_date3']."','".$input['restaurant_time1']."','".$input['restaurant_time2']."','".$input['restaurant_time3']."','".$input['is_hors_deovres']."','".$input['deovres_preference']."','".addslashes($input['deovres_comments'])."','".$input['is_dinner_desert']."','".$input['is_dinner_coffee']."','".$created."')");
             } else { // UPDATE
-                $this->CharterGuest->query("UPDATE $yDBName.charter_guest_meal_preferences SET is_breakfast='".$input['is_breakfast']."',breakfast_likes='".$input['breakfast_likes']."',other_breakfast_likes='".addslashes($input['other_breakfast_likes'])."',lunch_type='".$input['lunch_type']."',is_lunch_desert='".$input['is_lunch_desert']."',lunch_style='".$input['lunch_style']."',is_dining_ashore='".$input['is_dining_ashore']."',restaurant1='".addslashes($input['restaurant1'])."',restaurant2='".addslashes($input['restaurant2'])."',restaurant3='".addslashes($input['restaurant3'])."',restaurant_date1='".$input['restaurant_date1']."',restaurant_date2='".$input['restaurant_date2']."',restaurant_date3='".$input['restaurant_date3']."',restaurant_time1='".$input['restaurant_time1']."',restaurant_time2='".$input['restaurant_time2']."',restaurant_time3='".$input['restaurant_time3']."',is_hors_deovres='".$input['is_hors_deovres']."',deovres_preference='".$input['deovres_preference']."',deovres_comments='".addslashes($input['deovres_comments'])."',is_dinner_desert='".$input['is_dinner_desert']."',is_dinner_coffee='".$input['is_dinner_coffee']."' WHERE guest_lists_UUID='$guest_uuid'");
+                $this->CharterGuest->query("UPDATE $yDBName.charter_guest_meal_preferences SET breakfast_time='".$input['breakfast_time']."',lunch_time='".$input['lunch_time']."',dinner_time='".$input['dinner_time']."',breakfast_service_style='".$input['breakfast_service_style']."',lunch_service_style='".$input['lunch_service_style']."',dinner_service_style='".$input['dinner_service_style']."',meal_time_service_comments='".addslashes($input['meal_time_service_comments'])."',is_breakfast='".$input['is_breakfast']."',breakfast_likes='".$input['breakfast_likes']."',other_breakfast_likes='".addslashes($input['other_breakfast_likes'])."',lunch_type='".$input['lunch_type']."',is_lunch_desert='".$input['is_lunch_desert']."',lunch_style='".$input['lunch_style']."',is_dining_ashore='".$input['is_dining_ashore']."',restaurant1='".addslashes($input['restaurant1'])."',restaurant2='".addslashes($input['restaurant2'])."',restaurant3='".addslashes($input['restaurant3'])."',restaurant_date1='".$input['restaurant_date1']."',restaurant_date2='".$input['restaurant_date2']."',restaurant_date3='".$input['restaurant_date3']."',restaurant_time1='".$input['restaurant_time1']."',restaurant_time2='".$input['restaurant_time2']."',restaurant_time3='".$input['restaurant_time3']."',is_hors_deovres='".$input['is_hors_deovres']."',deovres_preference='".$input['deovres_preference']."',deovres_comments='".addslashes($input['deovres_comments'])."',is_dinner_desert='".$input['is_dinner_desert']."',is_dinner_coffee='".$input['is_dinner_coffee']."' WHERE guest_lists_UUID='$guest_uuid'");
             }
+
+
+            $CharterGuestMealPreferenceResExists = $this->CharterGuestMealPreferenceRestaurant->find('first', array('conditions' => array('guest_lists_UUID' => $guest_uuid,'charter_program_id'=>$charterHeadProgramId,'is_deleted' => 0)));
+            if (!empty($CharterGuestMealPreferenceResExists)) {
+                $input = array();
+                $input = $CharterGuestMealPreferenceResExists['CharterGuestMealPreferenceRestaurant'];
+                $PreferenceRestaurant = $this->CharterGuest->query("SELECT id FROM $yDBName.charter_guest_meal_preferences_restaurants WHERE guest_lists_UUID='$guest_uuid' AND charter_program_id = '$charterHeadProgramId' AND is_deleted = 0");
+                if (empty($PreferenceRestaurant)) { // INSERT
+                    
+                    $this->CharterGuest->query("INSERT INTO $yDBName.charter_guest_meal_preferences_restaurants (guest_lists_UUID,charter_program_id,is_deleted,is_dining_ashore,restaurant1,restaurant2,restaurant3,restaurant_date1,restaurant_date2,restaurant_date3,restaurant_time1,restaurant_time2,restaurant_time3,created) VALUES ("."'".$input['guest_lists_UUID']."'".","."'".$input['charter_program_id']."'".",'".($input['is_deleted'])."','".($input['is_dining_ashore'])."','".addslashes($input['restaurant1'])."','".addslashes($input['restaurant2'])."','".addslashes($input['restaurant3'])."','".$input['restaurant_date1']."','".$input['restaurant_date2']."','".$input['restaurant_date3']."','".$input['restaurant_time1']."','".$input['restaurant_time2']."','".$input['restaurant_time3']."','".$created."')");
+                }else{ // UPDATE
+                    $this->CharterGuest->query("UPDATE $yDBName.charter_guest_meal_preferences_restaurants SET is_dining_ashore='".($input['is_dining_ashore'])."',restaurant1='".addslashes($input['restaurant1'])."',restaurant2='".addslashes($input['restaurant2'])."',restaurant3='".addslashes($input['restaurant3'])."',restaurant_date1='".$input['restaurant_date1']."',restaurant_date2='".$input['restaurant_date2']."',restaurant_date3='".$input['restaurant_date3']."',restaurant_time1='".$input['restaurant_time1']."',restaurant_time2='".$input['restaurant_time2']."',restaurant_time3='".$input['restaurant_time3']."' WHERE guest_lists_UUID='$guest_uuid' AND charter_program_id = '$charterHeadProgramId'");
+
+                }
+            }
+
         }
 
         // charter_guest_food_preferences table
@@ -4590,11 +4760,11 @@ class ChartersController extends AppController {
                                     if($Datesarray[$publishmap['CharterProgramSchedule']['day_num']]){
                                         $scheduleData[$key]['CharterProgramSchedule']['day_dates'] = $Datesarray[$publishmap['CharterProgramSchedule']['day_num']];
                                     }
-                                    $samedayrouteorder[$publishmap['CharterProgramSchedule']['title']] = $publishmap['CharterProgramSchedule']['day_num'];
+                                    $samedayrouteorder[$publishmap['CharterProgramSchedule']['title'].' - Day '.$publishmap['CharterProgramSchedule']['day_num']] = $publishmap['CharterProgramSchedule']['day_num'];
                                    //$mcount = $this->getmsgnotifycountForMarker($publishmap['CharterProgramSchedule']['UUID']);
                                    $scheduleData[$key]['CharterProgramSchedule']['marker_msg_count'] = $this->CharterGuest->getCharterMarkerCommentCount($yachtDbName,$publishmap['CharterProgramSchedule']['UUID']);
         
-                                   $markertitle[$publishmap['CharterProgramSchedule']['id']] = $publishmap['CharterProgramSchedule']['title'];
+                                   $markertitle[$publishmap['CharterProgramSchedule']['id']] = $publishmap['CharterProgramSchedule']['title'].' - Day '.$publishmap['CharterProgramSchedule']['day_num'];
                                    $markername[$publishmap['CharterProgramSchedule']['title']] = $publishmap['CharterProgramSchedule']['title'];
 
                                     $samelocations[$publishmap['CharterProgramSchedule']['lattitude']][] = "Day ".$scheduleData[$key]['CharterProgramSchedule']['day_num']."&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;".$scheduleData[$key]['CharterProgramSchedule']['day_dates']; //same location
@@ -4616,9 +4786,9 @@ class ChartersController extends AppController {
                         }
                         //echo "<pre>";print_r($markername); exit;
                         $Routeorderdata = array();
-                        if(isset($samedayrouteorder) && !empty($samedayrouteorder)){
-                            asort($samedayrouteorder);
-                            }
+                        // if(isset($samedayrouteorder) && !empty($samedayrouteorder)){
+                        //     asort($samedayrouteorder);
+                        //     }
                         if(isset($samedayrouteorder) && !empty($samedayrouteorder)){
                             foreach($samedayrouteorder as $title => $value){
                                 $fetchData = $this->CharterGuest->query("SELECT * FROM $yachtDbName.charter_program_schedule_routes CharterProgramScheduleRoute WHERE charter_program_schedule_uuid = '$charterProgramId' AND is_deleted = 0  AND start_location= '$title'");
@@ -4626,6 +4796,28 @@ class ChartersController extends AppController {
                                 //$fetchData = $this->CharterProgramScheduleRoute->find('all', array('conditions' => array('charter_program_schedule_uuid' => $charterProgramId, 'is_deleted' => 0,'start_location'=>$value)));
                                 $Routeorderdata[] = $fetchData;
                                 
+                            }
+
+                            foreach($samedayrouteorder as $title => $value){
+                                $fetchData = $this->CharterGuest->query("SELECT * FROM $yachtDbName.charter_program_schedule_routes CharterProgramScheduleRoute WHERE charter_program_schedule_uuid = '$charterProgramId' AND is_deleted = 0  AND start_location= '$title'");
+                                //echo "<pre>";print_r($fetchData); exit;
+                                //$fetchData = $this->CharterProgramScheduleRoute->find('all', array('conditions' => array('charter_program_schedule_uuid' => $charterProgramId, 'is_deleted' => 0,'start_location'=>$value)));
+                                $Routeorderdatatemp[$title][] = $fetchData;
+                                
+                            }
+
+                            $temploc = array();
+                            if(!empty($Routeorderdatatemp)){
+                                foreach($Routeorderdatatemp as $title => $value){
+                                    if(!empty($value[0])){
+                                        //echo "<pre>";print_r($value[0]);
+                                        
+                                        foreach($value[0] as $v){
+                                            $temploc[$v['CharterProgramScheduleRoute']['start_location'].'_'.$v['CharterProgramScheduleRoute']['end_location']][] = "[".$v['CharterProgramScheduleRoute']['longitude'].",".$v['CharterProgramScheduleRoute']['lattitude']."]";
+                                        }
+                                    }
+
+                                }
                             }
                             
                             $RouteData = array();
@@ -4766,6 +4958,7 @@ class ChartersController extends AppController {
                         $this->set('diffDays', $diffDays);
                         $this->set('scheduleData', $scheduleData);
                         $this->set('modified', $modified);
+                        $this->set('temploc', $temploc);
                         $this->set('RouteData', $RouteData);
                         $this->set('RouteDatadisplaydistancevalue', $RouteDatadisplaydistancevalue);
                         $this->set('RouteDatadisplayduration', $RouteDatadisplayduration);
@@ -4803,6 +4996,11 @@ class ChartersController extends AppController {
 //        echo "<pre>";print_r($this->Session->read());exit;
         Configure::write('debug',0);
         $session = $this->Session->read('charter_info');
+        
+        // echo "<pre>";print_r($sessionAssoc);exit;
+        // if (empty($session)) {
+        //     $this->redirect(array('controller' => 'Charters', 'action' => 'index'));
+        // }
         $yachtDbName = $yachtdb;
         $charterProgramId = $prgUUID;
         if (!empty($yachtDbName)) {
@@ -4874,11 +5072,11 @@ class ChartersController extends AppController {
                             if($Datesarray[$publishmap['CharterProgramSchedule']['day_num']]){
                                 $scheduleData[$key]['CharterProgramSchedule']['day_dates'] = $Datesarray[$publishmap['CharterProgramSchedule']['day_num']];
                             }
-                            $samedayrouteorder[$publishmap['CharterProgramSchedule']['title']] = $publishmap['CharterProgramSchedule']['day_num'];
+                            $samedayrouteorder[$publishmap['CharterProgramSchedule']['title'].' - Day '.$publishmap['CharterProgramSchedule']['day_num']] = $publishmap['CharterProgramSchedule']['day_num'];
                            //$mcount = $this->getmsgnotifycountForMarker($publishmap['CharterProgramSchedule']['UUID']);
                            $scheduleData[$key]['CharterProgramSchedule']['marker_msg_count'] = $this->CharterGuest->getCharterMarkerCommentCount($yachtDbName,$publishmap['CharterProgramSchedule']['UUID']);
 
-                           $markertitle[$publishmap['CharterProgramSchedule']['id']] = $publishmap['CharterProgramSchedule']['title'];
+                           $markertitle[$publishmap['CharterProgramSchedule']['id']] = $publishmap['CharterProgramSchedule']['title'].' - Day '.$publishmap['CharterProgramSchedule']['day_num'];
                            $markername[$publishmap['CharterProgramSchedule']['title']] = $publishmap['CharterProgramSchedule']['title'];
 
                             $samelocations[$publishmap['CharterProgramSchedule']['lattitude']][] = "Day ".$scheduleData[$key]['CharterProgramSchedule']['day_num']."&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;".$scheduleData[$key]['CharterProgramSchedule']['day_dates']; //same location
@@ -4907,9 +5105,9 @@ class ChartersController extends AppController {
                 }
                 //echo "<pre>";print_r($markername); exit;
                 $Routeorderdata = array();
-                if(isset($samedayrouteorder) && !empty($samedayrouteorder)){
-                    asort($samedayrouteorder);
-                    }
+                // if(isset($samedayrouteorder) && !empty($samedayrouteorder)){
+                //     asort($samedayrouteorder);
+                //     }
                 if(isset($samedayrouteorder) && !empty($samedayrouteorder)){
                     foreach($samedayrouteorder as $title => $value){
                         $fetchData = $this->CharterGuest->query("SELECT * FROM $yachtDbName.charter_program_schedule_routes CharterProgramScheduleRoute WHERE charter_program_schedule_uuid = '$charterProgramId' AND is_deleted = 0  AND start_location= '$title'");
@@ -4917,6 +5115,28 @@ class ChartersController extends AppController {
                         //$fetchData = $this->CharterProgramScheduleRoute->find('all', array('conditions' => array('charter_program_schedule_uuid' => $charterProgramId, 'is_deleted' => 0,'start_location'=>$value)));
                         $Routeorderdata[] = $fetchData;
                         
+                    }
+
+                    foreach($samedayrouteorder as $title => $value){
+                        $fetchData = $this->CharterGuest->query("SELECT * FROM $yachtDbName.charter_program_schedule_routes CharterProgramScheduleRoute WHERE charter_program_schedule_uuid = '$charterProgramId' AND is_deleted = 0  AND start_location= '$title'");
+                        //echo "<pre>";print_r($fetchData); exit;
+                        //$fetchData = $this->CharterProgramScheduleRoute->find('all', array('conditions' => array('charter_program_schedule_uuid' => $charterProgramId, 'is_deleted' => 0,'start_location'=>$value)));
+                        $Routeorderdatatemp[$title][] = $fetchData;
+                        
+                    }
+
+                    $temploc = array();
+                    if(!empty($Routeorderdatatemp)){
+                        foreach($Routeorderdatatemp as $title => $value){
+                            if(!empty($value[0])){
+                                //echo "<pre>";print_r($value[0]);
+                                
+                                foreach($value[0] as $v){
+                                    $temploc[$v['CharterProgramScheduleRoute']['start_location'].'_'.$v['CharterProgramScheduleRoute']['end_location']][] = "[".$v['CharterProgramScheduleRoute']['longitude'].",".$v['CharterProgramScheduleRoute']['lattitude']."]";
+                                }
+                            }
+
+                        }
                     }
                     
                     $RouteData = array();
@@ -5067,6 +5287,7 @@ class ChartersController extends AppController {
                 $this->set('diffDays', $diffDays);
                 $this->set('scheduleData', $scheduleData);
                 $this->set('modified', $modified);
+                $this->set('temploc', $temploc);
                 $this->set('RouteData', $RouteData);
                 $this->set('RouteDatadisplaydistancevalue', $RouteDatadisplaydistancevalue);
                 $this->set('RouteDatadisplayduration', $RouteDatadisplayduration);
@@ -5104,23 +5325,33 @@ class ChartersController extends AppController {
                                 //$programFiles[]['startdate'] = $charter_from_date;
                             }
                             
-                            
-                            
+                            $charter_company_id = $value['CharterGuest']['charter_company_id'];
+                            if(isset($charter_company_id) && !empty($charter_company_id)){
+                                $companyData1 = $this->Fleetcompany->find('first', array('fields' => array('management_company_name','logo','fleetname'), 'conditions' => array('id' => $charter_company_id)));
+                                $fleetname1 = $companyData1['Fleetcompany']['fleetname'];
+                            }
+                            if(isset($programFiledata) && isset($fleetname1) && !empty($fleetname1)){
+                                $programFiles[$charter_from_date]['fleetname'] = $fleetname1;
+                            }
                         }//exit;
                         //echo "<pre>";print_r($programFiles); exit;
 
                         
 
-                        $fleetname = $this->Session->read('fleetname');
+                        // $fleetname = $this->Session->read('fleetname');
                         if(isset($programFiles) && !empty($programFiles) ){
                             $attachment = array();
                             $SITE_URL = Configure::read('BASE_URL');
                             foreach($programFiles as $startdate => $filedata){ 
                                 foreach($filedata['attachment'] as $file){ 
+                                    $fleetname = $this->Session->read('fleetname');
+                                    if(isset($filedata['fleetname'])){
+                                        $fleetname = $filedata['fleetname'];
+                                    }
                                     $sourceImagePath = $SITE_URL.'/'.$fleetname."/app/webroot/img/charter_program_files/".$file['CharterProgramFile']['file_name'];
                                     $attachment[$startdate] = $sourceImagePath;
                 
-                                    }
+                                }
                             } 
                         }
 
@@ -5183,8 +5414,10 @@ class ChartersController extends AppController {
                 $yname = $Ydata['Yacht']['yname'];
                 $fleetcompanyid = $Ydata['Yacht']['fleetcompany_id'];
                         $this->loadModel("Fleetcompany");
+                        if(isset($fleetcompanyid) && $fleetcompanyid != 0){
                         $fleetcompanydetails = $this->Fleetcompany->find('first',array('conditions'=>array('id'=>$fleetcompanyid)));
                         $fleetSiteName = $fleetcompanydetails['Fleetcompany']['fleetname'];
+                        }
                         $schUUIDs  =  explode(",",$scheduleSameLocationUUID);
                         $samelocationsDatesarr  =  explode(",",$samelocationsDates);
                         //$samelocationsDatestext = $samelocationsDatesarr[0]; 
@@ -5453,8 +5686,10 @@ class ChartersController extends AppController {
                 $yname = $Ydata['Yacht']['yname'];
                 $fleetcompanyid = $Ydata['Yacht']['fleetcompany_id'];
                         $this->loadModel("Fleetcompany");
+                        if(isset($fleetcompanyid) && $fleetcompanyid != 0){
                         $fleetcompanydetails = $this->Fleetcompany->find('first',array('conditions'=>array('id'=>$fleetcompanyid)));
                         $fleetSiteName = $fleetcompanydetails['Fleetcompany']['fleetname'];
+                        }
                 $scheduleAllData = $this->CharterGuest->query("SELECT * FROM $yachtDbName.charter_program_schedules CharterProgramSchedule WHERE charter_program_id = '$scheduleId' AND is_deleted = 0 order by day_num");
                // echo "<pre>";print_r($scheduleData); exit;
                 $basefolder = $this->request->base;
@@ -6016,7 +6251,7 @@ class ChartersController extends AppController {
         $activity_name = $postData['activity_name'];
         // $user_type = $postData['user_type'];
         // $user_name = $postData['user_name'];
-        $comments = $postData['comments'];
+        $comments = strip_tags(addslashes(($postData['comments'])));
         $type = $postData['type'];
         $yachtId = $postData['yachtid'];
 
@@ -6062,7 +6297,7 @@ if($type == "schedule"){
             
             $created = date("Y-m-d H:i:s");
             $insertValuescommenttitle = "(activity_id,activity_name,user_name,user_type,comment,crew_newlyaddedcomment,fleet_newlyaddedcomment,guest_newlyaddedcomment,type,created,publish_map) "
-                    . "VALUES ('$activityId','$activity_name','$loggedUserFullName','$loggedUserInfouser_type','$comments','$crew_newlyaddedcomment','$fleet_newlyaddedcomment','$guest_newlyaddedcomment','schedule','$created','$publish_map')";
+                    . "VALUES ('$activityId','$activity_name','$loggedUserFullName','$loggedUserInfouser_type','$comments','$crew_newlyaddedcomment','$fleet_newlyaddedcomment','$guest_newlyaddedcomment','schedule','$created','1')";
             $this->CharterGuest->insertCruisingMapComment($yachtDbName, $insertValuescommenttitle);          
     }
 
@@ -6097,7 +6332,7 @@ if($type == "schedule"){
                 
                 $created = date("Y-m-d H:i:s");
                 $insertValuesActivity = "(activity_id,activity_name,user_name,user_type,comment,crew_newlyaddedcomment,fleet_newlyaddedcomment,guest_newlyaddedcomment,type,created,publish_map) "
-                    . "VALUES ('$activityId','$activity_name','$loggedUserFullName','$loggedUserInfouser_type','$comments','$crew_newlyaddedcomment','$fleet_newlyaddedcomment','$guest_newlyaddedcomment','activity','$created','$publish_map')";
+                    . "VALUES ('$activityId','$activity_name','$loggedUserFullName','$loggedUserInfouser_type','$comments','$crew_newlyaddedcomment','$fleet_newlyaddedcomment','$guest_newlyaddedcomment','activity','$created','1')";
             $this->CharterGuest->insertCruisingMapComment($yachtDbName, $insertValuesActivity);    
                     
         }
@@ -6392,7 +6627,7 @@ function getPreviousCharterProgramSelections() {
         $sessiondata = $this->Session->read();
         $guestListUUID = $this->request->data['guestListUUID'];
         $selectedCharterProgramUUID = $this->request->data['selectedCharterProgramUUID'];
-           
+        $this->Session->delete("showPopup");
             $this->loadModel('GuestList');
             $this->loadModel('CharterGuest');
             $guestExistdata = $this->GuestList->find('first', array('conditions' => array('UUID' => $guestListUUID)));
@@ -6437,6 +6672,82 @@ function getPreviousCharterProgramSelections() {
     echo json_encode($result);
     exit;
     
+}
+
+function sessionShowPopupDelete(){
+    if($this->request->is('ajax')){
+        $this->layout = false;
+        $this->autoRender = false;
+
+        $this->Session->delete("showPopup");
+        $result['status'] = "success";
+        echo json_encode($result);
+        exit;
+    }
+}
+
+function uploadpassportimage(){
+    if($this->request->is('ajax')){
+        $this->layout = false;
+        $this->autoRender = false;
+        //echo "<pre>";print_r($this->request->form); exit;
+        $data = $this->request->form;
+        $path = 'img';
+                $folder_name = 'passport_images';
+                $folder_url = WWW_ROOT.$path.DIRECTORY_SEPARATOR.$folder_name;
+                $file = $data['file'];
+                $imageName = date("ymdHis").'_'.$file['name'];
+                // create full filename                   
+                $full_url = $folder_url.DIRECTORY_SEPARATOR.$imageName; 
+                // upload the file
+                if (move_uploaded_file($file['tmp_name'], $full_url)) {
+                    $data['passport_image'] = $imageName;
+                } 
+                        // Crop the image 
+                        $fileName = WWW_ROOT.$path.DIRECTORY_SEPARATOR.$folder_name.DIRECTORY_SEPARATOR.$imageName;
+                        $kaboom = explode(".", $fileName); // Split file name into an array using the dot
+                        $fileExt = end($kaboom);
+                        $target_file = "$fileName";
+                        $resized_file = WWW_ROOT.$path.DIRECTORY_SEPARATOR.$folder_name.DIRECTORY_SEPARATOR.$imageName;
+                        $wmax = 700;
+                        $hmax = 1000;
+                        $resfile = $this->ak_img_resize($target_file, $resized_file, $wmax, $hmax, $fileExt);
+
+        //$this->Session->delete("showPopup");
+        $result['status'] = "success";
+        $result['passport_image'] = $imageName;
+        echo json_encode($result);
+        exit;
+    }
+}
+
+function ak_img_resize($target, $newcopy, $w, $h, $ext) {
+    list($w_orig, $h_orig) = getimagesize($target);
+    $scale_ratio = $w_orig / $h_orig;
+    if (($w / $h) > $scale_ratio) {
+           $w = $h * $scale_ratio;
+    } else {
+           $h = $w / $scale_ratio;
+    }
+    $img = "";
+    $ext = strtolower($ext);
+    if ($ext == "gif"){ 
+    $img = imagecreatefromgif($target);
+    } else if($ext =="png"){ 
+    $img = imagecreatefrompng($target);
+    } else { 
+    $img = imagecreatefromjpeg($target);
+    }
+    $tci = imagecreatetruecolor($w, $h);
+    // imagecopyresampled(dst_img, src_img, dst_x, dst_y, src_x, src_y, dst_w, dst_h, src_w, src_h)
+    imagecopyresampled($tci, $img, 0, 0, 0, 0, $w, $h, $w_orig, $h_orig);
+    if ($ext == "gif"){ 
+        imagegif($tci, $newcopy);
+    } else if($ext =="png"){ 
+        imagepng($tci, $newcopy);
+    } else { 
+        imagejpeg($tci, $newcopy, 84);
+    }
 }
 
 
@@ -6504,6 +6815,21 @@ function getIndividualmsgcountMarer() {
             $cgBackgroundImage = BASE_URL."/charterguest/css/admin/images/full-charter.png";
         }
         return $cgBackgroundImage;
+    }
+
+    function getFleetLogoUrl($fleetcompany_id){
+        $SITE_URL = Configure::read('BASE_URL');
+        $this->loadModel('Fleetcompany');
+        $companyData = $this->Fleetcompany->find('first', array('fields' => array('management_company_name','logo','fleetname'), 'conditions' => array('id' => $fleetcompany_id)));
+        
+        if (isset($companyData['Fleetcompany']['logo']) && !empty($companyData['Fleetcompany']['logo'])) {
+            $fleetLogoUrl = $SITE_URL.'/'."charterguest/img/logo/thumb/".$companyData['Fleetcompany']['logo'];
+        } else{
+            $fleetLogoUrl = $SITE_URL.'/'."charterguest/img/logo/thumb/charter_guest_logo.png";
+        }
+        $this->Session->write("fleetCompanyName", $companyData['Fleetcompany']['management_company_name']);
+        $this->Session->write("fleetname", $companyData['Fleetcompany']['fleetname']);
+        return $fleetLogoUrl;
     }
     
 }

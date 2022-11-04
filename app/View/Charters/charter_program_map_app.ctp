@@ -10,6 +10,8 @@ for ($i = 0; $i < $diffDays; $i++) {
     $options .= '<option value="'.$j.'">Day '.$j.'</option>';
 }
 
+// echo "<pre>"; print_r($temploc); exit;
+
 $schedulePeriod = "";
 $schedulePeriodWithOutYear = "";
 $charterName = "";
@@ -1333,29 +1335,29 @@ if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !e
     }else if($schedule['CharterProgramSchedule']['marker_msg_count'] != 0){
         $marker_msg_count = "";
     }
-    if(isset($markertotal[$schedule['CharterProgramSchedule']['title']]['endplace']) && !empty($markertotal[$schedule['CharterProgramSchedule']['title']]['endplace'])){
-            $endplace = $markertotal[$schedule['CharterProgramSchedule']['title']]['endplace'];
+    if(isset($markertotal[$schedule['CharterProgramSchedule']['title'].' - Day '.$schedule['CharterProgramSchedule']['day_num']]['endplace']) && !empty($markertotal[$schedule['CharterProgramSchedule']['title'].' - Day '.$schedule['CharterProgramSchedule']['day_num']]['endplace'])){
+            $endplace = $markertotal[$schedule['CharterProgramSchedule']['title'].' - Day '.$schedule['CharterProgramSchedule']['day_num']]['endplace'];
             $bar = " / ";
     }else{
         $endplace = "";
         $bar = "";
     }
-    if(isset($markertotal[$schedule['CharterProgramSchedule']['title']]['distance']) && !empty($markertotal[$schedule['CharterProgramSchedule']['title']]['distance'])){
-        $distance = $markertotal[$schedule['CharterProgramSchedule']['title']]['distance'];
+    if(isset($markertotal[$schedule['CharterProgramSchedule']['title'].' - Day '.$schedule['CharterProgramSchedule']['day_num']]['distance']) && !empty($markertotal[$schedule['CharterProgramSchedule']['title'].' - Day '.$schedule['CharterProgramSchedule']['day_num']]['distance'])){
+        $distance = $markertotal[$schedule['CharterProgramSchedule']['title'].' - Day '.$schedule['CharterProgramSchedule']['day_num']]['distance'];
         
     }else{
         $distance = "";
     
     }
-    if(isset($markertotal[$schedule['CharterProgramSchedule']['title']]['duration']) && !empty($markertotal[$schedule['CharterProgramSchedule']['title']]['duration'])){
-        $duration = $markertotal[$schedule['CharterProgramSchedule']['title']]['duration'];
+    if(isset($markertotal[$schedule['CharterProgramSchedule']['title'].' - Day '.$schedule['CharterProgramSchedule']['day_num']]['duration']) && !empty($markertotal[$schedule['CharterProgramSchedule']['title'].' - Day '.$schedule['CharterProgramSchedule']['day_num']]['duration'])){
+        $duration = $markertotal[$schedule['CharterProgramSchedule']['title'].' - Day '.$schedule['CharterProgramSchedule']['day_num']]['duration'];
         
     }else{
     $duration = "";
     
     }
-    if(isset($markertotal[$schedule['CharterProgramSchedule']['title']]['consumption']) && !empty($markertotal[$schedule['CharterProgramSchedule']['title']]['consumption'])){
-        $consumption = $markertotal[$schedule['CharterProgramSchedule']['title']]['consumption'];
+    if(isset($markertotal[$schedule['CharterProgramSchedule']['title'].' - Day '.$schedule['CharterProgramSchedule']['day_num']]['consumption']) && !empty($markertotal[$schedule['CharterProgramSchedule']['title'].' - Day '.$schedule['CharterProgramSchedule']['day_num']]['consumption'])){
+        $consumption = $markertotal[$schedule['CharterProgramSchedule']['title'].' - Day '.$schedule['CharterProgramSchedule']['day_num']]['consumption'];
         
     }else{
     $consumption = "";
@@ -1395,7 +1397,7 @@ if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !e
         marker.scheduleSameLocationUUID = "<?php echo implode(',',$samelocationsScheduleUUID[$schedule['CharterProgramSchedule']['title']]); ?>";
         marker.samelocationsDates = "<?php echo implode(',',$samelocationsDates[$schedule['CharterProgramSchedule']['title']]); ?>";
         marker.labeldayanddate = "<?php echo $SumDaytitle; ?>";
-
+        marker.day_num = "<?php echo $schedule['CharterProgramSchedule']['day_num']; ?>";
         marker.markerNum = markerCount; 
         markerArray.push(marker);
         marker.addTo(map);
@@ -1446,13 +1448,13 @@ polylineDB.push(new L.LatLng(<?php echo $value['CharterProgramScheduleRoute']['l
     <?php echo $value['CharterProgramScheduleRoute']['lattitude']; ?>));
 
 
-var latlongv = new L.LatLng(<?php echo $value['CharterProgramScheduleRoute']['longitude']; ?>,
-    <?php echo $value['CharterProgramScheduleRoute']['lattitude']; ?>);
-modalrouteline.push({
-    name: '<?php echo $value['CharterProgramScheduleRoute']['start_location']; ?>',
-    index: latlongv,
-    end_loc: '<?php echo $value['CharterProgramScheduleRoute']['end_location']; ?>'
-});
+// var latlongv = new L.LatLng(<?php echo $value['CharterProgramScheduleRoute']['longitude']; ?>,
+//     <?php echo $value['CharterProgramScheduleRoute']['lattitude']; ?>);
+// modalrouteline.push({
+//     name: '<?php echo $value['CharterProgramScheduleRoute']['start_location']; ?>',
+//     index: latlongv,
+//     end_loc: '<?php echo $value['CharterProgramScheduleRoute']['end_location']; ?>'
+// });
 
 
 
@@ -1460,7 +1462,7 @@ modalrouteline.push({
     }
 } ?>
 
-<?php if(isset($RouteData) && !empty($RouteData)){ ?>
+<?php /*if(isset($RouteData) && !empty($RouteData)){ ?>
 var drawnItems = new L.FeatureGroup();
 map.addLayer(drawnItems);
 var polyLayers = [];
@@ -1480,7 +1482,55 @@ for (let layer of polyLayers) { //console.log(layer);
 }
 <?php 
    
+} */?>
+
+var modalrouteline = new Array();
+<?php if(isset($temploc) && !empty($temploc)){ 
+    
+    foreach($temploc as $title => $latlongs){   
+          $templlocnames = explode('_',$title);
+          $startlocnameexplode = $templlocnames[0];
+          $endlocnameexplode = $templlocnames[1];
+        ?>
+
+var latlongstemp = [];
+
+
+        
+
+<?php    foreach($latlongs as $v){ ?>
+
+            var latlongs0 = <?php echo $v ?>;
+            latlongstemp.push(latlongs0);
+
+            var latlongv = <?php echo $v ?>;
+
+            modalrouteline.push({
+            name: '<?php echo $startlocnameexplode; ?>',
+            index: latlongv,
+            end_loc: '<?php echo $endlocnameexplode; ?>',
+        });
+
+<?php } ?>
+// middle line
+var polyline0 = new L.Polyline(latlongstemp).addTo(map);
+//map.fitBounds(latlngs);
+// drawnItems.on('pm:edit', function (e) {
+
+//     e.layer.setStyle({ pmIgnore: false });
+//     L.PM.reInitLayer(e.layer);
+//     var layer = e.layer;
+//     setPupup(layer);
+//     //alert('jjj');
+//     layer.on('pm:update', function(e) { 
+//         setPupup(e.layer);
+//     });
+// });
+<?php //}
+
+}
 } ?>
+console.log(modalrouteline);
 
 setTimeout(() => {
         map.invalidateSize();

@@ -81,7 +81,10 @@ $actual_link_defaultctp = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on
 		echo $this->fetch('css');
 		echo $this->fetch('script');
 ?>
-    
+    <link href="//vjs.zencdn.net/7.10.2/video-js.min.css" rel="stylesheet">
+<script src="//vjs.zencdn.net/7.10.2/video.min.js"></script>
+
+<?php  echo $this->Html->script('Youtube'); ?>
 <style type="text/css">
 .modalmsg-container .modal-dialog{
 padding-left: 0px;
@@ -193,6 +196,7 @@ width: max-content;
 
     .videoclass{
       width: 450px !important;
+      height : 250px !important;
     }
 }
 
@@ -206,6 +210,7 @@ width: max-content;
 
     .videoclass{
       width: 450px !important;
+      height : 250px !important;
     }
 
 }
@@ -216,24 +221,69 @@ width: max-content;
 
     .videomodalcontent{
       width: 482px !important;
+      
     }
 
     .videoclass{
       width: 450px !important;
+      height : 250px !important;
     }
 
 }
 
-@media screen 
-  and (max-device-width: 1600px) 
-  { 
 
-    .videomodalcontent{
+
+@media only screen and (device-width: 768px) {
+  /* For general iPad layouts */
+  .videomodalcontent{
       width: 482px !important;
+      
     }
 
     .videoclass{
       width: 450px !important;
+      height : 250px !important;
+    }
+}
+
+@media only screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:portrait) {
+  /* For portrait layouts only */
+  .videomodalcontent{
+      width: 482px !important;
+      
+    }
+
+    .videoclass{
+      width: 450px !important;
+      height : 250px !important;
+    }
+}
+
+@media only screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:landscape) {
+  /* For landscape layouts only */
+  .videomodalcontent{
+      width: 560px !important;
+      
+    }
+
+    .videoclass{
+      width: 375px !important;
+      height : 250px !important;
+    }
+}
+
+@media screen 
+  and (max-device-width: 1366px)  and (orientation:landscape) 
+  { 
+
+    .videomodalcontent{
+      width: 560px !important;
+      
+    }
+
+    .videoclass{
+      width: 375px !important;
+      height : 250px !important;
     }
 
 }
@@ -541,16 +591,15 @@ width: max-content;
         </button>
       </div>-->
         <div class="modal-body">
-          <div class="modalmsg"> 
+          <div class="modalmsg" style="margin: auto;text-align: center;"> 
             <p>Enter your birthday to confirm your identity.</p>
           </div>
             <div class="text-center">
             <?php //echo $this->Form->input("dob",array("label"=>false,'class'=>'form-control dobDatePicker nonEditable','type' => 'text')); ?>
-            <input type="text" name="checkdob" id="checkdob" style="width: 50%;text-align: center;margin-left: 80px;" class="form-control dobDatePickerexisting existingnonEditable" />
+            <input type="text" name="checkdob" id="checkdob" style="width: 50%;text-align: center;margin: auto;" class="form-control dobDatePickerexisting existingnonEditable" />
             <p id="confirmpreferencesuccess" style="color:green;">Confirmed - Loading your preference now</p>
             <p id="confirmpreferencefail" style="color:red;">Wrong DOB - Please try again or create new</p>
-            <input class="btn btn-success" style="margin-top: 10px;
-    margin-left: 20px;" type="button" name="confirm" id="confirmPreference" data-assid=""  data-chkuuid ="" data-gtype="" value="CONFIRM" />
+            <input class="btn btn-success" style="margin: 10px auto;" type="button" name="confirm" id="confirmPreference" data-assid=""  data-chkuuid ="" data-gtype="" value="CONFIRM" />
                
            
             </div>    
@@ -574,10 +623,30 @@ width: max-content;
         </button>
       </div>
         <div class="modal-body">
-        <video width="100%" height="100%" controls class="videoclass" id="">
-        <source src="<?php echo  $this->request->base; ?>/app/webroot/210322061346_sample-mp4-file.mp4" type="video/mp4">
-        </video>
-                            
+        
+        <video
+    id="preferencesheetvideo"
+    class="video-js videoclass"
+    controls
+    preload="auto"
+    poster=""
+    data-setup='{ "techOrder": ["youtube"], "sources": [{ "type": "video/youtube", "src": "https://youtu.be/uLBICcPhNeE"}] }'
+   
+    >
+  <source src="https://youtu.be/uLBICcPhNeE" type="video/mp4"></source>
+  
+  <p class="vjs-no-js">
+    To view this video please enable JavaScript, and consider upgrading to a
+    web browser that
+    <a href="https://videojs.com/html5-video-support/" target="_blank">
+      supports HTML5 video
+    </a>
+  </p>
+</video>
+        <!-- <video width="100%" height="100%" class="video videoclass" playsinline autoplay muted loop controls="true"  preload="metadata" id="preferencesheetvideo">
+        <source src="https://youtu.be/4aMP61dg-cQ" type="video/mp4">
+        </video> -->
+        <!-- <iframe class="videomodalcontent" src="https://youtu.be/4aMP61dg-cQ" frameborder="0" allowfullscreen></iframe>                  -->
         </div>
         <div class="modal-footer">
             
@@ -596,9 +665,26 @@ width: max-content;
         </button>
       </div>
         <div class="modal-body">
-        <video width="100%" height="100%" controls class="videoclass" id="">
-        <source src="<?php echo  $this->request->base; ?>/app/webroot/210322061346_sample-mp4-file.mp4" type="video/mp4">
-        </video>
+        <video
+    id="charterheadvideo"
+    class="video-js videoclass"
+    controls
+    preload="auto"
+    poster=""
+    data-setup='{ "techOrder": ["youtube"], "sources": [{ "type": "video/youtube", "src": "https://youtu.be/1JrP38CXlSQ"}]}'>
+  <source src="https://youtu.be/1JrP38CXlSQ" type="video/mp4"></source>
+  
+  <p class="vjs-no-js"> 
+    To view this video please enable JavaScript, and consider upgrading to a
+    web browser that
+    <a href="https://videojs.com/html5-video-support/" target="_blank">
+      supports HTML5 video
+    </a>
+  </p>
+</video>
+        <!-- <video width="100%" height="100%" class="video videoclass" playsinline autoplay muted loop controls="true"  preload="metadata" id="charterheadvideo">
+        <source src="https://youtu.be/ExAG5mRmGAU" type="video/mp4">
+        </video> -->
                             
         </div>
         <div class="modal-footer">
@@ -683,7 +769,7 @@ $(".dobDatePickerexisting").datepicker({
     changeYear: true,
     changeMonth:true,
     yearRange: dobYearRange
-});
+}).attr('readonly','readonly');
 
 // Make Non-editable fields
 $(document).on("keypress", ".existingnonEditable", function(e) {
@@ -890,7 +976,61 @@ $(document).on("click", "#MenuHowToVideoCharterHead", function(e) {
 
 });
 
+// var vid = document.getElementById("preferencesheetvideo");
+// alert("Start: " + vid.buffered.start(0)
+// + " End: " + vid.buffered.end(0));
 
+// $('#howtovideo').on('shown.bs.modal', function () {
+//   $('#preferencesheetvideo')[0].play();
+// })
+
+
+// $('#howtovideocharterhead').on('shown.bs.modal', function () {
+//   $('#charterheadvideo')[0].play();
+// })
+// $('#howtovideocharterhead').on('hidden.bs.modal', function () {
+//   $('#charterheadvideo')[0].pause();
+// })
+
+var options = {};
+
+var player = videojs('preferencesheetvideo', options, function onPlayerReady() {
+  //videojs.log('Your player is ready!');
+
+  // In this context, `this` is the player that was created by Video.js.
+  //this.play();
+
+  // How about an event listener?
+  // this.on('ended', function() {
+  //   videojs.log('Awww...over so soon?!');
+  // });
+});
+player.responsive(true);
+$('#howtovideo').on('hidden.bs.modal', function () {
+  //$('#preferencesheetvideo')[0].pause();
+  
+  player.pause();  
+
+})
+
+var headoptions = {};
+
+var headplayer = videojs('charterheadvideo', headoptions, function onPlayerReady() {
+  //videojs.log('Your player is ready!');
+
+  // In this context, `this` is the player that was created by Video.js.
+  //this.play();
+
+  // // How about an event listener?
+  // this.on('ended', function() {
+  //   videojs.log('Awww...over so soon?!');
+  // });
+});
+headplayer.responsive(true);
+$('#howtovideocharterhead').on('hidden.bs.modal', function () {
+  //$('#charterheadvideo')[0].pause();
+  headplayer.pause();  
+})
 
 $(document).on("click", ".previousSelectionButton", function(e) { 
 

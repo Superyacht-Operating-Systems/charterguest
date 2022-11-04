@@ -1,9 +1,8 @@
 <?php
 $base = $this->request->base;
 $sessionData = $this->Session->read();
+$ownerprefenceID = $this->Session->read('ownerprefenceID');
 //echo "<pre>";print_r($sessionData); exit;
- $iti_guestListUUID = $this->Session->read('guestListUUID');
- $iti_selectedCharterProgramUUID = $this->Session->read('selectedCharterProgramUUID'); 
 // Itineraries
     $itineraryList = array(
         1 => 'Swimming',
@@ -24,7 +23,7 @@ $sessionData = $this->Session->read();
         16 => 'Land tours/Shopping',
         17 => 'Small boat exeditions',
         18 => 'Golfing',
-        19 => 'Hunting',
+        19 => 'Relaxing',
         20 => 'Parasailing/gliding',
         21 => 'Water toys',
         22 => 'Rock climbing',
@@ -142,7 +141,14 @@ $sessionData = $this->Session->read();
         ?>
 
 <div class="personal-row-container beverage-menu-row">
-<h1 class="position-mobile-head">Itinerary</h1>
+<!-- <h1 class="position-mobile-head">Itinerary</h1> -->
+<?php if(isset($ownerprefenceID)){
+              ?>
+         <h1 class="position-mobile-head">PREFERENCES<span style="padding-left:20px;">7 of 7</span></h1>
+          <?php }  else{ ?>
+            <h1 class="position-mobile-head">PREFERENCES<span style="padding-left:20px;">5 of 5</span></h1>
+          <?php } ?>
+
 <div class="fixed-row-container itinerary-row">
   <div class="col-md-12">
       <div class="form-group frmgrp-mar">
@@ -252,7 +258,7 @@ $sessionData = $this->Session->read();
             <div class="be-col-6">
             <div class="checkbox bev-chbox">
             <input type="checkbox" class="itinerary" name="data[CharterGuestItineraryPreference][itinerary][]" value="19" <?php echo $itineraryListChecked[19]; ?>>
-              <label class="pdd-none"><span class="sp-lab">Hunting</span></label>
+              <label class="pdd-none"><span class="sp-lab">Relaxing</span></label>
             </div></div>
             <div class="be-col-6">
             <div class="checkbox bev-chbox">
@@ -431,11 +437,10 @@ $sessionData = $this->Session->read();
             <div class="form-group frmgrp-mar">
                 <div class="col-sm-12">
                    
-                    <div class="text-center">
                         <?php if (!isset($charterAssocIdByHeaderView)) { ?>
                             <?php echo $this->Form->submit("Submit", array('class' => 'btn btn-success lastbutton'));?>
                         <?php } ?>
-                    </div>
+                  
                     
                 </div>
             </div>
@@ -443,51 +448,7 @@ $sessionData = $this->Session->read();
     <?php echo $this->Form->end(); ?></div></div></div>
 </div>
 
-<div id="successPreferenceAlert" class="modal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" >
-  <div class="modal-dialog" role="document">
-    <!---------------- login or logout-------------------->
-    <div class="modal-content mc-bord" id="successbody">
-      <div class="modal-body" >
-      <div class="modalmsg"> 
-        <p>Thank you for submitting your preference sheets.</p>
-        <p>All information will stay secure and confidential.</p>
-        <p>If you need to update any information you can login again using the same email address and password.</p>
-      </div>
-        <div class="text-center">
-            <?php if (isset($sessionData["fleetLogoUrl"]) && !empty($sessionData["fleetLogoUrl"])) { ?>
-                <img src="<?php echo $sessionData["fleetLogoUrl"]; ?>" alt="">
-            <?php } ?> 
-                <h3><?php echo !empty($sessionData["fleetCompanyName"]) ? $sessionData["fleetCompanyName"] : ""; ?></h3>
-        </div>    
-      </div>
-      <div class="modal-footer" style="text-align: center;">
-          <input class="btn btn-success"type="button" name="stay_log_in" id="stay_log_in" value="Stay Logged in">
-          <a href="<?php echo $base; ?>" class="btn btn-success" style="width: 103px; margin-left: 70px;">Log Out</a>
-      </div>
-    </div>
-              <!------------------login or logout----------------->
 
-    <div class="modal-content mc-bord" id="successUsePreference">
-      <div class="modal-body">
-      <div class="modalmsg" style="margin-left: 30px;"> 
-        <p>Would you like to allow your preferences to</p>
-        <p>be provided to future charter programs</p>
-        <p>without you having to submit them again?</p>
-      </div>
-        <div class="text-center">
-          <input class="btn btn-success" style="background-color: #5cb85c;
-    border-color: #4cae4c;" type="button" name="yes_please" id="yes_please" value="Yes please" />
-          <input class="btn btn-danger" type="button" name="no_thanks" id="no_thanks" value="No thanks" />
-        </div>   
-        <div class="modalmsg" style="margin-left: 30px;"> 
-        <p>You can login to Charter Guest and make</p>
-        <p>changes to your preferences at any time.</p>
-        </div> 
-      </div>
-    </div>
-
-  </div>
-</div>
 
 
 
@@ -523,23 +484,7 @@ $CharterGuestAssociate = $this->Session->read('charter_assoc_info.CharterGuestAs
 ?>
 <script>
   var BASE_FOLDER = "<?php echo $baseFolder; ?>";
-$(document).ready(function (e) {
-    <?php if (isset($showPopup)) { ?>
-            //$("#usesubmittedpreferences").modal('show');
-            $("#successPreferenceAlert").modal("show");
-            $("#successUsePreference").show();
-            $("#successbody").hide();
-    <?php } ?> 
-});    
-<?php if (isset($showPopup)) { ?>
-$(document).click('#stay_log_in',function(){
-    //alert();
-    $("#successPreferenceAlert").modal("hide");
-    <?php //if(empty($CharterGuestAssociate)){?>
-      window.location.href = BASE_FOLDER+'/charters/preference<?php echo $sessionData['preferenceParam']; ?>';
-    <?php //} ?>  
-});
-<?php } ?>
+
 
   
 //Itinerary checkbox selected and unselected
@@ -577,43 +522,5 @@ $(".itinerary").click(function () {
                
      });
 
-$(document).on("click", "#yes_please", function(e) {     //alert();
-  
-    var data = {
-        "guestListUUID": "<?php echo $iti_guestListUUID; ?>",
-        "selectedCharterProgramUUID": "<?php echo $iti_selectedCharterProgramUUID; ?>"
-    };
-    
-    
-        $("#hideloader").show();
-        $.ajax({
-            type: "POST",
-            url: BASE_FOLDER+'/charters/saveusesubmittedpreferences',
-            dataType: 'json',
-            data: data,
-            success:function(result) {
-                $("#hideloader").hide();
-                if (result.status == 'success') {
-                  $("#successUsePreference").hide();
-                  $("#successbody").show();
-                  return false;
-                }else if(result.status == 'fail'){
-                  $("#successUsePreference").hide();
-                  $("#successbody").show();
-                  return false;
-                }   
-            },
-            error: function(jqxhr) { 
-                $("#hideloader").hide();
-            }
-        });
-        return false;
-});
-$(document).on("click", "#no_thanks", function(e) {
 
-  $("#successUsePreference").hide();
-  $("#successbody").show();
-            return false;
-
-});
 </script>

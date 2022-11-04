@@ -1,6 +1,7 @@
 <?php
 
     // Coffee items
+    $ownerprefenceID = $this->Session->read('ownerprefenceID');
     $coffeeItems = array(
         1 => 'Espresso',
         2 => 'Decaf',
@@ -33,7 +34,7 @@
         2 => 'Coke',
         3 => 'Sprite',
         4 => 'Ginger Ale',
-        5 => 'Orange',
+        5 => 'Fanta',
         6 => 'Pepsi',
         7 => 'Club Soda',
         8 => 'Tonic',
@@ -234,7 +235,13 @@ hr.divmar{
            }
         ?>
 <div class="personal-row-container beverage-menu-row">
-<h1 class="position-mobile-head">Beverage</h1>
+<!-- <h1 class="position-mobile-head">Beverage</h1> -->
+<?php if(isset($ownerprefenceID)){
+              ?>
+              <h1 class="position-mobile-head">PREFERENCES<span style="padding-left:20px;">4 of 7</span></h1>
+          <?php }  else{ ?>
+            <h1 class="position-mobile-head">PREFERENCES<span style="padding-left:20px;">4 of 5</span></h1>
+          <?php } ?>
 <div class="fixed-row-container">
   <div class="col-md-12">
           <div class="form-group frmgrp-mar">
@@ -393,7 +400,7 @@ hr.divmar{
               <div class="be-col-3 be-col-sm-2">
                <div class="checkbox bev-chbox">
                <input type="checkbox" class="sodachk" name="data[CharterGuestBeveragePreference][soda_items][]" value="5" <?php echo $sodaItemsChecked[5]; ?>>
-                <label class="pdd-none"><span class="sp-lab">Orange</span></label>
+                <label class="pdd-none"><span class="sp-lab">Fanta</span></label>
               </div></div>
                <div class="be-col-3 be-col-sm-2">
                <div class="checkbox bev-chbox">
@@ -656,13 +663,12 @@ hr.divmar{
           </div>  
           
         <div class="form-group frmgrp-mar">
-            <div class="col-sm-12">
-                <div class="col-sm-4"></div> 
-                <div class="col-sm-4">
+            <div class="col-sm-12" style="padding-left:0px">
+                
                     <?php if (!isset($charterAssocIdByHeaderView)) { ?>
                         <?php echo $this->Form->submit("Save and Continue", array('class' => 'btn btn-success lastbutton'));?>
                     <?php } ?>
-                </div>
+                
             </div>
         </div>
         <?php echo $this->Form->end(); ?></div>   </div></div>

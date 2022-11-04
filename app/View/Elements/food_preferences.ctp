@@ -1,6 +1,7 @@
 <?php
 
 // Food Preferences
+$ownerprefenceID = $this->Session->read('ownerprefenceID');
     $foodList = array(
         1 => 'Soups',
         2 => 'Beef',
@@ -20,16 +21,16 @@
         16 => 'Vegetarian cuisine',
         17 => 'Pasta Rice',
         18 => 'Mussels',
-        19 => 'Fish:Black cod',
+        19 => 'Trout',
         20 => 'Halibut',
-        21 => 'Rockfish',
+        21 => 'Seabass',
         22 => 'Salmon',
         23 => 'Sole',
         24 => 'Tuna',
         25 => 'Shellfish: Crab',
         26 => 'King Crab',
         27 => 'Lobster',
-        28 => 'Prawns',
+        28 => 'Shrimp',
         29 => 'Scallops',
         30 => 'Caviar',
         31 => 'Foie gras',
@@ -252,7 +253,11 @@ width: 100%;
 }
   }
 
-
+  @media (max-width: 760px){
+    .fs-wd {
+    width: 50%;float: left;
+}
+}
 
   @media (max-width: 768px){
     .foodpreferences-row .label-comments-space{
@@ -262,9 +267,7 @@ width: 100%;
     width: 60%;
     float: left;
 }
-    .fs-wd {
-    width: 50%;float: left;
-}
+
     .cp-width{
       width:14% !important;
     }
@@ -330,108 +333,17 @@ table.fd-table tr>td {
         ?>
 
 <div class="personal-row-container foodpreferences-container">
-<h1 class="position-mobile-head">Food</h1>
+<!-- <h1 class="position-mobile-head">Food</h1> -->
+<?php if(isset($ownerprefenceID)){
+              ?>
+         <h1 class="position-mobile-head">PREFERENCES<span style="padding-left:20px;">3 of 7</span></h1>
+          <?php }  else{ ?>
+            <h1 class="position-mobile-head">PREFERENCES<span style="padding-left:20px;">3 of 5</span></h1>
+          <?php } ?>
+
 <div class="fixed-row-container"> 
         <div class="col-md-12 foodpreferences-row">
-      <div class="form-group frmgrp-mar">
-        <div class="col-md-12 md-col-nospace">
-          <label>Meal Time Preferences and Service Style</label>
-        </div>
-        <div class="col-lg-12 pdd-none full-column-marg">
-          <div class="col-lg-1 col-sm-2 ipadport-middle label-rigt-align"><label class="control-label ma-b ">Breakfast</label></div>
-          <div class="col-lg-2 rt-nospacesp col-sm-2 ipadport-input-padding-vertical input-mobile-width">
-            <!--<input type="text" class="form-control input-wid">-->
-            <?php echo $this->Form->input("breakfast_time",array("label"=>false, 'placeholder' => 'Time','class'=>'form-control input-wid breakfast_time_timePicker','type' => 'text', 'onchange' => "validateHhMm(this)")); ?>
-          </div>
-          <div class="col-lg-2 col-sm-2 md-radio-column-box">
-            <div class="radio ma-t-check">
-            <input type="radio" name="data[CharterGuestFoodPreference][breakfast_service_style]" value="1" <?php echo (isset($foodPreferences['CharterGuestFoodPreference']['breakfast_service_style']) && $foodPreferences['CharterGuestFoodPreference']['breakfast_service_style'] == 1) ? 'checked' : ''; ?>>
-                <label class="pdd-none"><span>Plated</span></label>
-            </div>
-          </div>
-          <div class="col-lg-2 col-sm-2 md-radio-column-box">
-            <div class="radio ma-t-check">
-            <input type="radio" name="data[CharterGuestFoodPreference][breakfast_service_style]" value="2" <?php echo (isset($foodPreferences['CharterGuestFoodPreference']['breakfast_service_style']) && $foodPreferences['CharterGuestFoodPreference']['breakfast_service_style'] == 2) ? 'checked' : ''; ?>>
-              <label class="pdd-none"><span>Buffet</span></label>
-            </div>
-          </div>
-          <div class="col-lg-3 col-sm-3 md-radio-column-box-max">
-            <div class="radio ma-t-check">
-            <input type="radio" name="data[CharterGuestFoodPreference][breakfast_service_style]" value="3" <?php echo (isset($foodPreferences['CharterGuestFoodPreference']['breakfast_service_style']) && $foodPreferences['CharterGuestFoodPreference']['breakfast_service_style'] == 3) ? 'checked' : ''; ?>>
-              <label class="pdd-none"><span>Silver Service</span></label>
-            </div>
-          </div>
-        </div>
-
-        <div class="clearfix"></div>
-
-        <div class="col-lg-12 pdd-none full-column-marg">
-          <div class="col-lg-1 col-sm-2 ipadport-middle label-rigt-align"><label class="control-label ma-b">Lunch</label></div>
-          <div class="col-lg-2 rt-nospacesp col-sm-2 ipadport-input-padding-vertical input-mobile-width">
-            <!--<input type="text" class="form-control input-wid">-->
-            <?php echo $this->Form->input("lunch_time",array("label"=>false, 'placeholder' => 'Time','class'=>'form-control input-wid lunch_time_timePicker','type' => 'text', 'onchange' => "validateHhMm(this)")); ?>
-          </div>
-          <div class="col-lg-2 col-sm-2 md-radio-column-box">
-            <div class="radio ma-t-check">
-            <input type="radio" name="data[CharterGuestFoodPreference][lunch_service_style]" value="1" <?php echo (isset($foodPreferences['CharterGuestFoodPreference']['lunch_service_style']) && $foodPreferences['CharterGuestFoodPreference']['lunch_service_style'] == 1) ? 'checked' : ''; ?>>
-              <label class="pdd-none"><span>Plated</span></label>
-            </div>
-          </div>
-          <div class="col-lg-2 col-sm-2 md-radio-column-box">
-            <div class="radio ma-t-check">
-            <input type="radio" name="data[CharterGuestFoodPreference][lunch_service_style]" value="2" <?php echo (isset($foodPreferences['CharterGuestFoodPreference']['lunch_service_style']) && $foodPreferences['CharterGuestFoodPreference']['lunch_service_style'] == 2) ? 'checked' : ''; ?>>
-              <label class="pdd-none"><span>Buffet</span></label>
-            </div>
-          </div>
-          <div class="col-lg-3 col-sm-3 md-radio-column-box-max">
-            <div class="radio ma-t-check">
-            <input type="radio" name="data[CharterGuestFoodPreference][lunch_service_style]" value="3" <?php echo (isset($foodPreferences['CharterGuestFoodPreference']['lunch_service_style']) && $foodPreferences['CharterGuestFoodPreference']['lunch_service_style'] == 3) ? 'checked' : ''; ?>>
-              <label class="pdd-none"><span>Silver Service</span></label>
-            </div>
-          </div>
-        </div>
-
-        <div class="clearfix"></div>
-
-         <div class="col-lg-12 pdd-none full-column-marg">
-          <div class="col-lg-1 col-sm-2 ipadport-middle label-rigt-align"><label class="control-label ma-b">Dinner</label></div>
-          <div class="col-lg-2 rt-nospacesp col-sm-2 ipadport-input-padding-vertical input-mobile-width">
-            <!--<input type="text" class="form-control input-wid">-->
-            <?php echo $this->Form->input("dinner_time",array("label"=>false, 'placeholder' => 'Time','class'=>'form-control input-wid dinner_time_timePicker','type' => 'text', 'onchange' => "validateHhMm(this)")); ?>
-          </div>
-          <div class="col-lg-2 col-sm-2 md-radio-column-box">
-            <div class="radio ma-t-check">
-            <input type="radio" name="data[CharterGuestFoodPreference][dinner_service_style]" value="1" <?php echo (isset($foodPreferences['CharterGuestFoodPreference']['dinner_service_style']) && $foodPreferences['CharterGuestFoodPreference']['dinner_service_style'] == 1) ? 'checked' : ''; ?>>
-              <label class="pdd-none"><span>Plated</span></label>
-            </div>
-          </div>
-          <div class="col-lg-2 col-sm-2 md-radio-column-box">
-            <div class="radio ma-t-check">
-            <input type="radio" name="data[CharterGuestFoodPreference][dinner_service_style]" value="2" <?php echo (isset($foodPreferences['CharterGuestFoodPreference']['dinner_service_style']) && $foodPreferences['CharterGuestFoodPreference']['dinner_service_style'] == 2) ? 'checked' : ''; ?>>
-              <label class="pdd-none"><span>Buffet</span></label>
-            </div>
-          </div>
-          <div class="col-lg-3 col-sm-3 md-radio-column-box-max">
-            <div class="radio ma-t-check">
-            <input type="radio" name="data[CharterGuestFoodPreference][dinner_service_style]" value="3" <?php echo (isset($foodPreferences['CharterGuestFoodPreference']['dinner_service_style']) && $foodPreferences['CharterGuestFoodPreference']['dinner_service_style'] == 3) ? 'checked' : ''; ?>>
-              <label class="pdd-none"><span>Silver Service</span></label>
-            </div>
-          </div>
-        </div>
-        <div class="clearfix"></div>
-
-        <div class="row ipadport-comments">
-          <div class="col-md-1 col-sm-2">
-          <label class="control-label label-comments-space">Comments</label>
-        </div>
-        <div class="col-md-8 col-sm-9 Comments-1024">
-          <!--<input type="text" class="form-control">-->
-          <?php echo $this->Form->input("meal_time_service_comments",array("label"=>false,'class'=>'form-control','type' => 'text')); ?>
-        </div>
-        </div>
-      </div>
-<div class="clearfix"></div>
-<hr class="divider divmar">
+      
       <!--<div class="space-50-h"></div>-->
 
       <div class="form-group frmgrp-mar dietary-requirements-row">
@@ -517,7 +429,7 @@ table.fd-table tr>td {
         </div>
         <input type="hidden" name="data[CharterGuestFoodPreference][food_style_hidden][]" id="food_style_hidden" value="" />
         <div class="clearfix"></div>
-        <div class="row ipadport-comments">
+        <div class="ipadport-comments">
           <div class="col-md-1 col-sm-2">
             <label class="control-label label-comments-space">Comments</label>
           </div>
@@ -898,7 +810,7 @@ table.fd-table tr>td {
            </div>
          </td>   
        </tr>
-       <tr>
+       <!-- <tr>
          <td class="fd-cent" >Caribou</td>
           <td align="center" class="md-radio-column-box">
            <div class="radio my-none">
@@ -918,8 +830,8 @@ table.fd-table tr>td {
              <label class="pdd-none"><span>Dislike</span></label>
            </div>
          </td>
-       </tr>
-       <tr>
+       </tr> -->
+       <!-- <tr>
          <td class="fd-cent" >Buffalo</td>
           <td align="center" class="md-radio-column-box">
            <div class="radio my-none">
@@ -939,7 +851,7 @@ table.fd-table tr>td {
              <label class="pdd-none"><span>Dislike</span></label>
            </div>
          </td>
-       </tr>
+       </tr> -->
       <tr>
          <td class="fd-cent" >Pork</td>
          <td align="center" class="md-radio-column-box">
@@ -1125,6 +1037,27 @@ table.fd-table tr>td {
          <td align="center" class="md-radio-column-box">
            <div class="radio my-none">
            <input type="radio" name="data[CharterGuestFoodPreference][food_17]" value="3" <?php echo $foodDislike[17]; ?>>
+             <label class="pdd-none"><span>Dislike</span></label>
+           </div>
+         </td>
+       </tr>
+       <tr>
+         <td class="fd-cent" >Rice</td>
+          <td align="center" class="md-radio-column-box">
+           <div class="radio my-none">
+           <input type="radio" name="data[CharterGuestFoodPreference][food_34]" value="1" <?php echo $foodLove[34]; ?>>
+             <label class="pdd-none"><span>Love</span></label>
+           </div>
+         </td>
+         <td align="center" class="md-radio-column-box">
+           <div class="radio my-none">
+           <input type="radio" name="data[CharterGuestFoodPreference][food_34]" value="2" <?php echo $foodLike[34]; ?>>
+             <label class="pdd-none"><span>Like</span></label>
+           </div>
+         </td>
+         <td align="center" class="md-radio-column-box">
+           <div class="radio my-none">
+           <input type="radio" name="data[CharterGuestFoodPreference][food_34]" value="3" <?php echo $foodDislike[34]; ?>>
              <label class="pdd-none"><span>Dislike</span></label>
            </div>
          </td>
@@ -1481,7 +1414,7 @@ table.fd-table tr>td {
          </td>
        </tr>
           <tr>
-         <td class="fd-cent" >Black cod</td>
+         <td class="fd-cent" >Trout</td>
                    <td align="center" class="md-radio-column-box">
            <div class="radio my-none" >
             <input type="radio" name="data[CharterGuestFoodPreference][food_19]" value="1" <?php echo $foodLove[19]; ?>>
@@ -1524,7 +1457,7 @@ table.fd-table tr>td {
          </td>
        </tr>
       <tr>
-         <td class="fd-cent" >Rockfish</td>
+         <td class="fd-cent" >Seabass</td>
           <td align="center" class="md-radio-column-box">
            <div class="radio my-none">
            <input type="radio" name="data[CharterGuestFoodPreference][food_21]" value="1" <?php echo $foodLove[21]; ?>>
@@ -1692,7 +1625,7 @@ table.fd-table tr>td {
          </td>
        </tr>
       <tr>
-         <td class="fd-cent" >Prawns</td>
+         <td class="fd-cent" >Shrimp</td>
           <td align="center" class="md-radio-column-box">
            <div class="radio my-none">
            <input type="radio" name="data[CharterGuestFoodPreference][food_29]" value="1" <?php echo $foodLove[29]; ?>>
@@ -1813,27 +1746,6 @@ table.fd-table tr>td {
          <td align="center" class="md-radio-column-box">
            <div class="radio my-none">
            <input type="radio" name="data[CharterGuestFoodPreference][food_33]" value="3" <?php echo $foodDislike[33]; ?>>
-             <label class="pdd-none"><span>Dislike</span></label>
-           </div>
-         </td>
-       </tr>
-      <tr>
-         <td class="fd-cent" >Rice</td>
-          <td align="center" class="md-radio-column-box">
-           <div class="radio my-none">
-           <input type="radio" name="data[CharterGuestFoodPreference][food_34]" value="1" <?php echo $foodLove[34]; ?>>
-             <label class="pdd-none"><span>Love</span></label>
-           </div>
-         </td>
-         <td align="center" class="md-radio-column-box">
-           <div class="radio my-none">
-           <input type="radio" name="data[CharterGuestFoodPreference][food_34]" value="2" <?php echo $foodLike[34]; ?>>
-             <label class="pdd-none"><span>Like</span></label>
-           </div>
-         </td>
-         <td align="center" class="md-radio-column-box">
-           <div class="radio my-none">
-           <input type="radio" name="data[CharterGuestFoodPreference][food_34]" value="3" <?php echo $foodDislike[34]; ?>>
              <label class="pdd-none"><span>Dislike</span></label>
            </div>
          </td>

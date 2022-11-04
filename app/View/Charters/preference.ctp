@@ -4,6 +4,7 @@
 <?php
     $baseFolder = $this->request->base;
     $session = $this->Session->read('charter_info.CharterGuest'); 
+    $sessionData = $this->Session->read();
     $sessionAssoc = $this->Session->read('charter_assoc_info');
     $adminLogin = $this->Session->read('charter_info.CharterGuest.Adminlogin');
      $selectedCHID = $this->Session->read('selectedCHID');
@@ -37,6 +38,11 @@
 
     $iti_guestListUUID_beforeleave = $this->Session->read('guestListUUID');
  $iti_selectedCharterProgramUUID_beforeleave = $this->Session->read('selectedCharterProgramUUID'); 
+
+ $iti_guestListUUID = $this->Session->read('guestListUUID');
+ $iti_selectedCharterProgramUUID = $this->Session->read('selectedCharterProgramUUID'); 
+
+ $showPopup = $this->Session->read('showPopup'); 
 
  $isgenerateWineOrderPdf = $this->Session->read('isgenerateWineOrderPdf'); 
  if($isgenerateWineOrderPdf==true){
@@ -83,6 +89,11 @@
 ?>
 
 <style>
+      @media only screen and (min-width: 300px) and (max-width: 1024px){
+label {
+  font-size: 14px !important;
+}
+}
     .occDate .form-control {
     padding: 6px 8px;
 }
@@ -191,10 +202,16 @@
   color: #000;
 }
 body .menu .menu__item a{
-    background: #a4a0a0!important;
+    /* background: #a4a0a0!important; */
   color: #000;
 }
+    /* .nav-side-menu .sidebar {
+  width: 190px;
+    } */
     .nav-side-menu .sidebar {
+  width: 139px;
+    }
+  .nav-side-menu .show {
   width: 190px;
     }
 
@@ -252,6 +269,120 @@ body .menu .submenu .menu__item a {
     }
 }
 
+.nav-justified2 > li > a {
+  margin-bottom: 5px;
+  text-align: center;
+}
+.container-row-all-innerpages{
+    margin-top:30px;
+}
+.container-row-all-innerpages .nav-justified2{
+    margin-bottom: 40px;
+display: flex;
+justify-content: center;
+
+}
+.nav-justified2 {
+  width: 100%;
+}
+@media only screen and (max-width: 767px){
+    .mob_mr_0{
+        margin-right: 0px;
+    }
+    .navbar-absalute-top {
+  z-index: auto;
+    }
+    .nav-side-menu-full-container .nav-side-menu .sidebar-btn{
+        top: 27px;
+    }
+    .container-row-all-innerpages .nav-justified2 {
+        margin-bottom: 0px;
+  justify-content: inherit;
+  overflow: auto;
+    }
+    .container-row-all-innerpages {
+  top: 95px;
+}
+.fixed-row-container {
+  margin-top: 0px;
+}
+.personal-row-container{
+    margin-top: 0px;
+}
+.nav-pills > li{
+    margin: 0px 0px 0px 0px!important;
+    
+}
+.nav-pills > li > a.nav-anch {
+    padding: 6px 4px;
+  /* background: #fff;
+   width: 95px;  */
+}
+.nav-side-menu-full-container .nav-side-menu .sidebar {
+    top: 60px;
+}
+.position-mobile-head {
+    text-transform: inherit;
+  margin-top: 10px;
+  top: -41px;
+  left: 80px;
+  font-size: 16px;
+}
+.nav-pills > li {
+    width: auto;
+}
+.mobwt-95{
+    /* width: 95px; */
+    width: 98px;
+}
+.pl-wt{
+    /* width: 72px; */
+    width: 98px;
+}
+.meal-wt{
+    width: 98px;
+}
+.food_wt{
+    /* width: 43px; */
+    width: 98px;
+}
+.beverage-wt{
+    /* width: 72px; */
+    width: 98px;
+}
+.wine_wt{
+    /* width: 93px; */
+    width: 98px;
+}
+.itinerary_wt{
+    /* width: 93px; */
+    width: 98px;
+}
+}
+@media only screen and (min-width: 690px) and (max-width: 767px){
+.container-row-all-innerpages .nav-justified2 {
+  justify-content: center;
+}
+}
+@media only screen and (min-width: 767px) and (max-width: 1024px){
+.container-row-all-innerpages{
+margin-top: 50px;
+}
+}
+@media only screen and (min-width: 767px) and (max-width: 991px){
+    /* .nav-pills > li{
+    margin: 0px 10px 10px 10px!important;
+    width: inherit;
+}
+.nav-pills > li > a.nav-anch {
+  background: #fff;
+  width: 95px;
+}
+.container-row-all-innerpages .nav-justified2 {
+  justify-content: inherit;
+  overflow: auto;
+    } */
+}
 
 </style>
 
@@ -310,10 +441,10 @@ body .menu .submenu .menu__item a {
         </button></a>
     </div>
 <?php } ?>
-<div class="nav-side-menu-full-container hidden-mob-view">
+<div class="nav-side-menu-full-container">
  <div class="nav-side-menu">
 <div class="base-margin">
-<div  class="sidebar-btn">
+<div  class="sidebar-btn ">
     <div class="menu-stripes"></div>
     <div class="menu-stripes"></div>
     <div class="menu-stripes"></div>
@@ -389,92 +520,32 @@ body .menu .submenu .menu__item a {
 </div>
 </div>   
 </div>
+
 <div class="container-row-all-innerpages">
-<div class="nav-side-menu">
-<div class="base-margin">
-<div id="sidebar-btn" class="sidebar-btn">
-    <div class="menu-stripes"></div>
-    <div class="menu-stripes"></div>
-    <div class="menu-stripes"></div>
-</div>
-<section id="sidebar" class="sidebar">
+
     <nav class="menu"> 
-        <ul class="menu menu-level1 no-style nav nav-pills nav-justified">
-          <li class="<?php echo $personalDetailsTab; ?>"><a data-toggle="tab" href="#personal_det" class="nav-anch">Personal</a></li>
-          <li class="<?php echo $mealPreferenceTab; ?>"><a data-toggle="tab" href="#meals" class="nav-anch">Meal Service</a></li>
-          <li class="<?php echo $foodPreferenceTab; ?>"><a data-toggle="tab" href="#food" class="nav-anch">Food</a></li>
-          <li class="<?php echo $beveragePreferenceTab; ?>"><a data-toggle="tab" href="#beverage" class="nav-anch">Beverage</a></li>
+        <ul class="menu menu-level1 no-style nav nav-pills nav-justified2">
+          <li class="<?php echo $personalDetailsTab; ?>"><a data-toggle="tab" href="#personal_det" class="nav-anch pl-wt">Personal</a></li>
+          <li class="<?php echo $mealPreferenceTab; ?>"><a data-toggle="tab" href="#meals" class="nav-anch meal-wt">Meal Service</a></li>
+          <li class="<?php echo $foodPreferenceTab; ?>"><a data-toggle="tab" href="#food" class="nav-anch food_wt">Food</a></li>
+          <li class="<?php echo $beveragePreferenceTab; ?>"><a data-toggle="tab" href="#beverage" class="nav-anch beverage-wt">Beverage</a></li>
           <?php if(isset($ownerprefenceID)){
               //if($sessionCH == 2){ ?>
-          <li class="<?php echo $spiritPreferenceTab; ?>"><a data-toggle="tab" href="#spirit" class="nav-anch">Beer & Spirit</a></li>
-          <li class="<?php echo $winePreferenceTab; ?>"><a data-toggle="tab" id="wineTab" href="#wine" class="nav-anch">Wine List</a></li>
+          <li class="<?php echo $spiritPreferenceTab; ?>"><a data-toggle="tab" href="#spirit" class="nav-anch BS-wt mobwt-95">Beer & Spirit</a></li>
+          <li class="<?php echo $winePreferenceTab; ?>"><a data-toggle="tab" id="wineTab" href="#wine" class="nav-anch wine_wt">Wine List</a></li>
           <?php } //} else{ ?>
            <!-- <li class="<?php echo $spiritPreferenceTab; ?>"><a data-toggle="tab" href="#spirit" class="nav-anch">Beer & Spirit</a></li>
            <li class="<?php echo $winePreferenceTab; ?>"><a data-toggle="tab" id="wineTab" href="#wine" class="nav-anch">Wine List</a></li> -->
         
           <?php //} ?>
           
-          <li class="<?php echo $itineraryPreferenceTab; ?>"><a data-toggle="tab" href="#itinerary" class="nav-anch">Itinerary</a></li>
+          <li class="<?php echo $itineraryPreferenceTab; ?>"><a data-toggle="tab" href="#itinerary" class="nav-anch itinerary_wt">Itinerary</a></li>
           
-          <li class="none-vew pagleave"> <a href="<?php echo $baseFolder."/charters/programs/".$session['guestListUUID'];  ?>">Charter Programs</a></li>
-          <?php if(isset($ownerprefenceID) && !empty($ownerprefenceID)){ ?>
-            <li class="none-vew pagleave"><a href="<?php echo $baseFolder."/charters/view/".$ownerprefenceID."/".$selectedCharterProgramUUID."/".$sessionCharterGuest['charter_company_id']; ?>">Guest List</a></li>
-            <?php }else if(isset($assocprefenceID) && !empty($assocprefenceID)){ ?>
-                <li class="none-vew pagleave"><a href="<?php echo $baseFolder."/charters/view_guest/".$selectedCharterProgramUUID."/".$sessionCharterGuest['charter_company_id']; ?>">Guest List</a></li>
-                <?php } ?>    
-                <?php if(empty($mapdetails)){ 
-                $title  = "Not published";
-            }else if(!empty($mapdetails)){
-                    $title  = "";
-            } ?>
-            <?php if(isset($ownerprefenceID) && !empty($ownerprefenceID)){ ?>
-                <li class="none-vew menu__item"> <a href="#" title="<?php echo $title; ?>">Cruising Map</a>
-                
-                <?php if(isset($mapdetails)){ ?>
-                    <ul class="submenu">
-                        <?php foreach($mapdetails as $startdate => $data){ ?>
-                            <li class="none-vew menu__item pagleave"><a href="<?php echo $baseFolder."/charters/charter_program_map/".$data['programid'].'/'.$data['dbname'].'/owner'; ?>" target="blank"><?php echo $startdate; ?></a></li>
-                        <?php
-                                
-                            } ?>
-                    </ul>
-                <?php } ?>
-            </li>   
-            <?php } ?>
-            <?php if(isset($assocprefenceID) && !empty($assocprefenceID)){ ?>
-            <li class="none-vew pagleave"><a class="nav-anch" href="<?php echo $baseFolder."/charters/charter_program_map/".$charterHeadProgramId.'/'.$ydb_name.'/guest'; ?>" target="blank">Cruising Map</a></li>
-            <?php } ?>
-          <li class="none-vew menu__item"> <a href="#">Charter Contracts</a>
-            <?php 
-              if(isset($ownerprefenceID) && !empty($ownerprefenceID)){ 
-                    if(isset($programFiles)){ ?>
-                        <ul class="submenu">
-                            <?php foreach($programFiles as $startdate => $filepath){ ?>
-                            <li class="none-vew menu__item"><a href="<?php echo $filepath; ?>" target="_blank"><?php echo $startdate; ?></a></li>
-                            <?php
-                                    
-                                } ?>
-                        </ul>
-                    <?php } 
-                }?>
-        </li>  
-        <li class="none-vew menu__item" ><a>How To Video</a>
-           <ul class="submenu">
-                   <li class="menu__item" id="MenuHowToVideo"><a href="#">Preference Sheets</a></li>
-                   <li class="menu__item" id="MenuHowToVideoCharterHead"><a href="#">Head Charterer</a></li>
-                </ul>
-            </li> 
-           
-           <li class="none-vew"> <a class="nav-anch" href="<?php echo $baseFolder."/charters/privacytermsofuse/1" ?>" target="blank">Terms of Use</a></li>
-           <li class="none-vew"> <a class="nav-anch" href="<?php echo $baseFolder."/charters/privacytermsofuse/2" ?>" target="blank">Privacy Policy</a></li>
-         <li class="list-logout-row-inner none-vew"><?php echo $this->Html->link($this->Html->image("admin/table.png", array("alt" => "","title" => "Logout")).'  Logout','/',array('escape' =>false,'title' => 'Logout'));?></li>
-        </ul>
+          </ul>
     </nav>
-</section>
-</div>
-</div>
 
-<div class="row">
+
+<div class="row mob_mr_0">
     <div class="col-lg-4">
         <?php echo $this->Session->flash();?>
         <div id="responseAlert" class="alert alert-success top strong-font" style="display:none;">
@@ -551,6 +622,52 @@ if(isset($defaultLastName) && !empty($defaultLastName)){
   </div>
 </div>
 
+<div id="successPreferenceAlert" class="modal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" >
+  <div class="modal-dialog" role="document">
+    <!---------------- login or logout-------------------->
+    <div class="modal-content mc-bord" id="successbody">
+      <div class="modal-body" >
+      <div class="modalmsg"> 
+        <p>Thank you for submitting your preference sheets.</p>
+        <p>All information will stay secure and confidential.</p>
+        <p>If you need to update any information you can login again using the same email address and password.</p>
+      </div>
+        <div class="text-center">
+            <?php if (isset($sessionData["fleetLogoUrl"]) && !empty($sessionData["fleetLogoUrl"])) { ?>
+                <img src="<?php echo $sessionData["fleetLogoUrl"]; ?>" alt="">
+            <?php } ?> 
+                <h3><?php echo !empty($sessionData["fleetCompanyName"]) ? $sessionData["fleetCompanyName"] : ""; ?></h3>
+        </div>    
+      </div>
+      <div class="modal-footer" style="text-align: center;">
+          <input class="btn btn-success"type="button" name="stay_log_in" id="stay_log_in" value="Stay Logged in">
+          <a href="<?php echo $base; ?>" class="btn btn-success" style="width: 103px; margin-left: 70px;">Log Out</a>
+      </div>
+    </div>
+              <!------------------login or logout----------------->
+
+    <div class="modal-content mc-bord" id="successUsePreference">
+      <div class="modal-body">
+      <div class="modalmsg" style="margin-left: 30px;"> 
+        <p>Would you like to allow your preferences to</p>
+        <p>be provided to future charter programs</p>
+        <p>without you having to submit them again?</p>
+      </div>
+        <div class="text-center">
+          <input class="btn btn-success" style="background-color: #5cb85c;
+    border-color: #4cae4c;" type="button" name="yes_please" id="yes_please" value="Yes please" />
+          <input class="btn btn-danger" type="button" name="no_thanks" id="no_thanks" value="No thanks" />
+        </div>   
+        <div class="modalmsg" style="margin-left: 30px;"> 
+        <p>You can login to Charter Guest and make</p>
+        <p>changes to your preferences at any time.</p>
+        </div> 
+      </div>
+    </div>
+
+  </div>
+</div>
+
 <!-- Tab content -->
     <div class="tab-content container tab-md-row-container">    
         <!-- Personal details -->
@@ -583,6 +700,35 @@ if(isset($defaultLastName) && !empty($defaultLastName)){
 var urltogo = "";
 var form = "";
 var url = "";
+
+$(document).on("click", ".nav-justified2 li .pl-wt , .nav-justified2 li .meal-wt, .nav-justified2 li .food_wt", function(e) { 
+             var outerContent =$('.nav-justified2')[0].clientWidth;
+            // var innerContent = $('.nav-justified2 > .active > .nav-anch')[0].clientWidth;
+            // $('.nav-justified2').scrollLeft( (innerContent - outerContent) / 2 + " px");
+            $('.nav-justified2').scrollLeft( - outerContent);
+            });
+
+$(document).on("click", ".nav-justified2 li .BS-wt, .nav-justified2 li .wine_wt, .nav-justified2 li .itinerary_wt", function(e) { 
+             var outerContent =$('.nav-justified2')[0].clientWidth;
+            // var innerContent = $('.nav-justified2 > .active > .nav-anch')[0].clientWidth;
+            // $('.nav-justified2').scrollLeft(  outerContent + " px");
+            $('.nav-justified2').scrollLeft( + outerContent);
+            });
+$(document).on("click", ".nav-justified2 li .beverage-wt", function(e) { 
+     var outerContent =$('.nav-justified2')[0].clientWidth;
+   // var $width = $('.nav-justified2').outerWidth()
+        var $scrollWidth = $('.nav-justified2')[0].scrollWidth; 
+        // var $scrollLeft = $('.nav-justified2').scrollLeft();
+        var $scrollLeft = Math.round($('.nav-justified2').scrollLeft());
+
+        if ($scrollWidth - (outerContent-1) === $scrollLeft || $scrollWidth - (outerContent) === $scrollLeft){
+            $('.nav-justified2').scrollLeft( - outerContent);
+        }
+        else{
+            $('.nav-justified2').scrollLeft( + outerContent);
+        }
+            
+            });       
 $(document).on("click", ".pagleave", function(e) { 
     $("#pageleavemodal").modal("show");
      urltogo = $(this).find('a').attr('href');
@@ -806,21 +952,21 @@ $(".datePicker").datepicker({
     changeYear: true,
     changeMonth:true,
     yearRange: "-100:+100"
-});
+}).attr('readonly','readonly');
 $(".issuedatePicker").datepicker({
     dateFormat: 'd M yy',
     changeYear: true,
     changeMonth:true,
     yearRange: "c-12:c+0",
     // yearRange: "-100:+100"
-});
+}).attr('readonly','readonly');
 $(".expirydatePicker").datepicker({
     dateFormat: 'd M yy',
     changeYear: true,
     changeMonth:true,
     yearRange: "c-0:c+12",
     // yearRange: "-100:+100"
-});
+}).attr('readonly','readonly');
 var dateToday = new Date();
 var dobYearRange = "1900:" + dateToday.getFullYear();
 var occationYearRange = dateToday.getFullYear() + ":" + (dateToday.getFullYear() + 5);
@@ -830,14 +976,14 @@ $(".dobDatePicker").datepicker({
     changeYear: true,
     changeMonth:true,
     yearRange: dobYearRange
-});
+}).attr('readonly','readonly');
 // Special occations
 $(".occationDatePicker").datepicker({
     dateFormat: 'd M yy',
     changeYear: true,
     changeMonth:true,
     yearRange: occationYearRange
-});
+}).attr('readonly','readonly');
 
 // Timepicker
 $('.timePicker').timepicker({ 
@@ -1032,4 +1178,203 @@ function validateDate(id) {
 $(window).on('load', function () {
     $('#hideloader').hide();
 }) 
+
+$(document).ready(function()
+{
+    jQuery("#personalDetailsForm").validate(
+    {	
+        // errorElement: "div",
+        rules: {	                 
+            "data[CharterGuestPersonalDetail][first_name]": {
+                required: true
+            },
+                "data[CharterGuestPersonalDetail][family_name]": {
+                required: true
+            },
+            "data[CharterGuestPersonalDetail][dob]": {
+                required: true                    
+            },
+            "data[CharterGuestPersonalDetail][pob]": {
+                required: true
+            },
+            "data[CharterGuestPersonalDetail][nationality]": {
+                required: true
+            },
+            "data[CharterGuestPersonalDetail][passport_num]": {
+                required: true
+            },
+            "data[CharterGuestPersonalDetail][issued_date]": {
+                required: true
+            },
+            "data[CharterGuestPersonalDetail][expiry_date]": {
+                required: true
+            },
+            "data[CharterGuestPersonalDetail][next_of_kin]": {
+                required: true
+            },
+            "data[CharterGuestPersonalDetail][next_of_kin_phone]": {
+                required: true
+            }
+            
+        },
+        highlight: function(element) {
+            $(element).addClass('has-error');
+        },
+        unhighlight: function(element) {
+            $(element).removeClass('has-error');
+        },
+        messages: {
+            "data[CharterGuestPersonalDetail][first_name]": {
+                required: ""
+                // required: "Please enter the first name."                    
+            },
+                "data[CharterGuestPersonalDetail][family_name]": {
+                required: ""
+                // required: "Please enter the family name."
+            },
+            "data[CharterGuestPersonalDetail][dob]": {
+                required: ""
+                // required: "Please enter the valid dob."                    
+            },
+            "data[CharterGuestPersonalDetail][pob]": {
+                required: ""
+                // required: "Please enter place of birth."
+            },
+            "data[CharterGuestPersonalDetail][nationality]": {
+                required: ""
+                // required: "Please select a nationality."
+            },
+            "data[CharterGuestPersonalDetail][passport_num]": {
+                required: ""
+                // required: "Please enter passport number."
+            },
+            "data[CharterGuestPersonalDetail][issued_date]": {
+                required: ""
+                // required: "Please enter passport issue date."
+            },
+            "data[CharterGuestPersonalDetail][expiry_date]": {
+                required: ""
+                // required: "Please enter passport expiry date."
+            },
+            "data[CharterGuestPersonalDetail][next_of_kin]": {
+                required: ""
+                // required: "Please enter Next of Kin."
+            },
+            "data[CharterGuestPersonalDetail][next_of_kin_phone]": {
+                required: ""
+                // required: "Please enter NoK Phone."
+            }
+        }
+    });
+}); 
+
+$(document).ready(function (e) {
+    <?php if (isset($showPopup) && $showPopup == 1) { ?>
+            //$("#usesubmittedpreferences").modal('show');
+            $("#successPreferenceAlert").modal("show");
+            $("#successUsePreference").show();
+            $("#successbody").hide();
+    <?php } ?> 
+});    
+<?php if (isset($showPopup) && $showPopup == 1) { //$this->Session->delete("showPopup");?>
+$(document).click('#stay_log_in',function(){
+    //alert();
+    $("#successPreferenceAlert").modal("hide");
+    sessionShowPopupDelete();
+});
+<?php } ?>
+
+
+$(document).on("click", "#yes_please", function(e) {     //alert();
+  
+  var data = {
+      "guestListUUID": "<?php echo $iti_guestListUUID; ?>",
+      "selectedCharterProgramUUID": "<?php echo $iti_selectedCharterProgramUUID; ?>"
+  };
+  
+  
+      $("#hideloader").show();
+      $.ajax({
+          type: "POST",
+          url: BASE_FOLDER+'/charters/saveusesubmittedpreferences',
+          dataType: 'json',
+          data: data,
+          success:function(result) {
+              $("#hideloader").hide();
+              if (result.status == 'success') {
+                $("#successUsePreference").hide();
+                $("#successbody").show();
+                return false;
+              }else if(result.status == 'fail'){
+                $("#successUsePreference").hide();
+                $("#successbody").show();
+                return false;
+              }   
+          },
+          error: function(jqxhr) { 
+              $("#hideloader").hide();
+          }
+      });
+      return false;
+});
+$(document).on("click", "#no_thanks", function(e) {
+
+$("#successUsePreference").hide();
+$("#successbody").show();
+          return false;
+
+});
+
+function sessionShowPopupDelete(){
+    $("#hideloader").show();
+    $.ajax({
+          type: "POST",
+          url: BASE_FOLDER+'/charters/sessionShowPopupDelete',
+          dataType: 'json',
+          data: '',
+          success:function(result) {
+              $("#hideloader").hide();
+              
+          },
+          error: function(jqxhr) { 
+              $("#hideloader").hide();
+          }
+      });
+    }
+   
+
+$(document).on('change','#passportImage',function(){
+        var property = document.getElementById('passportImage').files[0];
+        var image_name = property.name;
+        var image_extension = image_name.split('.').pop().toLowerCase();
+
+        if(jQuery.inArray(image_extension,['gif','jpg','jpeg','png','pdf']) == -1){
+          alert("Invalid image file");
+          $("#passportImage").val('');
+        }
+
+        var form_data = new FormData();
+        form_data.append("file",property);
+
+       
+    //alert(form_data);   
+    $("#hideloader").show();                          
+    $.ajax({
+        url: BASE_FOLDER+'/charters/uploadpassportimage', // <-- point to server-side PHP script 
+        dataType: 'json',
+        cache: false,
+        contentType: false,
+        processData: false,
+        data: form_data,                         
+        type: 'post',
+        success: function(php_script_response){
+            $("#hideloader").hide();
+            //alert(php_script_response.passport_image); 
+            $("#CharterGuestPersonalDetailExistPassportImage").val(php_script_response.passport_image);
+        }
+     });
+
+   
+});
+
 </script> 

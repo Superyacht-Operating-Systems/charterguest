@@ -606,6 +606,12 @@ font-weight: bold;
 
 }
 @media screen and (max-width:767px) {
+    .nav-side-menu-full-container .nav-side-menu .sidebar {
+  width: 120px;
+    }
+    .nav-side-menu-full-container .nav-side-menu .show {
+  width: 180px;
+    }
 .md-row-h-12,
 .md-hdtilt{
     display: none!important;
