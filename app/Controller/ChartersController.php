@@ -6831,5 +6831,8 @@ function getIndividualmsgcountMarer() {
         $this->Session->write("fleetname", $companyData['Fleetcompany']['fleetname']);
         return $fleetLogoUrl;
     }
+
+
+    
     
 }
