@@ -558,7 +558,7 @@ class ChartersController extends AppController {
                             if($fleetname == "fleetbeta" || $fleetname == "SOS"){
                                 $targetFullPath = $SITE_URL."/fleetbeta/app/webroot/img/charter_program_files/charter_program_photo/".$chData['CharterGuest']['program_image'];
                             }else if($fleetname != "fleetbeta" || $fleetname != "SOS"){
-                                $targetFullPath = $SITE_URL."/".$fleetname."/app/webroot/img/charter_program_files/charter_program_photo/".$value['CharterGuest']['program_image'];
+                                $targetFullPath = $SITE_URL."/".$fleetname."/app/webroot/img/charter_program_files/charter_program_photo/".$chData['CharterGuest']['program_image'];
                             }else{
                                 $targetFullPath = $SITE_URL."/".$fleetname."/app/webroot/".$yname."/app/webroot/img/charter_program_files/charter_program_photo/".$chData['CharterGuest']['program_image'];
                             }
