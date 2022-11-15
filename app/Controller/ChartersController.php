@@ -5582,8 +5582,8 @@ class ChartersController extends AppController {
                     <form id="scheduleFormEdit"><div class="inputContainerdiv">
                     <div class="sp-divrow">
                     <div class="sp-60-w">
-                    <input type="text" name="title" value="'.$title.'" placeholder="Enter the Title" class="" '.$readonly.' style="color: #000;font-size: 15px;border: solid 1px #ccc;width:100%;margin: 0px;padding: 8px 5px;font-weight: 600;">
-                    <textarea class="form-control textareacontmarker" style="background: #eee !important;color: #000!important;border: solid 1px rgb(243 243 243 / 70%)!important;" name="messagestitle" '.$readonly.' rows="4" cols="50">'.$notes.'</textarea>
+                    <input type="text" name="title" value="'.htmlspecialchars($title).'" placeholder="Enter the Title" class="" '.$readonly.' style="color: #000;font-size: 15px;border: solid 1px #ccc;width:100%;margin: 0px;padding: 8px 5px;font-weight: 600;">
+                    <textarea class="form-control textareacontmarker" style="background: #eee !important;color: #000!important;border: solid 1px rgb(243 243 243 / 70%)!important;" name="messagestitle" '.$readonly.' rows="4" cols="50">'.htmlspecialchars($notes).'</textarea>
                     </div>
                     <div class="sp-40-w">
                     <div class="sp-upload-img">
@@ -5693,7 +5693,7 @@ class ChartersController extends AppController {
                                 $colorcode = "";
                               }
 
-                            $popupHtml .= '<div class="sp-divrow"><div class="sp-60-w"><input type="text" name="activity_name[]" '.$readonly.' style="color: #000;font-size: 15px;border: solid 1px #ccc;width:100%;margin: 0px;padding: 8px 5px;font-weight: 600;" value="'.$activity['CharterProgramScheduleActivity']['activity_name'].'"><input type="hidden" name="activity_id[]" value="'.$activity['CharterProgramScheduleActivity']['UUID'].'"><textarea class="form-control textareacontmarker" '.$readonly.' style="background: #eee !important;color: #000!important;border: solid 1px rgb(243 243 243 / 70%)!important;" name="messages[]" rows="4" cols="50">'.$activity['CharterProgramScheduleActivity']['notes'].'</textarea></div><div class="sp-40-w"><div class="sp-upload-img"><a href="'.$activityattachmentimagehref.'" class="'.$activityfancybox.'"><img src="'.$activityattachmentimage.'" style="object-fit: fill; height: 150px;" alt=""></a></div><ul class="action-icon"><li><i class="fa fa-comments crew_comment_cruisingmap" style="'.$colorcode.$displaynone.'" data-rel="'.$activity['CharterProgramScheduleActivity']['UUID'].'" data-yachtid="'.$yacht_id.'" data-tempname="'.$activity['CharterProgramScheduleActivity']['activity_name'].'" title="Comments & Feedback"><input type="hidden" name=comments[] value="" class="messagecomments" /></i></li></ul></div></div>
+                            $popupHtml .= '<div class="sp-divrow"><div class="sp-60-w"><input type="text" name="activity_name[]" '.$readonly.' style="color: #000;font-size: 15px;border: solid 1px #ccc;width:100%;margin: 0px;padding: 8px 5px;font-weight: 600;" value="'.htmlspecialchars($activity['CharterProgramScheduleActivity']['activity_name']).'"><input type="hidden" name="activity_id[]" value="'.$activity['CharterProgramScheduleActivity']['UUID'].'"><textarea class="form-control textareacontmarker" '.$readonly.' style="background: #eee !important;color: #000!important;border: solid 1px rgb(243 243 243 / 70%)!important;" name="messages[]" rows="4" cols="50">'.htmlspecialchars($activity['CharterProgramScheduleActivity']['notes']).'</textarea></div><div class="sp-40-w"><div class="sp-upload-img"><a href="'.$activityattachmentimagehref.'" class="'.$activityfancybox.'"><img src="'.$activityattachmentimage.'" style="object-fit: fill; height: 150px;" alt=""></a></div><ul class="action-icon"><li><i class="fa fa-comments crew_comment_cruisingmap" style="'.$colorcode.$displaynone.'" data-rel="'.$activity['CharterProgramScheduleActivity']['UUID'].'" data-yachtid="'.$yacht_id.'" data-tempname="'.$activity['CharterProgramScheduleActivity']['activity_name'].'" title="Comments & Feedback"><input type="hidden" name=comments[] value="" class="messagecomments" /></i></li></ul></div></div>
                              ';
                         }
                     }
@@ -5802,8 +5802,8 @@ class ChartersController extends AppController {
                         <form id="scheduleFormEdit"><div class="inputContainerdiv">
                         <div class="sp-divrow">
                         <div class="sp-60-w"><h1 style="float:left;border:none;">Day '.$dayNum.'&nbsp;&nbsp;&nbsp;&nbsp;</h1>
-                        <input type="text" name="title" value="'.$title.'" placeholder="Enter the Title" class="" '.$readonly.' style="color: #000;float:right;font-size: 15px;border: solid 1px #ccc;width:68%;margin: 0px;padding: 8px 5px;font-weight: 600;background-color: #ddd;">
-                        <textarea class="form-control textareacont" name="messagestitle" '.$readonly.' rows="4" cols="50" style="margin-top:42px;background: #eee !important;color: #000!important;border: solid 1px rgb(243 243 243 / 70%)!important;">'.$notes.'</textarea>
+                        <input type="text" name="title" value="'.htmlspecialchars($title).'" placeholder="Enter the Title" class="" '.$readonly.' style="color: #000;float:right;font-size: 15px;border: solid 1px #ccc;width:68%;margin: 0px;padding: 8px 5px;font-weight: 600;background-color: #ddd;">
+                        <textarea class="form-control textareacont" name="messagestitle" '.$readonly.' rows="4" cols="50" style="margin-top:42px;background: #eee !important;color: #000!important;border: solid 1px rgb(243 243 243 / 70%)!important;">'.htmlspecialchars($notes).'</textarea>
                         </div>
                         <div class="sp-40-w">
                         <div class="sp-upload-img">
