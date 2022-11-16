@@ -6199,7 +6199,9 @@ class ChartersController extends AppController {
  
          $activity_id_chk = $activityId;      
          if(isset($activity_id_chk) && !empty($activity_id_chk)){
-             $CruisingMapCommentConditons = "activity_id = '$activity_id_chk' AND activity_name = '$activity_name' AND type = '$type' AND publish_map = 1";
+            $getactivityname =  str_replace("'", "", $activity_name);
+            $getactivityname = str_replace('"', "", $getactivityname);
+             $CruisingMapCommentConditons = "activity_id = '$activity_id_chk' AND activity_name = '$getactivityname' AND type = '$type' AND publish_map = 1";
              $comments = $this->CharterGuest->getCruisingMapComment($yachtDbName, $CruisingMapCommentConditons);
          }
  
@@ -6246,8 +6248,9 @@ class ChartersController extends AppController {
                      $updateCruisingMapCommentValues = "crew_newlyaddedcomment='0',fleet_newlyaddedcomment='0',modified=$shipTime";
                      
                 
-         
-                     $updateConditionsCruisingMapComment = "activity_id = '$activityId' AND activity_name = '$activity_name' AND type='activity'";
+                     $getactivityname =  str_replace("'", "", $activity_name);
+                     $getactivityname = str_replace('"', "", $getactivityname);
+                     $updateConditionsCruisingMapComment = "activity_id = '$activityId' AND activity_name = '$getactivityname' AND type='activity'";
                      
                      $scheduleUpdateStatus = $this->CharterGuest->updateCruisingMapComment($yachtDbName, $updateConditionsCruisingMapComment, $updateCruisingMapCommentValues);
              }
@@ -6262,8 +6265,9 @@ class ChartersController extends AppController {
  
              $updateCruisingMapCommentValues = "crew_newlyaddedcomment='0',fleet_newlyaddedcomment='0',modified=$shipTime";
  
-         
-             $updateConditionsCruisingMapComment = "activity_id = '$activityId' AND activity_name = '$activity_name' AND type='schedule'";
+             $getactivityname =  str_replace("'", "", $activity_name);
+             $getactivityname = str_replace('"', "", $getactivityname);
+             $updateConditionsCruisingMapComment = "activity_id = '$activityId' AND activity_name = '$getactivityname' AND type='schedule'";
              
              $scheduleUpdateStatus = $this->CharterGuest->updateCruisingMapComment($yachtDbName, $updateConditionsCruisingMapComment, $updateCruisingMapCommentValues);
          }
