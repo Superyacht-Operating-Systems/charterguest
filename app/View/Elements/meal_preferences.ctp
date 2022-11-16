@@ -231,6 +231,18 @@
 
 ?>
 <style>
+.radio.silverservice-input input[type="radio"]{
+    height: 27px!important;
+    width: 108px!important;
+    top: 0px;
+  }
+  
+.plated-input.radio input[type="radio"]   { height: 23px!important;
+height: 27px!important;
+    width: 63px!important;
+    top: 0px;
+  }
+  
     .label_lr{
         text-align: right;
         padding: 0px;
@@ -668,19 +680,19 @@ input[type="checkbox"] {
             <?php echo $this->Form->input("breakfast_time",array("label"=>false, 'placeholder' => 'Time','class'=>'form-control input-wid breakfast_time_timePicker','type' => 'text', 'onchange' => "validateHhMm(this)")); ?>
           </div>
           <div class="col-lg-2 col-sm-2 md-radio-column-box">
-            <div class="radio ma-t-check">
+            <div class="radio ma-t-check plated-input">
             <input type="radio" name="data[CharterGuestMealPreference][breakfast_service_style]" value="1" <?php echo (isset($mealPreferences['CharterGuestMealPreference']['breakfast_service_style']) && $mealPreferences['CharterGuestMealPreference']['breakfast_service_style'] == 1) ? 'checked' : ''; ?>>
                 <label class="pdd-none"><span>Plated</span></label>
             </div>
           </div>
           <div class="col-lg-2 col-sm-2 md-radio-column-box">
-            <div class="radio ma-t-check">
+            <div class="radio ma-t-check plated-input">
             <input type="radio" name="data[CharterGuestMealPreference][breakfast_service_style]" value="2" <?php echo (isset($mealPreferences['CharterGuestMealPreference']['breakfast_service_style']) && $mealPreferences['CharterGuestMealPreference']['breakfast_service_style'] == 2) ? 'checked' : ''; ?>>
               <label class="pdd-none"><span>Buffet</span></label>
             </div>
           </div>
           <div class="col-lg-3 col-sm-3 md-radio-column-box-max">
-            <div class="radio ma-t-check">
+            <div class="silverservice-input radio ma-t-check">
             <input type="radio" name="data[CharterGuestMealPreference][breakfast_service_style]" value="3" <?php echo (isset($mealPreferences['CharterGuestMealPreference']['breakfast_service_style']) && $mealPreferences['CharterGuestMealPreference']['breakfast_service_style'] == 3) ? 'checked' : ''; ?>>
               <label class="pdd-none"><span>Silver Service</span></label>
             </div>
@@ -696,19 +708,19 @@ input[type="checkbox"] {
             <?php echo $this->Form->input("lunch_time",array("label"=>false, 'placeholder' => 'Time','class'=>'form-control input-wid lunch_time_timePicker','type' => 'text', 'onchange' => "validateHhMm(this)")); ?>
           </div>
           <div class="col-lg-2 col-sm-2 md-radio-column-box">
-            <div class="radio ma-t-check">
+            <div class="radio ma-t-check plated-input">
             <input type="radio" name="data[CharterGuestMealPreference][lunch_service_style]" value="1" <?php echo (isset($mealPreferences['CharterGuestMealPreference']['lunch_service_style']) && $mealPreferences['CharterGuestMealPreference']['lunch_service_style'] == 1) ? 'checked' : ''; ?>>
               <label class="pdd-none"><span>Plated</span></label>
             </div>
           </div>
           <div class="col-lg-2 col-sm-2 md-radio-column-box">
-            <div class="radio ma-t-check">
+            <div class="radio ma-t-check plated-input">
             <input type="radio" name="data[CharterGuestMealPreference][lunch_service_style]" value="2" <?php echo (isset($mealPreferences['CharterGuestMealPreference']['lunch_service_style']) && $mealPreferences['CharterGuestMealPreference']['lunch_service_style'] == 2) ? 'checked' : ''; ?>>
               <label class="pdd-none"><span>Buffet</span></label>
             </div>
           </div>
           <div class="col-lg-3 col-sm-3 md-radio-column-box-max">
-            <div class="radio ma-t-check">
+            <div class="silverservice-input radio ma-t-check">
             <input type="radio" name="data[CharterGuestMealPreference][lunch_service_style]" value="3" <?php echo (isset($mealPreferences['CharterGuestMealPreference']['lunch_service_style']) && $mealPreferences['CharterGuestMealPreference']['lunch_service_style'] == 3) ? 'checked' : ''; ?>>
               <label class="pdd-none"><span>Silver Service</span></label>
             </div>
@@ -724,19 +736,19 @@ input[type="checkbox"] {
             <?php echo $this->Form->input("dinner_time",array("label"=>false, 'placeholder' => 'Time','class'=>'form-control input-wid dinner_time_timePicker','type' => 'text', 'onchange' => "validateHhMm(this)")); ?>
           </div>
           <div class="col-lg-2 col-sm-2 md-radio-column-box">
-            <div class="radio ma-t-check">
+            <div class="radio ma-t-check plated-input">
             <input type="radio" name="data[CharterGuestMealPreference][dinner_service_style]" value="1" <?php echo (isset($mealPreferences['CharterGuestMealPreference']['dinner_service_style']) && $mealPreferences['CharterGuestMealPreference']['dinner_service_style'] == 1) ? 'checked' : ''; ?>>
               <label class="pdd-none"><span>Plated</span></label>
             </div>
           </div>
           <div class="col-lg-2 col-sm-2 md-radio-column-box">
-            <div class="radio ma-t-check">
+            <div class="radio ma-t-check plated-input">
             <input type="radio" name="data[CharterGuestMealPreference][dinner_service_style]" value="2" <?php echo (isset($mealPreferences['CharterGuestMealPreference']['dinner_service_style']) && $mealPreferences['CharterGuestMealPreference']['dinner_service_style'] == 2) ? 'checked' : ''; ?>>
               <label class="pdd-none"><span>Buffet</span></label>
             </div>
           </div>
           <div class="col-lg-3 col-sm-3 md-radio-column-box-max">
-            <div class="radio ma-t-check">
+            <div class="silverservice-input radio ma-t-check">
             <input type="radio" name="data[CharterGuestMealPreference][dinner_service_style]" value="3" <?php echo (isset($mealPreferences['CharterGuestMealPreference']['dinner_service_style']) && $mealPreferences['CharterGuestMealPreference']['dinner_service_style'] == 3) ? 'checked' : ''; ?>>
               <label class="pdd-none"><span>Silver Service</span></label>
             </div>
