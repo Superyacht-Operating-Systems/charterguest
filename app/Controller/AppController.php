@@ -31,8 +31,15 @@ App::uses('Controller', 'Controller');
  * @link		http://book.cakephp.org/2.0/en/controllers.html#the-app-controller
  */
 class AppController extends Controller {
+
     var $helpers = array('Form', 'Html');
     var $components = array('RequestHandler', 'Session','Cookie');
+
+	// function beforeRender() {
+	// 	if ($this->name == 'CakeError') {
+	// 		$this->redirect(array('controller' => 'Charters', 'action' => 'index'));
+	// 	}
+	// }
     
     function beforeFilter() {
        // echo "<pre>"; print_r($this->params); exit;

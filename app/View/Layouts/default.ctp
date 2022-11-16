@@ -84,6 +84,7 @@ $actual_link_defaultctp = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on
     <link href="//vjs.zencdn.net/7.10.2/video-js.min.css" rel="stylesheet">
 <script src="//vjs.zencdn.net/7.10.2/video.min.js"></script>
 
+<?php  echo $this->Html->script('Youtube'); ?>
 <style type="text/css">
 .modalmsg-container .modal-dialog{
 padding-left: 0px;
@@ -230,21 +231,7 @@ width: max-content;
 
 }
 
-@media screen 
-  and (max-device-width: 1600px) 
-  { 
 
-    .videomodalcontent{
-      width: 482px !important;
-      
-    }
-
-    .videoclass{
-      width: 450px !important;
-      height : 250px !important;
-    }
-
-}
 
 @media only screen and (device-width: 768px) {
   /* For general iPad layouts */
@@ -275,14 +262,30 @@ width: max-content;
 @media only screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:landscape) {
   /* For landscape layouts only */
   .videomodalcontent{
-      width: 482px !important;
+      width: 560px !important;
       
     }
 
     .videoclass{
-      width: 450px !important;
+      width: 375px !important;
       height : 250px !important;
     }
+}
+
+@media screen 
+  and (max-device-width: 1366px)  and (orientation:landscape) 
+  { 
+
+    .videomodalcontent{
+      width: 560px !important;
+      
+    }
+
+    .videoclass{
+      width: 375px !important;
+      height : 250px !important;
+    }
+
 }
 
 			</style>              
@@ -627,10 +630,11 @@ width: max-content;
     controls
     preload="auto"
     poster=""
-    data-setup='{"controls": true, "autoplay": false, "preload": "auto"}'>
-  <source src="<?php echo  $this->request->base; ?>/app/webroot/Guest_how_to_video.mp4" type="video/mp4"></source>
-  <!-- <source src="//vjs.zencdn.net/v/oceans.webm" type="video/webm"></source>
-  <source src="//vjs.zencdn.net/v/oceans.ogv" type="video/ogg"></source> -->
+    data-setup='{ "techOrder": ["youtube"], "sources": [{ "type": "video/youtube", "src": "https://youtu.be/uLBICcPhNeE"}] }'
+   
+    >
+  <source src="https://youtu.be/uLBICcPhNeE" type="video/mp4"></source>
+  
   <p class="vjs-no-js">
     To view this video please enable JavaScript, and consider upgrading to a
     web browser that
@@ -640,9 +644,9 @@ width: max-content;
   </p>
 </video>
         <!-- <video width="100%" height="100%" class="video videoclass" playsinline autoplay muted loop controls="true"  preload="metadata" id="preferencesheetvideo">
-        <source src="<?php echo  $this->request->base; ?>/app/webroot/Guest_how_to_video.mp4" type="video/mp4">
+        <source src="https://youtu.be/4aMP61dg-cQ" type="video/mp4">
         </video> -->
-                            
+        <!-- <iframe class="videomodalcontent" src="https://youtu.be/4aMP61dg-cQ" frameborder="0" allowfullscreen></iframe>                  -->
         </div>
         <div class="modal-footer">
             
@@ -667,11 +671,10 @@ width: max-content;
     controls
     preload="auto"
     poster=""
-    data-setup='{"controls": true, "autoplay": false, "preload": "auto"}'>
-  <source src="<?php echo  $this->request->base; ?>/app/webroot/Head_Charterer_how_to_video.mp4" type="video/mp4"></source>
-  <!-- <source src="//vjs.zencdn.net/v/oceans.webm" type="video/webm"></source>
-  <source src="//vjs.zencdn.net/v/oceans.ogv" type="video/ogg"></source> -->
-  <p class="vjs-no-js">
+    data-setup='{ "techOrder": ["youtube"], "sources": [{ "type": "video/youtube", "src": "https://youtu.be/1JrP38CXlSQ"}]}'>
+  <source src="https://youtu.be/1JrP38CXlSQ" type="video/mp4"></source>
+  
+  <p class="vjs-no-js"> 
     To view this video please enable JavaScript, and consider upgrading to a
     web browser that
     <a href="https://videojs.com/html5-video-support/" target="_blank">
@@ -680,7 +683,7 @@ width: max-content;
   </p>
 </video>
         <!-- <video width="100%" height="100%" class="video videoclass" playsinline autoplay muted loop controls="true"  preload="metadata" id="charterheadvideo">
-        <source src="<?php echo  $this->request->base; ?>/app/webroot/Head_Charterer_how_to_video.mp4" type="video/mp4">
+        <source src="https://youtu.be/ExAG5mRmGAU" type="video/mp4">
         </video> -->
                             
         </div>

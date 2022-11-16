@@ -373,6 +373,13 @@ class ChartersController extends AppController {
      * 
      */
     function programs() {
+        $session = $this->Session->read('charter_info');
+        
+        // echo "<pre>";print_r($sessionAssoc);exit;
+         if (empty($session)) {
+            $this->redirect(array('controller' => 'Charters', 'action' => 'index'));
+         }
+
         $actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
         //echo "<pre>";print_r($this->Session->read());exit;
         //echo $actual_link."<br>"; 
@@ -551,7 +558,7 @@ class ChartersController extends AppController {
                             if($fleetname == "fleetbeta" || $fleetname == "SOS"){
                                 $targetFullPath = $SITE_URL."/fleetbeta/app/webroot/img/charter_program_files/charter_program_photo/".$chData['CharterGuest']['program_image'];
                             }else if($fleetname != "fleetbeta" || $fleetname != "SOS"){
-                                $targetFullPath = $SITE_URL."/".$fleetname."/app/webroot/img/charter_program_files/charter_program_photo/".$value['CharterGuest']['program_image'];
+                                $targetFullPath = $SITE_URL."/".$fleetname."/app/webroot/img/charter_program_files/charter_program_photo/".$chData['CharterGuest']['program_image'];
                             }else{
                                 $targetFullPath = $SITE_URL."/".$fleetname."/app/webroot/".$yname."/app/webroot/img/charter_program_files/charter_program_photo/".$chData['CharterGuest']['program_image'];
                             }
@@ -767,6 +774,12 @@ class ChartersController extends AppController {
         //echo "<pre>";print_r($this->is_mobile);exit;
 
         //echo "<pre>";print_r($explodepath);
+        $session = $this->Session->read('charter_info');
+        
+        // echo "<pre>";print_r($sessionAssoc);exit;
+         if (empty($session)) {
+             $this->redirect(array('controller' => 'Charters', 'action' => 'index'));
+         }
         
         $charter_program_id = $charter_program_id;
         $charter_company_id = $charter_company_id;
@@ -844,12 +857,13 @@ class ChartersController extends AppController {
         $this->set('programFiles', $attachment);
         
         $this->set('ismobile',$this->is_mobile);
-
-        $image = $YachtData[0]['Yacht']['cg_background_image'];
-        $fleetname = $YachtData[0]['Yacht']['fleetname'];
-        $yachtname = $YachtData[0]['Yacht']['yname'];
-        $cgBackgroundImage = $this->getBackgroundImageUrl($image, $fleetname, $yachtname);
-        $this->Session->write("cgBackgroundImage", $cgBackgroundImage);
+        if(isset($YachtData) && !empty($YachtData)){
+                $image = $YachtData[0]['Yacht']['cg_background_image'];
+                $fleetname = $YachtData[0]['Yacht']['fleetname'];
+                $yachtname = $YachtData[0]['Yacht']['yname'];
+                $cgBackgroundImage = $this->getBackgroundImageUrl($image, $fleetname, $yachtname);
+                $this->Session->write("cgBackgroundImage", $cgBackgroundImage);
+        }
     }
     
     /*
@@ -898,8 +912,10 @@ class ChartersController extends AppController {
         $charter_company_id = isset($session['CharterGuest']['charter_company_id']) ? $session['CharterGuest']['charter_company_id'] : 0;
         $this->loadModel('Fleetcompany');
         $companyData = $this->Fleetcompany->find('first', array('fields' => array('ipad_hex_code','fleetname'), 'conditions' => array('id' => $charter_company_id)));
-        $pSheetsColor = $companyData['Fleetcompany']['ipad_hex_code'];
-        $this->Session->write("pSheetsColor", $pSheetsColor);
+        if(isset($companyData) && !empty($companyData)){
+            $pSheetsColor = $companyData['Fleetcompany']['ipad_hex_code'];
+            $this->Session->write("pSheetsColor", $pSheetsColor);
+        }
        
         // When main Head charterer opens other guest(if Head charterer checked) and Update the Preference sheets
         if (isset($this->request->query['assocId']) && !empty($this->request->query['assocId'])) {
@@ -1028,7 +1044,9 @@ class ChartersController extends AppController {
             $this->set("defaultLastName", $charterGuestAssociatelast_name);
 
             $this->Session->write("ownerprefenceID", $charterGuestId);
-            $this->Session->write("ownerprefenceUUID", $charterGuestAssociateUUID);
+            if(isset($charterGuestAssociateusers_UUID_val)){
+            $this->Session->write("ownerprefenceUUID", $charterGuestAssociateusers_UUID_val);
+            }
             $this->Session->write("selectedCharterProgramUUID", $guestAssocData['CharterGuest']['charter_program_id']);
 
             $this->Session->write("preferenceParam", "?CharterGuestId=".$this->request->query['CharterGuestId']);
@@ -1147,6 +1165,17 @@ class ChartersController extends AppController {
             //         $data['passport_image'] = $existPassportImage;
             //     //}
             // }
+            if (isset($data['medical_conditions']) && !empty($data['medical_conditions'])) {
+                $data['medical_conditions'] = htmlspecialchars($data['medical_conditions']);
+            }
+
+            if (isset($data['dietry_comments']) && !empty($data['dietry_comments'])) {
+                $data['dietry_comments'] = htmlspecialchars($data['dietry_comments']);
+            }
+
+            if (isset($data['allergy_comments']) && !empty($data['allergy_comments'])) {
+                $data['allergy_comments'] = htmlspecialchars($data['allergy_comments']);
+            }
             
             $data['created'] = date('Y-m-d H:i:s');
             $data['dob'] = !empty($data['dob']) ? date_format(date_create($data['dob']), 'Y-m-d') : '';
@@ -1261,6 +1290,18 @@ class ChartersController extends AppController {
                 if(isset($data['deovres_preference_hidden'][0]) && !empty($data['deovres_preference_hidden'][0])){
                     $data['deovres_preference'] = '';
                 }
+            }
+
+            if (isset($data['meal_time_service_comments']) && !empty($data['meal_time_service_comments'])) {
+                $data['meal_time_service_comments'] = htmlspecialchars($data['meal_time_service_comments']);
+            }
+
+            if (isset($data['other_breakfast_likes']) && !empty($data['other_breakfast_likes'])) {
+                $data['other_breakfast_likes'] = htmlspecialchars($data['other_breakfast_likes']);
+            }
+
+            if (isset($data['deovres_comments']) && !empty($data['deovres_comments'])) {
+                $data['deovres_comments'] = htmlspecialchars($data['deovres_comments']);
             }
             
             $data['created'] = date('Y-m-d H:i:s');
@@ -1377,7 +1418,14 @@ class ChartersController extends AppController {
             $data['food_like'] = !empty($foodLike) ? implode(',', $foodLike) : '';
             $data['food_dislike'] = !empty($foodDislike) ? implode(',', $foodDislike) : '';
             
-            
+            if (isset($data['food_style_comments']) && !empty($data['food_style_comments'])) {
+                $data['food_style_comments'] = htmlspecialchars($data['food_style_comments']);
+            }
+
+            if (isset($data['dislike_comments']) && !empty($data['dislike_comments'])) {
+                $data['dislike_comments'] = htmlspecialchars($data['dislike_comments']);
+            }
+
             $data['created'] = date('Y-m-d H:i:s');
             
 //            echo "<pre>";print_r($data);exit;
@@ -1523,6 +1571,35 @@ class ChartersController extends AppController {
                 $data['quantity3'] = implode(",", $data['quantity3']);
             }
              */
+
+            if (isset($data['coffee_comments']) && !empty($data['coffee_comments'])) {
+                $data['coffee_comments'] = htmlspecialchars($data['coffee_comments']);
+            }
+
+            if (isset($data['tea_comments']) && !empty($data['tea_comments'])) {
+                $data['tea_comments'] = htmlspecialchars($data['tea_comments']);
+            }
+
+            if (isset($data['milk_comments']) && !empty($data['milk_comments'])) {
+                $data['milk_comments'] = htmlspecialchars($data['milk_comments']);
+            }
+
+            if (isset($data['soda_comments1']) && !empty($data['soda_comments1'])) {
+                $data['soda_comments1'] = htmlspecialchars($data['soda_comments1']);
+            }
+
+            if (isset($data['soda_comments2']) && !empty($data['soda_comments2'])) {
+                $data['soda_comments2'] = htmlspecialchars($data['soda_comments2']);
+            }
+
+            if (isset($data['juice_comments']) && !empty($data['juice_comments'])) {
+                $data['juice_comments'] = htmlspecialchars($data['juice_comments']);
+            }
+
+            if (isset($data['water_comments']) && !empty($data['water_comments'])) {
+                $data['water_comments'] = htmlspecialchars($data['water_comments']);
+            }
+
             
             $data['created'] = date('Y-m-d H:i:s');
             
@@ -1867,6 +1944,10 @@ class ChartersController extends AppController {
                 }
             }
             
+            if (isset($data['itinerary_comments']) && !empty($data['itinerary_comments'])) {
+                $data['itinerary_comments'] = htmlspecialchars($data['itinerary_comments']);
+            }
+
             $data['created'] = date('Y-m-d H:i:s');
             
             //echo "<pre>";print_r($data);exit;
@@ -2490,7 +2571,7 @@ class ChartersController extends AppController {
                         //echo "<pre>";print_r($existdata); //exit;
                         $personalDetails = $this->CharterGuestPersonalDetail->find('first', array('conditions' => array('guest_lists_UUID' => $existdata['CharterGuestAssociate']['UUID'],'is_deleted'=>0)));
                         //echo "<pre>"; print_r($personalDetails); exit;
-                        if(($existdata['CharterGuestAssociate']['is_psheets_done'] == 1 && !empty($personalDetails)) || ((empty($existdata['CharterGuestAssociate']['is_psheets_done']) || $existdata['CharterGuestAssociate']['is_psheets_done'] == 0) && !empty($personalDetails))){
+                        if(($existdata['CharterGuestAssociate']['is_psheets_done'] == 1 && !empty($personalDetails['CharterGuestPersonalDetail']['dob'])) || ((empty($existdata['CharterGuestAssociate']['is_psheets_done']) || $existdata['CharterGuestAssociate']['is_psheets_done'] == 0) && !empty($personalDetails['CharterGuestPersonalDetail']['dob']))){
                             
                             
                             $result['status'] = "success";
@@ -2529,7 +2610,7 @@ class ChartersController extends AppController {
                         
                         $personalDetails = $this->CharterGuestPersonalDetail->find('first', array('conditions' => array('guest_lists_UUID' => $CharterGuestexistdata['CharterGuest']['users_UUID'],'is_deleted'=>0)));
 
-                        if(($CharterGuestexistdata['CharterGuest']['is_psheets_done'] == 1 && !empty($personalDetails)) || ((empty($CharterGuestexistdata['CharterGuest']['is_psheets_done']) || $CharterGuestexistdata['CharterGuest']['is_psheets_done'] == 0) && !empty($personalDetails))){
+                        if(($CharterGuestexistdata['CharterGuest']['is_psheets_done'] == 1 && !empty($personalDetails['CharterGuestPersonalDetail']['dob'])) || ((empty($CharterGuestexistdata['CharterGuest']['is_psheets_done']) || $CharterGuestexistdata['CharterGuest']['is_psheets_done'] == 0) && !empty($personalDetails['CharterGuestPersonalDetail']['dob']))){ 
                                 
                                 $result['status'] = "success";
                                 $result['preferenceExistFirstName'] = $CharterGuestexistdata['CharterGuest']['first_name'];
@@ -2593,9 +2674,10 @@ class ChartersController extends AppController {
                             // if (isset($existdata['CharterGuestAssociate']['is_psheets_done']) && $existdata['CharterGuestAssociate']['is_psheets_done'] == 1) {
                             //     $openButtonLink = "/charters/preference?assocId=". base64_encode($existdata['CharterGuestAssociate']['id']);
                             // }
-                                                
+                           if(isset($existdata['CharterGuestAssociate']['fleetcompany_id']) && !empty($existdata['CharterGuestAssociate']['fleetcompany_id']) && $existdata['CharterGuestAssociate']['fleetcompany_id'] != 0){               
                             $fleetLogoUrl = $this->getFleetLogoUrl($existdata['CharterGuestAssociate']['fleetcompany_id']);
                             $this->Session->write("fleetLogoUrl", $fleetLogoUrl);
+                           }
                             $result['redirectUrl'] = $openButtonLink;      
                         }
                     }
@@ -2604,8 +2686,10 @@ class ChartersController extends AppController {
                     if(isset($filterData['associd']) && !empty($filterData['associd'])){
                         $CharterGuestexistdata = $this->CharterGuest->find('first',array('conditions'=>array('CharterGuest.users_UUID'=>$filterData['guest_list'],'CharterGuest.id'=>$filterData['associd'])));
                         if(isset($CharterGuestexistdata)){
+                            if(isset($CharterGuestexistdata['CharterGuest']['charter_company_id']) && !empty($CharterGuestexistdata['CharterGuest']['charter_company_id']) && $CharterGuestexistdata['CharterGuest']['charter_company_id'] != 0){     
                             $fleetLogoUrl = $this->getFleetLogoUrl($CharterGuestexistdata['CharterGuest']['charter_company_id']);
                             $this->Session->write("fleetLogoUrl", $fleetLogoUrl);
+                            }
                             $updateData = array();
                             $updateData['id'] = $CharterGuestexistdata['CharterGuest']['id'];
                             $updateData['preference_UUID'] = $filterData['guest_list'];
@@ -4085,6 +4169,7 @@ class ChartersController extends AppController {
             $input = $personalData['CharterGuestPersonalDetail'];
             $checkPersonalExists = $this->CharterGuest->query("SELECT id FROM $yDBName.charter_guest_personal_details WHERE guest_lists_UUID='$guest_uuid' AND is_deleted = 0");
             //echo "<pre>"; print_r($checkPersonalExists);
+
             if (empty($checkPersonalExists)) { // INSERT
                 //echo "INSERT INTO $yDBName.charter_guest_personal_details (guest_lists_UUID,charter_assoc_id,first_name,family_name,dob,pob,nationality,passport_num,issued_date,expiry_date,passport_image,medical_conditions,special_occations,birthday_date,film_festival_date,honeymoon_date,anniversary_date,other_occation_date,event_date,dietries,dietry_comments,allergies,allergy_comments,rain_jacket_size,foot_size,pillow_type,extra_pillow,created) VALUES (".$input['guest_lists_UUID'].",".$input['charter_assoc_id'].",'".mysql_real_escape_string($input['first_name'])."','".mysql_real_escape_string($input['family_name'])."','".$input['dob']."','".$input['pob']."','".$input['nationality']."','".$input['passport_num']."','".$input['issued_date']."','".$input['expiry_date']."','".$input['passport_image']."','".mysql_real_escape_string($input['medical_conditions'])."','".mysql_real_escape_string(input['special_occations'])."','".$input['birthday_date']."','".$input['film_festival_date']."','".$input['honeymoon_date']."','".$input['anniversary_date']."','".$input['other_occation_date']."','".$input['event_date']."','".$input['dietries']."','".mysql_real_escape_string($input['dietry_comments'])."','".mysql_real_escape_string($input['allergies'])."','".mysql_real_escape_string($input['allergy_comments'])."','".$input['rain_jacket_size']."','".$input['foot_size']."','".$input['pillow_type']."','".$input['extra_pillow']."','".$created."')"; exit;
                 $this->CharterGuest->query("INSERT INTO $yDBName.charter_guest_personal_details (guest_lists_UUID,charter_assoc_id,first_name,family_name,dob,pob,nationality,passport_num,issued_date,expiry_date,passport_image,medical_conditions,special_occations,birthday_date,film_festival_date,honeymoon_date,anniversary_date,other_occation_date,event_date,dietries,dietry_comments,allergies,allergy_comments,rain_jacket_size,foot_size,pillow_type,extra_pillow,created,next_of_kin,next_of_kin_phone) VALUES ("."'".$input['guest_lists_UUID']."'".",".$input['charter_assoc_id'].",'".addslashes($input['first_name'])."','".addslashes($input['family_name'])."','".$input['dob']."','".$input['pob']."','".$input['nationality']."','".$input['passport_num']."','".$input['issued_date']."','".$input['expiry_date']."','".$input['passport_image']."','".addslashes($input['medical_conditions'])."','".$input['special_occations']."','".$input['birthday_date']."','".$input['film_festival_date']."','".$input['honeymoon_date']."','".$input['anniversary_date']."','".$input['other_occation_date']."','".$input['event_date']."','".$input['dietries']."','".addslashes($input['dietry_comments'])."','".$input['allergies']."','".addslashes($input['allergy_comments'])."','".$input['rain_jacket_size']."','".$input['foot_size']."','".$input['pillow_type']."','".$input['extra_pillow']."','".$created."','".$input['next_of_kin']."','".$input['next_of_kin_phone']."')");
@@ -4092,6 +4177,22 @@ class ChartersController extends AppController {
                 //echo "<pre>"; print_r($input);
                 //echo "UPDATE $yDBName.charter_guest_personal_details SET first_name='".$input['first_name']."',family_name='".$input['family_name']."',dob='".$input['dob']."',pob='".$input['pob']."',nationality='".$input['nationality']."',passport_num='".$input['passport_num']."',issued_date='".$input['issued_date']."',expiry_date='".$input['expiry_date']."',passport_image='".$input['passport_image']."',medical_conditions='".addslashes($input['medical_conditions'])."',special_occations='".$input['special_occations']."',birthday_date='".$input['birthday_date']."',film_festival_date='".$input['film_festival_date']."',honeymoon_date='".$input['honeymoon_date']."',anniversary_date='".$input['anniversary_date']."',other_occation_date='".$input['other_occation_date']."',event_date='".$input['event_date']."',dietries='".$input['dietries']."',dietry_comments='".mysqli_real_escape_string($input['dietry_comments'])."',allergies='".$input['allergies']."',allergy_comments='".mysqli_real_escape_string($input['allergy_comments'])."',rain_jacket_size='".$input['rain_jacket_size']."',foot_size='".$input['foot_size']."',pillow_type='".$input['pillow_type']."',extra_pillow='".$input['extra_pillow']."' WHERE charter_guest_id=$charterHeadId AND charter_assoc_id=$charterAssocId"; exit;
                 $this->CharterGuest->query("UPDATE $yDBName.charter_guest_personal_details SET first_name='".$input['first_name']."',family_name='".$input['family_name']."',dob='".$input['dob']."',pob='".$input['pob']."',nationality='".$input['nationality']."',passport_num='".$input['passport_num']."',issued_date='".$input['issued_date']."',expiry_date='".$input['expiry_date']."',passport_image='".$input['passport_image']."',medical_conditions='".addslashes($input['medical_conditions'])."',special_occations='".$input['special_occations']."',birthday_date='".$input['birthday_date']."',film_festival_date='".$input['film_festival_date']."',honeymoon_date='".$input['honeymoon_date']."',anniversary_date='".$input['anniversary_date']."',other_occation_date='".$input['other_occation_date']."',event_date='".$input['event_date']."',dietries='".$input['dietries']."',dietry_comments='".addslashes($input['dietry_comments'])."',allergies='".$input['allergies']."',allergy_comments='".addslashes($input['allergy_comments'])."',rain_jacket_size='".$input['rain_jacket_size']."',foot_size='".$input['foot_size']."',pillow_type='".$input['pillow_type']."',extra_pillow='".$input['extra_pillow']."',next_of_kin='".$input['next_of_kin']."',next_of_kin_phone='".$input['next_of_kin_phone']."' WHERE guest_lists_UUID='$guest_uuid'");
+            }
+
+            
+            $checkPersonalSpecialOccasionsExists = $this->CharterGuestPersonalDetailSpecialOccasion->find('first', array('conditions' => array('guest_lists_UUID' => $guest_uuid,'charter_program_id'=>$charterHeadProgramId,'is_deleted' => 0)));
+            if (!empty($checkPersonalSpecialOccasionsExists)) {
+                $input = array();
+                $input = $checkPersonalSpecialOccasionsExists['CharterGuestPersonalDetailSpecialOccasion'];
+                //echo "<pre>"; print_r($input);
+                $PersonalSpecialOccasionsYacht = $this->CharterGuest->query("SELECT id FROM $yDBName.charter_guest_personal_detail_special_occasions WHERE guest_lists_UUID='$guest_uuid' AND charter_program_id = '$charterHeadProgramId' AND is_deleted = 0");
+                if (empty($PersonalSpecialOccasionsYacht)) { // INSERT
+                    //echo "INSERT INTO $yDBName.charter_guest_personal_detail_special_occasions (guest_lists_UUID,charter_program_id,is_deleted,special_occations,birthday_date,film_festival_date,honeymoon_date,anniversary_date,other_occation_date,event_date,created) VALUES ("."'".$input['guest_lists_UUID']."'".",".$input['charter_program_id'].",'".($input['is_deleted'])."','".addslashes($input['special_occations'])."','".$input['birthday_date']."','".$input['film_festival_date']."','".$input['honeymoon_date']."','".$input['anniversary_date']."','".$input['other_occation_date']."','".$input['event_date']."','".$created."')"; exit;
+                    $this->CharterGuest->query("INSERT INTO $yDBName.charter_guest_personal_detail_special_occasions (guest_lists_UUID,charter_program_id,is_deleted,special_occations,birthday_date,film_festival_date,honeymoon_date,anniversary_date,other_occation_date,event_date,created) VALUES ("."'".$input['guest_lists_UUID']."'".","."'".$input['charter_program_id']."'".",'".($input['is_deleted'])."','".addslashes($input['special_occations'])."','".$input['birthday_date']."','".$input['film_festival_date']."','".$input['honeymoon_date']."','".$input['anniversary_date']."','".$input['other_occation_date']."','".$input['event_date']."','".$created."')");
+                }else{ // UPDATE
+                    $this->CharterGuest->query("UPDATE $yDBName.charter_guest_personal_detail_special_occasions SET special_occations='".addslashes($input['special_occations'])."',birthday_date='".$input['birthday_date']."',film_festival_date='".($input['film_festival_date'])."',honeymoon_date='".$input['honeymoon_date']."',anniversary_date='".$input['anniversary_date']."',other_occation_date='".$input['other_occation_date']."',event_date='".$input['event_date']."' WHERE guest_lists_UUID='$guest_uuid' AND charter_program_id = '$charterHeadProgramId'");
+
+                }
             }
         }
 
@@ -4106,6 +4207,22 @@ class ChartersController extends AppController {
             } else { // UPDATE
                 $this->CharterGuest->query("UPDATE $yDBName.charter_guest_meal_preferences SET breakfast_time='".$input['breakfast_time']."',lunch_time='".$input['lunch_time']."',dinner_time='".$input['dinner_time']."',breakfast_service_style='".$input['breakfast_service_style']."',lunch_service_style='".$input['lunch_service_style']."',dinner_service_style='".$input['dinner_service_style']."',meal_time_service_comments='".addslashes($input['meal_time_service_comments'])."',is_breakfast='".$input['is_breakfast']."',breakfast_likes='".$input['breakfast_likes']."',other_breakfast_likes='".addslashes($input['other_breakfast_likes'])."',lunch_type='".$input['lunch_type']."',is_lunch_desert='".$input['is_lunch_desert']."',lunch_style='".$input['lunch_style']."',is_dining_ashore='".$input['is_dining_ashore']."',restaurant1='".addslashes($input['restaurant1'])."',restaurant2='".addslashes($input['restaurant2'])."',restaurant3='".addslashes($input['restaurant3'])."',restaurant_date1='".$input['restaurant_date1']."',restaurant_date2='".$input['restaurant_date2']."',restaurant_date3='".$input['restaurant_date3']."',restaurant_time1='".$input['restaurant_time1']."',restaurant_time2='".$input['restaurant_time2']."',restaurant_time3='".$input['restaurant_time3']."',is_hors_deovres='".$input['is_hors_deovres']."',deovres_preference='".$input['deovres_preference']."',deovres_comments='".addslashes($input['deovres_comments'])."',is_dinner_desert='".$input['is_dinner_desert']."',is_dinner_coffee='".$input['is_dinner_coffee']."' WHERE guest_lists_UUID='$guest_uuid'");
             }
+
+
+            $CharterGuestMealPreferenceResExists = $this->CharterGuestMealPreferenceRestaurant->find('first', array('conditions' => array('guest_lists_UUID' => $guest_uuid,'charter_program_id'=>$charterHeadProgramId,'is_deleted' => 0)));
+            if (!empty($CharterGuestMealPreferenceResExists)) {
+                $input = array();
+                $input = $CharterGuestMealPreferenceResExists['CharterGuestMealPreferenceRestaurant'];
+                $PreferenceRestaurant = $this->CharterGuest->query("SELECT id FROM $yDBName.charter_guest_meal_preferences_restaurants WHERE guest_lists_UUID='$guest_uuid' AND charter_program_id = '$charterHeadProgramId' AND is_deleted = 0");
+                if (empty($PreferenceRestaurant)) { // INSERT
+                    
+                    $this->CharterGuest->query("INSERT INTO $yDBName.charter_guest_meal_preferences_restaurants (guest_lists_UUID,charter_program_id,is_deleted,is_dining_ashore,restaurant1,restaurant2,restaurant3,restaurant_date1,restaurant_date2,restaurant_date3,restaurant_time1,restaurant_time2,restaurant_time3,created) VALUES ("."'".$input['guest_lists_UUID']."'".","."'".$input['charter_program_id']."'".",'".($input['is_deleted'])."','".($input['is_dining_ashore'])."','".addslashes($input['restaurant1'])."','".addslashes($input['restaurant2'])."','".addslashes($input['restaurant3'])."','".$input['restaurant_date1']."','".$input['restaurant_date2']."','".$input['restaurant_date3']."','".$input['restaurant_time1']."','".$input['restaurant_time2']."','".$input['restaurant_time3']."','".$created."')");
+                }else{ // UPDATE
+                    $this->CharterGuest->query("UPDATE $yDBName.charter_guest_meal_preferences_restaurants SET is_dining_ashore='".($input['is_dining_ashore'])."',restaurant1='".addslashes($input['restaurant1'])."',restaurant2='".addslashes($input['restaurant2'])."',restaurant3='".addslashes($input['restaurant3'])."',restaurant_date1='".$input['restaurant_date1']."',restaurant_date2='".$input['restaurant_date2']."',restaurant_date3='".$input['restaurant_date3']."',restaurant_time1='".$input['restaurant_time1']."',restaurant_time2='".$input['restaurant_time2']."',restaurant_time3='".$input['restaurant_time3']."' WHERE guest_lists_UUID='$guest_uuid' AND charter_program_id = '$charterHeadProgramId'");
+
+                }
+            }
+
         }
 
         // charter_guest_food_preferences table
@@ -4942,6 +5059,11 @@ class ChartersController extends AppController {
 //        echo "<pre>";print_r($this->Session->read());exit;
         Configure::write('debug',0);
         $session = $this->Session->read('charter_info');
+        
+        // echo "<pre>";print_r($sessionAssoc);exit;
+        if (empty($session)) {
+             $this->redirect(array('controller' => 'Charters', 'action' => 'index'));
+        }
         $yachtDbName = $yachtdb;
         $charterProgramId = $prgUUID;
         if (!empty($yachtDbName)) {
@@ -5460,8 +5582,8 @@ class ChartersController extends AppController {
                     <form id="scheduleFormEdit"><div class="inputContainerdiv">
                     <div class="sp-divrow">
                     <div class="sp-60-w">
-                    <input type="text" name="title" value="'.$title.'" placeholder="Enter the Title" class="" '.$readonly.' style="color: #000;font-size: 15px;border: solid 1px #ccc;width:100%;margin: 0px;padding: 8px 5px;font-weight: 600;">
-                    <textarea class="form-control textareacontmarker" style="background: #eee !important;color: #000!important;border: solid 1px rgb(243 243 243 / 70%)!important;" name="messagestitle" '.$readonly.' rows="4" cols="50">'.$notes.'</textarea>
+                    <input type="text" name="title" value="'.htmlspecialchars($title).'" placeholder="Enter the Title" class="" '.$readonly.' style="color: #000;font-size: 15px;border: solid 1px #ccc;width:100%;margin: 0px;padding: 8px 5px;font-weight: 600;">
+                    <textarea class="form-control textareacontmarker" style="background: #eee !important;color: #000!important;border: solid 1px rgb(243 243 243 / 70%)!important;" name="messagestitle" '.$readonly.' rows="4" cols="50">'.htmlspecialchars($notes).'</textarea>
                     </div>
                     <div class="sp-40-w">
                     <div class="sp-upload-img">
@@ -5571,7 +5693,7 @@ class ChartersController extends AppController {
                                 $colorcode = "";
                               }
 
-                            $popupHtml .= '<div class="sp-divrow"><div class="sp-60-w"><input type="text" name="activity_name[]" '.$readonly.' style="color: #000;font-size: 15px;border: solid 1px #ccc;width:100%;margin: 0px;padding: 8px 5px;font-weight: 600;" value="'.$activity['CharterProgramScheduleActivity']['activity_name'].'"><input type="hidden" name="activity_id[]" value="'.$activity['CharterProgramScheduleActivity']['UUID'].'"><textarea class="form-control textareacontmarker" '.$readonly.' style="background: #eee !important;color: #000!important;border: solid 1px rgb(243 243 243 / 70%)!important;" name="messages[]" rows="4" cols="50">'.$activity['CharterProgramScheduleActivity']['notes'].'</textarea></div><div class="sp-40-w"><div class="sp-upload-img"><a href="'.$activityattachmentimagehref.'" class="'.$activityfancybox.'"><img src="'.$activityattachmentimage.'" style="object-fit: fill; height: 150px;" alt=""></a></div><ul class="action-icon"><li><i class="fa fa-comments crew_comment_cruisingmap" style="'.$colorcode.$displaynone.'" data-rel="'.$activity['CharterProgramScheduleActivity']['UUID'].'" data-yachtid="'.$yacht_id.'" data-tempname="'.$activity['CharterProgramScheduleActivity']['activity_name'].'" title="Comments & Feedback"><input type="hidden" name=comments[] value="" class="messagecomments" /></i></li></ul></div></div>
+                            $popupHtml .= '<div class="sp-divrow"><div class="sp-60-w"><input type="text" name="activity_name[]" '.$readonly.' style="color: #000;font-size: 15px;border: solid 1px #ccc;width:100%;margin: 0px;padding: 8px 5px;font-weight: 600;" value="'.htmlspecialchars($activity['CharterProgramScheduleActivity']['activity_name']).'"><input type="hidden" name="activity_id[]" value="'.$activity['CharterProgramScheduleActivity']['UUID'].'"><textarea class="form-control textareacontmarker" '.$readonly.' style="background: #eee !important;color: #000!important;border: solid 1px rgb(243 243 243 / 70%)!important;" name="messages[]" rows="4" cols="50">'.htmlspecialchars($activity['CharterProgramScheduleActivity']['notes']).'</textarea></div><div class="sp-40-w"><div class="sp-upload-img"><a href="'.$activityattachmentimagehref.'" class="'.$activityfancybox.'"><img src="'.$activityattachmentimage.'" style="object-fit: fill; height: 150px;" alt=""></a></div><ul class="action-icon"><li><i class="fa fa-comments crew_comment_cruisingmap" style="'.$colorcode.$displaynone.'" data-rel="'.$activity['CharterProgramScheduleActivity']['UUID'].'" data-yachtid="'.$yacht_id.'" data-tempname="'.$activity['CharterProgramScheduleActivity']['activity_name'].'" title="Comments & Feedback"><input type="hidden" name=comments[] value="" class="messagecomments" /></i></li></ul></div></div>
                              ';
                         }
                     }
@@ -5680,8 +5802,8 @@ class ChartersController extends AppController {
                         <form id="scheduleFormEdit"><div class="inputContainerdiv">
                         <div class="sp-divrow">
                         <div class="sp-60-w"><h1 style="float:left;border:none;">Day '.$dayNum.'&nbsp;&nbsp;&nbsp;&nbsp;</h1>
-                        <input type="text" name="title" value="'.$title.'" placeholder="Enter the Title" class="" '.$readonly.' style="color: #000;float:right;font-size: 15px;border: solid 1px #ccc;width:68%;margin: 0px;padding: 8px 5px;font-weight: 600;background-color: #ddd;">
-                        <textarea class="form-control textareacont" name="messagestitle" '.$readonly.' rows="4" cols="50" style="margin-top:42px;background: #eee !important;color: #000!important;border: solid 1px rgb(243 243 243 / 70%)!important;">'.$notes.'</textarea>
+                        <input type="text" name="title" value="'.htmlspecialchars($title).'" placeholder="Enter the Title" class="" '.$readonly.' style="color: #000;float:right;font-size: 15px;border: solid 1px #ccc;width:68%;margin: 0px;padding: 8px 5px;font-weight: 600;background-color: #ddd;">
+                        <textarea class="form-control textareacont" name="messagestitle" '.$readonly.' rows="4" cols="50" style="margin-top:42px;background: #eee !important;color: #000!important;border: solid 1px rgb(243 243 243 / 70%)!important;">'.htmlspecialchars($notes).'</textarea>
                         </div>
                         <div class="sp-40-w">
                         <div class="sp-upload-img">
@@ -6644,11 +6766,50 @@ function uploadpassportimage(){
                 if (move_uploaded_file($file['tmp_name'], $full_url)) {
                     $data['passport_image'] = $imageName;
                 } 
+                        // Crop the image 
+                        $fileName = WWW_ROOT.$path.DIRECTORY_SEPARATOR.$folder_name.DIRECTORY_SEPARATOR.$imageName;
+                        $kaboom = explode(".", $fileName); // Split file name into an array using the dot
+                        $fileExt = end($kaboom);
+                        $target_file = "$fileName";
+                        $resized_file = WWW_ROOT.$path.DIRECTORY_SEPARATOR.$folder_name.DIRECTORY_SEPARATOR.$imageName;
+                        $wmax = 700;
+                        $hmax = 1000;
+                        $resfile = $this->ak_img_resize($target_file, $resized_file, $wmax, $hmax, $fileExt);
+
         //$this->Session->delete("showPopup");
         $result['status'] = "success";
         $result['passport_image'] = $imageName;
         echo json_encode($result);
         exit;
+    }
+}
+
+function ak_img_resize($target, $newcopy, $w, $h, $ext) {
+    list($w_orig, $h_orig) = getimagesize($target);
+    $scale_ratio = $w_orig / $h_orig;
+    if (($w / $h) > $scale_ratio) {
+           $w = $h * $scale_ratio;
+    } else {
+           $h = $w / $scale_ratio;
+    }
+    $img = "";
+    $ext = strtolower($ext);
+    if ($ext == "gif"){ 
+    $img = imagecreatefromgif($target);
+    } else if($ext =="png"){ 
+    $img = imagecreatefrompng($target);
+    } else { 
+    $img = imagecreatefromjpeg($target);
+    }
+    $tci = imagecreatetruecolor($w, $h);
+    // imagecopyresampled(dst_img, src_img, dst_x, dst_y, src_x, src_y, dst_w, dst_h, src_w, src_h)
+    imagecopyresampled($tci, $img, 0, 0, 0, 0, $w, $h, $w_orig, $h_orig);
+    if ($ext == "gif"){ 
+        imagegif($tci, $newcopy);
+    } else if($ext =="png"){ 
+        imagepng($tci, $newcopy);
+    } else { 
+        imagejpeg($tci, $newcopy, 84);
     }
 }
 
@@ -6733,5 +6894,8 @@ function getIndividualmsgcountMarer() {
         $this->Session->write("fleetname", $companyData['Fleetcompany']['fleetname']);
         return $fleetLogoUrl;
     }
+
+
+    
     
 }
