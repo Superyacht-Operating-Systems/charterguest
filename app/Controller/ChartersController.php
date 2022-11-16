@@ -5669,7 +5669,7 @@ class ChartersController extends AppController {
 
                             $activity_id_chk = $activity['CharterProgramScheduleActivity']['id']; 
                             $activity_UUID_chk = $activity['CharterProgramScheduleActivity']['UUID'];  
-                            $activity_name_id_chk = htmlspecialchars($activity['CharterProgramScheduleActivity']['activity_name']);        
+                            $activity_name_id_chk = str_replace("'", "", $activity['CharterProgramScheduleActivity']['activity_name']);        
                             $CruisingMapCommentConditons = "activity_id = '$activity_UUID_chk' AND activity_name = '$activity_name_id_chk' AND type = 'activity' AND publish_map = '1'";
                             $commentdata = $this->CharterGuest->getCruisingMapComment($yachtDbName, $CruisingMapCommentConditons);                 
                             //}
