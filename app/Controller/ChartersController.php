@@ -2297,7 +2297,7 @@ class ChartersController extends AppController {
             $this->request->data['CharterGuestPersonalDetail']['anniversary_date'] = (!empty($personalDetails['CharterGuestPersonalDetail']['anniversary_date']) && $personalDetails['CharterGuestPersonalDetail']['anniversary_date'] != '0000-00-00') ? date_format(date_create($personalDetails['CharterGuestPersonalDetail']['anniversary_date']), 'd M Y') : '';
             $this->request->data['CharterGuestPersonalDetail']['other_occation_date'] = (!empty($personalDetails['CharterGuestPersonalDetail']['other_occation_date']) && $personalDetails['CharterGuestPersonalDetail']['other_occation_date'] != '0000-00-00') ? date_format(date_create($personalDetails['CharterGuestPersonalDetail']['other_occation_date']), 'd M Y') : '';
             $this->request->data['CharterGuestPersonalDetail']['event_date'] = (!empty($personalDetails['CharterGuestPersonalDetail']['event_date']) && $personalDetails['CharterGuestPersonalDetail']['event_date'] != '0000-00-00') ? date_format(date_create($personalDetails['CharterGuestPersonalDetail']['event_date']), 'd M Y') : '';
-            $this->request->data['CharterGuestPersonalDetail']['medical_conditions'] = (!empty($personalDetails['CharterGuestPersonalDetail']['medical_conditions'])) ? htmlspecialchars($personalDetails['CharterGuestPersonalDetail']['medical_conditions']) : '';
+            $this->request->data['CharterGuestPersonalDetail']['medical_conditions'] = htmlspecialchars($personalDetails['CharterGuestPersonalDetail']['medical_conditions']);
             
             //$this->request->data['CharterGuestPersonalDetail']['passport_image']['name'] = $personalDetails['CharterGuestPersonalDetail']['passport_image'];
         }
