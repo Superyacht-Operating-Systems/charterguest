@@ -1293,15 +1293,15 @@ class ChartersController extends AppController {
             }
 
             if (isset($data['meal_time_service_comments']) && !empty($data['meal_time_service_comments'])) {
-                $data['meal_time_service_comments'] = htmlspecialchars($data['meal_time_service_comments']);
+                $data['meal_time_service_comments'] = htmlspecialchars_decode($data['meal_time_service_comments']);
             }
 
             if (isset($data['other_breakfast_likes']) && !empty($data['other_breakfast_likes'])) {
-                $data['other_breakfast_likes'] = htmlspecialchars($data['other_breakfast_likes']);
+                $data['other_breakfast_likes'] = htmlspecialchars_decode($data['other_breakfast_likes']);
             }
 
             if (isset($data['deovres_comments']) && !empty($data['deovres_comments'])) {
-                $data['deovres_comments'] = htmlspecialchars($data['deovres_comments']);
+                $data['deovres_comments'] = htmlspecialchars_decode($data['deovres_comments']);
             }
             
             $data['created'] = date('Y-m-d H:i:s');
@@ -1419,11 +1419,11 @@ class ChartersController extends AppController {
             $data['food_dislike'] = !empty($foodDislike) ? implode(',', $foodDislike) : '';
             
             if (isset($data['food_style_comments']) && !empty($data['food_style_comments'])) {
-                $data['food_style_comments'] = htmlspecialchars($data['food_style_comments']);
+                $data['food_style_comments'] = htmlspecialchars_decode($data['food_style_comments']);
             }
 
             if (isset($data['dislike_comments']) && !empty($data['dislike_comments'])) {
-                $data['dislike_comments'] = htmlspecialchars($data['dislike_comments']);
+                $data['dislike_comments'] = htmlspecialchars_decode($data['dislike_comments']);
             }
 
             $data['created'] = date('Y-m-d H:i:s');
@@ -1573,31 +1573,31 @@ class ChartersController extends AppController {
              */
 
             if (isset($data['coffee_comments']) && !empty($data['coffee_comments'])) {
-                $data['coffee_comments'] = htmlspecialchars($data['coffee_comments']);
+                $data['coffee_comments'] = htmlspecialchars_decode($data['coffee_comments']);
             }
 
             if (isset($data['tea_comments']) && !empty($data['tea_comments'])) {
-                $data['tea_comments'] = htmlspecialchars($data['tea_comments']);
+                $data['tea_comments'] = htmlspecialchars_decode($data['tea_comments']);
             }
 
             if (isset($data['milk_comments']) && !empty($data['milk_comments'])) {
-                $data['milk_comments'] = htmlspecialchars($data['milk_comments']);
+                $data['milk_comments'] = htmlspecialchars_decode($data['milk_comments']);
             }
 
             if (isset($data['soda_comments1']) && !empty($data['soda_comments1'])) {
-                $data['soda_comments1'] = htmlspecialchars($data['soda_comments1']);
+                $data['soda_comments1'] = htmlspecialchars_decode($data['soda_comments1']);
             }
 
             if (isset($data['soda_comments2']) && !empty($data['soda_comments2'])) {
-                $data['soda_comments2'] = htmlspecialchars($data['soda_comments2']);
+                $data['soda_comments2'] = htmlspecialchars_decode($data['soda_comments2']);
             }
 
             if (isset($data['juice_comments']) && !empty($data['juice_comments'])) {
-                $data['juice_comments'] = htmlspecialchars($data['juice_comments']);
+                $data['juice_comments'] = htmlspecialchars_decode($data['juice_comments']);
             }
 
             if (isset($data['water_comments']) && !empty($data['water_comments'])) {
-                $data['water_comments'] = htmlspecialchars($data['water_comments']);
+                $data['water_comments'] = htmlspecialchars_decode($data['water_comments']);
             }
 
             
@@ -1945,7 +1945,7 @@ class ChartersController extends AppController {
             }
             
             if (isset($data['itinerary_comments']) && !empty($data['itinerary_comments'])) {
-                $data['itinerary_comments'] = htmlspecialchars($data['itinerary_comments']);
+                $data['itinerary_comments'] = htmlspecialchars_decode($data['itinerary_comments']);
             }
 
             $data['created'] = date('Y-m-d H:i:s');
