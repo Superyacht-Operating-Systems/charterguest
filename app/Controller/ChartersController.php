@@ -1165,17 +1165,17 @@ class ChartersController extends AppController {
             //         $data['passport_image'] = $existPassportImage;
             //     //}
             // }
-            strip_tags(addslashes(($postData['comments'])));
+            //strip_tags(addslashes(($postData['comments'])));
             if (isset($data['medical_conditions']) && !empty($data['medical_conditions'])) {
-                $data['medical_conditions'] = strip_tags(addslashes(($postData['medical_conditions'])));
+                $data['medical_conditions'] = strip_tags(addslashes(($data['medical_conditions'])));
             }
 
             if (isset($data['dietry_comments']) && !empty($data['dietry_comments'])) {
-                $data['dietry_comments'] = strip_tags(addslashes(($postData['dietry_comments'])));
+                $data['dietry_comments'] = strip_tags(addslashes(($data['dietry_comments'])));
             }
 
             if (isset($data['allergy_comments']) && !empty($data['allergy_comments'])) {
-                $data['allergy_comments'] = strip_tags(addslashes(($postData['allergy_comments'])));
+                $data['allergy_comments'] = strip_tags(addslashes(($data['allergy_comments'])));
             }
             
             $data['created'] = date('Y-m-d H:i:s');
