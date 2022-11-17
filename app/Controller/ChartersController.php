@@ -291,6 +291,7 @@ class ChartersController extends AppController {
                                 $result['charter_guest_id'] = $charterHeadData['CharterGuest']['id'];
                                 $result['charter_assoc_id'] = $charterAssocData['CharterGuestAssociate']['id'];
                                 $result['guest_list_id'] = $GuestListData['GuestList']['id'];
+                                $this->Session->write("guestListUUID", $GuestListData['GuestList']['UUID']);
                             }
                         
                         } else {

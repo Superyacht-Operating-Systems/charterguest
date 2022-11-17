@@ -624,6 +624,11 @@ color: #000;
   width: 180px;
     }
 }
+.disableBeforesave:hover,
+.disableBeforesave {
+        background:#0c0a0af2 !important;
+        color:#fff;
+}
 </style>
   <div class="modal fade info-modal-pop" id="info-modal" role="dialog">
     <div class="modal-dialog">
@@ -1045,6 +1050,7 @@ $(".isHeadChartererYes").on("click",function(e){
         $(this).closest("div").find(".isHeadChartererChecked").val(2);
         $(this).removeClass("gry-btn").addClass("yes-btn");
         $(this).closest("div").find(".isHeadChartererNo").removeClass("no-btn").addClass("gry-btn");
+        $(this).closest("div .row").find(".sendMailClass").removeClass("displayNone").addClass("disableBeforesave");
         $(this).closest("div .row").find(".sendMailClass").attr("disabled", true);
         //$(this).closest("div .row").find(".newGuestAssoc").show();
         $(this).closest("div .row").find(".newGuestAssoc").attr("disabled", false);
@@ -1057,6 +1063,7 @@ $(".isHeadChartererNo").on("click",function(e){
         $(this).closest("div").find(".isHeadChartererChecked").val(1);
         $(this).removeClass("gry-btn").addClass("no-btn");
         $(this).closest("div").find(".isHeadChartererYes").removeClass("yes-btn").addClass("gry-btn");
+        $(this).closest("div .row").find(".sendMailClass").removeClass("displayNone").removeClass("disableBeforesave");
         $(this).closest("div .row").find(".sendMailClass").attr("disabled", false);
        // $(this).closest("div .row").find(".newGuestAssoc").show();
         $(this).closest("div .row").find(".newGuestAssoc").attr("disabled", true);

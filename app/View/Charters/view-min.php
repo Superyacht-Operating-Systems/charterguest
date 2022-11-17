@@ -25,7 +25,7 @@
                                                  <div class="info-box" data-toggle="modal" data-target="#info-modal"><img src="../../../../img/info-icon.jpg"></div> 
                                             </span>
                                         </label>
-                                        <?php 
+                                        <?php  //$charterData['CharterGuest']['is_psheets_done'] = 0;
                                         //echo $charterData['CharterGuest']['is_head_charterer'];
                                         if(isset($charterData['CharterGuest']['is_head_charterer']) && $charterData['CharterGuest']['is_head_charterer'] == 2){
                                             $yesClass = "yes-btn";
@@ -76,6 +76,7 @@
                                                 // as per the client showing the btn in warning color @07 Aug 2020
                                                 $owldotclass = "btn-open1";
                                                 $adminopenbutColor = "btn-open1 btn-warning btn-warning-bg";
+                                                //$headcharterRowText = "OPEN";
                                                 $textPreferenceSheetCharterGuest = "OPEN";
                                                 if (isset($charterData['CharterGuest']['is_psheets_done']) && $charterData['CharterGuest']['is_psheets_done'] == 1) {
                                                     $adminopenbutColor = "btn-open";
@@ -90,9 +91,9 @@
                                                    
                                                 }
                                                 ?>
-                                                <button type="button" data-charterHeadId="<?php echo $charterData['CharterGuest']['id']; ?>" data-charterAssocId="" class="btn  btn-eml-send sendMailClass <?php echo ($charterData['CharterGuest']['is_email_sent']) ? "displayNone" : ""; ?>" disabled="true">EMAIL</button>
+                                                <button type="button" data-charterHeadId="<?php echo $charterData['CharterGuest']['id']; ?>" data-charterAssocId="" class="btn  btn-eml-send sendMailClass disableBeforesave <?php echo ($charterData['CharterGuest']['is_email_sent']) ? "displayNone" : ""; ?>" disabled="true">EMAIL</button>
                                                                 
-                                                 <button type="button" data-charterHeadId="<?php echo $charterData['CharterGuest']['id']; ?>" data-charterAssocId="" class="btn btn-eml-send1 sent-btnr emailSentClass <?php echo ($charterData['CharterGuest']['is_email_sent']) ? "" : "displayNone"; ?>"><a></a></button>
+                                                 <button type="button" data-charterHeadId="<?php echo $charterData['CharterGuest']['id']; ?>" data-charterAssocId="" class="btn btn-eml-send1 sent-btnr  <?php echo ($charterData['CharterGuest']['is_email_sent']) ? "" : "displayNone"; ?>"><a>OPEN</a></button>
                                           <a href="#">
                                              
                                               <button type="button" <?php echo $style; ?> class="owlbtnflag btn <?php echo $waitingclass; ?> <?php echo $adminopenbutColor; ?> existingCheckFunction" data-guestype="owner" data-owldotclass="<?php echo $owldotclass; ?>" data-associd ="<?php echo $charterData['CharterGuest']['id']; ?>"><?php echo $textPreferenceSheetCharterGuest; ?></button>
@@ -243,7 +244,7 @@
                                                 
                                             ?>
                                             <?php //echo $baseFolder.$openButtonLink; ?>
-                                            <button type="button" data-charterHeadId=""  data-charterAssocId="<?php echo $charterAssoc['CharterGuestAssociate']['id']; ?>" class="btn btn-danger btn-eml-send sendMailClass <?php echo ($charterAssoc['CharterGuestAssociate']['is_email_sent']) ? "displayNone" : ""; ?>" <?php echo $sendMailBtnDisable; ?>>EMAIL</button>
+                                            <button type="button" data-charterHeadId=""  data-charterAssocId="<?php echo $charterAssoc['CharterGuestAssociate']['id']; ?>" class="btn btn-danger btn-eml-send sendMailClass disableBeforesave <?php echo ($charterAssoc['CharterGuestAssociate']['is_email_sent']) ? "displayNone" : ""; ?>" <?php echo $sendMailBtnDisable; ?>>OPEN</button>
                                                                 <button type="button" data-charterHeadId=""  data-charterAssocId="<?php echo $charterAssoc['CharterGuestAssociate']['id']; ?>"  class="btn btn-success btn-eml-send1 sent-btnr emailSentClass <?php echo ($charterAssoc['CharterGuestAssociate']['is_email_sent']) ? "" : "displayNone"; ?>"></button>
 
                                             <a href="#"><button type="button" class="<?php echo $owlbtnflag; ?> btn <?php echo $waitingclass; ?> <?php echo $openBtnColor; ?> <?php echo $openPreferenceSheetClass; ?>" data-guestype="guest" data-owldotclass="<?php echo $buttoncls; ?>" data-associd ="<?php echo $charterAssoc['CharterGuestAssociate']['id']; ?>" style="<?php echo $displayOpen; ?><?php echo $style; ?>" <?php echo $openBtnDisable; ?>><?php echo $textPreferenceSheet; ?></button></a>

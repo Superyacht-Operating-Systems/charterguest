@@ -407,6 +407,7 @@ margin-top: 50px;
 <?php
 // Dynamic color
     $session = $this->Session->read();
+    //echo "<pre>";print_r($session);
     if(isset($session['pSheetsColor']) && $session['pSheetsColor'] != ''){
       $pSheetsColor = $session['pSheetsColor'];
     ?>
