@@ -1166,15 +1166,15 @@ class ChartersController extends AppController {
             //     //}
             // }
             if (isset($data['medical_conditions']) && !empty($data['medical_conditions'])) {
-                $data['medical_conditions'] = htmlspecialchars($data['medical_conditions']);
+                $data['medical_conditions'] = htmlspecialchars_decode($data['medical_conditions']);
             }
 
             if (isset($data['dietry_comments']) && !empty($data['dietry_comments'])) {
-                $data['dietry_comments'] = htmlspecialchars($data['dietry_comments']);
+                $data['dietry_comments'] = htmlspecialchars_decode($data['dietry_comments']);
             }
 
             if (isset($data['allergy_comments']) && !empty($data['allergy_comments'])) {
-                $data['allergy_comments'] = htmlspecialchars($data['allergy_comments']);
+                $data['allergy_comments'] = htmlspecialchars_decode($data['allergy_comments']);
             }
             
             $data['created'] = date('Y-m-d H:i:s');
