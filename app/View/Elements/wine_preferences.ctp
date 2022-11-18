@@ -143,6 +143,14 @@ table#selectedWineListTableId thead th {
 table#selectedWineListTableId tr td input {
     height: 25px;
 }
+@media only screen and (max-width: 767px){
+.rating-row{
+     display: none;
+}
+
+
+
+
 </style>
 <!-- The Modal -->
 <!-- Modal -->
@@ -167,8 +175,8 @@ table#selectedWineListTableId tr td input {
 <div class="filter-banel">  
 <div class="close-filter-button">Close Filters</div>  
     <div class="col-sm-12 col-md-3 pdd-none no-space">
-		<div class="card">
-		  	<div class="card-content">
+		<div class="card rating-row">
+		  	<div class="card-content ">
                             <div class="search-right">
                                     <div class="card-title text-center" 
                                          style="text-align: left;line-height: 1.5;">
