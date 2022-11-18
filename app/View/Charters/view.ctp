@@ -234,7 +234,7 @@ font-weight: bold;
     float: initial;
     color: #fff;
     font-weight: bold;
-    opacity: 40!important;
+    opacity: 40;
     padding: 6px 20px;
         width: 78px;
     border-radius: 0px;
@@ -623,6 +623,11 @@ color: #000;
     .nav-side-menu-full-container .nav-side-menu .show {
   width: 180px;
     }
+}
+.disableBeforesave:hover,
+.disableBeforesave {
+        background:#0c0a0af2 !important;
+        color:#fff;
 }
 </style>
   <div class="modal fade info-modal-pop" id="info-modal" role="dialog">
@@ -1042,29 +1047,95 @@ $(".btn-eml-send1").on("click", function(e){
     }
 }); */
 $(".isHeadChartererYes").on("click",function(e){
+    if($(this).attr('data-psheetsubmitornot') == 1){
+        alert("Preference Sheets are completed. Thank you.");
+            return true;
+    }else{
         $(this).closest("div").find(".isHeadChartererChecked").val(2);
         $(this).removeClass("gry-btn").addClass("yes-btn");
         $(this).closest("div").find(".isHeadChartererNo").removeClass("no-btn").addClass("gry-btn");
+        $(this).closest("div .row").find(".sendMailClass").removeClass("displayNone").addClass("disableBeforesave");
         $(this).closest("div .row").find(".sendMailClass").attr("disabled", true);
+
+        var datasaved = $(this).attr('data-saved');
+        if(datasaved == 1){
+            var dataemailsentornot = $(this).attr('data-emailsentornot');
+            var datapsheetsubmitornot = $(this).attr('data-psheetsubmitornot');   
+            console.log(datasaved);
+            console.log(dataemailsentornot);
+            console.log(datapsheetsubmitornot);
+            if(datapsheetsubmitornot == ""){ //console.log('lll')
+                $(this).closest("div .row").find(".sendMailClass").text('OPEN');
+                $(this).closest("div .row").find(".hideshow ").removeClass("btn-warning").addClass("ch-waiting-btn").text('WAITING').show();
+                $(this).closest("div .row").find(".hideshow").css('display','block');
+                $(this).closest("div .row").find(".hideshow").attr("disabled", false);
+                $(this).closest("div .row").find(".hideshow").css({"opacity": "","pointer-events": "","cursor":"pointer"});
+                $(this).closest("div .row").find(".hideshow ").removeClass("existingCheckFunction").addClass("existingCheckFunction");
+                
+                //var txtopen =$(this).closest("div .row").find(".sendMailClass").text();
+                // if(txtopen == "OPEN"){
+                //     $(this).closest("div .row").find(".hideshow").css({"opacity": "0"});
+                // }
+            }
+
+            if(dataemailsentornot == 1){
+                $(this).closest("div .row").find(".emailSentClass").hide();
+                $(this).closest("div .row").find(".sendMailClass").show();
+            }
+            
+        }else{
+            $(this).closest("div .row").find(".sendMailClass").text('OPEN');
+        }
+
+
         //$(this).closest("div .row").find(".newGuestAssoc").show();
-        $(this).closest("div .row").find(".newGuestAssoc").attr("disabled", false);
+        //$(this).closest("div .row").find(".newGuestAssoc").attr("disabled", false);
         //$(this).closest("div .row").find(".newGuestAssoc").removeClass("btn-default").addClass("btn-primary");
         $(this).closest("div .row").find(".inputError").removeClass("inputError");
-        $(this).closest("div .row").find(".hideshow ").removeClass("ch-waiting-btn").addClass("btn-warning").text('OPEN').show();
-        
+        //$(this).closest("div .row").find(".hideshow ").removeClass("ch-waiting-btn").addClass("btn-warning").text('OPEN').show();
+    }
 });
 $(".isHeadChartererNo").on("click",function(e){ 
+
+    if($(this).attr('data-psheetsubmitornot') == 1){
+            alert("Preference Sheets are completed. Thank you.");
+            return true;
+    }else{
+
         $(this).closest("div").find(".isHeadChartererChecked").val(1);
         $(this).removeClass("gry-btn").addClass("no-btn");
         $(this).closest("div").find(".isHeadChartererYes").removeClass("yes-btn").addClass("gry-btn");
+        $(this).closest("div .row").find(".sendMailClass").removeClass("displayNone").removeClass("disableBeforesave");
         $(this).closest("div .row").find(".sendMailClass").attr("disabled", false);
+        var datasaved = $(this).attr('data-saved');
+        if(datasaved == 1){
+            var dataemailsentornot = $(this).attr('data-emailsentornot');
+            var datapsheetsubmitornot = $(this).attr('data-psheetsubmitornot');   
+            console.log(datasaved);
+            console.log(dataemailsentornot);
+            console.log(datapsheetsubmitornot);
+            if(dataemailsentornot == ""){
+                $(this).closest("div .row").find(".sendMailClass").text('EMAIL');
+                $(this).closest("div .row").find(".hideshow").css('display','block');
+                $(this).closest("div .row").find(".hideshow").css({"opacity": "0","pointer-events": "none"});
+            }
+
+            if(dataemailsentornot == 1){
+                $(this).closest("div .row").find(".sendMailClass").hide();
+                $(this).closest("div .row").find(".emailSentClass").show();
+                
+            }
+        }else{
+            $(this).closest("div .row").find(".sendMailClass").text('EMAIL');
+        }
        // $(this).closest("div .row").find(".newGuestAssoc").show();
-        $(this).closest("div .row").find(".newGuestAssoc").attr("disabled", true);
+        //$(this).closest("div .row").find(".newGuestAssoc").attr("disabled", true);
        
-        $(this).closest("div .row").find(".hideshow ").removeClass("btn-warning").addClass("ch-waiting-btn").text('WAITING').show();
+        //$(this).closest("div .row").find(".hideshow ").removeClass("btn-warning").addClass("ch-waiting-btn").text('WAITING').show();
         
        
        // $(this).closest("div .row").find(".newGuestAssoc").removeClass("btn-primary").addClass("btn-default");
+    }
 });
 // Submit and Redirect to the Preference pages when OPEN button clicked(If Head charterer is checked)
 $(".newGuestAssoc").on("click", function(e) {

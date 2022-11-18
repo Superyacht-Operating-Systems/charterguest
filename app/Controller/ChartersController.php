@@ -291,6 +291,7 @@ class ChartersController extends AppController {
                                 $result['charter_guest_id'] = $charterHeadData['CharterGuest']['id'];
                                 $result['charter_assoc_id'] = $charterAssocData['CharterGuestAssociate']['id'];
                                 $result['guest_list_id'] = $GuestListData['GuestList']['id'];
+                                $this->Session->write("guestListUUID", $GuestListData['GuestList']['UUID']);
                             }
                         
                         } else {
@@ -1166,15 +1167,15 @@ class ChartersController extends AppController {
             //     //}
             // }
             if (isset($data['medical_conditions']) && !empty($data['medical_conditions'])) {
-                $data['medical_conditions'] = htmlspecialchars($data['medical_conditions']);
+                $data['medical_conditions'] = htmlspecialchars_decode($data['medical_conditions']);
             }
 
             if (isset($data['dietry_comments']) && !empty($data['dietry_comments'])) {
-                $data['dietry_comments'] = htmlspecialchars($data['dietry_comments']);
+                $data['dietry_comments'] = htmlspecialchars_decode($data['dietry_comments']);
             }
 
             if (isset($data['allergy_comments']) && !empty($data['allergy_comments'])) {
-                $data['allergy_comments'] = htmlspecialchars($data['allergy_comments']);
+                $data['allergy_comments'] = htmlspecialchars_decode($data['allergy_comments']);
             }
             
             $data['created'] = date('Y-m-d H:i:s');
@@ -1293,15 +1294,15 @@ class ChartersController extends AppController {
             }
 
             if (isset($data['meal_time_service_comments']) && !empty($data['meal_time_service_comments'])) {
-                $data['meal_time_service_comments'] = htmlspecialchars($data['meal_time_service_comments']);
+                $data['meal_time_service_comments'] = htmlspecialchars_decode($data['meal_time_service_comments']);
             }
 
             if (isset($data['other_breakfast_likes']) && !empty($data['other_breakfast_likes'])) {
-                $data['other_breakfast_likes'] = htmlspecialchars($data['other_breakfast_likes']);
+                $data['other_breakfast_likes'] = htmlspecialchars_decode($data['other_breakfast_likes']);
             }
 
             if (isset($data['deovres_comments']) && !empty($data['deovres_comments'])) {
-                $data['deovres_comments'] = htmlspecialchars($data['deovres_comments']);
+                $data['deovres_comments'] = htmlspecialchars_decode($data['deovres_comments']);
             }
             
             $data['created'] = date('Y-m-d H:i:s');
@@ -1419,11 +1420,11 @@ class ChartersController extends AppController {
             $data['food_dislike'] = !empty($foodDislike) ? implode(',', $foodDislike) : '';
             
             if (isset($data['food_style_comments']) && !empty($data['food_style_comments'])) {
-                $data['food_style_comments'] = htmlspecialchars($data['food_style_comments']);
+                $data['food_style_comments'] = htmlspecialchars_decode($data['food_style_comments']);
             }
 
             if (isset($data['dislike_comments']) && !empty($data['dislike_comments'])) {
-                $data['dislike_comments'] = htmlspecialchars($data['dislike_comments']);
+                $data['dislike_comments'] = htmlspecialchars_decode($data['dislike_comments']);
             }
 
             $data['created'] = date('Y-m-d H:i:s');
@@ -1573,31 +1574,31 @@ class ChartersController extends AppController {
              */
 
             if (isset($data['coffee_comments']) && !empty($data['coffee_comments'])) {
-                $data['coffee_comments'] = htmlspecialchars($data['coffee_comments']);
+                $data['coffee_comments'] = htmlspecialchars_decode($data['coffee_comments']);
             }
 
             if (isset($data['tea_comments']) && !empty($data['tea_comments'])) {
-                $data['tea_comments'] = htmlspecialchars($data['tea_comments']);
+                $data['tea_comments'] = htmlspecialchars_decode($data['tea_comments']);
             }
 
             if (isset($data['milk_comments']) && !empty($data['milk_comments'])) {
-                $data['milk_comments'] = htmlspecialchars($data['milk_comments']);
+                $data['milk_comments'] = htmlspecialchars_decode($data['milk_comments']);
             }
 
             if (isset($data['soda_comments1']) && !empty($data['soda_comments1'])) {
-                $data['soda_comments1'] = htmlspecialchars($data['soda_comments1']);
+                $data['soda_comments1'] = htmlspecialchars_decode($data['soda_comments1']);
             }
 
             if (isset($data['soda_comments2']) && !empty($data['soda_comments2'])) {
-                $data['soda_comments2'] = htmlspecialchars($data['soda_comments2']);
+                $data['soda_comments2'] = htmlspecialchars_decode($data['soda_comments2']);
             }
 
             if (isset($data['juice_comments']) && !empty($data['juice_comments'])) {
-                $data['juice_comments'] = htmlspecialchars($data['juice_comments']);
+                $data['juice_comments'] = htmlspecialchars_decode($data['juice_comments']);
             }
 
             if (isset($data['water_comments']) && !empty($data['water_comments'])) {
-                $data['water_comments'] = htmlspecialchars($data['water_comments']);
+                $data['water_comments'] = htmlspecialchars_decode($data['water_comments']);
             }
 
             
@@ -1945,7 +1946,7 @@ class ChartersController extends AppController {
             }
             
             if (isset($data['itinerary_comments']) && !empty($data['itinerary_comments'])) {
-                $data['itinerary_comments'] = htmlspecialchars($data['itinerary_comments']);
+                $data['itinerary_comments'] = htmlspecialchars_decode($data['itinerary_comments']);
             }
 
             $data['created'] = date('Y-m-d H:i:s');
@@ -5514,7 +5515,7 @@ class ChartersController extends AppController {
                 //echo "<pre>";print_r($scheduleData); exit;
                 $basefolder = $this->request->base;
                 if (count($scheduleData) != 0) {
-                    $title = $scheduleData[0]['CharterProgramSchedule']['title'];
+                    $title = htmlspecialchars($scheduleData[0]['CharterProgramSchedule']['title']);
                     $dayNum = $scheduleData[0]['CharterProgramSchedule']['day_num'];
                     $programScheduleUUID = $scheduleData[0]['CharterProgramSchedule']['UUID'];
                     $isFleetUser = $this->Session->read('loggedUserInfo.is_fleet');
@@ -5589,7 +5590,7 @@ class ChartersController extends AppController {
                     <div class="sp-upload-img">
                     <a href="'.$titleimagehref.'" class="'.$fancybox.'"><img src="'.$titleimage.'" style="object-fit: fill; height: 150px;" alt="" ></a>
                     </div>
-                    <ul class="action-icon"><li><i class="fa fa-comments crew_comment_cruisingmaptitle"  style="'.$colorcodetitle.$displaynone.'" data-rel="'.$scheduleData[0]['CharterProgramSchedule']['UUID'].'" data-yachtid="'.$yacht_id.'" data-tempname="'.$scheduleData[0]['CharterProgramSchedule']['title'].'"><input type="hidden" name=commentstitle value="" class="messagecommentstitle" /></i></li></ul>
+                    <ul class="action-icon"><li><i class="fa fa-comments crew_comment_cruisingmaptitle"  style="'.$colorcodetitle.$displaynone.'" data-rel="'.$scheduleData[0]['CharterProgramSchedule']['UUID'].'" data-yachtid="'.$yacht_id.'" data-tempname="'.htmlspecialchars($scheduleData[0]['CharterProgramSchedule']['title']).'"><input type="hidden" name=commentstitle value="" class="messagecommentstitle" /></i></li></ul>
                     </div>
                     </div>';
                     $popupHtml .= '<input type="hidden" name="schedule_id" value="'.$scheduleId.'"><input type="hidden" class="form-control" name="day_num" id="dayNum" value="'.$dayNum.'">';
@@ -5669,7 +5670,8 @@ class ChartersController extends AppController {
 
                             $activity_id_chk = $activity['CharterProgramScheduleActivity']['id']; 
                             $activity_UUID_chk = $activity['CharterProgramScheduleActivity']['UUID'];  
-                            $activity_name_id_chk = $activity['CharterProgramScheduleActivity']['activity_name'];        
+                            $activity_name_id_chk = str_replace("'", "", $activity['CharterProgramScheduleActivity']['activity_name']);    
+                            $activity_name_id_chk = str_replace('"', "", $activity_name_id_chk);     
                             $CruisingMapCommentConditons = "activity_id = '$activity_UUID_chk' AND activity_name = '$activity_name_id_chk' AND type = 'activity' AND publish_map = '1'";
                             $commentdata = $this->CharterGuest->getCruisingMapComment($yachtDbName, $CruisingMapCommentConditons);                 
                             //}
@@ -5693,7 +5695,7 @@ class ChartersController extends AppController {
                                 $colorcode = "";
                               }
 
-                            $popupHtml .= '<div class="sp-divrow"><div class="sp-60-w"><input type="text" name="activity_name[]" '.$readonly.' style="color: #000;font-size: 15px;border: solid 1px #ccc;width:100%;margin: 0px;padding: 8px 5px;font-weight: 600;" value="'.htmlspecialchars($activity['CharterProgramScheduleActivity']['activity_name']).'"><input type="hidden" name="activity_id[]" value="'.$activity['CharterProgramScheduleActivity']['UUID'].'"><textarea class="form-control textareacontmarker" '.$readonly.' style="background: #eee !important;color: #000!important;border: solid 1px rgb(243 243 243 / 70%)!important;" name="messages[]" rows="4" cols="50">'.htmlspecialchars($activity['CharterProgramScheduleActivity']['notes']).'</textarea></div><div class="sp-40-w"><div class="sp-upload-img"><a href="'.$activityattachmentimagehref.'" class="'.$activityfancybox.'"><img src="'.$activityattachmentimage.'" style="object-fit: fill; height: 150px;" alt=""></a></div><ul class="action-icon"><li><i class="fa fa-comments crew_comment_cruisingmap" style="'.$colorcode.$displaynone.'" data-rel="'.$activity['CharterProgramScheduleActivity']['UUID'].'" data-yachtid="'.$yacht_id.'" data-tempname="'.$activity['CharterProgramScheduleActivity']['activity_name'].'" title="Comments & Feedback"><input type="hidden" name=comments[] value="" class="messagecomments" /></i></li></ul></div></div>
+                            $popupHtml .= '<div class="sp-divrow"><div class="sp-60-w"><input type="text" name="activity_name[]" '.$readonly.' style="color: #000;font-size: 15px;border: solid 1px #ccc;width:100%;margin: 0px;padding: 8px 5px;font-weight: 600;" value="'.htmlspecialchars($activity['CharterProgramScheduleActivity']['activity_name']).'"><input type="hidden" name="activity_id[]" value="'.$activity['CharterProgramScheduleActivity']['UUID'].'"><textarea class="form-control textareacontmarker" '.$readonly.' style="background: #eee !important;color: #000!important;border: solid 1px rgb(243 243 243 / 70%)!important;" name="messages[]" rows="4" cols="50">'.htmlspecialchars($activity['CharterProgramScheduleActivity']['notes']).'</textarea></div><div class="sp-40-w"><div class="sp-upload-img"><a href="'.$activityattachmentimagehref.'" class="'.$activityfancybox.'"><img src="'.$activityattachmentimage.'" style="object-fit: fill; height: 150px;" alt=""></a></div><ul class="action-icon"><li><i class="fa fa-comments crew_comment_cruisingmap" style="'.$colorcode.$displaynone.'" data-rel="'.$activity['CharterProgramScheduleActivity']['UUID'].'" data-yachtid="'.$yacht_id.'" data-tempname="'.htmlspecialchars($activity['CharterProgramScheduleActivity']['activity_name']).'" title="Comments & Feedback"><input type="hidden" name=comments[] value="" class="messagecomments" /></i></li></ul></div></div>
                              ';
                         }
                     }
@@ -6199,7 +6201,9 @@ class ChartersController extends AppController {
  
          $activity_id_chk = $activityId;      
          if(isset($activity_id_chk) && !empty($activity_id_chk)){
-             $CruisingMapCommentConditons = "activity_id = '$activity_id_chk' AND activity_name = '$activity_name' AND type = '$type' AND publish_map = 1";
+            $getactivityname =  str_replace("'", "", $activity_name);
+            $getactivityname = str_replace('"', "", $getactivityname);
+             $CruisingMapCommentConditons = "activity_id = '$activity_id_chk' AND activity_name = '$getactivityname' AND type = '$type' AND publish_map = 1";
              $comments = $this->CharterGuest->getCruisingMapComment($yachtDbName, $CruisingMapCommentConditons);
          }
  
@@ -6246,8 +6250,9 @@ class ChartersController extends AppController {
                      $updateCruisingMapCommentValues = "crew_newlyaddedcomment='0',fleet_newlyaddedcomment='0',modified=$shipTime";
                      
                 
-         
-                     $updateConditionsCruisingMapComment = "activity_id = '$activityId' AND activity_name = '$activity_name' AND type='activity'";
+                     $getactivityname =  str_replace("'", "", $activity_name);
+                     $getactivityname = str_replace('"', "", $getactivityname);
+                     $updateConditionsCruisingMapComment = "activity_id = '$activityId' AND activity_name = '$getactivityname' AND type='activity'";
                      
                      $scheduleUpdateStatus = $this->CharterGuest->updateCruisingMapComment($yachtDbName, $updateConditionsCruisingMapComment, $updateCruisingMapCommentValues);
              }
@@ -6262,8 +6267,9 @@ class ChartersController extends AppController {
  
              $updateCruisingMapCommentValues = "crew_newlyaddedcomment='0',fleet_newlyaddedcomment='0',modified=$shipTime";
  
-         
-             $updateConditionsCruisingMapComment = "activity_id = '$activityId' AND activity_name = '$activity_name' AND type='schedule'";
+             $getactivityname =  str_replace("'", "", $activity_name);
+             $getactivityname = str_replace('"', "", $getactivityname);
+             $updateConditionsCruisingMapComment = "activity_id = '$activityId' AND activity_name = '$getactivityname' AND type='schedule'";
              
              $scheduleUpdateStatus = $this->CharterGuest->updateCruisingMapComment($yachtDbName, $updateConditionsCruisingMapComment, $updateCruisingMapCommentValues);
          }
@@ -6357,10 +6363,11 @@ if($type == "schedule"){
             $fleet_newlyaddedcomment = 0;
             $guest_newlyaddedcomment = 1;
         
-            
+            $getactivityname =  str_replace("'", "", $activity_name);
+                $getactivityname = str_replace('"', "", $getactivityname);
             $created = date("Y-m-d H:i:s");
             $insertValuescommenttitle = "(activity_id,activity_name,user_name,user_type,comment,crew_newlyaddedcomment,fleet_newlyaddedcomment,guest_newlyaddedcomment,type,created,publish_map) "
-                    . "VALUES ('$activityId','$activity_name','$loggedUserFullName','$loggedUserInfouser_type','$comments','$crew_newlyaddedcomment','$fleet_newlyaddedcomment','$guest_newlyaddedcomment','schedule','$created','1')";
+                    . "VALUES ('$activityId','$getactivityname','$loggedUserFullName','$loggedUserInfouser_type','$comments','$crew_newlyaddedcomment','$fleet_newlyaddedcomment','$guest_newlyaddedcomment','schedule','$created','1')";
             $this->CharterGuest->insertCruisingMapComment($yachtDbName, $insertValuescommenttitle);          
     }
 
@@ -6392,10 +6399,11 @@ if($type == "schedule"){
             $crew_newlyaddedcomment = 0;
             $fleet_newlyaddedcomment = 0;
             $guest_newlyaddedcomment = 1;
-                
+            $getactivityname =  str_replace("'", "", $activity_name);
+            $getactivityname = str_replace('"', "", $getactivityname);
                 $created = date("Y-m-d H:i:s");
                 $insertValuesActivity = "(activity_id,activity_name,user_name,user_type,comment,crew_newlyaddedcomment,fleet_newlyaddedcomment,guest_newlyaddedcomment,type,created,publish_map) "
-                    . "VALUES ('$activityId','$activity_name','$loggedUserFullName','$loggedUserInfouser_type','$comments','$crew_newlyaddedcomment','$fleet_newlyaddedcomment','$guest_newlyaddedcomment','activity','$created','1')";
+                    . "VALUES ('$activityId','$getactivityname','$loggedUserFullName','$loggedUserInfouser_type','$comments','$crew_newlyaddedcomment','$fleet_newlyaddedcomment','$guest_newlyaddedcomment','activity','$created','1')";
             $this->CharterGuest->insertCruisingMapComment($yachtDbName, $insertValuesActivity);    
                     
         }
@@ -6450,8 +6458,9 @@ function markCommentUnread() {
                     $updateCruisingMapCommentValues = "crew_newlyaddedcomment=1,fleet_newlyaddedcomment=1,modified=$shipTime";
                     
                 } 
-        
-                    $updateConditionsCruisingMapComment = "activity_id = '$activityId' AND activity_name = '$activity_name' AND type='activity'";
+                $getactivityname =  str_replace("'", "", $activity_name);
+                $getactivityname = str_replace('"', "", $getactivityname);
+                    $updateConditionsCruisingMapComment = "activity_id = '$activityId' AND activity_name = '$getactivityname' AND type='activity'";
                     
                     $scheduleUpdateStatus = $this->CharterGuest->updateCruisingMapComment($yachtDbName, $updateConditionsCruisingMapComment, $updateCruisingMapCommentValues);
             }
@@ -6469,8 +6478,9 @@ function markCommentUnread() {
                 $updateCruisingMapCommentValues = "crew_newlyaddedcomment=1,fleet_newlyaddedcomment=1,modified=$shipTime";
                 
             } 
-    
-                $updateConditionsCruisingMapComment = "activity_id = '$activityId' AND activity_name = '$activity_name' AND type='schedule'";
+            $getactivityname =  str_replace("'", "", $activity_name);
+            $getactivityname = str_replace('"', "", $getactivityname);
+                $updateConditionsCruisingMapComment = "activity_id = '$activityId' AND activity_name = '$getactivityname' AND type='schedule'";
                 
                 $scheduleUpdateStatus = $this->CharterGuest->updateCruisingMapComment($yachtDbName, $updateConditionsCruisingMapComment, $updateCruisingMapCommentValues);
         }
