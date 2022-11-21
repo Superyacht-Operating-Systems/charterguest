@@ -733,7 +733,7 @@ float: right;
     width: 400px;
 }
 
-.acti-count {
+/* .acti-count {
     background: #f00;
     width: 21px;
     font-size: 11px;
@@ -747,6 +747,29 @@ float: right;
     display: inline-flex;
     align-items: center;
     justify-content: center;
+} */
+
+.acti-count {
+    background: #f00;
+    width: 21px;
+    font-size: 11px;
+    line-height: initial;
+    height: 20px;
+    border-radius: 10px;
+    color: #fff;
+    /* margin-top: -67px; */
+    position: absolute;
+    /* margin-left: 130px; */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    right: -4px;
+    top: -10px;
+    /* left: 0; */
+    float: right;
+    /* right: -131px; */
+    /* left: 0; */
+    /* text-align: right; */
 }
 
 .Tooltip {

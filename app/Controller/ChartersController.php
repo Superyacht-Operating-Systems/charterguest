@@ -6839,7 +6839,7 @@ function getIndividualmsgcountMarer() {
 
         $scheduleSameLocationUUID = explode(",",$postData['scheduleSameLocationUUID']);
 
-        if($scheduleSameLocationUUID > 1){
+        if(count($scheduleSameLocationUUID) > 1){
             $lastschuuid = reset($scheduleSameLocationUUID);
             foreach($scheduleSameLocationUUID as $schuuid){
                 $mcount += $this->CharterGuest->getCharterMarkerCommentCount($yachtDbName,$schuuid);

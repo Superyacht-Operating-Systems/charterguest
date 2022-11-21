@@ -235,7 +235,7 @@ font-weight: bold;
     color: #fff;
     font-weight: bold;
     opacity: 40;
-    padding: 6px 20px;
+    /* padding: 6px 20px; */
         width: 78px;
     border-radius: 0px;
      height: 30px!important;
@@ -828,6 +828,24 @@ color: #000;
 </div><!-- /.modal -->
   <!---- Send Mail modal --------->  
 
+  <div class="modal helpModal" tabindex="-1" role="dialog" id="completeMsgModal" style="overflow:auto;">
+  <div class="modal-dialog">
+    <div class="modal-content" style="border:none;">
+      
+      <div class="modal-body clearfix">
+         
+            Sorry you are unable to change this after preferences are complete.
+          <br>
+          <br>
+          <center>
+            <input type="button" value="Close" id="completeMsgModalClose" class="btn btn-default">
+          </center>
+       </div>
+         
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
 <script> 
     
 // Submit Guests with mail sending
@@ -1048,7 +1066,8 @@ $(".btn-eml-send1").on("click", function(e){
 }); */
 $(".isHeadChartererYes").on("click",function(e){
     if($(this).attr('data-psheetsubmitornot') == 1){
-        alert("Preference Sheets are completed. Thank you.");
+        
+            jQuery('#completeMsgModal').fadeIn();
             return true;
     }else{
         $(this).closest("div").find(".isHeadChartererChecked").val(2);
@@ -1095,10 +1114,12 @@ $(".isHeadChartererYes").on("click",function(e){
         //$(this).closest("div .row").find(".hideshow ").removeClass("ch-waiting-btn").addClass("btn-warning").text('OPEN').show();
     }
 });
+
+
 $(".isHeadChartererNo").on("click",function(e){ 
 
     if($(this).attr('data-psheetsubmitornot') == 1){
-            alert("Preference Sheets are completed. Thank you.");
+            jQuery('#completeMsgModal').fadeIn();
             return true;
     }else{
 
@@ -1138,6 +1159,12 @@ $(".isHeadChartererNo").on("click",function(e){
     }
 });
 // Submit and Redirect to the Preference pages when OPEN button clicked(If Head charterer is checked)
+
+$("#completeMsgModalClose").on("click",function(e){
+    jQuery('#completeMsgModal').fadeOut();
+});
+
+
 $(".newGuestAssoc").on("click", function(e) {
     
     var classObj = $(this);

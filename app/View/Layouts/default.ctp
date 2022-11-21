@@ -345,7 +345,7 @@ width: max-content;
                                  <?php if($programpageCharter == "charters" && $programpagePrograms == "programs"){ ?>
                                   <span class="user-hname"><?php if (isset($session["login_username"]) && !empty($session["login_username"])) { echo $session['login_username']; } ?></span>
                                   <?php } ?>
-                                  <br><?php if($this->Session->read('commentcounttotal') > 0){ ?><span class="acti-countnav fa fa-bell-o "><small><?php echo $this->Session->read('commentcounttotal'); ?></small></span><?php } ?>
+                                  <br><?php if($this->Session->read('commentcounttotal') > 0){ ?><span class="acti-countnav fa fa-bell-o " data-toggle="tooltip" title="Cruising Map Comments"><small><?php echo $this->Session->read('commentcounttotal'); ?></small></span><?php } ?>
                                  	
                                  </div>
                                     <div class="list-logout-row">
