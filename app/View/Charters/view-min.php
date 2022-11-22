@@ -19,7 +19,7 @@
                                     <!-- Empty assoc id -->
                                     <input type="hidden" class="rowInput newGuestAssocId" name="charter_assoc_id[]" value="">
  
-                                    <div class="md-row-h-8">
+                                    <div class="md-row-h-8 ddddsdd">
                                         <label>Head Charterer
                                             <span class="tooltip-mob">
                                                  <div class="info-box" data-toggle="modal" data-target="#info-modal"><img src="../../../../img/info-icon.jpg"></div> 
@@ -140,7 +140,12 @@
 
 
                                          <div class="md-row-h-8">
-                                         <label>Head Charterer</label>  
+                                         <label>Head Charterer
+                                          <span class="tooltip-mob">
+                                                 <div class="info-box" data-toggle="modal" data-target="#info-modal"><img src="../../../../img/info-icon.jpg"></div> 
+                                            </span>
+                                         
+                                         </label>  
                                         <?php 
                                         $textOpen = "OPEN";
                                         $disableBeforesave = "disableBeforesave";
@@ -305,7 +310,11 @@
                                 <div class="container-row-column">
                                     <div class="row">
                                     <div class="md-row-h-8">
-                                        <label>Head Charterer</label>
+                                        <label>Head Charterer
+                                         <span class="tooltip-mob">
+                                                 <div class="info-box" data-toggle="modal" data-target="#info-modal"><img src="../../../../img/info-icon.jpg"></div> 
+                                            </span>
+                                        </label>
                                     <button class="gry-btn isHeadChartererYes" data-saved="0">Yes</button>
                                     <button class="gry-btn isHeadChartererNo" data-saved="0">No</button>
                                     <input type="hidden" class="isHeadChartererChecked rowInput" name="is_head_charterer_checked[]" value="">
