@@ -2099,6 +2099,7 @@ $(document).on("click", "#CruisingCommentSave" ,function() {
                         var mcount = result.status;
                         var schuuidtoupdateintooltip = result.schuuidtoupdateintooltip;
                         $("#"+schuuidtoupdateintooltip).text(mcount);
+                        $("#msgcountnotify").text(mcount);
                         if(mcount == 0){
                             $("#"+schuuidtoupdateintooltip).css('display','none');
                         }

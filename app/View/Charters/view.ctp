@@ -849,8 +849,9 @@ color: #000;
 <script> 
     
 // Submit Guests with mail sending
-$(".sendMailClass").on("click", function(e) {
-    
+jQuery(document).on("click",".sendMailClass",function(e){
+//$(".sendMailClass").on("click", function(e) {
+    console.log('kkk');
     var classObj = $(this);
     var rowObj = $(this).closest('div .row');
     var error = 0;
@@ -1080,12 +1081,15 @@ $(".isHeadChartererYes").on("click",function(e){
         if(datasaved == 1){
             var dataemailsentornot = $(this).attr('data-emailsentornot');
             var datapsheetsubmitornot = $(this).attr('data-psheetsubmitornot');   
-            console.log(datasaved);
-            console.log(dataemailsentornot);
-            console.log(datapsheetsubmitornot);
+            // console.log(datasaved);
+            // console.log(dataemailsentornot);
+            // console.log(datapsheetsubmitornot);
             if(datapsheetsubmitornot == ""){ //console.log('lll')
                 $(this).closest("div .row").find(".sendMailClass").text('OPEN');
-                $(this).closest("div .row").find(".hideshow ").removeClass("btn-warning").addClass("ch-waiting-btn").text('WAITING').show();
+                $(this).closest("div .row").find(".sendMailClass").attr("disabled", false);
+                $(this).closest("div .row").find(".sendMailClass").removeClass("sendMailClass").removeClass("existingCheckFunction").addClass("existingCheckFunction");
+
+                $(this).closest("div .row").find(".hideshow ").removeClass("disableBeforesave").removeClass("btn-warning").addClass("ch-waiting-btn").text('WAITING').show();
                 $(this).closest("div .row").find(".hideshow").css('display','block');
                 $(this).closest("div .row").find(".hideshow").attr("disabled", false);
                 $(this).closest("div .row").find(".hideshow").css({"opacity": "","pointer-events": "","cursor":"pointer"});
@@ -1100,6 +1104,7 @@ $(".isHeadChartererYes").on("click",function(e){
             if(dataemailsentornot == 1){
                 $(this).closest("div .row").find(".emailSentClass").hide();
                 $(this).closest("div .row").find(".sendMailClass").show();
+                $(this).closest("div .row").find(".existingCheckFunction").css('display','block');
             }
             
         }else{
@@ -1132,18 +1137,23 @@ $(".isHeadChartererNo").on("click",function(e){
         if(datasaved == 1){
             var dataemailsentornot = $(this).attr('data-emailsentornot');
             var datapsheetsubmitornot = $(this).attr('data-psheetsubmitornot');   
-            console.log(datasaved);
-            console.log(dataemailsentornot);
-            console.log(datapsheetsubmitornot);
+            // console.log(datasaved);
+            // console.log(dataemailsentornot);
+            // console.log(datapsheetsubmitornot);
             if(dataemailsentornot == ""){
-                $(this).closest("div .row").find(".sendMailClass").text('EMAIL');
+                $(this).closest("div .row").find(".existingCheckFunction").text('EMAIL');
+                $(this).closest("div .row").find(".existingCheckFunction").removeClass("disableBeforesave").addClass("sendMailClass").removeClass("existingCheckFunction");
                 $(this).closest("div .row").find(".hideshow").css('display','block');
                 $(this).closest("div .row").find(".hideshow").css({"opacity": "0","pointer-events": "none"});
+                $(this).closest("div .row").find(".hideshow").removeClass("disableBeforesave");
             }
 
             if(dataemailsentornot == 1){
                 $(this).closest("div .row").find(".sendMailClass").hide();
+                $(this).closest("div .row").find(".disableBeforesave").hide();
                 $(this).closest("div .row").find(".emailSentClass").show();
+                $(this).closest("div .row").find(".hideshow").removeClass("ch-waiting-btn").removeClass("existingCheckFunction");
+                $(this).closest("div .row").find(".hideshow").css({"display": "inline-block","padding":"0","cursor": "not-allowed"});
                 
             }
         }else{
