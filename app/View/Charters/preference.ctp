@@ -11,6 +11,11 @@
      $selectedCHPRGID = $this->Session->read('selectedCHPRGID');
      $selectedCHPRGCOMID = $this->Session->read('selectedCHPRGCOMID');
     
+     $sessionModal = $this->Session->read('charter_info');
+        $modifieddate = date('Y-m-d',strtotime($sessionModal['CharterGuest']['modified']));;
+        $modifieddatestrtotime = strtotime($modifieddate);
+        $todaydatestrtotime = strtotime(date('Y-m-d'));
+        //echo "<pre>"; print_r($sessionModal); exit;
     if(isset($charterAssocIdisHeadChecked) && $charterAssocIdisHeadChecked!=''){
     $sessionCH = $charterAssocIdisHeadChecked;//$sessionAssoc['CharterGuestAssociate']['is_head_charterer'];
     }
@@ -596,12 +601,12 @@ if(isset($defaultLastName) && !empty($defaultLastName)){
     }
 ?>
 <div id="pageleavemodal" class="modal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" >
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog" role="document" style="width: 470px;">
     <div class="modal-content mc-bord">
       <div class="modal-body">
-      <div class="modalmsg" > 
-        <p>Would you like to save or submit your</p>
-        <p>preferences before leaving this page?</p>
+      <div class="modalmsg"> 
+        <p>If you’re not finished click Save and complete your preferences later.</p>
+        <p>If you are finished click Submit to send your preferences to the yacht.</p>
       </div>
         <div class="text-center">
         <input class="btn btn-primary" type="button" name="pageleave_save" id="pageleave_save" value="Save" />
@@ -1288,11 +1293,20 @@ $(document).ready(function()
 }); 
 
 $(document).ready(function (e) {
-    <?php if (isset($showPopup) && $showPopup == 1) { ?>
+    <?php if (isset($showPopup) && $showPopup == 1) { 
+        
+        ?>
             //$("#usesubmittedpreferences").modal('show');
             $("#successPreferenceAlert").modal("show");
-            $("#successUsePreference").show();
-            $("#successbody").hide();
+           <?php if($modifieddatestrtotime == $todaydatestrtotime){ ?>
+            //alert('kkk');
+            $("#successUsePreference").hide();
+            $("#successbody").show();
+            <?php }else{?>   //alert('jjjj');
+                $("#successUsePreference").show();
+                $("#successbody").hide();
+            <?php } ?>
+            
     <?php } ?> 
 });    
 <?php if (isset($showPopup) && $showPopup == 1) { //$this->Session->delete("showPopup");?>

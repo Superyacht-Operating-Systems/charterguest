@@ -2101,6 +2101,7 @@ $(document).on("click", "#CruisingCommentSave" ,function() {
                         $("#"+schuuidtoupdateintooltip).text(mcount);
                         $("#msgcountnotify").text(mcount);
                         if(mcount == 0){
+                            $("#msgcountnotify").css('display','none');
                             $("#"+schuuidtoupdateintooltip).css('display','none');
                         }
                         $(".leaflet-popup-close-button").removeClass('updateCommentscount');
