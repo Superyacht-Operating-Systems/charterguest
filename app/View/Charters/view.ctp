@@ -396,7 +396,8 @@ font-weight: bold;
 .md-row-space{margin-bottom:0px!important;}
     .owl-carousel label {
     width: 100%;
-    display: block!important;
+        display: inline-block;
+    overflow: hidden;
     color: #fff;
 }
 .footer-mob-row .btn-success {
