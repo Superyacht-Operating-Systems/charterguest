@@ -89,6 +89,10 @@ $actual_link_defaultctp = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on
 .modalmsg-container .modal-dialog{
 padding-left: 0px;
 }
+body .mydemolabel {
+    font-size: 34px;
+}
+
 .modalmsg-container .modal-body{
   margin: 0px;
 }
@@ -125,6 +129,9 @@ width: max-content;
     width: 400px;
     margin: 30px auto;
 }
+
+
+
 }
 
 /*	.iter-pref{
@@ -151,8 +158,22 @@ width: max-content;
 .ipadport-can-you-block{
   margin-left: -8px;
 }
+.user-subnamep{
+display: block;
+
+}
+body .mydemolabel{
+    font-size: 14px!important;
+}
+
 .modalmsg-container .modal-content{
   width: 100%;
+}
+
+.user-subnamep .sp-noe{
+
+display: none;
+
 }
 .modalmsg-container .modal-open .modal{
   padding-right: 0px;
@@ -334,7 +355,7 @@ width: max-content;
 
                     <div class="label-bold-head mydemolabel">
                       <?php if($programpageCharter == "charters" && $programpagePrograms != "programs" && $programpagePrograms == "preference"){ ?>
-                        <?php if (isset($session["yachFullName"]) && !empty($session["yachFullName"])) { echo $session['login_username']; } ?>
+                        <?php if (isset($session["yachFullName"]) && !empty($session["yachFullName"])) { echo $session['login_username']; } ?><span class="user-subnamep"> <span class="sp-noe">for</span> DAVID CLARKE</span>
                       <?php } else if($programpageCharter == "charters" && $programpagePrograms != "programs"){ ?>
                         <?php if (isset($session["yachFullName"]) && !empty($session["yachFullName"])) { echo $session['yachFullName']; } ?>
                       <?php } ?>  
