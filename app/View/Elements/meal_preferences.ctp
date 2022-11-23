@@ -677,23 +677,23 @@ input[type="checkbox"] {
           <div class="col-lg-1 col-sm-2 ipadport-middle label-rigt-align"><label class="control-label ma-b ">Breakfast</label></div>
           <div class="col-lg-2 rt-nospacesp col-sm-2 ipadport-input-padding-vertical input-mobile-width">
             <!--<input type="text" class="form-control input-wid">-->
-            <?php echo $this->Form->input("breakfast_time",array("label"=>false, 'placeholder' => 'Time','class'=>'form-control input-wid breakfast_time_timePicker','type' => 'text', 'onchange' => "validateHhMm(this)")); ?>
+            <?php echo $this->Form->input("breakfast_time",array("label"=>false, 'placeholder' => 'Time','class'=>'form-control checkInputChange input-wid breakfast_time_timePicker','type' => 'text', 'onchange' => "validateHhMm(this)")); ?>
           </div>
           <div class="col-lg-2 col-sm-2 md-radio-column-box">
             <div class="radio ma-t-check plated-input">
-            <input type="radio" name="data[CharterGuestMealPreference][breakfast_service_style]" value="1" <?php echo (isset($mealPreferences['CharterGuestMealPreference']['breakfast_service_style']) && $mealPreferences['CharterGuestMealPreference']['breakfast_service_style'] == 1) ? 'checked' : ''; ?>>
+            <input type="radio" class="checkInputChange" name="data[CharterGuestMealPreference][breakfast_service_style]" value="1" <?php echo (isset($mealPreferences['CharterGuestMealPreference']['breakfast_service_style']) && $mealPreferences['CharterGuestMealPreference']['breakfast_service_style'] == 1) ? 'checked' : ''; ?>>
                 <label class="pdd-none"><span>Plated</span></label>
             </div>
           </div>
           <div class="col-lg-2 col-sm-2 md-radio-column-box">
             <div class="radio ma-t-check plated-input">
-            <input type="radio" name="data[CharterGuestMealPreference][breakfast_service_style]" value="2" <?php echo (isset($mealPreferences['CharterGuestMealPreference']['breakfast_service_style']) && $mealPreferences['CharterGuestMealPreference']['breakfast_service_style'] == 2) ? 'checked' : ''; ?>>
+            <input type="radio" class="checkInputChange" name="data[CharterGuestMealPreference][breakfast_service_style]" value="2" <?php echo (isset($mealPreferences['CharterGuestMealPreference']['breakfast_service_style']) && $mealPreferences['CharterGuestMealPreference']['breakfast_service_style'] == 2) ? 'checked' : ''; ?>>
               <label class="pdd-none"><span>Buffet</span></label>
             </div>
           </div>
           <div class="col-lg-3 col-sm-3 md-radio-column-box-max">
             <div class="silverservice-input radio ma-t-check">
-            <input type="radio" name="data[CharterGuestMealPreference][breakfast_service_style]" value="3" <?php echo (isset($mealPreferences['CharterGuestMealPreference']['breakfast_service_style']) && $mealPreferences['CharterGuestMealPreference']['breakfast_service_style'] == 3) ? 'checked' : ''; ?>>
+            <input type="radio" class="checkInputChange" name="data[CharterGuestMealPreference][breakfast_service_style]" value="3" <?php echo (isset($mealPreferences['CharterGuestMealPreference']['breakfast_service_style']) && $mealPreferences['CharterGuestMealPreference']['breakfast_service_style'] == 3) ? 'checked' : ''; ?>>
               <label class="pdd-none"><span>Silver Service</span></label>
             </div>
           </div>
@@ -705,23 +705,23 @@ input[type="checkbox"] {
           <div class="col-lg-1 col-sm-2 ipadport-middle label-rigt-align"><label class="control-label ma-b">Lunch</label></div>
           <div class="col-lg-2 rt-nospacesp col-sm-2 ipadport-input-padding-vertical input-mobile-width">
             <!--<input type="text" class="form-control input-wid">-->
-            <?php echo $this->Form->input("lunch_time",array("label"=>false, 'placeholder' => 'Time','class'=>'form-control input-wid lunch_time_timePicker','type' => 'text', 'onchange' => "validateHhMm(this)")); ?>
+            <?php echo $this->Form->input("lunch_time",array("label"=>false, 'placeholder' => 'Time','class'=>'form-control checkInputChange input-wid lunch_time_timePicker','type' => 'text', 'onchange' => "validateHhMm(this)")); ?>
           </div>
           <div class="col-lg-2 col-sm-2 md-radio-column-box">
             <div class="radio ma-t-check plated-input">
-            <input type="radio" name="data[CharterGuestMealPreference][lunch_service_style]" value="1" <?php echo (isset($mealPreferences['CharterGuestMealPreference']['lunch_service_style']) && $mealPreferences['CharterGuestMealPreference']['lunch_service_style'] == 1) ? 'checked' : ''; ?>>
+            <input type="radio" class="checkInputChange" name="data[CharterGuestMealPreference][lunch_service_style]" value="1" <?php echo (isset($mealPreferences['CharterGuestMealPreference']['lunch_service_style']) && $mealPreferences['CharterGuestMealPreference']['lunch_service_style'] == 1) ? 'checked' : ''; ?>>
               <label class="pdd-none"><span>Plated</span></label>
             </div>
           </div>
           <div class="col-lg-2 col-sm-2 md-radio-column-box">
             <div class="radio ma-t-check plated-input">
-            <input type="radio" name="data[CharterGuestMealPreference][lunch_service_style]" value="2" <?php echo (isset($mealPreferences['CharterGuestMealPreference']['lunch_service_style']) && $mealPreferences['CharterGuestMealPreference']['lunch_service_style'] == 2) ? 'checked' : ''; ?>>
+            <input type="radio" class="checkInputChange" name="data[CharterGuestMealPreference][lunch_service_style]" value="2" <?php echo (isset($mealPreferences['CharterGuestMealPreference']['lunch_service_style']) && $mealPreferences['CharterGuestMealPreference']['lunch_service_style'] == 2) ? 'checked' : ''; ?>>
               <label class="pdd-none"><span>Buffet</span></label>
             </div>
           </div>
           <div class="col-lg-3 col-sm-3 md-radio-column-box-max">
             <div class="silverservice-input radio ma-t-check">
-            <input type="radio" name="data[CharterGuestMealPreference][lunch_service_style]" value="3" <?php echo (isset($mealPreferences['CharterGuestMealPreference']['lunch_service_style']) && $mealPreferences['CharterGuestMealPreference']['lunch_service_style'] == 3) ? 'checked' : ''; ?>>
+            <input type="radio" class="checkInputChange" name="data[CharterGuestMealPreference][lunch_service_style]" value="3" <?php echo (isset($mealPreferences['CharterGuestMealPreference']['lunch_service_style']) && $mealPreferences['CharterGuestMealPreference']['lunch_service_style'] == 3) ? 'checked' : ''; ?>>
               <label class="pdd-none"><span>Silver Service</span></label>
             </div>
           </div>
@@ -733,23 +733,23 @@ input[type="checkbox"] {
           <div class="col-lg-1 col-sm-2 ipadport-middle label-rigt-align"><label class="control-label ma-b">Dinner</label></div>
           <div class="col-lg-2 rt-nospacesp col-sm-2 ipadport-input-padding-vertical input-mobile-width">
             <!--<input type="text" class="form-control input-wid">-->
-            <?php echo $this->Form->input("dinner_time",array("label"=>false, 'placeholder' => 'Time','class'=>'form-control input-wid dinner_time_timePicker','type' => 'text', 'onchange' => "validateHhMm(this)")); ?>
+            <?php echo $this->Form->input("dinner_time",array("label"=>false, 'placeholder' => 'Time','class'=>'form-control checkInputChange input-wid dinner_time_timePicker','type' => 'text', 'onchange' => "validateHhMm(this)")); ?>
           </div>
           <div class="col-lg-2 col-sm-2 md-radio-column-box">
             <div class="radio ma-t-check plated-input">
-            <input type="radio" name="data[CharterGuestMealPreference][dinner_service_style]" value="1" <?php echo (isset($mealPreferences['CharterGuestMealPreference']['dinner_service_style']) && $mealPreferences['CharterGuestMealPreference']['dinner_service_style'] == 1) ? 'checked' : ''; ?>>
+            <input type="radio" class="checkInputChange" name="data[CharterGuestMealPreference][dinner_service_style]" value="1" <?php echo (isset($mealPreferences['CharterGuestMealPreference']['dinner_service_style']) && $mealPreferences['CharterGuestMealPreference']['dinner_service_style'] == 1) ? 'checked' : ''; ?>>
               <label class="pdd-none"><span>Plated</span></label>
             </div>
           </div>
           <div class="col-lg-2 col-sm-2 md-radio-column-box">
             <div class="radio ma-t-check plated-input">
-            <input type="radio" name="data[CharterGuestMealPreference][dinner_service_style]" value="2" <?php echo (isset($mealPreferences['CharterGuestMealPreference']['dinner_service_style']) && $mealPreferences['CharterGuestMealPreference']['dinner_service_style'] == 2) ? 'checked' : ''; ?>>
+            <input type="radio" class="checkInputChange" name="data[CharterGuestMealPreference][dinner_service_style]" value="2" <?php echo (isset($mealPreferences['CharterGuestMealPreference']['dinner_service_style']) && $mealPreferences['CharterGuestMealPreference']['dinner_service_style'] == 2) ? 'checked' : ''; ?>>
               <label class="pdd-none"><span>Buffet</span></label>
             </div>
           </div>
           <div class="col-lg-3 col-sm-3 md-radio-column-box-max">
             <div class="silverservice-input radio ma-t-check">
-            <input type="radio" name="data[CharterGuestMealPreference][dinner_service_style]" value="3" <?php echo (isset($mealPreferences['CharterGuestMealPreference']['dinner_service_style']) && $mealPreferences['CharterGuestMealPreference']['dinner_service_style'] == 3) ? 'checked' : ''; ?>>
+            <input type="radio" class="checkInputChange" name="data[CharterGuestMealPreference][dinner_service_style]" value="3" <?php echo (isset($mealPreferences['CharterGuestMealPreference']['dinner_service_style']) && $mealPreferences['CharterGuestMealPreference']['dinner_service_style'] == 3) ? 'checked' : ''; ?>>
               <label class="pdd-none"><span>Silver Service</span></label>
             </div>
           </div>
@@ -762,7 +762,7 @@ input[type="checkbox"] {
         </div>
         <div class="col-md-8 col-sm-9 Comments-1024">
           <!--<input type="text" class="form-control">-->
-          <?php echo $this->Form->input("meal_time_service_comments",array("label"=>false,'class'=>'form-control','type' => 'text')); ?>
+          <?php echo $this->Form->input("meal_time_service_comments",array("label"=>false,'class'=>'form-control checkInputChange','type' => 'text')); ?>
         </div>
         </div>
       </div>
@@ -775,14 +775,14 @@ input[type="checkbox"] {
                     <div class="check-mrg-top">
                         <div class="col-xs-3 col-md-1 col-sm-1 md-no-padd col-md-xs-radiobox mtb-8" >
                             <div class="radio" style="margin-top:0px;margin-bottom:0px!important">
-                                <input type="radio" name="data[CharterGuestMealPreference][is_breakfast]" value="1"
+                                <input type="radio" class="checkInputChange" name="data[CharterGuestMealPreference][is_breakfast]" value="1"
                                     <?php echo $isBreakfastYes; ?>>
                                 <label class="pdd-none"><span>Yes</span></label>
                             </div>
                         </div>
                         <div class="col-xs-3 col-md-1 col-sm-1 md-no-padd col-md-xs-radiobox mtb-8">
                             <div class="radio" style="margin-top:0px;margin-bottom:0px!important">
-                                <input type="radio" name="data[CharterGuestMealPreference][is_breakfast]" value="0"
+                                <input type="radio" class="checkInputChange" name="data[CharterGuestMealPreference][is_breakfast]" value="0"
                                     <?php echo $isBreakfastNo; ?>>
                                 <label class="pdd-none"><span class="no-radio-btn">No</span></label>
                             </div>
@@ -800,7 +800,7 @@ input[type="checkbox"] {
                     </div>
                     <div class="col-sm-2 pdd-none bf-width">
                         <div class="checkbox">
-                            <input type="checkbox" class="breakfastchk"
+                            <input type="checkbox" class="breakfastchk checkInputChange"
                                 name="data[CharterGuestMealPreference][breakfast_likes][]" value="1"
                                 <?php echo $breakfastLikesListChecked[1]; ?>>
                             <label class="pdd-none">Bacon</label>
@@ -808,7 +808,7 @@ input[type="checkbox"] {
                     </div>
                     <div class="col-sm-2 pdd-none bf-width">
                         <div class="checkbox">
-                            <input type="checkbox" class="breakfastchk"
+                            <input type="checkbox" class="breakfastchk checkInputChange"
                                 name="data[CharterGuestMealPreference][breakfast_likes][]" value="2"
                                 <?php echo $breakfastLikesListChecked[2]; ?>>
                             <label class="pdd-none">Sausage</label>
@@ -816,7 +816,7 @@ input[type="checkbox"] {
                     </div>
                     <div class="col-sm-2 pdd-none bf-width">
                         <div class="checkbox">
-                            <input type="checkbox" class="breakfastchk"
+                            <input type="checkbox" class="breakfastchk checkInputChange"
                                 name="data[CharterGuestMealPreference][breakfast_likes][]" value="3"
                                 <?php echo $breakfastLikesListChecked[3]; ?>>
                             <label class="pdd-none">Ham</label>
@@ -825,7 +825,7 @@ input[type="checkbox"] {
 
                     <div class="col-sm-2 pdd-none bf-width">
                         <div class="checkbox">
-                            <input type="checkbox" class="breakfastchk"
+                            <input type="checkbox" class="breakfastchk checkInputChange"
                                 name="data[CharterGuestMealPreference][breakfast_likes][]" value="4"
                                 <?php echo $breakfastLikesListChecked[4]; ?>>
                             <label class="pdd-none">French Toast</label>
@@ -833,7 +833,7 @@ input[type="checkbox"] {
                     </div>
                     <div class="col-sm-2 pdd-none bf-width">
                         <div class="checkbox">
-                            <input type="checkbox" class="breakfastchk"
+                            <input type="checkbox" class="breakfastchk checkInputChange"
                                 name="data[CharterGuestMealPreference][breakfast_likes][]" value="5"
                                 <?php echo $breakfastLikesListChecked[5]; ?>>
                             <label class="pdd-none">Tomatoes</label>
@@ -841,7 +841,7 @@ input[type="checkbox"] {
                     </div>
                     <div class="col-sm-2 pdd-none bf-width">
                         <div class="checkbox">
-                            <input type="checkbox" class="breakfastchk"
+                            <input type="checkbox" class="breakfastchk checkInputChange"
                                 name="data[CharterGuestMealPreference][breakfast_likes][]" value="6"
                                 <?php echo $breakfastLikesListChecked[6]; ?>>
                             <label class="pdd-none">Potatoes</label>
@@ -856,7 +856,7 @@ input[type="checkbox"] {
                     </div>
                     <div class="col-sm-2 pdd-none bf-width">
                         <div class="checkbox">
-                            <input type="checkbox" class="breakfastchk"
+                            <input type="checkbox" class="breakfastchk checkInputChange"
                                 name="data[CharterGuestMealPreference][breakfast_likes][]" value="7"
                                 <?php echo $breakfastLikesListChecked[7]; ?>>
                             <label class="pdd-none">Boiled</label>
@@ -864,7 +864,7 @@ input[type="checkbox"] {
                     </div>
                     <div class="col-sm-2 pdd-none bf-width">
                         <div class="checkbox">
-                            <input type="checkbox" class="breakfastchk"
+                            <input type="checkbox" class="breakfastchk checkInputChange"
                                 name="data[CharterGuestMealPreference][breakfast_likes][]" value="8"
                                 <?php echo $breakfastLikesListChecked[8]; ?>>
                             <label class="pdd-none">Benedict</label>
@@ -872,7 +872,7 @@ input[type="checkbox"] {
                     </div>
                     <div class="col-sm-2 pdd-none bf-width">
                         <div class="checkbox">
-                            <input type="checkbox" class="breakfastchk"
+                            <input type="checkbox" class="breakfastchk checkInputChange"
                                 name="data[CharterGuestMealPreference][breakfast_likes][]" value="9"
                                 <?php echo $breakfastLikesListChecked[9]; ?>>
                             <label class="pdd-none">Fried</label>
@@ -881,7 +881,7 @@ input[type="checkbox"] {
 
                     <div class="col-sm-2 pdd-none bf-width">
                         <div class="checkbox">
-                            <input type="checkbox" class="breakfastchk"
+                            <input type="checkbox" class="breakfastchk checkInputChange"
                                 name="data[CharterGuestMealPreference][breakfast_likes][]" value="10"
                                 <?php echo $breakfastLikesListChecked[10]; ?>>
                             <label class="pdd-none">Poached</label>
@@ -889,7 +889,7 @@ input[type="checkbox"] {
                     </div>
                     <div class="col-sm-2 pdd-none bf-width">
                         <div class="checkbox">
-                            <input type="checkbox" class="breakfastchk"
+                            <input type="checkbox" class="breakfastchk checkInputChange"
                                 name="data[CharterGuestMealPreference][breakfast_likes][]" value="11"
                                 <?php echo $breakfastLikesListChecked[11]; ?>>
                             <label class="pdd-none">Scrambled</label>
@@ -897,7 +897,7 @@ input[type="checkbox"] {
                     </div>
                     <div class="col-sm-2 pdd-none bf-width">
                         <div class="checkbox">
-                            <input type="checkbox" class="breakfastchk"
+                            <input type="checkbox" class="breakfastchk checkInputChange"
                                 name="data[CharterGuestMealPreference][breakfast_likes][]" value="12"
                                 <?php echo $breakfastLikesListChecked[12]; ?>>
                             <label class="pdd-none">Omelette</label>
@@ -912,7 +912,7 @@ input[type="checkbox"] {
                     </div>
                     <div class="col-sm-2 pdd-none bf-width">
                         <div class="checkbox">
-                            <input type="checkbox" class="breakfastchk"
+                            <input type="checkbox" class="breakfastchk checkInputChange"
                                 name="data[CharterGuestMealPreference][breakfast_likes][]" value="13"
                                 <?php echo $breakfastLikesListChecked[13]; ?>>
                             <label class="pdd-none">Hard Boiled</label>
@@ -920,7 +920,7 @@ input[type="checkbox"] {
                     </div>
                     <div class="col-sm-2 pdd-none bf-width">
                         <div class="checkbox">
-                            <input type="checkbox" class="breakfastchk"
+                            <input type="checkbox" class="breakfastchk checkInputChange"
                                 name="data[CharterGuestMealPreference][breakfast_likes][]" value="14"
                                 <?php echo $breakfastLikesListChecked[14]; ?>>
                             <label class="pdd-none">Soft Boiled</label>
@@ -928,7 +928,7 @@ input[type="checkbox"] {
                     </div>
                     <div class="col-sm-2 pdd-none bf-width">
                         <div class="checkbox">
-                            <input type="checkbox" class="breakfastchk"
+                            <input type="checkbox" class="breakfastchk checkInputChange"
                                 name="data[CharterGuestMealPreference][breakfast_likes][]" value="15"
                                 <?php echo $breakfastLikesListChecked[15]; ?>>
                             <label class="pdd-none">Over Well</label>
@@ -937,7 +937,7 @@ input[type="checkbox"] {
 
                     <div class="col-sm-2 pdd-none bf-width">
                         <div class="checkbox">
-                            <input type="checkbox" class="breakfastchk"
+                            <input type="checkbox" class="breakfastchk checkInputChange"
                                 name="data[CharterGuestMealPreference][breakfast_likes][]" value="16"
                                 <?php echo $breakfastLikesListChecked[16]; ?>>
                             <label class="pdd-none">Over Easy</label>
@@ -945,7 +945,7 @@ input[type="checkbox"] {
                     </div>
                     <div class="col-sm-2 pdd-none bf-width">
                         <div class="checkbox">
-                            <input type="checkbox" class="breakfastchk"
+                            <input type="checkbox" class="breakfastchk checkInputChange"
                                 name="data[CharterGuestMealPreference][breakfast_likes][]" value="17"
                                 <?php echo $breakfastLikesListChecked[17]; ?>>
                             <label class="pdd-none">Sunny Side Up</label>
@@ -953,7 +953,7 @@ input[type="checkbox"] {
                     </div>
                     <div class="col-sm-2 pdd-none bf-width">
                         <div class="checkbox">
-                            <input type="checkbox" class="breakfastchk"
+                            <input type="checkbox" class="breakfastchk checkInputChange"
                                 name="data[CharterGuestMealPreference][breakfast_likes][]" value="18"
                                 <?php echo $breakfastLikesListChecked[18]; ?>>
                             <label class="pdd-none">Runny</label>
@@ -968,7 +968,7 @@ input[type="checkbox"] {
                     </div>
                     <div class="col-sm-2 pdd-none bf-width">
                         <div class="checkbox">
-                            <input type="checkbox" class="breakfastchk"
+                            <input type="checkbox" class="breakfastchk checkInputChange"
                                 name="data[CharterGuestMealPreference][breakfast_likes][]" value="19"
                                 <?php echo $breakfastLikesListChecked[19]; ?>>
                             <label class="pdd-none">Croissant</label>
@@ -976,7 +976,7 @@ input[type="checkbox"] {
                     </div>
                     <div class="col-sm-2 pdd-none bf-width">
                         <div class="checkbox">
-                            <input type="checkbox" class="breakfastchk"
+                            <input type="checkbox" class="breakfastchk checkInputChange"
                                 name="data[CharterGuestMealPreference][breakfast_likes][]" value="20"
                                 <?php echo $breakfastLikesListChecked[20]; ?>>
                             <label class="pdd-none">Danish</label>
@@ -984,7 +984,7 @@ input[type="checkbox"] {
                     </div>
                     <div class="col-sm-2 pdd-none bf-width">
                         <div class="checkbox">
-                            <input type="checkbox" class="breakfastchk"
+                            <input type="checkbox" class="breakfastchk checkInputChange"
                                 name="data[CharterGuestMealPreference][breakfast_likes][]" value="21"
                                 <?php echo $breakfastLikesListChecked[21]; ?>>
                             <label class="pdd-none">Pancakes</label>
@@ -993,7 +993,7 @@ input[type="checkbox"] {
 
                     <div class="col-sm-2 pdd-none bf-width">
                         <div class="checkbox">
-                            <input type="checkbox" class="breakfastchk"
+                            <input type="checkbox" class="breakfastchk checkInputChange"
                                 name="data[CharterGuestMealPreference][breakfast_likes][]" value="22"
                                 <?php echo $breakfastLikesListChecked[22]; ?>>
                             <label class="pdd-none">Bagels</label>
@@ -1001,7 +1001,7 @@ input[type="checkbox"] {
                     </div>
                     <div class="col-sm-2 pdd-none bf-width">
                         <div class="checkbox">
-                            <input type="checkbox" class="breakfastchk"
+                            <input type="checkbox" class="breakfastchk checkInputChange"
                                 name="data[CharterGuestMealPreference][breakfast_likes][]" value="23"
                                 <?php echo $breakfastLikesListChecked[23]; ?>>
                             <label class="pdd-none">Crumpets</label>
@@ -1009,7 +1009,7 @@ input[type="checkbox"] {
                     </div>
                     <div class="col-sm-2 pdd-none bf-width">
                         <div class="checkbox">
-                            <input type="checkbox" class="breakfastchk"
+                            <input type="checkbox" class="breakfastchk checkInputChange"
                                 name="data[CharterGuestMealPreference][breakfast_likes][]" value="24"
                                 <?php echo $breakfastLikesListChecked[24]; ?>>
                             <label class="pdd-none">Muffins</label>
@@ -1024,7 +1024,7 @@ input[type="checkbox"] {
                     </div>
                     <div class="col-sm-2 pdd-none bf-width">
                         <div class="checkbox">
-                            <input type="checkbox" class="breakfastchk"
+                            <input type="checkbox" class="breakfastchk checkInputChange"
                                 name="data[CharterGuestMealPreference][breakfast_likes][]" value="25"
                                 <?php echo $breakfastLikesListChecked[25]; ?>>
                             <label class="pdd-none">Cornflakes</label>
@@ -1032,7 +1032,7 @@ input[type="checkbox"] {
                     </div>
                     <div class="col-sm-2 pdd-none bf-width">
                         <div class="checkbox">
-                            <input type="checkbox" class="breakfastchk"
+                            <input type="checkbox" class="breakfastchk checkInputChange"
                                 name="data[CharterGuestMealPreference][breakfast_likes][]" value="26"
                                 <?php echo $breakfastLikesListChecked[26]; ?>>
                             <label class="pdd-none">Special K</label>
@@ -1040,7 +1040,7 @@ input[type="checkbox"] {
                     </div>
                     <div class="col-sm-2 pdd-none bf-width">
                         <div class="checkbox">
-                            <input type="checkbox" class="breakfastchk"
+                            <input type="checkbox" class="breakfastchk checkInputChange"
                                 name="data[CharterGuestMealPreference][breakfast_likes][]" value="27"
                                 <?php echo $breakfastLikesListChecked[27]; ?>>
                             <label class="pdd-none">Raisin Bran</label>
@@ -1049,7 +1049,7 @@ input[type="checkbox"] {
 
                     <div class="col-sm-2 pdd-none bf-width">
                         <div class="checkbox">
-                            <input type="checkbox" class="breakfastchk"
+                            <input type="checkbox" class="breakfastchk checkInputChange"
                                 name="data[CharterGuestMealPreference][breakfast_likes][]" value="28"
                                 <?php echo $breakfastLikesListChecked[28]; ?>>
                             <label class="pdd-none">Cheerios</label>
@@ -1057,7 +1057,7 @@ input[type="checkbox"] {
                     </div>
                     <div class="col-sm-2 pdd-none bf-width">
                         <div class="checkbox">
-                            <input type="checkbox" class="breakfastchk"
+                            <input type="checkbox" class="breakfastchk checkInputChange"
                                 name="data[CharterGuestMealPreference][breakfast_likes][]" value="29"
                                 <?php echo $breakfastLikesListChecked[29]; ?>>
                             <label class="pdd-none">Rice Krispies</label>
@@ -1065,7 +1065,7 @@ input[type="checkbox"] {
                     </div>
                     <div class="col-sm-2 pdd-none bf-width">
                         <div class="checkbox">
-                            <input type="checkbox" class="breakfastchk"
+                            <input type="checkbox" class="breakfastchk checkInputChange"
                                 name="data[CharterGuestMealPreference][breakfast_likes][]" value="30"
                                 <?php echo $breakfastLikesListChecked[30]; ?>>
                             <label class="pdd-none">Frosted Flakes</label>
@@ -1077,7 +1077,7 @@ input[type="checkbox"] {
                     </div>
                     <div class="col-sm-2 pdd-none bf-width">
                         <div class="checkbox">
-                            <input type="checkbox" class="breakfastchk"
+                            <input type="checkbox" class="breakfastchk checkInputChange"
                                 name="data[CharterGuestMealPreference][breakfast_likes][]" value="31"
                                 <?php echo $breakfastLikesListChecked[31]; ?>>
                             <label class="pdd-none">CocoPops</label>
@@ -1085,7 +1085,7 @@ input[type="checkbox"] {
                     </div>
                     <div class="col-sm-2 pdd-none bf-width">
                         <div class="checkbox">
-                            <input type="checkbox" class="breakfastchk"
+                            <input type="checkbox" class="breakfastchk checkInputChange"
                                 name="data[CharterGuestMealPreference][breakfast_likes][]" value="32"
                                 <?php echo $breakfastLikesListChecked[32]; ?>>
                             <label class="pdd-none">Muesli</label>
@@ -1093,7 +1093,7 @@ input[type="checkbox"] {
                     </div>
                     <div class="col-sm-2 pdd-none bf-width">
                         <div class="checkbox">
-                            <input type="checkbox" class="breakfastchk"
+                            <input type="checkbox" class="breakfastchk checkInputChange"
                                 name="data[CharterGuestMealPreference][breakfast_likes][]" value="33"
                                 <?php echo $breakfastLikesListChecked[33]; ?>>
                             <label class="pdd-none">Bircher</label>
@@ -1102,7 +1102,7 @@ input[type="checkbox"] {
 
                     <div class="col-sm-2 pdd-none bf-width">
                         <div class="checkbox">
-                            <input type="checkbox" class="breakfastchk"
+                            <input type="checkbox" class="breakfastchk checkInputChange"
                                 name="data[CharterGuestMealPreference][breakfast_likes][]" value="34"
                                 <?php echo $breakfastLikesListChecked[34]; ?>>
                             <label class="pdd-none">Granola</label>
@@ -1110,7 +1110,7 @@ input[type="checkbox"] {
                     </div>
                     <div class="col-sm-2 pdd-none bf-width">
                         <div class="checkbox">
-                            <input type="checkbox" class="breakfastchk"
+                            <input type="checkbox" class="breakfastchk checkInputChange"
                                 name="data[CharterGuestMealPreference][breakfast_likes][]" value="35"
                                 <?php echo $breakfastLikesListChecked[35]; ?>>
                             <label class="pdd-none">Oats</label>
@@ -1118,7 +1118,7 @@ input[type="checkbox"] {
                     </div>
                     <div class="col-sm-2 pdd-none bf-width">
                         <div class="checkbox">
-                            <input type="checkbox" class="breakfastchk"
+                            <input type="checkbox" class="breakfastchk checkInputChange"
                                 name="data[CharterGuestMealPreference][breakfast_likes][]" value="36"
                                 <?php echo $breakfastLikesListChecked[36]; ?>>
                             <label class="pdd-none">Porridge</label>
@@ -1135,7 +1135,7 @@ input[type="checkbox"] {
                     </div>
                     <div class="col-sm-2 pdd-none bf-width">
                         <div class="checkbox">
-                            <input type="checkbox" class="breakfastchk"
+                            <input type="checkbox" class="breakfastchk checkInputChange"
                                 name="data[CharterGuestMealPreference][breakfast_likes][]" value="37"
                                 <?php echo $breakfastLikesListChecked[37]; ?>>
                             <label class="pdd-none">Full Cream</label>
@@ -1143,7 +1143,7 @@ input[type="checkbox"] {
                     </div>
                     <div class="col-sm-2 pdd-none bf-width">
                         <div class="checkbox">
-                            <input type="checkbox" class="breakfastchk"
+                            <input type="checkbox" class="breakfastchk checkInputChange"
                                 name="data[CharterGuestMealPreference][breakfast_likes][]" value="38"
                                 <?php echo $breakfastLikesListChecked[38]; ?>>
                             <label class="pdd-none">Low Fat</label>
@@ -1151,7 +1151,7 @@ input[type="checkbox"] {
                     </div>
                     <div class="col-sm-2 pdd-none bf-width">
                         <div class="checkbox">
-                            <input type="checkbox" class="breakfastchk"
+                            <input type="checkbox" class="breakfastchk checkInputChange"
                                 name="data[CharterGuestMealPreference][breakfast_likes][]" value="39"
                                 <?php echo $breakfastLikesListChecked[39]; ?>>
                             <label class="pdd-none">Skim Milk</label>
@@ -1160,7 +1160,7 @@ input[type="checkbox"] {
 
                     <div class="col-sm-2 pdd-none bf-width">
                         <div class="checkbox">
-                            <input type="checkbox" class="breakfastchk"
+                            <input type="checkbox" class="breakfastchk checkInputChange"
                                 name="data[CharterGuestMealPreference][breakfast_likes][]" value="40"
                                 <?php echo $breakfastLikesListChecked[40]; ?>>
                             <label class="pdd-none">Almond Milk</label>
@@ -1168,7 +1168,7 @@ input[type="checkbox"] {
                     </div>
                     <div class="col-sm-2 pdd-none bf-width">
                         <div class="checkbox">
-                            <input type="checkbox" class="breakfastchk"
+                            <input type="checkbox" class="breakfastchk checkInputChange"
                                 name="data[CharterGuestMealPreference][breakfast_likes][]" value="41"
                                 <?php echo $breakfastLikesListChecked[41]; ?>>
                             <label class="pdd-none">Soy Milk</label>
@@ -1176,7 +1176,7 @@ input[type="checkbox"] {
                     </div>
                     <div class="col-sm-2 pdd-none bf-width">
                         <div class="checkbox">
-                            <input type="checkbox" class="breakfastchk"
+                            <input type="checkbox" class="breakfastchk checkInputChange"
                                 name="data[CharterGuestMealPreference][breakfast_likes][]" value="42"
                                 <?php echo $breakfastLikesListChecked[42]; ?>>
                             <label class="pdd-none">Oat Milk</label>
@@ -1190,7 +1190,7 @@ input[type="checkbox"] {
                     </div>
                     <div class="col-sm-2 pdd-none bf-width">
                         <div class="checkbox">
-                            <input type="checkbox" class="breakfastchk"
+                            <input type="checkbox" class="breakfastchk checkInputChange"
                                 name="data[CharterGuestMealPreference][breakfast_likes][]" value="43"
                                 <?php echo $breakfastLikesListChecked[43]; ?>>
                             <label class="pdd-none">Greek</label>
@@ -1198,7 +1198,7 @@ input[type="checkbox"] {
                     </div>
                     <div class="col-sm-2 pdd-none bf-width">
                         <div class="checkbox">
-                            <input type="checkbox" class="breakfastchk"
+                            <input type="checkbox" class="breakfastchk checkInputChange"
                                 name="data[CharterGuestMealPreference][breakfast_likes][]" value="44"
                                 <?php echo $breakfastLikesListChecked[44]; ?>>
                             <label class="pdd-none">Natural</label>
@@ -1206,7 +1206,7 @@ input[type="checkbox"] {
                     </div>
                     <div class="col-sm-2 pdd-none bf-width">
                         <div class="checkbox">
-                            <input type="checkbox" class="breakfastchk"
+                            <input type="checkbox" class="breakfastchk checkInputChange"
                                 name="data[CharterGuestMealPreference][breakfast_likes][]" value="45"
                                 <?php echo $breakfastLikesListChecked[45]; ?>>
                             <label class="pdd-none">Vanilla</label>
@@ -1215,7 +1215,7 @@ input[type="checkbox"] {
 
                     <div class="col-sm-2 pdd-none bf-width">
                         <div class="checkbox">
-                            <input type="checkbox" class="breakfastchk"
+                            <input type="checkbox" class="breakfastchk checkInputChange"
                                 name="data[CharterGuestMealPreference][breakfast_likes][]" value="46"
                                 <?php echo $breakfastLikesListChecked[46]; ?>>
                             <label class="pdd-none">Berry</label>
@@ -1223,7 +1223,7 @@ input[type="checkbox"] {
                     </div>
                     <div class="col-sm-2 pdd-none bf-width">
                         <div class="checkbox">
-                            <input type="checkbox" class="breakfastchk"
+                            <input type="checkbox" class="breakfastchk checkInputChange"
                                 name="data[CharterGuestMealPreference][breakfast_likes][]" value="47"
                                 <?php echo $breakfastLikesListChecked[47]; ?>>
                             <label class="pdd-none">Mango</label>
@@ -1231,7 +1231,7 @@ input[type="checkbox"] {
                     </div>
                     <div class="col-sm-2 pdd-none bf-width">
                         <div class="checkbox">
-                            <input type="checkbox" class="breakfastchk"
+                            <input type="checkbox" class="breakfastchk checkInputChange"
                                 name="data[CharterGuestMealPreference][breakfast_likes][]" value="48"
                                 <?php echo $breakfastLikesListChecked[48]; ?>>
                             <label class="pdd-none">Banana</label>
@@ -1245,7 +1245,7 @@ input[type="checkbox"] {
                     </div>
                     <div class="col-sm-2 pdd-none bf-width">
                         <div class="checkbox">
-                            <input type="checkbox" class="breakfastchk"
+                            <input type="checkbox" class="breakfastchk checkInputChange"
                                 name="data[CharterGuestMealPreference][breakfast_likes][]" value="49"
                                 <?php echo $breakfastLikesListChecked[49]; ?>>
                             <label class="pdd-none">Cold Meats</label>
@@ -1253,7 +1253,7 @@ input[type="checkbox"] {
                     </div>
                     <div class="col-sm-2 pdd-none bf-width">
                         <div class="checkbox">
-                            <input type="checkbox" class="breakfastchk"
+                            <input type="checkbox" class="breakfastchk checkInputChange"
                                 name="data[CharterGuestMealPreference][breakfast_likes][]" value="50"
                                 <?php echo $breakfastLikesListChecked[50]; ?>>
                             <label class="pdd-none">Cheese</label>
@@ -1261,7 +1261,7 @@ input[type="checkbox"] {
                     </div>
                     <div class="col-sm-2 pdd-none bf-width">
                         <div class="checkbox">
-                            <input type="checkbox" class="breakfastchk"
+                            <input type="checkbox" class="breakfastchk checkInputChange"
                                 name="data[CharterGuestMealPreference][breakfast_likes][]" value="51"
                                 <?php echo $breakfastLikesListChecked[51]; ?>>
                             <label class="pdd-none">Fruit</label>
@@ -1270,7 +1270,7 @@ input[type="checkbox"] {
 
                     <div class="col-sm-2 pdd-none bf-width">
                         <div class="checkbox">
-                            <input type="checkbox" class="breakfastchk"
+                            <input type="checkbox" class="breakfastchk checkInputChange"
                                 name="data[CharterGuestMealPreference][breakfast_likes][]" value="52"
                                 <?php echo $breakfastLikesListChecked[52]; ?>>
                             <label class="pdd-none">Smoothy</label>
@@ -1278,7 +1278,7 @@ input[type="checkbox"] {
                     </div>
                     <div class="col-sm-2 pdd-none bf-width">
                         <div class="checkbox">
-                            <input type="checkbox" class="breakfastchk"
+                            <input type="checkbox" class="breakfastchk checkInputChange"
                                 name="data[CharterGuestMealPreference][breakfast_likes][]" value="53"
                                 <?php echo $breakfastLikesListChecked[53]; ?>>
                             <label class="pdd-none">Frittata</label>
@@ -1286,7 +1286,7 @@ input[type="checkbox"] {
                     </div>
                     <div class="col-sm-2 pdd-none bf-width">
                         <div class="checkbox">
-                            <input type="checkbox" class="breakfastchk"
+                            <input type="checkbox" class="breakfastchk checkInputChange"
                                 name="data[CharterGuestMealPreference][breakfast_likes][]" value="54"
                                 <?php echo $breakfastLikesListChecked[54]; ?>>
                             <label class="pdd-none">Parfaits</label>
@@ -1340,7 +1340,7 @@ input[type="checkbox"] {
                     <div class="col-xs-8 col-sm-9 col-md-7 pdd-lt-none ml40-1024 two">
 
                         <!--<input type="text" class="form-control ipad-input" name="data[CharterGuestMealPreference][other_breakfast_likes]">-->
-                        <?php echo $this->Form->input("other_breakfast_likes",array("label"=>false,'class'=>'form-control ipad-input','type' => 'text')); ?>
+                        <?php echo $this->Form->input("other_breakfast_likes",array("label"=>false,'class'=>'form-control checkInputChange ipad-input','type' => 'text')); ?>
                     </div>
                     <div class="col-sm-12"></div>
                 </div>
@@ -1355,7 +1355,7 @@ input[type="checkbox"] {
                     <div class="col-md-10 col-sm-12 two" style="padding-left: 0px;">
                         <div class="col-sm-2 col-xs-6 wt-fix-st   ">
                             <div class="checkbox">
-                                <input type="checkbox" class="lunchtypechk"
+                                <input type="checkbox" class="lunchtypechk checkInputChange"
                                     name="data[CharterGuestMealPreference][lunch_type][]" value="1"
                                     <?php echo $lunchTypeListChecked[1]; ?>>
                                 <label class="pdd-none">Hot</label>
@@ -1363,7 +1363,7 @@ input[type="checkbox"] {
                         </div>
                         <div class="col-sm-2 col-xs-6 wt-fix-st   ">
                             <div class="checkbox">
-                                <input type="checkbox" class="lunchtypechk"
+                                <input type="checkbox" class="lunchtypechk checkInputChange"
                                     name="data[CharterGuestMealPreference][lunch_type][]" value="2"
                                     <?php echo $lunchTypeListChecked[2]; ?>>
                                 <label class="pdd-none">Cold</label>
@@ -1371,7 +1371,7 @@ input[type="checkbox"] {
                         </div>
                         <div class="col-sm-2 col-xs-6 wt-fix-st   ">
                             <div class="checkbox">
-                                <input type="checkbox" class="lunchtypechk"
+                                <input type="checkbox" class="lunchtypechk checkInputChange"
                                     name="data[CharterGuestMealPreference][lunch_type][]" value="3"
                                     <?php echo $lunchTypeListChecked[3]; ?>>
                                 <label class="pdd-none">Hearty</label>
@@ -1379,7 +1379,7 @@ input[type="checkbox"] {
                         </div>
                         <div class="col-sm-2 col-xs-6 wt-fix-st   ">
                             <div class="checkbox">
-                                <input type="checkbox" class="lunchtypechk"
+                                <input type="checkbox" class="lunchtypechk checkInputChange"
                                     name="data[CharterGuestMealPreference][lunch_type][]" value="4"
                                     <?php echo $lunchTypeListChecked[4]; ?>>
                                 <label class="pdd-none">Healthy</label>
@@ -1401,7 +1401,7 @@ input[type="checkbox"] {
                     <div class="col-md-10 col-sm-12 two"  style="padding-left: 0px;">
                         <div class="col-sm-2 col-xs-6 wt-fix-st  ">
                             <div class="checkbox">
-                                <input type="checkbox" class="lunchstylechk"
+                                <input type="checkbox" class="lunchstylechk checkInputChange"
                                     name="data[CharterGuestMealPreference][lunch_style][]" value="1"
                                     <?php echo $lunchStyleListChecked[1]; ?>>
                                 <label class="pdd-none">Family Buffet</label>
@@ -1410,7 +1410,7 @@ input[type="checkbox"] {
 
                         <div class="col-sm-2 col-xs-6 wt-fix-st  ">
                             <div class="checkbox">
-                                <input type="checkbox" class="lunchstylechk"
+                                <input type="checkbox" class="lunchstylechk checkInputChange"
                                     name="data[CharterGuestMealPreference][lunch_style][]" value="4"
                                     <?php echo $lunchStyleListChecked[4]; ?>>
                                 <label class="pdd-none">Substantial</label>
@@ -1418,7 +1418,7 @@ input[type="checkbox"] {
                         </div>
                         <div class="col-sm-2 col-xs-6 wt-fix-st  ">
                             <div class="checkbox">
-                                <input type="checkbox" class="lunchstylechk"
+                                <input type="checkbox" class="lunchstylechk checkInputChange"
                                     name="data[CharterGuestMealPreference][lunch_style][]" value="2"
                                     <?php echo $lunchStyleListChecked[2]; ?>>
                                 <label class="pdd-none">Formal Plate</label>
@@ -1426,7 +1426,7 @@ input[type="checkbox"] {
                         </div>
                         <div class="col-sm-2 col-xs-6 wt-fix-st  ">
                             <div class="checkbox">
-                                <input type="checkbox" class="lunchstylechk"
+                                <input type="checkbox" class="lunchstylechk checkInputChange"
                                     name="data[CharterGuestMealPreference][lunch_style][]" value="3"
                                     <?php echo $lunchStyleListChecked[3]; ?>>
                                 <label class="pdd-none">Light</label>
@@ -1443,14 +1443,14 @@ input[type="checkbox"] {
                     <div class="check-mrg-top">
                         <div class="col-xs-3 col-md-1 col-sm-1 md-no-padd col-md-xs-radiobox mtb-8">
                             <div class="radio" style="margin-top:0px;margin-bottom:0px!important;">
-                            <input type="radio" name="data[CharterGuestMealPreference][is_lunch_desert]" value="1"
+                            <input type="radio" class="checkInputChange" name="data[CharterGuestMealPreference][is_lunch_desert]" value="1"
                                     <?php echo $isLunchDesertYes; ?>>
                                 <label class="pdd-none"><span>Yes</span></label>
                             </div>
                         </div>
                         <div class="col-xs-3 col-md-1 col-sm-1 md-no-padd col-md-xs-radiobox mtb-8">
                             <div class="radio" style="margin-top:0px;margin-bottom:0px!important;">
-                            <input type="radio" name="data[CharterGuestMealPreference][is_lunch_desert]" value="0"
+                            <input type="radio" class="checkInputChange" name="data[CharterGuestMealPreference][is_lunch_desert]" value="0"
                                     <?php echo $isLunchDesertNo; ?>>
                                 <label class="pdd-none"><span class="no-radio-btn">No</span></label>
                             </div>
@@ -1496,14 +1496,14 @@ input[type="checkbox"] {
                         <div class="check-mrg-top">
                             <div class="col-xs-3 col-md-1 col-sm-1 md-no-padd col-md-xs-radiobox " style="margin-right: 10px;margin-left: 4px;">
                                 <div class="radio" style="margin-top:0px;margin-bottom:0px!important">
-                                    <input type="radio" name="data[CharterGuestMealPreference][is_dining_ashore]"
+                                    <input type="radio" class="checkInputChange" name="data[CharterGuestMealPreference][is_dining_ashore]"
                                         value="1" <?php echo $isDiningAshoreYes; ?>>
                                     <label class="pdd-none"><span>Yes</span></label>
                                 </div>
                             </div>
                             <div class="col-xs-3 col-md-1 col-sm-1 md-no-padd col-md-xs-radiobox ">
                                 <div class="radio" style="margin-top:0px;margin-bottom:0px!important">
-                                    <input type="radio" name="data[CharterGuestMealPreference][is_dining_ashore]"
+                                    <input type="radio" class="checkInputChange" name="data[CharterGuestMealPreference][is_dining_ashore]"
                                         value="0" <?php echo $isDiningAshoreNo; ?>>
                                     <label class="pdd-none"><span class="no-radio-btn">No</span></label>
                                 </div>
@@ -1540,40 +1540,40 @@ input[type="checkbox"] {
                         <div class="col-sm-12 col-md-8 pdd-none">
                             <div class="col-xs-12 col-md-4 col-sm-7 pdd-none md-marg-div">
                                 <!--<input type="text" class="form-control" name="data[CharterGuestMealPreference][restaurant1]" placeholder="Restaurant Name and Town">-->
-                                <?php echo $this->Form->input("restaurant1",array("label"=>false,'class'=>'form-control','type' => 'text', 'placeholder' => 'Restaurant Name and Town')); ?>
+                                <?php echo $this->Form->input("restaurant1",array("label"=>false,'class'=>'form-control checkInputChange','type' => 'text', 'placeholder' => 'Restaurant Name and Town')); ?>
                             </div>
                             <div class="col-xs-6 col-md-3 col-sm-3 md-marg-div md-no-padd">
                                 <!--<input ttype="text" class="form-control datePicker" name="data[CharterGuestMealPreference][restaurant_date1]" placeholder="Select Date">-->
-                                <?php echo $this->Form->input("restaurant_date1",array("label"=>false,'class'=>'form-control datePicker','type' => 'text', 'placeholder' => 'Select Date', 'onchange' => "isValidDate(this)")); ?>
+                                <?php echo $this->Form->input("restaurant_date1",array("label"=>false,'class'=>'form-control checkInputChange datePicker','type' => 'text', 'placeholder' => 'Select Date', 'onchange' => "isValidDate(this)")); ?>
                             </div>
                             <div class="col-xs-6 col-md-2 col-sm-2 pdd-none md-marg-div md-no-padd">
                                 <!--<input ttype="text" class="form-control" name="data[CharterGuestMealPreference][restaurant_time1]" placeholder="Time">-->
-                                <?php echo $this->Form->input("restaurant_time1",array("label"=>false,'class'=>'form-control timePicker','type' => 'text', 'placeholder' => 'Time', 'onchange' => "validateHhMm(this)")); ?>
+                                <?php echo $this->Form->input("restaurant_time1",array("label"=>false,'class'=>'form-control checkInputChange timePicker','type' => 'text', 'placeholder' => 'Time', 'onchange' => "validateHhMm(this)")); ?>
                                 <!-- //, 'onkeyup' => "validateDate('CharterGuestMealPreferenceRestaurantTime1')")); ?> -->
                             </div> <br><br>
                             <div class="col-xs-12 col-md-4 col-sm-7 pdd-none md-marg-div">
                                 <!--<input type="text" class="form-control" name="data[CharterGuestMealPreference][restaurant2]"  placeholder="Restaurant Name and Town">-->
-                                <?php echo $this->Form->input("restaurant2",array("label"=>false,'class'=>'form-control','type' => 'text', 'placeholder' => 'Restaurant Name and Town')); ?>
+                                <?php echo $this->Form->input("restaurant2",array("label"=>false,'class'=>'form-control checkInputChange','type' => 'text', 'placeholder' => 'Restaurant Name and Town')); ?>
                             </div>
                             <div class="col-xs-6 col-md-3 col-sm-3 md-marg-div md-no-padd">
                                 <!--<input ttype="text" class="form-control datePicker" name="data[CharterGuestMealPreference][restaurant_date2]" placeholder="Select Date">-->
-                                <?php echo $this->Form->input("restaurant_date2",array("label"=>false,'class'=>'form-control datePicker','type' => 'text', 'placeholder' => 'Select Date', 'onchange' => "isValidDate(this)")); ?>
+                                <?php echo $this->Form->input("restaurant_date2",array("label"=>false,'class'=>'form-control checkInputChange datePicker','type' => 'text', 'placeholder' => 'Select Date', 'onchange' => "isValidDate(this)")); ?>
                             </div>
                             <div class="col-xs-6 col-md-2 col-sm-2 pdd-none md-marg-div md-no-padd">
                                 <!--<input ttype="text" class="form-control" name="data[CharterGuestMealPreference][restaurant_time2]" placeholder="Time">-->
-                                <?php echo $this->Form->input("restaurant_time2",array("label"=>false,'class'=>'form-control timePicker','type' => 'text', 'placeholder' => 'Time', 'onchange' => "validateHhMm(this)")); ?>
+                                <?php echo $this->Form->input("restaurant_time2",array("label"=>false,'class'=>'form-control checkInputChange timePicker','type' => 'text', 'placeholder' => 'Time', 'onchange' => "validateHhMm(this)")); ?>
                             </div> <br><br>
                             <div class="col-xs-12 col-md-4 col-sm-7 pdd-none md-marg-div">
                                 <!--<input type="text" class="form-control" name="data[CharterGuestMealPreference][restaurant3]"  placeholder="Restaurant Name and Town">-->
-                                <?php echo $this->Form->input("restaurant3",array("label"=>false,'class'=>'form-control','type' => 'text', 'placeholder' => 'Restaurant Name and Town')); ?>
+                                <?php echo $this->Form->input("restaurant3",array("label"=>false,'class'=>'form-control checkInputChange','type' => 'text', 'placeholder' => 'Restaurant Name and Town')); ?>
                             </div>
                             <div class="col-xs-6 col-md-3 col-sm-3 md-marg-div md-no-padd">
                                 <!--<input ttype="text" class="form-control datePicker" name="data[CharterGuestMealPreference][restaurant_date3]" placeholder="Select Date">-->
-                                <?php echo $this->Form->input("restaurant_date3",array("label"=>false,'class'=>'form-control datePicker','type' => 'text', 'placeholder' => 'Select Date', 'onchange' => "isValidDate(this)")); ?>
+                                <?php echo $this->Form->input("restaurant_date3",array("label"=>false,'class'=>'form-control checkInputChange datePicker','type' => 'text', 'placeholder' => 'Select Date', 'onchange' => "isValidDate(this)")); ?>
                             </div>
                             <div class="col-xs-6 col-md-2 col-sm-2 pdd-none md-marg-div md-no-padd">
                                 <!--<input ttype="text" class="form-control" name="data[CharterGuestMealPreference][restaurant_time3]" placeholder="Time">-->
-                                <?php echo $this->Form->input("restaurant_time3",array("label"=>false,'class'=>'form-control timePicker','type' => 'text', 'placeholder' => 'Time', 'onchange' => "validateHhMm(this)")); ?>
+                                <?php echo $this->Form->input("restaurant_time3",array("label"=>false,'class'=>'form-control checkInputChange timePicker','type' => 'text', 'placeholder' => 'Time', 'onchange' => "validateHhMm(this)")); ?>
                             </div>
                         </div>
                     </div>
@@ -1591,14 +1591,14 @@ input[type="checkbox"] {
                     <div class="check-mrg-top">
                         <div class="col-xs-3 col-md-1 col-sm-1 md-no-padd col-md-xs-radiobox mtb-8">
                             <div class="radio" style="margin-top:0px;margin-bottom:0px!important">
-                            <input type="radio" name="data[CharterGuestMealPreference][is_hors_deovres]" value="1"
+                            <input type="radio" class="checkInputChange" name="data[CharterGuestMealPreference][is_hors_deovres]" value="1"
                                     <?php echo $isDeovresYes; ?>>
                                 <label class="pdd-none"><span>Yes</span></label>
                             </div>
                         </div>
                         <div class="col-xs-3 col-md-1 col-sm-1 md-no-padd col-md-xs-radiobox mtb-8">
                             <div class="radio" style="margin-top:0px;margin-bottom:0px!important">
-                            <input type="radio" name="data[CharterGuestMealPreference][is_hors_deovres]" value="0"
+                            <input type="radio" class="checkInputChange" name="data[CharterGuestMealPreference][is_hors_deovres]" value="0"
                                     <?php echo $isDeovresNo; ?>>
                                 <label class="pdd-none"><span class="no-radio-btn">No</span></label>
                             </div>
@@ -1642,7 +1642,7 @@ input[type="checkbox"] {
                         <div class="col-xs-12 col-sm-8 two">
                             <div class="col-xs-6 col-sm-3 des-pre-w col-md-2 pdd-none">
                                 <div class="checkbox">
-                                    <input type="checkbox" class="deovreschk"
+                                    <input type="checkbox" class="deovreschk checkInputChange"
                                         name="data[CharterGuestMealPreference][deovres_preference][]" value="1"
                                         <?php echo $deovresListChecked[1]; ?>>
                                     <label class="pdd-none">Caviar</label>
@@ -1650,7 +1650,7 @@ input[type="checkbox"] {
                             </div>
                             <div class="col-xs-6 col-sm-3 des-pre-w col-md-2 pdd-none">
                                 <div class="checkbox">
-                                    <input type="checkbox" class="deovreschk"
+                                    <input type="checkbox" class="deovreschk checkInputChange"
                                         name="data[CharterGuestMealPreference][deovres_preference][]" value="2"
                                         <?php echo $deovresListChecked[2]; ?>>
                                     <label class="pdd-none">Canapes</label>
@@ -1658,7 +1658,7 @@ input[type="checkbox"] {
                             </div>
                             <div class="col-xs-6 col-sm-3 des-pre-w col-md-2 pdd-none">
                                 <div class="checkbox">
-                                    <input type="checkbox" class="deovreschk"
+                                    <input type="checkbox" class="deovreschk checkInputChange"
                                         name="data[CharterGuestMealPreference][deovres_preference][]" value="3"
                                         <?php echo $deovresListChecked[3]; ?>>
                                     <label class="pdd-none">Crudites</label>
@@ -1666,7 +1666,7 @@ input[type="checkbox"] {
                             </div>
                             <div class="col-xs-6 col-sm-3 des-pre-w col-md-2 pdd-none">
                                 <div class="checkbox">
-                                    <input type="checkbox" class="deovreschk"
+                                    <input type="checkbox" class="deovreschk checkInputChange"
                                         name="data[CharterGuestMealPreference][deovres_preference][]" value="4"
                                         <?php echo $deovresListChecked[4]; ?>>
                                     <label class="pdd-none">Sushi</label>
@@ -1676,7 +1676,7 @@ input[type="checkbox"] {
                             <div class="full-row-container">
                                 <div class=" col-xs-4 col-sm-2 des-pre-w pdd-none cheese-inline">
                                     <div class="checkbox">
-                                        <input type="checkbox" class="deovreschk"
+                                        <input type="checkbox" class="deovreschk checkInputChange"
                                             name="data[CharterGuestMealPreference][deovres_preference][]" value="5"
                                             <?php echo $deovresListChecked[5]; ?>>
                                         <label class="pdd-none">Cheese</label>
@@ -1684,7 +1684,7 @@ input[type="checkbox"] {
                                 </div>
                                 <div class="col-xs-8 col-sm-9 col-md-6 pdd-none Cheese-md-row-input">
                                     <!--<input ttype="text" class="form-control" name="data[CharterGuestMealPreference][deovres_comments]" placeholder="Specific Brands">-->
-                                    <?php echo $this->Form->input("deovres_comments",array("label"=>false,'class'=>'form-control','type' => 'text', 'placeholder' => 'e.g. Double Brie')); ?>
+                                    <?php echo $this->Form->input("deovres_comments",array("label"=>false,'class'=>'form-control checkInputChange','type' => 'text', 'placeholder' => 'e.g. Double Brie')); ?>
                                 </div>
                             </div>
                             <input type="hidden" name="data[CharterGuestMealPreference][deovres_preference_hidden][]"
@@ -1700,14 +1700,14 @@ input[type="checkbox"] {
                     <div class="check-mrg-top">
                         <div class="col-xs-3 col-md-1 col-sm-1 md-no-padd col-md-xs-radiobox mtb-8">
                             <div class="radio" style="margin-top:0px;margin-bottom:0px!important">
-                            <input type="radio" name="data[CharterGuestMealPreference][is_dinner_desert]" value="1"
+                            <input type="radio" class="checkInputChange" name="data[CharterGuestMealPreference][is_dinner_desert]" value="1"
                                     <?php echo $isDinnerDesertYes; ?>>
                                 <label class="pdd-none"><span>Yes</span></label>
                             </div>
                         </div>
                         <div class="col-xs-3 col-md-1 col-sm-1 md-no-padd col-md-xs-radiobox mtb-8">
                             <div class="radio" style="margin-top:0px;margin-bottom:0px!important">
-                            <input type="radio" name="data[CharterGuestMealPreference][is_dinner_desert]" value="0"
+                            <input type="radio" class="checkInputChange" name="data[CharterGuestMealPreference][is_dinner_desert]" value="0"
                                     <?php echo $isDinnerDesertNo; ?>>
                                 <label class="pdd-none"><span class="no-radio-btn">No</span></label>
                             </div>
@@ -1747,14 +1747,14 @@ input[type="checkbox"] {
                     <div class="check-mrg-top">
                         <div class="col-xs-3 col-md-1 col-sm-1 md-no-padd col-md-xs-radiobox mtb-8">
                             <div class="radio" style="margin-top:0px;margin-bottom:0px!important">
-                            <input type="radio" name="data[CharterGuestMealPreference][is_dinner_coffee]" value="1"
+                            <input type="radio" class="checkInputChange" name="data[CharterGuestMealPreference][is_dinner_coffee]" value="1"
                                     <?php echo $isDinnerCoffeeYes; ?>>
                                 <label class="pdd-none"><span>Yes</span></label>
                             </div>
                         </div>
                         <div class="col-xs-3 col-md-1 col-sm-1 md-no-padd col-md-xs-radiobox mtb-8">
                             <div class="radio" style="margin-top:0px;margin-bottom:0px!important">
-                            <input type="radio" name="data[CharterGuestMealPreference][is_dinner_coffee]" value="0"
+                            <input type="radio" class="checkInputChange" name="data[CharterGuestMealPreference][is_dinner_coffee]" value="0"
                                     <?php echo $isDinnerCoffeeNo; ?>>
                                 <label class="pdd-none"><span class="no-radio-btn">No</span></label>
                             </div>

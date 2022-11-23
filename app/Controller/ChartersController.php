@@ -2174,6 +2174,8 @@ class ChartersController extends AppController {
                         $guest_file_name = $guestListData['GuestList']['file_name'];
                         $guest_file_path = $guestListData['GuestList']['file_path'];
                         //$salutation = $guestListData['GuestList']['salutation'];
+                        $use_submitted_date = $guestListData['GuestList']['use_submitted_date'];
+                        $use_submitted_preferences = $guestListData['GuestList']['use_submitted_preferences'];
                         $guest_targetImagePath = "";
                         $guest_targetFileName = "";
                         if($guest_file_name != ""){
@@ -2267,6 +2269,9 @@ class ChartersController extends AppController {
             // For showing popup
             //$this->set("showPopup", 1);
             $this->Session->write("showPopup", 1);
+           // $this->Session->write("use_submitted_date", $use_submitted_date);
+            //$this->Session->write("use_submitted_preferences", $use_submitted_preferences);
+            
             $sessionData = $this->Session->read();
             $this->redirect(array('action' => 'preference'.$sessionData['preferenceParam']));
             
@@ -2286,6 +2291,9 @@ class ChartersController extends AppController {
         //echo $charterAssocId;
         $personalDetails = $this->CharterGuestPersonalDetail->find('first', array('conditions' => array('guest_lists_UUID' => $charterGuestAssociateUUID,'is_deleted'=>0)));
         $this->set('personalDetails', $personalDetails);
+
+       
+        
 
         if (!empty($personalDetails)) {
             $this->request->data['CharterGuestPersonalDetail'] = $personalDetails['CharterGuestPersonalDetail'];
@@ -2546,6 +2554,16 @@ class ChartersController extends AppController {
         $this->set('programFiles', $attachment);
         // echo "<pre>";print_r($programFilesCond);
         // echo "<pre>";print_r($attachment);exit;
+    }
+
+    function use_submitted_date(){
+        //echo '<pre>'; print_r($this->params); exit;
+      
+           $this->loadModel('GuestList');
+            $data = $this->GuestList->find('first', array('conditions' => array('UUID' => $this->params->pass[0],'is_deleted'=>0)));
+                    
+       
+           return $data;
     }
 
     function existingCheckFunction(){
@@ -6700,7 +6718,10 @@ function getPreviousCharterProgramSelections() {
         $sessiondata = $this->Session->read();
         $guestListUUID = $this->request->data['guestListUUID'];
         $selectedCharterProgramUUID = $this->request->data['selectedCharterProgramUUID'];
+        $use_submitted_preferences = $this->request->data['use'];
         $this->Session->delete("showPopup");
+        
+        
             $this->loadModel('GuestList');
             $this->loadModel('CharterGuest');
             $guestExistdata = $this->GuestList->find('first', array('conditions' => array('UUID' => $guestListUUID)));
@@ -6708,7 +6729,8 @@ function getPreviousCharterProgramSelections() {
             if(!empty($guestExistdata)){
                 $guestlistData = array();
                 $guestlistData['id'] = $guestExistdata['GuestList']['id'];
-                $guestlistData['use_submitted_preferences'] = 1;
+                $guestlistData['use_submitted_preferences'] = $use_submitted_preferences;
+                $guestlistData['use_submitted_date'] = date('Y-m-d');
                 $this->GuestList->save($guestlistData);
                 // Fetch the Charter Guest data
                 $charterGuestData = $this->CharterGuest->find('first', array('conditions' => array('charter_program_id' => $selectedCharterProgramUUID)));
@@ -6729,7 +6751,8 @@ function getPreviousCharterProgramSelections() {
                     
                     if (!empty($checkCharterExists)) {
                         // Updation
-                        $updateQuery = "UPDATE $yachtDbName.passenger_lists SET use_submitted_preferences='1' WHERE UUID='$guestListUUID'";
+                        $dateToday = date('Y-m-d');
+                        $updateQuery = "UPDATE $yachtDbName.passenger_lists SET use_submitted_preferences='".$use_submitted_preferences."',use_submitted_date='".$dateToday."' WHERE UUID='$guestListUUID'";
                         $this->CharterGuest->query($updateQuery);
                     }
 
@@ -6753,6 +6776,7 @@ function sessionShowPopupDelete(){
         $this->autoRender = false;
 
         $this->Session->delete("showPopup");
+        
         $result['status'] = "success";
         echo json_encode($result);
         exit;

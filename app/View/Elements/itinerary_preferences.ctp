@@ -158,172 +158,172 @@ $ownerprefenceID = $this->Session->read('ownerprefenceID');
           <div class="iter-pref">
             <div class="be-col-6">
             <div class="checkbox">
-            <input type="checkbox" class="itinerary" name="data[CharterGuestItineraryPreference][itinerary][]" value="1" <?php echo $itineraryListChecked[1]; ?>>
+            <input type="checkbox" class="itinerary checkInputChange" name="data[CharterGuestItineraryPreference][itinerary][]" value="1" <?php echo $itineraryListChecked[1]; ?>>
                 <label class="pdd-none"><span class="sp-lab">Swimming</span></label>
             </div></div>
             <div class="be-col-6">
             <div class="checkbox bev-chbox">
-            <input type="checkbox" class="itinerary" name="data[CharterGuestItineraryPreference][itinerary][]" value="2" <?php echo $itineraryListChecked[2]; ?>>
+            <input type="checkbox" class="itinerary checkInputChange" name="data[CharterGuestItineraryPreference][itinerary][]" value="2" <?php echo $itineraryListChecked[2]; ?>>
               <label class="pdd-none"><span class="sp-lab">Water Skiing</span></label>
             </div>
             </div>
             <div class="be-col-6">
             <div class="checkbox bev-chbox">
-            <input type="checkbox" class="itinerary" name="data[CharterGuestItineraryPreference][itinerary][]" value="3" <?php echo $itineraryListChecked[3]; ?>>
+            <input type="checkbox" class="itinerary checkInputChange" name="data[CharterGuestItineraryPreference][itinerary][]" value="3" <?php echo $itineraryListChecked[3]; ?>>
               <label class="pdd-none"><span class="sp-lab">Sightseeing</span></label>
             </div>
              </div>
              <div class="be-col-6">
             <div class="checkbox bev-chbox">
-            <input type="checkbox" class="itinerary" name="data[CharterGuestItineraryPreference][itinerary][]" value="4" <?php echo $itineraryListChecked[4]; ?>>
+            <input type="checkbox" class="itinerary checkInputChange" name="data[CharterGuestItineraryPreference][itinerary][]" value="4" <?php echo $itineraryListChecked[4]; ?>>
               <label class="pdd-none"><span class="sp-lab">Inland excursions</span></label>
             </div>
             </div>
             <div class="be-col-6">
             <div class="checkbox bev-chbox">
-            <input type="checkbox" class="itinerary" name="data[CharterGuestItineraryPreference][itinerary][]" value="5" <?php echo $itineraryListChecked[5]; ?>>
+            <input type="checkbox" class="itinerary checkInputChange" name="data[CharterGuestItineraryPreference][itinerary][]" value="5" <?php echo $itineraryListChecked[5]; ?>>
               <label class="pdd-none"><span class="sp-lab">Music/dancing</span></label>
             </div>
             </div>
             <div class="be-col-6">
             <div class="checkbox bev-chbox">
-            <input type="checkbox" class="itinerary" name="data[CharterGuestItineraryPreference][itinerary][]" value="6" <?php echo $itineraryListChecked[6]; ?>>
+            <input type="checkbox" class="itinerary checkInputChange" name="data[CharterGuestItineraryPreference][itinerary][]" value="6" <?php echo $itineraryListChecked[6]; ?>>
               <label class="pdd-none"><span class="sp-lab">Trail blazing</span></label>
             </div>
             </div>
             <div class="be-col-6">
             <div class="checkbox bev-chbox">
-            <input type="checkbox" class="itinerary" name="data[CharterGuestItineraryPreference][itinerary][]" value="7" <?php echo $itineraryListChecked[7]; ?>>
+            <input type="checkbox" class="itinerary checkInputChange" name="data[CharterGuestItineraryPreference][itinerary][]" value="7" <?php echo $itineraryListChecked[7]; ?>>
               <label class="pdd-none"><span class="sp-lab">Night life/Clubs</span></label>
             </div>
             </div>
             <div class="be-col-6">
             <div class="checkbox bev-chbox">
-            <input type="checkbox" class="itinerary" name="data[CharterGuestItineraryPreference][itinerary][]" value="8" <?php echo $itineraryListChecked[8]; ?>>
+            <input type="checkbox" class="itinerary checkInputChange" name="data[CharterGuestItineraryPreference][itinerary][]" value="8" <?php echo $itineraryListChecked[8]; ?>>
               <label class="pdd-none"><span class="sp-lab">Helicopter rides</span></label>
             </div>
              </div>
              <div class="be-col-6">
             <div class="checkbox bev-chbox">
-            <input type="checkbox" class="itinerary" name="data[CharterGuestItineraryPreference][itinerary][]" value="9" <?php echo $itineraryListChecked[9]; ?>>
+            <input type="checkbox" class="itinerary checkInputChange" name="data[CharterGuestItineraryPreference][itinerary][]" value="9" <?php echo $itineraryListChecked[9]; ?>>
               <label class="pdd-none"><span class="sp-lab">Fly fishing</span></label>
             </div>
             </div>
             <div class="be-col-6">
             <div class="checkbox bev-chbox">
-            <input type="checkbox" class="itinerary" name="data[CharterGuestItineraryPreference][itinerary][]" value="10" <?php echo $itineraryListChecked[10]; ?>>
+            <input type="checkbox" class="itinerary checkInputChange" name="data[CharterGuestItineraryPreference][itinerary][]" value="10" <?php echo $itineraryListChecked[10]; ?>>
               <label class="pdd-none"><span class="sp-lab">Hiking</span></label>
             </div></div>
             <div class="be-col-6">
             <div class="checkbox bev-chbox">
-            <input type="checkbox" class="itinerary" name="data[CharterGuestItineraryPreference][itinerary][]" value="11" <?php echo $itineraryListChecked[11]; ?>>
+            <input type="checkbox" class="itinerary checkInputChange" name="data[CharterGuestItineraryPreference][itinerary][]" value="11" <?php echo $itineraryListChecked[11]; ?>>
               <label class="pdd-none"><span class="sp-lab">Mountain biking</span></label>
             </div></div>
              <div class="be-col-6">
              <div class="checkbox">
-              <input type="checkbox" class="itinerary" name="data[CharterGuestItineraryPreference][itinerary][]" value="12" <?php echo $itineraryListChecked[12]; ?>>
+              <input type="checkbox" class="itinerary checkInputChange" name="data[CharterGuestItineraryPreference][itinerary][]" value="12" <?php echo $itineraryListChecked[12]; ?>>
               <label class="pdd-none"><span class="sp-lab">Snorkeling</span></label>
             </div></div>
             <div class="be-col-6">
             <div class="checkbox bev-chbox">
-            <input type="checkbox" class="itinerary" name="data[CharterGuestItineraryPreference][itinerary][]" value="13" <?php echo $itineraryListChecked[13]; ?>>
+            <input type="checkbox" class="itinerary checkInputChange" name="data[CharterGuestItineraryPreference][itinerary][]" value="13" <?php echo $itineraryListChecked[13]; ?>>
               <label class="pdd-none"><span class="sp-lab">Wakeboarding</span></label>
             </div></div>
             <div class="be-col-6">
             <div class="checkbox bev-chbox">
-            <input type="checkbox" class="itinerary" name="data[CharterGuestItineraryPreference][itinerary][]" value="14" <?php echo $itineraryListChecked[14]; ?>>
+            <input type="checkbox" class="itinerary checkInputChange" name="data[CharterGuestItineraryPreference][itinerary][]" value="14" <?php echo $itineraryListChecked[14]; ?>>
               <label class="pdd-none"><span class="sp-lab">Hot Springs</span></label>
             </div></div>
             <div class="be-col-6">
             <div class="checkbox bev-chbox">
-            <input type="checkbox" class="itinerary" name="data[CharterGuestItineraryPreference][itinerary][]" value="15" <?php echo $itineraryListChecked[15]; ?>>
+            <input type="checkbox" class="itinerary checkInputChange" name="data[CharterGuestItineraryPreference][itinerary][]" value="15" <?php echo $itineraryListChecked[15]; ?>>
               <label class="pdd-none"><span class="sp-lab">Kite Surfing</span></label>
             </div></div>
             <div class="be-col-6">
             <div class="checkbox bev-chbox">
-            <input type="checkbox" class="itinerary" name="data[CharterGuestItineraryPreference][itinerary][]" value="16" <?php echo $itineraryListChecked[16]; ?>>
+            <input type="checkbox" class="itinerary checkInputChange" name="data[CharterGuestItineraryPreference][itinerary][]" value="16" <?php echo $itineraryListChecked[16]; ?>>
               <label class="pdd-none"><span class="sp-lab">Surfing</span></label>
             </div></div>
             <div class="be-col-6">
             <div class="checkbox bev-chbox">
-            <input type="checkbox" class="itinerary" name="data[CharterGuestItineraryPreference][itinerary][]" value="17" <?php echo $itineraryListChecked[17]; ?>>
+            <input type="checkbox" class="itinerary checkInputChange" name="data[CharterGuestItineraryPreference][itinerary][]" value="17" <?php echo $itineraryListChecked[17]; ?>>
               <label class="pdd-none"><span class="sp-lab">Shopping</span></label>
             </div></div>
             <div class="be-col-6">
             <div class="checkbox bev-chbox">
-            <input type="checkbox" class="itinerary" name="data[CharterGuestItineraryPreference][itinerary][]" value="18" <?php echo $itineraryListChecked[18]; ?>>
+            <input type="checkbox" class="itinerary checkInputChange" name="data[CharterGuestItineraryPreference][itinerary][]" value="18" <?php echo $itineraryListChecked[18]; ?>>
               <label class="pdd-none"><span class="sp-lab">Golfing</span></label>
               </div>
             </div>
             <div class="be-col-6">
             <div class="checkbox bev-chbox">
-            <input type="checkbox" class="itinerary" name="data[CharterGuestItineraryPreference][itinerary][]" value="19" <?php echo $itineraryListChecked[19]; ?>>
+            <input type="checkbox" class="itinerary checkInputChange" name="data[CharterGuestItineraryPreference][itinerary][]" value="19" <?php echo $itineraryListChecked[19]; ?>>
               <label class="pdd-none"><span class="sp-lab">Relaxing</span></label>
             </div></div>
             <div class="be-col-6">
             <div class="checkbox bev-chbox">
-            <input type="checkbox" class="itinerary" name="data[CharterGuestItineraryPreference][itinerary][]" value="20" <?php echo $itineraryListChecked[20]; ?>>
+            <input type="checkbox" class="itinerary checkInputChange" name="data[CharterGuestItineraryPreference][itinerary][]" value="20" <?php echo $itineraryListChecked[20]; ?>>
               <label class="pdd-none"><span class="sp-lab">Parasailing</span></label>
             </div></div>
             <div class="be-col-6">
             <div class="checkbox bev-chbox">
-            <input type="checkbox" class="itinerary" name="data[CharterGuestItineraryPreference][itinerary][]" value="21" <?php echo $itineraryListChecked[21]; ?>>
+            <input type="checkbox" class="itinerary checkInputChange" name="data[CharterGuestItineraryPreference][itinerary][]" value="21" <?php echo $itineraryListChecked[21]; ?>>
               <label class="pdd-none"><span class="sp-lab">Water toys</span></label>
             </div></div>
             <div class="be-col-6">
             <div class="checkbox bev-chbox">
-            <input type="checkbox" class="itinerary" name="data[CharterGuestItineraryPreference][itinerary][]" value="22" <?php echo $itineraryListChecked[22]; ?>>
+            <input type="checkbox" class="itinerary checkInputChange" name="data[CharterGuestItineraryPreference][itinerary][]" value="22" <?php echo $itineraryListChecked[22]; ?>>
               <label class="pdd-none"><span class="sp-lab">Rock climbing</span></label>
             </div></div>
             <div class="be-col-6">
              <div class="checkbox">
-             <input type="checkbox" class="itinerary" name="data[CharterGuestItineraryPreference][itinerary][]" value="23" <?php echo $itineraryListChecked[23]; ?>>
+             <input type="checkbox" class="itinerary checkInputChange" name="data[CharterGuestItineraryPreference][itinerary][]" value="23" <?php echo $itineraryListChecked[23]; ?>>
               <label class="pdd-none"><span class="sp-lab">Beach activities</span></label>
             </div></div>
             <div class="be-col-6">
             <div class="checkbox bev-chbox">
-            <input type="checkbox" class="itinerary" name="data[CharterGuestItineraryPreference][itinerary][]" value="24" <?php echo $itineraryListChecked[24]; ?>>
+            <input type="checkbox" class="itinerary checkInputChange" name="data[CharterGuestItineraryPreference][itinerary][]" value="24" <?php echo $itineraryListChecked[24]; ?>>
               <label class="pdd-none"><span class="sp-lab">Wave runners</span></label>
             </div></div>
             <div class="be-col-6">
             <div class="checkbox bev-chbox">
-            <input type="checkbox" class="itinerary" name="data[CharterGuestItineraryPreference][itinerary][]" value="25" <?php echo $itineraryListChecked[25]; ?>>
+            <input type="checkbox" class="itinerary checkInputChange" name="data[CharterGuestItineraryPreference][itinerary][]" value="25" <?php echo $itineraryListChecked[25]; ?>>
               <label class="pdd-none"><span class="sp-lab">Active cruising</span></label>
             </div></div>
             <div class="be-col-6">
             <div class="checkbox bev-chbox">
-            <input type="checkbox" class="itinerary" name="data[CharterGuestItineraryPreference][itinerary][]" value="26" <?php echo $itineraryListChecked[26]; ?>>
+            <input type="checkbox" class="itinerary checkInputChange" name="data[CharterGuestItineraryPreference][itinerary][]" value="26" <?php echo $itineraryListChecked[26]; ?>>
               <label class="pdd-none"><span class="sp-lab">Sailing</span></label>
             </div></div>
              <div class="be-col-6">
             <div class="checkbox bev-chbox">
-            <input type="checkbox" class="itinerary" name="data[CharterGuestItineraryPreference][itinerary][]" value="27" <?php echo $itineraryListChecked[27]; ?>>
+            <input type="checkbox" class="itinerary checkInputChange" name="data[CharterGuestItineraryPreference][itinerary][]" value="27" <?php echo $itineraryListChecked[27]; ?>>
               <label class="pdd-none"><span class="sp-lab">Tennis</span></label>
             </div></div>
             <div class="be-col-6">
             <div class="checkbox bev-chbox">
-            <input type="checkbox" class="itinerary" name="data[CharterGuestItineraryPreference][itinerary][]" value="28" <?php echo $itineraryListChecked[28]; ?>>
+            <input type="checkbox" class="itinerary checkInputChange" name="data[CharterGuestItineraryPreference][itinerary][]" value="28" <?php echo $itineraryListChecked[28]; ?>>
               <label class="pdd-none"><span class="sp-lab">Sea kayaking</span></label>
             </div></div>
             <div class="be-col-6">
             <div class="checkbox bev-chbox">
-            <input type="checkbox" class="itinerary" name="data[CharterGuestItineraryPreference][itinerary][]" value="29" <?php echo $itineraryListChecked[29]; ?>>
+            <input type="checkbox" class="itinerary checkInputChange" name="data[CharterGuestItineraryPreference][itinerary][]" value="29" <?php echo $itineraryListChecked[29]; ?>>
               <label class="pdd-none"><span class="sp-lab">Dining ashore</span></label>
             </div></div>
             <div class="be-col-6">
             <div class="checkbox bev-chbox">
-            <input type="checkbox" class="itinerary" name="data[CharterGuestItineraryPreference][itinerary][]" value="30" <?php echo $itineraryListChecked[30]; ?>>
+            <input type="checkbox" class="itinerary checkInputChange" name="data[CharterGuestItineraryPreference][itinerary][]" value="30" <?php echo $itineraryListChecked[30]; ?>>
               <label class="pdd-none"><span class="sp-lab">Deep sea fishing</span></label>
             </div></div>
             <div class="be-col-6">
             <div class="checkbox bev-chbox">
-            <input type="checkbox" class="itinerary" name="data[CharterGuestItineraryPreference][itinerary][]" value="31" <?php echo $itineraryListChecked[31]; ?>>
+            <input type="checkbox" class="itinerary checkInputChange" name="data[CharterGuestItineraryPreference][itinerary][]" value="31" <?php echo $itineraryListChecked[31]; ?>>
               <label class="pdd-none"><span class="sp-lab">Scuba diving</span></label>
             </div></div>
 
              <div class="be-col-6">
             <div class="checkbox bev-chbox">
-            <input type="checkbox" class="itinerary" name="data[CharterGuestItineraryPreference][itinerary][]" value="32" <?php echo $itineraryListChecked[32]; ?>>
+            <input type="checkbox" class="itinerary checkInputChange" name="data[CharterGuestItineraryPreference][itinerary][]" value="32" <?php echo $itineraryListChecked[32]; ?>>
               <label class="pdd-none"><span class="sp-lab">Wildlife watching</span></label>
             </div></div>
           </div>
@@ -338,7 +338,7 @@ $ownerprefenceID = $this->Session->read('ownerprefenceID');
           </div>
           <div class="col-md-8 col-sm-8">
             <!--<input type="text" class="form-control">-->
-            <?php echo $this->Form->input("itinerary_comments",array("label"=>false,'class'=>'form-control','type' => 'text')); ?>
+            <?php echo $this->Form->input("itinerary_comments",array("label"=>false,'class'=>'form-control checkInputChange','type' => 'text')); ?>
           </div>
             </div>
            <div class="clearfix"></div>
@@ -351,7 +351,7 @@ $ownerprefenceID = $this->Session->read('ownerprefenceID');
              <div class="col-md-7 col-sm-7 ipadport-ml15 mrg-btm-row">
               <div class="be-col-2 col-md-1 col-sm-2">
                 <div class="radio my-none" style="margin:0;">
-                <input type="radio" name="data[CharterGuestItineraryPreference][is_swim]" value="1" <?php echo (isset($itineraryPreferences['CharterGuestItineraryPreference']['is_swim']) && $itineraryPreferences['CharterGuestItineraryPreference']['is_swim'] == 1) ? 'checked' : ''; ?>>
+                <input type="radio" class="checkInputChange" name="data[CharterGuestItineraryPreference][is_swim]" value="1" <?php echo (isset($itineraryPreferences['CharterGuestItineraryPreference']['is_swim']) && $itineraryPreferences['CharterGuestItineraryPreference']['is_swim'] == 1) ? 'checked' : ''; ?>>
                   <label class="pdd-none">
                       <span>Yes</span>
                   </label>
@@ -359,7 +359,7 @@ $ownerprefenceID = $this->Session->read('ownerprefenceID');
               </div>
               <div class="be-col-2 col-md-1 col-sm-2">
                 <div class="radio my-none" style="margin:0;">
-                 <input type="radio" name="data[CharterGuestItineraryPreference][is_swim]" value="0" <?php echo (isset($itineraryPreferences['CharterGuestItineraryPreference']['is_swim']) && $itineraryPreferences['CharterGuestItineraryPreference']['is_swim'] == 0) ? 'checked' : ''; ?>>
+                 <input type="radio" class="checkInputChange" name="data[CharterGuestItineraryPreference][is_swim]" value="0" <?php echo (isset($itineraryPreferences['CharterGuestItineraryPreference']['is_swim']) && $itineraryPreferences['CharterGuestItineraryPreference']['is_swim'] == 0) ? 'checked' : ''; ?>>
                  <label class="pdd-none">         
                     <span>No</span>
                  </label>
@@ -374,7 +374,7 @@ $ownerprefenceID = $this->Session->read('ownerprefenceID');
              <div class="col-md-7 col-sm-7 ipadport-ml15 mrg-btm-row">
               <div class="be-col-2 col-md-1 col-sm-2">
                 <div class="radio my-none" style="margin:0;">
-                <input type="radio" name="data[CharterGuestItineraryPreference][is_dive_licence]" value="1" <?php echo (isset($itineraryPreferences['CharterGuestItineraryPreference']['is_dive_licence']) && $itineraryPreferences['CharterGuestItineraryPreference']['is_dive_licence'] == 1) ? 'checked' : ''; ?>>
+                <input type="radio" class="checkInputChange" name="data[CharterGuestItineraryPreference][is_dive_licence]" value="1" <?php echo (isset($itineraryPreferences['CharterGuestItineraryPreference']['is_dive_licence']) && $itineraryPreferences['CharterGuestItineraryPreference']['is_dive_licence'] == 1) ? 'checked' : ''; ?>>
                   <label class="pdd-none">
                       <span>Yes</span>
                   </label>
@@ -382,7 +382,7 @@ $ownerprefenceID = $this->Session->read('ownerprefenceID');
               </div>
               <div class="be-col-2 col-md-1 col-sm-2">
                 <div class="radio my-none" style="margin:0;">
-                 <input type="radio" name="data[CharterGuestItineraryPreference][is_dive_licence]" value="0" <?php echo (isset($itineraryPreferences['CharterGuestItineraryPreference']['is_dive_licence']) && $itineraryPreferences['CharterGuestItineraryPreference']['is_dive_licence'] == 0) ? 'checked' : ''; ?>>
+                 <input type="radio" class="checkInputChange" name="data[CharterGuestItineraryPreference][is_dive_licence]" value="0" <?php echo (isset($itineraryPreferences['CharterGuestItineraryPreference']['is_dive_licence']) && $itineraryPreferences['CharterGuestItineraryPreference']['is_dive_licence'] == 0) ? 'checked' : ''; ?>>
                  <label class="pdd-none">         
                     <span>No</span>
                  </label>
@@ -399,25 +399,25 @@ $ownerprefenceID = $this->Session->read('ownerprefenceID');
              <div class="col-md-12 col-sm-12 mrg-btm-row">
                <div class="be-col-6 col-md-2 col-sm-3 pdd-none">
                  <div class="checkbox">
-                 <input type="checkbox" class="divechk" name="data[CharterGuestItineraryPreference][dive_license][]" value="1" <?php echo $diveLicenseChecked[1]; ?>>
+                 <input type="checkbox" class="divechk checkInputChange" name="data[CharterGuestItineraryPreference][dive_license][]" value="1" <?php echo $diveLicenseChecked[1]; ?>>
                    <label class="pdd-none"><span class="sp-lab">Not Licenced</span></label>
                  </div>
                </div>
               <div class="be-col-6 col-md-2 col-sm-3">
                  <div class="checkbox">
-                 <input type="checkbox"class="divechk" name="data[CharterGuestItineraryPreference][dive_license][]" value="2" <?php echo $diveLicenseChecked[2]; ?>>
+                 <input type="checkbox"class="divechk checkInputChange" name="data[CharterGuestItineraryPreference][dive_license][]" value="2" <?php echo $diveLicenseChecked[2]; ?>>
                    <label class="pdd-none"><span class="sp-lab">Rescue Diver</span></label>
                  </div>
                </div>
                <div class="be-col-6 col-md-2 col-sm-3 ipd-0">
                  <div class="checkbox">
-                 <input type="checkbox"class="divechk" name="data[CharterGuestItineraryPreference][dive_license][]" value="3" <?php echo $diveLicenseChecked[3]; ?>>
+                 <input type="checkbox"class="divechk checkInputChange" name="data[CharterGuestItineraryPreference][dive_license][]" value="3" <?php echo $diveLicenseChecked[3]; ?>>
                    <label class="pdd-none"><span class="sp-lab">Open Water</span></label>
                  </div>
                </div>
               <div class="be-col-6 col-md-2 col-sm-3 md-ins-pad">
                  <div class="checkbox">
-                 <input type="checkbox"class="divechk" name="data[CharterGuestItineraryPreference][dive_license][]" value="4" <?php echo $diveLicenseChecked[4]; ?>>
+                 <input type="checkbox"class="divechk checkInputChange" name="data[CharterGuestItineraryPreference][dive_license][]" value="4" <?php echo $diveLicenseChecked[4]; ?>>
                    <label class="pdd-none"><span class="sp-lab">Instructor</span></label>
                  </div>
                </div>

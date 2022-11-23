@@ -252,35 +252,35 @@ hr.divmar{
               <label class="pdd-none mrg-label">COFFEE</label>
               <div class="be-col-3 be-col-8">
                <div class="checkbox bev-chbox">
-               <input type="checkbox" class="coffeechk" name="data[CharterGuestBeveragePreference][coffee_items][]" value="1" <?php echo $coffeeItemsChecked[1]; ?>>
+               <input type="checkbox" class="coffeechk checkInputChange" name="data[CharterGuestBeveragePreference][coffee_items][]" value="1" <?php echo $coffeeItemsChecked[1]; ?>>
                 <label class="pdd-none"><span class="sp-lab">Espresso</span></label>
               </div></div>
                <div class="be-col-3 be-col-sm-2">
                <div class="checkbox bev-chbox">
-               <input type="checkbox" class="coffeechk" name="data[CharterGuestBeveragePreference][coffee_items][]" value="2" <?php echo $coffeeItemsChecked[2]; ?>>
+               <input type="checkbox" class="coffeechk checkInputChange" name="data[CharterGuestBeveragePreference][coffee_items][]" value="2" <?php echo $coffeeItemsChecked[2]; ?>>
                 <label class="pdd-none"><span class="sp-lab">Decaf</span></label>
               </div>
               </div>
               <div class="be-col-3 be-col-sm-2">
               <div class="checkbox">
-              <input type="checkbox" class="coffeechk" name="data[CharterGuestBeveragePreference][coffee_items][]" value="3" <?php echo $coffeeItemsChecked[3]; ?>>
+              <input type="checkbox" class="coffeechk checkInputChange" name="data[CharterGuestBeveragePreference][coffee_items][]" value="3" <?php echo $coffeeItemsChecked[3]; ?>>
                   <label class="pdd-none"><span class="sp-lab">Regular</span></label>
               </div>
               </div>
 
               <div class="be-col-3 be-col-8">
                <div class="checkbox bev-chbox">
-               <input type="checkbox" class="coffeechk" name="data[CharterGuestBeveragePreference][coffee_items][]" value="4" <?php echo $coffeeItemsChecked[4]; ?>>
+               <input type="checkbox" class="coffeechk checkInputChange" name="data[CharterGuestBeveragePreference][coffee_items][]" value="4" <?php echo $coffeeItemsChecked[4]; ?>>
                 <label class="pdd-none"><span class="sp-lab">Cappuccino</span></label>
               </div></div>
               <div class="be-col-3 be-col-sm-2">
                <div class="checkbox bev-chbox">
-               <input type="checkbox" class="coffeechk" name="data[CharterGuestBeveragePreference][coffee_items][]" value="5" <?php echo $coffeeItemsChecked[5]; ?>>
+               <input type="checkbox" class="coffeechk checkInputChange" name="data[CharterGuestBeveragePreference][coffee_items][]" value="5" <?php echo $coffeeItemsChecked[5]; ?>>
                 <label class="pdd-none"><span class="sp-lab">Latte</span></label>
               </div></div>
               <div class="be-col-3 be-col-sm-2">
                <div class="checkbox bev-chbox">
-               <input type="checkbox" class="coffeechk" name="data[CharterGuestBeveragePreference][coffee_items][]" value="6" <?php echo $coffeeItemsChecked[6]; ?>>
+               <input type="checkbox" class="coffeechk checkInputChange" name="data[CharterGuestBeveragePreference][coffee_items][]" value="6" <?php echo $coffeeItemsChecked[6]; ?>>
                 <label class="pdd-none"><span class="sp-lab">Mocha</span></label>
               </div></div>
               <div>
@@ -288,39 +288,39 @@ hr.divmar{
                 <label class="pdd-none mrg-label">Other</label>
               </div>
               <div class="col-md-12 col-sm-12 pl-none pl-2 md-input-row">
-              <?php echo $this->Form->input("coffee_comments",array("label"=>false,'class'=>'form-control','type' => 'text')); ?>
+              <?php echo $this->Form->input("coffee_comments",array("label"=>false,'class'=>'form-control checkInputChange','type' => 'text')); ?>
             </div> 
               </div>
             <div class="col-md-4 col-sm-4 pdd-none pl-2">
               <label class="pdd-none mrg-label">TEA</label>
                 <div class="be-col-3 be-col-8">
                <div class="checkbox bev-chbox">
-               <input type="checkbox" class="teachk" name="data[CharterGuestBeveragePreference][tea_items][]" value="1" <?php echo $teaItemsChecked[1]; ?>>
+               <input type="checkbox" class="teachk checkInputChange" name="data[CharterGuestBeveragePreference][tea_items][]" value="1" <?php echo $teaItemsChecked[1]; ?>>
                 <label class="pdd-none"><span class="sp-lab">Chi Latte</span></label>
               </div></div>
               <div class="be-col-3 be-col-sm-2">
                <div class="checkbox bev-chbox">
-               <input type="checkbox" class="teachk" name="data[CharterGuestBeveragePreference][tea_items][]" value="2" <?php echo $teaItemsChecked[2]; ?>>
+               <input type="checkbox" class="teachk checkInputChange" name="data[CharterGuestBeveragePreference][tea_items][]" value="2" <?php echo $teaItemsChecked[2]; ?>>
                 <label class="pdd-none"><span class="sp-lab">Herbal</span></label>
               </div></div>
               <div class="be-col-3 be-col-sm-2">
                <div class="checkbox bev-chbox">  
-               <input type="checkbox" class="teachk" name="data[CharterGuestBeveragePreference][tea_items][]" value="3" <?php echo $teaItemsChecked[3]; ?>>
+               <input type="checkbox" class="teachk checkInputChange" name="data[CharterGuestBeveragePreference][tea_items][]" value="3" <?php echo $teaItemsChecked[3]; ?>>
                 <label class="pdd-none"><span class="sp-lab">Green</span></label>
               </div></div>
               <div class="be-col-3 be-col-8">
                <div class="checkbox bev-chbox">
-               <input type="checkbox" class="teachk" name="data[CharterGuestBeveragePreference][tea_items][]" value="4" <?php echo $teaItemsChecked[4]; ?>>
+               <input type="checkbox" class="teachk checkInputChange" name="data[CharterGuestBeveragePreference][tea_items][]" value="4" <?php echo $teaItemsChecked[4]; ?>>
                 <label class="pdd-none"><span class="sp-lab">Peppermint</span></label>
               </div></div>
               <div class="be-col-3 be-col-sm-2">
                <div class="checkbox bev-chbox">
-               <input type="checkbox" class="teachk" name="data[CharterGuestBeveragePreference][tea_items][]" value="5" <?php echo $teaItemsChecked[5]; ?>>
+               <input type="checkbox" class="teachk checkInputChange" name="data[CharterGuestBeveragePreference][tea_items][]" value="5" <?php echo $teaItemsChecked[5]; ?>>
                 <label class="pdd-none"><span class="sp-lab">White</span></label>
               </div></div>
                <div class="be-col-3 be-col-sm-2">
               <div class="checkbox bev-chbox">
-              <input type="checkbox" class="teachk" name="data[CharterGuestBeveragePreference][tea_items][]" value="6" <?php echo $teaItemsChecked[6]; ?>>
+              <input type="checkbox" class="teachk checkInputChange" name="data[CharterGuestBeveragePreference][tea_items][]" value="6" <?php echo $teaItemsChecked[6]; ?>>
                 <label class="pdd-none"><span class="sp-lab">Black</span></label>
               </div> </div>
               <div>
@@ -328,40 +328,40 @@ hr.divmar{
                 <label class="pdd-none mrg-label">Other</label>
               </div>
             <div class="col-md-12 col-sm-12 pl-none md-input-row">
-              <?php echo $this->Form->input("tea_comments",array("label"=>false,'class'=>'form-control','type' => 'text')); ?>
+              <?php echo $this->Form->input("tea_comments",array("label"=>false,'class'=>'form-control checkInputChange','type' => 'text')); ?>
             </div>
             </div>
             <div class="col-md-4 col-sm-4 pdd-none pl-2">
                 <label class="pdd-none mrg-label">MILK</label>
                 <div class="be-col-3 be-col-8">
               <div class="checkbox bev-chbox">
-              <input type="checkbox" class="milkchk" name="data[CharterGuestBeveragePreference][milk_items][]" value="1" <?php echo $milkItemsChecked[1]; ?>>
+              <input type="checkbox" class="milkchk checkInputChange" name="data[CharterGuestBeveragePreference][milk_items][]" value="1" <?php echo $milkItemsChecked[1]; ?>>
                 <label class="pdd-none"><span class="sp-lab">Whole</span></label>
               </div></div>
                <div class="be-col-3 be-col-sm-2">
                <div class="checkbox bev-chbox">
-               <input type="checkbox" class="milkchk" name="data[CharterGuestBeveragePreference][milk_items][]" value="2" <?php echo $milkItemsChecked[2]; ?>>
+               <input type="checkbox" class="milkchk checkInputChange" name="data[CharterGuestBeveragePreference][milk_items][]" value="2" <?php echo $milkItemsChecked[2]; ?>>
                 <label class="pdd-none"><span class="sp-lab">2%</span></label>
               </div></div>
               <div class="be-col-3 be-col-sm-2">
                <div class="checkbox bev-chbox">  
-               <input type="checkbox" class="milkchk" name="data[CharterGuestBeveragePreference][milk_items][]" value="3" <?php echo $milkItemsChecked[3]; ?>>
+               <input type="checkbox" class="milkchk checkInputChange" name="data[CharterGuestBeveragePreference][milk_items][]" value="3" <?php echo $milkItemsChecked[3]; ?>>
                 <label class="pdd-none"><span class="sp-lab">Skim</span></label>
               </div></div>
               <div class="be-col-3 be-col-8">
                <div class="checkbox bev-chbox">
-               <input type="checkbox" class="milkchk" name="data[CharterGuestBeveragePreference][milk_items][]" value="4" <?php echo $milkItemsChecked[4]; ?>>
+               <input type="checkbox" class="milkchk checkInputChange" name="data[CharterGuestBeveragePreference][milk_items][]" value="4" <?php echo $milkItemsChecked[4]; ?>>
                 <label class="pdd-none"><span class="sp-lab">Soy</span></label>
               </div>
               </div>
               <div class="be-col-3 be-col-sm-2">
                <div class="checkbox bev-chbox">
-               <input type="checkbox" class="milkchk" name="data[CharterGuestBeveragePreference][milk_items][]" value="5" <?php echo $milkItemsChecked[5]; ?>>
+               <input type="checkbox" class="milkchk checkInputChange" name="data[CharterGuestBeveragePreference][milk_items][]" value="5" <?php echo $milkItemsChecked[5]; ?>>
                 <label class="pdd-none"><span class="sp-lab">Rice</span></label>
               </div></div>
               <div class="be-col-3 be-col-sm-2">
                <div class="checkbox bev-chbox">
-               <input type="checkbox" class="milkchk" name="data[CharterGuestBeveragePreference][milk_items][]" value="6" <?php echo $milkItemsChecked[6]; ?>>
+               <input type="checkbox" class="milkchk checkInputChange" name="data[CharterGuestBeveragePreference][milk_items][]" value="6" <?php echo $milkItemsChecked[6]; ?>>
                 <label class="pdd-none"><span class="sp-lab">Almond</span></label>
               </div></div>
               <div>
@@ -369,7 +369,7 @@ hr.divmar{
                 <label class="pdd-none mrg-label">Other</label>
               </div>
              <div class="col-md-12 col-sm-12 pl-none md-input-row">
-              <?php echo $this->Form->input("milk_comments",array("label"=>false,'class'=>'form-control','type' => 'text')); ?>
+              <?php echo $this->Form->input("milk_comments",array("label"=>false,'class'=>'form-control checkInputChange','type' => 'text')); ?>
             </div>
             </div>
             <div class="clearfix"></div>
@@ -379,32 +379,32 @@ hr.divmar{
               <label class="mrg-label">SODA</label>
               <div class="be-col-3 be-col-8">
               <div class="checkbox bev-chbox">
-              <input type="checkbox" class="sodachk" name="data[CharterGuestBeveragePreference][soda_items][]" value="1" <?php echo $sodaItemsChecked[1]; ?>>
+              <input type="checkbox" class="sodachk checkInputChange" name="data[CharterGuestBeveragePreference][soda_items][]" value="1" <?php echo $sodaItemsChecked[1]; ?>>
                 <label class="pdd-none"><span class="sp-lab">Diet Coke</span></label>
               </div></div>
               <div class="be-col-3 be-col-sm-2">
                <div class="checkbox bev-chbox">
-               <input type="checkbox" class="sodachk" name="data[CharterGuestBeveragePreference][soda_items][]" value="2" <?php echo $sodaItemsChecked[2]; ?>>
+               <input type="checkbox" class="sodachk checkInputChange" name="data[CharterGuestBeveragePreference][soda_items][]" value="2" <?php echo $sodaItemsChecked[2]; ?>>
                 <label class="pdd-none"><span class="sp-lab">Coke</span></label>
               </div></div>
               <div class="be-col-3 be-col-sm-2">
                <div class="checkbox bev-chbox">  
-               <input type="checkbox" class="sodachk" name="data[CharterGuestBeveragePreference][soda_items][]" value="3" <?php echo $sodaItemsChecked[3]; ?>>
+               <input type="checkbox" class="sodachk checkInputChange" name="data[CharterGuestBeveragePreference][soda_items][]" value="3" <?php echo $sodaItemsChecked[3]; ?>>
                 <label class="pdd-none"><span class="sp-lab">Sprite</span></label>
               </div></div>
               <div class="be-col-3 be-col-8">
                <div class="checkbox bev-chbox">
-               <input type="checkbox" class="sodachk" name="data[CharterGuestBeveragePreference][soda_items][]" value="4" <?php echo $sodaItemsChecked[4]; ?>>
+               <input type="checkbox" class="sodachk checkInputChange" name="data[CharterGuestBeveragePreference][soda_items][]" value="4" <?php echo $sodaItemsChecked[4]; ?>>
                 <label class="pdd-none"><span class="sp-lab">Ginger Ale</span></label>
               </div></div>
               <div class="be-col-3 be-col-sm-2">
                <div class="checkbox bev-chbox">
-               <input type="checkbox" class="sodachk" name="data[CharterGuestBeveragePreference][soda_items][]" value="5" <?php echo $sodaItemsChecked[5]; ?>>
+               <input type="checkbox" class="sodachk checkInputChange" name="data[CharterGuestBeveragePreference][soda_items][]" value="5" <?php echo $sodaItemsChecked[5]; ?>>
                 <label class="pdd-none"><span class="sp-lab">Fanta</span></label>
               </div></div>
                <div class="be-col-3 be-col-sm-2">
                <div class="checkbox bev-chbox">
-               <input type="checkbox" class="sodachk" name="data[CharterGuestBeveragePreference][soda_items][]" value="6" <?php echo $sodaItemsChecked[6]; ?>>
+               <input type="checkbox" class="sodachk checkInputChange" name="data[CharterGuestBeveragePreference][soda_items][]" value="6" <?php echo $sodaItemsChecked[6]; ?>>
                 <label class="pdd-none"><span class="sp-lab">Pepsi</span></label>
               </div></div>
 
@@ -412,40 +412,40 @@ hr.divmar{
                 <label class="pdd-none mrg-label">Other</label>
               </div>
               <div class="col-md-12 col-sm-12 ipad-bev pl-none pl-25 md-input-row">
-              <?php echo $this->Form->input("soda_comments1",array("label"=>false,'class'=>'form-control','type' => 'text')); ?>
+              <?php echo $this->Form->input("soda_comments1",array("label"=>false,'class'=>'form-control checkInputChange','type' => 'text')); ?>
             </div> 
             </div>
             <div class="col-md-3 col-sm-3 ipad-bev pdd-none pl-25">
                <label class="pdd-none mrg-label">SODA</label>
                <div class="be-col-3 be-col-8">
               <div class="checkbox bev-chbox">
-              <input type="checkbox" class="sodachk" name="data[CharterGuestBeveragePreference][soda_items][]" value="7" <?php echo $sodaItemsChecked[7]; ?>>
+              <input type="checkbox" class="sodachk checkInputChange" name="data[CharterGuestBeveragePreference][soda_items][]" value="7" <?php echo $sodaItemsChecked[7]; ?>>
                 <label class="pdd-none"><span class="sp-lab">Club Soda</span></label>
               </div></div>
               <div class="be-col-3 be-col-sm-2">
                <div class="checkbox bev-chbox">
-               <input type="checkbox" class="sodachk" name="data[CharterGuestBeveragePreference][soda_items][]" value="8" <?php echo $sodaItemsChecked[8]; ?>>
+               <input type="checkbox" class="sodachk checkInputChange" name="data[CharterGuestBeveragePreference][soda_items][]" value="8" <?php echo $sodaItemsChecked[8]; ?>>
                 <label class="pdd-none"><span class="sp-lab">Tonic</span></label>
               </div></div>
               <div class="be-col-3 be-col-sm-2">
                <div class="checkbox bev-chbox">  
-               <input type="checkbox" class="sodachk" name="data[CharterGuestBeveragePreference][soda_items][]" value="9" <?php echo $sodaItemsChecked[9]; ?>>
+               <input type="checkbox" class="sodachk checkInputChange" name="data[CharterGuestBeveragePreference][soda_items][]" value="9" <?php echo $sodaItemsChecked[9]; ?>>
                 <label class="pdd-none"><span class="sp-lab">Red Bull</span></label>
               </div></div>
               <div class="be-col-3 be-col-8">
                <div class="checkbox bev-chbox">
-               <input type="checkbox" class="sodachk" name="data[CharterGuestBeveragePreference][soda_items][]" value="10" <?php echo $sodaItemsChecked[10]; ?>>
+               <input type="checkbox" class="sodachk checkInputChange" name="data[CharterGuestBeveragePreference][soda_items][]" value="10" <?php echo $sodaItemsChecked[10]; ?>>
                 <label class="pdd-none"><span class="sp-lab">Root Beer</span></label>
               </div>
               </div>
               <div class="be-col-3 be-col-sm-2">
                <div class="checkbox bev-chbox">
-               <input type="checkbox" class="sodachk" name="data[CharterGuestBeveragePreference][soda_items][]" value="11" <?php echo $sodaItemsChecked[11]; ?>>
+               <input type="checkbox" class="sodachk checkInputChange" name="data[CharterGuestBeveragePreference][soda_items][]" value="11" <?php echo $sodaItemsChecked[11]; ?>>
                 <label class="pdd-none">Orangina</label>
               </div></div>
               <div class="be-col-3 be-col-sm-2">
                <div class="checkbox bev-chbox">
-               <input type="checkbox" class="sodachk" name="data[CharterGuestBeveragePreference][soda_items][]" value="12" <?php echo $sodaItemsChecked[12]; ?>>
+               <input type="checkbox" class="sodachk checkInputChange" name="data[CharterGuestBeveragePreference][soda_items][]" value="12" <?php echo $sodaItemsChecked[12]; ?>>
                 <label class="pdd-none"><span class="sp-lab">Ice tea</span></label>
               </div></div>
                 <div>
@@ -453,40 +453,40 @@ hr.divmar{
                 <label class="pdd-none mrg-label">Other</label>
               </div>
                   <div class="col-md-12 col-sm-12 ipad-bev pl-none md-input-row">
-              <?php echo $this->Form->input("soda_comments2",array("label"=>false,'class'=>'form-control','type' => 'text')); ?>
+              <?php echo $this->Form->input("soda_comments2",array("label"=>false,'class'=>'form-control checkInputChange','type' => 'text')); ?>
             </div>
             </div>
             <div class="col-md-3 col-sm-3 ipad-bev pdd-none pl-25">
                 <label class="mrg-label">JUICE</label>
                 <div class="be-col-3 be-col-8">
               <div class="checkbox bev-chbox">
-              <input type="checkbox" class="juicechk" name="data[CharterGuestBeveragePreference][juice_items][]" value="1" <?php echo $juiceItemsChecked[1]; ?>>
+              <input type="checkbox" class="juicechk checkInputChange" name="data[CharterGuestBeveragePreference][juice_items][]" value="1" <?php echo $juiceItemsChecked[1]; ?>>
                 <label class="pdd-none"><span class="sp-lab">Grapefruit</span></label>
               </div></div>
               <div class="be-col-3 be-col-sm-2">
                <div class="checkbox bev-chbox">
-               <input type="checkbox" class="juicechk" name="data[CharterGuestBeveragePreference][juice_items][]" value="2" <?php echo $juiceItemsChecked[2]; ?>>
+               <input type="checkbox" class="juicechk checkInputChange" name="data[CharterGuestBeveragePreference][juice_items][]" value="2" <?php echo $juiceItemsChecked[2]; ?>>
                 <label class="pdd-none"><span class="sp-lab">Orange</span></label>
               </div></div>
                 <div class="be-col-3 be-col-sm-2">
                <div class="checkbox bev-chbox">
-               <input type="checkbox" class="juicechk" name="data[CharterGuestBeveragePreference][juice_items][]" value="3" <?php echo $juiceItemsChecked[3]; ?>>
+               <input type="checkbox" class="juicechk checkInputChange" name="data[CharterGuestBeveragePreference][juice_items][]" value="3" <?php echo $juiceItemsChecked[3]; ?>>
                 <label class="pdd-none"><span class="sp-lab">Apple</span></label>
               </div> </div>
               <div class="be-col-3 be-col-8">
                <div class="checkbox bev-chbox">
-               <input type="checkbox"class="juicechk"  name="data[CharterGuestBeveragePreference][juice_items][]" value="4" <?php echo $juiceItemsChecked[4]; ?>>
+               <input type="checkbox"class="juicechk checkInputChange"  name="data[CharterGuestBeveragePreference][juice_items][]" value="4" <?php echo $juiceItemsChecked[4]; ?>>
                 <label class="pdd-none"> <span class="sp-lab">Pineapple</span></label>
               </div>
               </div>
               <div class="be-col-3 be-col-sm-2">
                <div class="checkbox bev-chbox">  
-               <input type="checkbox" class="juicechk" name="data[CharterGuestBeveragePreference][juice_items][]" value="5" <?php echo $juiceItemsChecked[5]; ?>>
+               <input type="checkbox" class="juicechk checkInputChange" name="data[CharterGuestBeveragePreference][juice_items][]" value="5" <?php echo $juiceItemsChecked[5]; ?>>
                 <label class="pdd-none"><span class="sp-lab">Tomato</span></label>
               </div></div>
               <div class="be-col-3 be-col-sm-2">
                <div class="checkbox bev-chbox">  
-               <input type="checkbox" class="juicechk" name="data[CharterGuestBeveragePreference][juice_items][]" value="6" <?php echo $juiceItemsChecked[6]; ?>>
+               <input type="checkbox" class="juicechk checkInputChange" name="data[CharterGuestBeveragePreference][juice_items][]" value="6" <?php echo $juiceItemsChecked[6]; ?>>
                 <label class="pdd-none"><span class="sp-lab">Carrot</span></label>
               </div></div>
               <input type="hidden" name="data[CharterGuestBeveragePreference][juicehidden][]" id="juicehidden" value="" />
@@ -494,7 +494,7 @@ hr.divmar{
                 <label class="pdd-none mrg-label">Other</label>
               </div>
               <div class="col-md-12 col-sm-12 ipad-bev pl-none md-input-row">
-              <?php echo $this->Form->input("juice_comments",array("label"=>false,'class'=>'form-control','type' => 'text')); ?>
+              <?php echo $this->Form->input("juice_comments",array("label"=>false,'class'=>'form-control checkInputChange','type' => 'text')); ?>
             </div>
             </div>
             <div class="col-md-3 col-sm-3  ipad-bev pdd-none pl-25">
@@ -502,27 +502,27 @@ hr.divmar{
               <label class="pdd-none mrg-label">WATER</label>
                <div class="be-col-3 be-col-8">
               <div class="checkbox bev-chbox">
-              <input type="checkbox" class="waterchk" name="data[CharterGuestBeveragePreference][water_items][]" value="1" <?php echo $waterItemsChecked[1]; ?>>
+              <input type="checkbox" class="waterchk checkInputChange" name="data[CharterGuestBeveragePreference][water_items][]" value="1" <?php echo $waterItemsChecked[1]; ?>>
                 <label class="pdd-none"><span class="sp-lab">Mineral</span></label>
               </div></div>
                <div class="be-col-3 be-col-sm-2">
                <div class="checkbox bev-chbox">
-               <input type="checkbox" class="waterchk" name="data[CharterGuestBeveragePreference][water_items][]" value="2" <?php echo $waterItemsChecked[2]; ?>>
+               <input type="checkbox" class="waterchk checkInputChange" name="data[CharterGuestBeveragePreference][water_items][]" value="2" <?php echo $waterItemsChecked[2]; ?>>
                 <label class="pdd-none"><span class="sp-lab">Sparkling</span></label>
               </div></div>
               <div class="be-col-3 be-col-sm-2">
                <div class="checkbox bev-chbox">  
-               <input type="checkbox" class="waterchk" name="data[CharterGuestBeveragePreference][water_items][]" value="3" <?php echo $waterItemsChecked[3]; ?>>
+               <input type="checkbox" class="waterchk checkInputChange" name="data[CharterGuestBeveragePreference][water_items][]" value="3" <?php echo $waterItemsChecked[3]; ?>>
                 <label class="pdd-none"><span class="sp-lab">Still</span></label>
               </div></div>
                <div class="be-col-3 be-col-8">
                <div class="checkbox bev-chbox">
-               <input type="checkbox" class="waterchk"  name="data[CharterGuestBeveragePreference][water_items][]" value="4" <?php echo $waterItemsChecked[4]; ?>>
+               <input type="checkbox" class="waterchk checkInputChange"  name="data[CharterGuestBeveragePreference][water_items][]" value="4" <?php echo $waterItemsChecked[4]; ?>>
                 <label class="pdd-none"><span class="sp-lab">Coconut</span></label>
               </div></div>
               <div class="be-col-3 be-col-sm-2">
                <div class="checkbox bev-chbox">
-               <input type="checkbox" class="waterchk" name="data[CharterGuestBeveragePreference][water_items][]" value="5" <?php echo $waterItemsChecked[5]; ?>>
+               <input type="checkbox" class="waterchk checkInputChange" name="data[CharterGuestBeveragePreference][water_items][]" value="5" <?php echo $waterItemsChecked[5]; ?>>
                 <label class="pdd-none"><span class="sp-lab">Infused</span></label>
               </div></div>
               <input type="hidden" name="data[CharterGuestBeveragePreference][water_hidden][]" id="water_hidden" value="" />
@@ -531,7 +531,7 @@ hr.divmar{
                 <label class="pdd-none mrg-label">Other</label>
               </div>
               <div class="col-md-12 col-sm-12 pl-none md-input-row">
-              <?php echo $this->Form->input("water_comments",array("label"=>false,'class'=>'form-control','type' => 'text')); ?>
+              <?php echo $this->Form->input("water_comments",array("label"=>false,'class'=>'form-control checkInputChange','type' => 'text')); ?>
             </div>
 
             </div>

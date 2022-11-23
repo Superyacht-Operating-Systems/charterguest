@@ -11,10 +11,9 @@
      $selectedCHPRGID = $this->Session->read('selectedCHPRGID');
      $selectedCHPRGCOMID = $this->Session->read('selectedCHPRGCOMID');
     
-     $sessionModal = $this->Session->read('charter_info');
-        $modifieddate = date('Y-m-d',strtotime($sessionModal['CharterGuest']['modified']));;
-        $modifieddatestrtotime = strtotime($modifieddate);
-        $todaydatestrtotime = strtotime(date('Y-m-d'));
+        //$sessionModal = $this->Session->read('charter_info');
+       
+        
         //echo "<pre>"; print_r($sessionModal); exit;
     if(isset($charterAssocIdisHeadChecked) && $charterAssocIdisHeadChecked!=''){
     $sessionCH = $charterAssocIdisHeadChecked;//$sessionAssoc['CharterGuestAssociate']['is_head_charterer'];
@@ -22,7 +21,7 @@
     if(isset($sessionAssoc['CharterGuestAssociate']['is_head_charterer']) && $sessionAssoc['CharterGuestAssociate']['is_head_charterer']!=''){
     $sessionCH = $sessionAssoc['CharterGuestAssociate']['is_head_charterer'];
     }
-    //echo $sessionCH.'llllll';exit('ddd');
+    //echo $use_submitted_date.'llllll';exit('ddd');
 
     $sessionCharterGuest = $this->Session->read('charter_info.CharterGuest');
 
@@ -46,6 +45,16 @@
 
  $iti_guestListUUID = $this->Session->read('guestListUUID');
  $iti_selectedCharterProgramUUID = $this->Session->read('selectedCharterProgramUUID'); 
+// @23nov22 - Display used submitted preferences modal if the submitted date empty or less than today date.
+ $use_submitted_date_data  = $this -> requestAction(array('controller' => 'charters','action' => 'use_submitted_date',$iti_guestListUUID));
+ //echo "<pre>"; print_r($use_submitted_date_data); exit;
+ $use_submitted_date = $use_submitted_date_data['GuestList']['use_submitted_date'];
+ if(isset($use_submitted_date) && !empty($use_submitted_date)){ 
+     $modifieddate = date('Y-m-d',strtotime($use_submitted_date));
+     $modifieddatestrtotime = strtotime($modifieddate);
+     $todaydatestrtotime = strtotime(date('Y-m-d'));
+ }
+
 
  $showPopup = $this->Session->read('showPopup'); 
 
@@ -752,11 +761,19 @@ $(document).on("click", ".nav-justified2 li .beverage-wt", function(e) {
             $('.nav-justified2').scrollLeft( + outerContent);
         }
             
-            });       
+            });    
+            var inputflag = 0;
+$('.checkInputChange').on('input', function() {
+    // do something
+    inputflag = 1;
+});
+
 $(document).on("click", ".pagleave", function(e) { 
+   if(inputflag == 1){ 
     $("#pageleavemodal").modal("show");
      urltogo = $(this).find('a').attr('href');
     return false;
+   }
 });
 
 $(document).on("click","#pageleave_close",function(e) {
@@ -1297,15 +1314,24 @@ $(document).ready(function (e) {
         
         ?>
             //$("#usesubmittedpreferences").modal('show');
-            $("#successPreferenceAlert").modal("show");
-           <?php if($modifieddatestrtotime == $todaydatestrtotime){ ?>
-            //alert('kkk');
-            $("#successUsePreference").hide();
-            $("#successbody").show();
-            <?php }else{?>   //alert('jjjj');
-                $("#successUsePreference").show();
-                $("#successbody").hide();
-            <?php } ?>
+            
+           <?php  if(empty($use_submitted_date)){ ?>
+                        $("#successPreferenceAlert").modal("show");
+                        $("#successUsePreference").show();
+                        $("#successbody").hide();
+            <?php }else if(isset($modifieddatestrtotime) && $modifieddatestrtotime == $todaydatestrtotime){ ?>
+                    $("#successPreferenceAlert").modal("show");
+                    //console.log('kkkkkkkkkkk');
+                           // alert('kkk');
+                            $("#successUsePreference").hide();
+                            $("#successbody").show();
+            <?php }else if(isset($modifieddatestrtotime) && ($modifieddatestrtotime < $todaydatestrtotime)){?>  
+                    //console.log('jjjjjjjjjjjjjjjjjjjjj');
+                     //alert('jjjj');
+                     $("#successPreferenceAlert").modal("show");
+                            $("#successUsePreference").show();
+                            $("#successbody").hide();
+            <?php }  ?>
             
     <?php } ?> 
 });    
@@ -1322,7 +1348,8 @@ $(document).on("click", "#yes_please", function(e) {     //alert();
   
   var data = {
       "guestListUUID": "<?php echo $iti_guestListUUID; ?>",
-      "selectedCharterProgramUUID": "<?php echo $iti_selectedCharterProgramUUID; ?>"
+      "selectedCharterProgramUUID": "<?php echo $iti_selectedCharterProgramUUID; ?>",
+      "use": 1
   };
   
   
@@ -1352,9 +1379,36 @@ $(document).on("click", "#yes_please", function(e) {     //alert();
 });
 $(document).on("click", "#no_thanks", function(e) {
 
-$("#successUsePreference").hide();
-$("#successbody").show();
-          return false;
+    var data = {
+      "guestListUUID": "<?php echo $iti_guestListUUID; ?>",
+      "selectedCharterProgramUUID": "<?php echo $iti_selectedCharterProgramUUID; ?>",
+      "use": 0
+  };
+  
+  
+      $("#hideloader").show();
+      $.ajax({
+          type: "POST",
+          url: BASE_FOLDER+'/charters/saveusesubmittedpreferences',
+          dataType: 'json',
+          data: data,
+          success:function(result) {
+              $("#hideloader").hide();
+              if (result.status == 'success') {
+                $("#successUsePreference").hide();
+                $("#successbody").show();
+                return false;
+              }else if(result.status == 'fail'){
+                $("#successUsePreference").hide();
+                $("#successbody").show();
+                return false;
+              }   
+          },
+          error: function(jqxhr) { 
+              $("#hideloader").hide();
+          }
+      });
+      return false;
 
 });
 
