@@ -1954,7 +1954,7 @@ $(document).ready(function() { //alert();
                     $('.CruisingCommentMarkUnread').attr('data-type1',data.UserType);
                     $('.CruisingCommentMarkUnread').attr('data-name1',data.UserName); 
                     $('.CruisingCommentMarkUnread').attr('data-chartertype1',data.type);
-                    ('.CruisingCommentMarkUnread').attr('data-yachtid', yachtid);
+                    $('.CruisingCommentMarkUnread').attr('data-yachtid', yachtid);
                     //alert(data.isfleet);
                     $("#hideloader").hide();
                     //thisObj.css("color","green");
