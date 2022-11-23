@@ -92,7 +92,7 @@ padding-left: 0px;
 body .mydemolabel {
     font-size: 34px;
 }
-
+.sp-noe {font-size: 25px;}
 .modalmsg-container .modal-body{
   margin: 0px;
 }
