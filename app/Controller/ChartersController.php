@@ -2588,6 +2588,9 @@ class ChartersController extends AppController {
                     if(isset($data['associd']) && !empty($data['associd'])){
                         $existdata = $this->CharterGuestAssociate->find('first',array('conditions'=>array('CharterGuestAssociate.id'=>$data['associd'])));
                         //echo "<pre>";print_r($existdata); //exit;
+                        $this->Session->delete("preferenceGuestName");
+                        $preferenceGuestName = $existdata['CharterGuestAssociate']['first_name'].' '.$existdata['CharterGuestAssociate']['last_name'];
+                        $this->Session->write("preferenceGuestName",$preferenceGuestName);
                         $personalDetails = $this->CharterGuestPersonalDetail->find('first', array('conditions' => array('guest_lists_UUID' => $existdata['CharterGuestAssociate']['UUID'],'is_deleted'=>0)));
                         //echo "<pre>"; print_r($personalDetails); exit;
                         if(($existdata['CharterGuestAssociate']['is_psheets_done'] == 1 && !empty($personalDetails['CharterGuestPersonalDetail']['dob'])) || ((empty($existdata['CharterGuestAssociate']['is_psheets_done']) || $existdata['CharterGuestAssociate']['is_psheets_done'] == 0) && !empty($personalDetails['CharterGuestPersonalDetail']['dob']))){
@@ -2623,7 +2626,7 @@ class ChartersController extends AppController {
                     
                     }
                 }else if(isset($data['guestType']) && $data['guestType'] == "owner"){
-                    
+                    $this->Session->delete("preferenceGuestName");
                     if(isset($data['associd']) && !empty($data['associd'])){
                         $CharterGuestexistdata = $this->CharterGuest->find('first',array('conditions'=>array('CharterGuest.id'=>$data['associd'])));
                         
