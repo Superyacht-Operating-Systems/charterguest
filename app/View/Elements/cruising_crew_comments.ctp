@@ -58,21 +58,35 @@
 <div class="card-box">
     <div class="inbox-widget nicescroll mx-box">
                     <?php foreach($comments as $comments){ 
-                         if($comments['CruisingMapComment']['user_type'] == "OBA" || $comments['CruisingMapComment']['user_type'] == "HOD" || $comments['CruisingMapComment']['user_type'] == "Superadmin" || $comments['CruisingMapComment']['user_type'] == "Crew Member" ){
-                    		$backgroundcolor = "#F2F2F2 !important;";
-                    	}else{
-                    		$backgroundcolor = "#E5F6FC !important;";
-                    	}
-                        
+                        //  if($comments['CruisingMapComment']['user_type'] == "OBA" || $comments['CruisingMapComment']['user_type'] == "HOD" || $comments['CruisingMapComment']['user_type'] == "Superadmin" || $comments['CruisingMapComment']['user_type'] == "Crew Member" ){
+                    	// 	$backgroundcolor = "#F2F2F2 !important;";
+                    	// }else{
+                    	// 	$backgroundcolor = "#E5F6FC !important;";
+                    	// }
+                        if($comments['CruisingMapComment']['fleet_newlyaddedcomment'] == 1 || $comments['CruisingMapComment']['guest_newlyaddedcomment'] == 1){
+                            $backgroundcolor = "#e5f6fc;";
+                            $selectedcommentdiv = "selectedcomment";
+                        }else{
+                            $backgroundcolor = "#ffffff;";
+                            $selectedcommentdiv = "";
+                        }
+                        $id = $comments['CruisingMapComment']['id'];
+                        //#E5F6FC
                         ?>
-        <div class="inbox-item" style="background-color:<?php echo $backgroundcolor; ?>">
+        <div class="inbox-item clickcommentdiv <?php echo $selectedcommentdiv; ?>" id="<?php echo $id; ?>"  style="background-color:<?php echo $backgroundcolor; ?>;cursor:pointer;">
             <div class="col-md-4">
                 <p class="inbox-item-author"><?php echo $comments['CruisingMapComment']['user_name']; ?> : <br>
                 <?php echo date('d M Y : H:i', strtotime($comments['CruisingMapComment']['created'])); ?> </p>
             </div>
             <div class="col-md-8" style="padding: 0px;">
 
-            <p class="inbox-item-text pull-left"><?php echo nl2br($comments['CruisingMapComment']['comment']); ?></p>
+            <p class="inbox-item-text pull-left">
+                <?php 
+                if(isset($comments['CruisingMapComment']['comment'])){
+                    $commentsCruisingMap = htmlspecialchars($comments['CruisingMapComment']['comment']);
+                }
+                echo nl2br($commentsCruisingMap);
+                 ?></p>
             </div>
         </div>
                     <?php } ?>

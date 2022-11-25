@@ -114,48 +114,50 @@
 
 				
 				   if(isset($charter_program_schedules_UUID_array) && !empty($charter_program_schedules_UUID_array)){
+                    $charter_program_schedules_UUID_array = array_unique($charter_program_schedules_UUID_array);
 				      $aids = implode(',',$charter_program_schedules_UUID_array);
 				      if(isset($aids) && !empty($aids)){
 				      	$aids = $aids;
 				      }else{
 				      	$aids = ' ';
 				      }
-				      $schedulecommentQuery	= "SELECT * from $dbname.cruising_map_comments where activity_id IN ($aids) and crew_newlyaddedcomment = 1 and is_deleted = 0 and type='schedule' and publish_map = 1 ORDER BY created Desc";
+				      $schedulecommentQuery	= "SELECT * from $dbname.cruising_map_comments where (activity_id IN ($aids) and crew_newlyaddedcomment = 1 and is_deleted = 0 and type='schedule' and publish_map = 1) OR (activity_id IN ($aids) and fleet_newlyaddedcomment = 1 and is_deleted = 0 and type='schedule' and publish_map = 1) ORDER BY created Desc";
 				      $schedulecomments = $this->query($schedulecommentQuery);
 
-                      $GuestschedulecommentQuery	= "SELECT * from $dbname.cruising_map_comments where activity_id IN ($aids) and fleet_newlyaddedcomment = 1 and is_deleted = 0 and type='schedule' and publish_map = 1 ORDER BY created Desc";
-				      $Guestsschedulecomments = $this->query($GuestschedulecommentQuery);
+                    //   $GuestschedulecommentQuery	= "SELECT * from $dbname.cruising_map_comments where activity_id IN ($aids) and fleet_newlyaddedcomment = 1 and is_deleted = 0 and type='schedule' and publish_map = 1 ORDER BY created Desc";
+				    //   $Guestsschedulecomments = $this->query($GuestschedulecommentQuery);
 				     
                 	 foreach($schedulecomments as $value){
                 	 	$scount[] = $value['cruising_map_comments']['activity_id'];
                 	 }
 
-                     foreach($Guestsschedulecomments as $value){
-                        $scount[] = $value['cruising_map_comments']['activity_id'];
-                    }
+                    //  foreach($Guestsschedulecomments as $value){
+                    //     $scount[] = $value['cruising_map_comments']['activity_id'];
+                    // }
 				   }
                    //echo "<pre>"; print_R($scount);
                    //exit;
                    if(isset($schedule_activities_id_array) && !empty($schedule_activities_id_array)){
+                    $schedule_activities_id_array = array_unique($schedule_activities_id_array);
                     $actvityids = implode(',',$schedule_activities_id_array);
                     if(isset($actvityids) && !empty($actvityids)){
                         $actvityids = $actvityids;
                     }else{
                         $actvityids = ' ';
                     }
-                    $activitycommentQuery	= "SELECT * from $dbname.cruising_map_comments where activity_id IN ($actvityids) and crew_newlyaddedcomment = 1 and is_deleted = 0 and type='activity' and publish_map = 1 ORDER BY created Desc";
+                    $activitycommentQuery	= "SELECT * from $dbname.cruising_map_comments where (activity_id IN ($actvityids) and crew_newlyaddedcomment = 1 and is_deleted = 0 and type='activity' and publish_map = 1) OR (activity_id IN ($actvityids) and fleet_newlyaddedcomment = 1 and is_deleted = 0 and type='activity' and publish_map = 1) ORDER BY created Desc";
                     $activitycomments = $this->query($activitycommentQuery);
 
-                    $guestactivitycommentQuery	= "SELECT * from $dbname.cruising_map_comments where activity_id IN ($actvityids) and fleet_newlyaddedcomment = 1 and is_deleted = 0 and type='activity' and publish_map = 1 ORDER BY created Desc";
-                    $guestactivitycomments = $this->query($guestactivitycommentQuery);
+                    // $guestactivitycommentQuery	= "SELECT * from $dbname.cruising_map_comments where activity_id IN ($actvityids) and fleet_newlyaddedcomment = 1 and is_deleted = 0 and type='activity' and publish_map = 1 ORDER BY created Desc";
+                    // $guestactivitycomments = $this->query($guestactivitycommentQuery);
                    
                    foreach($activitycomments as $value){
                        $actcount[] = $value['cruising_map_comments']['activity_id'];
                    }
 
-                   foreach($guestactivitycomments as $value){
-                    $actcount[] = $value['cruising_map_comments']['activity_id'];
-                    }
+                //    foreach($guestactivitycomments as $value){
+                //     $actcount[] = $value['cruising_map_comments']['activity_id'];
+                //     }
                  }
                  //echo "<pre>"; print_R($actcount);
                  //exit;        

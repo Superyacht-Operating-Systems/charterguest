@@ -1958,13 +1958,13 @@ $(document).ready(function() { //alert();
                     //alert(data.isfleet);
                     $("#hideloader").hide();
                     //thisObj.css("color","green");
-                    var color = thisObj.css("color");
-                        //alert(color);
-                        var colorgreen = hexc(color);
+                    // var color = thisObj.css("color");
+                    //     //alert(color);
+                    //     var colorgreen = hexc(color);
                         
-                        if(colorgreen == "#ff0000"){
-                            thisObj.css("color","green");
-                        }
+                    //     if(colorgreen == "#ff0000"){
+                    //         thisObj.css("color","green");
+                    //     }
 
                     //alert($('#CrewCommentSave').data('id'));
                      //$('#msgcountchange').html(data.msgcount[0]);
@@ -2015,13 +2015,13 @@ $(document).ready(function() { //alert();
             //alert(data.isfleet);
             $("#hideloader").hide();
             //thisObj.css("color","green");
-            var color = thisObj.css("color");
-            //alert(color);
-            var colorgreen = hexc(color);
-            //alert(colorgreen);
-            if (colorgreen == "#ff0000") {
-                thisObj.css("color", "green");
-            }
+            // var color = thisObj.css("color");
+            // //alert(color);
+            // var colorgreen = hexc(color);
+            // //alert(colorgreen);
+            // if (colorgreen == "#ff0000") {
+            //     thisObj.css("color", "green");
+            // }
             //alert($('#CrewCommentSave').data('id'));
             //$('#msgcountchange').html(data.msgcount[0]);
         }
@@ -2049,7 +2049,7 @@ $(document).on("click", "#CruisingCommentSave" ,function() {
                 data: {'activityId': activityId,'activity_name': activity_name,'user_type':user_type,'user_name':user_name, 'type':type,'comments':comments,'yachtid':yachtid},
                 success:function(data) {
                     if(data.success == 'success'){
-	                    $('#cruisingmsgmyModal').modal('hide');
+	                    $('#cruisingmsgmyModal').hide();
                         saveobj.css("color","green");
                     }
                 }
@@ -2068,7 +2068,83 @@ $(document).on("click", "#CruisingCommentSave" ,function() {
         $('#cruisingmsgmyModal').hide();
     });
 
-    function hexc(colorval) {
+    
+    //$( '.clickcommentdiv' ).on( 'click', function () {
+$(document).on("click", ".clickcommentdiv", function() { 
+    //alert('kkk');
+    var clickcommentObj = $(this);
+    var color = $(this).css("background-color");
+            //alert(color);
+    var yachtId = $("#yachtId").val();
+    var selectedcomment = hexc(color);
+    //console.log(selectedcomment);
+    if (selectedcomment == "#e5f6fc") { //console.log('ll');
+        $(this).css("background-color","#ffffff");
+        $(this).removeClass('selectedcomment');
+        var id = $(this).attr('id');
+        var read = "read";
+    }else{ console.log('gg');
+        $(this).css("background-color","#e5f6fc");
+        $(this).addClass('selectedcomment');
+        var id = $(this).attr('id');
+        var read = "unread";
+    }
+
+    //return false;
+    var activityId = $(".CruisingCommentMarkUnread").data('id1');
+    var activity_name = $(".CruisingCommentMarkUnread").data('tempname1');
+    //alert(checklistName);
+    var user_type = $(".CruisingCommentMarkUnread").data('type1');
+    var user_name = $(".CruisingCommentMarkUnread").data('name1');
+    var comments = $('#Cruising_crew_comment').val();
+    var comm_id = $(".CruisingCommentMarkUnread").data('commentid');
+    var chartertype1 = $(".CruisingCommentMarkUnread").data('chartertype1');
+
+
+    $.ajax({
+        type: "POST",
+        dataType: 'json',
+        url: basefolder+"/"+"charters/markSingleCommentUnread",
+        data: {
+            'primaryid': id,
+            'read': read,
+            'activityId': activityId,
+            'userType': user_type,
+            'user_name': user_name,
+            'activity_name': activity_name,
+            'comments': comments,
+            'comment_id': comm_id,
+            'chartertype1': chartertype1,
+            'yachtId':yachtId
+        },
+        success: function(data) {
+            if (data.success == 'success') {
+                
+                //comments icon color change in itinerary modal
+                var primaryidscheck = [];
+                $(".selectedcomment").each(function(){
+                    primaryidscheck.push($(this).attr('id'));
+                //alert($(this).attr('id'));
+                });
+                thisObj.css("color","green");
+                var color = thisObj.css("color");
+                //alert(color);
+                var colorgreen = hexc(color);
+
+                if (colorgreen == "#ff0000") {
+                    thisObj.css("color", "green");
+                }
+                if(primaryidscheck.length >= 1){
+                    thisObj.css("color", "red");
+                }
+            }
+        }
+    });
+
+
+});
+
+function hexc(colorval) {
     var parts = colorval.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
     delete(parts[0]);
     for (var i = 1; i <= 3; ++i) {
@@ -2079,7 +2155,6 @@ $(document).on("click", "#CruisingCommentSave" ,function() {
 
     return color;
 }
-
 
     function msgcount(scheduleSameLocationUUID){
     //console.log(e);
@@ -2126,13 +2201,18 @@ $(document).on("click", ".CruisingCommentMarkUnread" ,function() {
         var chartertype1 = markunread.data('chartertype1');
 
         var yachtId = $("#yachtId").val();
-
+        var primaryids = [];
+$(".selectedcomment").each(function(){
+    primaryids.push($(this).attr('id'));
+   //alert($(this).attr('id'));
+});
         //alert(templatechecklistId);
+if(primaryids.length >= 1){ 
         $.ajax({
                 type: "POST",
                 dataType: 'json',
                 url: basefolder+"/"+"charters/markCommentUnread",
-                data: {'activityId': activityId,'userType': user_type,'user_name':user_name,'activity_name':activity_name, 'comments':comments,'comment_id':comm_id,'chartertype1':chartertype1,'yachtId':yachtId},
+                data: {'activityId': activityId,'userType': user_type,'user_name':user_name,'activity_name':activity_name, 'comments':comments,'comment_id':comm_id,'chartertype1':chartertype1,'yachtId':yachtId,'ids':primaryids},
                 success:function(data) {
                     if(data.success == 'success'){
 	                    $('#cruisingmsgmyModal').hide();
@@ -2141,6 +2221,10 @@ $(document).on("click", ".CruisingCommentMarkUnread" ,function() {
                     }
                 }
        }); 
+}else{
+    alert("Please select the messages to mark unread.");
+    return false;
+}
     });
 
     $(document).on("click", "#CruisingButton", function(e) {
