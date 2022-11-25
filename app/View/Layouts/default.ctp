@@ -89,6 +89,12 @@ $actual_link_defaultctp = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on
 .modalmsg-container .modal-dialog{
 padding-left: 0px;
 }
+
+body .mydemolabel .user-subnamep{
+    font-size: 36px!important;
+}
+
+
 body .mydemolabel {
     font-size: 34px;
 }
@@ -171,10 +177,18 @@ body .mydemolabel{
 }
 
 .user-subnamep .sp-noe{
-
-display: none;
+font-size: 14px;
 
 }
+body .mydemolabel{
+text-align: left;
+}
+body .mydemolabel .user-subnamep {
+    font-size: 14px!important;
+        padding-top: 2px!important;
+}
+
+
 .modalmsg-container .modal-open .modal{
   padding-right: 0px;
 }
@@ -355,7 +369,7 @@ width: max-content;
 
                     <div class="label-bold-head mydemolabel">
                       <?php if($programpageCharter == "charters" && $programpagePrograms != "programs" && $programpagePrograms == "preference"){ ?>
-                        <?php if (isset($session["yachFullName"]) && !empty($session["yachFullName"])) { echo $session['login_username']; } ?><span class="user-subnamep"> <span class="sp-noe"><?php if(isset($session['preferenceGuestName'])){ ?>for<?php } ?></span> <span class="guestNameInHeader"><?php if(isset($session['preferenceGuestName'])){ echo $session['preferenceGuestName'];  } ?> </span> </span>
+                        <?php if (isset($session["yachFullName"]) && !empty($session["yachFullName"])) { echo $session['login_username']; } ?><span class="user-subnamep"> <span class="sp-noe">for</span> DAVID CLARKE</span>
                       <?php } else if($programpageCharter == "charters" && $programpagePrograms != "programs"){ ?>
                         <?php if (isset($session["yachFullName"]) && !empty($session["yachFullName"])) { echo $session['yachFullName']; } ?>
                       <?php } ?>  
