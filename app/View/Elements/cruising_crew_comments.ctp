@@ -63,7 +63,7 @@
                     	// }else{
                     	// 	$backgroundcolor = "#E5F6FC !important;";
                     	// }
-                        if($comments['CruisingMapComment']['fleet_newlyaddedcomment'] == 1 || $comments['CruisingMapComment']['guest_newlyaddedcomment'] == 1){
+                        if($comments['CruisingMapComment']['fleet_newlyaddedcomment'] == 1 || $comments['CruisingMapComment']['crew_newlyaddedcomment'] == 1){
                             $backgroundcolor = "#e5f6fc;";
                             $selectedcommentdiv = "selectedcomment";
                         }else{
