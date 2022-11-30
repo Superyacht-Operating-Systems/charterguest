@@ -2566,6 +2566,15 @@ class ChartersController extends AppController {
            return $data;
     }
 
+
+    function fleet_company_button_color(){
+        //echo '<pre>'; print_r($this->params); //exit;
+            $this->loadModel('Fleetcompany');
+            $companyData = $this->Fleetcompany->find('first', array('conditions' => array('id' => $this->params->pass[0])));
+            //echo '<pre>'; print_r($companyData); exit;
+           return $companyData;
+    }
+
     function existingCheckFunction(){
 
         // echo "<pre>";print_r($personalDetails); //exit;

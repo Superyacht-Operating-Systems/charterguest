@@ -55,6 +55,18 @@
      $todaydatestrtotime = strtotime(date('Y-m-d'));
  }
 
+ if(isset($sessionCharterGuest['charter_company_id'])){
+    $companyData  = $this -> requestAction(array('controller' => 'charters','action' => 'fleet_company_button_color',$sessionCharterGuest['charter_company_id']));
+    if(isset($companyData['Fleetcompany']['cga_glow_color']) && !empty($companyData['Fleetcompany']['cga_glow_color'])){ 
+        $cga_glow_color = $companyData['Fleetcompany']['cga_glow_color'];
+    }
+    if(isset($companyData['Fleetcompany']['cga_button_color']) && !empty($companyData['Fleetcompany']['cga_button_color'])){ 
+        $cga_button_color = $companyData['Fleetcompany']['cga_button_color'];
+    }
+    if(isset($companyData['Fleetcompany']['cga_button_text']) && !empty($companyData['Fleetcompany']['cga_button_text'])){ 
+        $cga_button_text = $companyData['Fleetcompany']['cga_button_text'];
+    }
+ }
 
  $showPopup = $this->Session->read('showPopup'); 
 
@@ -701,6 +713,69 @@ if(isset($defaultLastName) && !empty($defaultLastName)){
   </div>
 </div>
 
+<?php 
+if(isset($cga_button_color)){
+?>
+<style>
+.nav-pills>li.active>a.nav-anch {
+    color: <?php echo $cga_button_text; ?>;
+    background-color: <?php echo $cga_button_color; ?>;
+    transition: 0.3s;
+}
+
+.checkbox input[type="checkbox"]:checked + label::before {
+    background-color: <?php echo $cga_button_color; ?>;
+}
+
+.radio input[type="radio"]:checked + label::after {
+    background: <?php echo $cga_button_color; ?>;
+}
+
+.required {
+    color: <?php echo $cga_button_color; ?>;
+}
+.submit .btn {
+    color: <?php echo $cga_button_text; ?>;
+    background-color: <?php echo $cga_button_color; ?>;
+    border-color: <?php echo $cga_button_color; ?>;
+}
+
+.filter-button {
+    background-color: <?php echo $cga_button_color; ?>;
+    border-color: <?php echo $cga_button_color; ?>;
+}
+.btn.previous-btn {
+    background-color: <?php echo $cga_button_color; ?>;
+    transition: 0.3s;
+}
+
+.btn-info, .btn-primary {
+    background-color: <?php echo $cga_button_color; ?>;
+    color: <?php echo $cga_button_text; ?>;
+}
+
+</style>
+
+<?php
+}
+?>
+<?php 
+if(isset($cga_glow_color)){
+?>
+<style>
+.md-row-h-8 button:hover, .btn-success:hover, .btn-open:hover {
+    background: <?php echo $cga_glow_color; ?>!important;
+}
+
+.nav > li > a:hover, .nav > li > a:focus {
+    background: <?php echo $cga_glow_color; ?>!important;
+    
+}
+
+</style>
+<?php
+}
+?>
 <!-- Tab content -->
     <div class="tab-content container tab-md-row-container">    
         <!-- Personal details -->
