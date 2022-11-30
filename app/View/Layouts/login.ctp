@@ -19,7 +19,8 @@
         <title>Superyacht Operating Systems - Charter Guest</title>
        
             <?php
-            echo $this->Html->meta('favicon.ico','img/favicon.ico',array('type' => 'icon'));
+            //echo $this->Html->meta('favicon.ico','img/favicon.ico',array('type' => 'icon'));
+             echo $this->Html->meta('favicon.ico','img/chater_favicon.ico',array('type' => 'icon'));
                 echo $this->Html->css('admin/bootstrap'); 
                 echo $this->Html->css('admin/style');
                 echo $this->Html->css('admin/sb-admin');
