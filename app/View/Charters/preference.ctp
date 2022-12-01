@@ -714,44 +714,62 @@ if(isset($defaultLastName) && !empty($defaultLastName)){
 </div>
 
 <?php 
-if(isset($cga_button_color)){
+if(isset($cga_glow_color)){
 ?>
 <style>
 .nav-pills>li.active>a.nav-anch {
+    <?php 
+        if(isset($cga_button_text)){
+    ?>
     color: <?php echo $cga_button_text; ?>;
-    background-color: <?php echo $cga_button_color; ?>;
+    <?php
+        }
+    ?>
+    background-color: <?php echo $cga_glow_color; ?>;
     transition: 0.3s;
 }
 
 .checkbox input[type="checkbox"]:checked + label::before {
-    background-color: <?php echo $cga_button_color; ?>;
+    background-color: <?php echo $cga_glow_color; ?>;
 }
 
 .radio input[type="radio"]:checked + label::after {
-    background: <?php echo $cga_button_color; ?>;
+    background: <?php echo $cga_glow_color; ?>;
 }
 
 .required {
-    color: <?php echo $cga_button_color; ?>;
+    color: <?php echo $cga_glow_color; ?>;
 }
 .submit .btn {
+    <?php 
+        if(isset($cga_button_text)){
+    ?>
     color: <?php echo $cga_button_text; ?>;
-    background-color: <?php echo $cga_button_color; ?>;
-    border-color: <?php echo $cga_button_color; ?>;
+    <?php
+        }
+    ?>
+    background-color: <?php echo $cga_glow_color; ?>;
+    border-color: <?php echo $cga_glow_color; ?>;
 }
 
 .filter-button {
-    background-color: <?php echo $cga_button_color; ?>;
-    border-color: <?php echo $cga_button_color; ?>;
+    background-color: <?php echo $cga_glow_color; ?>;
+    border-color: <?php echo $cga_glow_color; ?>;
 }
 .btn.previous-btn {
-    background-color: <?php echo $cga_button_color; ?>;
+    background-color: <?php echo $cga_glow_color; ?>;
     transition: 0.3s;
 }
 
 .btn-info, .btn-primary {
-    background-color: <?php echo $cga_button_color; ?>;
+    background-color: <?php echo $cga_glow_color; ?>;
+    <?php 
+        if(isset($cga_button_text)){
+    ?>
     color: <?php echo $cga_button_text; ?>;
+    <?php
+        }
+    ?>
 }
 
 </style>
@@ -765,13 +783,34 @@ if(isset($cga_glow_color)){
 <style>
 .md-row-h-8 button:hover, .btn-success:hover, .btn-open:hover {
     background: <?php echo $cga_glow_color; ?>!important;
+    <?php 
+        if(isset($cga_button_text)){
+    ?>
+    color: <?php echo $cga_button_text; ?>;
+    <?php
+        }
+    ?>
 }
 
 .nav > li > a:hover, .nav > li > a:focus {
     background: <?php echo $cga_glow_color; ?>!important;
-    
+    <?php 
+        if(isset($cga_button_text)){
+    ?>
+    color: <?php echo $cga_button_text; ?>!important;
+    <?php
+        }
+    ?>
 }
-
+.ds-progress{
+    background: <?php echo $cga_glow_color; ?>!important;
+}
+.ds-skate{
+    border: 2px solid <?php echo $cga_glow_color; ?>!important;
+}
+.ds-end-skate{
+    border: 2px solid <?php echo $cga_glow_color; ?>!important;
+}
 </style>
 <?php
 }

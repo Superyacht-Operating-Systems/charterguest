@@ -6964,8 +6964,8 @@ function uploadpassportimage(){
                         $fileExt = end($kaboom);
                         $target_file = "$fileName";
                         $resized_file = WWW_ROOT.$path.DIRECTORY_SEPARATOR.$folder_name.DIRECTORY_SEPARATOR.$imageName;
-                        $wmax = 700;
-                        $hmax = 1000;
+                        $wmax = 600;
+                        $hmax = 800;
                         $resfile = $this->ak_img_resize($target_file, $resized_file, $wmax, $hmax, $fileExt);
 
         //$this->Session->delete("showPopup");
