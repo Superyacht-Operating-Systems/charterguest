@@ -3003,6 +3003,11 @@ class ChartersController extends AppController {
         //     $conditions['WineList.score >='] = $filters['startRange'];
         //     $conditions['WineList.score <='] = $filters['endRange'];
         // }
+        if ((isset($filters['startRange']) && isset($filters['endRange']))) {
+            $conditions['WineList.score >='] = $filters['startRange'];
+            $conditions['WineList.score <='] = $filters['endRange'];
+        }
+
         // Country filter
         if (isset($filters['country'])) {
             $conditions['WineList.country'] = $filters['country'];
