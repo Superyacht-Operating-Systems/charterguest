@@ -196,12 +196,12 @@ class ChartersController extends AppController {
                         
                         $ydb_name = $yachtData['Yacht']['ydb_name'];
                         $yachtDBData = $this->Yacht->getYachtData($ydb_name);
-                        if(isset($yachtDBData[0]['yachts']['cg_background_image'])){
+                        //if(isset($yachtDBData[0]['yachts']['cg_background_image'])){
                             $image = $yachtDBData[0]['yachts']['cg_background_image'];
-                        }
-                        if(isset($yachtDBData[0]['yachts']['psheets_color'])){
+                        //}
+                        //if(isset($yachtDBData[0]['yachts']['psheets_color'])){
                             $pSheetsColor = $yachtDBData[0]['yachts']['psheets_color'];
-                        }
+                        //}
                         // echo "<pre>"; print_r($yachtDBData); exit;
                         // if($image){
                         //     $fleetSiteName = $yachtDBData[0]['yachts']['fleetname'];
@@ -213,15 +213,15 @@ class ChartersController extends AppController {
                         // }else{
                         //     $cgBackgroundImage = "https://totalsuperyacht.com:8080/charterguest/css/admin/images/full-charter.png";
                         // }
-                        if(isset($yachtDBData[0]['yachts']['fleetname'])){
+                        //if(isset($yachtDBData[0]['yachts']['fleetname'])){
                             $fleetname = $yachtDBData[0]['yachts']['fleetname'];
-                        }
+                        //}
                         $yachtname = $yachtDBData[0]['yachts']['yname'];
-                        if(isset($image) && isset($fleetname) && isset($yachtname)){
+                        //if(isset($image) && isset($fleetname) && isset($yachtname)){
                         $cgBackgroundImage = $this->getBackgroundImageUrl($image, $fleetname, $yachtname);
                         $this->Session->write("cgBackgroundImage", $cgBackgroundImage);
                         $this->Session->write("pSheetsColor", $pSheetsColor);
-                        }
+                        //}
                         
                         // Check whether the Password is already created
                         $passwordExists = $this->CharterGuest->find('first', array('conditions' => array('id' => $charterData['CharterGuest']['id'], 'password IS NOT NULL', 'password != ""')));
