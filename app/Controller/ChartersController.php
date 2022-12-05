@@ -196,8 +196,12 @@ class ChartersController extends AppController {
                         
                         $ydb_name = $yachtData['Yacht']['ydb_name'];
                         $yachtDBData = $this->Yacht->getYachtData($ydb_name);
-                        $image = $yachtDBData[0]['yachts']['cg_background_image'];
-                        $pSheetsColor = $yachtDBData[0]['yachts']['psheets_color'];
+                        if(isset($yachtDBData[0]['yachts']['cg_background_image'])){
+                            $image = $yachtDBData[0]['yachts']['cg_background_image'];
+                        }
+                        if(isset($yachtDBData[0]['yachts']['psheets_color'])){
+                            $pSheetsColor = $yachtDBData[0]['yachts']['psheets_color'];
+                        }
                         // echo "<pre>"; print_r($yachtDBData); exit;
                         // if($image){
                         //     $fleetSiteName = $yachtDBData[0]['yachts']['fleetname'];
@@ -209,11 +213,15 @@ class ChartersController extends AppController {
                         // }else{
                         //     $cgBackgroundImage = "https://totalsuperyacht.com:8080/charterguest/css/admin/images/full-charter.png";
                         // }
-                        $fleetname = $yachtDBData[0]['yachts']['fleetname'];
+                        if(isset($yachtDBData[0]['yachts']['fleetname'])){
+                            $fleetname = $yachtDBData[0]['yachts']['fleetname'];
+                        }
                         $yachtname = $yachtDBData[0]['yachts']['yname'];
+                        if(isset($image) && isset($fleetname) && isset($yachtname)){
                         $cgBackgroundImage = $this->getBackgroundImageUrl($image, $fleetname, $yachtname);
                         $this->Session->write("cgBackgroundImage", $cgBackgroundImage);
                         $this->Session->write("pSheetsColor", $pSheetsColor);
+                        }
                         
                         // Check whether the Password is already created
                         $passwordExists = $this->CharterGuest->find('first', array('conditions' => array('id' => $charterData['CharterGuest']['id'], 'password IS NOT NULL', 'password != ""')));
@@ -2569,8 +2577,13 @@ class ChartersController extends AppController {
 
     function fleet_company_button_color(){
         //echo '<pre>'; print_r($this->params); //exit;
+        $this->loadModel('CharterGuest');
+        $guestDetails = $this->CharterGuest->find('first', array('conditions' => array('charter_program_id' => $this->params->pass[0])));
+                       
+        $charter_company_id = $guestDetails['CharterGuest']['charter_company_id'];
+
             $this->loadModel('Fleetcompany');
-            $companyData = $this->Fleetcompany->find('first', array('conditions' => array('id' => $this->params->pass[0])));
+            $companyData = $this->Fleetcompany->find('first', array('conditions' => array('id' => $charter_company_id)));
             //echo '<pre>'; print_r($companyData); exit;
            return $companyData;
     }

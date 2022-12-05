@@ -55,8 +55,8 @@
      $todaydatestrtotime = strtotime(date('Y-m-d'));
  }
 
- if(isset($sessionCharterGuest['charter_company_id'])){
-    $companyData  = $this -> requestAction(array('controller' => 'charters','action' => 'fleet_company_button_color',$sessionCharterGuest['charter_company_id']));
+ if(isset($iti_selectedCharterProgramUUID)){
+    $companyData  = $this -> requestAction(array('controller' => 'charters','action' => 'fleet_company_button_color',$iti_selectedCharterProgramUUID));
     if(isset($companyData['Fleetcompany']['cga_glow_color']) && !empty($companyData['Fleetcompany']['cga_glow_color'])){ 
         $cga_glow_color = $companyData['Fleetcompany']['cga_glow_color'];
     }
