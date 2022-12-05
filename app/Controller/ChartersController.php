@@ -3043,7 +3043,6 @@ class ChartersController extends AppController {
                     array(
                         'table' => 'wine_list_regions',
                         'alias' => 'WineListRegion',
-                        'type'=>'left',
                         'conditions' => 'WineListRegion.wine_list_id = WineList.id'
                     ),
                     array(
