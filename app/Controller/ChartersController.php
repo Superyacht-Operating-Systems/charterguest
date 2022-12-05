@@ -2986,7 +2986,8 @@ class ChartersController extends AppController {
         $order = "";
         $limit = 25;
         $session = $this->Session->read();
-        $CGID = $session['charter_info']['CharterGuest']['users_UUID'];
+        //$CGID = $session['charter_info']['CharterGuest']['users_UUID'];
+        $CGID = $this->Session->read('guestListUUID');
        //echo "<pre>"; print_r($session); exit;
         // Show limit filter
         if (isset($filters['limit'])) {
@@ -2995,9 +2996,10 @@ class ChartersController extends AppController {
         // Show limit filter
         if (isset($filters['wineName'])) {
             $conditions["WineList.wine LIKE '%".$filters['wineName']."%'"] = '';
+
         }
         // Score filter
-        if (isset($filters['startRange']) && isset($filters['endRange'])) {
+        if (($filters['startRange'] != 80)  && ($filters['endRange'] != 100)) {
             $conditions['WineList.score >='] = $filters['startRange'];
             $conditions['WineList.score <='] = $filters['endRange'];
         }
@@ -3036,6 +3038,7 @@ class ChartersController extends AppController {
                     array(
                         'table' => 'wine_list_regions',
                         'alias' => 'WineListRegion',
+                        'type'=>'left',
                         'conditions' => 'WineListRegion.wine_list_id = WineList.id'
                     ),
                     array(
@@ -3045,7 +3048,7 @@ class ChartersController extends AppController {
                         'conditions' => array('TWLS.wine_list_id = WineList.id','TWLS.guest_lists_UUID ='.'"'.$CGID.'"')
                     )
                 );
-        // print_r($conditions); exit;
+         //print_r($joins); exit;
         // Paginator settings
         $this->Paginator->settings = array('conditions' => $conditions,
             'limit' => $limit,
@@ -3062,7 +3065,8 @@ class ChartersController extends AppController {
         );
         
         //echo "<pre>";print_r($this->Paginator->paginate('WineList'));exit;
-        return $this->Paginator->paginate('WineList');
+         return $this->Paginator->paginate('WineList');
+        //echo $this->WineList->getLastQuery(); exit;   
         
     }
     
@@ -3222,14 +3226,17 @@ class ChartersController extends AppController {
             $product_array['wine'] = $this->request->data['product_name'];
             $product_array['color'] = $this->request->data['wine_color_list'];
             $product_array['vintage'] = $this->request->data['Vintage'];
-            $cgid =  $this->request->data['CGID'];
+            //$cgid =  $this->request->data['CGID'];
+            $session = $this->Session->read();
+            $cgid = $this->Session->read('guestListUUID');
             //echo "<pre>"; print_r($product_array); exit;
             if($this->WineList->save($product_array)){
                 $lastId =  $this->WineList->getLastInsertId();
                 $this->loadModel('TempWineListSelection');
                 $insertData = array();
                 $insertData['wine_list_id'] = $lastId;
-                $insertData['charter_guest_id'] = $cgid;
+                $insertData['guest_lists_UUID'] = $cgid;
+                //$insertData['charter_guest_id'] = $cgid;
                 $insertData['created'] = date("Y-m-d H:i:s");
                 $insertData['modified'] = date("Y-m-d H:i:s");
                 $this->TempWineListSelection->create();

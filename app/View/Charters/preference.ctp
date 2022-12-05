@@ -253,6 +253,11 @@ body .menu .submenu .menu__item a {
     color:#fff;
 }
 }
+.paginationbeerWine {
+    position: absolute;
+    padding-top: 8px !important;
+    width: 35%;
+}
 
 @media screen and (max-width: 990px) {
 .nav-side-menu {
@@ -325,6 +330,7 @@ justify-content: center;
         margin-bottom: 0px;
   justify-content: inherit;
   overflow: scroll;
+  
     }
     .container-row-all-innerpages {
   top: 95px;
@@ -384,6 +390,14 @@ justify-content: center;
     /* width: 93px; */
     width: 98px;
 }
+
+.paginationbeerWine {
+    position: absolute;
+    padding-top: 4px !important;
+    width: 35%;
+    font-size: 13px;
+}
+
 }
 @media only screen and (min-width: 690px) and (max-width: 767px){
 .container-row-all-innerpages .nav-justified2 {
@@ -569,7 +583,7 @@ margin-top: 50px;
 <div class="container-row-all-innerpages">
 
     <nav class="menu"> 
-        <ul class="menu menu-level1 no-style nav nav-pills nav-justified2">
+        <ul id="prefmenu" class="menu menu-level1 no-style nav nav-pills nav-justified2">
           <li class="<?php echo $personalDetailsTab; ?>"><a data-toggle="tab" href="#personal_det" class="nav-anch pl-wt">Personal</a></li>
           <li class="<?php echo $mealPreferenceTab; ?>"><a data-toggle="tab" href="#meals" class="nav-anch meal-wt">Meal Service</a></li>
           <li class="<?php echo $foodPreferenceTab; ?>"><a data-toggle="tab" href="#food" class="nav-anch food_wt">Food</a></li>
@@ -1577,4 +1591,38 @@ $(document).on('change','#passportImage',function(){
    
 });
 
+/*********** On mobile view after save, the active should display ************************* */
+<?php if(!empty($beveragePreferenceTab)){ ?>
+var myDiv = document.getElementById("prefmenu");
+
+setTimeout(function() {
+   myDiv.scrollLeft = myDiv.scrollWidth;
+}, 300);
+<?php } ?>
+
+<?php if(!empty($spiritPreferenceTab)){ ?>
+var myDiv = document.getElementById("prefmenu");
+
+setTimeout(function() {
+   myDiv.scrollLeft = myDiv.scrollWidth;
+}, 300);
+<?php } ?>
+
+<?php if(!empty($winePreferenceTab)){ ?>
+var myDiv = document.getElementById("prefmenu");
+
+setTimeout(function() {
+   myDiv.scrollLeft = myDiv.scrollWidth;
+}, 300);
+<?php } ?>
+
+<?php if(!empty($itineraryPreferenceTab)){ ?>
+var myDiv = document.getElementById("prefmenu");
+
+setTimeout(function() {
+   myDiv.scrollLeft = myDiv.scrollWidth;
+}, 300);
+<?php } ?>
+
+/************************************ */
 </script> 

@@ -24,10 +24,11 @@ $this->Js->JqueryEngine->jQueryObject = 'jQuery';
 														    'currentClass' => 'active', 
 														    'currentTag' => 'span' , 
 														    'escape' => false,
+															'modulus' =>6,
 														    'class' => 'number'
 														    )); ?>
                	<?php echo $this->Paginator->next(__('<span>&raquo;</span>'), array('tag' => 'li', 'escape' => false)); ?>
-               	<?= $this->Paginator->counter() ?>               	
+               	<?php echo "<span class='paginationbeerWine' >&nbsp;&nbsp;".$this->Paginator->counter()."</span>"; ?>               	
 </ul>
 
 <?php
