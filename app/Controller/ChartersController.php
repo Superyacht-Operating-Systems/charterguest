@@ -2999,10 +2999,10 @@ class ChartersController extends AppController {
 
         }
         // Score filter
-        if (($filters['startRange'] != 80)  && ($filters['endRange'] != 100)) {
-            $conditions['WineList.score >='] = $filters['startRange'];
-            $conditions['WineList.score <='] = $filters['endRange'];
-        }
+        // if ((isset($filters['startRange']) && $filters['startRange'] != 80)  && (isset($filters['endRange']) && $filters['endRange'] != 100)) {
+        //     $conditions['WineList.score >='] = $filters['startRange'];
+        //     $conditions['WineList.score <='] = $filters['endRange'];
+        // }
         // Country filter
         if (isset($filters['country'])) {
             $conditions['WineList.country'] = $filters['country'];
