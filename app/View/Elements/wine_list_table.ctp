@@ -43,7 +43,7 @@
         }
     }
     .tenrows {
-        max-height: 250px;
+        max-height: 360px;
         overflow: auto;
     }
     .modal-header {
