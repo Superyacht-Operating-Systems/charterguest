@@ -156,7 +156,7 @@ table#selectedProductListTableId tr td input {
     width: 90%;
 }
 .tenrows {
-    max-height: 360px;
+    max-height: 400px;
     overflow: auto;
 }
 </style>
