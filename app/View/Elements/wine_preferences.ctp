@@ -691,29 +691,57 @@ $(document).on("click", ".addPreviousWineToCart", function(e) {
     var rowObj = obj.closest("tr");
     var wineListId = obj.data("winelistid");
     var quantity = obj.data("quantity");
+
+    if(obj.hasClass('SelectedPrevWine')){
+        obj.removeClass('SelectedPrevWine');
+        obj.text('Select');
+    }else{
+        obj.addClass('SelectedPrevWine');
+        obj.text('Selected');
+    }
+    return false; 
+
     
-    if (wineListId != "") {
+    
+	
+});
+
+
+$(document).on("click", ".addpreviousselectedWine", function(e) { 
+
+
+var wineListId = [];
+var quantitywine = [];
+$('.SelectedPrevWine').each(function() {
+    var dataprevwinelistid = $(this).data('winelistid');
+    var dataprevquantitywine = $(this).data('quantity');
+    wineListId.push(dataprevwinelistid);
+    quantitywine.push(dataprevquantitywine);
+});
+
+if (wineListId.length >= 1) {
         $("#hideloader").show();
         $.ajax({
             type: "POST",
             url: '<?php echo $baseFolder; ?>/charters/addPreviousWineToCart',
             dataType: 'json',
-            data: { "wineListId": wineListId,"quantity":quantity },
+            data: { "wineListId": wineListId,"quantity":quantitywine },
             success:function(result) {
                 $("#hideloader").hide();
                 if (result.status == 'success') {
                     // obj.css('display', 'none');
                     // rowObj.find('.removeWineRow').css('display', 'block');
-
-                    $(".selectWineRow").each(function (i,e) { 
-                        if($(this).attr('data-winelistid') == wineListId){ 
-                            $(this).css('display', 'none');
-                        };   
-                    });
-                    $(".removeWineRow").each(function (i,e) {
-                        if($(this).attr('data-winelistid') == wineListId){
-                            $(this).css('display', 'block');
-                        };   
+                    $(wineListId).each(function (i,e) { 
+                        $(".selectWineRow").each(function (a,b) { 
+                            if($(this).attr('data-winelistid') == e){ 
+                                $(this).css('display', 'none');
+                            };   
+                        });
+                        $(".removeWineRow").each(function (c,d) {
+                            if($(this).attr('data-winelistid') == e){
+                                $(this).css('display', 'block');
+                            };   
+                        });
                     });
                     $("#previousWineSelectionCart").modal('hide');
                     $("#selectionCartBtn").click();
@@ -723,8 +751,13 @@ $(document).on("click", ".addPreviousWineToCart", function(e) {
                 $("#hideloader").hide();
             }
         });
-    }  
-	
+}else{
+    $("#prevwinealert").text("Please select the wine names.");
+    setTimeout(function () {
+        $("#prevwinealert").text("");
+    }, 2000);
+}  
+
 });
 </script>
 

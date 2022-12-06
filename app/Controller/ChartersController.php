@@ -194,33 +194,33 @@ class ChartersController extends AppController {
                             $this->Session->write("fleetLogoUrl", $fleetLogoUrl);
                         }
                         
-                        $ydb_name = $yachtData['Yacht']['ydb_name'];
-                        $yachtDBData = $this->Yacht->getYachtData($ydb_name);
-                        //if(isset($yachtDBData[0]['yachts']['cg_background_image'])){
-                            $image = $yachtDBData[0]['yachts']['cg_background_image'];
-                        //}
-                        //if(isset($yachtDBData[0]['yachts']['psheets_color'])){
-                            $pSheetsColor = $yachtDBData[0]['yachts']['psheets_color'];
-                        //}
-                        // echo "<pre>"; print_r($yachtDBData); exit;
-                        // if($image){
-                        //     $fleetSiteName = $yachtDBData[0]['yachts']['fleetname'];
-                        //     $yachtSiteName = $yachtDBData[0]['yachts']['yname'];
-                        //     $cgBackgroundImage = BASE_URL.'/SOS/app/webroot/betayacht/app/webroot/img/charter_program_files/'.$image;
-                        //     if (!empty($fleetSiteName)) { // IF yacht is under any Fleet
-                        //         $cgBackgroundImage = BASE_URL."/".$fleetSiteName."/app/webroot/".$yachtSiteName."/app/webroot/img/charter_program_files/".$image;
-                        //     }
-                        // }else{
-                        //     $cgBackgroundImage = "https://totalsuperyacht.com:8080/charterguest/css/admin/images/full-charter.png";
-                        // }
-                        //if(isset($yachtDBData[0]['yachts']['fleetname'])){
-                            $fleetname = $yachtDBData[0]['yachts']['fleetname'];
-                        //}
-                        $yachtname = $yachtDBData[0]['yachts']['yname'];
-                        //if(isset($image) && isset($fleetname) && isset($yachtname)){
-                        $cgBackgroundImage = $this->getBackgroundImageUrl($image, $fleetname, $yachtname);
-                        $this->Session->write("cgBackgroundImage", $cgBackgroundImage);
-                        $this->Session->write("pSheetsColor", $pSheetsColor);
+                        // $ydb_name = $yachtData['Yacht']['ydb_name'];
+                        // $yachtDBData = $this->Yacht->getYachtData($ydb_name);
+                        // //if(isset($yachtDBData[0]['yachts']['cg_background_image'])){
+                        //     $image = $yachtDBData[0]['yachts']['cg_background_image'];
+                        // //}
+                        // //if(isset($yachtDBData[0]['yachts']['psheets_color'])){
+                        //     $pSheetsColor = $yachtDBData[0]['yachts']['psheets_color'];
+                        // //}
+                        // // echo "<pre>"; print_r($yachtDBData); exit;
+                        // // if($image){
+                        // //     $fleetSiteName = $yachtDBData[0]['yachts']['fleetname'];
+                        // //     $yachtSiteName = $yachtDBData[0]['yachts']['yname'];
+                        // //     $cgBackgroundImage = BASE_URL.'/SOS/app/webroot/betayacht/app/webroot/img/charter_program_files/'.$image;
+                        // //     if (!empty($fleetSiteName)) { // IF yacht is under any Fleet
+                        // //         $cgBackgroundImage = BASE_URL."/".$fleetSiteName."/app/webroot/".$yachtSiteName."/app/webroot/img/charter_program_files/".$image;
+                        // //     }
+                        // // }else{
+                        // //     $cgBackgroundImage = "https://totalsuperyacht.com:8080/charterguest/css/admin/images/full-charter.png";
+                        // // }
+                        // //if(isset($yachtDBData[0]['yachts']['fleetname'])){
+                        //     $fleetname = $yachtDBData[0]['yachts']['fleetname'];
+                        // //}
+                        // $yachtname = $yachtDBData[0]['yachts']['yname'];
+                        // //if(isset($image) && isset($fleetname) && isset($yachtname)){
+                        // $cgBackgroundImage = $this->getBackgroundImageUrl($image, $fleetname, $yachtname);
+                        // $this->Session->write("cgBackgroundImage", $cgBackgroundImage);
+                        // $this->Session->write("pSheetsColor", $pSheetsColor);
                         //}
                         
                         // Check whether the Password is already created
@@ -3582,27 +3582,31 @@ class ChartersController extends AppController {
             $selectedCharterProgramUUID = $session['selectedCharterProgramUUID'];
             
             if (isset($this->request->data['wineListId']) && $charterHeadId != 0) {
-                $insertData = array();
-                $checkData['wine_list_id'] = $insertData['wine_list_id'] = $wineListId = $this->request->data['wineListId'];
-                $checkData['guest_lists_UUID'] = $insertData['guest_lists_UUID'] = $charterHeadId;
-                $checkData['charter_program_id'] = $insertData['charter_program_id'] = $selectedCharterProgramUUID;
-                $insertData['quantity'] = $this->request->data['quantity'];
-                $insertData['created'] = date("Y-m-d H:i:s");
-                $insertData['modified'] = date("Y-m-d H:i:s");
-                
-                $this->loadModel('TempWineListSelection');
-                
-                // Check whether the wine already added to cart for this Guest
-                $rowCount = $this->TempWineListSelection->find('count', array('conditions' => $checkData));
-                if (!$rowCount) {
-                    // Adding the selected wine into the temp table
-                    $this->TempWineListSelection->create();
-                    if ($this->TempWineListSelection->save($insertData)) {
-                        $result['status'] = "success";
-                    } else {
-                        $result['status'] = "fail";
+                $winearray = $this->request->data['wineListId'];
+                $wineQtyarray = $this->request->data['quantity'];
+                foreach($winearray as $key => $value){
+                    $insertData = array();
+                    $checkData['wine_list_id'] = $insertData['wine_list_id'] = $wineListId = $value;
+                    $checkData['guest_lists_UUID'] = $insertData['guest_lists_UUID'] = $charterHeadId;
+                    $checkData['charter_program_id'] = $insertData['charter_program_id'] = $selectedCharterProgramUUID;
+                    $insertData['quantity'] = $wineQtyarray[$key];
+                    $insertData['created'] = date("Y-m-d H:i:s");
+                    $insertData['modified'] = date("Y-m-d H:i:s");
+                    
+                    $this->loadModel('TempWineListSelection');
+                    
+                    // Check whether the wine already added to cart for this Guest
+                    $rowCount = $this->TempWineListSelection->find('count', array('conditions' => $checkData));
+                    if (!$rowCount) {
+                        // Adding the selected wine into the temp table
+                        $this->TempWineListSelection->create();
+                        $this->TempWineListSelection->save($insertData);
+                           
                     }
                 }
+                $result['status'] = "success";
+            }else{
+                $result['status'] = "fail";
             }
 
             echo json_encode($result);
@@ -4116,36 +4120,43 @@ class ChartersController extends AppController {
             $this->layout = 'ajax';
             $this->autoRender = false;
             $result = array();
-            
+            $this->loadModel('TempProductListSelection');
             $session = $this->Session->read();
-            //echo "<pre>";print_r($session); exit;
+            //echo "<pre>";print_r($this->request->data['productListId']); exit;
             if(isset($session['ownerprefenceUUID']) && !empty($session['ownerprefenceUUID'])){
                 $charterHeadId = $session['ownerprefenceUUID'];
             }
             $selectedCharterProgramUUID = $session['selectedCharterProgramUUID']; //exit;
+
             if (isset($this->request->data['productListId']) && $charterHeadId != 0) {
-                $insertData = array();
-                $checkData['product_list_id'] = $insertData['product_list_id'] = $productListId = $this->request->data['productListId'];
-                $checkData['guest_lists_UUID'] = $insertData['guest_lists_UUID'] = $charterHeadId;
-                $checkData['charter_program_id'] = $insertData['charter_program_id'] =  $selectedCharterProgramUUID;
-                $checkData['quantity'] = $insertData['quantity'] = $this->request->data['quantity'];
-                $insertData['created'] = date("Y-m-d H:i:s");
-                $insertData['modified'] = date("Y-m-d H:i:s");
-                
-                $this->loadModel('TempProductListSelection');
-                
-                // Check whether the wine already added to cart for this Guest
-                $rowCount = $this->TempProductListSelection->find('count', array('conditions' => $checkData));
-                if (!$rowCount) {
-                    // Adding the selected product into the temp table
-                    $this->TempProductListSelection->create();
-                    if ($this->TempProductListSelection->save($insertData)) {
-                        $result['status'] = "success";
-                    } else {
-                        $result['status'] = "fail";
-                    }
+                $productarray = $this->request->data['productListId'];
+                $quantityarray = $this->request->data['quantity'];
+                foreach($productarray as $key => $value){
+                        $insertData = array();
+                        $checkData['product_list_id'] = $insertData['product_list_id'] = $productListId = $value;
+                        $checkData['guest_lists_UUID'] = $insertData['guest_lists_UUID'] = $charterHeadId;
+                        $checkData['charter_program_id'] = $insertData['charter_program_id'] =  $selectedCharterProgramUUID;
+                        $checkData['quantity'] = $insertData['quantity'] = $quantityarray[$key];
+                        $insertData['created'] = date("Y-m-d H:i:s");
+                        $insertData['modified'] = date("Y-m-d H:i:s");
+                        
+                        
+                        
+                        // Check whether the wine already added to cart for this Guest
+                        $rowCount = $this->TempProductListSelection->find('count', array('conditions' => $checkData));
+                        if (!$rowCount) {
+                            // Adding the selected product into the temp table
+                            $this->TempProductListSelection->create();
+                            $this->TempProductListSelection->save($insertData);
+                              
+                        }
                 }
+                $result['status'] = "success";
+            }else {
+                $result['status'] = "fail";
             }
+
+
 
             echo json_encode($result);
             exit;
@@ -6773,10 +6784,8 @@ function getPreviousCharterProgramSelections() {
             $selectedCharterProgramUUID = $programuuid;
             //echo $charterHeadId.'>>>>';
             //echo $selectedCharterProgramUUID;
-            $this->loadModel('CharterGuestSpiritPreference');
             $this->loadModel('TempProductListSelection');
             $this->loadModel('ProductList');
-            $this->loadModel('CharterGuest');
             $this->loadModel('CharterGuestAssociate');
             //'guest_lists_UUID'=>$charterHeadId
             $selectConditions = array('charter_program_id'=>$selectedCharterProgramUUID,'guest_lists_UUID'=>$charterHeadId);

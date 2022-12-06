@@ -668,8 +668,33 @@ $(document).on("click", ".addtocartselectedBeer", function(e) {
     var rowObj = obj.closest("tr");
     var productid = obj.data("productid");
     var quantity = obj.data("quantity");
+
+    if(obj.hasClass('SelectedPrevSpirit')){
+        obj.removeClass('SelectedPrevSpirit');
+        obj.text('Select');
+    }else{
+        obj.addClass('SelectedPrevSpirit');
+        obj.text('Selected');
+    }
+    return false; 
+      
+	
+});
     
-    if (productid != "") {
+
+$(document).on("click", ".addpreviousselectedprogram", function(e) { 
+
+
+var productid = [];
+var quantity = [];
+$('.SelectedPrevSpirit').each(function() {
+    var dataprevproductid = $(this).data('productid');
+    var dataprevquantity = $(this).data('quantity');
+    productid.push(dataprevproductid);
+    quantity.push(dataprevquantity);
+});
+
+if(productid.length >= 1){
         $("#hideloader").show();
         $.ajax({
             type: "POST",
@@ -679,16 +704,23 @@ $(document).on("click", ".addtocartselectedBeer", function(e) {
             success:function(result) {
                 $("#hideloader").hide();
                 if (result.status == 'success') {
-                    $(".selectProductRow").each(function (i,e) { 
-                        if($(this).attr('data-productlistid') == productid){ 
-                            $(this).css('display', 'none');
-                        };   
+                    $(productid).each(function (i,e) { 
+                        // console.log(i);
+                        // console.log(e);
+                        $(".selectProductRow").each(function (j,l) { 
+                            if($(this).attr('data-productlistid') == e){ 
+                                $(this).css('display', 'none');
+                            };   
+                        });
+
+                        $(".removeProductRow").each(function (x,y) {
+                            if($(this).attr('data-productlistid') == e){
+                                $(this).css('display', 'block');
+                            };   
+                        });
                     });
-                    $(".removeProductRow").each(function (i,e) {
-                        if($(this).attr('data-productlistid') == productid){
-                            $(this).css('display', 'block');
-                        };   
-                    });
+
+                    
                     $("#previousBeerSelectionCart").modal('hide');
                     $("#productSelectionCartBtn").click();
                 }  
@@ -697,10 +729,16 @@ $(document).on("click", ".addtocartselectedBeer", function(e) {
                 $("#hideloader").hide();
             }
         });
-    }  
-	
-});
     
+}else{
+    $("#prevbeeralert").text("Please select the product names.");
+    setTimeout(function () {
+        $("#prevbeeralert").text("");
+    }, 2000);
+}
+
+
+});
                     
 </script>
 

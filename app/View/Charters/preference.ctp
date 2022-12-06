@@ -332,6 +332,12 @@ justify-content: center;
   overflow: scroll;
   
     }
+    .addpreviousselectedprogram{
+        margin-left:150px !important;
+    }
+    .addpreviousselectedWine{
+        margin-left:150px !important;
+    }
     .container-row-all-innerpages {
   top: 95px;
 }
@@ -777,6 +783,17 @@ if(isset($cga_glow_color)){
 
 .btn-info, .btn-primary {
     background-color: <?php echo $cga_glow_color; ?>;
+    <?php 
+        if(isset($cga_button_text)){
+    ?>
+    color: <?php echo $cga_button_text; ?>;
+    <?php
+        }
+    ?>
+}
+
+.btn-success:focus, .btn-primary:focus, .btn-primary.focus{
+    background: <?php echo $cga_glow_color; ?> !important;
     <?php 
         if(isset($cga_button_text)){
     ?>

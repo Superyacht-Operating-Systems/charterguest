@@ -113,10 +113,12 @@ tbody tr .th-md50{
         <?php }*/ ?>    
     </tbody>
 </table>
+<span id="prevbeeralert" style="text-align:center;font-size:12px;color:red;"></span>
 </div>
 <hr style="    margin-top: 0px;margin-bottom: 5px;">
 		  
 <br>
+<button class="btn btn-primary addpreviousselectedprogram" style="line-height: 0.8;border-radius: 12px;margin-left: 300px;"> Add </button>
 <?php //echo $this->Form->end(); ?>
 
 

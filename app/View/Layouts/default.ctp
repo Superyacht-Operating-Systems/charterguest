@@ -1098,12 +1098,19 @@ $(document).on("click", ".previousSelectionButton", function(e) {
 
 
 $(document).on("click", ".selectpreviousprogram", function(e) { 
-
 var classObj = $(this);
 var typeofspirit = classObj.data('type');
 var programuuid = classObj.data('programuuid');
+//$(this).text("Selected");
+// if(classObj.hasClass('SelectedPrevSpirit')){
+//     classObj.removeClass('SelectedPrevSpirit');
+//     classObj.text('Select');
+//   }else{
+//     classObj.addClass('SelectedPrevSpirit');
+//     classObj.text('Selected');
+//   }
 
-
+// return false;
       $("#hideloader").show();
       $.ajax({
           type: "POST",
@@ -1145,6 +1152,9 @@ var programuuid = classObj.data('programuuid');
   
    
 });
+
+
+
 
 $(document).on("click", ".previousBeerSelectionCartclose", function(e) { 
   $("#previousBeerSelectionCart").modal('hide');
