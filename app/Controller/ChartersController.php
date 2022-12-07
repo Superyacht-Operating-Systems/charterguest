@@ -194,33 +194,33 @@ class ChartersController extends AppController {
                             $this->Session->write("fleetLogoUrl", $fleetLogoUrl);
                         }
                         
-                        // $ydb_name = $yachtData['Yacht']['ydb_name'];
-                        // $yachtDBData = $this->Yacht->getYachtData($ydb_name);
-                        // //if(isset($yachtDBData[0]['yachts']['cg_background_image'])){
-                        //     $image = $yachtDBData[0]['yachts']['cg_background_image'];
-                        // //}
-                        // //if(isset($yachtDBData[0]['yachts']['psheets_color'])){
-                        //     $pSheetsColor = $yachtDBData[0]['yachts']['psheets_color'];
-                        // //}
-                        // // echo "<pre>"; print_r($yachtDBData); exit;
-                        // // if($image){
-                        // //     $fleetSiteName = $yachtDBData[0]['yachts']['fleetname'];
-                        // //     $yachtSiteName = $yachtDBData[0]['yachts']['yname'];
-                        // //     $cgBackgroundImage = BASE_URL.'/SOS/app/webroot/betayacht/app/webroot/img/charter_program_files/'.$image;
-                        // //     if (!empty($fleetSiteName)) { // IF yacht is under any Fleet
-                        // //         $cgBackgroundImage = BASE_URL."/".$fleetSiteName."/app/webroot/".$yachtSiteName."/app/webroot/img/charter_program_files/".$image;
-                        // //     }
-                        // // }else{
-                        // //     $cgBackgroundImage = "https://totalsuperyacht.com:8080/charterguest/css/admin/images/full-charter.png";
-                        // // }
-                        // //if(isset($yachtDBData[0]['yachts']['fleetname'])){
-                        //     $fleetname = $yachtDBData[0]['yachts']['fleetname'];
-                        // //}
-                        // $yachtname = $yachtDBData[0]['yachts']['yname'];
-                        // //if(isset($image) && isset($fleetname) && isset($yachtname)){
-                        // $cgBackgroundImage = $this->getBackgroundImageUrl($image, $fleetname, $yachtname);
-                        // $this->Session->write("cgBackgroundImage", $cgBackgroundImage);
-                        // $this->Session->write("pSheetsColor", $pSheetsColor);
+                        $ydb_name = $yachtData['Yacht']['ydb_name'];
+                        $yachtDBData = $this->Yacht->getYachtData($ydb_name);
+                        //if(isset($yachtDBData[0]['yachts']['cg_background_image'])){
+                            $image = $yachtDBData[0]['yachts']['cg_background_image'];
+                        //}
+                        //if(isset($yachtDBData[0]['yachts']['psheets_color'])){
+                            $pSheetsColor = $yachtDBData[0]['yachts']['psheets_color'];
+                        //}
+                        // echo "<pre>"; print_r($yachtDBData); exit;
+                        // if($image){
+                        //     $fleetSiteName = $yachtDBData[0]['yachts']['fleetname'];
+                        //     $yachtSiteName = $yachtDBData[0]['yachts']['yname'];
+                        //     $cgBackgroundImage = BASE_URL.'/SOS/app/webroot/betayacht/app/webroot/img/charter_program_files/'.$image;
+                        //     if (!empty($fleetSiteName)) { // IF yacht is under any Fleet
+                        //         $cgBackgroundImage = BASE_URL."/".$fleetSiteName."/app/webroot/".$yachtSiteName."/app/webroot/img/charter_program_files/".$image;
+                        //     }
+                        // }else{
+                        //     $cgBackgroundImage = "https://totalsuperyacht.com:8080/charterguest/css/admin/images/full-charter.png";
+                        // }
+                        //if(isset($yachtDBData[0]['yachts']['fleetname'])){
+                            $fleetname = $yachtDBData[0]['yachts']['fleetname'];
+                        //}
+                        $yachtname = $yachtDBData[0]['yachts']['yname'];
+                        //if(isset($image) && isset($fleetname) && isset($yachtname)){
+                        $cgBackgroundImage = $this->getBackgroundImageUrl($image, $fleetname, $yachtname);
+                        $this->Session->write("cgBackgroundImage", $cgBackgroundImage);
+                        $this->Session->write("pSheetsColor", $pSheetsColor);
                         //}
                         
                         // Check whether the Password is already created
@@ -3015,6 +3015,11 @@ class ChartersController extends AppController {
         // Region filter
         if (isset($filters['region'])) {
             $conditions['WineListRegion.region'] = $filters['region'];
+            $Region = array(
+                'table' => 'wine_list_regions',
+                'alias' => 'WineListRegion',
+                'conditions' => array(array('WineListRegion.wine_list_id = WineList.id'))
+            );
         }
         // Appellation filter
         if (isset($filters['appellation'])) {
@@ -3038,13 +3043,10 @@ class ChartersController extends AppController {
         }
         
         //$selectedWineList = $this->selectedWineList(); // Fetch wine list from Cart
-        //$conditions['WineList.id'] = $selectedWineList;
+        //$conditions['WineList.wine_id'] = 0;
+        if(isset($Region)){
         $joins = array(
-                    array(
-                        'table' => 'wine_list_regions',
-                        'alias' => 'WineListRegion',
-                        'conditions' => 'WineListRegion.wine_list_id = WineList.id'
-                    ),
+                    $Region,
                     array(
                         'table' => 'temp_wine_list_selections',
                         'alias' => 'TWLS',
@@ -3052,6 +3054,16 @@ class ChartersController extends AppController {
                         'conditions' => array('TWLS.wine_list_id = WineList.id','TWLS.guest_lists_UUID ='.'"'.$CGID.'"')
                     )
                 );
+        }else{
+            $joins = array(
+                array(
+                    'table' => 'temp_wine_list_selections',
+                    'alias' => 'TWLS',
+                    'type'=>'left',
+                    'conditions' => array('TWLS.wine_list_id = WineList.id','TWLS.guest_lists_UUID ='.'"'.$CGID.'"')
+                )
+            );
+        }
          //print_r($joins); exit;
         // Paginator settings
         $this->Paginator->settings = array('conditions' => $conditions,
@@ -3201,6 +3213,7 @@ class ChartersController extends AppController {
                     if ($this->TempProductListSelection->save($insertData)) {
                         $result['status'] = "success";
                         $result['message'] = "Successfully created.";
+                        $result['prodid'] = $lastId;
                     } else {
                         $result['status'] = "fail";
                         $result['message'] = "Failed.";
@@ -3230,23 +3243,26 @@ class ChartersController extends AppController {
             $product_array['wine'] = $this->request->data['product_name'];
             $product_array['color'] = $this->request->data['wine_color_list'];
             $product_array['vintage'] = $this->request->data['Vintage'];
+            $product_array['score'] = 80;
             //$cgid =  $this->request->data['CGID'];
             $session = $this->Session->read();
             $cgid = $this->Session->read('guestListUUID');
-            //echo "<pre>"; print_r($product_array); exit;
+            $selectedCharterProgramUUID = $session['selectedCharterProgramUUID'];
+            //echo "<pre>"; print_r($session); exit;
             if($this->WineList->save($product_array)){
                 $lastId =  $this->WineList->getLastInsertId();
                 $this->loadModel('TempWineListSelection');
                 $insertData = array();
                 $insertData['wine_list_id'] = $lastId;
                 $insertData['guest_lists_UUID'] = $cgid;
-                //$insertData['charter_guest_id'] = $cgid;
+                $insertData['charter_program_id'] = $selectedCharterProgramUUID;
                 $insertData['created'] = date("Y-m-d H:i:s");
                 $insertData['modified'] = date("Y-m-d H:i:s");
                 $this->TempWineListSelection->create();
                 if ($this->TempWineListSelection->save($insertData)) {
                     $result['status'] = "success";
                     $result['message'] = "Successfully created.";
+                    $result['wineid'] = $lastId;
                     $filterData = array();
                     // $filterData['wineName'] = $this->request->data['product_name'];
                     $wineList = $this->fetchWineList($filterData); // Fetch wine list by filters

@@ -612,6 +612,27 @@ $(document).on("click", "#save_bs_product", function(e) {
                     $("#responseAlert").removeClass("alert-danger").addClass("alert-success").css('display', 'block');
                     $("#responseAlert").html(result.message).slideDown('fast').delay(3000).slideUp();
                     //location.reload();
+                    //add new product and also directly to cart
+                    var prodid = result.prodid;
+                    $.ajax({
+                        type: "POST",
+                        url: '<?php echo $baseFolder; ?>/charters/addProductToCart',
+                        dataType: 'json',
+                        data: { productListId: prodid },
+                        success:function(result) {
+                            $("#hideloader").hide();
+                            // if (result.status == 'success') {
+                            //     obj.css('display', 'none');
+                            //     rowObj.find('.removeProductRow').css('display', 'block');
+                            // }  
+                        },
+                        error: function(jqxhr) { 
+                            $("#hideloader").hide();
+                        }
+                    });
+
+                    //add new product and also directly to cart
+
                 } else {
                     $('html, body').animate({
                         'scrollTop': $("#responseAlert").position().top - 50
@@ -647,6 +668,7 @@ $(document).on("click", "#wlinputsave", function(e) {
                     });
                     $("#responseAlert").removeClass("alert-danger").addClass("alert-success").css('display', 'block');
                     $("#responseAlert").html(result.message).slideDown('fast').delay(3000).slideUp();
+
                     // location.reload();
                 } else {
                     $('html, body').animate({
