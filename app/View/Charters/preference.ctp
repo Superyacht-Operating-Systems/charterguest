@@ -448,6 +448,11 @@ margin-top: 50px;
   overflow: auto;
     } */
 }
+
+.wine_addbtn_prev.removeProductRowPrev, .wine_addbtn_prev.removeWineRowPrev {
+    background-color: #f0ad4e !important;
+    border-color: #eea236 !important;
+}
 </style>
 
 <?php

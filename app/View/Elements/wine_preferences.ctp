@@ -694,12 +694,17 @@ $(document).on("click", ".addPreviousWineToCart", function(e) {
 
     if(obj.hasClass('SelectedPrevWine')){
         obj.removeClass('SelectedPrevWine');
+        obj.removeClass('wine_addbtn_prev removeWineRowPrev');
+        obj.addClass('btn-primary');
         obj.text('Select');
     }else{
         obj.addClass('SelectedPrevWine');
+        obj.removeClass('btn-primary');
+        obj.addClass('wine_addbtn_prev removeWineRowPrev');
+        
         obj.text('Selected');
     }
-    return false; 
+    //return false; 
 
     
     

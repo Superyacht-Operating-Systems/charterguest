@@ -693,12 +693,16 @@ $(document).on("click", ".addtocartselectedBeer", function(e) {
 
     if(obj.hasClass('SelectedPrevSpirit')){
         obj.removeClass('SelectedPrevSpirit');
+        obj.removeClass('wine_addbtn_prev removeProductRowPrev');
+        obj.addClass('btn-primary');
         obj.text('Select');
     }else{
         obj.addClass('SelectedPrevSpirit');
+        obj.removeClass('btn-primary');
+        obj.addClass('wine_addbtn_prev removeProductRowPrev');
         obj.text('Selected');
     }
-    return false; 
+    //return false; 
       
 	
 });
