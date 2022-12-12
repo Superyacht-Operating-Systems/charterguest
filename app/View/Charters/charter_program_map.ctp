@@ -1163,7 +1163,7 @@ span.sp-leftalign {
             </li>
             <li> <a href="<?php echo $basefolder."/charters/privacytermsofuse/1" ?>" target="blank">Terms of Use</a></li>
         <li> <a href="<?php echo $basefolder."/charters/privacytermsofuse/2" ?>" target="blank">Privacy Policy</a></li>
-         <li class="list-logout-row row-hide-btn"><?php echo $this->Html->link($this->Html->image("admin/table.png", array("alt" => "","title" => "Logout")).'Logout','/',array('escape' =>false,'title' => 'Logout'));?></li>
+         <li class="list-logout-row row-hide-btn"><?php echo $this->Html->link('Logout','/',array('escape' =>false,'title' => 'Logout'));?></li>
         </ul>
     </nav>
 </section>
@@ -1600,7 +1600,7 @@ var polyline0 = new L.Polyline(latlongstemp).addTo(map);
 
 }
 } ?>
-console.log(modalrouteline);
+//console.log(modalrouteline);
 
 
 // L.Control.MarkerControl = L.Control.extend({

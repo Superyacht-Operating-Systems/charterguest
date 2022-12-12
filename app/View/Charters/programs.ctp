@@ -704,7 +704,7 @@ input:focus {
          <!-- <li class="guest-list"> <a href="#">Guest List</a></li>
            <li><a href="charter_program_map">Cruising Map</a></li>
            <li><a>How To Video</a></li> -->
-         <li class="list-logout-row row-hide-btn"><?php echo $this->Html->link($this->Html->image("admin/table.png", array("alt" => "","title" => "Logout")).'Logout','/',array('escape' =>false,'title' => 'Logout'));?></li>
+         <li class="list-logout-row row-hide-btn"><?php echo $this->Html->link('Logout','/',array('escape' =>false,'title' => 'Logout'));?></li>
         </ul>
     </nav>
 </section>

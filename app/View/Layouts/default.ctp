@@ -384,7 +384,7 @@ width: max-content;
                                  	
                                  </div>
                                     <div class="list-logout-row">
-                                        <?php echo $this->Html->link($this->Html->image("admin/table.png", array("alt" => "Logout","title" => "Logout")).'  Logout','/',array('escape' =>false,'title' => 'Logout'));?>
+                                        <?php echo $this->Html->link('  Logout','/',array('escape' =>false,'title' => 'Logout'));?>
                         </div>
                     </div>
                     
@@ -1175,11 +1175,11 @@ var enforceModalFocusFn = $.fn.modal.Constructor.prototype.enforceFocus;
 
 $.fn.modal.Constructor.prototype.enforceFocus = function() {};
 
-$confModal.on('hidden', function() {
+//$confModal.on('hidden', function() {
     $.fn.modal.Constructor.prototype.enforceFocus = enforceModalFocusFn;
-});
+//});
 
-$confModal.modal({ backdrop : false });
+//$confModal.modal({ backdrop : false });
 /// existing preference
 
   function fbsproductsubmit(){

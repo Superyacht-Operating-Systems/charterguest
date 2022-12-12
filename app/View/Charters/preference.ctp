@@ -583,7 +583,7 @@ margin-top: 50px;
             </li>
            <li> <a href="<?php echo $baseFolder."/charters/privacytermsofuse/1" ?>" target="blank">Terms of Use</a></li>
            <li> <a href="<?php echo $baseFolder."/charters/privacytermsofuse/2" ?>" target="blank">Privacy Policy</a></li>
-            <li class="list-logout-row-inner pagleave"><?php echo $this->Html->link($this->Html->image("admin/table.png", array("alt" => "","title" => "Logout")).'  Logout','/',array('escape' =>false,'title' => 'Logout'));?></li>
+            <li class="list-logout-row-inner pagleave"><?php echo $this->Html->link('  Logout','/',array('escape' =>false,'title' => 'Logout'));?></li>
         </ul>
     </nav>
 </section>

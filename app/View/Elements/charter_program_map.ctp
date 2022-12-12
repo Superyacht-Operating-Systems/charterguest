@@ -155,7 +155,7 @@ echo $this->Html->css('leaflet/dist/leaflet');
                    <li class="menu__item" id="MenuHowToVideoCharterHead"><a href="#">Head Charterer</a></li>
                 </ul>
             </li>
-         <li class="list-logout-row"><?php echo $this->Html->link($this->Html->image("admin/table.png", array("alt" => "Logout","title" => "Logout")).'  Logout','/',array('escape' =>false,'title' => 'Logout'));?></li>
+         <li class="list-logout-row"><?php echo $this->Html->link('  Logout','/',array('escape' =>false,'title' => 'Logout'));?></li>
         </ul>
     </nav>
 </section>
