@@ -1175,11 +1175,11 @@ var enforceModalFocusFn = $.fn.modal.Constructor.prototype.enforceFocus;
 
 $.fn.modal.Constructor.prototype.enforceFocus = function() {};
 
-//$confModal.on('hidden', function() {
+$confModal.on('hidden', function() {
     $.fn.modal.Constructor.prototype.enforceFocus = enforceModalFocusFn;
-//});
+});
 
-//$confModal.modal({ backdrop : false });
+$confModal.modal({ backdrop : false });
 /// existing preference
 
   function fbsproductsubmit(){
