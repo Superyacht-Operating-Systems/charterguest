@@ -524,7 +524,7 @@ margin-top: 50px;
         <ul class="menu menu-level1 no-style nav nav-pills nav-justified">
        
         <?php //if(isset($adminLogin) && $adminLogin==1){ ?>
-            <li class="pagleave"> <a href="<?php echo $baseFolder."/charters/programs/".$session['guestListUUID'];  ?>">Charter Programs</a></li>
+            <li class="menu__item pagleave"> <a href="<?php echo $baseFolder."/charters/programs/".$session['guestListUUID'];  ?>">Charter Programs</a></li>
             <!-- <li class="guest-list"> <a href="<?php //echo $baseFolder."/charters/view"; ?>">Guest List</a></li> -->
 
         <?php //}
@@ -581,9 +581,9 @@ margin-top: 50px;
                    <li class="menu__item" id="MenuHowToVideoCharterHead"><a href="#">Head Charterer</a></li>
                 </ul>
             </li>
-           <li> <a href="<?php echo $baseFolder."/charters/privacytermsofuse/1" ?>" target="blank">Terms of Use</a></li>
-           <li> <a href="<?php echo $baseFolder."/charters/privacytermsofuse/2" ?>" target="blank">Privacy Policy</a></li>
-            <li class="list-logout-row-inner pagleave"><?php echo $this->Html->link('  Logout','/',array('escape' =>false,'title' => 'Logout'));?></li>
+           <li class="menu__item"> <a href="<?php echo $baseFolder."/charters/privacytermsofuse/1" ?>" target="blank">Terms of Use</a></li>
+           <li class="menu__item"> <a href="<?php echo $baseFolder."/charters/privacytermsofuse/2" ?>" target="blank">Privacy Policy</a></li>
+            <li class=" menu__item list-logout-row-inner pagleave"><?php echo $this->Html->link('  Logout','/',array('escape' =>false,'title' => 'Logout'));?></li>
         </ul>
     </nav>
 </section>
