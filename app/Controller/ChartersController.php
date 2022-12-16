@@ -742,12 +742,15 @@ class ChartersController extends AppController {
         
         // Fetch the Charter company details
         $this->loadModel('Fleetcompany');
+        if($charter_company_id != 0){
         $companyData = $this->Fleetcompany->find('first', array('fields' => array('management_company_name','logo','fleetname'), 'conditions' => array('id' => $charter_company_id)));
         $this->set('companyData', $companyData);
         $this->set('charter_company_id', $charter_company_id);
         $this->set('ismobile',$this->is_mobile);
 
         $fleetname = $companyData['Fleetcompany']['fleetname'];
+        }
+
         if(isset($programFiles) ){
             $attachment = array();
             $SITE_URL = Configure::read('BASE_URL');
