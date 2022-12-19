@@ -48,6 +48,9 @@ $actual_link_defaultctp = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on
         <meta name="author" content="">
             
         <title>Superyacht Operating Systems - Charter Guest</title>
+        <script>
+          console.warn = () => {};
+        //console.log = console.warn = console.info = console.assert = console.info = console.error = () => {};</script>
 	<?php
 		echo $this->Html->meta('icon');
 
@@ -1172,14 +1175,18 @@ $(document).on("click", ".previousWineSelectionCartclose", function(e) {
 // "Uncaught RangeError: Maximum call stack size exceeded"
 // But then when the nested modal is hidden we reset modal.enforceFocus
 var enforceModalFocusFn = $.fn.modal.Constructor.prototype.enforceFocus;
-
 $.fn.modal.Constructor.prototype.enforceFocus = function() {};
+try{
+    $confModal.on('hidden', function() {
+        $.fn.modal.Constructor.prototype.enforceFocus = enforceModalFocusFn;
+    });
+    $confModal.modal({ backdrop : false });
+}
+catch (error) {
+    if(error.name != 'ReferenceError')
+        throw error;
+}
 
-$confModal.on('hidden', function() {
-    $.fn.modal.Constructor.prototype.enforceFocus = enforceModalFocusFn;
-});
-
-$confModal.modal({ backdrop : false });
 /// existing preference
 
   function fbsproductsubmit(){
@@ -1264,6 +1271,8 @@ $confModal.modal({ backdrop : false });
     }
     return false;
   }
+  // console.log = () => {};
+  // console.warn = () => {};
 </script>
 </body>
 </html>
