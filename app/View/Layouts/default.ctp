@@ -1272,7 +1272,7 @@ catch (error) {
   // console.warn = () => {};
 </script>
 <script>
-       setTimeout("clear()",5000)
+       setTimeout("console.clear()",5000)
     </script>
 </body>
 </html>
