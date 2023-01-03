@@ -15,9 +15,8 @@
  */
 $session = $this->Session->read();
 $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework');
-$cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version());
+$cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
         //echo "<pre>"; print_r($session); exit;
-        error_reporting(0);
 ?>
 <!DOCTYPE html>
 <html>
@@ -49,9 +48,6 @@ $actual_link_defaultctp = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on
         <meta name="author" content="">
             
         <title>Superyacht Operating Systems - Charter Guest</title>
-        <script>
-          console.warn = () => {};
-        //console.log = console.warn = console.info = console.assert = console.info = console.error = () => {};</script>
 	<?php
 		echo $this->Html->meta('icon');
 
@@ -1275,5 +1271,8 @@ catch (error) {
   // console.log = () => {};
   // console.warn = () => {};
 </script>
+<script>
+       setTimeout("console.clear()",3000)
+    </script>
 </body>
 </html>
