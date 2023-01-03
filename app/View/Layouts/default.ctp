@@ -1273,7 +1273,7 @@ catch (error) {
 </script>
 <script>
   $(document).ready(function() {
-    setTimeout("console.clear()",5000)
+    console.clear();
 
 });
     </script>
