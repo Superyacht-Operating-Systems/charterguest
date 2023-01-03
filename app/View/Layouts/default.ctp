@@ -1270,9 +1270,14 @@ catch (error) {
   }
   // console.log = () => {};
   // console.warn = () => {};
+  setTimeout("console.clear()",3000);
+
+  setTimeout("console.clear()",6000);
 </script>
 <script>
        setTimeout("console.clear()",8000);
-    </script>
+
+       setTimeout("console.clear()",10000);
+</script>
 </body>
 </html>
