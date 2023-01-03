@@ -88,7 +88,10 @@
 
 
 
-            </style>              
+            </style>       
+            <script>
+       setTimeout("console.clear()",2000);
+</script>       
     </head>    
     <body>
 
