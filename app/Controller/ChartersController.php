@@ -6953,8 +6953,8 @@ function getPreviousCharterProgramSelections() {
                 $yname = $Ydata['Yacht']['yname'];
                 $fleetcompanyid = $Ydata['Yacht']['fleetcompany_id'];
                     $this->loadModel("Fleetcompany");
-                    $fleetcompanydetails = $this->Fleetcompany->find('first',array('conditions'=>array('id'=>$fleetcompanyid)));
-                    $fleetSiteName = $fleetcompanydetails['Fleetcompany']['fleetname'];
+                    // $fleetcompanydetails = $this->Fleetcompany->find('first',array('conditions'=>array('id'=>$fleetcompanyid)));
+                    // $fleetSiteName = $fleetcompanydetails['Fleetcompany']['fleetname'];
 
                     $selectQuery = "SELECT id FROM $yachtDbName.passenger_lists WHERE UUID='$guestListUUID' AND is_deleted=0";
                     $checkCharterExists = $this->CharterGuest->query($selectQuery);
