@@ -56,7 +56,9 @@ class ChartersController extends AppController {
                     if(count($GuestListData) > 0){
                     $this->loadModel('CharterGuestAssociate');
                     $guestassConditions = array('UUID' => $GuestListData['GuestList']['UUID']);
-                    $GuestAssListData = $this->CharterGuestAssociate->find('first', array('conditions' => $guestassConditions));
+                    $GuestAssListData = $this->CharterGuestAssociate->find('all', array('conditions' => $guestassConditions));
+                    $guestCHGConditions = array('users_UUID' => $GuestListData['GuestList']['UUID']);
+                    $CharterGuestListData = $this->CharterGuest->find('all', array('conditions' => $guestCHGConditions));
                    
                     //echo "<pre>"; print_r($GuestAssListData); exit;
                     if (count($GuestListData) != 0) {
@@ -103,9 +105,23 @@ class ChartersController extends AppController {
                             $updateData['GuestList']['password'] = NULL;
                             $this->GuestList->save($updateData);
                             $this->loadModel('CharterGuestAssociate');
-                            $updateData1['CharterGuestAssociate']['id'] = $GuestAssListData['CharterGuestAssociate']['id'];;
-                            $updateData1['CharterGuestAssociate']['password'] = NULL;
-                            $this->CharterGuestAssociate->save($updateData1);
+                            if(isset($GuestAssListData[0]['CharterGuestAssociate']['id'])){
+                                foreach($GuestAssListData as $value){
+                                    $updateData1 = array();
+                                    $updateData1['CharterGuestAssociate']['id'] = $value['CharterGuestAssociate']['id'];
+                                    $updateData1['CharterGuestAssociate']['password'] = NULL;
+                                    $this->CharterGuestAssociate->save($updateData1);
+                                }
+                            }
+                            $this->loadModel('CharterGuest');
+                            if(isset($CharterGuestListData[0]['CharterGuest']['id'])){
+                                foreach($CharterGuestListData as $value){
+                                    $updateCharterGuestData1 = array();
+                                    $updateCharterGuestData1['CharterGuest']['id'] = $value['CharterGuest']['id'];
+                                    $updateCharterGuestData1['CharterGuest']['password'] = NULL;
+                                    $this->CharterGuest->save($updateCharterGuestData1);
+                                }
+                            }
                         
                             $result['status'] = "success";
                             $result['message'] = "Please check your mail.";
@@ -159,7 +175,7 @@ class ChartersController extends AppController {
                     $charterData = $this->CharterGuest->find('first', array('conditions' => $guestConditions));
                     
                     $GuestListData = $this->GuestList->find('first', array('conditions' => $guestConditions));
-                    
+                    //echo "<pre>"; print_r($GuestListData); exit;
                     if (count($charterData) != 0) {
                         $this->Session->destroy();
                         //echo "<pre>"; print_r($charterData); exit;
@@ -4738,6 +4754,14 @@ class ChartersController extends AppController {
                             // Update to the corresponding Yacht DB
                             $this->CharterGuest->query("UPDATE $yachtDbName.charter_programs SET salutation='$headSalutation' WHERE UUID='$charterProgramId'");
                         }
+                            // update head charter salutation to guest list table
+                            $guestHeadExistdata = $this->GuestList->find('first', array('conditions' => array('first_name' => $data['first_name'][0],'last_name'=>$data['last_name'][0],'email'=>$data['email'][0])));
+                            if(isset($guestHeadExistdata) && !empty($guestHeadExistdata)){
+                                $guestlistHDataArray = array();
+                                $guestlistHDataArray['id'] = $guestHeadExistdata['GuestList']['id'];
+                                $guestlistHDataArray['salutation'] = $data['salutation'][0];
+                                $this->GuestList->save($guestlistHDataArray);
+                            }
                         
                     } else { // Associates
                         //guest_lists table save
