@@ -436,7 +436,7 @@ $ownerprefenceID = $this->Session->read('ownerprefenceID');
            <br><br>
             <div class="form-group frmgrp-mar">
                 <div class="col-sm-12">
-                   
+                <?php echo $this->Form->input("frompageleave",array("label"=>false,'id'=>'frompageleave','class'=>'form-control frompageleave','type' => 'hidden','value'=>'submit')); ?>
                         <?php if (!isset($charterAssocIdByHeaderView)) { ?>
                             <?php echo $this->Form->submit("Submit", array('class' => 'btn btn-success lastbutton'));?>
                         <?php } ?>

@@ -10,6 +10,8 @@
      $selectedCHID = $this->Session->read('selectedCHID');
      $selectedCHPRGID = $this->Session->read('selectedCHPRGID');
      $selectedCHPRGCOMID = $this->Session->read('selectedCHPRGCOMID');
+
+     $Fromownerguestlist = $this->Session->read('Fromownerguestlist');
     
         //$sessionModal = $this->Session->read('charter_info');
        
@@ -94,9 +96,9 @@
  if($isgenerateProductOrderPdf==true){
     ?>
     <script>
-        console.log("filepath jhghjg")
+        //console.log("filepath jhghjg")
         var filepath = "<?php echo $baseFolder; ?>/charters/generateProductOrderPdf";
-        console.log("filepath=",filepath)
+        //console.log("filepath=",filepath)
         downloadFile(filepath);
 
         function downloadFile(filePath){
@@ -544,8 +546,11 @@ margin-top: 50px;
              <?php if(isset($ownerprefenceID) && !empty($ownerprefenceID)){ ?>
             <li class="menu__item pagleave"><a href="<?php echo $baseFolder."/charters/view/".$ownerprefenceID."/".$selectedCharterProgramUUID."/".$sessionCharterGuest['charter_company_id']; ?>">Guest List</a></li>
             <?php }else if(isset($assocprefenceID) && !empty($assocprefenceID)){ ?>
+                <?php if(isset($Fromownerguestlist) && $Fromownerguestlist== "yes"){ ?>
+                    <li class="menu__item pagleave"><a href="<?php echo $baseFolder."/charters/view/".$selectedCHID."/".$selectedCharterProgramUUID."/".$sessionCharterGuest['charter_company_id']; ?>">Guest List</a></li>
+                <?php }else{ ?>
                 <li class="menu__item pagleave"><a href="<?php echo $baseFolder."/charters/view_guest/".$selectedCharterProgramUUID."/".$sessionCharterGuest['charter_company_id']; ?>">Guest List</a></li>
-                <?php } ?>   
+                <?php } }?>   
                 <?php if(isset($ownerprefenceID) && !empty($ownerprefenceID)){ ?> 
                 <li class="menu__item"> <a href="#" title="<?php echo $title; ?>">Cruising Map</a>
                     <?php  if(isset($mapdetails)){ ?>
@@ -932,6 +937,7 @@ $(document).on("click","#pageleave_close",function(e) {
 });
 
 $(document).on("click","#pageleave_save",function(e) {
+    
     var tabname = $("ul.menu-level1").find('li.active').text();
         //alert(ref_this.data("id"));
     if(tabname == "Personal"){
@@ -961,11 +967,14 @@ $(document).on("click","#pageleave_save",function(e) {
             url = form.attr('action');
         
     }else if(tabname == "Itinerary"){ //alert('Itinerary');
+        $(".frompageleave").val('save');
         form = $("#itineraryPreferenceForm");
             url = form.attr('action');
         
         
     }
+    // console.log(form.serialize());
+    // return false;
     $("#hideloader").show();
             $.ajax({
                 type: "POST",
@@ -989,6 +998,7 @@ $(document).on("click","#pageleave_submit",function(e) {
     var tabname = $("ul.menu-level1").find('li.active').text();
         //alert(ref_this.data("id"));
     //if(tabname == "Itinerary"){ alert('Itinerary');
+        $(".frompageleave").val('submit');
         form = $("#itineraryPreferenceForm");
             url = form.attr('action');
             $("#hideloader").show();
@@ -1020,7 +1030,8 @@ $(document).on("click", "#yes_pleaseBeforeLeave", function(e) {     //alert();
   
   var data = {
       "guestListUUID": "<?php echo $iti_guestListUUID_beforeleave; ?>",
-      "selectedCharterProgramUUID": "<?php echo $iti_selectedCharterProgramUUID_beforeleave; ?>"
+      "selectedCharterProgramUUID": "<?php echo $iti_selectedCharterProgramUUID_beforeleave; ?>",
+      "use": 1
   };
   
   

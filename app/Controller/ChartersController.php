@@ -688,6 +688,9 @@ class ChartersController extends AppController {
         $this->Session->write("selectedCHPRGID", $charter_program_id);
         $this->Session->write("selectedCHPRGCOMID", $charter_company_id);
 
+        $this->Session->delete("Fromownerguestlist");
+        $this->Session->write("Fromownerguestlist","yes");
+
         $this->loadModel('CharterGuest');
         $this->loadModel('CharterProgramFile');
         $this->loadModel('Yacht');
@@ -813,6 +816,7 @@ class ChartersController extends AppController {
         $charter_company_id = $charter_company_id;
         // Fetching the Head Charterer details
        
+        $this->Session->delete("Fromownerguestlist");
 
         $this->loadModel('CharterGuest');
         $this->loadModel('CharterProgramFile');
@@ -1921,6 +1925,7 @@ class ChartersController extends AppController {
             $itineraryPreferenceTab = 'active in';
             
         } else if (isset($this->request->data['CharterGuestItineraryPreference']) && !empty($this->request->data['CharterGuestItineraryPreference'])) {
+            //echo "<pre>";print_r($this->request->data);exit;
             // Save Itinerary preference details //
             $data = $this->request->data['CharterGuestItineraryPreference'];
             
@@ -1977,15 +1982,18 @@ class ChartersController extends AppController {
             }
 
             $data['created'] = date('Y-m-d H:i:s');
+            $frompageleave = $data['frompageleave'];
+            unset($data['frompageleave']);
             
-            //echo "<pre>";print_r($data);exit;
             // Checks whether its CREATE or UPDATE
             if (empty($data['id'])) {
                 $this->CharterGuestItineraryPreference->create();
             }
+            //echo $frompageleave;
+            //echo "<pre>";print_r($data);exit;
             $is_psheets_done = 0;
             if ($this->CharterGuestItineraryPreference->save($data)) {
-                   
+            if(!empty($frompageleave) && $frompageleave == "submit"){      
                 // Update the P-sheet status
                 $updateData = array();
                 if (!empty($associatePrimaryid) || $associatePrimaryid != 0) {
@@ -2283,7 +2291,7 @@ class ChartersController extends AppController {
                 // Updating all the tabs records into corresponding yacht tables
                 $charterHeadProgramId = $selectedCharterProgramUUID;
                 $this->sendRecordsToYacht($yDBName,$charterHeadProgramId,$charterHeadId,$charterAssocId,$guest_uuid);
-                
+            }
             }
             $personalDetailsTab = '';
             $mealPreferenceTab = '';
