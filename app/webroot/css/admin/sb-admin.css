@@ -4420,6 +4420,7 @@ overflow: hidden;}
 .upload-img-row a{
     color: #0043f1;
        display: inline-table;
+       white-space: nowrap; 
     position: relative;
     right: -11px;
     float: right;
