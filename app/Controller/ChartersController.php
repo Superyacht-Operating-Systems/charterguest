@@ -162,7 +162,7 @@ class ChartersController extends AppController {
                 $this->loadModel('CharterGuest');
                 $this->loadModel('GuestList');
                 $cloudUrl = Configure::read('cloudUrl');
-                $SITE_URL = Configure::read('BASE_URL');  
+                //$SITE_URL = Configure::read('BASE_URL');  
                 
                 $this->CharterGuest->set($this->request->data);
                 if (!$this->CharterGuest->validates(array('fieldList' => array('email')))) {
@@ -192,6 +192,12 @@ class ChartersController extends AppController {
                         $this->Session->write("charter_info.CharterGuest.captain_name", $yachtData['Yacht']['captain_name']);
                         $this->Session->write("charter_info.CharterGuest.ydb_name", $yachtData['Yacht']['ydb_name']);
                         $this->Session->write("charter_info.CharterGuest.Adminlogin",1);
+                        $domain_name = $yachtData['Yacht']['domain_name'];
+                        if(isset($domain_name) && $domain_name == "charterguest"){
+                            $SITE_URL = "https://charterguest.net/";
+                        }else{
+                            $SITE_URL = "https://totalsuperyacht.com:8080/";
+                        }
                         //exit('dddd');
                         // Fetch the Charter company details
                         $this->loadModel('Fleetcompany');
@@ -233,8 +239,14 @@ class ChartersController extends AppController {
                             $fleetname = $yachtDBData[0]['yachts']['fleetname'];
                         //}
                         $yachtname = $yachtDBData[0]['yachts']['yname'];
+                        $domain_name = $yachtDBData[0]['yachts']['domain_name'];
+                        if(isset($domain_name) && $domain_name == "charterguest"){
+                            $SITE_URL = "https://charterguest.net/";
+                        }else{
+                            $SITE_URL = "https://totalsuperyacht.com:8080/";
+                        }
                         //if(isset($image) && isset($fleetname) && isset($yachtname)){
-                        $cgBackgroundImage = $this->getBackgroundImageUrl($image, $fleetname, $yachtname);
+                        $cgBackgroundImage = $this->getBackgroundImageUrl($image, $fleetname, $yachtname,$SITE_URL);
                         $this->Session->write("cgBackgroundImage", $cgBackgroundImage);
                         $this->Session->write("pSheetsColor", $pSheetsColor);
                         //}
@@ -286,7 +298,12 @@ class ChartersController extends AppController {
                             $this->Session->write("selectedCharterProgramUUID", $charterAssocData['CharterGuestAssociate']['charter_guest_id']);
                             $this->Session->write("assocprefenceID", $charterAssocData['CharterGuestAssociate']['id']);
                             $this->Session->write("assocprefenceUUID", $charterAssocData['CharterGuestAssociate']['UUID']);
-
+                            $domain_name = $yachtData['Yacht']['domain_name'];
+                            if(isset($domain_name) && $domain_name == "charterguest"){
+                                $SITE_URL = "https://charterguest.net/";
+                            }else{
+                                $SITE_URL = "https://totalsuperyacht.com:8080/";
+                            }
                             //echo "<pre>";print_r($this->Session->read());exit;
                             
                             // Fetch the Charter company details
@@ -432,6 +449,7 @@ class ChartersController extends AppController {
         $programFiles  = array();
         $mapdetails = array();
         $SITE_URL = Configure::read('BASE_URL');
+        //$SITE_URL = "https://totalsuperyacht.com:8080/";
        // echo "<pre>";print_r($guestListData); //exit;
         // echo "<pre>";print_r($charterGuestData); exit;
         if(isset($charterGuestData) && !empty($charterGuestData)){
@@ -461,6 +479,12 @@ class ChartersController extends AppController {
                 $Ydata = $this->Yacht->find('first', array('conditions' => $yachtCond));
                 $ydb_name = $Ydata['Yacht']['ydb_name'];
                 $yname = $Ydata['Yacht']['yname'];
+                $domain_name = $Ydata['Yacht']['domain_name'];
+                if(isset($domain_name) && $domain_name == "charterguest"){
+                    $SITE_URL = "https://charterguest.net/";
+                }else{
+                    $SITE_URL = "https://totalsuperyacht.com:8080/";
+                }
                 
                 if(isset($charter_company_id) && !empty($charter_company_id)){
                     $companyData = $this->Fleetcompany->find('first', array('fields' => array('management_company_name','logo','fleetname'), 'conditions' => array('id' => $charter_company_id)));
@@ -468,9 +492,11 @@ class ChartersController extends AppController {
                 }
                 if(isset($programFiledata) && isset($fleetname) && !empty($fleetname)){
                     $programFiles[$charter_from_date]['fleetname'] = $fleetname;
+                    $programFiles[$charter_from_date]['siteurl'] = $SITE_URL;
                 }
                 if(isset($value['CharterGuest']['program_image']) && !empty($value['CharterGuest']['program_image'])){
                     if (!empty($fleetname)) {
+                        
                         if($fleetname == "fleetbeta" || $fleetname == "SOS"){
                             $targetFullPath = $SITE_URL."/fleetbeta/app/webroot/img/charter_program_files/charter_program_photo/".$value['CharterGuest']['program_image'];
                         }else if($fleetname != "fleetbeta" || $fleetname != "SOS"){
@@ -529,12 +555,16 @@ class ChartersController extends AppController {
             $fleetname = $this->Session->read('fleetname');
             if(isset($programFiles) && !empty($programFiles) ){
                 $attachment = array();
-                $SITE_URL = Configure::read('BASE_URL');
+                //$SITE_URL = Configure::read('BASE_URL');
+                //$SITE_URL = "https://totalsuperyacht.com:8080/";
                 foreach($programFiles as $startdate => $filedata){ 
                     foreach($filedata['attachment'] as $file){ 
                         $fleetname = $this->Session->read('fleetname');
                         if(isset($filedata['fleetname'])){
                             $fleetname = $filedata['fleetname'];
+                        }
+                        if(isset($filedata['siteurl'])){
+                            $SITE_URL = $filedata['siteurl'];
                         }
                         $sourceImagePath = $SITE_URL.'/'.$fleetname."/app/webroot/img/charter_program_files/".$file['CharterProgramFile']['file_name'];
                         $attachment[$startdate] = $sourceImagePath;
@@ -572,6 +602,12 @@ class ChartersController extends AppController {
                         $Ydata = $this->Yacht->find('first', array('conditions' => $yachtCond));
                         if(isset($Ydata['Yacht']['ydb_name'])){
                         $ydb_name = $Ydata['Yacht']['ydb_name'];
+                        }
+                        $domain_name = $Ydata['Yacht']['domain_name'];
+                        if(isset($domain_name) && $domain_name == "charterguest"){
+                            $SITE_URL = "https://charterguest.net/";
+                        }else{
+                            $SITE_URL = "https://totalsuperyacht.com:8080/";
                         }
                         $yname = $Ydata['Yacht']['yname'];
                         if(isset($charter_company_id) && !empty($charter_company_id)){
@@ -733,7 +769,13 @@ class ChartersController extends AppController {
         $image = $YachtData[0]['Yacht']['cg_background_image'];
         $fleetname = $YachtData[0]['Yacht']['fleetname'];
         $yachtname = $YachtData[0]['Yacht']['yname'];
-        $cgBackgroundImage = $this->getBackgroundImageUrl($image, $fleetname, $yachtname);
+        $domain_name = $YachtData[0]['Yacht']['domain_name'];
+                        if(isset($domain_name) && $domain_name == "charterguest"){
+                            $SITE_URL = "https://charterguest.net/";
+                        }else{
+                            $SITE_URL = "https://totalsuperyacht.com:8080/";
+                        }
+        $cgBackgroundImage = $this->getBackgroundImageUrl($image, $fleetname, $yachtname,$SITE_URL);
         $this->Session->write("cgBackgroundImage", $cgBackgroundImage);
         // Background image
 
@@ -772,7 +814,7 @@ class ChartersController extends AppController {
 
         if(isset($programFiles) ){
             $attachment = array();
-            $SITE_URL = Configure::read('BASE_URL');
+            //$SITE_URL = Configure::read('BASE_URL');
             foreach($programFiles as $startdate => $filedata){ 
                 foreach($filedata['attachment'] as $file){ 
                     $sourceImagePath = $SITE_URL.'/'.$fleetname."/app/webroot/img/charter_program_files/".$file['CharterProgramFile']['file_name'];
@@ -842,7 +884,12 @@ class ChartersController extends AppController {
         $yachtCond = array('Yacht.id' => $yacht_id);
         $Ydata = $this->Yacht->find('first', array('conditions' => $yachtCond));
         $ydb_name = $Ydata['Yacht']['ydb_name'];
-        
+        $domain_name = $Ydata['Yacht']['domain_name'];
+                            if(isset($domain_name) && $domain_name == "charterguest"){
+                                $SITE_URL = "https://charterguest.net/";
+                            }else{
+                                $SITE_URL = "https://totalsuperyacht.com:8080/";
+                            }
         $this->set('ydb_name', $ydb_name);
         $this->set('charter_program_id', $charter_program_id);
 
@@ -876,7 +923,7 @@ class ChartersController extends AppController {
         $fleetname = $companyData['Fleetcompany']['fleetname'];
         if(isset($programFiles) ){
             $attachment = array();
-            $SITE_URL = Configure::read('BASE_URL');
+            //$SITE_URL = Configure::read('BASE_URL');
             foreach($programFiles as $startdate => $filedata){ 
                 foreach($filedata['attachment'] as $file){ 
                     $sourceImagePath = $SITE_URL.'/'.$fleetname."/app/webroot/img/charter_program_files/".$file['CharterProgramFile']['file_name'];
@@ -893,7 +940,13 @@ class ChartersController extends AppController {
                 $image = $YachtData[0]['Yacht']['cg_background_image'];
                 $fleetname = $YachtData[0]['Yacht']['fleetname'];
                 $yachtname = $YachtData[0]['Yacht']['yname'];
-                $cgBackgroundImage = $this->getBackgroundImageUrl($image, $fleetname, $yachtname);
+                $domain_name = $YachtData[0]['Yacht']['domain_name'];
+                        if(isset($domain_name) && $domain_name == "charterguest"){
+                            $SITE_URL = "https://charterguest.net/";
+                        }else{
+                            $SITE_URL = "https://totalsuperyacht.com:8080/";
+                        }
+                $cgBackgroundImage = $this->getBackgroundImageUrl($image, $fleetname, $yachtname,$SITE_URL);
                 $this->Session->write("cgBackgroundImage", $cgBackgroundImage);
         }
     }
@@ -2578,7 +2631,13 @@ class ChartersController extends AppController {
         $fleetname = $this->Session->read('fleetname');
         $attachment = array();
         if(isset($programFiles) ){
-            $SITE_URL = Configure::read('BASE_URL');
+            $YachtData = $this->CharterProgramFile->query("SELECT * FROM $ydb_name.yachts Yacht");
+            $domain_name = $YachtData[0]['Yacht']['domain_name'];
+            if(isset($domain_name) && $domain_name == "charterguest"){
+                $SITE_URL = "https://charterguest.net/";
+            }else{
+                $SITE_URL = "https://totalsuperyacht.com:8080/";
+            }
             foreach($programFiles as $startdate => $filedata){ 
                 foreach($filedata['attachment'] as $file){ 
                     $sourceImagePath = $SITE_URL.'/'.$fleetname."/app/webroot/img/charter_program_files/".$file['CharterProgramFile']['file_name'];
@@ -5277,7 +5336,13 @@ class ChartersController extends AppController {
                 $image = $YachtData[0]['Yacht']['cg_background_image'];
                 $fleetname = $YachtData[0]['Yacht']['fleetname'];
                 $yachtname = $YachtData[0]['Yacht']['yname'];
-                $cgBackgroundImage = $this->getBackgroundImageUrl($image, $fleetname, $yachtname);
+                $domain_name = $YachtData[0]['Yacht']['domain_name'];
+                if(isset($domain_name) && $domain_name == "charterguest"){
+                    $SITE_URL = "https://charterguest.net/";
+                }else{
+                    $SITE_URL = "https://totalsuperyacht.com:8080/";
+                }
+                $cgBackgroundImage = $this->getBackgroundImageUrl($image, $fleetname, $yachtname,$SITE_URL);
                 $this->Session->write("cgBackgroundImage", $cgBackgroundImage);
                 
                 if(isset($YachtData[0]['Yacht']['cruising_unit']) && $YachtData[0]['Yacht']['cruising_unit'] != '0' ){
@@ -5490,7 +5555,7 @@ class ChartersController extends AppController {
         
                     $programFiles  = array();
                     $mapdetails = array();
-                    $SITE_URL = Configure::read('BASE_URL');
+                    //$SITE_URL = Configure::read('BASE_URL');
                 // echo "<pre>";print_r($guestListData); //exit;
                     // echo "<pre>";print_r($charterGuestData); exit;
                     if(isset($charterGuestData) && !empty($charterGuestData)){
@@ -5521,7 +5586,7 @@ class ChartersController extends AppController {
                         // $fleetname = $this->Session->read('fleetname');
                         if(isset($programFiles) && !empty($programFiles) ){
                             $attachment = array();
-                            $SITE_URL = Configure::read('BASE_URL');
+                            //$SITE_URL = Configure::read('BASE_URL');
                             foreach($programFiles as $startdate => $filedata){ 
                                 foreach($filedata['attachment'] as $file){ 
                                     $fleetname = $this->Session->read('fleetname');
@@ -7144,23 +7209,28 @@ function getIndividualmsgcountMarer() {
         // print_r($details);exit;
     }
 
-    function getBackgroundImageUrl($image, $fleetname, $yachtname){
+    function getBackgroundImageUrl($image, $fleetname, $yachtname, $SITE_URL){
         if($image){
-            $cgBackgroundImage = BASE_URL.'/'.$yachtname.'/app/webroot/img/charter_program_files/'.$image;
+            $cgBackgroundImage = $SITE_URL.'/'.$yachtname.'/app/webroot/img/charter_program_files/'.$image;
             if (!empty($fleetname)) { // IF yacht is under any Fleet
-                $cgBackgroundImage = BASE_URL."/".$fleetname."/app/webroot/".$yachtname."/app/webroot/img/charter_program_files/".$image;
+                $cgBackgroundImage = $SITE_URL."/".$fleetname."/app/webroot/".$yachtname."/app/webroot/img/charter_program_files/".$image;
             }
         }else{
-            $cgBackgroundImage = BASE_URL."/charterguest/css/admin/images/full-charter.png";
+            $cgBackgroundImage = $SITE_URL."/charterguest/css/admin/images/full-charter.png";
         }
         return $cgBackgroundImage;
     }
 
     function getFleetLogoUrl($fleetcompany_id){
-        $SITE_URL = Configure::read('BASE_URL');
+        //$SITE_URL = Configure::read('BASE_URL');
         $this->loadModel('Fleetcompany');
-        $companyData = $this->Fleetcompany->find('first', array('fields' => array('management_company_name','logo','fleetname'), 'conditions' => array('id' => $fleetcompany_id)));
-        
+        $companyData = $this->Fleetcompany->find('first', array('fields' => array('management_company_name','logo','fleetname','domain_name'), 'conditions' => array('id' => $fleetcompany_id)));
+        $domain_name = $companyData['Fleetcompany']['domain_name'];
+        if(isset($domain_name) && $domain_name == "charterguest"){
+            $SITE_URL = "https://charterguest.net/";
+        }else{
+            $SITE_URL = "https://totalsuperyacht.com:8080/";
+        }
         if (isset($companyData['Fleetcompany']['logo']) && !empty($companyData['Fleetcompany']['logo'])) {
             $fleetLogoUrl = $SITE_URL.'/'."charterguest/img/logo/thumb/".$companyData['Fleetcompany']['logo'];
         } else{
