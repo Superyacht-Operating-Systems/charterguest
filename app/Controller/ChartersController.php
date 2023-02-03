@@ -386,6 +386,7 @@ class ChartersController extends AppController {
                         $this->GuestList->save($guestinsertData);
                         $result['status'] = "success";
                         $result['guest_list_uuid'] = $guest_list_data['GuestList']['UUID'];
+                        $this->Session->write("guestListUUID", $guest_list_data['GuestList']['UUID']);
                     } else {
                         $result['status'] = "fail";
                     }
@@ -397,6 +398,7 @@ class ChartersController extends AppController {
                         $this->GuestList->save($guestinsertData);
                         $result['status'] = "success";
                         $result['guest_list_uuid'] = $guest_list_data['GuestList']['UUID'];
+                        $this->Session->write("guestListUUID", $guest_list_data['GuestList']['UUID']);
                     } else {
                         $result['status'] = "fail";
                     }
@@ -485,7 +487,7 @@ class ChartersController extends AppController {
                 }else{
                     $SITE_URL = "https://totalsuperyacht.com:8080/";
                 }
-                
+                $fleetname = "";
                 if(isset($charter_company_id) && !empty($charter_company_id)){
                     $companyData = $this->Fleetcompany->find('first', array('fields' => array('management_company_name','logo','fleetname'), 'conditions' => array('id' => $charter_company_id)));
                     $fleetname = $companyData['Fleetcompany']['fleetname'];
@@ -498,19 +500,20 @@ class ChartersController extends AppController {
                     if (!empty($fleetname)) {
                         
                         if($fleetname == "fleetbeta" || $fleetname == "SOS"){
-                            $targetFullPath = $SITE_URL."/fleetbeta/app/webroot/img/charter_program_files/charter_program_photo/".$value['CharterGuest']['program_image'];
+                            $targetFullPath = $SITE_URL."fleetbeta/app/webroot/img/charter_program_files/charter_program_photo/".$value['CharterGuest']['program_image'];
                         }else if($fleetname != "fleetbeta" || $fleetname != "SOS"){
-                            $targetFullPath = $SITE_URL."/".$fleetname."/app/webroot/img/charter_program_files/charter_program_photo/".$value['CharterGuest']['program_image'];
+                            $targetFullPath = $SITE_URL.$fleetname."/app/webroot/img/charter_program_files/charter_program_photo/".$value['CharterGuest']['program_image'];
                         }else{
-                            $targetFullPath = $SITE_URL."/".$fleetname."/app/webroot/".$yname."/app/webroot/img/charter_program_files/charter_program_photo/".$value['CharterGuest']['program_image'];
+                            $targetFullPath = $SITE_URL.$fleetname."/app/webroot/".$yname."/app/webroot/img/charter_program_files/charter_program_photo/".$value['CharterGuest']['program_image'];
                         }
-                    } else {
-                        $targetFullPath = $SITE_URL."/".$yname."/app/webroot/img/charter_program_files/charter_program_photo/".$value['CharterGuest']['program_image'];
+                    } else {  
+                        $targetFullPath = $SITE_URL.$yname."/app/webroot/img/charter_program_files/charter_program_photo/".$value['CharterGuest']['program_image'];
                     }
                     $charterGuestData[$key]['program_image'] = $targetFullPath;
                 }else{
                     $charterGuestData[$key]['program_image'] = "#";
                 }
+                //echo $targetFullPath."<br>"; //exit;
                 $pid = $value['CharterGuest']['charter_program_id'];
                 $charterGuestData[$key]['ydb_name'] = $ydb_name;
                 $scheduleData = $this->CharterProgramFile->query("SELECT * FROM $ydb_name.charter_program_schedules CharterProgramSchedule WHERE charter_program_id = '$pid' AND is_deleted = 0");
@@ -610,6 +613,7 @@ class ChartersController extends AppController {
                             $SITE_URL = "https://totalsuperyacht.com:8080/";
                         }
                         $yname = $Ydata['Yacht']['yname'];
+                        $fleetname = "";
                         if(isset($charter_company_id) && !empty($charter_company_id)){
                             $companyData = $this->Fleetcompany->find('first', array('fields' => array('management_company_name','logo','fleetname'), 'conditions' => array('id' => $charter_company_id)));
                             $fleetname = $companyData['Fleetcompany']['fleetname'];
@@ -7031,14 +7035,16 @@ function getPreviousCharterProgramSelections() {
         
             $this->loadModel('GuestList');
             $this->loadModel('CharterGuest');
-            $guestExistdata = $this->GuestList->find('first', array('conditions' => array('UUID' => $guestListUUID)));
+            $guestExistdata = $this->GuestList->find('all', array('conditions' => array('UUID' => $guestListUUID)));
             //echo "<pre>"; print_r($guestExistdata); exit;
             if(!empty($guestExistdata)){
-                $guestlistData = array();
-                $guestlistData['id'] = $guestExistdata['GuestList']['id'];
-                $guestlistData['use_submitted_preferences'] = $use_submitted_preferences;
-                $guestlistData['use_submitted_date'] = date('Y-m-d');
-                $this->GuestList->save($guestlistData);
+                foreach($guestExistdata as $val){
+                    $guestlistData = array();
+                    $guestlistData['id'] = $val['GuestList']['id'];
+                    $guestlistData['use_submitted_preferences'] = $use_submitted_preferences;
+                    $guestlistData['use_submitted_date'] = date('Y-m-d');
+                    $this->GuestList->save($guestlistData);
+                }
                 // Fetch the Charter Guest data
                 $charterGuestData = $this->CharterGuest->find('first', array('conditions' => array('charter_program_id' => $selectedCharterProgramUUID)));
 

@@ -39,7 +39,7 @@
 
             $base = $this->request->base;
 
-            // echo "<pre>"; print_r($this->Session->read()); 
+             //echo "<pre>"; print_r($this->Session->read()); 
     //exit;
 
     $iti_guestListUUID_beforeleave = $this->Session->read('guestListUUID');
