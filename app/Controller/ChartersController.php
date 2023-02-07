@@ -6116,7 +6116,9 @@ class ChartersController extends AppController {
         $yachtName = $this->Session->read('charter_info.CharterGuest.yacht_name');
         $captainName = $this->Session->read('charter_info.CharterGuest.captain_name');
         $this->loadModel('CharterGuest');
-        $headCharterData = $this->CharterGuest->find('first', array('conditions' => array('id' => $data['charter_guest_id'])));
+        //$headCharterData = $this->CharterGuest->find('first', array('conditions' => array('id' => $data['charter_guest_id'])));
+        $headCharterData = $this->CharterGuest->find('first', array('conditions' => array('charter_program_id' => $data['charter_guest_id'])));
+       //echo "<pre>"; print_r($data);print_r($headCharterData); exit;
         $headChartererName = $headCharterData['CharterGuest']['first_name']." ".$headCharterData['CharterGuest']['last_name'];
         $cloudURL = Configure::read('cloudUrl')."charterguest";
         
@@ -6172,7 +6174,10 @@ class ChartersController extends AppController {
         $yachtName = $this->Session->read('charter_info.CharterGuest.yacht_name');
         $captainName = $this->Session->read('charter_info.CharterGuest.captain_name');
         $this->loadModel('CharterGuest');
-        $headCharterData = $this->CharterGuest->find('first', array('conditions' => array('id' => $data['charter_guest_id'])));
+        //$headCharterData = $this->CharterGuest->find('first', array('conditions' => array('id' => $data['charter_guest_id'])));
+        $headCharterData = $this->CharterGuest->find('first', array('conditions' => array('charter_program_id' => $data['charter_guest_id'])));
+       
+        //echo "<pre>"; print_r($data); print_r($headCharterData); exit;
         $headChartererName = $headCharterData['CharterGuest']['first_name']." ".$headCharterData['CharterGuest']['last_name'];
         $cloudURL = Configure::read('cloudUrl')."charterguest";
         
