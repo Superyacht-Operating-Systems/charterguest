@@ -2011,11 +2011,27 @@ class ChartersController extends AppController {
                 $charterHeadId = $ownerprefenceID;
                 $CharterGuestData = $this->CharterGuest->find('first', array('conditions' => array('id' => $ownerprefenceID)));
                 $salutation = $CharterGuestData['CharterGuest']['salutation'];
+                $typetext = "Guest";
+                if(isset($CharterGuestData['CharterGuest']['charter_program_type']) && !empty($CharterGuestData['CharterGuest']['charter_program_type'])){
+                    if($CharterGuestData['CharterGuest']['charter_program_type'] == 1){
+                        $typetext = "Owner";
+                    }else if($CharterGuestData['CharterGuest']['charter_program_type'] == 2){
+                        $typetext = "Charterer";
+                    }
+                }
             }else{
                $data['guest_lists_UUID'] = $guestAssc['CharterGuestAssociate']['UUID'];
                $guest_uuid = $guestAssc['CharterGuestAssociate']['UUID'];
                $charterAssocId = $guestAssc['CharterGuestAssociate']['id'];
                $salutation = $guestAssc['CharterGuestAssociate']['salutation'];
+               $typetext = "Guest";
+                if(isset($guestAssc['CharterGuestAssociate']['is_head_charterer']) && !empty($guestAssc['CharterGuestAssociate']['is_head_charterer'])){
+                    if($guestAssc['CharterGuestAssociate']['is_head_charterer'] == 1){
+                        $typetext = "Owner";
+                    }else if($guestAssc['CharterGuestAssociate']['is_head_charterer'] == 2){
+                        $typetext = "Charterer";
+                    }
+                }
             }
             $data['charter_assoc_id'] = $charterAssocId;
             $charterGuestAssociateUUID = $data['guest_lists_UUID'];
@@ -2092,6 +2108,8 @@ class ChartersController extends AppController {
                         $guest_file_name = $guestListData['GuestList']['file_name'];
                         $guest_file_path = $guestListData['GuestList']['file_path'];
                         $guest_fleetcompany_id = $guestListData['GuestList']['fleetcompany_id'];
+                        $guest_token = $guestListData['GuestList']['token'];
+                        $guest_password = $guestListData['GuestList']['password'];
                         //$salutation = $guestListData['GuestList']['salutation'];
                         if($guest_file_name != ""){
                                 $guest_targetFullPath = "";
@@ -2231,11 +2249,11 @@ class ChartersController extends AppController {
                     
                     if (empty($checkCharterExists)) {
                         // Insertion
-                        $insertQuery = "INSERT INTO $yDBName.passenger_lists (UUID,salutation,family_name,first_name,date_of_birth,place_of_birth,nationality,passport_number,issued_date,expiration_date,file_name,file_path,status,modified,is_psheets_done,type,group_id,email) VALUES ('".$guest_uuid."','".$salutation."','".$familyName."','".$firstName."','".$dob."','".$pob."','".$nationality."','".$passportNum."','".$issuedDate."','".$expiryDate."','".$targetFileName."','".$targetImagePath."',$status,'".$created."','".$is_psheets_done."','".$guest_type."','".$G_group_id."','".$guest_email."')";
+                        $insertQuery = "INSERT INTO $yDBName.passenger_lists (UUID,salutation,family_name,first_name,date_of_birth,place_of_birth,nationality,passport_number,issued_date,expiration_date,file_name,file_path,status,modified,is_psheets_done,type,group_id,email,token,password) VALUES ('".$guest_uuid."','".$salutation."','".$familyName."','".$firstName."','".$dob."','".$pob."','".$nationality."','".$passportNum."','".$issuedDate."','".$expiryDate."','".$targetFileName."','".$targetImagePath."',$status,'".$created."','".$is_psheets_done."','".$typetext."','".$G_group_id."','".$guest_email."','".$guest_token."','".$guest_password."')";
                         $this->CharterGuest->query($insertQuery);
                     } else {
                         // Updation
-                        $updateQuery = "UPDATE $yDBName.passenger_lists SET is_psheets_done='".$is_psheets_done."',salutation='".$salutation."',family_name='".$familyName."',first_name='".$firstName."',date_of_birth='".$dob."',place_of_birth='".$pob."',nationality='".$nationality."',passport_number='".$passportNum."',issued_date='".$issuedDate."',expiration_date='".$expiryDate."',file_name='".$targetFileName."',file_path='".$targetImagePath."',modified='".$created."',type='".$guest_type."',group_id='".$G_group_id."',email='".$guest_email."' WHERE UUID='$guest_uuid'"; 
+                        $updateQuery = "UPDATE $yDBName.passenger_lists SET is_psheets_done='".$is_psheets_done."',salutation='".$salutation."',family_name='".$familyName."',first_name='".$firstName."',date_of_birth='".$dob."',place_of_birth='".$pob."',nationality='".$nationality."',passport_number='".$passportNum."',issued_date='".$issuedDate."',expiration_date='".$expiryDate."',file_name='".$targetFileName."',file_path='".$targetImagePath."',modified='".$created."',type='".$typetext."',group_id='".$G_group_id."',email='".$guest_email."',token='".$guest_token."',password='".$guest_password."' WHERE UUID='$guest_uuid'"; 
                         $this->CharterGuest->query($updateQuery);
                     }
                     
@@ -2252,12 +2270,28 @@ class ChartersController extends AppController {
                         $familyName = $assocDetails['CharterGuestAssociate']['last_name'];
                         $salutation = $assocDetails['CharterGuestAssociate']['salutation'];
                         $charter_company_id = $assocDetails['CharterGuestAssociate']['fleetcompany_id'];
+                        $typetext = "Guest";
+                            if(isset($assocDetails['CharterGuestAssociate']['is_head_charterer']) && !empty($assocDetails['CharterGuestAssociate']['is_head_charterer'])){
+                                if($assocDetails['CharterGuestAssociate']['is_head_charterer'] == 1){
+                                    $typetext = "Owner";
+                                }else if($assocDetails['CharterGuestAssociate']['is_head_charterer'] == 2){
+                                    $typetext = "Charterer";
+                                }
+                            }
                     } else { // Head Charterer
                         $guestDetails = $this->CharterGuest->find('first', array('conditions' => array('charter_program_id' => $selectedCharterProgramUUID)));
                         $firstName = $guestDetails['CharterGuest']['first_name'];
                         $familyName = $guestDetails['CharterGuest']['last_name'];
                         $salutation = $guestDetails['CharterGuest']['salutation'];
                         $charter_company_id = $guestDetails['CharterGuest']['charter_company_id'];
+                        $typetext = "Guest";
+                            if(isset($guestDetails['CharterGuest']['charter_program_type']) && !empty($guestDetails['CharterGuest']['charter_program_type'])){
+                                if($guestDetails['CharterGuest']['charter_program_type'] == 1){
+                                    $typetext = "Owner";
+                                }else if($guestDetails['CharterGuest']['charter_program_type'] == 2){
+                                    $typetext = "Charterer";
+                                }
+                            }
                     }
 
                     $this->loadModel('GuestList');
@@ -2272,6 +2306,8 @@ class ChartersController extends AppController {
                         //$salutation = $guestListData['GuestList']['salutation'];
                         $use_submitted_date = $guestListData['GuestList']['use_submitted_date'];
                         $use_submitted_preferences = $guestListData['GuestList']['use_submitted_preferences'];
+                        $Gtoken = $guestListData['GuestList']['token'];
+                        $Gpassword= $guestListData['GuestList']['password'];
                         $guest_targetImagePath = "";
                         $guest_targetFileName = "";
                         if($guest_file_name != ""){
@@ -2339,11 +2375,11 @@ class ChartersController extends AppController {
                     
                     if (empty($checkCharterExists)) {
                         // Insertion
-                        $insertQuery = "INSERT INTO $yDBName.passenger_lists (UUID,salutation,family_name,first_name,status,modified,is_psheets_done,type,group_id,file_name,file_path) VALUES ('".$guest_uuid."','".$salutation."','".$familyName."','".$firstName."',$status,'".$created."','".$is_psheets_done."','".$guest_type."','".$G_group_id."','".$guest_targetFileName."','".$guest_targetImagePath."')";
+                        $insertQuery = "INSERT INTO $yDBName.passenger_lists (UUID,salutation,family_name,first_name,status,modified,is_psheets_done,type,group_id,file_name,file_path,email,token,password) VALUES ('".$guest_uuid."','".$salutation."','".$familyName."','".$firstName."',$status,'".$created."','".$is_psheets_done."','".$typetext."','".$G_group_id."','".$guest_targetFileName."','".$guest_targetImagePath."','".$guest_email."','".$Gtoken."','".$Gpassword."')";
                         $this->CharterGuest->query($insertQuery);
                     } else {
                         // Updation
-                        $updateQuery = "UPDATE $yDBName.passenger_lists SET family_name='".$familyName."',salutation='".$salutation."',first_name='".$firstName."',modified='".$created."',type='".$guest_type."',group_id='".$G_group_id."',file_name='".$guest_targetFileName."',file_path='".$guest_targetImagePath."',is_psheets_done='".$is_psheets_done."' WHERE UUID='$guest_uuid'";
+                        $updateQuery = "UPDATE $yDBName.passenger_lists SET family_name='".$familyName."',salutation='".$salutation."',first_name='".$firstName."',modified='".$created."',type='".$typetext."',group_id='".$G_group_id."',file_name='".$guest_targetFileName."',file_path='".$guest_targetImagePath."',is_psheets_done='".$is_psheets_done."',email='".$guest_email."',token='".$Gtoken."',password='".$Gpassword."' WHERE UUID='$guest_uuid'";
                         $this->CharterGuest->query($updateQuery);
                     }
                 }
