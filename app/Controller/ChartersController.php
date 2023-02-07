@@ -4595,8 +4595,45 @@ class ChartersController extends AppController {
                                 }
                                 $insertData['UUID'] = $guestExistdata['GuestList']['UUID'];
 
+                                $exists_company_id = $guestExistdata['GuestList']['fleetcompany_id'];
+                                if(isset($exists_company_id)){
+                                            $explodeCmpid = explode(',',$exists_company_id);
+                                }
+                                $currentcompanyid[] = $this->request->data['charter_company_id'];
+                                $newsetcompanyidarray = array_merge($explodeCmpid, $currentcompanyid);
+                                //$newsetcompanyidarray = array_unique($newsetcompanyidarray);
+                                if(isset($newsetcompanyidarray)){
+                                    $companyimplodeids =  implode(',',$newsetcompanyidarray);
+                                }
+
+                                $exists_yacht_id = $guestExistdata['GuestList']['yacht_id'];
+                                if(isset($exists_yacht_id)){
+                                            $explodeYid = explode(',',$exists_yacht_id);
+                                }
+                                $currentYid[] = $this->request->data['yachtId'];
+                                $newsetYidarray = array_merge($explodeYid, $currentYid);
+                                //$newsetYidarray = array_unique($newsetYidarray);
+                                if(isset($newsetYidarray)){
+                                    $Yimplodeids =  implode(',',$newsetYidarray);
+                                }
+
+                                $exists_guest_type = $guestExistdata['GuestList']['guest_type'];
+                                if(isset($exists_guest_type)){
+                                            $explodeGT = explode(',',$exists_guest_type);
+                                }
+                                $currentGT[] = $this->request->data['charter_company_id']."-".$this->request->data['yachtId']."-Guest";
+                                $newsetGTarray = array_merge($explodeGT, $currentGT);
+                                //$newsetGTarray = array_unique($newsetGTarray);
+                                if(isset($newsetGTarray)){
+                                    $GTimplodeids =  implode(',',$newsetGTarray);
+                                }
+
+
+
                                 $guestlistData = array();
-                                $guestlistData['guest_type'] = "Guest";
+                                $guestlistData['yacht_id'] = $Yimplodeids;
+                                $guestlistData['fleetcompany_id'] = $companyimplodeids;
+                                $guestlistData['guest_type'] = $GTimplodeids;
                                 $guestlistData['salutation'] = $insertData['salutation'];
                                 $guestlistData['id'] = $guestExistdata['GuestList']['id'];
                                 if(empty($guestExistdata['GuestList']['token'])){
@@ -4695,12 +4732,13 @@ class ChartersController extends AppController {
                             $guestlistData['last_name'] = $data['last_name'][$i];
                             $guestlistData['first_name'] = $data['first_name'][$i];
                             $guestlistData['email'] = $data['email'][$i];
-                            $guestlistData['fleetcompany_id'] = $fleetcompany_id;
-                            $guestlistData['yacht_id'] = $yachtId;
-                            $guestlistData['type'] = "Guest";
+                            
                             $existCharterassocData = $this->CharterGuestAssociate->find('all', array('conditions' => array('last_name' => $data['last_name'][$i],'first_name' => $data['first_name'][$i],'email' => $data['email'][$i])));
                             $guestlistData['salutation'] =$data['salutation'][$i];
                         if(empty($chkduplicate)){
+                            $guestlistData['fleetcompany_id'] = $fleetcompany_id;
+                            $guestlistData['yacht_id'] = $yachtId;
+                            $guestlistData['type'] = "Guest";
                                 $Guestlistuuid = String::uuid();
                                 $guestlistData['UUID'] = $Guestlistuuid;
                                 
@@ -4845,17 +4883,55 @@ class ChartersController extends AppController {
                         $guestlistData['last_name'] = $data['last_name'][$i];
                         $guestlistData['first_name'] = $data['first_name'][$i];
                         $guestlistData['email'] = $data['email'][$i];
-                        $guestlistData['fleetcompany_id'] = $charter_company_id;
-                        $guestlistData['yacht_id'] = $yachtId;
-                        $guestlistData['type'] = "Guest";
                         $guestlistData['salutation'] = $data['salutation'][$i];
                         if(empty($data['charter_assoc_id'][$i])){
                             $guestExistdata = $this->GuestList->find('first', array('conditions' => array('first_name' => $data['first_name'][$i],'last_name'=>$data['last_name'][$i],'email'=>$data['email'][$i])));
                             if(isset($guestExistdata) && !empty($guestExistdata)){
                                 $Guestlistuuid = $guestExistdata['GuestList']['UUID'];
+                                $exists_company_id = $guestExistdata['GuestList']['fleetcompany_id'];
+                                    if(isset($exists_company_id)){
+                                                $explodeCmpid = explode(',',$exists_company_id);
+                                    }
+                                    $currentcompanyid = array();
+                                    $currentcompanyid[] = $charter_company_id;
+                                    $newsetcompanyidarray = array_merge($explodeCmpid, $currentcompanyid);
+                                    //$newsetcompanyidarray = array_unique($newsetcompanyidarray);
+                                    if(isset($newsetcompanyidarray)){
+                                        $companyimplodeids =  implode(',',$newsetcompanyidarray);
+                                    }
+
+                                    $exists_yacht_id = $guestExistdata['GuestList']['yacht_id'];
+                                    if(isset($exists_yacht_id)){
+                                                $explodeYid = explode(',',$exists_yacht_id);
+                                    }
+                                    $currentYid = array();
+                                    $currentYid[] = $yachtId;
+                                    $newsetYidarray = array_merge($explodeYid, $currentYid);
+                                    //$newsetYidarray = array_unique($newsetYidarray);
+                                    if(isset($newsetYidarray)){
+                                        $Yimplodeids =  implode(',',$newsetYidarray);
+                                    }
+
+                                    $exists_guest_type = $guestExistdata['GuestList']['guest_type'];
+                                    if(isset($exists_guest_type)){
+                                                $explodeGT = explode(',',$exists_guest_type);
+                                    }
+                                    $currentGT = array();
+                                    $currentGT[] = $charter_company_id."-".$yachtId."-Guest";
+                                    $newsetGTarray = array_merge($explodeGT, $currentGT);
+                                    //$newsetGTarray = array_unique($newsetGTarray);
+                                    if(isset($newsetGTarray)){
+                                        $GTimplodeids =  implode(',',$newsetGTarray);
+                                    }
+                                    $guestlistData['fleetcompany_id'] = $companyimplodeids;
+                                    $guestlistData['yacht_id'] = $Yimplodeids;
+                                    $guestlistData['type'] = $GTimplodeids;
                                 $guestlistData['UUID'] = $Guestlistuuid;
                                 $guestlistData['id'] = $guestExistdata['GuestList']['id'];
                             }else{
+                                $guestlistData['fleetcompany_id'] = $charter_company_id;
+                                $guestlistData['yacht_id'] = $yachtId;
+                                $guestlistData['type'] = "Guest";
                                 $Guestlistuuid = String::uuid();
                                 $guestlistData['UUID'] = $Guestlistuuid;
                             }
