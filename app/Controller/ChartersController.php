@@ -758,6 +758,7 @@ class ChartersController extends AppController {
         $yachtCond = array('Yacht.id' => $yacht_id);
         $Ydata = $this->Yacht->find('first', array('conditions' => $yachtCond));
         $ydb_name = $Ydata['Yacht']['ydb_name'];
+        $yfullNameDisp = $Ydata['Yacht']['yfullName'];
         
         // Background image
         // $image = $Ydata['Yacht']['cg_background_image'];
@@ -786,7 +787,7 @@ class ChartersController extends AppController {
         $this->Session->write("cgBackgroundImage", $cgBackgroundImage);
         // Background image
         $this->Session->delete("GuestListYname");
-        $this->Session->write("GuestListYname", $yachtname);
+        $this->Session->write("GuestListYname", $yfullNameDisp);
 
         
         $pid = $charterData['CharterGuest']['charter_program_id'];
@@ -894,7 +895,7 @@ class ChartersController extends AppController {
         $yachtCond = array('Yacht.id' => $yacht_id);
         $Ydata = $this->Yacht->find('first', array('conditions' => $yachtCond));
         $ydb_name = $Ydata['Yacht']['ydb_name'];
-        $yachtnamedisp = $Ydata['Yacht']['yname'];
+        $yachtnamedisp = $Ydata['Yacht']['yfullName'];
         $domain_name = $Ydata['Yacht']['domain_name'];
                             if(isset($domain_name) && $domain_name == "charterguest"){
                                 $SITE_URL = "https://charterguest.net/";
