@@ -118,7 +118,8 @@ class AppController extends Controller {
 		
 		//$mail->setFrom(FROM_EMAIL_ADDRESS, 'Superyacht');"TotalSuperyacht
 		//if($from == ''){
-			$mail->setFrom(FROM_EMAIL_ADDRESS, 'TotalSuperyacht');
+//			$mail->setFrom(FROM_EMAIL_ADDRESS, 'TotalSuperyacht');
+			$mail->setFrom(FROM_EMAIL_ADDRESS, 'Charter Guest');
 		//}else{
 		//	$mail->setFrom($from, 'TotalSuperyacht');
 		//}
@@ -129,7 +130,7 @@ class AppController extends Controller {
 		//$mail->addReplyTo('info@example.com', 'Information');
 		//$mail->addCC('cc@example.com');
 		$mail->addBCC('admin@superyachtos.com');
-		//$mail->addBCC('ramesh@ceruleaninfotech.com');
+		$mail->addBCC('rakesh.avula@gmail.com');
 		
 		//$mail->addAttachment('/var/tmp/file.tar.gz');         // Add attachments
 		//$mail->addAttachment('/tmp/image.jpg', 'new.jpg');    // Optional name
