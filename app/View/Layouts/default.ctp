@@ -49,8 +49,8 @@ $actual_link_defaultctp = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on
             
         <title>Charter Guest</title>
 	<?php
-		echo $this->Html->meta('icon');
-
+		//echo $this->Html->meta('icon');
+    echo $this->Html->meta('chater_favicon.ico','img/chater_favicon.ico',array('type' => 'icon'));
 		//echo $this->Html->css('cake.generic');
                 echo $this->Html->css('admin/bootstrap'); 
                 echo $this->Html->css('admin/sb-admin');
