@@ -6162,7 +6162,7 @@ class ChartersController extends AppController {
         $headCharterData = $this->CharterGuest->find('first', array('conditions' => array('charter_program_id' => $data['charter_guest_id'])));
        //echo "<pre>"; print_r($data);print_r($headCharterData); exit;
         $headChartererName = $headCharterData['CharterGuest']['first_name']." ".$headCharterData['CharterGuest']['last_name'];
-        $cloudURL = Configure::read('cloudUrl')."charterguest";
+        $cloudURL = Configure::read('cloudUrl')."/charterguest";
         
         $subject = "Welcome to the charter guest program for the $yachtName";
         $message="
@@ -6177,11 +6177,11 @@ class ChartersController extends AppController {
         <p>To tailor our services so we can provide you a 7 star experience we kindly request that you login to the below secure website with your email and token and complete your preference sheets.</p>
         
 	<p><a href='".$cloudURL."'>$cloudURL</a></p>
-        <p>Email Address : <b>".$to."</b></p>
+        <p>Username : <b>".$to."</b></p>
         <p>Token : <b>".$userToken."</b></p>
         
         <p>When you complete your preference sheets $headChartererName will be notified by email and your completed preference sheets and personal details will be automatically made available to the Captain of the $yachtName.</p>
-	<p>Please watch this 60 sec video to learn how to use the charter guest program.</p> 
+	<p>Please watch this <a href='https://youtu.be/uLBICcPhNeE'>3 min video</a> to learn how to use the charter guest program.</p> 
         <p>We look forward to welcoming you onboard soon.</p>
         </br>
         <p>Kind regards,</p>        
@@ -6221,7 +6221,7 @@ class ChartersController extends AppController {
        
         //echo "<pre>"; print_r($data); print_r($headCharterData); exit;
         $headChartererName = $headCharterData['CharterGuest']['first_name']." ".$headCharterData['CharterGuest']['last_name'];
-        $cloudURL = Configure::read('cloudUrl')."charterguest";
+        $cloudURL = Configure::read('cloudUrl')."/charterguest";
         
         $subject = "Welcome to the charter guest program for the $yachtName";
         $message="
@@ -6236,11 +6236,11 @@ class ChartersController extends AppController {
         <p>To tailor our services so we can provide you a 7 star experience we kindly request that you login to the below secure website with your email and token and complete your preference sheets.</p>
         
 	<p><a href='".$cloudURL."'>$cloudURL</a></p>
-        <p>Email Address : <b>".$to."</b></p>
+        <p>Username : <b>".$to."</b></p>
         <p>Token : <b>".$userToken."</b></p>
         
         <p>When you complete your preference sheets $headChartererName will be notified by email and your completed preference sheets and personal details will be automatically made available to the Captain of the $yachtName.</p>
-	<p>Please watch this 60 sec video to learn how to use the charter guest program.</p> 
+	<p>Please watch this <a href='https://youtu.be/uLBICcPhNeE'>3 min video</a> to learn how to use the charter guest program.</p> 
         <p>We look forward to welcoming you onboard soon.</p>
         </br>
         <p>Kind regards,</p>        
