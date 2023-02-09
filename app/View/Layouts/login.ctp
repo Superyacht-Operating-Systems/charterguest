@@ -16,7 +16,7 @@
         <meta name="description" content="">
         <meta name="author" content="">
             
-        <title>Superyacht Operating Systems - Charter Guest</title>
+        <title>Charter Guest</title>
        
             <?php
             //echo $this->Html->meta('favicon.ico','img/favicon.ico',array('type' => 'icon'));
