@@ -192,7 +192,9 @@ class ChartersController extends AppController {
                         $this->Session->write("charter_info.CharterGuest.captain_name", $yachtData['Yacht']['captain_name']);
                         $this->Session->write("charter_info.CharterGuest.ydb_name", $yachtData['Yacht']['ydb_name']);
                         $this->Session->write("charter_info.CharterGuest.Adminlogin",1);
+                        if(isset($yachtData['Yacht']['domain_name'])){
                         $domain_name = $yachtData['Yacht']['domain_name'];
+                        }
                         if(isset($domain_name) && $domain_name == "charterguest"){
                             $SITE_URL = "https://charterguest.net/";
                         }else{
@@ -239,7 +241,9 @@ class ChartersController extends AppController {
                             $fleetname = $yachtDBData[0]['yachts']['fleetname'];
                         //}
                         $yachtname = $yachtDBData[0]['yachts']['yname'];
+                        if(isset($yachtDBData[0]['yachts']['domain_name'])){
                         $domain_name = $yachtDBData[0]['yachts']['domain_name'];
+                        }
                         if(isset($domain_name) && $domain_name == "charterguest"){
                             $SITE_URL = "https://charterguest.net/";
                         }else{
@@ -298,7 +302,9 @@ class ChartersController extends AppController {
                             $this->Session->write("selectedCharterProgramUUID", $charterAssocData['CharterGuestAssociate']['charter_guest_id']);
                             $this->Session->write("assocprefenceID", $charterAssocData['CharterGuestAssociate']['id']);
                             $this->Session->write("assocprefenceUUID", $charterAssocData['CharterGuestAssociate']['UUID']);
+                            if(isset($yachtData['Yacht']['domain_name'])){
                             $domain_name = $yachtData['Yacht']['domain_name'];
+                            }
                             if(isset($domain_name) && $domain_name == "charterguest"){
                                 $SITE_URL = "https://charterguest.net/";
                             }else{
@@ -481,7 +487,9 @@ class ChartersController extends AppController {
                 $Ydata = $this->Yacht->find('first', array('conditions' => $yachtCond));
                 $ydb_name = $Ydata['Yacht']['ydb_name'];
                 $yname = $Ydata['Yacht']['yname'];
+                if(isset($Ydata['Yacht']['domain_name'])){
                 $domain_name = $Ydata['Yacht']['domain_name'];
+                }
                 if(isset($domain_name) && $domain_name == "charterguest"){
                     $SITE_URL = "https://charterguest.net/";
                 }else{
@@ -610,7 +618,9 @@ class ChartersController extends AppController {
                         if(isset($Ydata['Yacht']['ydb_name'])){
                         $ydb_name = $Ydata['Yacht']['ydb_name'];
                         }
+                        if(isset($Ydata['Yacht']['domain_name'])){
                         $domain_name = $Ydata['Yacht']['domain_name'];
+                        }
                         if(isset($domain_name) && $domain_name == "charterguest"){
                             $SITE_URL = "https://charterguest.net/";
                         }else{
@@ -777,7 +787,9 @@ class ChartersController extends AppController {
         $image = $YachtData[0]['Yacht']['cg_background_image'];
         $fleetname = $YachtData[0]['Yacht']['fleetname'];
         $yachtname = $YachtData[0]['Yacht']['yname'];
+        if(isset($YachtData[0]['Yacht']['domain_name'])){
         $domain_name = $YachtData[0]['Yacht']['domain_name'];
+        }
                         if(isset($domain_name) && $domain_name == "charterguest"){
                             $SITE_URL = "https://charterguest.net/";
                         }else{
@@ -896,7 +908,9 @@ class ChartersController extends AppController {
         $Ydata = $this->Yacht->find('first', array('conditions' => $yachtCond));
         $ydb_name = $Ydata['Yacht']['ydb_name'];
         $yachtnamedisp = $Ydata['Yacht']['yfullName'];
+        if(isset($Ydata['Yacht']['domain_name'])){
         $domain_name = $Ydata['Yacht']['domain_name'];
+        }
                             if(isset($domain_name) && $domain_name == "charterguest"){
                                 $SITE_URL = "https://charterguest.net/";
                             }else{
@@ -955,7 +969,9 @@ class ChartersController extends AppController {
                 $image = $YachtData[0]['Yacht']['cg_background_image'];
                 $fleetname = $YachtData[0]['Yacht']['fleetname'];
                 $yachtname = $YachtData[0]['Yacht']['yname'];
+                if(isset($YachtData[0]['Yacht']['domain_name'])){
                 $domain_name = $YachtData[0]['Yacht']['domain_name'];
+                }
                         if(isset($domain_name) && $domain_name == "charterguest"){
                             $SITE_URL = "https://charterguest.net/";
                         }else{
@@ -2683,7 +2699,9 @@ class ChartersController extends AppController {
         $attachment = array();
         if(isset($programFiles) ){
             $YachtData = $this->CharterProgramFile->query("SELECT * FROM $ydb_name.yachts Yacht");
+            if(isset($YachtData[0]['Yacht']['domain_name'])){
             $domain_name = $YachtData[0]['Yacht']['domain_name'];
+            }
             if(isset($domain_name) && $domain_name == "charterguest"){
                 $SITE_URL = "https://charterguest.net/";
             }else{
@@ -5463,7 +5481,9 @@ class ChartersController extends AppController {
                 $image = $YachtData[0]['Yacht']['cg_background_image'];
                 $fleetname = $YachtData[0]['Yacht']['fleetname'];
                 $yachtname = $YachtData[0]['Yacht']['yname'];
+                if(isset($YachtData[0]['Yacht']['domain_name'])){
                 $domain_name = $YachtData[0]['Yacht']['domain_name'];
+                }
                 if(isset($domain_name) && $domain_name == "charterguest"){
                     $SITE_URL = "https://charterguest.net/";
                 }else{
@@ -7359,7 +7379,9 @@ function getIndividualmsgcountMarer() {
         //$SITE_URL = Configure::read('BASE_URL');
         $this->loadModel('Fleetcompany');
         $companyData = $this->Fleetcompany->find('first', array('fields' => array('management_company_name','logo','fleetname','domain_name'), 'conditions' => array('id' => $fleetcompany_id)));
+        if(isset($companyData['Fleetcompany']['domain_name'])){
         $domain_name = $companyData['Fleetcompany']['domain_name'];
+        }
         if(isset($domain_name) && $domain_name == "charterguest"){
             $SITE_URL = "https://charterguest.net/";
         }else{
