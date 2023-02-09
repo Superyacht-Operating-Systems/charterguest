@@ -738,7 +738,6 @@ class ChartersController extends AppController {
         $this->loadModel('CharterGuest');
         $this->loadModel('CharterProgramFile');
         $this->loadModel('Yacht');
-        $this->loadModel('Yacht');
         $charterData = $this->CharterGuest->find('first', array('conditions' => array('id' => $CharterGuest_id)));
         $this->set('charterData', $charterData);
 //        echo "<pre>";print_r($charterData);
@@ -786,7 +785,10 @@ class ChartersController extends AppController {
         $cgBackgroundImage = $this->getBackgroundImageUrl($image, $fleetname, $yachtname,$SITE_URL);
         $this->Session->write("cgBackgroundImage", $cgBackgroundImage);
         // Background image
+        $this->Session->delete("GuestListYname");
+        $this->Session->write("GuestListYname", $yachtname);
 
+        
         $pid = $charterData['CharterGuest']['charter_program_id'];
         //echo "SELECT * FROM $ydb_name.charter_program_schedules CharterProgramSchedule WHERE charter_program_id = '$pid' AND is_deleted = 0";
         $scheduleData = $this->CharterProgramFile->query("SELECT * FROM $ydb_name.charter_program_schedules CharterProgramSchedule WHERE charter_program_id = '$pid' AND is_deleted = 0");
@@ -892,6 +894,7 @@ class ChartersController extends AppController {
         $yachtCond = array('Yacht.id' => $yacht_id);
         $Ydata = $this->Yacht->find('first', array('conditions' => $yachtCond));
         $ydb_name = $Ydata['Yacht']['ydb_name'];
+        $yachtnamedisp = $Ydata['Yacht']['yname'];
         $domain_name = $Ydata['Yacht']['domain_name'];
                             if(isset($domain_name) && $domain_name == "charterguest"){
                                 $SITE_URL = "https://charterguest.net/";
@@ -900,6 +903,9 @@ class ChartersController extends AppController {
                             }
         $this->set('ydb_name', $ydb_name);
         $this->set('charter_program_id', $charter_program_id);
+
+        $this->Session->delete("GuestListYname");
+        $this->Session->write("GuestListYname", $yachtnamedisp);
 
         $pid = $charterData['CharterGuest']['charter_program_id'];
         //echo "SELECT * FROM $ydb_name.charter_program_schedules CharterProgramSchedule WHERE charter_program_id = '$pid' AND is_deleted = 0";

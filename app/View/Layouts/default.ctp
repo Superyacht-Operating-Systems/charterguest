@@ -47,7 +47,7 @@ $actual_link_defaultctp = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on
         <meta name="description" content="">
         <meta name="author" content="">
             
-        <title>Superyacht Operating Systems - Charter Guest</title>
+        <title>Charter Guest</title>
 	<?php
 		echo $this->Html->meta('icon');
 
@@ -372,6 +372,8 @@ width: max-content;
                         <?php if (isset($session["yachFullName"]) && !empty($session["yachFullName"])) { echo $session['login_username']; } ?><span class="user-subnamep">  <span class="sp-noe"><?php if(isset($session['preferenceGuestName'])){ ?>for <?php } ?></span><?php if(isset($session['preferenceGuestName'])){ echo $session['preferenceGuestName'];  } ?></span>
                       <?php } else if($programpageCharter == "charters" && $programpagePrograms != "programs"){ ?>
                         <?php if (isset($session["yachFullName"]) && !empty($session["yachFullName"])) { echo $session['yachFullName']; } ?>
+                      <?php } else if($programpageCharter == "charters" && $programpagePrograms != "programs" && $programpagePrograms == "view"){ ?>
+                        <?php if (isset($session["GuestListYname"]) && !empty($session["GuestListYname"])) { echo $session['GuestListYname']; } ?>
                       <?php } ?>  
                     </div>
                     <div class="yachtHeaderName">Charter Guest
