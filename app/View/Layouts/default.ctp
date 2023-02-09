@@ -15,8 +15,8 @@
  */
 $session = $this->Session->read();
 $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework');
-$cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
-        //echo "<pre>"; print_r($session); exit;
+$cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version());
+        echo "<pre>"; print_r($session); exit;
 ?>
 <!DOCTYPE html>
 <html>
