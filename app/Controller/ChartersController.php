@@ -5965,6 +5965,7 @@ class ChartersController extends AppController {
                     //print_r($sch_inarray); 
                     //echo "SELECT * FROM $yachtDbName.charter_program_schedule_activities CharterProgramScheduleActivity WHERE charter_program_schedule_id IN ($sch_inarray)"; exit;
                     $activityData = $this->CharterGuest->query("SELECT * FROM $yachtDbName.charter_program_schedule_activities CharterProgramScheduleActivity WHERE charter_program_schedule_id = '$programScheduleUUID' AND is_deleted = 0");
+                    echo "<pre>";print_r($activityData);exit;
                     if (count($activityData) != 0) {
                         foreach ($activityData as $activity) {
 
