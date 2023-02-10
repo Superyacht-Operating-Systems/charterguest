@@ -5802,6 +5802,7 @@ class ChartersController extends AppController {
                 $yacht_id = $chprgdata['CharterGuest']['yacht_id'];
                 $yachtCond = array('Yacht.id' => $yacht_id);
                 $Ydata = $this->Yacht->find('first', array('conditions' => $yachtCond));
+                echo "<pre>";print_r($Ydata); exit;
                 $yachtDbName = $Ydata['Yacht']['ydb_name'];
                 $yname = $Ydata['Yacht']['yname'];
                 $fleetcompanyid = $Ydata['Yacht']['fleetcompany_id'];
