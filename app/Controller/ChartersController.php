@@ -5798,7 +5798,9 @@ class ChartersController extends AppController {
                 $popupHtml = '';
                 $this->loadModel('CharterGuest');
                 $this->loadModel('Yacht');
+                echo $programId;
                 $chprgdata = $this->CharterGuest->find('first',array('conditions'=>array('CharterGuest.charter_program_id'=>$programId)));
+                echo "<pre>";print_r($chprgdata); exit;
                 $yacht_id = $chprgdata['CharterGuest']['yacht_id'];
                 $yachtCond = array('Yacht.id' => $yacht_id);
                 $Ydata = $this->Yacht->find('first', array('conditions' => $yachtCond));
