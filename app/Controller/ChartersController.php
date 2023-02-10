@@ -787,6 +787,11 @@ class ChartersController extends AppController {
         $image = $YachtData[0]['Yacht']['cg_background_image'];
         $fleetname = $YachtData[0]['Yacht']['fleetname'];
         $yachtname = $YachtData[0]['Yacht']['yname'];
+         
+        $YachtDetails = $this->Yacht->query("SELECT * FROM $ydb_name.yachts WHERE id = '$yacht_id' AND is_deleted = 0");
+        //echo "<pre>"; print_r($YachtDetails[0]['yachts']['captain_name']); exit('ddddd');
+        $yachtcaptainname = $YachtDetails[0]['yachts']['captain_name'];
+        $yachtname = $YachtData[0]['Yacht']['yname'];
         if(isset($YachtData[0]['Yacht']['domain_name'])){
         $domain_name = $YachtData[0]['Yacht']['domain_name'];
         }
@@ -800,7 +805,8 @@ class ChartersController extends AppController {
         // Background image
         $this->Session->delete("GuestListYname");
         $this->Session->write("GuestListYname", $yfullNameDisp);
-
+        $this->Session->delete("GuestCaptaionName");
+        $this->Session->write("GuestCaptaionName", $yachtcaptainname);
         
         $pid = $charterData['CharterGuest']['charter_program_id'];
         //echo "SELECT * FROM $ydb_name.charter_program_schedules CharterProgramSchedule WHERE charter_program_id = '$pid' AND is_deleted = 0";
@@ -908,6 +914,11 @@ class ChartersController extends AppController {
         $Ydata = $this->Yacht->find('first', array('conditions' => $yachtCond));
         $ydb_name = $Ydata['Yacht']['ydb_name'];
         $yachtnamedisp = $Ydata['Yacht']['yfullName'];
+        
+        $YachtDetails = $this->Yacht->query("SELECT * FROM $ydb_name.yachts WHERE id = '$yacht_id' AND is_deleted = 0");
+        //echo "<pre>"; print_r($YachtDetails); exit('ddddd');
+        
+        $yachtcaptainname = $YachtDetails[0]['yachts']['captain_name'];
         if(isset($Ydata['Yacht']['domain_name'])){
         $domain_name = $Ydata['Yacht']['domain_name'];
         }
@@ -921,6 +932,10 @@ class ChartersController extends AppController {
 
         $this->Session->delete("GuestListYname");
         $this->Session->write("GuestListYname", $yachtnamedisp);
+        $this->Session->delete("GuestCaptaionName");
+        $this->Session->write("GuestCaptaionName", $yachtcaptainname);
+        
+        
 
         $pid = $charterData['CharterGuest']['charter_program_id'];
         //echo "SELECT * FROM $ydb_name.charter_program_schedules CharterProgramSchedule WHERE charter_program_id = '$pid' AND is_deleted = 0";
@@ -4600,9 +4615,21 @@ class ChartersController extends AppController {
                             // if(isset($existassocdataUUID)){
                             //     $this->CharterGuest->query("UPDATE guest_lists SET first_name='".$insertData['first_name']."',family_name='".$insertData['last_name']."',email='".$insertData['email']."',token='".$insertData['token']."' WHERE UUID='$existassocdataUUID'");
                             // }
-
+                             // client asked to add condtion @feb10 2023
+                                
+                                $this->loadModel('GuestList');
+                                $GuestListData =  $this->GuestList->find('first',array('conditions'=>array('first_name'=>$insertData['first_name'],'last_name'=>$insertData['last_name'],'email'=>$insertData['email'],'is_deleted'=>0)));
+                                //echo "<pre>"; print_r($GuestListData); exit('ddd');
+                                if($GuestListData['GuestList']['use_submitted_preferences'] == 1 && $GuestListData['GuestList']['is_psheets_done'] == 1){
+                                     // Send an email notification to the already preference submitted user
+                                    $this->sendAlreadySubmittedPreferenceMail($insertData,$userToken);
+                                }else{
+                                    // Send an email notification to the user
+                                    $this->sendCharterNotifyMail($insertData,$userToken);
+                                }
+                                // client asked to add condtion @feb10 2023
                             // Send an email notification to the user
-                            $this->sendCharterNotifyMail($insertData,$userToken);
+                            //$this->sendCharterNotifyMail($insertData,$userToken);
                             if(isset($this->request->data['resend']) && $this->request->data['resend'] == 0){
                                 //echo "<pre>";print_r(($Otherrowdata)); exit;
                                 $this->saveOtherRowRecord($Otherrowdata,$fleetcompany_id);
@@ -4720,9 +4747,24 @@ class ChartersController extends AppController {
                         //     if(isset($existassocdataUUID) && !empty($existassocdataUUID)){
                         //         $this->CharterGuest->query("UPDATE guest_lists SET first_name='".$insertData['first_name']."',last_name='".$insertData['last_name']."',email='".$insertData['email']."' WHERE UUID='$existassocdataUUID'");
                         //     }
+                            //echo "<pre>"; print_r($insertData); exit;
                             if (!isset($this->request->data['mailSending'])) {
+                                // client asked to add condtion @feb10 2023
+                                
+                                $this->loadModel('GuestList');
+                                $GuestListData =  $this->GuestList->find('first',array('conditions'=>array('first_name'=>$insertData['first_name'],'last_name'=>$insertData['last_name'],'email'=>$insertData['email'],'is_deleted'=>0)));
+                                
+                                if($GuestListData['GuestList']['use_submitted_preferences'] == 1 && $GuestListData['GuestList']['is_psheets_done'] == 1){
+                                     // Send an email notification to the already preference submitted user
+                                    $this->sendAlreadySubmittedPreferenceMail($insertData,$userToken);
+                                }else{
+                                    // Send an email notification to the user
+                                    $this->sendCharterNotifyAssociateGuestMail($insertData,$userToken);
+                                }
+                                // client asked to add condtion @feb10 2023
+                               
                                 // Send an email notification to the user
-                                $this->sendCharterNotifyAssociateGuestMail($insertData,$userToken);
+                                //$this->sendCharterNotifyAssociateGuestMail($insertData,$userToken);
                                 // Update email status
                                 $this->CharterGuestAssociate->save(array('id' => $charterAssocId, 'is_email_sent' => 1));
                                 if(isset($this->request->data['resend']) && $this->request->data['resend'] == 0){
@@ -4749,7 +4791,114 @@ class ChartersController extends AppController {
         exit;
         
     }
-            
+    
+        /*
+     * Mail notification
+     * Functionality -  Send login notification mail to the Charter guest
+     * Developer - Nagarajan
+     * Created date - 24-May-2018
+     * Modified date - 
+     */
+    function sendCharterNotifyAssociateGuestMail($data,$userToken) {
+        
+        $salutation = $data['salutation'];
+        $firstName = $data['first_name'];
+        $lastName = $data['last_name'];
+        $to = $data['email'];
+        //$to = "vignesh@ceruleaninfotech.com";
+        $yachtName = $this->Session->read('GuestListYname');//$this->Session->read('charter_info.CharterGuest.yacht_name');
+        $captainName = $this->Session->read('GuestCaptaionName');//$this->Session->read('charter_info.CharterGuest.captain_name');
+        $this->loadModel('CharterGuest');
+        //$headCharterData = $this->CharterGuest->find('first', array('conditions' => array('id' => $data['charter_guest_id'])));
+        $headCharterData = $this->CharterGuest->find('first', array('conditions' => array('charter_program_id' => $data['charter_guest_id'])));
+       
+        //echo "<pre>"; print_r($data); print_r($headCharterData); exit;
+        $headChartererName = $headCharterData['CharterGuest']['first_name']." ".$headCharterData['CharterGuest']['last_name'];
+        $cloudURL = Configure::read('cloudUrl')."/charterguest";
+        
+        $subject = "Welcome to the charter guest program for the $yachtName";
+        $message="
+        <html>
+        <head>
+        <title></title>
+        </head>
+        <body>
+        <div style='font-size:14px; font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif;'>
+        <p>Hi <b>".$firstName."</b>,</p>
+        <p>You have been invited to join $headChartererName for a cruise onboard the $yachtName.</p>
+        <p>To tailor our services so we can provide you a 7 star experience we kindly request that you login to the below secure website with your email and token and complete your preference sheets.</p>
+        
+	<p><a href='".$cloudURL."'>$cloudURL</a></p>
+        <p>Username : <b>".$to."</b></p>
+        <p>Token : <b>".$userToken."</b></p>
+        
+        <p>When you complete your preference sheets $headChartererName will be notified by email and your completed preference sheets and personal details will be automatically made available to the Captain of the $yachtName.</p>
+	<p>Please watch this <a href='https://youtu.be/uLBICcPhNeE'>3 min video</a> to learn how to use the charter guest program.</p> 
+        <p>We look forward to welcoming you onboard soon.</p>
+        </br>
+        <p>Kind regards,</p>        
+        <p>$captainName</p>       
+        <p>$yachtName</p>         
+        </div>
+        </body>
+        </html>";
+        
+        $headers= "MIME-version: 1.0\n";
+        $headers.= "Content-type: text/html; charset= iso-8859-1\n";
+        $headers .= 'From: TotalSuperyacht <mail@totalsuperyacht.com>' . "\r\n";
+        $this->chkSMTPEmail($to,$subject,$message,$headers);
+        
+    }
+     /*
+     * Mail notification
+     * Functionality -  already submitted preferences 
+     * Developer - 
+     * Created date - 
+     * Modified date - 
+     */
+    function sendAlreadySubmittedPreferenceMail($data,$userToken) {
+        //echo $headcharterName; exit;
+        $firstName = $data['first_name'];
+        $lastName = $data['last_name'];
+        $to = $data['email'];
+        $yachtName = $this->Session->read('GuestListYname');//$yachtData['yfullName'];
+        $captainName = $this->Session->read('GuestCaptaionName');//$yachtData['captain_name'];
+        $cloudURL	= Configure::read('cloudUrl');
+        // now we moved charterguest to diff domain @feb10 2023
+        $cloudURL1 = "https://charterguest.net/charterguest";
+        
+        $subject = "Welcome to the charter guest program for the $yachtName";
+        $message="
+        <html>
+        <head>
+        <title></title>
+        </head>
+        <body>
+        <div style='font-size:14px; font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif;'>
+        <p>Hi <b>".$firstName."</b>,</p>
+        <p>Thank you for chartering the ".$yachtName." and we look forward to having you and your guests onboard soon.</p>
+        <p>We see you have previously submitted your preference sheets to this yacht and we are able to use them without you doing anything. </p>
+        <p>However, if your personal information has changed (e.g. passport) or your food and beverage preferences have changed, we kindly request that you login to the below secure website with your email and token and update the information in your preference sheets.</p>
+        <p><a href='".$cloudURL1."'>$cloudURL1</a></p>
+        <p>Username : <b>".$to."</b></p>
+        <p>Token : <b>".$userToken."</b></p>
+        <p>From the Guest List page you can add guests and send an invite to each guest with the access code so they can enter their own personal details and complete their own preference sheets. </p>
+        <p>When each guest completes their preference sheets you will be notified by email and the completed preference sheets and personal details will be automatically made available to the Captain of the ".$yachtName."</p></br>
+        <p>Watch this <a href='https://youtu.be/uLBICcPhNeE'>3 min video</a> to learn how to use the charter guest program.</p>    
+        </br>
+        <p>Kind regards,</p>        
+        <p>$captainName</p>       
+        <p>$yachtName</p>         
+        </div>
+        </body>
+        </html>";
+        
+        $headers= "MIME-version: 1.0\n";
+        $headers.= "Content-type: text/html; charset= iso-8859-1\n";
+        $headers .= 'From: TotalSuperyacht <mail@totalsuperyacht.com>' . "\r\n";
+        $this->setSmtpSendMail($to, $message, $subject,  $headers);
+        
+    }        
     //so on very first time clicking send button will take any other row of guest data typed that also insert to the table without duplication
     // for that this Otherrowdata is added in ajax call, it should work only the first time clicking email button not on resend.
     // on send email button on each row of guest this function will call from saveAndSendMail function
@@ -6220,63 +6369,7 @@ class ChartersController extends AppController {
     }
 
 
-    /*
-     * Mail notification
-     * Functionality -  Send login notification mail to the Charter guest
-     * Developer - Nagarajan
-     * Created date - 24-May-2018
-     * Modified date - 
-     */
-    function sendCharterNotifyAssociateGuestMail($data,$userToken) {
-        
-        $salutation = $data['salutation'];
-        $firstName = $data['first_name'];
-        $lastName = $data['last_name'];
-        $to = $data['email'];
-        //$to = "vignesh@ceruleaninfotech.com";
-        $yachtName = $this->Session->read('charter_info.CharterGuest.yacht_name');
-        $captainName = $this->Session->read('charter_info.CharterGuest.captain_name');
-        $this->loadModel('CharterGuest');
-        //$headCharterData = $this->CharterGuest->find('first', array('conditions' => array('id' => $data['charter_guest_id'])));
-        $headCharterData = $this->CharterGuest->find('first', array('conditions' => array('charter_program_id' => $data['charter_guest_id'])));
-       
-        //echo "<pre>"; print_r($data); print_r($headCharterData); exit;
-        $headChartererName = $headCharterData['CharterGuest']['first_name']." ".$headCharterData['CharterGuest']['last_name'];
-        $cloudURL = Configure::read('cloudUrl')."/charterguest";
-        
-        $subject = "Welcome to the charter guest program for the $yachtName";
-        $message="
-        <html>
-        <head>
-        <title></title>
-        </head>
-        <body>
-        <div style='font-size:14px; font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif;'>
-        <p>Hi <b>".$firstName."</b>,</p>
-        <p>You have been invited to join $headChartererName for a cruise onboard the $yachtName.</p>
-        <p>To tailor our services so we can provide you a 7 star experience we kindly request that you login to the below secure website with your email and token and complete your preference sheets.</p>
-        
-	<p><a href='".$cloudURL."'>$cloudURL</a></p>
-        <p>Username : <b>".$to."</b></p>
-        <p>Token : <b>".$userToken."</b></p>
-        
-        <p>When you complete your preference sheets $headChartererName will be notified by email and your completed preference sheets and personal details will be automatically made available to the Captain of the $yachtName.</p>
-	<p>Please watch this <a href='https://youtu.be/uLBICcPhNeE'>3 min video</a> to learn how to use the charter guest program.</p> 
-        <p>We look forward to welcoming you onboard soon.</p>
-        </br>
-        <p>Kind regards,</p>        
-        <p>$captainName</p>       
-        <p>$yachtName</p>         
-        </div>
-        </body>
-        </html>";
-        
-        $headers= "MIME-version: 1.0\n";
-        $headers.= "Content-type: text/html; charset= iso-8859-1\n";
-        $headers .= 'From: TotalSuperyacht <mail@totalsuperyacht.com>' . "\r\n";
-        $this->chkSMTPEmail($to,$subject,$message,$headers);
-        
-    }
+
     
     // Random unique token creation
     function uniqueToken($length = 8) {
