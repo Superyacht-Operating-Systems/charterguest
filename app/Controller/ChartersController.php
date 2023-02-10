@@ -5275,7 +5275,7 @@ class ChartersController extends AppController {
         
                         $scheduleConditions = "charter_program_id = '$charterProgramId' AND is_deleted = 0";
                         $scheduleData = $this->CharterGuest->getCharterProgramScheduleData($yachtDbName, $scheduleConditions);
-                        echo "<pre>";print_r($scheduleData); exit;
+                        //echo "<pre>";print_r($scheduleData); exit;
                         $markertitle = array();
                         $markername = array();
                         $samelocations = array();
@@ -5500,6 +5500,7 @@ class ChartersController extends AppController {
                         $this->set('markertitle', $markertitle);
                         $this->set('markertotal', $markertotal);
                         $this->set('yacht_id_fromyachtDB', $yacht_id_fromyachtDB);
+                        $this->set('ipadurlDB', $yachtDbName);
                         
                         $this->set('guesttype', "guest");
                         $this->set('cruising_speed', $cruising_speed);
@@ -5934,6 +5935,10 @@ class ChartersController extends AppController {
                     $guesttype = $this->request->data['guesttype'];
                 }
 
+                if(isset($this->request->data['ipaddb'])){
+                    $ipaddb = $this->request->data['ipaddb'];
+                }
+
                 $tablepId = $this->request->data['tablepId'];
 
                 $daytitle = $this->request->data['daytitle'];
@@ -5947,13 +5952,21 @@ class ChartersController extends AppController {
                 $popupHtml = '';
                 $this->loadModel('CharterGuest');
                 $this->loadModel('Yacht');
-                $chprgdata = $this->CharterGuest->find('first',array('conditions'=>array('CharterGuest.charter_program_id'=>$programId)));
-                $yacht_id = $chprgdata['CharterGuest']['yacht_id'];
-                $yachtCond = array('Yacht.id' => $yacht_id);
-                $Ydata = $this->Yacht->find('first', array('conditions' => $yachtCond));
-                $yachtDbName = $Ydata['Yacht']['ydb_name'];
-                $yname = $Ydata['Yacht']['yname'];
-                $fleetcompanyid = $Ydata['Yacht']['fleetcompany_id'];
+                if(isset($ipaddb) && !empty($ipaddb)){
+                    $yachtDbName = $ipaddb;
+                    $ydbapp = $this->CharterGuest->query("SELECT * FROM $yachtDbName.yachts Yacht");
+                    $yacht_id = $ydbapp[0]['Yacht']['id'];
+                    $yname = $ydbapp[0]['Yacht']['yname'];
+                    $fleetcompanyid = $ydbapp[0]['Yacht']['fleetcompany_id'];
+                }else{
+                    $chprgdata = $this->CharterGuest->find('first',array('conditions'=>array('CharterGuest.charter_program_id'=>$programId)));
+                    $yacht_id = $chprgdata['CharterGuest']['yacht_id'];
+                    $yachtCond = array('Yacht.id' => $yacht_id);
+                    $Ydata = $this->Yacht->find('first', array('conditions' => $yachtCond));
+                    $yachtDbName = $Ydata['Yacht']['ydb_name'];
+                    $yname = $Ydata['Yacht']['yname'];
+                    $fleetcompanyid = $Ydata['Yacht']['fleetcompany_id'];
+                }
                         $this->loadModel("Fleetcompany");
                         if(isset($fleetcompanyid) && $fleetcompanyid != 0){
                         $fleetcompanydetails = $this->Fleetcompany->find('first',array('conditions'=>array('id'=>$fleetcompanyid)));
