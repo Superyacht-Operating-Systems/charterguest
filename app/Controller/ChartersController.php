@@ -5126,7 +5126,7 @@ class ChartersController extends AppController {
         
                         $scheduleConditions = "charter_program_id = '$charterProgramId' AND is_deleted = 0";
                         $scheduleData = $this->CharterGuest->getCharterProgramScheduleData($yachtDbName, $scheduleConditions);
-                        //echo "<pre>";print_r($scheduleData); exit;
+                        echo "<pre>";print_r($scheduleData); exit;
                         $markertitle = array();
                         $markername = array();
                         $samelocations = array();
