@@ -5798,9 +5798,7 @@ class ChartersController extends AppController {
                 $popupHtml = '';
                 $this->loadModel('CharterGuest');
                 $this->loadModel('Yacht');
-                echo $programId;
                 $chprgdata = $this->CharterGuest->find('first',array('conditions'=>array('CharterGuest.charter_program_id'=>$programId)));
-                echo "<pre>";print_r($chprgdata); exit;
                 $yacht_id = $chprgdata['CharterGuest']['yacht_id'];
                 $yachtCond = array('Yacht.id' => $yacht_id);
                 $Ydata = $this->Yacht->find('first', array('conditions' => $yachtCond));
@@ -5966,7 +5964,6 @@ class ChartersController extends AppController {
                     // }
                     //print_r($sch_inarray); 
                     //echo "SELECT * FROM $yachtDbName.charter_program_schedule_activities CharterProgramScheduleActivity WHERE charter_program_schedule_id IN ($sch_inarray)"; exit;
-                    echo "SELECT * FROM $yachtDbName.charter_program_schedule_activities CharterProgramScheduleActivity WHERE charter_program_schedule_id = '$programScheduleUUID' AND is_deleted = 0"; exit;
                     $activityData = $this->CharterGuest->query("SELECT * FROM $yachtDbName.charter_program_schedule_activities CharterProgramScheduleActivity WHERE charter_program_schedule_id = '$programScheduleUUID' AND is_deleted = 0");
                     if (count($activityData) != 0) {
                         foreach ($activityData as $activity) {
