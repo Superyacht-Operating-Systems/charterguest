@@ -4670,7 +4670,7 @@ class ChartersController extends AppController {
                                 $guestlistData['fleetcompany_id'] = $this->request->data['charter_company_id'];
                                 $guestlistData['yacht_id'] = $this->request->data['yachtId'];
                                 $guestlistData['token'] = $userToken;
-                                $guestlistData['guest_type'] = "Guest";
+                                $guestlistData['guest_type'] = $this->request->data['charter_company_id']."-".$this->request->data['yachtId']."-"."Guest";
                                 $guestlistData['salutation'] = $insertData['salutation'];
                                 $guestlistData['UUID'] = $Guestlistuuid;
                                 $this->GuestList->create();
