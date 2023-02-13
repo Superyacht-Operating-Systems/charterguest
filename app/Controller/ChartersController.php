@@ -4948,7 +4948,7 @@ class ChartersController extends AppController {
                         if(empty($chkduplicate)){
                             $guestlistData['fleetcompany_id'] = $fleetcompany_id;
                             $guestlistData['yacht_id'] = $yachtId;
-                            $guestlistData['type'] = "Guest";
+                            $guestlistData['type'] = $fleetcompany_id."-".$yachtId."-Guest";
                                 $Guestlistuuid = String::uuid();
                                 $guestlistData['UUID'] = $Guestlistuuid;
                                 
@@ -5141,7 +5141,7 @@ class ChartersController extends AppController {
                             }else{
                                 $guestlistData['fleetcompany_id'] = $charter_company_id;
                                 $guestlistData['yacht_id'] = $yachtId;
-                                $guestlistData['type'] = "Guest";
+                                $guestlistData['type'] = $charter_company_id."-".$yachtId."-Guest";
                                 $Guestlistuuid = String::uuid();
                                 $guestlistData['UUID'] = $Guestlistuuid;
                             }
