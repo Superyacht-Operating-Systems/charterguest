@@ -490,10 +490,9 @@ class ChartersController extends AppController {
                 if(isset($Ydata['Yacht']['domain_name'])){
                 $domain_name = $Ydata['Yacht']['domain_name'];
                 }
+                $SITE_URL = "https://totalsuperyacht.com:8080/";
                 if(isset($domain_name) && $domain_name == "charterguest"){
                     $SITE_URL = "https://charterguest.net/";
-                }else{
-                    $SITE_URL = "https://totalsuperyacht.com:8080/";
                 }
                 $fleetname = "";
                 if(isset($charter_company_id) && !empty($charter_company_id)){
@@ -621,10 +620,9 @@ class ChartersController extends AppController {
                         if(isset($Ydata['Yacht']['domain_name'])){
                         $domain_name = $Ydata['Yacht']['domain_name'];
                         }
+                        $SITE_URL = "https://totalsuperyacht.com:8080/";
                         if(isset($domain_name) && $domain_name == "charterguest"){
                             $SITE_URL = "https://charterguest.net/";
-                        }else{
-                            $SITE_URL = "https://totalsuperyacht.com:8080/";
                         }
                         $yname = $Ydata['Yacht']['yname'];
                         $fleetname = "";
@@ -635,7 +633,11 @@ class ChartersController extends AppController {
                     if(isset($chData['CharterGuest']['program_image']) && !empty($chData['CharterGuest']['program_image'])){
                         if (!empty($fleetname)) {
                             if($fleetname == "fleetbeta" || $fleetname == "SOS"){
+                                if($fleetname == "fleetbeta" && $yname == "betayacht"){
+                                    $targetFullPath = $SITE_URL."fleetbeta/app/webroot/betayacht/app/webroot/img/charter_program_files/charter_program_photo/".$value['CharterGuest']['program_image'];
+                                }else{  
                                 $targetFullPath = $SITE_URL."/fleetbeta/app/webroot/img/charter_program_files/charter_program_photo/".$chData['CharterGuest']['program_image'];
+                                }
                             }else if($fleetname != "fleetbeta" || $fleetname != "SOS"){
                                 $targetFullPath = $SITE_URL."/".$fleetname."/app/webroot/img/charter_program_files/charter_program_photo/".$chData['CharterGuest']['program_image'];
                             }else{
