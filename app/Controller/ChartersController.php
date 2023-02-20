@@ -456,10 +456,10 @@ class ChartersController extends AppController {
         $yfullName = $this->Yacht->find('list', array('fields' => array('id','yfullName')));
         $programFiles  = array();
         $mapdetails = array();
-        $SITE_URL = Configure::read('BASE_URL');
+        //$SITE_URL = Configure::read('BASE_URL');
         //$SITE_URL = "https://totalsuperyacht.com:8080/";
        // echo "<pre>";print_r($guestListData); //exit;
-         echo "<pre>";print_r($charterGuestData); exit;
+        // echo "<pre>";print_r($charterGuestData); exit;
         if(isset($charterGuestData) && !empty($charterGuestData)){
             $commentcounttotal = 0;
             foreach($charterGuestData as $key => $value){
