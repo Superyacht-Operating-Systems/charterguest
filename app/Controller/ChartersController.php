@@ -618,6 +618,7 @@ class ChartersController extends AppController {
                         if(isset($Ydata['Yacht']['ydb_name'])){
                         $ydb_name = $Ydata['Yacht']['ydb_name'];
                         }
+                        $domain_name = "";
                         if(isset($Ydata['Yacht']['domain_name'])){
                         $domain_name = $Ydata['Yacht']['domain_name'];
                         }
@@ -691,8 +692,8 @@ class ChartersController extends AppController {
                 }
 
              }
-    echo "<pre>";print_r($charterGuestData); 
-        echo "<pre>";print_r($charterAssocData); exit;
+    // echo "<pre>";print_r($charterGuestData); 
+    //     echo "<pre>";print_r($charterAssocData); exit;
         //echo "<pre>";print_r($mapdetails); exit;
         
         $this->set('charterGuestData', $charterGuestData);
