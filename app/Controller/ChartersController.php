@@ -690,8 +690,8 @@ class ChartersController extends AppController {
                 }
 
              }
-    //echo "<pre>";print_r($charterGuestData); 
-        //echo "<pre>";print_r($charterAssocData); //exit;
+    echo "<pre>";print_r($charterGuestData); 
+        echo "<pre>";print_r($charterAssocData); exit;
         //echo "<pre>";print_r($mapdetails); exit;
         
         $this->set('charterGuestData', $charterGuestData);
