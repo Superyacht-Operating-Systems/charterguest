@@ -459,7 +459,7 @@ class ChartersController extends AppController {
         $SITE_URL = Configure::read('BASE_URL');
         //$SITE_URL = "https://totalsuperyacht.com:8080/";
        // echo "<pre>";print_r($guestListData); //exit;
-        // echo "<pre>";print_r($charterGuestData); exit;
+         echo "<pre>";print_r($charterGuestData); exit;
         if(isset($charterGuestData) && !empty($charterGuestData)){
             $commentcounttotal = 0;
             foreach($charterGuestData as $key => $value){
