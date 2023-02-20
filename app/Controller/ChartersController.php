@@ -487,6 +487,7 @@ class ChartersController extends AppController {
                 $Ydata = $this->Yacht->find('first', array('conditions' => $yachtCond));
                 $ydb_name = $Ydata['Yacht']['ydb_name'];
                 $yname = $Ydata['Yacht']['yname'];
+                $domain_name = "";
                 if(isset($Ydata['Yacht']['domain_name'])){
                 $domain_name = $Ydata['Yacht']['domain_name'];
                 }
