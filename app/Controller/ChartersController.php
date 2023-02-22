@@ -6135,10 +6135,12 @@ class ChartersController extends AppController {
                     //print_r($sch_inarray); 
                     //echo "SELECT * FROM $yachtDbName.charter_program_schedule_activities CharterProgramScheduleActivity WHERE charter_program_schedule_id IN ($sch_inarray)"; exit;
                     $activityData = $this->CharterGuest->query("SELECT * FROM $yachtDbName.charter_program_schedule_activities CharterProgramScheduleActivity WHERE charter_program_schedule_id = '$programScheduleUUID' AND is_deleted = 0");
+                    $timeArray	= array(""=>"Time","08:00:00"=>"08:00","09:00:00"=>"09:00","10:00:00"=>"10:00","11:00:00"=>"11:00","12:00:00"=>"12:00","13:00:00"=>"13:00","14:00:00"=>"14:00","15:00:00"=>"15:00","16:00:00"=>"16:00","17:00:00"=>"17:00","18:00:00"=>"18:00","19:00:00"=>"19:00","20:00:00"=>"20:00","21:00:00"=>"21:00","22:00:00"=>"22:00","23:00:00"=>"23:00");    
                     if (count($activityData) != 0) {
                         foreach ($activityData as $activity) {
-
+                            $iti_time = "";
                             $activitynotes = $activity['CharterProgramScheduleActivity']['notes'];
+                            $iti_time = $activity['CharterProgramScheduleActivity']['iti_time'];
                             if(isset($activitynotes) && !empty($activitynotes)){
                                 $activitynotesgreen = "style='display:block;'";
                             }else{
@@ -6193,7 +6195,15 @@ class ChartersController extends AppController {
                                 $colorcode = "";
                               }
 
-                            $popupHtml .= '<div class="sp-divrow"><div class="sp-60-w"><input type="text" name="activity_name[]" '.$readonly.' style="color: #000;font-size: 15px;border: solid 1px #ccc;width:100%;margin: 0px;padding: 8px 5px;font-weight: 600;" value="'.htmlspecialchars($activity['CharterProgramScheduleActivity']['activity_name']).'"><input type="hidden" name="activity_id[]" value="'.$activity['CharterProgramScheduleActivity']['UUID'].'"><textarea class="form-control textareacontmarker" '.$readonly.' style="background: #eee !important;color: #000!important;border: solid 1px rgb(243 243 243 / 70%)!important;" name="messages[]" rows="4" cols="50">'.htmlspecialchars($activity['CharterProgramScheduleActivity']['notes']).'</textarea></div><div class="sp-40-w"><div class="sp-upload-img"><a href="'.$activityattachmentimagehref.'" class="'.$activityfancybox.'"><img src="'.$activityattachmentimage.'" style="object-fit: fill; height: 150px;" alt=""></a></div><ul class="action-icon"><li><i class="fa fa-comments crew_comment_cruisingmap" style="'.$colorcode.$displaynone.'" data-rel="'.$activity['CharterProgramScheduleActivity']['UUID'].'" data-yachtid="'.$yacht_id.'" data-tempname="'.htmlspecialchars($activity['CharterProgramScheduleActivity']['activity_name']).'" title="Comments & Feedback"><input type="hidden" name=comments[] value="" class="messagecomments" /></i></li></ul></div></div>
+                            $popupHtml .= '<div class="sp-divrow"><div class="sp-60-w"><select name="iti_time[]" disabled="true" id="iti_time" style="color: #000;font-size: 15px;border: solid 1px #ccc;width:18%;margin: 0px;padding: 8px 5px;font-weight: 600;">"';
+                            foreach ($timeArray as $val => $disp) {
+                                  if($val == $iti_time){
+                                      $popupHtml .= '<option value="'.$val.'" selected>'.$disp.'</option>';
+                                  }else{
+                                      $popupHtml .= '<option value="'.$val.'">'.$disp.'</option>';
+                                  }
+                              }
+                            $popupHtml .= '</select>&nbsp;&nbsp;&nbsp;<input type="text" name="activity_name[]" '.$readonly.' style="color: #000;font-size: 15px;border: solid 1px #ccc;width:78%;margin: 0px;padding: 8px 5px;font-weight: 600;" value="'.htmlspecialchars($activity['CharterProgramScheduleActivity']['activity_name']).'"><input type="hidden" name="activity_id[]" value="'.$activity['CharterProgramScheduleActivity']['UUID'].'"><textarea class="form-control textareacontmarker" '.$readonly.' style="background: #eee !important;color: #000!important;border: solid 1px rgb(243 243 243 / 70%)!important;" name="messages[]" rows="4" cols="50">'.htmlspecialchars($activity['CharterProgramScheduleActivity']['notes']).'</textarea></div><div class="sp-40-w"><div class="sp-upload-img"><a href="'.$activityattachmentimagehref.'" class="'.$activityfancybox.'"><img src="'.$activityattachmentimage.'" style="object-fit: fill; height: 150px;" alt=""></a></div><ul class="action-icon"><li><i class="fa fa-comments crew_comment_cruisingmap" style="'.$colorcode.$displaynone.'" data-rel="'.$activity['CharterProgramScheduleActivity']['UUID'].'" data-yachtid="'.$yacht_id.'" data-tempname="'.htmlspecialchars($activity['CharterProgramScheduleActivity']['activity_name']).'" title="Comments & Feedback"><input type="hidden" name=comments[] value="" class="messagecomments" /></i></li></ul></div></div>
                              ';
                         }
                     }
