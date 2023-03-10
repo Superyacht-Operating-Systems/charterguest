@@ -1113,10 +1113,42 @@ span.sp-leftalign {
     font-size:12px;
     padding: 10px;
 }
+
+@media only screen and (min-width: 320px) and (max-width: 767px){
+body .sp-60-w {
+    width: 100%!important;
+}
 body .sp-60-w input {
-     width: 78%!important;
+     width: 74%!important;
     margin-bottom: 8px!important;
 }
+.sp-60-w select{
+    width: 21%!important;
+    padding: 8px 0px!important;
+}
+.certificat-modal-container .modal-content{
+    height: 97vh;
+}
+.certificat-modal-container .mx-box {
+    max-height: 60vh;
+    min-height: 60vh;
+}
+
+.certificat-modal-container .chat-inputbar textarea {
+    width: 100%;
+    height: 150px;
+}
+.leaflet-popup {
+    max-height: 650px;
+}
+.leaflet-container a.leaflet-popup-close-button {
+    right: 4px!important;
+    top: 4px!important;
+}
+
+
+}
+
 
 
 
