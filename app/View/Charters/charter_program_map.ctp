@@ -1113,6 +1113,13 @@ span.sp-leftalign {
     font-size:12px;
     padding: 10px;
 }
+body .sp-60-w input {
+     width: 78%!important;
+    margin-bottom: 8px!important;
+}
+
+
+
 </style>  
 
 <?php    echo $this->Html->script('jquery-1.7.2.min');
