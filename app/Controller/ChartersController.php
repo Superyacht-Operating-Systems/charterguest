@@ -204,10 +204,11 @@ class ChartersController extends AppController {
                         // Fetch the Charter company details
                         $this->loadModel('Fleetcompany');
                         $companyData = $this->Fleetcompany->find('first', array('fields' => array('management_company_name','logo','fleetname','id'), 'conditions' => array('id' => $charterData['CharterGuest']['charter_company_id'])));
+                       
                         if (isset($companyData['Fleetcompany']['logo']) && !empty($companyData['Fleetcompany']['logo'])) {
                             // $fleetLogoUrl = $cloudUrl.$companyData['Fleetcompany']['fleetname']."/img/logo/thumb/".$companyData['Fleetcompany']['logo'];
                             // $fleetLogoUrl = $SITE_URL.'/'."charterguest/img/logo/thumb/".$companyData['Fleetcompany']['logo'];
-                            // $fleetLogoUrl = $cloudUrl.$companyData['Fleetcompany']['fleetname']."/img/logo/thumb/".$companyData['Fleetcompany']['logo'];
+                            //$fleetLogoUrl = $cloudUrl.$companyData['Fleetcompany']['fleetname']."/img/logo/thumb/".$companyData['Fleetcompany']['logo'];
                             $fleetLogoUrl = $SITE_URL.'/'.$companyData['Fleetcompany']['fleetname']."/img/logo/thumb/".$companyData['Fleetcompany']['logo'];
                             $this->Session->write("fleetLogoUrl", $fleetLogoUrl);
                             $this->Session->write("fleetCompanyName", $companyData['Fleetcompany']['management_company_name']);
@@ -1174,6 +1175,7 @@ class ChartersController extends AppController {
             $charterGuestAssociateusers_UUID_val = $guestAssocData['CharterGuest']['users_UUID'];
             $charterGuestAssociatefirst_name = $guestAssocData['CharterGuest']['first_name'];
             $charterGuestAssociatelast_name = $guestAssocData['CharterGuest']['last_name'];
+            $charterGuestAssociatelast_fleetid = $guestAssocData['CharterGuest']['charter_company_id'];
 
 
             $deletedPersoanlDetail = $this->CharterGuestPersonalDetail->find('first', array('conditions' => array('guest_lists_UUID' => $charterGuestAssociateusers_UUID_val, 'is_deleted'=>1)));
@@ -2726,6 +2728,29 @@ class ChartersController extends AppController {
         }
 
         $fleetname = $this->Session->read('fleetname');
+        //echo $charterGuestAssociatelast_fleetid;
+        if(isset($charterGuestAssociatelast_fleetid)){
+        $this->loadModel('Fleetcompany');
+        $companyData = $this->Fleetcompany->find('first', array('fields' => array('management_company_name','logo','fleetname','domain_name'), 'conditions' => array('id' => $charterGuestAssociatelast_fleetid)));
+        $domain_name_fleet = $companyData['Fleetcompany']['domain_name'];
+        if(isset($domain_name_fleet) && $domain_name_fleet == "charterguest"){
+                $SITE_URL1 = "https://charterguest.net/";
+            }else{
+                $SITE_URL1 = "https://totalsuperyacht.com:8080/";
+            }
+        if (isset($companyData['Fleetcompany']['logo']) && !empty($companyData['Fleetcompany']['logo'])) {
+            // $fleetLogoUrl = $cloudUrl.$companyData['Fleetcompany']['fleetname']."/img/logo/thumb/".$companyData['Fleetcompany']['logo'];
+            $fleetLogoUrl = $SITE_URL1.'/'."charterguest/img/logo/thumb/".$companyData['Fleetcompany']['logo'];
+            $this->Session->write("fleetLogoUrl", $fleetLogoUrl);
+        } else{
+            $fleetLogoUrl = $SITE_URL1.'/'."charterguest/img/logo/thumb/charter_guest_logo.png";
+            $this->Session->write("fleetLogoUrl", $fleetLogoUrl);
+        }
+        }else{
+            $SITE_URL = "https://totalsuperyacht.com:8080/";
+            $fleetLogoUrl = $SITE_URL.'/'."charterguest/img/logo/thumb/charter_guest_logo.png";
+            $this->Session->write("fleetLogoUrl", $fleetLogoUrl);
+        }
         $attachment = array();
         if(isset($programFiles) ){
             $YachtData = $this->CharterProgramFile->query("SELECT * FROM $ydb_name.yachts Yacht");
@@ -2746,7 +2771,7 @@ class ChartersController extends AppController {
         }
         $this->set('programFiles', $attachment);
         // echo "<pre>";print_r($programFilesCond);
-        // echo "<pre>";print_r($attachment);exit;
+         //echo "<pre>";print_r($attachment);exit;
     }
 
     function use_submitted_date(){
