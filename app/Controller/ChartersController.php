@@ -577,8 +577,15 @@ class ChartersController extends AppController {
                         $fleetname = $this->Session->read('fleetname');
                         if(isset($filedata['fleetname'])){
                             $fleetname = $filedata['fleetname'];
+                            $companyData1 = $this->Fleetcompany->find('first', array('fields' => array('management_company_name','logo','fleetname','domain_name'), 'conditions' => array('management_company' => $fleetname)));
+                            if(isset($companyData1['Fleetcompany']['domain_name'])){
+                                $fleet_domain_name = $companyData1['Fleetcompany']['domain_name'];
+                            }
+                            
                         }
-                        if(isset($filedata['siteurl'])){
+                        if(isset($fleet_domain_name) && $fleet_domain_name == "charterguest"){
+                                $SITE_URL = "https://charterguest.net/";
+                        }else if(isset($filedata['siteurl'])){
                             $SITE_URL = $filedata['siteurl'];
                         }
                         $sourceImagePath = $SITE_URL.'/'.$fleetname."/app/webroot/img/charter_program_files/".$file['CharterProgramFile']['file_name'];
