@@ -1728,13 +1728,13 @@ $(document).on("click", "#HideDetails", function(e) {
     // }
     var btntext = $("#HideDetails").text();
     if(btntext == "Show Details"){
-        $(".Tooltip").css("margin-top","");
+        //$(".Tooltip").css("margin-top","");
         $(".Tooltip").css("width","160px");
         $(".smalltooltip").hide();
         $(".owntooltip").show();
         $("#HideDetails").text("Hide Details");
     }else if(btntext == "Hide Details"){
-        $(".Tooltip").css("margin-top","35px");
+        //$(".Tooltip").css("margin-top","35px");
         $(".Tooltip").css("width","50px");
         $(".smalltooltip").show();
         $(".owntooltip").hide();
@@ -1966,6 +1966,7 @@ $(document).ready(function() { //alert();
 
             setTimeout(function(){
                 $(".leaflet-tooltip").css("opacity", "1");  
+                $(".Tooltip").css("width","50px");
                 $(".smalltooltip").show();
                 $(".owntooltip").hide();
             },2000);
