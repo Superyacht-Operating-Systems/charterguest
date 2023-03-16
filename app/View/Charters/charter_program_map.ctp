@@ -1740,11 +1740,7 @@ $(document).on("click", "#HideDetails", function(e) {
         $(".owntooltip").hide();
         $("#HideDetails").text("Show Details");
     }
-    $(".leaflet-tooltip").css("opacity", "0");  
-    setTimeout(function(){
-                $(".leaflet-tooltip").css("opacity", "1");  
-                
-            },2000);
+    
     
 });
 
