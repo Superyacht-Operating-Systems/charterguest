@@ -5968,6 +5968,7 @@ class ChartersController extends AppController {
             //$yachtDbName = $session['CharterGuest']['ydb_name'];
             $result = array();
             if (isset($this->request->data['programId']) && !empty($this->request->data['programId']) && !empty($this->request->data['diffDays'])) {
+               //echo "<pre>"; print_r($this->request->data); exit;
                 $programId = $this->request->data['programId'];
                 $scheduleId = $this->request->data['scheduleId'];
                 $diffDays = $this->request->data['diffDays'];
@@ -5998,6 +5999,7 @@ class ChartersController extends AppController {
                     $yacht_id = $ydbapp[0]['Yacht']['id'];
                     $yname = $ydbapp[0]['Yacht']['yname'];
                     $fleetcompanyid = $ydbapp[0]['Yacht']['fleetcompany_id'];
+                    $yacht_domain = $ydbapp[0]['Yacht']['domain_name'];
                 }else{
                     $chprgdata = $this->CharterGuest->find('first',array('conditions'=>array('CharterGuest.charter_program_id'=>$programId)));
                     $yacht_id = $chprgdata['CharterGuest']['yacht_id'];
@@ -6006,6 +6008,7 @@ class ChartersController extends AppController {
                     $yachtDbName = $Ydata['Yacht']['ydb_name'];
                     $yname = $Ydata['Yacht']['yname'];
                     $fleetcompanyid = $Ydata['Yacht']['fleetcompany_id'];
+                    $yacht_domain = $Ydata['Yacht']['domain_name'];
                 }
                         $this->loadModel("Fleetcompany");
                         if(isset($fleetcompanyid) && $fleetcompanyid != 0){
@@ -6059,13 +6062,23 @@ class ChartersController extends AppController {
                         $noteexist = "style='display:none;'";
                     }
                     if(isset($attachment) && !empty($attachment)){
+                        //echo $yacht_domain; echo $fleetSiteName; echo $yname;
+                        
+                        if(isset($yacht_domain) && $yacht_domain == "charterguest"){
+                            $update_BASE_URL = "https://charterguest.net/";
+                        }else{
+                            $update_BASE_URL = "https://totalsuperyacht.com:8080/";
+                        }
+                        
                         $noteimg = "style='display:block;'";
                         if($yname == "yacht"){
                             $targetFullPath = BASE_URL.'/SOS/app/webroot/betayacht/app/webroot/img/charter_program_files/itinerary_photos/'.$attachment;
                         }else{
-                            $targetFullPath = BASE_URL.'/'.$yname."/app/webroot/img/charter_program_files/itinerary_photos/".$attachment;
+                            //$targetFullPath = BASE_URL.'/'.$yname."/app/webroot/img/charter_program_files/itinerary_photos/".$attachment;
+                             $targetFullPath = $update_BASE_URL.'/'.$yname."/app/webroot/img/charter_program_files/itinerary_photos/".$attachment;
+                           
                             if (!empty($fleetSiteName)) { // IF yacht is under any Fleet
-                                $targetFullPath = BASE_URL.'/'.$fleetSiteName."/app/webroot/".$yname."/app/webroot/img/charter_program_files/itinerary_photos/".$attachment;
+                                $targetFullPath = $update_BASE_URL.'/'.$fleetSiteName."/app/webroot/".$yname."/app/webroot/img/charter_program_files/itinerary_photos/".$attachment;
                             }
                         }
 
@@ -6078,7 +6091,7 @@ class ChartersController extends AppController {
                         $titleimagehref = "#";
                         $fancybox = "";
                     }
-
+                    //echo "<pre>"; print_r($titleimage); exit;
                     $CruisingMapCommentConditons = "activity_id = '$programScheduleUUID' AND activity_name = '$title' AND type = 'schedule' AND publish_map = '1'";
                          $commentdatatitle = $this->CharterGuest->getCruisingMapComment($yachtDbName, $CruisingMapCommentConditons);
                     //}
@@ -6180,13 +6193,20 @@ class ChartersController extends AppController {
                             }
                             $activityattachment = $activity['CharterProgramScheduleActivity']['attachment'];
                             if(isset($activityattachment) && !empty($activityattachment)){
+                                if(isset($yacht_domain) && $yacht_domain == "charterguest"){
+                                    $update_BASE_URL = "https://charterguest.net/";
+                                }else{
+                                    $update_BASE_URL = "https://totalsuperyacht.com:8080/";
+                                }
                                 $activityattachmentimg = "style='display:block;'";
+                                
                                 if($yname == "yacht"){
                                     $targetFullPath = BASE_URL.'/SOS/app/webroot/betayacht/app/webroot/img/charter_program_files/itinerary_photos/'.$activityattachment;
                                 }else{
-                                        $targetFullPath = BASE_URL.'/'.$yname."/app/webroot/img/charter_program_files/itinerary_photos/".$activityattachment;
+                                       // $targetFullPath = BASE_URL.'/'.$yname."/app/webroot/img/charter_program_files/itinerary_photos/".$activityattachment;
+                                        $targetFullPath = $update_BASE_URL.'/'.$yname."/app/webroot/img/charter_program_files/itinerary_photos/".$activityattachment;
                                         if (!empty($fleetSiteName)) { // IF yacht is under any Fleet
-                                            $targetFullPath = BASE_URL.'/'.$fleetSiteName."/app/webroot/".$yname."/app/webroot/img/charter_program_files/itinerary_photos/".$activityattachment;
+                                            $targetFullPath = $update_BASE_URL.'/'.$fleetSiteName."/app/webroot/".$yname."/app/webroot/img/charter_program_files/itinerary_photos/".$activityattachment;
                                         }
                                 }
 
