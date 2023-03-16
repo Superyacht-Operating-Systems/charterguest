@@ -1733,12 +1733,22 @@ $(document).on("click", "#HideDetails", function(e) {
         $(".smalltooltip").hide();
         $(".owntooltip").show();
         $("#HideDetails").text("Hide Details");
+        $(".leaflet-tooltip").css("opacity", "0");  
+        setTimeout(function(){
+                $(".leaflet-tooltip").css("opacity", "1");  
+                
+        },1000);
     }else if(btntext == "Hide Details"){
         //$(".Tooltip").css("margin-top","35px");
         $(".Tooltip").css("width","50px");
         $(".smalltooltip").show();
         $(".owntooltip").hide();
         $("#HideDetails").text("Show Details");
+        $(".leaflet-tooltip").css("opacity", "0");  
+        setTimeout(function(){
+                $(".leaflet-tooltip").css("opacity", "1");  
+                
+        },1000);
     }
     
     
