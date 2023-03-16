@@ -1728,6 +1728,8 @@ $(document).on("click", "#HideDetails", function(e) {
     // }
     var btntext = $("#HideDetails").text();
     if(btntext == "Show Details"){
+        $(".Tooltip").css("margin-top","");
+        $(".Tooltip").css("width","160px");
         $(".smalltooltip").hide();
         $(".owntooltip").show();
         $("#HideDetails").text("Hide Details");
