@@ -556,7 +556,7 @@ margin-top: 50px;
                     <?php  if(isset($mapdetails)){ ?>
                         <ul class="submenu">
                             <?php foreach($mapdetails as $startdate => $data){ ?>
-                                <li class="menu__item pagleave"><a href="<?php echo $baseFolder."/charters/charter_program_map/".$data['programid'].'/'.$data['dbname'].'/owner'; ?>" target="blank"><?php echo $startdate; ?></a></li>
+                                <li class="menu__item pagleave"><a href="<?php echo $baseFolder."/charters/charter_program_map/".$data['programid'].'/'.$data['dbname'].'/owner'; ?>"><?php echo $startdate; ?></a></li>
                             <?php
                                     
                                 } ?>
@@ -564,7 +564,7 @@ margin-top: 50px;
                     <?php } ?>
                 </li>  
             <?php }else if(isset($assocprefenceID) && !empty($assocprefenceID)){ ?>
-            <li class="menu__item pagleave"><a href="<?php echo $baseFolder."/charters/charter_program_map/".$charterHeadProgramId.'/'.$ydb_name.'/guest'; ?>" target="blank">Cruising Map</a></li>
+            <li class="menu__item pagleave"><a href="<?php echo $baseFolder."/charters/charter_program_map/".$charterHeadProgramId.'/'.$ydb_name.'/guest'; ?>">Cruising Map</a></li>
             <?php } ?>
             <li class="menu__item"> <a href="#">Charter Contracts</a>
             <?php 

@@ -1060,6 +1060,7 @@ class ChartersController extends AppController {
         if (isset($this->request->query['assocId']) && !empty($this->request->query['assocId'])) {
             $charterAssocId = base64_decode($this->request->query['assocId']);
             $guestAssocData = $this->CharterGuestAssociate->find('first', array('conditions' => array('id' => $charterAssocId)));
+            $maplinkchpguuid = $guestAssocData['CharterGuestAssociate']['charter_guest_id'];
             $charterGuestAssociateUUID = $guestAssocData['CharterGuestAssociate']['UUID'];
             $charterGuestAssociatefirst_name = $guestAssocData['CharterGuestAssociate']['first_name'];
             $charterGuestAssociatelast_name = $guestAssocData['CharterGuestAssociate']['last_name'];
@@ -1113,6 +1114,7 @@ class ChartersController extends AppController {
             $checkAssocExist = $this->CharterGuestAssociate->find('count', array('conditions' => array('id' => $charterAssociateRowId)));
             if ($checkAssocExist != 0) {
                 $chedkAss = $this->CharterGuestAssociate->find('first', array('conditions' => array('id' => $charterAssociateRowId)));
+                $maplinkchpguuid = $chedkAss['CharterGuestAssociate']['charter_guest_id'];
                 $charterGuestAssociateUUID = $chedkAss['CharterGuestAssociate']['UUID'];
                 $charterGuestAssociatefirst_name = $chedkAss['CharterGuestAssociate']['first_name'];
                 $charterGuestAssociatelast_name = $chedkAss['CharterGuestAssociate']['last_name'];
@@ -1164,6 +1166,7 @@ class ChartersController extends AppController {
         if (isset($this->request->query['CharterGuestId']) && !empty($this->request->query['CharterGuestId'])) {
            $charterGuestId = base64_decode($this->request->query['CharterGuestId']);
             $guestAssocData = $this->CharterGuest->find('first', array('conditions' => array('id' => $charterGuestId)));
+            $maplinkchpguuid = $guestAssocData['CharterGuest']['charter_program_id'];
             $charterGuestAssociateusers_UUID_val = $guestAssocData['CharterGuest']['users_UUID'];
             $charterGuestAssociatefirst_name = $guestAssocData['CharterGuest']['first_name'];
             $charterGuestAssociatelast_name = $guestAssocData['CharterGuest']['last_name'];
@@ -2692,14 +2695,14 @@ class ChartersController extends AppController {
             $charter_from_date = date("d M Y", strtotime($guestAssocData['CharterGuest']['charter_from_date']));
         }
         $this->loadModel('CharterProgramFile');
-        $scheduleData = $this->CharterProgramFile->query("SELECT * FROM $ydb_name.charter_program_schedules CharterProgramSchedule WHERE charter_program_id = '$charterHeadProgramId' AND is_deleted = 0");
+        $scheduleData = $this->CharterProgramFile->query("SELECT * FROM $ydb_name.charter_program_schedules CharterProgramSchedule WHERE charter_program_id = '$maplinkchpguuid' AND is_deleted = 0");
         // echo "<pre>";print_r($scheduleData);exit;
         
         if(isset($scheduleData) && !empty($scheduleData)){
             if(($scheduleData[0]['CharterProgramSchedule']['publish_map'] == 1)){
                 $map = array();
                 $map['dbname'] = $ydb_name;
-                $map['programid'] = $charterHeadProgramId;
+                $map['programid'] = $maplinkchpguuid;
                 $mapdetails[$charter_from_date] = $map;
             }
         }
