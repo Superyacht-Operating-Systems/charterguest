@@ -1717,7 +1717,7 @@ var polyline0 = new L.Polyline(latlongstemp).addTo(map);
 
 $(document).on("click", "#HideDetails", function(e) {
     mapClickEvent = false; // this is for condition to disable the map click function
-    var disp = $(".Tooltip").css("display");
+    //var disp = $(".Tooltip").css("display");
     // if (disp == "block") {
     //     $(".Tooltip").css("display", "none");  
     //     $("#HideDetails").text("Show Details");
@@ -1740,7 +1740,11 @@ $(document).on("click", "#HideDetails", function(e) {
         $(".owntooltip").hide();
         $("#HideDetails").text("Show Details");
     }
-    
+    $(".leaflet-tooltip").css("opacity", "0");  
+    setTimeout(function(){
+                $(".leaflet-tooltip").css("opacity", "1");  
+                
+            },2000);
     
 });
 
@@ -1959,16 +1963,16 @@ $(document).ready(function() { //alert();
 
             //$('.fancybox').fancybox();
 
-            
+                $(".Tooltip").css("width","50px");
+                $(".smalltooltip").show();
+                $(".owntooltip").hide();
             //When page opens do not display location cards until 2 seconds after page loads. 
             $(".leaflet-tooltip").css("opacity", "0");  
             //$('.fancybox').fancybox();
 
             setTimeout(function(){
                 $(".leaflet-tooltip").css("opacity", "1");  
-                $(".Tooltip").css("width","50px");
-                $(".smalltooltip").show();
-                $(".owntooltip").hide();
+                
             },2000);
 
             //When page opens do not display location cards until 2 seconds after page loads. 
