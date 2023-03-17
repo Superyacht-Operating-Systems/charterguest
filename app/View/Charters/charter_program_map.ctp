@@ -1087,7 +1087,7 @@ span.sp-rightalign {
 .modal-header .close {
   transform: scale(1.1);
 }
-.textareacontmarker {
+textarea.form-control {
     resize: vertical!important;
     overflow: auto!important;
 }
