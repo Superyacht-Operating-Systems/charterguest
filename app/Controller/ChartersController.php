@@ -1068,9 +1068,11 @@ class ChartersController extends AppController {
         if (isset($this->request->query['assocId']) && !empty($this->request->query['assocId'])) {
             $charterAssocId = base64_decode($this->request->query['assocId']);
             $guestAssocData = $this->CharterGuestAssociate->find('first', array('conditions' => array('id' => $charterAssocId)));
+            $this->Session->delete("maplinkchpguuid");
             $maplinkchpguuid = $guestAssocData['CharterGuestAssociate']['charter_guest_id'];
             $charterGuestAssociateUUID = $guestAssocData['CharterGuestAssociate']['UUID'];
             $charterGuestAssociatefirst_name = $guestAssocData['CharterGuestAssociate']['first_name'];
+            $this->Session->write("maplinkchpguuid", $maplinkchpguuid);
             $charterGuestAssociatelast_name = $guestAssocData['CharterGuestAssociate']['last_name'];
             if (empty($guestAssocData)) {
                 $this->redirect(array('action' => 'view'));
@@ -1121,12 +1123,13 @@ class ChartersController extends AppController {
             $charterAssociateRowId = base64_decode($this->request->query['id']);
             $checkAssocExist = $this->CharterGuestAssociate->find('count', array('conditions' => array('id' => $charterAssociateRowId)));
             if ($checkAssocExist != 0) {
+                $this->Session->delete("maplinkchpguuid");
                 $chedkAss = $this->CharterGuestAssociate->find('first', array('conditions' => array('id' => $charterAssociateRowId)));
                 $maplinkchpguuid = $chedkAss['CharterGuestAssociate']['charter_guest_id'];
                 $charterGuestAssociateUUID = $chedkAss['CharterGuestAssociate']['UUID'];
                 $charterGuestAssociatefirst_name = $chedkAss['CharterGuestAssociate']['first_name'];
                 $charterGuestAssociatelast_name = $chedkAss['CharterGuestAssociate']['last_name'];
-
+                $this->Session->write("maplinkchpguuid", $maplinkchpguuid);
                 $deletedPersoanlDetail = $this->CharterGuestPersonalDetail->find('first', array('conditions' => array('guest_lists_UUID' => $charterGuestAssociateUUID, 'is_deleted'=>1)));
 
                 if(isset($deletedPersoanlDetail) && !empty($deletedPersoanlDetail)){
@@ -1172,6 +1175,7 @@ class ChartersController extends AppController {
         }
 
         if (isset($this->request->query['CharterGuestId']) && !empty($this->request->query['CharterGuestId'])) {
+            $this->Session->delete("maplinkchpguuid");
            $charterGuestId = base64_decode($this->request->query['CharterGuestId']);
             $guestAssocData = $this->CharterGuest->find('first', array('conditions' => array('id' => $charterGuestId)));
             $maplinkchpguuid = $guestAssocData['CharterGuest']['charter_program_id'];
@@ -1179,7 +1183,7 @@ class ChartersController extends AppController {
             $charterGuestAssociatefirst_name = $guestAssocData['CharterGuest']['first_name'];
             $charterGuestAssociatelast_name = $guestAssocData['CharterGuest']['last_name'];
             $charterGuestAssociatelast_fleetid = $guestAssocData['CharterGuest']['charter_company_id'];
-
+            $this->Session->write("maplinkchpguuid", $maplinkchpguuid);
 
             $deletedPersoanlDetail = $this->CharterGuestPersonalDetail->find('first', array('conditions' => array('guest_lists_UUID' => $charterGuestAssociateusers_UUID_val, 'is_deleted'=>1)));
 
@@ -2704,14 +2708,15 @@ class ChartersController extends AppController {
             $charter_from_date = date("d M Y", strtotime($guestAssocData['CharterGuest']['charter_from_date']));
         }
         $this->loadModel('CharterProgramFile');
-        $scheduleData = $this->CharterProgramFile->query("SELECT * FROM $ydb_name.charter_program_schedules CharterProgramSchedule WHERE charter_program_id = '$maplinkchpguuid' AND is_deleted = 0");
+        $maplinkCHPRGUUID = $this->Session->read('maplinkchpguuid');
+        $scheduleData = $this->CharterProgramFile->query("SELECT * FROM $ydb_name.charter_program_schedules CharterProgramSchedule WHERE charter_program_id = '$maplinkCHPRGUUID' AND is_deleted = 0");
         // echo "<pre>";print_r($scheduleData);exit;
         
         if(isset($scheduleData) && !empty($scheduleData)){
             if(($scheduleData[0]['CharterProgramSchedule']['publish_map'] == 1)){
                 $map = array();
                 $map['dbname'] = $ydb_name;
-                $map['programid'] = $maplinkchpguuid;
+                $map['programid'] = $maplinkCHPRGUUID;
                 $mapdetails[$charter_from_date] = $map;
             }
         }
