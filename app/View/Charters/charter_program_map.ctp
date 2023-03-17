@@ -1051,7 +1051,7 @@ span.sp-rightalign {
     position: relative;
 }
 
-@media only screen and (max-width: 990px){
+@media screen and (max-width: 992px) {
 .common-form-row.map-form-rwo {
     margin-top: 50px;
     margin-bottom: 20px;
