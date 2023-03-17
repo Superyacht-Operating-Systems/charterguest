@@ -1075,7 +1075,7 @@ span.sp-rightalign {
   .sm-cruisingmsgmyModal{
   height: 100vh;
   }
-    .modal-header .close::before {
+    .modal-header .close::before , .leaflet-popup-close-button{
   content: "";
   display: block;
   position: absolute;
@@ -1084,7 +1084,7 @@ span.sp-rightalign {
   left: -10px;
   right: -10px;
 }
-.modal-header .close {
+.modal-header .close , .leaflet-popup-close-button{
   transform: scale(1.1);
 }
 textarea.form-control {
