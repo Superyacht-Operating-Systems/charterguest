@@ -1084,14 +1084,7 @@ span.sp-rightalign {
   left: -10px;
   right: -10px;
 }
-.leaflet-popup-close-button::before{
-  content: "";
-  display: block;
-  position: absolute;
-  top: -10px;
-  bottom: -10px;
-}
-.modal-header .close , .leaflet-popup-close-button{
+.modal-header .close {
   transform: scale(1.1);
 }
 textarea.form-control {
