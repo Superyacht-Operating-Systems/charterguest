@@ -1213,7 +1213,7 @@ span.sp-leftalign {
 
 <div class="custom-popup" id="map" style="height: 600px;position:relative;outline:none;">
     <button id="CruisingButton">Cruising Schedule</button>
-    <button id="HideDetails">Hide Details</button>
+    <button id="HideDetails">Show Details</button>
     <button id="HelpfulTips">Helpful Tips</button>
 </div>
 <?php if(empty($no_cruising_select)){?>
