@@ -1084,7 +1084,7 @@ span.sp-rightalign {
   left: -10px;
   right: -10px;
 }
-.leaflet-popup-close-button{
+.leaflet-popup-close-button::before{
   content: "";
   display: block;
   position: absolute;
