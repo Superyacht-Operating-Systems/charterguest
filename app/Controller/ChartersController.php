@@ -6318,6 +6318,7 @@ class ChartersController extends AppController {
                 $yachtDbName = $Ydata['Yacht']['ydb_name'];
                 $yname = $Ydata['Yacht']['yname'];
                 $fleetcompanyid = $Ydata['Yacht']['fleetcompany_id'];
+                $yacht_domain = $Ydata['Yacht']['domain_name'];
                         $this->loadModel("Fleetcompany");
                         if(isset($fleetcompanyid) && $fleetcompanyid != 0){
                         $fleetcompanydetails = $this->Fleetcompany->find('first',array('conditions'=>array('id'=>$fleetcompanyid)));
@@ -6344,12 +6345,17 @@ class ChartersController extends AppController {
                         }
                         if(isset($attachment) && !empty($attachment)){
                             $noteimg = "style='display:block;'";
+                            if(isset($yacht_domain) && $yacht_domain == "charterguest"){
+                                $update_BASE_URL = "https://charterguest.net/";
+                            }else{
+                                $update_BASE_URL = "https://totalsuperyacht.com:8080/";
+                            }
                             // if($yname == "yacht"){
                             //     $targetFullPath = BASE_URL.'/SOS/app/webroot/betayacht/app/webroot/img/charter_program_files/itinerary_photos/'.$attachment;
                             // }else{
-                                $targetFullPath = BASE_URL.'/'.$yname.'/app/webroot/img/charter_program_files/itinerary_photos/'.$attachment;
+                                $targetFullPath = $update_BASE_URL.'/'.$yname.'/app/webroot/img/charter_program_files/itinerary_photos/'.$attachment;
                                 if (!empty($fleetSiteName)) { // IF yacht is under any Fleet
-                                    $targetFullPath = BASE_URL.'/'.$fleetSiteName."/app/webroot/".$yname.'/app/webroot/img/charter_program_files/itinerary_photos/'.$attachment;
+                                    $targetFullPath = $update_BASE_URL.'/'.$fleetSiteName."/app/webroot/".$yname.'/app/webroot/img/charter_program_files/itinerary_photos/'.$attachment;
                                 }
                             //}
 
