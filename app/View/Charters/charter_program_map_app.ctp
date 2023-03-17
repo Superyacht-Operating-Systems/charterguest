@@ -1367,6 +1367,7 @@ if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !e
     $consumption = "";
     
     }
+    $daynumber = $schedule['CharterProgramSchedule']['day_num'];
         if ($schedule['CharterProgramSchedule']['day_num'] == 1) {
         ?>
             day1 = 1;
@@ -1379,7 +1380,7 @@ if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !e
         zoom = 7;
         
         var marker = L.marker(["<?php echo $schedule['CharterProgramSchedule']['lattitude']; ?>", "<?php echo $schedule['CharterProgramSchedule']['longitude']; ?>"],{pmIgnore: true})
-        .bindTooltip("<?php echo "<span class='owntooltip' id=".$key."><b style='font-size: 12px;'>".$SumDaytitle."&nbsp;</b><br><b style='font-size: 12px;'>".$schedule['CharterProgramSchedule']['title']."<hr>".$endplace."</b><br><b style='font-size: 12px;'>".$distance.$bar.$duration."</b></span>"?>", 
+        .bindTooltip("<?php echo "<span class='smalltooltip'>Day ".$daynumber."</span><span class='owntooltip' id=".$key."><b style='font-size: 12px;'>".$SumDaytitle."&nbsp;</b><br><b style='font-size: 12px;'>".$schedule['CharterProgramSchedule']['title']."<hr>".$endplace."</b><br><b style='font-size: 12px;'>".$distance.$bar.$duration."</b></span>"?>", 
                     {
                         permanent: true, 
                         direction: 'right',
@@ -1614,14 +1615,39 @@ setTimeout(() => {
 
 $(document).on("click", "#HideDetails", function(e) {
     mapClickEvent = false; // this is for condition to disable the map click function
-    var disp = $(".Tooltip").css("display");
-    if (disp == "block") {
-        $(".Tooltip").css("display", "none");  
-        $("#HideDetails").text("Show Details");
-    } else {
-        $(".Tooltip").css("display", "block");
-        $("#HideDetails").text("Hide Details");
+    // var disp = $(".Tooltip").css("display");
+    // if (disp == "block") {
+    //     $(".Tooltip").css("display", "none");  
+    //     $("#HideDetails").text("Show Details");
+    // } else {
+    //     $(".Tooltip").css("display", "block");
+    //     $("#HideDetails").text("Hide Details");
 
+    // }
+
+    var btntext = $("#HideDetails").text();
+    if(btntext == "Show Details"){
+        //$(".Tooltip").css("margin-top","");
+        $(".Tooltip").css("width","160px");
+        $(".smalltooltip").hide();
+        $(".owntooltip").show();
+        $("#HideDetails").text("Hide Details");
+        $(".leaflet-tooltip").css("opacity", "0");  
+        setTimeout(function(){
+                $(".leaflet-tooltip").css("opacity", "1");  
+                
+        },1000);
+    }else if(btntext == "Hide Details"){
+        //$(".Tooltip").css("margin-top","35px");
+        $(".Tooltip").css("width","50px");
+        $(".smalltooltip").show();
+        $(".owntooltip").hide();
+        $("#HideDetails").text("Show Details");
+        $(".leaflet-tooltip").css("opacity", "0");  
+        setTimeout(function(){
+                $(".leaflet-tooltip").css("opacity", "1");  
+                
+        },1000);
     }
 });
 
@@ -1909,6 +1935,9 @@ $(document).ready(function() { //alert();
                 type : "image"
             });
 
+            $(".Tooltip").css("width","50px");
+                $(".smalltooltip").show();
+                $(".owntooltip").hide();
             //When page opens do not display location cards until 2 seconds after page loads. 
             $(".leaflet-tooltip").css("opacity", "0");  
             //$('.fancybox').fancybox();
