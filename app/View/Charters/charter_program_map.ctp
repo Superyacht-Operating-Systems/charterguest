@@ -1325,7 +1325,7 @@ body .sp-60-w input {
 <div class="fixed-row-container map-container">  
  <div class="form-group base-margin">
 <div class="custom-popup " id="map" style="height: calc(100vh - 100px);"></div>
-<button id="CruisingButton">Cruising</button>
+<button id="CruisingButton">Cruising Schedule</button>
 <button id="HideDetails">Show Details</button>
 <button id="HelpfulTips">Helpful Tips</button>
 </div></div>
