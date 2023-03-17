@@ -1055,7 +1055,44 @@ span.sp-rightalign {
 .common-form-row.map-form-rwo {
     margin-top: 50px;
     margin-bottom: 20px;
-}}
+}
+.certificat-modal-container{
+    background-color: #000!important;
+  }
+  .certificat-modal-container .mx-box {
+    max-height: 58vh;
+    min-height: 58vh;
+}
+.certificat-modal-container .chat-inputbar textarea {
+    width: 100%;
+    height: 90px;
+}
+  .certificat-modal-container .modal-body{
+      min-height: 88vh!important;
+	  max-height: 88vh!important;
+  }
+  
+  .sm-cruisingmsgmyModal{
+  height: 100vh;
+  }
+    .modal-header .close::before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: -10px;
+  bottom: -10px;
+  left: -10px;
+  right: -10px;
+}
+.modal-header .close {
+  transform: scale(1.1);
+}
+.textareacontmarker {
+    resize: vertical!important;
+    overflow: auto!important;
+}
+}
+
 @media only screen and (max-width:767px){
 .sp-rightalign{
     display: none;
@@ -1129,15 +1166,9 @@ body .sp-60-w input {
 .certificat-modal-container .modal-content{
     height: 97vh;
 }
-.certificat-modal-container .mx-box {
-    max-height: 60vh;
-    min-height: 60vh;
-}
 
-.certificat-modal-container .chat-inputbar textarea {
-    width: 100%;
-    height: 150px;
-}
+
+
 .leaflet-popup {
     max-height: 650px;
 }
@@ -1291,7 +1322,7 @@ body .sp-60-w input {
 </div><!-- /.modal-content -->
 
 <!-- sample modal content -->
-<div id="cruisingmsgmyModal" class="modal certificat-modal-container"  role="dialog">
+<div id="cruisingmsgmyModal" class="modal certificat-modal-container sm-cruisingmsgmyModal"  role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
