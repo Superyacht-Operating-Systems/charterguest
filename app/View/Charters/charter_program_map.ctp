@@ -1055,6 +1055,9 @@ textarea.form-control {
     overflow: auto!important;
 }
 @media screen and (max-width: 990px) {
+    .cruising-location-Modal .modal-content{
+       height: 96vh!important;
+    }
 .common-form-row.map-form-rwo {
     margin-top: 50px;
     margin-bottom: 20px;
@@ -1307,16 +1310,16 @@ body .sp-60-w input {
 <!--help modal end here--> 
 
 <!-- sample modal content -->
-<div id="cruisinglocationModal" class="modal certificat-modal-container"  role="dialog">
+<div id="cruisinglocationModal" class="modal certificat-modal-container cruising-location-Modal"  role="dialog">
     <div class="modal-dialog">
         <div class="modal-content" style="width:620px;">
             <div class="modal-header">
                 <button type="button" class="close" id="cruisinglocationModalclose" aria-hidden="true" style="margin-right: 5px;">×</button>
                 <h4 class="modal-title" id="myModalLabel" style="text-align: center;font-weight: bold;"><?php echo $startloc; ?> to <?php echo $endloc; ?></h4>
             </div>
-            <div class="modal-body" style="max-height: 495px;
+            <div class="modal-body" style="max-height: 580px;
     overflow-y: scroll;overflow-x: hidden;">
-                <div id="cruisinglocationModal_load" style="margin:5px 10px 5px 8px;">
+                <div id="cruisinglocationModal_load" style="margin:5px 10px 5px 8px;padding-bottom: 100px;">
 
                 </div>
 
