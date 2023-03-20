@@ -1032,7 +1032,13 @@ textarea.form-control {
     resize: vertical!important;
     overflow: auto!important;
 }
+.modal_load{
+    margin:5px 10px 5px 8px;
+}
 @media screen and (max-width: 990px) {
+    .modal_load{
+        padding-bottom: 100px;
+    }
     .cruising-location-Modal .modal-content{
        height: 96vh!important;
     }
@@ -1229,7 +1235,7 @@ span.sp-leftalign {
             </div>
             <div class="modal-body" style="max-height: 580px;
     overflow-y: scroll;overflow-x: hidden;">
-                <div id="cruisinglocationModal_load" style="margin:5px 10px 5px 8px;padding-bottom: 100px;">
+                <div id="cruisinglocationModal_load" class="modal_load">
 
                 </div>
 
