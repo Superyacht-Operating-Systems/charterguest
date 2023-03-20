@@ -1028,6 +1028,52 @@ position: absolute;
 }
 
 }
+@media screen and (max-width: 990px) {
+    .cruising-location-Modal .modal-content{
+       height: 96vh!important;
+    }
+.common-form-row.map-form-rwo {
+    margin-top: 50px;
+    margin-bottom: 20px;
+}
+.certificat-modal-container{
+    background-color: #000!important;
+  }
+  .certificat-modal-container .mx-box {
+    max-height: 46vh;
+    min-height: 46vh;
+}
+.card-box {
+    margin-bottom: 0px;
+    border: 0px solid rgba(54, 64, 74, 0.05);
+}
+.certificat-modal-container .chat-inputbar textarea {
+    width: 100%;
+    height: 90px;
+}
+  /* .certificat-modal-container .modal-body{
+      min-height: 88vh!important;
+	  max-height: 88vh!important;
+  } */
+  
+  .sm-cruisingmsgmyModal{
+  height: 100vh;
+  }
+    .modal-header .close::before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: -10px;
+  bottom: -10px;
+  left: -10px;
+  right: -10px;
+}
+.modal-header .close {
+  transform: scale(1.1);
+}
+
+}
+
 @media only screen and (max-width:767px){
 .sp-rightalign{
     display: none;
@@ -1116,7 +1162,7 @@ span.sp-leftalign {
 <!-- <br> -->
 
 <!-- sample modal content -->
-<div id="cruisingmsgmyModal" class="modal certificat-modal-container"  role="dialog">
+<div id="cruisingmsgmyModal" class="modal certificat-modal-container sm-cruisingmsgmyModal"  role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -1170,16 +1216,16 @@ span.sp-leftalign {
 <!--help modal end here--> 
 
 <!-- sample modal content -->
-<div id="cruisinglocationModal" class="modal certificat-modal-container"  role="dialog">
+<div id="cruisinglocationModal" class="modal certificat-modal-container cruising-location-Modal"  role="dialog">
     <div class="modal-dialog">
         <div class="modal-content" style="width:620px;">
             <div class="modal-header">
                 <button type="button" class="close" id="cruisinglocationModalclose" aria-hidden="true" style="margin-right: 5px;">×</button>
                 <h4 class="modal-title" id="myModalLabel" style="text-align: center;font-weight: bold;"><?php echo $startloc; ?> to <?php echo $endloc; ?></h4>
             </div>
-            <div class="modal-body" style="max-height: 495px;
+            <div class="modal-body" style="max-height: 580px;
     overflow-y: scroll;overflow-x: hidden;">
-                <div id="cruisinglocationModal_load" style="margin:5px 10px 5px 8px;">
+                <div id="cruisinglocationModal_load" style="margin:5px 10px 5px 8px;padding-bottom: 100px;">
 
                 </div>
 
