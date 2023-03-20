@@ -1028,6 +1028,10 @@ position: absolute;
 }
 
 }
+textarea.form-control {
+    resize: vertical!important;
+    overflow: auto!important;
+}
 @media screen and (max-width: 990px) {
     .cruising-location-Modal .modal-content{
        height: 96vh!important;
