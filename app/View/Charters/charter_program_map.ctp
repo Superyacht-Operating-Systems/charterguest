@@ -1054,7 +1054,7 @@ textarea.form-control {
     resize: vertical!important;
     overflow: auto!important;
 }
-@media screen and (max-width: 992px) {
+@media screen and (max-width: 990px) {
 .common-form-row.map-form-rwo {
     margin-top: 50px;
     margin-bottom: 20px;
