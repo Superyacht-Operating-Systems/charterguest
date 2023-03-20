@@ -1050,7 +1050,10 @@ span.sp-rightalign {
     font-size: 18px!important;
     position: relative;
 }
-
+textarea.form-control {
+    resize: vertical!important;
+    overflow: auto!important;
+}
 @media screen and (max-width: 992px) {
 .common-form-row.map-form-rwo {
     margin-top: 50px;
@@ -1060,17 +1063,21 @@ span.sp-rightalign {
     background-color: #000!important;
   }
   .certificat-modal-container .mx-box {
-    max-height: 58vh;
-    min-height: 58vh;
+    max-height: 46vh;
+    min-height: 46vh;
+}
+.card-box {
+    margin-bottom: 0px;
+    border: 0px solid rgba(54, 64, 74, 0.05);
 }
 .certificat-modal-container .chat-inputbar textarea {
     width: 100%;
     height: 90px;
 }
-  .certificat-modal-container .modal-body{
+  /* .certificat-modal-container .modal-body{
       min-height: 88vh!important;
 	  max-height: 88vh!important;
-  }
+  } */
   
   .sm-cruisingmsgmyModal{
   height: 100vh;
@@ -1087,10 +1094,7 @@ span.sp-rightalign {
 .modal-header .close {
   transform: scale(1.1);
 }
-textarea.form-control {
-    resize: vertical!important;
-    overflow: auto!important;
-}
+
 }
 
 @media only screen and (max-width:767px){
@@ -1164,7 +1168,7 @@ body .sp-60-w input {
     padding: 8px 0px!important;
 }
 .certificat-modal-container .modal-content{
-    height: 97vh;
+    height: 85vh;
 }
 
 
@@ -1519,7 +1523,7 @@ if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !e
         zoom = 7;
         
         var marker = L.marker(["<?php echo $schedule['CharterProgramSchedule']['lattitude']; ?>", "<?php echo $schedule['CharterProgramSchedule']['longitude']; ?>"],{pmIgnore: true})
-        .bindTooltip("<?php echo "<span class='smalltooltip'>Day ".$daynumber."</span><span class='owntooltip' id=".$key.">".$SumDaytitle."&nbsp;<span id='".$schuuid."'   class='acti-count' ".$marker_msg_count." >".$samemkrcount."</span><br><b style='font-size: 10px;'>".$schedule['CharterProgramSchedule']['title']."<hr>".$endplace."</b><br><b style='font-size: 10px;'>".$distance.$bar.$duration."</b></span>"?>", 
+        .bindTooltip("<?php echo "<span class='smalltooltip'>Day ".$daynumber."</span><span class='owntooltip' id=".$key.">".$SumDaytitle."<span id='".$schuuid."'   class='acti-count' ".$marker_msg_count." >".$samemkrcount."</span><br><b style='font-size: 10px;'>".$schedule['CharterProgramSchedule']['title']."<hr>".$endplace."</b><br><b style='font-size: 10px;'>".$distance.$bar.$duration."</b></span>"?>", 
                     {
                         permanent: true, 
                         direction: 'right',
