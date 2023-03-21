@@ -957,7 +957,7 @@ padding-left: 15px!important;
   color:#000;
   z-index: 9999;
   font-weight:bold;
-  width: 138px;
+  width: 145px;
 }
 
 #HideDetails {
@@ -969,7 +969,7 @@ padding-left: 15px!important;
   color:#000;
   z-index: 9999;
   font-weight:bold;
-  min-width: 138px;
+  min-width: 145px;
 }
 
 #HelpfulTips {
@@ -981,7 +981,7 @@ padding-left: 15px!important;
   color:#000;
   z-index: 9999;
   font-weight:bold;
-  min-width: 138px;
+  min-width: 145px;
 }
 @media only screen and (min-width: 768px) and (max-width: 1092px){
     #CruisingButton {
