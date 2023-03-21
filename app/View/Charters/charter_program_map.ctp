@@ -2411,7 +2411,7 @@ $(document).on("click", "#cruisinglocationModalclose" ,function() {
             if(valuetxt != ""){
                     //console.log("webopen");
                     $(this).animate({
-                        //    height: "14em"
+                            height: "14em"
                             }, 500);
 
                             $(this).css({
@@ -2440,7 +2440,7 @@ $(document).on("click", "#cruisinglocationModalclose" ,function() {
         $(document).on("click", function(event){
         if(!$(event.target).closest(".textareacontmarker").length){
             $(".textareacontmarker").animate({
-                        //    height: "7em"
+                            height: "7em"
                     }, 500);
 
                     // $(".textareacontmarker").css({
