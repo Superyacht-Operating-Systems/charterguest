@@ -78,6 +78,12 @@ if(empty($scheduleData)){
         width: 225px;
         margin: 5px 0px;
     }
+    .leaflet-popup-scrolled {
+  overflow-y: auto;
+  border-bottom: 1px solid #ddd;
+  border-top: 1px solid #ddd;
+  overflow-x: hidden;
+}
     .leaflet-popup-content {
   margin: 13px 10px!important;
   line-height: 1.4;
