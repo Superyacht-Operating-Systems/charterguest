@@ -49,6 +49,15 @@ if(empty($scheduleData)){
 }
 ?>
 <style>
+    .custom-popup .leaflet-popup-content {
+    overflow-y: auto;
+    border-bottom: 1px solid #ddd;
+    border-top: 1px solid #ddd;
+    overflow-x: hidden;
+    min-height: 250px;
+    max-height: 500px;
+    width: auto !important;
+}
 ::-webkit-input-placeholder { /* WebKit, Blink, Edge */
     color:gray!important;
     opacity: 1!important;
