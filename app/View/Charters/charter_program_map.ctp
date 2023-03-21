@@ -2385,7 +2385,7 @@ $(document).on("click", "#cruisinglocationModalclose" ,function() {
         //console.log('testse');
         $(this).animate({
                  height: "14em"
-                }, 500);
+                }, 100);
 
                 $(this).css({
                     overflow:"scroll"
@@ -2397,7 +2397,7 @@ $(document).on("click", "#cruisinglocationModalclose" ,function() {
         //console.log('sss');
         $(this).animate({
                  height: "7em"
-                }, 500);
+                }, 100);
 
                 $(this).css({
                     overflow:"scroll"
@@ -2412,7 +2412,7 @@ $(document).on("click", "#cruisinglocationModalclose" ,function() {
                     //console.log("webopen");
                     $(this).animate({
                             height: "14em"
-                            }, 500);
+                            }, 100);
 
                             $(this).css({
                                 overflow:"scroll"
