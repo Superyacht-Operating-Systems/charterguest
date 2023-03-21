@@ -1574,7 +1574,7 @@ var latlongstemp = [];
 
 <?php } ?>
 // middle line
-var polyline0 = new L.Polyline(latlongstemp).addTo(map);
+var polyline0 = new L.Polyline(latlongstemp, {stroke:true,weight:4,lineCap: "round",lineJoin: "round",smoothFactor: 1}).addTo(map);
 //map.fitBounds(latlngs);
 // drawnItems.on('pm:edit', function (e) {
 
@@ -1688,22 +1688,22 @@ $(document).on("click", "#HideDetails", function(e) {
         $(".smalltooltip").hide();
         $(".owntooltip").show();
         $("#HideDetails").text("Hide Details");
-        $(".leaflet-tooltip").css("opacity", "0");  
-        setTimeout(function(){
-                $(".leaflet-tooltip").css("opacity", "1");  
+        // $(".leaflet-tooltip").css("opacity", "0");  
+        // setTimeout(function(){
+        //         $(".leaflet-tooltip").css("opacity", "1");  
                 
-        },1000);
+        // },1000);
     }else if(btntext == "Hide Details"){
         //$(".Tooltip").css("margin-top","35px");
         $(".Tooltip").css("width","50px");
         $(".smalltooltip").show();
         $(".owntooltip").hide();
         $("#HideDetails").text("Show Details");
-        $(".leaflet-tooltip").css("opacity", "0");  
-        setTimeout(function(){
-                $(".leaflet-tooltip").css("opacity", "1");  
+        // $(".leaflet-tooltip").css("opacity", "0");  
+        // setTimeout(function(){
+        //         $(".leaflet-tooltip").css("opacity", "1");  
                 
-        },1000);
+        // },1000);
     }
 });
 
@@ -1995,12 +1995,12 @@ $(document).ready(function() { //alert();
                 $(".smalltooltip").show();
                 $(".owntooltip").hide();
             //When page opens do not display location cards until 2 seconds after page loads. 
-            $(".leaflet-tooltip").css("opacity", "0");  
+            // $(".leaflet-tooltip").css("opacity", "0");  
             //$('.fancybox').fancybox();
 
-            setTimeout(function(){
-                $(".leaflet-tooltip").css("opacity", "1");  
-            },2000);
+            // setTimeout(function(){
+            //     $(".leaflet-tooltip").css("opacity", "1");  
+            // },2000);
 
             //When page opens do not display location cards until 2 seconds after page loads. 
 
