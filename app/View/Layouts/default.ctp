@@ -368,8 +368,11 @@ width: max-content;
                     </div>
 
                     <div class="label-bold-head mydemolabel">
-                      <?php if($programpageCharter == "charters" && $programpagePrograms != "programs" && $programpagePrograms == "preference"){ ?>
-                        <?php if (isset($session["yachFullName"]) && !empty($session["yachFullName"])) { echo $session['login_username']; } ?><span class="user-subnamep">  <span class="sp-noe"><?php if(isset($session['preferenceGuestName']) && ($session['login_username'] != $session['preferenceGuestName'])  ){ ?>for <?php } ?></span><?php if(isset($session['preferenceGuestName']) && ($session['login_username'] != $session['preferenceGuestName'])){ echo $session['preferenceGuestName'];  } ?></span>
+                      <?php if($programpageCharter == "charters" && $programpagePrograms != "programs" && $programpagePrograms == "preference"){ 
+                        $loginusername = strtolower($session['login_username']);
+                        $loginpreferenceGuestName = strtolower($session['preferenceGuestName']);
+                        ?>
+                        <?php if (isset($session["yachFullName"]) && !empty($session["yachFullName"])) { echo $session['login_username']; } ?><span class="user-subnamep">  <span class="sp-noe"><?php if(isset($session['preferenceGuestName']) && ( $loginusername != $loginpreferenceGuestName)  ){ ?>for <?php } ?></span><?php if(isset($session['preferenceGuestName']) && ($loginusername != $loginpreferenceGuestName)){ echo $session['preferenceGuestName'];  } ?></span>
                       <?php } else if($programpageCharter == "charters" && $programpagePrograms != "programs"){ ?>
                         <?php if (isset($session["yachFullName"]) && !empty($session["yachFullName"])) { echo $session['GuestListYname']; } ?>
                       <?php } ?>  
