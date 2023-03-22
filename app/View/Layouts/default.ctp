@@ -369,8 +369,12 @@ width: max-content;
 
                     <div class="label-bold-head mydemolabel">
                       <?php if($programpageCharter == "charters" && $programpagePrograms != "programs" && $programpagePrograms == "preference"){ 
+                        if(isset($session['login_username'])){
                         $loginusername = strtolower($session['login_username']);
+                        }
+                        if(isset($session['preferenceGuestName'])){
                         $loginpreferenceGuestName = strtolower($session['preferenceGuestName']);
+                        }
                         ?>
                         <?php if (isset($session["yachFullName"]) && !empty($session["yachFullName"])) { echo $session['login_username']; } ?><span class="user-subnamep">  <span class="sp-noe"><?php if(isset($session['preferenceGuestName']) && ( $loginusername != $loginpreferenceGuestName)  ){ ?>for <?php } ?></span><?php if(isset($session['preferenceGuestName']) && ($loginusername != $loginpreferenceGuestName)){ echo $session['preferenceGuestName'];  } ?></span>
                       <?php } else if($programpageCharter == "charters" && $programpagePrograms != "programs"){ ?>
