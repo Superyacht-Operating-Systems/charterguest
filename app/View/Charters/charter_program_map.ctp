@@ -1876,6 +1876,7 @@ function markerOnClick(e) {
             success:function(result) {
                 $("#hideloader").hide();
                 if (result.status == 'success') {
+                    var width = $(window).width();
                     $(".leaflet-control-attribution").hide();
                     $("#CruisingButton").hide();
                     $("#HideDetails").hide();
@@ -1888,6 +1889,8 @@ function markerOnClick(e) {
                 setTimeout(function() {
                     var popup = L.popup({
                         autoPan: true
+                        // closeOnClick: false,
+                        // autoClose: false
                         })
                     .setLatLng(popLocation)
                     .setContent(result.popupHtml)
@@ -1899,6 +1902,16 @@ function markerOnClick(e) {
                             $("#HideDetails").show();
                             $("#HelpfulTips").show();
                             $(".leaflet-control-container").show();
+
+                            //for screenview <990 on opening the itinerary modal blacked out the map region
+                            // on close modal removed the blacked out css
+                                $(".leaflet-tile-pane").css({
+                                        "display":""
+                                });
+                                $(".leaflet-container").css({
+                                        "background-color":""
+                                });
+                            
                             
                         });
                     // display popup from top
@@ -1913,6 +1926,26 @@ function markerOnClick(e) {
                      /* $(popup._closeButton).one('click', function(e){
                         msgcount();
                     }); */
+                    
+                    //alert(width);
+                    //for screenview <990 on opening the itinerary modal blacked out the map region
+                    // on close modal removed the blacked out css
+                    if(width<990){
+                        $(".leaflet-tile-pane").css({
+                                "display":"none"
+                        });
+                        $(".leaflet-container").css({
+                                "background-color":"#000"
+                        });
+                        
+                    }else if(width>990){
+                        $(".leaflet-tile-pane").css({
+                                "display":""
+                        });
+                        $(".leaflet-container").css({
+                                "background-color":""
+                        });
+                    }
                 }
             },
             error: function(jqxhr) { 
@@ -1974,7 +2007,6 @@ $(document).on("change", ".noofdayscard", function(e) {
 
 });
 
-
 // Closing the popup
 $(document).on("click", "#closeSchedule", function(e) {
     $(".leaflet-popup-close-button")[0].click();
@@ -1983,6 +2015,20 @@ $(document).on("click", "#closeSchedule", function(e) {
     $("#HideDetails").show();
     $("#HelpfulTips").show();
     $(".leaflet-control-container").show();
+
+    //for screenview <990 on opening the itinerary modal blacked out the map region
+    // on close modal removed the blacked out css
+    var width = $(window).width();
+    //alert(width);
+        if(width<990){
+        $(".leaflet-tile-pane").css({
+                "display":""
+        });
+        $(".leaflet-container").css({
+                "background-color":""
+        });
+    }
+
 });
 
 
