@@ -551,12 +551,18 @@ margin-top: 50px;
                 <?php }else{ ?>
                 <li class="menu__item pagleave"><a href="<?php echo $baseFolder."/charters/view_guest/".$selectedCharterProgramUUID."/".$sessionCharterGuest['charter_company_id']; ?>">Guest List</a></li>
                 <?php } }?>   
-                <?php //if(isset($ownerprefenceID) && !empty($ownerprefenceID)){ ?> 
+                <?php 
+                $usertypeformap = "";
+                if(isset($ownerprefenceID) && !empty($ownerprefenceID)){ 
+                    $usertypeformap = "owner";
+                 }else if(isset($assocprefenceID) && !empty($assocprefenceID)){ 
+                    $usertypeformap = "guest";
+                 }?>    
                 <li class="menu__item"> <a href="#" title="<?php echo $title; ?>">Cruising Map</a>
                     <?php  if(isset($mapdetails)){ ?>
                         <ul class="submenu">
                             <?php foreach($mapdetails as $startdate => $data){ ?>
-                                <li class="menu__item pagleave"><a href="<?php echo $baseFolder."/charters/charter_program_map/".$data['programid'].'/'.$data['dbname'].'/owner'; ?>"><?php echo $startdate; ?></a></li>
+                                <li class="menu__item pagleave"><a href="<?php echo $baseFolder."/charters/charter_program_map/".$data['programid'].'/'.$data['dbname'].'/'.$usertypeformap; ?>"><?php echo $startdate; ?></a></li>
                             <?php
                                     
                                 } ?>
