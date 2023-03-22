@@ -1905,12 +1905,7 @@ function markerOnClick(e) {
 
                             //for screenview <990 on opening the itinerary modal blacked out the map region
                             // on close modal removed the blacked out css
-                                $(".leaflet-tile-pane").css({
-                                        "display":""
-                                });
-                                $(".leaflet-container").css({
-                                        "background-color":""
-                                });
+                            customMediaQueryRemove();
                             
                             
                         });
@@ -1931,20 +1926,10 @@ function markerOnClick(e) {
                     //for screenview <990 on opening the itinerary modal blacked out the map region
                     // on close modal removed the blacked out css
                     if(width<990){
-                        $(".leaflet-tile-pane").css({
-                                "display":"none"
-                        });
-                        $(".leaflet-container").css({
-                                "background-color":"#000"
-                        });
+                        customMediaQueryAdd();
                         
                     }else if(width>990){
-                        $(".leaflet-tile-pane").css({
-                                "display":""
-                        });
-                        $(".leaflet-container").css({
-                                "background-color":""
-                        });
+                        customMediaQueryRemove();
                     }
                 }
             },
@@ -2021,12 +2006,7 @@ $(document).on("click", "#closeSchedule", function(e) {
     var width = $(window).width();
     //alert(width);
         if(width<990){
-        $(".leaflet-tile-pane").css({
-                "display":""
-        });
-        $(".leaflet-container").css({
-                "background-color":""
-        });
+            customMediaQueryRemove();
     }
 
 });
@@ -2537,6 +2517,40 @@ $(document).on("click", ".close", function(e) {
     $("#howtovideo").hide();
     $("#howtovideocharterhead").hide();
 });
-close
+
+function customMediaQueryRemove(){
+        $(".leaflet-tile-pane").css({
+                "display":""
+        });
+        $(".leaflet-overlay-pane").css({
+            "display":""
+        });
+        $(".leaflet-marker-pane").css({
+                "display":""
+        });
+        $(".leaflet-tooltip-pane").css({
+                "display":""
+        });
+        $(".leaflet-container").css({
+                "background-color":""
+        });
+    }
+function customMediaQueryAdd(){
+    $(".leaflet-tile-pane").css({
+            "display":"none"
+    });
+    $(".leaflet-overlay-pane").css({
+            "display":"none"
+    });
+    $(".leaflet-marker-pane").css({
+            "display":"none"
+    });
+    $(".leaflet-tooltip-pane").css({
+            "display":"none"
+    });
+    $(".leaflet-container").css({
+            "background-color":"#000"
+    });
+}
 </script>
   
