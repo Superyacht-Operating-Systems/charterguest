@@ -1771,6 +1771,7 @@ function markerOnClick(e) {
             success:function(result) {
                 
                 if (result.status == 'success') {
+                    var width = $(window).width();
                     $("#hideloader").hide();
                     map.setView(e.latlng);
                     $(".leaflet-control-attribution").hide();
@@ -1791,6 +1792,10 @@ function markerOnClick(e) {
                             $("#HideDetails").show();
                             $("#HelpfulTips").show();
                             $(".leaflet-control-container").show();
+
+                            //for screenview <990 on opening the itinerary modal blacked out the map region
+                            // on close modal removed the blacked out css
+                            customMediaQueryRemove();
                             
                         });
                     window.scrollTo(0, 0);
@@ -1811,6 +1816,16 @@ function markerOnClick(e) {
                         $(".leaflet-control-attribution").show();
                         $(".leaflet-control-container").show();
                     });
+
+                    //alert(width);
+                    //for screenview <990 on opening the itinerary modal blacked out the map region
+                    // on close modal removed the blacked out css
+                    if(width<990){
+                        customMediaQueryAdd();
+                        
+                    }else if(width>990){
+                        customMediaQueryRemove();
+                    }
                 }
             },
             error: function(jqxhr) { 
@@ -1845,6 +1860,7 @@ $(document).on("change", ".noofdayscard", function(e) {
             success:function(result) {
                
                 if (result.status == 'success') {
+                    var width = $(window).width();
                     $("#hideloader").hide();
                     //console.log(mapmarkerglobalObj);
                     map.setView(mapmarkerglobalObj.latlng);
@@ -1871,6 +1887,11 @@ $(document).on("change", ".noofdayscard", function(e) {
                             $("#HideDetails").show();
                             $("#HelpfulTips").show();
                             $(".leaflet-control-container").show();
+
+                            //for screenview <990 on opening the itinerary modal blacked out the map region
+                            // on close modal removed the blacked out css
+                            customMediaQueryRemove();
+
                         });
                         window.scrollTo(0, 0);
                         //$('.day_dates').text(day_dates);
@@ -1891,6 +1912,16 @@ $(document).on("change", ".noofdayscard", function(e) {
                         $(".leaflet-control-attribution").show();
                         $(".leaflet-control-container").show();
                     });
+
+                        //alert(width);
+                        //for screenview <990 on opening the itinerary modal blacked out the map region
+                        // on close modal removed the blacked out css
+                        if(width<990){
+                            customMediaQueryAdd();
+                            
+                        }else if(width>990){
+                            customMediaQueryRemove();
+                        }
                     }, 1000);
                      
                 }
@@ -1910,6 +1941,14 @@ $(document).on("click", "#closeSchedule", function(e) {
     $("#HideDetails").show();
     $("#HelpfulTips").show();
     $(".leaflet-control-container").show();
+
+    //for screenview <990 on opening the itinerary modal blacked out the map region
+    // on close modal removed the blacked out css
+    var width = $(window).width();
+    //alert(width);
+        if(width<990){
+            customMediaQueryRemove();
+    }
 });
 
 $(document).on("click", "#CruisingButton", function(e) {
@@ -2312,7 +2351,40 @@ $(document).on("click", ".CruisingCommentMarkUnread" ,function() {
     });
 
 
-
+    function customMediaQueryRemove(){
+        $(".leaflet-tile-pane").css({
+                "display":""
+        });
+        $(".leaflet-overlay-pane").css({
+            "display":""
+        });
+        $(".leaflet-marker-pane").css({
+                "display":""
+        });
+        $(".leaflet-tooltip-pane").css({
+                "display":""
+        });
+        $(".leaflet-container").css({
+                "background-color":""
+        });
+    }
+function customMediaQueryAdd(){
+    $(".leaflet-tile-pane").css({
+            "display":"none"
+    });
+    $(".leaflet-overlay-pane").css({
+            "display":"none"
+    });
+    $(".leaflet-marker-pane").css({
+            "display":"none"
+    });
+    $(".leaflet-tooltip-pane").css({
+            "display":"none"
+    });
+    $(".leaflet-container").css({
+            "background-color":"#000"
+    });
+}
         
     
 </script>

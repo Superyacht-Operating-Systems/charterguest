@@ -1423,8 +1423,21 @@ var sidebar = (function() {
 
         if (!sidebarIsVisible) {
             sidebarIsVisible = true;
+            // In phone view the left menu should not overflow with map right side buttons
+            var screenwidth = $(window).width();
+            if(screenwidth <490){
+                            $("#CruisingButton").hide();
+                            $("#HideDetails").hide();
+                            $("#HelpfulTips").hide();
+            }
+            // In phone view the left menu should not overflow with map right side buttons
         } else {
             sidebarIsVisible = false;
+            // In phone view the left menu should not overflow with map right side buttons
+                    $("#CruisingButton").show();
+                    $("#HideDetails").show();
+                    $("#HelpfulTips").show();
+                    // In phone view the left menu should not overflow with map right side buttons
         }
     }
 })();
@@ -1976,6 +1989,9 @@ $(document).on("change", ".noofdayscard", function(e) {
                     .openOn(map)
                     .on("remove", function () {
                             msgcount(scheduleSameLocationUUID);
+                            //for screenview <990 on opening the itinerary modal blacked out the map region
+                            // on close modal removed the blacked out css
+                            customMediaQueryRemove();
                         });
                         window.scrollTo(0, 0);
                         //$('.day_dates').text(day_dates);
