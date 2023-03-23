@@ -584,12 +584,12 @@ class ChartersController extends AppController {
                             }
                             
                         }
-                        if(isset($fleet_domain_name) && $fleet_domain_name == "charterguest"){
-                                $SITE_URL = "https://charterguest.net/";
-                        }else if(isset($filedata['siteurl'])){
+                        // if(isset($fleet_domain_name) && $fleet_domain_name == "charterguest"){
+                        //         $SITE_URL = "https://charterguest.net/";
+                        // }else if(isset($filedata['siteurl'])){
                             $SITE_URL = $filedata['siteurl'];
-                        }
-                        $sourceImagePath = $SITE_URL.'/'.$fleetname."/app/webroot/img/charter_program_files/".$file['CharterProgramFile']['file_name'];
+                        //}
+                        $sourceImagePath = $SITE_URL.$fleetname."/app/webroot/img/charter_program_files/".$file['CharterProgramFile']['file_name'];
                         $attachment[$startdate] = $sourceImagePath;
                     }
                 } 

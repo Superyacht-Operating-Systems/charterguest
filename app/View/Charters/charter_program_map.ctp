@@ -1913,15 +1913,7 @@ function markerOnClick(e) {
                     window.scrollTo(0, 0);
                     //$('.day_dates').text(day_dates);
                     $('.noofdayscard').html(result.no_of_days_options);
-                }, 1000);
-                    $(".leaflet-popup-close-button").addClass('updateCommentscount');
-                   // alert(day_dates);
-                    
-                     // to get reduce msgcount
-                     /* $(popup._closeButton).one('click', function(e){
-                        msgcount();
-                    }); */
-                    
+
                     //alert(width);
                     //for screenview <990 on opening the itinerary modal blacked out the map region
                     // on close modal removed the blacked out css
@@ -1931,6 +1923,16 @@ function markerOnClick(e) {
                     }else if(width>990){
                         customMediaQueryRemove();
                     }
+                }, 1000);
+                    $(".leaflet-popup-close-button").addClass('updateCommentscount');
+                   // alert(day_dates);
+                    
+                     // to get reduce msgcount
+                     /* $(popup._closeButton).one('click', function(e){
+                        msgcount();
+                    }); */
+                    
+                    
                 }
             },
             error: function(jqxhr) { 
@@ -1961,6 +1963,7 @@ $(document).on("change", ".noofdayscard", function(e) {
             success:function(result) {
                 $("#hideloader").hide();
                 if (result.status == 'success') {
+                    var width = $(window).width();
                     //console.log(mapmarkerglobalObj);
                     map.setView(mapmarkerglobalObj.latlng);
                     var popLocation= mapmarkerglobalObj.latlng;
@@ -1977,6 +1980,15 @@ $(document).on("change", ".noofdayscard", function(e) {
                         window.scrollTo(0, 0);
                         //$('.day_dates').text(day_dates);
                         $('.noofdayscard').html(result.no_of_days_options);
+                        //alert(width);
+                        //for screenview <990 on opening the itinerary modal blacked out the map region
+                        // on close modal removed the blacked out css
+                        if(width<990){
+                            customMediaQueryAdd();
+                            
+                        }else if(width>990){
+                            customMediaQueryRemove();
+                        }
                     }, 1000);
                     $(".leaflet-popup-close-button").addClass('updateCommentscount');
                    
