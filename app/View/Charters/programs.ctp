@@ -667,7 +667,7 @@ input:focus {
             <?php if(isset($programFiles) && !empty($programFiles)){ ?>
                 <ul class="submenu">
                     <?php foreach($programFiles as $startdate => $filepath){ ?>
-                    <li class="menu__item"><a href="<?php echo $filepath; ?>" target="_self"><?php echo $startdate; ?></a></li>
+                    <li class="menu__item"><a href="<?php echo $filepath; ?>" download><?php echo $startdate; ?></a></li>
                     <?php
                             
                         } ?>
