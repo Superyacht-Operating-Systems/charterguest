@@ -673,7 +673,7 @@ color: #000;
             <?php if(isset($programFiles)){ ?>
                 <ul class="submenu">
                     <?php foreach($programFiles as $startdate => $filepath){ ?>
-                    <li class="menu__item"><a href="<?php echo $filepath; ?>" target="_blank"><?php echo $startdate; ?></a></li>
+                    <li class="menu__item"><a href="<?php echo $filepath; ?>" download><?php echo $startdate; ?></a></li>
                     <?php
                             
                         } ?>

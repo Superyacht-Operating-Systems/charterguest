@@ -594,7 +594,7 @@ class ChartersController extends AppController {
                     }
                 } 
             }
-    //    echo "<pre>";print_r($attachment); echo "<pre>";print_r($programFiles); exit;
+        echo "<pre>";print_r($attachment); echo "<pre>";print_r($programFiles); exit;
 
          }
 
