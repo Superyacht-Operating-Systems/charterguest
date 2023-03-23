@@ -5907,6 +5907,7 @@ class ChartersController extends AppController {
                     //$SITE_URL = Configure::read('BASE_URL');
                 // echo "<pre>";print_r($guestListData); //exit;
                     // echo "<pre>";print_r($charterGuestData); exit;
+                    $this->loadModel('Yacht');
                     if(isset($charterGuestData) && !empty($charterGuestData)){
                     
                         foreach($charterGuestData as $key => $value){
@@ -5917,6 +5918,20 @@ class ChartersController extends AppController {
                             if(isset($programFiledata)){
                                 $programFiles[$charter_from_date]['attachment'] = $programFiledata;
                                 //$programFiles[]['startdate'] = $charter_from_date;
+                            }
+                            $yacht_id = $value['CharterGuest']['yacht_id'];
+                            $charter_company_id = $value['CharterGuest']['charter_company_id'];
+                            $yachtCond = array('Yacht.id' => $yacht_id);
+                            $Ydata = $this->Yacht->find('first', array('conditions' => $yachtCond));
+                            $ydb_name = $Ydata['Yacht']['ydb_name'];
+                            $yname = $Ydata['Yacht']['yname'];
+                            $domain_name = "";
+                            if(isset($Ydata['Yacht']['domain_name'])){
+                            $domain_name = $Ydata['Yacht']['domain_name'];
+                            }
+                            $SITE_URL = "https://totalsuperyacht.com:8080/";
+                            if(isset($domain_name) && $domain_name == "charterguest"){
+                                $SITE_URL = "https://charterguest.net/";
                             }
                             
                             $charter_company_id = $value['CharterGuest']['charter_company_id'];
