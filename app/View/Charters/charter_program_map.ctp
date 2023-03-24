@@ -2491,19 +2491,22 @@ $(document).on("click", "#cruisinglocationModalclose" ,function() {
     });
     
         $(document).on("click", ".textareacontmarker" ,function() {
-        
-            var valuetxt = $(this).val();
+            const textarea = document.getElementByClassName('textareacontmarker');
+        const lineHeight = parseInt(window.getComputedStyle(textarea).lineHeight);
+        const numLines = textarea.scrollHeight / lineHeight;
+        const newHeight = numLines * lineHeight;
+        textarea.style.height = `${newHeight}px`;
+            // var valuetxt = $(this).val();
 
-            if(valuetxt != ""){
-                    //console.log("webopen");
-                    $(this).animate({
-                            height: "14em"
-                            }, 500);
+            // if(valuetxt != ""){
+            //         $(this).animate({
+            //                 height: "14em"
+            //                 }, 500);
 
-                            $(this).css({
-                                overflow:"scroll"
-                            });
-                }
+            //                 $(this).css({
+            //                     overflow:"scroll"
+            //                 });
+            //     }
                     
         });
    
