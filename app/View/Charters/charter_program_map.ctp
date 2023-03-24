@@ -2491,7 +2491,7 @@ $(document).on("click", "#cruisinglocationModalclose" ,function() {
     });
     
         $(document).on("click", ".textareacontmarker" ,function() {
-            const textarea = document.getElementByClassName('textareacontmarker');
+            const textarea = document.getElementsByClassName('textareacontmarker');
         const lineHeight = parseInt(window.getComputedStyle(textarea).lineHeight);
         const numLines = textarea.scrollHeight / lineHeight;
         const newHeight = numLines * lineHeight;
