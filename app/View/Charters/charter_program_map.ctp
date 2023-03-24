@@ -2464,49 +2464,41 @@ $(document).on("click", "#cruisinglocationModalclose" ,function() {
 
     $(document).on("focus", ".textareacont" ,function() {
         //console.log('testse');
-        const textarea = document.getElementByClassName('textareacont');
-        const lineHeight = parseInt(window.getComputedStyle(textarea).lineHeight);
-        const numLines = textarea.scrollHeight / lineHeight;
-        const newHeight = numLines * lineHeight;
-        textarea.style.height = `${newHeight}px`;
-        // $(this).animate({
-        //          height: "14em"
-        //         }, 500);
+        $(this).animate({
+                 height: "14em"
+                }, 500);
 
-        //         $(this).css({
-        //             overflow:"scroll"
-        //         });
+                $(this).css({
+                    overflow:"scroll"
+                });
                 
     });
 
     $(document).on("blur", ".textareacont" ,function() {
         //console.log('sss');
-        // $(this).animate({
-        //          height: "7em"
-        //         }, 500);
+        $(this).animate({
+                 height: "7em"
+                }, 500);
 
-        //         $(this).css({
-        //             overflow:"scroll"
-        //         });
+                $(this).css({
+                    overflow:"scroll"
+                });
     });
     
         $(document).on("click", ".textareacontmarker" ,function() {
-            const textarea = document.getElementsByClassName('textareacontmarker');
-        const lineHeight = parseInt(window.getComputedStyle(textarea).lineHeight);
-        const numLines = textarea.scrollHeight / lineHeight;
-        const newHeight = numLines * lineHeight;
-        textarea.style.height = `${newHeight}px`;
-            // var valuetxt = $(this).val();
+        
+            var valuetxt = $(this).val();
 
-            // if(valuetxt != ""){
-            //         $(this).animate({
-            //                 height: "14em"
-            //                 }, 500);
+            if(valuetxt != ""){
+                    //console.log("webopen");
+                    $(this).animate({
+                            height: "14em"
+                            }, 500);
 
-            //                 $(this).css({
-            //                     overflow:"scroll"
-            //                 });
-            //     }
+                            $(this).css({
+                                overflow:"scroll"
+                            });
+                }
                     
         });
    
