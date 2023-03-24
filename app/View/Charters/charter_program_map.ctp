@@ -1019,7 +1019,7 @@ padding-left: 15px!important;
 @media (max-width: 767px){
 #HideDetails, #HelpfulTips {
 
-    width: 108px;
+    width: 113px;
     height: 24px;
     padding: 0px!important;
     font-size: 11px!important;
@@ -1027,7 +1027,7 @@ padding-left: 15px!important;
 }
 #CruisingButton {
     height: 24px;
-    width: 108px;
+    width: 113px;
   top: 18px !important;
 }
 
