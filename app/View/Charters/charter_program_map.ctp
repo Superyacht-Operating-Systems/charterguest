@@ -2486,20 +2486,19 @@ $(document).on("click", "#cruisinglocationModalclose" ,function() {
     });
     
         $(document).on("click", ".textareacontmarker" ,function() {
-            setTimeout(function(){
-                $('.textareacontmarker').autoResize();
-            }, 1500);
-            // var valuetxt = $(this).val();
+        
+            var valuetxt = $(this).val();
 
-            // if(valuetxt != ""){
-            //         $(this).animate({
-            //                 height: "14em"
-            //                 }, 500);
+            if(valuetxt != ""){
+                    //console.log("webopen");
+                    $(this).animate({
+                            height: "14em"
+                            }, 500);
 
-            //                 $(this).css({
-            //                     overflow:"scroll"
-            //                 });
-            //     }
+                            $(this).css({
+                                overflow:"scroll"
+                            });
+                }
                     
         });
    
@@ -2521,9 +2520,9 @@ $(document).on("click", "#cruisinglocationModalclose" ,function() {
 
         $(document).on("click", function(event){
         if(!$(event.target).closest(".textareacontmarker").length){
-            // $(".textareacontmarker").animate({
-            //                 height: "7em"
-            //         }, 500);
+            $(".textareacontmarker").animate({
+                            height: "7em"
+                    }, 500);
 
                     // $(".textareacontmarker").css({
                     //     overflow:"scroll"
