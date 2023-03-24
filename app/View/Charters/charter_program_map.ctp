@@ -58,6 +58,7 @@ if(empty($scheduleData)){
     max-height: 500px;
     width: auto !important;
 } */
+
 ::-webkit-input-placeholder { /* WebKit, Blink, Edge */
     color:gray!important;
     opacity: 1!important;
@@ -1072,9 +1073,20 @@ textarea.form-control {
 .modal_load{
     margin:5px 10px 5px 8px;
 }
+@media screen and (min-width: 990px) {
+.location_Modal_body{
+    max-height: 580px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+}
 @media screen and (max-width: 990px) {
     .modal_load{
-        padding-bottom: 100px;
+        max-height: 85vh;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    margin: 5px 0px 5px 8px;
+    padding: 0px 10px 100px 0px;
     }
     .cruising-location-Modal .modal-content{
        height: 96vh!important;
@@ -1338,8 +1350,7 @@ body .sp-60-w input {
                 <button type="button" class="close" id="cruisinglocationModalclose" aria-hidden="true" style="margin-right: 5px;">×</button>
                 <h4 class="modal-title" id="myModalLabel" style="text-align: center;font-weight: bold;"><?php echo $startloc; ?> to <?php echo $endloc; ?></h4>
             </div>
-            <div class="modal-body" style="max-height: 580px;
-    overflow-y: scroll;overflow-x: hidden;">
+            <div class="modal-body location_Modal_body">
                 <div id="cruisinglocationModal_load" class="modal_load">
 
                 </div>
