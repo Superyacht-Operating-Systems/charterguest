@@ -1082,7 +1082,7 @@ textarea.form-control {
 }
 @media screen and (max-width: 990px) {
     .modal_load{
-        max-height: 85vh;
+        max-height: 86vh;
     overflow-y: scroll;
     overflow-x: hidden;
     margin: 5px 0px 5px 8px;
