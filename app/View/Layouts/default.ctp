@@ -1280,7 +1280,7 @@ catch (error) {
 
   $('.download').click(function(e) {
       var downloadcontractfile = $(this).attr("data-href");
-      var filename = downloadcontractfile.split('/').pop();
+      var fileName = downloadcontractfile.split('/').pop();
        //Set the File URL.
        var url = downloadcontractfile;
  
