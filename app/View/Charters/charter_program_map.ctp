@@ -2464,25 +2464,30 @@ $(document).on("click", "#cruisinglocationModalclose" ,function() {
 
     $(document).on("focus", ".textareacont" ,function() {
         //console.log('testse');
-        $(this).animate({
-                 height: "14em"
-                }, 500);
+        const textarea = document.getElementByClassName('textareacont');
+        const lineHeight = parseInt(window.getComputedStyle(textarea).lineHeight);
+        const numLines = textarea.scrollHeight / lineHeight;
+        const newHeight = numLines * lineHeight;
+        textarea.style.height = `${newHeight}px`;
+        // $(this).animate({
+        //          height: "14em"
+        //         }, 500);
 
-                $(this).css({
-                    overflow:"scroll"
-                });
+        //         $(this).css({
+        //             overflow:"scroll"
+        //         });
                 
     });
 
     $(document).on("blur", ".textareacont" ,function() {
         //console.log('sss');
-        $(this).animate({
-                 height: "7em"
-                }, 500);
+        // $(this).animate({
+        //          height: "7em"
+        //         }, 500);
 
-                $(this).css({
-                    overflow:"scroll"
-                });
+        //         $(this).css({
+        //             overflow:"scroll"
+        //         });
     });
     
         $(document).on("click", ".textareacontmarker" ,function() {
