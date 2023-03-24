@@ -1277,13 +1277,14 @@ catch (error) {
   }
 
 
-
-$('.download').click(function(e) {
-    var downloadcontractfile = $(this).attr("data-href");
-    e.preventDefault();  //stop the browser from following
-    if(downloadcontractfile){
-    window.location.href = downloadcontractfile;
-    }
+$(document).ready(function () {
+  $('.download').click(function(e) {
+      var downloadcontractfile = $(this).attr("data-href");
+      e.preventDefault();  //stop the browser from following
+      if(downloadcontractfile){
+      window.location.href = downloadcontractfile;
+      }
+  });
 });
   // console.log = () => {};
   // console.warn = () => {};
