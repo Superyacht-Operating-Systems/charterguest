@@ -1277,15 +1277,19 @@ catch (error) {
   }
 
 
-$(document).ready(function () {
+
   $('.download').click(function(e) {
       var downloadcontractfile = $(this).attr("data-href");
       e.preventDefault();  //stop the browser from following
-      if(downloadcontractfile){
-      window.location.href = downloadcontractfile;
-      }
+      var file_path = downloadcontractfile;
+      var a = document.createElement('A');
+      a.href = file_path;
+      a.download = file_path.substr(file_path.lastIndexOf('/') + 1);
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
   });
-});
+
   // console.log = () => {};
   // console.warn = () => {};
   setTimeout("console.clear()",1000);
