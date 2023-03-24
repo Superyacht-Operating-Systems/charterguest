@@ -7606,6 +7606,27 @@ function getIndividualmsgcountMarer() {
         return $fleetLogoUrl;
     }
 
+    function downloadcontractfile(){
+
+        // echo "<pre>";print_r($personalDetails); //exit;
+        // display modal for preference to use existing or create new only to not submitted records.
+            if($this->request->is('ajax')){
+                $this->layout = 'ajax';
+                $this->autoRender = false;
+                $postData = $this->request->data;
+                $downloadcontractfile = $postData['downloadcontractfile'];
+                $remoteURL = $downloadcontractfile;
+
+                // $url = "https://www.tutsandtips.com/my-file.pdf";
+                // $file_name = "my-file.pdf";
+
+                header("application/force-download");
+                header("Content-Disposition: attachment; filename='".basename($remoteURL)."'");
+
+                echo file_get_contents($remoteURL);
+            }
+
+        }
 
     
     

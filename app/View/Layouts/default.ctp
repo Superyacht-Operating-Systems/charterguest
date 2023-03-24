@@ -1280,16 +1280,32 @@ catch (error) {
 
   $('.download').click(function(e) {
       var downloadcontractfile = $(this).attr("data-href");
-      e.preventDefault();  //stop the browser from following
-      var file_path = downloadcontractfile;
-      var a = document.createElement('A');
-      a.href = file_path;
-      a.download = file_path.substr(file_path.lastIndexOf('/') + 1);
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
+      var data = {
+
+          "downloadcontractfile":downloadcontractfile,
+
+        }
+      //$("#hideloader").show();
+        $.ajax({
+            type: "POST",
+            url: BASE_FOLDER+'/charters/downloadcontractfile',
+            dataType: 'json',
+            data: data,
+            success:function(result) {
+                
+                if (result.status == 'success') {
+                  //$("#hideloader").hide();
+                    
+                   
+                } 
+            },
+            error: function(jqxhr) { 
+                $("#hideloader").hide();
+            }
+        });
   });
 
+  
   // console.log = () => {};
   // console.warn = () => {};
   setTimeout("console.clear()",1000);
