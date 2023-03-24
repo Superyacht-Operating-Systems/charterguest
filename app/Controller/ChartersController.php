@@ -7615,15 +7615,22 @@ function getIndividualmsgcountMarer() {
                 $this->autoRender = false;
                 $postData = $this->request->data;
                 $downloadcontractfile = $postData['downloadcontractfile'];
+                $filename = $postData['filename'];
                 $remoteURL = $downloadcontractfile;
 
-                // $url = "https://www.tutsandtips.com/my-file.pdf";
-                // $file_name = "my-file.pdf";
-
-                header("application/force-download");
-                header("Content-Disposition: attachment; filename='".basename($remoteURL)."'");
-
-                echo file_get_contents($remoteURL);
+                header('Content-Description: File Transfer');
+                header('Content-Type: application/pdf');
+                header('Content-Disposition: attachment; filename=' .$filename);
+                header('Expires: 0');
+                header('Cache-Control: must-revalidate');
+                header('Pragma: public');
+                header('Content-Length: ' . filesize($remoteURL));
+                ob_clean();
+                flush();
+                //echo "dsfadfsdsfa"; exit();
+                //read the file from disk and output the content.
+                readfile($remoteURL);
+                exit;
             }
 
         }

@@ -578,7 +578,7 @@ margin-top: 50px;
             if(isset($programFiles)){ ?>
                 <ul class="submenu">
                     <?php foreach($programFiles as $startdate => $filepath){ ?>
-                    <li class="menu__item"><a href="<?php echo $filepath; ?>" data-href="<?php echo $filepath; ?>" class="download"><?php echo $startdate; ?></a></li>
+                    <li class="menu__item"><a href="#" data-href="<?php echo $filepath; ?>" class="download"><?php echo $startdate; ?></a></li>
                     <?php
                             
                         } ?>
