@@ -1352,7 +1352,7 @@ catch (error) {
                     }
                 }
             });
-        };
+        }
 
   
   // console.log = () => {};

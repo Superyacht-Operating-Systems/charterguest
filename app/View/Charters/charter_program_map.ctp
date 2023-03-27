@@ -790,8 +790,9 @@ float: right;
 
 .Tooltip {
     width: 160px;
-    display: block;
+    display: none;
     font-size: 12px;
+    /* top : -30px; */
 }
 
 .Tooltipmodalmap {
@@ -813,10 +814,14 @@ float: right;
   width: 320px;
 }
 
+.leaflet-control-attribution, .leaflet-control-scale-line{
+    padding:0;
+}
+
 .leaflet-control-attribution {
 
-height: 42px;
-width: 160px;
+/* height: 42px; */
+width: 260px;
 
 
 }
@@ -1222,6 +1227,13 @@ body .sp-60-w input {
 }
 
 
+.text-below-marker {
+    font-size: 16px;
+    font-weight: 1px solid;
+    font-weight: bolder;
+    margin-top: -25px !important;
+    margin-left: -3px !important;
+}
 
 
 </style>  
@@ -1257,7 +1269,7 @@ body .sp-60-w input {
             <?php if(isset($guesttype) && $guesttype == "owner"){ if(isset($programFiles)){ ?>
                 <ul class="submenu">
                     <?php  foreach($programFiles as $startdate => $filepath){ ?>
-                    <li class="menu__item"><a href="#" data-href="<?php echo $filepath; ?>" class="download"><?php echo $startdate; ?></a></li>
+                    <li class="menu__item"><a href="#" data-href="<?php echo $filepath; ?>" class="downloadmappagefile"><?php echo $startdate; ?></a></li>
                     <?php
                             
                         } ?>
@@ -1472,7 +1484,7 @@ var vessel = new L.LayerGroup();
 var markerArray = [];
 var markerCount = 0;
      
-var mbAttr = '<table width=100%><thead><tr style="font-size:12px;font-weight:bold;text-align:center;"><td style="width:50%">Distance</td><td style="width:50%">Duration</td></tr></thead><tbody><tr style="font-size:12px;color:#3388ff;font-weight:bold;text-align:center;"><td ><?php echo $RouteDatadisplaydistancevalue; ?></td><td ><?php echo $RouteDatadisplayduration; ?></td></tr></tbody></table>';
+var mbAttr = '<table width=100%><thead><tr style="font-size:12px;font-weight:bold;text-align:center;"><td style="width:33%;border-right: 8px solid #000;">Distance</td><td style="width:33%;border-right: 8px solid #000;">Duration</td><td style="width:34%;border-right: 8px solid #000;">Fuel</td></tr></thead><tbody><tr style="font-size:12px;color:#3388ff;font-weight:bold;text-align:center;"><td style="border-right: 8px solid #000;"><?php echo $RouteDatadisplaydistancevalue; ?></td><td style="border-right: 8px solid #000;"><?php echo $RouteDatadisplayduration; ?></td><td style="border-right: 8px solid #000;"><?php echo $RouteDatatotalconsumption; ?></td></tr></tbody></table>';
 mbUrl = 'https://api.mapbox.com/styles/v1/superyachtos/{id}/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1Ijoic3VwZXJ5YWNodG9zIiwiYSI6ImNpdW54eHV5bjAxNmMzMG1sMGpkamVma2cifQ.Y9kj-j0RGCFSE6khFVPyOw';
 var satellite   =   L.tileLayer(mbUrl, {
     id: 'ciurvui5100uz2iqqe929nrlr', 
@@ -1598,7 +1610,22 @@ if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !e
         markerArray.push(marker);
         marker.addTo(map);
         markerCount++;
+
+
 <?php } } ?>
+
+<?php foreach ($scheduleData as $key => $schedule) { 
+    $markernumberDisplay = $schedule['CharterProgramSchedule']['day_num'];
+    ?>
+
+    var textMarker = L.marker(["<?php echo $schedule['CharterProgramSchedule']['lattitude']; ?>", "<?php echo $schedule['CharterProgramSchedule']['longitude']; ?>"], {
+  icon: L.divIcon({
+      html: "<?php echo $markernumberDisplay; ?>",
+      className: 'text-below-marker',
+    })
+}).addTo(map);
+
+ <?php } ?>
 
 // Making the Centre point
 if (day1) {
@@ -1707,7 +1734,7 @@ var latlongstemp = [];
 
 <?php } ?>
 // middle line
-var polyline0 = new L.Polyline(latlongstemp, {stroke:true,weight:4,lineCap: "round",lineJoin: "round",smoothFactor: 1}).addTo(map);
+var polyline0 = new L.Polyline(latlongstemp, {stroke:true,weight:4,dashArray: [10,10],lineCap: "round",lineJoin: "round",smoothFactor: 1}).addTo(map);
 //map.fitBounds(latlngs);
 // drawnItems.on('pm:edit', function (e) {
 
@@ -1815,6 +1842,7 @@ $(document).on("click", "#HideDetails", function(e) {
         //$(".Tooltip").css("margin-top","");
         $(".Tooltip").css("width","160px");
         $(".smalltooltip").hide();
+        $(".Tooltip").show();
         $(".owntooltip").show();
         $("#HideDetails").text("Hide Details");
         // $(".leaflet-tooltip").css("opacity", "0");  
@@ -1825,7 +1853,8 @@ $(document).on("click", "#HideDetails", function(e) {
     }else if(btntext == "Hide Details"){
         //$(".Tooltip").css("margin-top","35px");
         $(".Tooltip").css("width","50px");
-        $(".smalltooltip").show();
+        $(".smalltooltip").hide();
+        $(".Tooltip").hide();
         $(".owntooltip").hide();
         $("#HideDetails").text("Show Details");
         // $(".leaflet-tooltip").css("opacity", "0");  
@@ -2095,7 +2124,8 @@ $(document).ready(function() { //alert();
             //$('.fancybox').fancybox();
 
                 $(".Tooltip").css("width","50px");
-                $(".smalltooltip").show();
+                $(".smalltooltip").hide();
+                $(".Tooltip").hide();
                 $(".owntooltip").hide();
             //When page opens do not display location cards until 2 seconds after page loads. 
             //$(".leaflet-tooltip").css("opacity", "0");  
@@ -2592,5 +2622,83 @@ function customMediaQueryAdd(){
             "background-color":"#000"
     });
 }
+
+
+$(document).on("click", ".downloadmappagefile", function(e) { //alert()
+      var downloadcontractfile = $(this).attr("data-href");
+      var fileName = downloadcontractfile.split('/').pop();
+       //Set the File URL.
+       var url = downloadcontractfile;
+
+       var data = {
+        "downloadcontractfile":downloadcontractfile,
+        "fileName":fileName,
+        }
+        $("#hideloader").show();
+        $.ajax({
+            type: "POST",
+            url: BASE_FOLDER+'/charters/downloadcontractfile',
+            dataType: 'json',
+            data: data,
+            success:function(result) {
+              $("#hideloader").hide();
+                if (result.status == 'success') {
+                 
+                    downloadmappagefile(result.link,result.file);
+                    //window.location.href = result.link
+                   
+                }else{
+                  alert('Sorry!! Unable to download file');
+                  return false;
+                } 
+            },
+            error: function(jqxhr) { 
+                $("#hideloader").hide();
+            }
+        });
+  });
+
+
+  function downloadmappagefile(link,fileName) {
+            //Set the File URL.
+            //var url = fileName;
+            var url = link + fileName;
+            $.ajax({
+                url: url,
+                cache: false,
+                xhr: function () {
+                    var xhr = new XMLHttpRequest();
+                    xhr.onreadystatechange = function () {
+                        if (xhr.readyState == 2) {
+                            if (xhr.status == 200) {
+                                xhr.responseType = "blob";
+                            } else {
+                                xhr.responseType = "text";
+                            }
+                        }
+                    };
+                    return xhr;
+                },
+                success: function (data) {
+                    //Convert the Byte Data to BLOB object.
+                    var blob = new Blob([data], { type: "application/octetstream" });
+ 
+                    //Check the Browser type and download the File.
+                    var isIE = false || !!document.documentMode;
+                    if (isIE) {
+                        window.navigator.msSaveBlob(blob, fileName);
+                    } else {
+                        var url = window.URL || window.webkitURL;
+                        link = url.createObjectURL(blob);
+                        var a = $("<a />");
+                        a.attr("download", fileName);
+                        a.attr("href", link);
+                        $("body").append(a);
+                        a[0].click();
+                        $("body").remove(a);
+                    }
+                }
+            });
+        }
 </script>
   
