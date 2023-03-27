@@ -7607,30 +7607,98 @@ function getIndividualmsgcountMarer() {
     }
 
     function downloadcontractfile(){
-
+        error_reporting(0);
         // echo "<pre>";print_r($personalDetails); //exit;
         // display modal for preference to use existing or create new only to not submitted records.
             if($this->request->is('ajax')){
                 $this->layout = 'ajax';
                 $this->autoRender = false;
+                $result = array();
                 $postData = $this->request->data;
                 $downloadcontractfile = $postData['downloadcontractfile'];
-                $filename = $postData['filename'];
+                $filename = $postData['fileName'];
                 $remoteURL = $downloadcontractfile;
 
-                header('Content-Description: File Transfer');
-                header('Content-Type: application/pdf');
-                header('Content-Disposition: attachment; filename=' .$filename);
-                header('Expires: 0');
-                header('Cache-Control: must-revalidate');
-                header('Pragma: public');
-                header('Content-Length: ' . filesize($remoteURL));
-                ob_clean();
-                flush();
-                //echo "dsfadfsdsfa"; exit();
-                //read the file from disk and output the content.
-                readfile($remoteURL);
+                $remote_file_url = $downloadcontractfile;
+                //if(file_exists($remote_file_url)){
+                    /* New file name and path for this file */
+                    $SITE_URL = Configure::read('BASE_URL');
+                    $sourceImagePath = $_SERVER['DOCUMENT_ROOT']."/charterguest/app/webroot/img/admin/".$filename;
+                    $local_file = $sourceImagePath;
+                    
+                    /* Copy the file from source url to server */
+                    $copy = copy( $remote_file_url, $local_file );
+                    
+                    /* Add notice for success/failure */
+                    if( !$copy ) {
+                        //echo "Doh! failed to copy $filename...\n";
+                        $result['status'] = "fail";
+                        $result['link'] ="fail";
+                    }
+                    else{
+                        //echo "WOOT! success to copy $filename...\n";
+                        $successlink = $SITE_URL."/charterguest/app/webroot/img/admin/";
+                        $result['status'] = "success";
+                        $result['link'] =$successlink;
+                        $result['file'] =$filename;
+                    }
+
+                // }else{
+                //     $result['status'] = "fail";
+                //         $result['link'] ="fail";
+                // }
+
+                echo json_encode($result);
                 exit;
+
+//                 $url = $downloadcontractfile;
+// $destination_folder = $_SERVER['DOCUMENT_ROOT'].'/charterguest/app/webroot/img/admin/';
+
+
+//     $newfname = $destination_folder .$filename; //set your file ext
+
+//     $file = fopen ($url, "rb");
+
+//     if ($file) {
+//       $newf = fopen ($newfname, "a"); // to overwrite existing file
+
+//       if ($newf)
+//       while(!feof($file)) {
+//         fwrite($newf, fread($file, 1024 * 8 ), 1024 * 8 );
+
+//       }
+//     }
+
+//     if ($file) {
+//       fclose($file);
+//     }
+
+//     if ($newf) {
+//       fclose($newf);
+//     }
+
+//exit;
+// $filePath = $local_file;
+
+// if(file_exists($filePath)) {
+//     $fileName = basename($filePath);
+//     $fileSize = filesize($filePath);
+
+//     // Output headers.
+//     header("Cache-Control: private");
+//     header("Content-Type: application/stream");
+//     header("Content-Length: ".$fileSize);
+//     header("Content-Disposition: attachment; filename=".$fileName);
+
+//     // Output file.
+//             ob_clean();
+//             flush();
+//             print(readfile($filePath));
+// }
+// else {
+//     die('The provided file path is not valid.');
+// }
+
             }
 
         }
