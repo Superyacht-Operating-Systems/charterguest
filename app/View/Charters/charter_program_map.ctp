@@ -502,7 +502,7 @@ display: block;
 }
 .sp-mp-detailsrow h1 {
     color: #000;
-    font-size: 20px;
+    font-size: 15px;
     font-weight: 600;
 }
 .custom-popup .leaflet-popup-content-wrapper {
@@ -1179,10 +1179,13 @@ span.sp-leftalign {
 } 
 
 @media only screen and (max-width:400px){
-   .sp-60-w  input{
-    width: 100%!important;
+   .sp-60-w input{
+    width: 70%!important;
     margin-bottom: 8px!important;
    }
+   .sp-60-w {
+  width: 100% !important;
+}
 }
 
 .no_of_days_loc{
