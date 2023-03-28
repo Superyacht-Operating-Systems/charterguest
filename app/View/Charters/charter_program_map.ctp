@@ -1228,10 +1228,10 @@ body .sp-60-w input {
 
 
 .text-below-marker {
-    font-size: 16px;
+    font-size: 11px;
     font-weight: 1px solid;
     font-weight: bolder;
-    margin-top: -25px !important;
+    margin-top: -36px !important;
     margin-left: -3px !important;
 }
 
@@ -1365,6 +1365,24 @@ body .sp-60-w input {
             </div>
             <div class="modal-body location_Modal_body">
                 <div id="cruisinglocationModal_load" class="modal_load">
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div><!-- /.modal-content -->
+
+
+<div id="markerModal" class="modal certificat-modal-container cruising-location-Modal"  role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content" style="width:650px;">
+            <div class="modal-header">
+                <button type="button" class="close" data-schuuid="" id="markerModalclose" aria-hidden="true" style="margin-right: 5px;">×</button>
+                <h4 class="modal-title" id="markerModalLabel" style="text-align: center;font-weight: bold;"></h4>
+            </div>
+            <div class="modal-body location_Modal_body">
+                <div id="markerModal_load" class="modal_load">
 
                 </div>
 
@@ -1615,6 +1633,8 @@ if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !e
 <?php } } ?>
 
 <?php foreach ($scheduleData as $key => $schedule) { 
+    if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !empty($samelocations[$schedule['CharterProgramSchedule']['lattitude']])){
+
     $markernumberDisplay = $schedule['CharterProgramSchedule']['day_num'];
     ?>
 
@@ -1625,7 +1645,8 @@ if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !e
     })
 }).addTo(map);
 
- <?php } ?>
+ <?php } 
+}?>
 
 // Making the Centre point
 if (day1) {
@@ -1889,11 +1910,33 @@ $(document).on("click", ".mapquestionmodalclose", function(e) {
 // then opened the modal using same markerclick function
 if(markerCount > 0){
 $('.leaflet-marker-icon').each(function(i, obj) {
-    $(this).addClass('myownmarker'+i);
+   
+    if(!$(this).hasClass('text-below-marker')){
+        $(this).addClass('myownmarker'+i);
+    }
+    
+});
+
+// created the day numbers as separated marker label and assign the row id only to markers 
+// For numbers added the attr, on clicking the number on marker icon calling the same marker click function attr id.
+var z = 0
+$('.leaflet-marker-icon').each(function(i, obj) {
+   
+   if($(this).hasClass('text-below-marker')){
+       $(this).attr('data-markerid', z);
+       z++;
+   }
+   
 });
 }
 $(document).on("click", ".Tooltip", function(e) {
     var myowntooltip = $(this).find('.owntooltip').attr('id');
+    $(".myownmarker"+myowntooltip).click();
+    
+});
+
+$(document).on("click", ".text-below-marker", function(e) {
+    var myowntooltip = $(this).attr('data-markerid');
     $(".myownmarker"+myowntooltip).click();
     
 });
@@ -1940,29 +1983,34 @@ function markerOnClick(e) {
                     map.setView(e.latlng);
 
                     var popLocation= e.latlng;
-                setTimeout(function() {
-                    var popup = L.popup({
-                        autoPan: true
-                        // closeOnClick: false,
-                        // autoClose: false
-                        })
-                    .setLatLng(popLocation)
-                    .setContent(result.popupHtml)
-                    .openOn(map)
-                        .on("remove", function () {
-                            msgcount(scheduleSameLocationUUID);
-                            $(".leaflet-control-attribution").show();
-                            $("#CruisingButton").show();
-                            $("#HideDetails").show();
-                            $("#HelpfulTips").show();
-                            $(".leaflet-control-container").show();
+                //setTimeout(function() {
+                    // var popup = L.popup({
+                    //     autoPan: true
+                    //     // closeOnClick: false,
+                    //     // autoClose: false
+                    //     })
+                    // .setLatLng(popLocation)
+                    // .setContent(result.popupHtml)
+                    // .openOn(map)
+                    //     .on("remove", function () {
+                    //         msgcount(scheduleSameLocationUUID);
+                    //         $(".leaflet-control-attribution").show();
+                    //         $("#CruisingButton").show();
+                    //         $("#HideDetails").show();
+                    //         $("#HelpfulTips").show();
+                    //         $(".leaflet-control-container").show();
 
-                            //for screenview <990 on opening the itinerary modal blacked out the map region
-                            // on close modal removed the blacked out css
-                            customMediaQueryRemove();
+                    //         //for screenview <990 on opening the itinerary modal blacked out the map region
+                    //         // on close modal removed the blacked out css
+                    //         customMediaQueryRemove();
                             
                             
-                        });
+                    //     });
+                        $("#markerModal_load").html(result.popupHtml);
+                        
+                        $("#markerModalclose").attr("data-schuuid",scheduleSameLocationUUID);
+                        $("#markerModal").show();
+                        
                     // display popup from top
                     window.scrollTo(0, 0);
                     //$('.day_dates').text(day_dates);
@@ -1977,7 +2025,7 @@ function markerOnClick(e) {
                     }else if(width>990){
                         customMediaQueryRemove();
                     }
-                }, 1000);
+                //}, 1000);
                     $(".leaflet-popup-close-button").addClass('updateCommentscount');
                    // alert(day_dates);
                     
@@ -1995,6 +2043,29 @@ function markerOnClick(e) {
         });
     }
         
+}
+
+
+
+// Closing the popup
+$(document).on("click", "#markerModalclose", function(e) {
+   
+   var schuuid =  $(this).attr("data-schuuid");
+   markerModalclose(schuuid);
+});
+
+function markerModalclose(scheduleSameLocationUUID){
+    msgcount(scheduleSameLocationUUID);
+                            $("#markerModal").hide();
+                            $(".leaflet-control-attribution").show();
+                            $("#CruisingButton").show();
+                            $("#HideDetails").show();
+                            $("#HelpfulTips").show();
+                            $(".leaflet-control-container").show();
+
+                            //for screenview <990 on opening the itinerary modal blacked out the map region
+                            // on close modal removed the blacked out css
+                            customMediaQueryRemove();
 }
 
 $(document).on("change", ".noofdayscard", function(e) {
@@ -2021,19 +2092,25 @@ $(document).on("change", ".noofdayscard", function(e) {
                     //console.log(mapmarkerglobalObj);
                     map.setView(mapmarkerglobalObj.latlng);
                     var popLocation= mapmarkerglobalObj.latlng;
-                    setTimeout(function() {
-                    var popup = L.popup({
-                        autoPan: true
-                        })
-                    .setLatLng(popLocation)
-                    .setContent(result.popupHtml)
-                    .openOn(map)
-                    .on("remove", function () {
-                            msgcount(scheduleSameLocationUUID);
-                            //for screenview <990 on opening the itinerary modal blacked out the map region
-                            // on close modal removed the blacked out css
-                            customMediaQueryRemove();
-                        });
+                    //setTimeout(function() {
+                    // var popup = L.popup({
+                    //     autoPan: true
+                    //     })
+                    // .setLatLng(popLocation)
+                    // .setContent(result.popupHtml)
+                    // .openOn(map)
+                    // .on("remove", function () {
+                    //         msgcount(scheduleSameLocationUUID);
+                    //         //for screenview <990 on opening the itinerary modal blacked out the map region
+                    //         // on close modal removed the blacked out css
+                    //         customMediaQueryRemove();
+                    //     });
+
+                        $("#markerModal_load").html(result.popupHtml);
+                        
+                        $("#markerModalclose").attr("data-schuuid",scheduleSameLocationUUID);
+                        $("#markerModal").show();
+
                         window.scrollTo(0, 0);
                         //$('.day_dates').text(day_dates);
                         $('.noofdayscard').html(result.no_of_days_options);
@@ -2046,7 +2123,7 @@ $(document).on("change", ".noofdayscard", function(e) {
                         }else if(width>990){
                             customMediaQueryRemove();
                         }
-                    }, 1000);
+                    //}, 1000);
                     $(".leaflet-popup-close-button").addClass('updateCommentscount');
                    
                     
@@ -2061,14 +2138,21 @@ $(document).on("change", ".noofdayscard", function(e) {
 
 });
 
+
+
+
+
 // Closing the popup
 $(document).on("click", "#closeSchedule", function(e) {
-    $(".leaflet-popup-close-button")[0].click();
+    //$(".leaflet-popup-close-button")[0].click();
+    $("#markerModal").hide();
     $(".leaflet-control-attribution").show();
     $("#CruisingButton").show();
     $("#HideDetails").show();
     $("#HelpfulTips").show();
     $(".leaflet-control-container").show();
+
+    
 
     //for screenview <990 on opening the itinerary modal blacked out the map region
     // on close modal removed the blacked out css
