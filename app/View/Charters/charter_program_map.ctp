@@ -502,7 +502,7 @@ display: block;
 }
 .sp-mp-detailsrow h1 {
     color: #000;
-    font-size: 20px;
+    font-size: 15px;
     font-weight: 600;
 }
 .custom-popup .leaflet-popup-content-wrapper {
