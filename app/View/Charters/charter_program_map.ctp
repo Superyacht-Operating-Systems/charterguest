@@ -1179,10 +1179,13 @@ span.sp-leftalign {
 } 
 
 @media only screen and (max-width:400px){
-   .sp-60-w  input{
-    width: 100%!important;
+   .sp-60-w input{
+    width: 70%!important;
     margin-bottom: 8px!important;
    }
+   .sp-60-w {
+  width: 100% !important;
+}
 }
 
 .no_of_days_loc{
