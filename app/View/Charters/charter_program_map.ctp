@@ -1075,10 +1075,10 @@ span.sp-rightalign {
     font-size: 18px!important;
     position: relative;
 }
-textarea.form-control {
+/* textarea.form-control {
     resize: vertical!important;
     overflow: auto!important;
-}
+} */
 .modal_load{
     margin:5px 10px 5px 8px;
 }
