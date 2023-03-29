@@ -788,6 +788,29 @@ float: right;
     /* text-align: right; */
 }
 
+.acti-count-onmarker {
+    background: #f00;
+    width: 18px;
+    font-size: 11px;
+    line-height: initial;
+    height: 18px;
+    border-radius: 10px;
+    color: #fff;
+    /* margin-top: -67px; */
+    position: absolute;
+    /* margin-left: 130px; */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    right: 12px;
+    top: -10px;
+    /* left: 0; */
+    float: right;
+    /* right: -131px; */
+    /* left: 0; */
+    /* text-align: right; */
+}
+
 .Tooltip {
     width: 160px;
     display: none;
@@ -1552,6 +1575,7 @@ if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !e
     $schuuid = $schedule['CharterProgramSchedule']['UUID'];
     if($samemarkercommentcount[$schedule['CharterProgramSchedule']['lattitude']] == 0){
         $marker_msg_count = "style='display:none;'";
+        $samemkrcount = "";
     }else if($samemarkercommentcount[$schedule['CharterProgramSchedule']['lattitude']] != 0){
         $marker_msg_count = "";
         $samemkrcount = $samemarkercommentcount[$schedule['CharterProgramSchedule']['lattitude']];
@@ -1604,13 +1628,15 @@ if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !e
         centerLng = <?php echo $schedule['CharterProgramSchedule']['longitude']; ?>;
         zoom = 7;
         
-        var marker = L.marker(["<?php echo $schedule['CharterProgramSchedule']['lattitude']; ?>", "<?php echo $schedule['CharterProgramSchedule']['longitude']; ?>"],{pmIgnore: true})
-        .bindTooltip("<?php echo "<span class='smalltooltip'>Day ".$daynumber."</span><span class='owntooltip' id=".$key.">".$SumDaytitle."<span id='".$schuuid."'   class='acti-count' ".$marker_msg_count." >".$samemkrcount."</span><b style='font-size: 10px;'>".$schedule['CharterProgramSchedule']['title']."<hr>".$endplace."</b><br><b style='font-size: 10px;'>".$distance.$bar.$duration."</b></span>"?>", 
+        var marker = L.marker(["<?php echo $schedule['CharterProgramSchedule']['lattitude']; ?>", "<?php echo $schedule['CharterProgramSchedule']['longitude']; ?>"],{pmIgnore: true,riseOnHover:true})
+        .bindTooltip("<?php echo "<span class='smalltooltip' ".$marker_msg_count.">".$samemkrcount."</span><span class='owntooltip' id=".$key.">".$SumDaytitle."<span id='".$schuuid."'   class='acti-count' ".$marker_msg_count." >".$samemkrcount."</span><b style='font-size: 10px;'>".$schedule['CharterProgramSchedule']['title']."<hr>".$endplace."</b><br><b style='font-size: 10px;'>".$distance.$bar.$duration."</b></span>"?>", 
                     {
                         permanent: true, 
+                        offset: [0,-40],
+                        //sticky:true,
                         direction: 'right',
                         className: "Tooltip",
-                        noWrap: false,
+                        noWrap: true,
                     })
                 .on("click", markerOnClick);
                 //console.log(marker);
@@ -1638,12 +1664,29 @@ if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !e
 <?php foreach ($scheduleData as $key => $schedule) { 
     if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !empty($samelocations[$schedule['CharterProgramSchedule']['lattitude']])){
 
+        $schuuid = $schedule['CharterProgramSchedule']['UUID'];
+    if($samemarkercommentcount[$schedule['CharterProgramSchedule']['lattitude']] == 0){
+        $marker_msg_count = "style='display:none;'";
+        $samemkrcount = "";
+    }else if($samemarkercommentcount[$schedule['CharterProgramSchedule']['lattitude']] != 0){
+        $marker_msg_count = "";
+        $samemkrcount = $samemarkercommentcount[$schedule['CharterProgramSchedule']['lattitude']];
+        if(isset($guesttype) && !empty($guesttype)){ //echo $guesttype; exit;
+            if($guesttype == "guest"){
+                    $marker_msg_count = "style='display:none;'";
+            }else{
+                    $marker_msg_count = "";
+            }
+        }
+        
+    }
+
     $markernumberDisplay = $schedule['CharterProgramSchedule']['day_num'];
     ?>
 
     var textMarker = L.marker(["<?php echo $schedule['CharterProgramSchedule']['lattitude']; ?>", "<?php echo $schedule['CharterProgramSchedule']['longitude']; ?>"], {
   icon: L.divIcon({
-      html: "<?php echo $markernumberDisplay; ?>",
+      html: "<?php echo $markernumberDisplay; ?><span id='<?php echo $schuuid ?>'   class='acti-count-onmarker' <?php echo $marker_msg_count ?> ><?php echo $samemkrcount ?></span>",
       className: 'text-below-marker',
     })
 }).addTo(map);
@@ -1866,9 +1909,18 @@ $(document).on("click", "#HideDetails", function(e) {
         //$(".Tooltip").css("margin-top","");
         $(".Tooltip").css("width","160px");
         $(".smalltooltip").hide();
-        $(".Tooltip").show();
+         $(".Tooltip").show();
         $(".owntooltip").show();
+        
         $("#HideDetails").text("Hide Details");
+        // $('.text-below-marker').each(function(i, obj) {
+        //     var t = $(this).find('.acti-count-onmarker').text();
+        //     //console.log(t);
+        //     if(t != "" && t > 0){
+                $(".acti-count-onmarker").hide();
+        //     }
+        
+        // });
         // $(".leaflet-tooltip").css("opacity", "0");  
         // setTimeout(function(){
         //         $(".leaflet-tooltip").css("opacity", "1");  
@@ -1878,9 +1930,20 @@ $(document).on("click", "#HideDetails", function(e) {
         //$(".Tooltip").css("margin-top","35px");
         $(".Tooltip").css("width","50px");
         $(".smalltooltip").hide();
-        $(".Tooltip").hide();
+         $(".Tooltip").hide();
         $(".owntooltip").hide();
         $("#HideDetails").text("Show Details");
+        $(".acti-count-onmarker").hide();
+        $('.text-below-marker').each(function(i, obj) {
+            var t = $(this).find('.acti-count-onmarker').text();
+            //console.log(t);
+            if(t > 0){
+                $(this).find('.acti-count-onmarker').show();
+            }else{
+                $(this).find('.acti-count-onmarker').hide();
+            }
+        
+        });
         // $(".leaflet-tooltip").css("opacity", "0");  
         // setTimeout(function(){
         //         $(".leaflet-tooltip").css("opacity", "1");  
@@ -2212,7 +2275,7 @@ $(document).ready(function() { //alert();
 
                 $(".Tooltip").css("width","50px");
                 $(".smalltooltip").hide();
-                $(".Tooltip").hide();
+                 $(".Tooltip").hide();
                 $(".owntooltip").hide();
             //When page opens do not display location cards until 2 seconds after page loads. 
             //$(".leaflet-tooltip").css("opacity", "0");  
