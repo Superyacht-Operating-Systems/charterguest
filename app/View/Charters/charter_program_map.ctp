@@ -59,9 +59,9 @@ if(empty($scheduleData)){
     width: auto !important;
 } */
 .auto_resize {
-        resize: none;
-        overflow: hidden;
-        border: 1px solid black;
+        resize: none!important;
+        overflow: hidden!important;
+        /* border: 1px solid black; */
       }
 ::-webkit-input-placeholder { /* WebKit, Blink, Edge */
     color:gray!important;
