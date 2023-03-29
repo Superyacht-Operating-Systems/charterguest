@@ -58,9 +58,7 @@ if(empty($scheduleData)){
     max-height: 500px;
     width: auto !important;
 } */
-.cruising-location-Modal .modal-content {
-    height: 85vh;
-}
+
 .auto_resize {
         resize: none!important;
         overflow: hidden!important;
@@ -1087,7 +1085,8 @@ span.sp-rightalign {
 }
 @media screen and (min-width: 990px) {
 .location_Modal_body{
-    max-height: 580px;
+    /* max-height: 580px; */
+    height: 85vh;
     overflow-y: scroll;
     overflow-x: hidden;
 }
