@@ -736,9 +736,25 @@ float: right;
     justify-content: center;
 }
 
+.acti-count-onmarker {
+    background: #f00;
+    width: 18px;
+    font-size: 11px;
+    line-height: initial;
+    height: 20px;
+    border-radius: 10px;
+    color: #fff;
+    margin-top: -10px;
+    position: absolute;
+    margin-left: 20px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .Tooltip {
     width: 160px;
-    display: block;
+    display: none;
     font-size: 12px;
 }
 
@@ -761,10 +777,14 @@ float: right;
   width: 320px;
 }
 
+.leaflet-control-attribution, .leaflet-control-scale-line{
+    padding:0;
+}
+
 .leaflet-control-attribution {
 
-height: 42px;
-width: 160px;
+/* height: 42px; */
+width: 260px;
 
 
 }
@@ -1156,6 +1176,14 @@ span.sp-leftalign {
     display:none;
 }
 }
+
+.text-below-marker {
+    font-size: 11px;
+    font-weight: 1px solid;
+    font-weight: bolder;
+    margin-top: -36px !important;
+    margin-left: -3px !important;
+}
 </style>  
 
 <?php    echo $this->Html->script('jquery-1.7.2.min');
@@ -1243,6 +1271,25 @@ span.sp-leftalign {
         </div>
     </div>
 </div><!-- /.modal-content -->
+
+
+<div id="markerModal" class="modal certificat-modal-container cruising-location-Modal"  role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content" style="width:650px;">
+            <div class="modal-header">
+                <button type="button" class="close" data-schuuid="" id="markerModalclose" aria-hidden="true" style="margin-right: 5px;">×</button>
+                <h4 class="modal-title" id="markerModalLabel" style="text-align: center;font-weight: bold;"></h4>
+            </div>
+            <div class="modal-body location_Modal_body">
+                <div id="markerModal_load" class="modal_load">
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div><!-- /.modal-content -->
+
 
 <div class="row common-form-row">
     <div class="w-33 col-lg-4 col-md-4 col-sm-4 mob-none">  
@@ -1339,7 +1386,7 @@ var vessel = new L.LayerGroup();
 var markerArray = [];
 var markerCount = 0;
      
-var mbAttr = '<table width=100%><thead><tr style="font-size:12px;font-weight:bold;text-align:center;"><td style="width:50%">Distance</td><td style="width:50%">Duration</td></tr></thead><tbody><tr style="font-size:12px;color:#3388ff;font-weight:bold;text-align:center;"><td ><?php echo $RouteDatadisplaydistancevalue; ?></td><td ><?php echo $RouteDatadisplayduration; ?></td></tr></tbody></table>';
+var mbAttr = '<table width=100%><thead><tr style="font-size:12px;font-weight:bold;text-align:center;"><td style="width:33%;border-right: 8px solid #000;">Distance</td><td style="width:33%;border-right: 8px solid #000;">Duration</td><td style="width:34%;border-right: 8px solid #000;">Fuel</td></tr></thead><tbody><tr style="font-size:12px;color:#3388ff;font-weight:bold;text-align:center;"><td style="border-right: 8px solid #000;"><?php echo $RouteDatadisplaydistancevalue; ?></td><td style="border-right: 8px solid #000;"><?php echo $RouteDatadisplayduration; ?></td><td style="border-right: 8px solid #000;"><?php echo $RouteDatatotalconsumption; ?></td></tr></tbody></table>';
 mbUrl = 'https://api.mapbox.com/styles/v1/superyachtos/{id}/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1Ijoic3VwZXJ5YWNodG9zIiwiYSI6ImNpdW54eHV5bjAxNmMzMG1sMGpkamVma2cifQ.Y9kj-j0RGCFSE6khFVPyOw';
 var satellite   =   L.tileLayer(mbUrl, {
     id: 'ciurvui5100uz2iqqe929nrlr', 
@@ -1439,6 +1486,7 @@ if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !e
         .bindTooltip("<?php echo "<span class='smalltooltip'>Day ".$daynumber."</span><span class='owntooltip' id=".$key."><b style='font-size: 12px;'>".$SumDaytitle."</b><b style='font-size: 12px;'>".$schedule['CharterProgramSchedule']['title']."<hr>".$endplace."</b><br><b style='font-size: 12px;'>".$distance.$bar.$duration."</b></span>"?>", 
                     {
                         permanent: true, 
+                        offset: [0,-40],
                         direction: 'right',
                         className: "Tooltip",
                         noWrap: false,
@@ -1466,6 +1514,39 @@ if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !e
 <?php } } ?>
 
 
+<?php foreach ($scheduleData as $key => $schedule) { 
+    if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !empty($samelocations[$schedule['CharterProgramSchedule']['lattitude']])){
+
+    $markernumberDisplay = $schedule['CharterProgramSchedule']['day_num'];
+    ?>
+
+    var textMarker = L.marker(["<?php echo $schedule['CharterProgramSchedule']['lattitude']; ?>", "<?php echo $schedule['CharterProgramSchedule']['longitude']; ?>"], {
+  icon: L.divIcon({
+      html: "<?php echo $markernumberDisplay; ?>",
+      className: 'text-below-marker',
+    })
+}).addTo(map);
+
+ <?php } 
+}?>
+
+// script to show the tooltip next to marker on show/hide and also zoomin and zoomout
+map.on('zoomstart', function () {
+
+var zoomLevel = map.getZoom();
+    //alert(zoomLevel);
+    //console.log(zoomLevel);
+    //alert(zoomLevel);
+    $('.Tooltip').css('top','');
+    var tooltipdisplay = $('.Tooltip').css('display');
+    if(tooltipdisplay == "block"){ 
+        $('.Tooltip').css('top','45px');
+    }
+    //alert(zoomLevel);
+    // console.log("zoomLevel");
+    // console.log(tooltipdisplay);
+
+});
 
 // Making the Centre point
 if (day1) {
@@ -1574,7 +1655,7 @@ var latlongstemp = [];
 
 <?php } ?>
 // middle line
-var polyline0 = new L.Polyline(latlongstemp, {stroke:true,weight:4,lineCap: "round",lineJoin: "round",smoothFactor: 1}).addTo(map);
+var polyline0 = new L.Polyline(latlongstemp, {stroke:true,weight:4,dashArray: [10,10],lineCap: "round",lineJoin: "round",smoothFactor: 1}).addTo(map);
 //map.fitBounds(latlngs);
 // drawnItems.on('pm:edit', function (e) {
 
@@ -1686,6 +1767,7 @@ $(document).on("click", "#HideDetails", function(e) {
         //$(".Tooltip").css("margin-top","");
         $(".Tooltip").css("width","160px");
         $(".smalltooltip").hide();
+        $(".Tooltip").show();
         $(".owntooltip").show();
         $("#HideDetails").text("Hide Details");
         // $(".leaflet-tooltip").css("opacity", "0");  
@@ -1697,6 +1779,7 @@ $(document).on("click", "#HideDetails", function(e) {
         //$(".Tooltip").css("margin-top","35px");
         $(".Tooltip").css("width","50px");
         $(".smalltooltip").show();
+        $(".Tooltip").hide();
         $(".owntooltip").hide();
         $("#HideDetails").text("Show Details");
         // $(".leaflet-tooltip").css("opacity", "0");  
@@ -1728,11 +1811,33 @@ $(document).on("click", ".mapquestionmodalclose", function(e) {
 // then opened the modal using same markerclick function
 if(markerCount > 0){
 $('.leaflet-marker-icon').each(function(i, obj) {
-    $(this).addClass('myownmarker'+i);
+    if(!$(this).hasClass('text-below-marker')){
+        $(this).addClass('myownmarker'+i);
+    }
 });
+
+// created the day numbers as separated marker label and assign the row id only to markers 
+// For numbers added the attr, on clicking the number on marker icon calling the same marker click function attr id.
+var z = 0
+$('.leaflet-marker-icon').each(function(i, obj) {
+   
+   if($(this).hasClass('text-below-marker')){
+       $(this).attr('data-markerid', z);
+       z++;
+   }
+   
+});
+
 }
+
 $(document).on("click", ".Tooltip", function(e) {
     var myowntooltip = $(this).find('.owntooltip').attr('id');
+    $(".myownmarker"+myowntooltip).click();
+    
+});
+
+$(document).on("click", ".text-below-marker", function(e) {
+    var myowntooltip = $(this).attr('data-markerid');
     $(".myownmarker"+myowntooltip).click();
     
 });
@@ -1781,23 +1886,30 @@ function markerOnClick(e) {
                     $(".leaflet-control-container").hide();
                     
                     var popLocation= e.latlng;
-                    var popup = L.popup({keepInView:true,maxHeight:500})
-                    .setLatLng(popLocation)
-                    .setContent(result.popupHtml)
-                    .openOn(map)
-                    .on("remove", function () {
-                            //msgcount();
-                            $(".leaflet-control-attribution").show();
-                            $("#CruisingButton").show();
-                            $("#HideDetails").show();
-                            $("#HelpfulTips").show();
-                            $(".leaflet-control-container").show();
+                    // var popup = L.popup({keepInView:true,maxHeight:500})
+                    // .setLatLng(popLocation)
+                    // .setContent(result.popupHtml)
+                    // .openOn(map)
+                    // .on("remove", function () {
+                    //         //msgcount();
+                    //         $(".leaflet-control-attribution").show();
+                    //         $("#CruisingButton").show();
+                    //         $("#HideDetails").show();
+                    //         $("#HelpfulTips").show();
+                    //         $(".leaflet-control-container").show();
 
-                            //for screenview <990 on opening the itinerary modal blacked out the map region
-                            // on close modal removed the blacked out css
-                            customMediaQueryRemove();
+                    //         //for screenview <990 on opening the itinerary modal blacked out the map region
+                    //         // on close modal removed the blacked out css
+                    //         customMediaQueryRemove();
                             
-                        });
+                    //     });
+
+                    $("#markerModal_load").html(result.popupHtml);
+                        
+                        $("#markerModalclose").attr("data-schuuid",scheduleSameLocationUUID);
+                        $("#markerModal").show();
+
+
                     window.scrollTo(0, 0);
                     $(".leaflet-control-attribution").hide();
                     $(".leaflet-popup-close-button").addClass('updateCommentscount');
@@ -1808,14 +1920,14 @@ function markerOnClick(e) {
                     $(".crew_comment_cruisingmap").remove();
                     $(".leaflet-popup-close-button").remove();
                      // to get reduce msgcount
-                     $(popup._closeButton).one('click', function(e){
-                        //msgcount();
-                        $("#CruisingButton").show();
-                        $("#HideDetails").show();
-                        $("#HelpfulTips").show();
-                        $(".leaflet-control-attribution").show();
-                        $(".leaflet-control-container").show();
-                    });
+                    //  $(popup._closeButton).one('click', function(e){
+                    //     //msgcount();
+                    //     $("#CruisingButton").show();
+                    //     $("#HideDetails").show();
+                    //     $("#HelpfulTips").show();
+                    //     $(".leaflet-control-attribution").show();
+                    //     $(".leaflet-control-container").show();
+                    // });
 
                     //alert(width);
                     //for screenview <990 on opening the itinerary modal blacked out the map region
@@ -1837,6 +1949,25 @@ function markerOnClick(e) {
 }
 <?php } ?>
 
+$(document).on("click", "#markerModalclose", function(e) {
+   
+   var schuuid =  $(this).attr("data-schuuid");
+   markerModalclose(schuuid);
+});
+
+function markerModalclose(scheduleSameLocationUUID){
+    msgcount(scheduleSameLocationUUID);
+                            $("#markerModal").hide();
+                            $(".leaflet-control-attribution").show();
+                            $("#CruisingButton").show();
+                            $("#HideDetails").show();
+                            $("#HelpfulTips").show();
+                            $(".leaflet-control-container").show();
+
+                            //for screenview <990 on opening the itinerary modal blacked out the map region
+                            // on close modal removed the blacked out css
+                            customMediaQueryRemove();
+}
 
 $(document).on("change", ".noofdayscard", function(e) {
     var scheduleUUId = mapmarkerglobalObj.target.scheduleUUId;
@@ -1874,25 +2005,31 @@ $(document).on("change", ".noofdayscard", function(e) {
                     $(".leaflet-control-container").hide();
                     setTimeout(function() {
                         
-                    var popup = L.popup({
-                        autoPan: true
-                        })
-                    .setLatLng(popLocation)
-                    .setContent(result.popupHtml)
-                    .openOn(map)
-                    .on("remove", function () {
-                            //msgcount(scheduleSameLocationUUID);
-                            $(".leaflet-control-attribution").show();
-                            $("#CruisingButton").show();
-                            $("#HideDetails").show();
-                            $("#HelpfulTips").show();
-                            $(".leaflet-control-container").show();
+                    // var popup = L.popup({
+                    //     autoPan: true
+                    //     })
+                    // .setLatLng(popLocation)
+                    // .setContent(result.popupHtml)
+                    // .openOn(map)
+                    // .on("remove", function () {
+                    //         //msgcount(scheduleSameLocationUUID);
+                    //         $(".leaflet-control-attribution").show();
+                    //         $("#CruisingButton").show();
+                    //         $("#HideDetails").show();
+                    //         $("#HelpfulTips").show();
+                    //         $(".leaflet-control-container").show();
 
-                            //for screenview <990 on opening the itinerary modal blacked out the map region
-                            // on close modal removed the blacked out css
-                            customMediaQueryRemove();
+                    //         //for screenview <990 on opening the itinerary modal blacked out the map region
+                    //         // on close modal removed the blacked out css
+                    //         customMediaQueryRemove();
 
-                        });
+                    //     });
+
+                        $("#markerModal_load").html(result.popupHtml);
+                        $("#markerModalclose").attr("data-schuuid",scheduleSameLocationUUID);
+                        $("#markerModal").show();
+
+
                         window.scrollTo(0, 0);
                         //$('.day_dates').text(day_dates);
                         $(".leaflet-control-attribution").hide();
@@ -1935,7 +2072,8 @@ $(document).on("change", ".noofdayscard", function(e) {
 
 // Closing the popup
 $(document).on("click", "#closeSchedule", function(e) { 
-    $(".leaflet-popup-close-button")[0].click();
+    //$(".leaflet-popup-close-button")[0].click();
+    $("#markerModal").hide();
     $(".leaflet-control-attribution").show();
     $("#CruisingButton").show();
     $("#HideDetails").show();
@@ -2031,7 +2169,8 @@ $(document).ready(function() { //alert();
             });
 
             $(".Tooltip").css("width","50px");
-                $(".smalltooltip").show();
+                $(".smalltooltip").hide();
+                $(".Tooltip").hide();
                 $(".owntooltip").hide();
             //When page opens do not display location cards until 2 seconds after page loads. 
             // $(".leaflet-tooltip").css("opacity", "0");  

@@ -1700,12 +1700,7 @@ if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !e
  <?php } 
 }?>
 
-// var tooltipdisplay = $('.Tooltip').css('display');
-//     if(tooltipdisplay == "block"){
-//         $('.Tooltip').css('top','45px');
-//     }else{
-//         $('.Tooltip').css('top','');
-//     }
+
 // script to show the tooltip next to marker on show/hide and also zoomin and zoomout
 map.on('zoomstart', function () {
 
