@@ -329,7 +329,7 @@ width: max-content;
     <div style="position:fixed;height:100%;width:100%;left:0;top:0;z-index:9999;opacity:0.5;display:none;" id="hideloader">
 		<div style="text-align:center;vertical-align:center;font-weight:bold;font-size:45px;margin-top:305px;color:#000000"><?php echo $this->Html->image("admin/loader.gif"); ?></div></div>         
 	 <section class="">
-            <div class="row">
+            <div class="row" style="margin-right: 0px;">
               <?php if($pageUrlName == 'privacytermsofuse'){ ?>
                 <div class="navbar-header ">             
                   <div class="logoimg"> <?php echo $this->Html->image($logoimage);?></div> 
