@@ -1163,17 +1163,7 @@ span.sp-rightalign {
   transition-delay: 30s;
 }
 }
-@media only screen and (min-width: 770px) and (max-width: 1020px){
-.navbar-absalute-top .yachtHeaderName {
-  position: absolute !important;
-  text-align: center;
-  left: 0;
-  right: 0;
-  display: inline-block;
-  width: 100%;
-  max-width: 100%;
-}
-}
+
 @media only screen and (max-width:767px){
 .sp-rightalign{
     display: none;
