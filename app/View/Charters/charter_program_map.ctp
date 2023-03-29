@@ -2017,6 +2017,26 @@ function markerOnClick(e) {
                         
                         $("#markerModalclose").attr("data-schuuid",scheduleSameLocationUUID);
                         $("#markerModal").show();
+
+
+                              // get all the text area elements
+var textareas = document.querySelectorAll(".auto_resize");
+
+// function to adjust the height of a text area based on its contents
+function adjustTextareaHeight(textarea) {
+  textarea.style.minHeight = textarea.style.height;
+  textarea.style.height = "auto";
+  textarea.style.height = textarea.scrollHeight + "px";
+}
+
+// loop over all the text areas and call the adjustTextareaHeight function for each one
+for (var i = 0; i < textareas.length; i++) {
+  var textarea = textareas[i];
+  adjustTextareaHeight(textarea);
+  textarea.addEventListener("input", function() {
+    adjustTextareaHeight(textarea);
+  });
+}
                         
                     // display popup from top
                     window.scrollTo(0, 0);
