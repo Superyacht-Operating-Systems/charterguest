@@ -6398,7 +6398,7 @@ class ChartersController extends AppController {
                         <div class="sp-divrow">
                         <div class="sp-60-w"><h1 style="float:left;border:none;line-height: inherit;padding: 9px 5px;">Day '.$dayNum.'&nbsp;&nbsp;&nbsp;&nbsp;</h1>
                         <input type="text" name="title" value="'.htmlspecialchars($title).'" placeholder="Enter the Title" class="" '.$readonly.' style="color: #000;float:right;font-size: 15px;border: solid 1px #ffffff;width:68%;margin: 0px;padding: 8px 5px;font-weight: 600;background-color: #ffffff;">
-                        <textarea class="form-control textareacont" name="messagestitle" '.$readonly.' rows="4" cols="50" style="margin-top:37px;background: #ffffff !important;color: #4d4d4d!important;border: solid 1px rgb(243 243 243 / 70%)!important;">'.htmlspecialchars($notes).'</textarea>
+                        <textarea class="form-control textareacont auto_resize" name="messagestitle" '.$readonly.' rows="4" cols="50" style="margin-top:37px;background: #ffffff !important;color: #4d4d4d!important;border: solid 1px rgb(243 243 243 / 70%)!important;">'.htmlspecialchars($notes).'</textarea>
                         </div>
                         <div class="sp-40-w">
                         <div class="sp-upload-img">

@@ -58,7 +58,11 @@ if(empty($scheduleData)){
     max-height: 500px;
     width: auto !important;
 } */
-
+.auto_resize {
+        resize: none;
+        overflow: hidden;
+        border: 1px solid black;
+      }
 ::-webkit-input-placeholder { /* WebKit, Blink, Edge */
     color:gray!important;
     opacity: 1!important;
@@ -2553,6 +2557,26 @@ $("#hideloader").show();
 
                 $("#cruisinglocationModal_load").html(result.popupHtml);
                 $("#cruisinglocationModal").show();
+
+                      // get all the text area elements
+var textareas = document.querySelectorAll(".auto_resize");
+
+// function to adjust the height of a text area based on its contents
+function adjustTextareaHeight(textarea) {
+  textarea.style.minHeight = textarea.style.height;
+  textarea.style.height = "auto";
+  textarea.style.height = textarea.scrollHeight + "px";
+}
+
+// loop over all the text areas and call the adjustTextareaHeight function for each one
+for (var i = 0; i < textareas.length; i++) {
+  var textarea = textareas[i];
+  adjustTextareaHeight(textarea);
+  textarea.addEventListener("input", function() {
+    adjustTextareaHeight(textarea);
+  });
+}
+
                 
                 $(".leaflet-control-attribution").hide();
                 $(".leaflet-control-container").hide();
@@ -2579,28 +2603,27 @@ $(document).on("click", "#cruisinglocationModalclose" ,function() {
         $(".leaflet-control-container").show();
     });
 
-    $(document).on("focus", ".textareacont" ,function() {
-        //console.log('testse');
-        $(this).animate({
-                 height: "14em"
-                }, 500);
+    // $(document).on("focus", ".textareacont" ,function() {
+     
+    //     $(this).animate({
+    //              height: "14em"
+    //             }, 500);
 
-                $(this).css({
-                    overflow:"scroll"
-                });
+    //             $(this).css({
+    //                 overflow:"scroll"
+    //             });
                 
-    });
+    // });
 
-    $(document).on("blur", ".textareacont" ,function() {
-        //console.log('sss');
-        $(this).animate({
-                 height: "7em"
-                }, 500);
+    // $(document).on("blur", ".textareacont" ,function() {
+    //     $(this).animate({
+    //              height: "7em"
+    //             }, 500);
 
-                $(this).css({
-                    overflow:"scroll"
-                });
-    });
+    //             $(this).css({
+    //                 overflow:"scroll"
+    //             });
+    // });
     
         $(document).on("click", ".textareacontmarker" ,function() {
         
