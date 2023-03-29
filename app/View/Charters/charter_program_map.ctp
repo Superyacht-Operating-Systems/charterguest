@@ -498,7 +498,7 @@ display: block;
 }
 .sp-divrow .sp-60-w textarea.form-control{
   margin-top: 5px;
-      height: 111px;
+      /* height: 111px; */
 }
 .p-mt-3{
   margin-top: 3rem;
