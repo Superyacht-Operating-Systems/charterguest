@@ -58,6 +58,9 @@ if(empty($scheduleData)){
     max-height: 500px;
     width: auto !important;
 } */
+.cruising-location-Modal .modal-content {
+    height: 85vh;
+}
 .auto_resize {
         resize: none!important;
         overflow: hidden!important;
