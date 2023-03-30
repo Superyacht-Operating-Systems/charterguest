@@ -391,8 +391,6 @@ echo $this->Html->script('leaflet/route');
  echo $this->Html->css('leaflet/leaflet.draw.css');
  echo $this->Html->script('leaflet/leaflet.draw.js'); 
 
- echo $this->Html->script('leaflet/L.Polyline.SnakeAnim.js'); 
-
 ?>
 <style>
 .wrapper{overflow: hidden;}
@@ -1828,17 +1826,7 @@ var latlongstemp = [];
 
 <?php } ?>
 // middle line
-var polyline0 = new L.Polyline(latlongstemp, {stroke:true,weight:4,dashArray: [10,10],lineCap: "round",lineJoin: "round",smoothFactor: 3});
-map.addLayer(polyline0);
-// setTimeout(() => {
-//     //map.addLayer(polyline0);
-//     //polyline0.snakeIn();
-// }, 1000);
-
-setTimeout(() => {
-    //map.addLayer(polyline0).snakeIn();
-    polyline0.snakeIn();
-}, 10000);
+var polyline0 = new L.Polyline(latlongstemp, {stroke:true,weight:4,dashArray: [10,10],lineCap: "round",lineJoin: "round",smoothFactor: 3}).addTo(map);
 //map.fitBounds(latlngs);
 // drawnItems.on('pm:edit', function (e) {
 
