@@ -5398,7 +5398,7 @@ class ChartersController extends AppController {
                                         //echo "<pre>";print_r($value[0]);
                                         
                                         foreach($value[0] as $v){
-                                            $temploc[$v['CharterProgramScheduleRoute']['start_location'].'_'.$v['CharterProgramScheduleRoute']['end_location']][] = "[".$v['CharterProgramScheduleRoute']['longitude'].",".$v['CharterProgramScheduleRoute']['lattitude']."]";
+                                            $temploc[$v['CharterProgramScheduleRoute']['start_location'].'_'.$v['CharterProgramScheduleRoute']['end_location']][] = "[".$v['CharterProgramScheduleRoute']['lattitude'].",".$v['CharterProgramScheduleRoute']['longitude']."]";
                                         }
                                     }
 
