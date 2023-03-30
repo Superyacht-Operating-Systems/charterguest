@@ -1828,7 +1828,17 @@ var latlongstemp = [];
 
 <?php } ?>
 // middle line
-var polyline0 = new L.Polyline(latlongstemp, {snakingPause: 200,stroke:true,weight:4,dashArray: [10,10],lineCap: "round",lineJoin: "round",smoothFactor: 3}).addTo(map).snakeIn();
+var polyline0 = new L.Polyline(latlongstemp, {stroke:true,weight:4,dashArray: [10,10],lineCap: "round",lineJoin: "round",smoothFactor: 3});
+map.addLayer(polyline0);
+// setTimeout(() => {
+//     //map.addLayer(polyline0);
+//     //polyline0.snakeIn();
+// }, 1000);
+
+setTimeout(() => {
+    //map.addLayer(polyline0).snakeIn();
+    polyline0.snakeIn();
+}, 2000);
 //map.fitBounds(latlngs);
 // drawnItems.on('pm:edit', function (e) {
 
