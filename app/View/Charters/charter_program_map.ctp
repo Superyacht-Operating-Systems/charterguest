@@ -1838,7 +1838,7 @@ map.addLayer(polyline0);
 setTimeout(() => {
     //map.addLayer(polyline0).snakeIn();
     polyline0.snakeIn();
-}, 2000);
+}, 10000);
 //map.fitBounds(latlngs);
 // drawnItems.on('pm:edit', function (e) {
 
