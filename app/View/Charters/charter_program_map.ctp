@@ -1408,7 +1408,7 @@ body .sp-60-w input {
 
 <div id="markerModal" class="modal certificat-modal-container cruising-location-Modal"  role="dialog">
     <div class="modal-dialog">
-        <div class="modal-content" style="width:650px;">
+        <div class="modal-content" style="width:650px;" id="markerModal_id">
             <div class="modal-header">
                 <button type="button" class="close" data-schuuid="" id="markerModalclose" aria-hidden="true" style="margin-right: 5px;">×</button>
                 <h4 class="modal-title" id="markerModalLabel" style="text-align: center;font-weight: bold;"></h4>
@@ -2914,5 +2914,16 @@ $(document).on("click", ".downloadmappagefile", function(e) { //alert()
                 }
             });
         }
+
+        window.addEventListener("resize", update_mapContainer);
+
+function update_mapContainer() {
+ let modelHeight = document.getElementById("markerModal_id").clientHeight;
+ let modelWidth = document.getElementById("markerModal_id").clientWidth;
+ let heigth=modelHeight * .75;
+ let width=modelWidth * .95;
+ document.getElementById('Img_container').style.height= `${heigth}px`;
+ document.getElementById('Img_container').style.width= `${width}px`;
+}
 </script>
   
