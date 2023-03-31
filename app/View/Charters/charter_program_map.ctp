@@ -2916,7 +2916,7 @@ $(document).on("click", ".downloadmappagefile", function(e) { //alert()
         }
 
         window.addEventListener("resize", update_mapContainer);
-
+        document.getElementById("markerModal_id").addEventListener("load", update_mapContainer);
 function update_mapContainer() {
  let modelHeight = document.getElementById("markerModal_id").clientHeight;
  let modelWidth = document.getElementById("markerModal_id").clientWidth;
