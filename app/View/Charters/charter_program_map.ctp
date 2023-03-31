@@ -2101,7 +2101,7 @@ function markerOnClick(e) {
                         
                         $("#markerModalclose").attr("data-schuuid",scheduleSameLocationUUID);
                         $("#markerModal").show();
-
+                        update_mapContainer();
 
                               // get all the text area elements
 var textareas = document.querySelectorAll(".auto_resize");
@@ -2916,7 +2916,6 @@ $(document).on("click", ".downloadmappagefile", function(e) { //alert()
         }
 
         window.addEventListener("resize", update_mapContainer);
-        window.addEventListener("load", update_mapContainer);
 function update_mapContainer() {
  let modelHeight = document.getElementById("markerModal_id").clientHeight;
  let modelWidth = document.getElementById("markerModal_id").clientWidth;
