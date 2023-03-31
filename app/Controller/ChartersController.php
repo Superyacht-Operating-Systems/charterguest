@@ -6153,8 +6153,8 @@ class ChartersController extends AppController {
                     <form id="scheduleFormEdit"><div class="inputContainerdiv">
                     <div class="sp-divrow">
                     <div class="sp-60-w">
-                    <input type="text" name="title" value="'.htmlspecialchars($title).'" placeholder="Enter the Title" class="" '.$readonly.' style="color: #000;font-size: 15px;border: solid 1px #ccc;width:100%;margin: 0px;padding: 8px 5px;font-weight: 600;">
-                    <textarea class="form-control auto_resize" style="background: #eee !important;color: #000!important;border: solid 1px rgb(243 243 243 / 70%)!important;" name="messagestitle" '.$readonly.' rows="4" cols="50">'.htmlspecialchars($notes).'</textarea>
+                    <input type="text" name="title" value="'.htmlspecialchars($title).'" placeholder="Enter the Title" class="" '.$readonly.' style="color: #000;font-size: 15px;border: solid 1px #ccc;width:100%!important;margin: 0px;padding: 8px 5px;font-weight: 600;">
+                    <textarea class="form-control auto_resize" style="background: #fff !important;color: #4d4d4d!important;border: solid 1px rgb(243 243 243 / 70%)!important;" name="messagestitle" '.$readonly.' rows="4" cols="50">'.htmlspecialchars($notes).'</textarea>
                     </div>
                     <div class="sp-40-w">
                     <div class="sp-upload-img">
