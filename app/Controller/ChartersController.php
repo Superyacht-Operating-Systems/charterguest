@@ -6152,8 +6152,8 @@ class ChartersController extends AppController {
                     <div class="sp-modal-hd"><div class="row"><div class="col-md-8"><select name="noofdayscard" class="form-control noofdayscard wt-st" style="font-size: 17px !important;font-weight: bold;background:none !important;color:#000 !important;border:solid 1px #ddd !important;"></select></div></div></div>
                     <form id="scheduleFormEdit"><div class="inputContainerdiv">
                     <div class="">
-   <div style="color: #000;font-size: 15px;border: solid 1px #ccc;width:100%!important;margin: 0px;padding: 8px 5px;font-weight: 600;">Shaw to Thomas </div>
-   <div id="Img_container"></div>
+   <div style="color: #000;font-size: 15px;border: solid 1px #ccc;width:100%!important;margin: 0px 0px 5px 0px;padding: 8px 5px;font-weight: 600;">Shaw to Thomas </div>
+   <div id="Img_container" style="border: solid 1px #ccc;"></div>
 </div>
                     <div class="sp-divrow">
                     <div class="sp-60-w">
