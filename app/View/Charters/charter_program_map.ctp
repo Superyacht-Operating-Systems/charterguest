@@ -59,6 +59,10 @@ if(empty($scheduleData)){
     max-height: 500px;
     width: auto !important;
 } */
+.m_loc_desc_div {
+  width: 450px;
+  margin-right: 10px;
+}
 .subloc_name {
   color: #000;
   font-size: 15px;
@@ -196,6 +200,7 @@ width: 100%;
     margin-right: 0px;
 width: 100%;
 }
+
 .certificat-modal-container .modal-dialog {
     width: 95%!important;
 margin: 0 auto;
