@@ -123,18 +123,18 @@ border-radius: 10px;
 top: -2px;
 color: #fff;
 }
-.CS_modal .modal-title{
+.CS_modal .modal-title, .Mark_modal .modal-title{
     font-family: 'monsterrat';
 }
 
-.CS_modal{
+.CS_modal, .Mark_modal{
     background-color: #eeeeee;
 }
 .location_container,.sp-divrow{
     background-color: #ffffff;
 }
 @media only screen and (max-width: 771px){
-    .CS_modal{
+    .CS_modal, .Mark_modal{
     width:100% !important;
 }
 .inputContainerdiv{
@@ -172,10 +172,11 @@ float: left;
 }
 
 @media only screen and (min-width: 771px){
-    .CS_modal{
+    .CS_modal, .Mark_modal{
     width:650px;
 }
 }
+
 
 .auto_resize {
         resize: none!important;
@@ -1527,7 +1528,7 @@ body .sp-60-w input {
 
 <div id="markerModal" class="modal certificat-modal-container cruising-location-Modal"  role="dialog">
     <div class="modal-dialog">
-        <div class="modal-content" style="width:650px;" id="markerModal_id">
+        <div class="modal-content Mark_modal" id="markerModal_id">
             <div class="modal-header">
                 <button type="button" class="close" data-schuuid="" id="markerModalclose" aria-hidden="true" style="margin-right: 5px;">×</button>
                 <h4 class="modal-title" id="markerModalLabel" style="text-align: center;font-weight: bold;"></h4>
