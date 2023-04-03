@@ -60,15 +60,17 @@ if(empty($scheduleData)){
 } */
 @media only screen and (max-width: 771px){
     .CS_modal{
-    width:100%;
+    width:100% !important;
     background-color: #eeeeee;
 }
 .CS_modal .modal-title{
-    font-family: monsterrat;
+    font-family: 'monsterrat';
 }
-
-.ff-lora{
-    font-family: lora;
+.modal-dialog {
+  margin: 30px auto;
+}
+.ff-desc{
+    font-family: 'Open Sans';
 }
 .location_container,.sp-divrow{
     background-color: #ffffff;
