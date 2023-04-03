@@ -48,6 +48,7 @@ if(empty($scheduleData)){
 
 }
 ?>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style>
     /* .custom-popup .leaflet-popup-content {
     overflow-y: auto;
@@ -64,7 +65,7 @@ display: flex;
 padding: 10px;
 background-color: #fff;
 border-radius: 10px;
-margin: 10px 0px;
+margin: 15px 5px;
 }	
 .loc_name{
     color: #000;
@@ -80,6 +81,14 @@ margin: 10px 0px;
 .loc_desc_div{
 width: 450px;
 margin-right: 10px;
+}
+.loc_desc_field{
+    padding: 6px 6px;
+    background: #ffffff !important;
+    color: #4d4d4d!important;
+    border: solid 0px rgb(243 243 243 / 70%)!important;
+    box-shadow: none;
+    font-family: 'Open Sans';
 }
 .loc_img_div{
 width: 150px;
