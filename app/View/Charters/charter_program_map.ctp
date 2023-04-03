@@ -152,12 +152,16 @@ margin-top: 15px;
 }
 
 .loc_img_div{
-width: 40%;
+width: 100%;
 }	
+
 .loc_map_div{
+    width: 40%;
 margin-right: 10px;
 }
-
+.sp-upload-img{
+    width: 40%;
+}
 }
 
 @media only screen and (min-width: 771px){
