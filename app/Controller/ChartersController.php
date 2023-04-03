@@ -6394,9 +6394,14 @@ class ChartersController extends AppController {
                         <div class="loc_desc_div">
                         <div>
 						   <img class="l_count_icon" src="'.BASE_URL.$basefolder.'/app/webroot/img/admin/loc_count.png"><span class="l_count">'.$dayNum.'</span>
-                           <input type="text" name="title" value="'.htmlspecialchars($title).'" placeholder="Enter the Title" class="" '.$readonly.' style="color: #000;float:right;font-size: 15px;border: solid 1px #ffffff;width:68%;margin: 0px;padding: 8px 5px;font-weight: 600;background-color: #ffffff;">
+                           <input type="text" name="title" value="'.htmlspecialchars($title).'" placeholder="Enter the Title" class="" '.$readonly.' style="color: #000;font-size: 15px;border: solid 1px #ffffff;width:68%;margin: 0px;padding: 8px 5px;font-weight: 600;background-color: #ffffff;">
                            <i style="color: #00a8f3;float: right;padding: 10px 5px;" class="fa fa-comments"></i>
 						</div>
+                           <div style="padding: 10px 5px 5px 5px;border-bottom: 2px solid #eee;">
+<i style="color: #00a8f3;" class="fa fa-solid fa-calendar"><span style="color: #000;">&nbsp;&nbsp;Mon 1 Jun 2023&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span></span></span></i>
+<i style="color: #00a8f3;" class="fa fa-solid fa-clock-o "><span style="color: #000;">&nbsp;&nbsp;2h 45mins&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span></span></span></i>
+<i class="fa fa-ship" aria-hidden="true">&nbsp;45mm&nbsp;&nbsp;&nbsp;&nbsp;</i>
+</div>
 						<div>
 						   <textarea class="form-control auto_resize" name="messagestitle" '.$readonly.' rows="4" cols="50" style="margin-top:37px;background: #ffffff !important;color: #4d4d4d!important;border: solid 1px rgb(243 243 243 / 70%)!important;">'.htmlspecialchars($notes).'</textarea>
 						</div>

@@ -64,6 +64,7 @@ display: flex;
 padding: 10px;
 background-color: #fff;
 border-radius: 10px;
+margin: 10px 0px;
 }	
 .loc_desc_div{
 width: 450px;
