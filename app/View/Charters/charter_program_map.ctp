@@ -89,6 +89,8 @@ margin-right: 10px;
     border: solid 0px rgb(243 243 243 / 70%)!important;
     box-shadow: none;
     font-family: 'Open Sans';
+    text-align: justify;
+white-space: normal;
 }
 .loc_img_div{
 width: 150px;
@@ -142,6 +144,7 @@ display: grid;
 width: 100%;
 }	
 .loc_desc_div{
+    margin-right: 0px;
 width: 100%;
 }
 
