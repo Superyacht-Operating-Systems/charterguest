@@ -59,6 +59,12 @@ if(empty($scheduleData)){
     max-height: 500px;
     width: auto !important;
 } */
+
+.mark_map_div{
+    background-color: #fff;
+border-radius: 10px;
+padding: 10px;
+}
 .m_loc_desc_div {
   width: 450px;
   margin-right: 10px;
