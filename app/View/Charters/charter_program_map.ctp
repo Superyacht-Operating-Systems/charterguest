@@ -63,6 +63,9 @@ if(empty($scheduleData)){
   width: 450px;
   margin-right: 10px;
 }
+.m_loc_img_div{
+width: 150px;
+}	
 .subloc_name {
   color: #000;
   font-size: 15px;
