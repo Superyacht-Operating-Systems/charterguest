@@ -135,11 +135,27 @@ color: #fff;
     .CS_modal{
     width:100% !important;
 }
+.inputContainerdiv{
+display: grid;
+}
+.loc_img_div{
+width: 100%;
+}	
+.loc_desc_div{
+width: 100%;
+}
 
 .certificat-modal-container .modal-dialog {
     width: 95%!important;
 margin: 0 auto;
 margin-top: 15px;
+}
+
+.loc_img_div{
+width: 40%;
+}	
+.loc_map_div{
+margin-right: 10px;
 }
 
 }
