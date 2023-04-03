@@ -6148,7 +6148,7 @@ class ChartersController extends AppController {
                     }else{
                             $displaynone = "display:block;";
                     }
-                    $popupHtml .= '<div class="mapPopup sp-mp-detailsrow sp-modal-600" data-schuuid="'.$scheduleId.'">
+                    $popupHtml .= '<div class="mapPopup sp-mp-detailsrow " data-schuuid="'.$scheduleId.'">
                     <div class="sp-modal-hd"><div class="row"><div class="col-md-8"><select name="noofdayscard" class="form-control noofdayscard wt-st" style="font-size: 17px !important;font-weight: bold;background:none !important;color:#000 !important;border:solid 1px #ddd !important;"></select></div></div></div>
                     <form id="scheduleFormEdit"><div class="inputContainerdiv">
                     <div class="">
@@ -6162,11 +6162,11 @@ class ChartersController extends AppController {
                     <ul class="action-icon"><li><i class="fa fa-comments crew_comment_cruisingmaptitle"  style="'.$colorcodetitle.$displaynone.'" data-rel="'.$scheduleData[0]['CharterProgramSchedule']['UUID'].'" data-yachtid="'.$yacht_id.'" data-tempname="'.htmlspecialchars($scheduleData[0]['CharterProgramSchedule']['title']).'"><input type="hidden" name=commentstitle value="" class="messagecommentstitle" /></i></li></ul>
                     </div>
                     <div>
-                    <textarea class="form-control auto_resize" style="background: #fff !important;color: #4d4d4d!important;border: solid 1px rgb(243 243 243 / 70%)!important;" name="messagestitle" '.$readonly.' rows="4" cols="50">'.htmlspecialchars($notes).'</textarea>
+                    <textarea class="form-control auto_resize loc_desc_field" name="messagestitle" '.$readonly.' rows="4" cols="50">'.htmlspecialchars($notes).'</textarea>
                     </div>
                     </div>
                     <div class="marker_img_div">
-                    <div class="sp-upload-img">
+                    <div class="mLoc-img_prev">
                     <a href="'.$titleimagehref.'" class="'.$fancybox.'"><img src="'.$titleimage.'" style="object-fit: fill; height: 150px;" alt="" ></a>
                     </div>
                     

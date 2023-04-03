@@ -119,6 +119,13 @@ height: 150px;
 margin-bottom: 10px;
 border-radius: 10px;
 }
+.mLoc-img_prev{
+    border: solid 1px #ccc;
+    width: 150px;
+    overflow: hidden;
+    height: 150px;
+    border-radius: 10px;
+}
 .loc_img_prev{
     float: left;
     border: solid 1px #ccc;
@@ -188,6 +195,10 @@ margin-bottom: 0px;
     width: 49% !important;
 margin-right: 1%;
 float: left;
+}
+.mLoc-img_prev{
+    width: 50% !important;
+    margin: 0 auto;
 }
 /* marker popup style */
 .marker_desc_div{
