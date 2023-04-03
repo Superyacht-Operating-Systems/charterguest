@@ -58,6 +58,22 @@ if(empty($scheduleData)){
     max-height: 500px;
     width: auto !important;
 } */
+
+.inputContainerdiv{
+display: flex;
+padding: 10px;
+background-color: #fff;
+border-radius: 10px;
+}	
+.loc_desc_div{
+width: 450px;
+margin-right: 10px;
+}
+.loc_img_div{
+width: 150px;
+}	
+
+
 .l_count_icon{
     width:20px;
     margin-top:5px;
