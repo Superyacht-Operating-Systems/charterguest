@@ -6388,7 +6388,7 @@ class ChartersController extends AppController {
 
                         
                         $readonly = "readonly";
-                        $popupHtml .= '<div class="mapPopup sp-mp-detailsrow sp-modal-600" data-schuuid="'.$scheduleData['CharterProgramSchedule']['UUID'].'">
+                        $popupHtml .= '<div class="mapPopup sp-mp-detailsrow" data-schuuid="'.$scheduleData['CharterProgramSchedule']['UUID'].'">
                        
                        <form id="scheduleFormEdit"><div class="inputContainerdiv">
                         <div class="loc_desc_div">
@@ -6400,12 +6400,12 @@ class ChartersController extends AppController {
 						<div>
 						   <textarea class="form-control auto_resize" name="messagestitle" '.$readonly.' rows="4" cols="50" style="margin-top:37px;background: #ffffff !important;color: #4d4d4d!important;border: solid 1px rgb(243 243 243 / 70%)!important;">'.htmlspecialchars($notes).'</textarea>
 						</div>
+                         </div>
                         <div class="loc_img_div">
                         <div class="sp-upload-img">
                         <a href="'.$titleimagehref.'" class="'.$fancybox.'"><img src="'.$titleimage.'" style="object-fit: fill; height: 150px;" alt="" ></a>
                         </div>
                         <ul class="action-icon"></ul>
-                        </div>
                         </div>';
                         $popupHtml .= '<input type="hidden" name="schedule_id" value="'.$scheduleId.'"><input type="hidden" class="form-control" name="day_num" id="dayNum" value="'.$dayNum.'">';
                         $popupHtml .= '<input type="hidden" name="yacht_id" value="'.$yacht_id.'">';
