@@ -66,6 +66,17 @@ background-color: #fff;
 border-radius: 10px;
 margin: 10px 0px;
 }	
+.loc_name{
+    color: #000;
+    font-size: 15px;
+    border: solid 1px #ffffff;
+    width:68%;
+    margin: 0px;
+    padding: 8px 5px;
+    font-weight: 600;
+    background-color: #ffffff;
+    font-family: 'monsterrat';
+}
 .loc_desc_div{
 width: 450px;
 margin-right: 10px;
@@ -82,8 +93,15 @@ height: 150px;
 margin-bottom: 10px;
 border-radius: 10px;
 }
-
-
+.icons_fields{
+    padding: 10px 5px 5px 5px;
+    border-bottom: 2px solid #eee;
+}
+.icon_label{
+    color: #000;
+    padding: 0px 20px 0px 5px;
+    font-family: 'Open Sans';
+}
 .l_count_icon{
     width:20px;
     margin-top:5px;
@@ -97,9 +115,7 @@ color: #fff;
 .CS_modal .modal-title{
     font-family: 'monsterrat';
 }
-.ff-desc{
-    font-family: 'Open Sans';
-}
+
 .CS_modal{
     background-color: #eeeeee;
 }
