@@ -60,6 +60,21 @@ if(empty($scheduleData)){
     width: auto !important;
 } */
 
+.Marker_container_div{
+    display: flex;
+padding: 10px;
+background-color: #fff;
+border-radius: 10px;
+margin: 15px 5px;
+}
+.marker_desc_div{
+    width: 450px;
+margin-right: 10px;
+}
+.marker_img_div{
+width: 150px;
+}
+
 .inputContainer_div{
 display: flex;
 padding: 10px;
@@ -148,6 +163,9 @@ color: #fff;
 .inputContainer_div{
 display: grid;
 }
+.Marker_container_div{
+    display: grid;
+}
 .loc_img_div{
 width: 100%;
 }	
@@ -155,17 +173,11 @@ width: 100%;
     margin-right: 0px;
 width: 100%;
 }
-
 .certificat-modal-container .modal-dialog {
     width: 95%!important;
 margin: 0 auto;
 margin-top: 15px;
 }
-
-.loc_img_div{
-width: 100%;
-}	
-
 .loc_map_div{
     width: 49% !important;
 margin-left: 1%;
@@ -177,6 +189,14 @@ margin-bottom: 0px;
 margin-right: 1%;
 float: left;
 }
+/* marker popup style */
+.marker_desc_div{
+    margin-right: 0px;
+width: 100%;
+}
+.marker_img_div{
+width: 100%;
+}	
 }
 
 @media only screen and (min-width: 771px){

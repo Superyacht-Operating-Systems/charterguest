@@ -6155,16 +6155,21 @@ class ChartersController extends AppController {
    <div style="color: #000;font-size: 15px;border: solid 1px #ccc;width:100%!important;margin: 0px 0px 5px 0px;padding: 8px 5px;font-weight: 600;">Shaw to Thomas </div>
    <div id="Img_container" style="border: solid 1px #ccc;"></div>
 </div>
-                    <div class="sp-divrow">
-                    <div class="sp-60-w">
-                    <input type="text" name="title" value="'.htmlspecialchars($title).'" placeholder="Enter the Title" class="" '.$readonly.' style="color: #000;font-size: 15px;border: solid 1px #ccc;width:100%!important;margin: 0px;padding: 8px 5px;font-weight: 600;">
+                    <div class="Marker_container_div">
+                    <div class="marker_desc_div">
+                    <div>
+                    <input type="text" name="title" value="'.htmlspecialchars($title).'" placeholder="Enter the Title" class="loc_name" '.$readonly.' >
+                    <ul class="action-icon"><li><i class="fa fa-comments crew_comment_cruisingmaptitle"  style="'.$colorcodetitle.$displaynone.'" data-rel="'.$scheduleData[0]['CharterProgramSchedule']['UUID'].'" data-yachtid="'.$yacht_id.'" data-tempname="'.htmlspecialchars($scheduleData[0]['CharterProgramSchedule']['title']).'"><input type="hidden" name=commentstitle value="" class="messagecommentstitle" /></i></li></ul>
+                    </div>
+                    <div>
                     <textarea class="form-control auto_resize" style="background: #fff !important;color: #4d4d4d!important;border: solid 1px rgb(243 243 243 / 70%)!important;" name="messagestitle" '.$readonly.' rows="4" cols="50">'.htmlspecialchars($notes).'</textarea>
                     </div>
-                    <div class="sp-40-w">
+                    </div>
+                    <div class="marker_img_div">
                     <div class="sp-upload-img">
                     <a href="'.$titleimagehref.'" class="'.$fancybox.'"><img src="'.$titleimage.'" style="object-fit: fill; height: 150px;" alt="" ></a>
                     </div>
-                    <ul class="action-icon"><li><i class="fa fa-comments crew_comment_cruisingmaptitle"  style="'.$colorcodetitle.$displaynone.'" data-rel="'.$scheduleData[0]['CharterProgramSchedule']['UUID'].'" data-yachtid="'.$yacht_id.'" data-tempname="'.htmlspecialchars($scheduleData[0]['CharterProgramSchedule']['title']).'"><input type="hidden" name=commentstitle value="" class="messagecommentstitle" /></i></li></ul>
+                    
                     </div>
                     </div>';
                     $popupHtml .= '<input type="hidden" name="schedule_id" value="'.$scheduleId.'"><input type="hidden" class="form-control" name="day_num" id="dayNum" value="'.$dayNum.'">';
