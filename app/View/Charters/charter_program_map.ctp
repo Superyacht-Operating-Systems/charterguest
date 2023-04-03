@@ -142,7 +142,7 @@ color: #fff;
     background-color: #ffffff;
 }
 @media only screen and (max-width: 771px){
-    .CS_modal{
+    .CS_modal, .Mark_modal{
     width:100% !important;
 }
 .inputContainer_div{
@@ -180,9 +180,10 @@ float: left;
 }
 
 @media only screen and (min-width: 771px){
-    .CS_modal{
+    .CS_modal, .Mark_modal{
     width:650px;
 }
+
 }
 
 .auto_resize {
