@@ -156,11 +156,13 @@ width: 100%;
 }	
 
 .loc_map_div{
-    width: 40%!important;
-margin-right: 10px;
+    width: 49% !important;
+margin-left: 1%;
+margin-bottom: 0px;
 }
 .sp-upload-img{
-    width: 40%!important;
+    width: 49% !important;
+margin-left: 1%;
 }
 }
 
