@@ -532,6 +532,7 @@ float: left;
     width: 150px;
     overflow: hidden;
     height: 150px;
+    border-radius: 10px;
 }
 .sp-40-w .action-icon{
 display: block;

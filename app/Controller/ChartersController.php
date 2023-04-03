@@ -6394,16 +6394,16 @@ class ChartersController extends AppController {
                         <div class="loc_desc_div">
                         <div>
 						   <img class="l_count_icon" src="'.BASE_URL.$basefolder.'/app/webroot/img/admin/loc_count.png"><span class="l_count">'.$dayNum.'</span>
-                           <input type="text" name="title" value="'.htmlspecialchars($title).'" placeholder="Enter the Title" class="" '.$readonly.' style="color: #000;font-size: 15px;border: solid 1px #ffffff;width:68%;margin: 0px;padding: 8px 5px;font-weight: 600;background-color: #ffffff;">
+                           <input type="text" name="title" value="'.htmlspecialchars($title).'" placeholder="Enter the Title" class="" '.$readonly.' style="color: #000;font-size: 15px;border: solid 1px #ffffff;width:68%;margin: 0px;padding: 8px 5px;font-weight: 600;background-color: #ffffff;font-family: 'monsterrat';">
                            <i style="color: #00a8f3;float: right;padding: 10px 5px;" class="fa fa-comments"></i>
 						</div>
                            <div style="padding: 10px 5px 5px 5px;border-bottom: 2px solid #eee;">
-<i style="color: #00a8f3;" class="fa fa-solid fa-calendar"><span style="color: #000;padding: 0px 20px 0px 5px;">Mon, 1 Jun 2023</span></i>
-<i style="color: #00a8f3;" class="fa fa-solid fa-clock-o "><span style="color: #000;padding: 0px 20px 0px 5px;">2h 45mins</span></i>
-<i class="fa fa-ship" aria-hidden="true"><span style="color: #000;padding: 0px 20px 0px 5px;">45mm</span></i>
+<i style="color: #00a8f3;" class="fa fa-solid fa-calendar"><span style="color: #000;padding: 0px 20px 0px 5px;font-family: 'Open Sans';">Mon, 1 Jun 2023</span></i>
+<i style="color: #00a8f3;" class="fa fa-solid fa-clock-o "><span style="color: #000;padding: 0px 20px 0px 5px;font-family: 'Open Sans';">2h 45mins</span></i>
+<i class="fa fa-ship" aria-hidden="true"><span style="color: #000;padding: 0px 20px 0px 5px;font-family: 'Open Sans';">45mm</span></i>
 </div>
 						<div>
-						   <textarea class="form-control auto_resize" name="messagestitle" '.$readonly.' rows="4" cols="50" style="padding: 6px 6px;background: #ffffff !important;color: #4d4d4d!important;border: solid 0px rgb(243 243 243 / 70%)!important;box-shadow: none;">'.htmlspecialchars($notes).'</textarea>
+						   <textarea class="form-control auto_resize" name="messagestitle" '.$readonly.' rows="4" cols="50" style="padding: 6px 6px;background: #ffffff !important;color: #4d4d4d!important;border: solid 0px rgb(243 243 243 / 70%)!important;box-shadow: none;font-family: 'Open Sans';">'.htmlspecialchars($notes).'</textarea>
 						</div>
                          </div>
                         <div class="loc_img_div">
