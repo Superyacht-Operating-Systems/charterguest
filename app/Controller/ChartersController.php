@@ -6392,7 +6392,7 @@ class ChartersController extends AppController {
                        
                         <form id="scheduleFormEdit"><div class="inputContainerdiv">
                         <div class="sp-divrow">
-                        <div class="sp-60-w"><img src="'.BASE_URL.$basefolder.'/app/webroot/img/admin/loc_count.png"><h1 style="float:left;border:none;line-height: inherit;padding: 9px 5px;"> '.$dayNum.'&nbsp;&nbsp;&nbsp;&nbsp;</h1>
+                        <div class="sp-60-w"><img class="loc_count" src="'.BASE_URL.$basefolder.'/app/webroot/img/admin/loc_count.png"><span>'.$dayNum.'</span>
                         <input type="text" name="title" value="'.htmlspecialchars($title).'" placeholder="Enter the Title" class="" '.$readonly.' style="color: #000;float:right;font-size: 15px;border: solid 1px #ffffff;width:68%;margin: 0px;padding: 8px 5px;font-weight: 600;background-color: #ffffff;">
                         <textarea class="form-control auto_resize" name="messagestitle" '.$readonly.' rows="4" cols="50" style="margin-top:37px;background: #ffffff !important;color: #4d4d4d!important;border: solid 1px rgb(243 243 243 / 70%)!important;">'.htmlspecialchars($notes).'</textarea>
                         </div>

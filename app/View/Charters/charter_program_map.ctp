@@ -58,6 +58,15 @@ if(empty($scheduleData)){
     max-height: 500px;
     width: auto !important;
 } */
+.l_count_icon{
+    width:20px;
+    margin-top:5px;
+}
+.l_count{
+    position: relative;
+left: -18px;
+top: -1px;
+}
 .CS_modal .modal-title{
     font-family: 'monsterrat';
 }
