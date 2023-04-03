@@ -64,8 +64,9 @@ if(empty($scheduleData)){
 }
 .l_count{
     position: relative;
-left: -18px;
-top: -1px;
+    left: -14px;
+top: -2px;
+color: #fff;
 }
 .CS_modal .modal-title{
     font-family: 'monsterrat';
