@@ -58,25 +58,29 @@ if(empty($scheduleData)){
     max-height: 500px;
     width: auto !important;
 } */
-@media only screen and (max-width: 771px){
-    .CS_modal{
-    width:100% !important;
-    background-color: #eeeeee;
-}
 .CS_modal .modal-title{
     font-family: 'monsterrat';
 }
+.ff-desc{
+    font-family: 'Open Sans';
+}
+.CS_modal{
+    background-color: #eeeeee;
+}
+.location_container,.sp-divrow{
+    background-color: #ffffff;
+}
+@media only screen and (max-width: 771px){
+    .CS_modal{
+    width:100% !important;
+}
+
 .certificat-modal-container .modal-dialog {
     width: 95%!important;
 margin: 0 auto;
 margin-top: 15px;
 }
-.ff-desc{
-    font-family: 'Open Sans';
-}
-.location_container,.sp-divrow{
-    background-color: #ffffff;
-}
+
 }
 
 @media only screen and (min-width: 771px){
