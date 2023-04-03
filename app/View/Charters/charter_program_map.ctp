@@ -78,10 +78,11 @@ width: 150px;
   font-family: 'monsterrat';
 }
 .marksub-div {
-  overflow: hidden;
-  width: 100%;
   display: flex;
-  margin-top: 5px;
+  background-color: #fff;
+  padding: 10px;
+border-radius: 10px;
+margin: 15px 5px;
 }
 .Marker_container_div{
     display: flex;
@@ -180,7 +181,7 @@ color: #fff;
     font-family: 'monsterrat';
 }
 
-.CS_modal{
+.CS_modal,.Mark_modal{
     background-color: #eeeeee;
 }
 .location_container,.sp-divrow{
