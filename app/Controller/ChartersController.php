@@ -6400,7 +6400,7 @@ class ChartersController extends AppController {
                            <div class="icons_fields">
 <i style="color: #00a8f3;" class="fa fa-solid fa-calendar"><span class="icon_label" >Mon, 1 Jun 2023</span></i>
 <i style="color: #00a8f3;" class="fa fa-solid fa-clock-o "><span class="icon_label">2h 45mins</span></i>
-<i class="fa fa-ship" aria-hidden="true"><span class="icon_label">45mm</span></i>
+<i style="color: #00a8f3;" class="fa fa-solid fa-ship" aria-hidden="true"><span class="icon_label">45mm</span></i>
 </div>
 						<div>
 						   <textarea class="form-control auto_resize loc_desc_field" name="messagestitle" '.$readonly.' rows="4" cols="50">'.htmlspecialchars($notes).'</textarea>
