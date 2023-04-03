@@ -58,6 +58,28 @@ if(empty($scheduleData)){
     max-height: 500px;
     width: auto !important;
 } */
+@media only screen and (max-width: 771px){
+    .CS_modal{
+    width:100%;
+    background-color: #eeeeee;
+}
+.CS_modal .modal-title{
+    font-family: monsterrat;
+}
+
+.ff-lora{
+    font-family: lora;
+}
+.location_container,.sp-divrow{
+    background-color: #ffffff;
+}
+}
+
+@media only screen and (min-width: 771px){
+    .CS_modal{
+    width:650px;
+}
+}
 
 .auto_resize {
         resize: none!important;
@@ -1390,7 +1412,7 @@ body .sp-60-w input {
 <!-- sample modal content -->
 <div id="cruisinglocationModal" class="modal certificat-modal-container cruising-location-Modal"  role="dialog">
     <div class="modal-dialog">
-        <div class="modal-content" style="width:620px;">
+        <div class="modal-content CS_modal">
             <div class="modal-header">
                 <button type="button" class="close" id="cruisinglocationModalclose" aria-hidden="true" style="margin-right: 5px;">×</button>
                 <h4 class="modal-title" id="myModalLabel" style="text-align: center;font-weight: bold;"><?php echo $startloc; ?> to <?php echo $endloc; ?></h4>
