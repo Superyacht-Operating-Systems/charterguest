@@ -59,7 +59,23 @@ if(empty($scheduleData)){
     max-height: 500px;
     width: auto !important;
 } */
-
+.subloc_name {
+  color: #000;
+  font-size: 15px;
+  border: solid 1px #ffffff;
+  width: 100%;
+  margin: 0px;
+  padding: 8px 5px;
+  font-weight: 600;
+  background-color: #ffffff;
+  font-family: 'monsterrat';
+}
+.marksub-div {
+  overflow: hidden;
+  width: 100%;
+  display: flex;
+  margin-top: 5px;
+}
 .Marker_container_div{
     display: flex;
 padding: 10px;
