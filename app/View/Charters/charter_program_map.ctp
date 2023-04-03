@@ -67,7 +67,9 @@ if(empty($scheduleData)){
     font-family: 'monsterrat';
 }
 .modal-dialog {
-  margin: 30px auto;
+    width: 95%;
+margin: 0 auto;
+margin-top: 15px;
 }
 .ff-desc{
     font-family: 'Open Sans';
