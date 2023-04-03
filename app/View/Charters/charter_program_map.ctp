@@ -73,6 +73,15 @@ margin-right: 10px;
 .loc_img_div{
 width: 150px;
 }	
+.loc_map_div{
+    float: left;
+border: solid 1px #ccc;
+width: 150px;
+overflow: hidden;
+height: 150px;
+margin-bottom: 10px;
+border-radius: 10px;
+}
 
 
 .l_count_icon{

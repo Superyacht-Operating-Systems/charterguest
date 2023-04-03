@@ -6403,10 +6403,13 @@ class ChartersController extends AppController {
 <i class="fa fa-ship" aria-hidden="true"><span style="color: #000;padding: 0px 20px 0px 5px;">45mm</span></i>
 </div>
 						<div>
-						   <textarea class="form-control auto_resize" name="messagestitle" '.$readonly.' rows="4" cols="50" style="margin-top:5px;background: #ffffff !important;color: #4d4d4d!important;border: solid 0px rgb(243 243 243 / 70%)!important;box-shadow: none;">'.htmlspecialchars($notes).'</textarea>
+						   <textarea class="form-control auto_resize" name="messagestitle" '.$readonly.' rows="4" cols="50" style="padding: 6px 6px;background: #ffffff !important;color: #4d4d4d!important;border: solid 0px rgb(243 243 243 / 70%)!important;box-shadow: none;">'.htmlspecialchars($notes).'</textarea>
 						</div>
                          </div>
                         <div class="loc_img_div">
+                        <div class="loc_map_div">
+                        
+                        </div>
                         <div class="sp-upload-img">
                         <a href="'.$titleimagehref.'" class="'.$fancybox.'"><img src="'.$titleimage.'" style="object-fit: fill; height: 150px;" alt="" ></a>
                         </div>
