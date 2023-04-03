@@ -60,7 +60,7 @@ if(empty($scheduleData)){
     width: auto !important;
 } */
 
-.inputContainerdiv{
+.inputContainer_div{
 display: flex;
 padding: 10px;
 background-color: #fff;
@@ -145,7 +145,7 @@ color: #fff;
     .CS_modal{
     width:100% !important;
 }
-.inputContainerdiv{
+.inputContainer_div{
 display: grid;
 }
 .loc_img_div{
