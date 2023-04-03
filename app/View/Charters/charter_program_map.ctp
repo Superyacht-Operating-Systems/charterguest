@@ -157,7 +157,7 @@ width: 100%;
 
 .loc_map_div{
     width: 49% !important;
-margin-left: 1%;
+margin-right: 1%;
 margin-bottom: 0px;
 }
 .sp-upload-img{
