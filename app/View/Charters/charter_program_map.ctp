@@ -157,12 +157,14 @@ width: 100%;
 
 .loc_map_div{
     width: 49% !important;
-margin-right: 1%;
+margin-left: 1%;
+float: right;
 margin-bottom: 0px;
 }
 .sp-upload-img{
     width: 49% !important;
-margin-left: 1%;
+margin-right: 1%;
+float: left;
 }
 }
 
