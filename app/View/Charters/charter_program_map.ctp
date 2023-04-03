@@ -66,8 +66,8 @@ if(empty($scheduleData)){
 .CS_modal .modal-title{
     font-family: 'monsterrat';
 }
-.modal-dialog {
-    width: 95%;
+.certificat-modal-container .modal-dialog {
+    width: 95%!important;
 margin: 0 auto;
 margin-top: 15px;
 }
