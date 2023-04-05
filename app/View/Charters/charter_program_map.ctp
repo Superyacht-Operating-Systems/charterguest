@@ -2285,7 +2285,6 @@ $(document).on("click", ".text-below-marker", function(e) {
     
 });
 /***********************************On clicking marker tooltip open modal of that specific marker */
-
 var mapmarkerglobalObj = null;
 var fitzoommap = [];
 var routeexists;
@@ -2326,7 +2325,8 @@ function markerOnClick(e) {
                      $("#map .leaflet-control-container").hide();
                     // open popup center to map
                     map.setView(e.latlng);
-
+                    //modalmap.setView(e.latlng);
+                    
                     var popLocation= e.latlng;
                 //setTimeout(function() {
                     // var popup = L.popup({
@@ -2406,19 +2406,12 @@ function markerOnClick(e) {
                     /////////////////////////////itineray modal map///////////////////////////////////////////////////
 
                                 ReloadModalMaplayer();
-                                var popLocation = e.latlng;
+                                //var popLocation = e.latlng;
                                 var tooltipcontent = e.target._tooltip._content;
                                 var selectedmarkertitle = e.target.daytitle;
                                 var selectedmarkerday_num = e.target.day_num;
                                 //console.log(popLocation);
                                 fitzoommap.push(popLocation);
-
-                                var textMarkermodalmap = L.marker([lattitude,longitude], {
-                                icon: L.divIcon({
-                                    html: selectedmarkerday_num,
-                                    className: 'text-below-marker-modalmap',
-                                    })
-                                }).addTo(modalmap);
 
                                 // $("#frommarker").val(selectedmarkertitle +' - Day '+selectedmarkerday_num);
                                 // $("#frommarkerlat").val(lattitude);
@@ -2453,6 +2446,13 @@ function markerOnClick(e) {
                                 });
                                 routemodalmarker.addTo(modalmap);
 
+                                var textMarkermodalmap = L.marker([lattitude,longitude], {
+                                icon: L.divIcon({
+                                    html: selectedmarkerday_num,
+                                    className: 'text-below-marker-modalmap',
+                                    })
+                                }).addTo(modalmap);
+
                                 // $(".Tooltipmodalmap").hide();
                     ////////////////////////////////////////////////////////////////////////////////
                     
@@ -2465,6 +2465,94 @@ function markerOnClick(e) {
         });
     }
         
+}
+
+var routemodalmarkerselected = {};
+var textMarkermodalmap = {};
+var selectedlat;
+var selectedlong;
+var fmlong;
+var fmlat;
+var modalmapdaynumber;
+var defaultline = {};
+function markersnamesmodalmap(selectedTitle){
+
+    //selectedTitle = $(this).val();
+    //alert(selectedTitle);
+    //console.log(selectedTitle);
+    if (selectedTitle != "") {
+        // selectedlatlong = $(".markersnamesmodalmap option:selected").attr("data-lat");
+        // selectedlong = $(".markersnamesmodalmap option:selected").attr("data-long");
+        // var schid = $(".markersnamesmodalmap option:selected").attr("data-schid");
+        // var modalmapdaynumber = $(".markersnamesmodalmap option:selected").attr("data-daynum");
+        
+        //console.log(markerArray);  return false;
+        var selectedmarkertooltipcontent = "";
+       
+        $.each(markerArray, function(i, val) {
+            //console.log(val);
+            if (val.endplace == selectedTitle) {
+                selectedmarkertooltipcontent = val._tooltip._content;
+                selectedlat = val._latlng.lat;
+                selectedlong = val._latlng.lng;
+                modalmapdaynumber = val.day_num;
+                fitzoommap.push(val._latlng);
+            }
+        });
+
+        // console.log(routemodalmarkerselected); 
+        // console.log(selectedlat);  
+        // console.log(selectedlong);  
+        if (routemodalmarkerselected != "") { //alert();
+            modalmap.removeLayer(routemodalmarkerselected);
+        }
+        if (textMarkermodalmap != "") { //alert();
+            modalmap.removeLayer(textMarkermodalmap);
+        }
+        routemodalmarkerselected = L.marker([selectedlat,selectedlong], {
+            draggable: false,
+            pmIgnore: true
+        }).bindTooltip(selectedmarkertooltipcontent, {
+            permanent: true,
+            direction: 'right',
+            className: "Tooltipmodalmap",
+            noWrap: false,
+        });
+        routemodalmarkerselected.addTo(modalmap);
+        // adding day number to marker
+        textMarkermodalmap = L.marker([selectedlat,selectedlong], {
+        icon: L.divIcon({
+            html: modalmapdaynumber,
+            className: 'text-below-marker-modalmap',
+            })
+        });
+        textMarkermodalmap.addTo(modalmap);
+        
+        // by default selecting the to location display the route line
+        // if(routeexists == 0){
+        //     if (defaultline != "") { //alert();
+        //         modalmap.removeLayer(defaultline);
+        //     }
+        //         fmlat =  $("#frommarkerlat").val();
+        //         fmlong = $("#frommarkerlong").val();
+
+        //     var origin = new L.LatLng(fmlat, fmlong);
+        //     var dest = new L.LatLng(selectedlat, selectedlong);
+        //     defaultline = L.polyline([origin, dest]);
+        //     defaultline.addTo(modalmap);
+        // }
+
+        modalmap.fitBounds(fitzoommap);
+        //modalmap.setView(new L.LatLng(selectedlat,selectedlong), 4);
+
+        setTimeout(() => {
+            modalmap.invalidateSize();
+        }, 0);
+
+        //$(".Tooltipmodalmap").hide();
+    }
+
+    return 1;
 }
 
 function drawrouteinmodal(frommarker) { //alert();
@@ -2487,6 +2575,8 @@ function drawrouteinmodal(frommarker) { //alert();
     //console.log(drawrouteline);
     if (nextmarkername != "undefined" && nextmarkername != "" && nextmarkername != null) { //alert();
         //$(".markersnamesmodalmap").val(nextmarkername).trigger('change');
+       var returnvalue =  markersnamesmodalmap(nextmarkername);
+       if(returnvalue == 1){
         var tempdrawrouteline = [];
         
         $.each(modalrouteline, function(name, value) {
@@ -2504,11 +2594,13 @@ function drawrouteinmodal(frommarker) { //alert();
         let toword = myArrayTo[0];
         $("#embarkation").text(fromword);
         $("#debarkation").text(toword);
-        var specificline = tempdrawrouteline;
+        var specificline = "";
+            specificline = tempdrawrouteline;
         var drawnItemsModalMap = new L.FeatureGroup();
         modalmap.addLayer(drawnItemsModalMap);
         var polyLayersModalMap = [];
-        var polyline2 = new L.polyline(specificline, {stroke:true,snakingSpeed: 200,weight:2.5,dashArray: [5,5],color:'#fff',lineCap: "round",lineJoin: "round",smoothFactor: 1});
+        var polyline2 = "";
+            polyline2 = new L.polyline(specificline, {stroke:true,snakingSpeed: 200,weight:2.5,dashArray: [5,5],color:'#fff',lineCap: "round",lineJoin: "round",smoothFactor: 1});
 
         polyLayersModalMap.push(polyline2)
 
@@ -2518,12 +2610,14 @@ function drawrouteinmodal(frommarker) { //alert();
             drawnItemsModalMap.addLayer(layer);
         }
         drawnItemsModalMap.snakeIn();
-        //drawnItemsModalMap.snakeIn();
         
+    }
         
     }
 
 }
+
+
 
 
 
@@ -2546,6 +2640,11 @@ function markerModalclose(scheduleSameLocationUUID){
                             //for screenview <990 on opening the itinerary modal blacked out the map region
                             // on close modal removed the blacked out css
                             customMediaQueryRemove();
+
+                            // Removed the layer on close the route modal to clear any changes done and not saved.
+                            modalmap.eachLayer(function (layer) {
+                                modalmap.removeLayer(layer);
+                            });
 }
 
 $(document).on("change", ".noofdayscard", function(e) {
