@@ -6030,6 +6030,10 @@ class ChartersController extends AppController {
                 }else{
                     $chprgdata = $this->CharterGuest->find('first',array('conditions'=>array('CharterGuest.charter_program_id'=>$programId)));
                     $yacht_id = $chprgdata['CharterGuest']['yacht_id'];
+                    $embarkation = $chprgdata['CharterGuest']['embarkation'];
+                    $debarkation = $chprgdata['CharterGuest']['debarkation'];
+                    $charter_from_date = $chprgdata['CharterGuest']['charter_from_date'];
+                    //$charter_from_date_conv = date("M jS F Y",strtotime($charter_from_date));
                     $yachtCond = array('Yacht.id' => $yacht_id);
                     $Ydata = $this->Yacht->find('first', array('conditions' => $yachtCond));
                     $yachtDbName = $Ydata['Yacht']['ydb_name'];
@@ -6055,6 +6059,7 @@ class ChartersController extends AppController {
                         
                         
                         $no_of_days_options = "";
+                        $modaldisplayDate = "";
                         foreach($schUUIDs as $key => $uuid){
                             $scheduleConditionschk = "UUID = '$uuid' AND is_deleted = 0";
                             $scheduleDataGetNum = $this->CharterGuest->getCharterProgramScheduleData($yachtDbName, $scheduleConditionschk);
@@ -6066,6 +6071,7 @@ class ChartersController extends AppController {
                             }
                             if($scheduleId ==  $uuid){
                                 $no_of_days_options .= '<option value="'.$uuid.'" selected>Day '.$scheduleDataNum.$space.$samelocationsDatesarr[$key].'</option>';
+                                $modaldisplayDate = date("M, jS F Y",strtotime($samelocationsDatesarr[$key]));
                             }else{
                                 $no_of_days_options .= '<option value="'.$uuid.'">Day '.$scheduleDataNum.$space.$samelocationsDatesarr[$key].'</option>';
                             }
@@ -6118,6 +6124,7 @@ class ChartersController extends AppController {
                         $titleimagehref = "#";
                         $fancybox = "";
                     }
+                    $markerimage = BASE_URL.'/charterguest/app/webroot/css/leaflet/dist/images/marker-icon.png';
                     //echo "<pre>"; print_r($titleimage); exit;
                     $CruisingMapCommentConditons = "activity_id = '$programScheduleUUID' AND activity_name = '$title' AND type = 'schedule' AND publish_map = '1'";
                          $commentdatatitle = $this->CharterGuest->getCruisingMapComment($yachtDbName, $CruisingMapCommentConditons);
@@ -6149,15 +6156,10 @@ class ChartersController extends AppController {
                             $displaynone = "display:block;";
                     }
                     $popupHtml .= '<div class="mapPopup sp-mp-detailsrow " data-schuuid="'.$scheduleId.'">
-                    <div class="sp-modal-hd"><div class="row"><div class="col-md-8"><select name="noofdayscard" class="form-control noofdayscard wt-st" style="font-size: 17px !important;font-weight: bold;background:none !important;color:#000 !important;border:solid 1px #ddd !important;"></select></div></div></div>
                     <form id="scheduleFormEdit"><div class="inputContainerdiv">
-                    <div class="mark_map_div">
-   <div style="color: #000;font-size: 15px;border: solid 1px #ccc;width:100%!important;margin: 0px 0px 5px 0px;padding: 8px 5px;font-weight: 600;">Shaw to Thomas </div>
-   <div id="Img_container" style="border: solid 1px #ccc;"></div>
-</div>
                     <div class="Marker_container_div">
                     <div class="marker_desc_div">
-                    <div>
+                    <div><span style="display: inline-block;position: relative;"><img src="'.$markerimage.'" style="object-fit: fill; height: 35px;" alt="" ><span style="position: absolute;color:#000;top: 4px;right: 10px;">'.$dayNum.'</span></span>
                     <input type="text" name="title" value="'.htmlspecialchars($title).'" placeholder="Enter the Title" class="loc_name" '.$readonly.' >
                     <ul class="action-icon"><li><i class="fa fa-comments crew_comment_cruisingmaptitle"  style="'.$colorcodetitle.$displaynone.'" data-rel="'.$scheduleData[0]['CharterProgramSchedule']['UUID'].'" data-yachtid="'.$yacht_id.'" data-tempname="'.htmlspecialchars($scheduleData[0]['CharterProgramSchedule']['title']).'"><input type="hidden" name=commentstitle value="" class="messagecommentstitle" /></i></li></ul>
                     </div>
@@ -6283,7 +6285,7 @@ class ChartersController extends AppController {
                                 $colorcode = "";
                               }
 
-                            $popupHtml .= '<div class="marksub-div"><div class="m_loc_desc_div"><div><input name="iti_time[]" disabled="true" id="iti_time" style="background-color: #00a8f3;border-radius: 6px;color: #000;font-size: 15px;border: solid 1px #ccc;width:22% !important;margin: 0px;padding: 8px 5px;font-weight: 600;" value="'.$iti_time.'"><ul class="action-icon"><li><i class="fa fa-comments crew_comment_cruisingmap" style="'.$colorcode.$displaynone.'" data-rel="'.$activity['CharterProgramScheduleActivity']['UUID'].'" data-yachtid="'.$yacht_id.'" data-tempname="'.htmlspecialchars($activity['CharterProgramScheduleActivity']['activity_name']).'" title="Comments & Feedback"><input type="hidden" name=comments[] value="" class="messagecomments" /></i></li></ul></div><div class="subloc_name" name="activity_name[]" >'.htmlspecialchars($activity['CharterProgramScheduleActivity']['activity_name']).'</div><input type="hidden" name="activity_id[]" value="'.$activity['CharterProgramScheduleActivity']['UUID'].'"><textarea class="form-control auto_resize loc_desc_field" '.$readonly.' name="messages[]" rows="4" cols="50">'.htmlspecialchars($activity['CharterProgramScheduleActivity']['notes']).'</textarea></div><div class="m_loc_img_div"><div class="sp-upload-img"><a href="'.$activityattachmentimagehref.'" class="'.$activityfancybox.'"><img src="'.$activityattachmentimage.'" style="object-fit: fill; height: 150px;" alt=""></a></div></div></div>
+                            $popupHtml .= '<div class="marksub-div"><div class="m_loc_desc_div"><div><span style="display: inline-block;position: relative;"><img src="'.$markerimage.'" style="object-fit: fill; height: 35px;" alt="" ><span style="position: absolute;color:#000;top: 4px;right: 10px;">'.$dayNum.'</span></span>&nbsp;&nbsp;&nbsp;<input name="iti_time[]" disabled="true" id="iti_time" style="background-color: #00a8f3;border-radius: 6px;color: #000;font-size: 15px;border: solid 1px #ccc;width:22% !important;margin: 0px;padding: 8px 5px;font-weight: 600;" value="'.$iti_time.'"><ul class="action-icon"><li><i class="fa fa-comments crew_comment_cruisingmap" style="'.$colorcode.$displaynone.'" data-rel="'.$activity['CharterProgramScheduleActivity']['UUID'].'" data-yachtid="'.$yacht_id.'" data-tempname="'.htmlspecialchars($activity['CharterProgramScheduleActivity']['activity_name']).'" title="Comments & Feedback"><input type="hidden" name=comments[] value="" class="messagecomments" /></i></li></ul></div><div class="subloc_name" name="activity_name[]" >'.htmlspecialchars($activity['CharterProgramScheduleActivity']['activity_name']).'</div><input type="hidden" name="activity_id[]" value="'.$activity['CharterProgramScheduleActivity']['UUID'].'"><textarea class="form-control auto_resize loc_desc_field" '.$readonly.' name="messages[]" rows="4" cols="50">'.htmlspecialchars($activity['CharterProgramScheduleActivity']['notes']).'</textarea></div><div class="m_loc_img_div"><div class="sp-upload-img"><a href="'.$activityattachmentimagehref.'" class="'.$activityfancybox.'"><img src="'.$activityattachmentimage.'" style="object-fit: fill; height: 150px;" alt=""></a></div></div></div>
                              ';
                         }
                     }
@@ -6298,6 +6300,8 @@ class ChartersController extends AppController {
                     $result['status'] = "success";
                     $result['popupHtml'] = $popupHtml;
                     $result['no_of_days_options'] = $no_of_days_options;
+                    $result['modaldisplayDate'] = $modaldisplayDate;
+                    
                     $result['fromlocationcard'] = $fromlocationcard;
                     //echo "<pre>";print_r($result); exit;
                 }
