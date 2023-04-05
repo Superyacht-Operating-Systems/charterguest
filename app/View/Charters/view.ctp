@@ -424,7 +424,7 @@ font-weight: bold;
 
 
 }
-.md-row-h-30{display: inline-block;margin:0px 0px!important;width:100%!important;}
+.md-row-h-30{display: inline-block;width:100%!important;}
 .md-row-h-18 {
         width: 175px!important;
     float: right!important;
@@ -563,7 +563,7 @@ font-weight: bold;
     width: 100%;
 }
 .rowm-md-mob-resize .select {
-  width: 103%!important;
+  width: 102%!important;
 }
 .owl-carousel .md-row-h-30 label, .owl-carousel .md-row-h-10 label, .owl-carousel .md-row-h-12 label {
   padding-top: 7px;
