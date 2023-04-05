@@ -85,9 +85,7 @@ content: "SENT";
 
 .yachtHeaderName{font-weight: bold;font-size: 46px;}
 .container-row-column .row{margin-bottom: 7px;}
-.container-row-column .row .form-control{
-    height: 30px!important;
-}
+
     table.table tbody tr {
         background: none !important;
     }
@@ -426,7 +424,7 @@ font-weight: bold;
 
 
 }
-.md-row-h-30{display: inline-block;margin:5px 2px!important;width:100%!important;}
+.md-row-h-30{display: inline-block;margin:0px 0px!important;width:100%!important;}
 .md-row-h-18 {
         width: 175px!important;
     float: right!important;
@@ -555,9 +553,20 @@ font-weight: bold;
     
 }
 }
+@media screen and (min-width: 990px){
+.container-row-column .row .form-control {
+  height: 30px !important;
+}
+}
 @media only screen and (max-width:990px){
 .footer-mob-row {
     width: 100%;
+}
+.rowm-md-mob-resize .select {
+  width: 103%!important;
+}
+.owl-carousel .md-row-h-30 label, .owl-carousel .md-row-h-10 label, .owl-carousel .md-row-h-12 label {
+  padding-top: 7px;
 }
 }
 
