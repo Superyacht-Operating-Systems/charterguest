@@ -206,7 +206,6 @@ color: #fff;
 }
 
 @media only screen and (max-width: 771px){
-    
     .m_loc_desc_div{
         width: 100%;
 margin-right: 10px;
