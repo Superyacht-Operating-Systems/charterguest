@@ -6071,7 +6071,7 @@ class ChartersController extends AppController {
                             }
                             if($scheduleId ==  $uuid){
                                 $no_of_days_options .= '<option value="'.$uuid.'" selected>Day '.$scheduleDataNum.$space.$samelocationsDatesarr[$key].'</option>';
-                                $modaldisplayDate = date("M, jS F Y",strtotime($samelocationsDatesarr[$key]));
+                                $modaldisplayDate = date("d M Y",strtotime($samelocationsDatesarr[$key]));
                             }else{
                                 $no_of_days_options .= '<option value="'.$uuid.'">Day '.$scheduleDataNum.$space.$samelocationsDatesarr[$key].'</option>';
                             }

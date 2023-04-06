@@ -2516,6 +2516,8 @@ function markerOnClick(e) {
                                 modalmap.fitBounds(fitzoommap);
                                 //modalmap.setView(new L.LatLng(lattitude,longitude), 7);
                                 //modalmap.panBy([0,0]);
+                                // console.log(lattitude);  
+                                // console.log(longitude);  
                                 setTimeout(() => {
                                     modalmap.invalidateSize();
                                 }, 0);
@@ -2538,7 +2540,7 @@ function markerOnClick(e) {
                                     })
                                 }).addTo(modalmap);
 
-                                // $(".Tooltipmodalmap").hide();
+                                 $(".Tooltipmodalmap").hide();
                     ////////////////////////////////////////////////////////////////////////////////
                     
                     
@@ -2552,14 +2554,7 @@ function markerOnClick(e) {
         
 }
 
-var routemodalmarkerselected = {};
-var textMarkermodalmap = {};
-var selectedlat;
-var selectedlong;
-var fmlong;
-var fmlat;
-var modalmapdaynumber;
-var defaultline = {};
+
 function markersnamesmodalmap(selectedTitle){
 
     //selectedTitle = $(this).val();
@@ -2571,25 +2566,38 @@ function markersnamesmodalmap(selectedTitle){
         // var schid = $(".markersnamesmodalmap option:selected").attr("data-schid");
         // var modalmapdaynumber = $(".markersnamesmodalmap option:selected").attr("data-daynum");
         
-        //console.log(markerArray);  return false;
+        //console.log(markerArray);  //return false;
+        var routemodalmarkerselected = {};
+        var textMarkermodalmap = {};
+        var selectedlat = "";
+        var selectedlong = "";
+        var fmlong;
+        var fmlat;
+        var modalmapdaynumber = "";
+        var defaultline = {};
+
         var selectedmarkertooltipcontent = "";
         const selectedTitleFrom = selectedTitle.split("-");
         //console.log(selectedTitleFrom);
         let selectedTitleFromWord = $.trim(selectedTitleFrom[0]);
         $.each(markerArray, function(i, val) {
-            console.log(val);
-            if (val.daytitle == selectedTitleFromWord) {
-                selectedmarkertooltipcontent = val._tooltip._content;
+            // console.log("val.daytitle ==="+val.daytitle);
+            // console.log("selectedTitleFromWord ==="+selectedTitleFromWord);
+            //console.log(val);
+            if ((val.daytitle == selectedTitleFromWord) ) {
+                //console.log('kkk');
+                //selectedmarkertooltipcontent = val._tooltip._content;
                 selectedlat = val._latlng.lat;
                 selectedlong = val._latlng.lng;
                 modalmapdaynumber = val.day_num;
                 fitzoommap.push(val._latlng);
+                //return false;
             }
         });
 
         // console.log(routemodalmarkerselected); 
-        // console.log(selectedlat);  
-        // console.log(selectedlong);  
+        //  console.log(selectedlat);  
+        //  console.log(selectedlong);  
         if (routemodalmarkerselected != "") { //alert();
             modalmap.removeLayer(routemodalmarkerselected);
         }
@@ -2599,12 +2607,13 @@ function markersnamesmodalmap(selectedTitle){
         routemodalmarkerselected = L.marker([selectedlat,selectedlong], {
             draggable: false,
             pmIgnore: true
-        }).bindTooltip(selectedmarkertooltipcontent, {
-            permanent: true,
-            direction: 'right',
-            className: "Tooltipmodalmap",
-            noWrap: false,
         });
+        // .bindTooltip(selectedmarkertooltipcontent, {
+        //     permanent: true,
+        //     direction: 'right',
+        //     className: "Tooltipmodalmap",
+        //     noWrap: false,
+        // });
         routemodalmarkerselected.addTo(modalmap);
         // adding day number to marker
         textMarkermodalmap = L.marker([selectedlat,selectedlong], {
