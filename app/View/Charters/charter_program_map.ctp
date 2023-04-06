@@ -1319,7 +1319,7 @@ span.sp-rightalign {
     resize: vertical!important;
     overflow: auto!important;
 } */
-.modal_load{
+.modal_load,.markmodal_load{
     margin:5px 10px 5px 8px;
 }
 @media screen and (min-width: 990px) {
@@ -1331,6 +1331,16 @@ span.sp-rightalign {
 }
 }
 @media screen and (max-width: 990px) {
+    .markmodalbody{
+        max-height: 90vh;
+    overflow-y: scroll;
+    overflow-x: hidden;
+   
+    }
+    .markmodal_load{
+        margin: 5px 0px 5px 8px;
+    padding: 0px 10px 100px 0px;
+    }
     .modal_load{
         max-height: 90vh;
     overflow-y: scroll;
@@ -1636,7 +1646,7 @@ body .sp-60-w input {
                 <button type="button" class="close" data-schuuid="" id="markerModalclose" aria-hidden="true" style="margin-right: 5px;">×</button>
                 <h4 class="modal-title" id="markerModalLabel" style="text-align: center;font-weight: bold;"></h4>
             </div>
-            <div class="modal-body location_Modal_body">
+            <div class="modal-body location_Modal_body markmodalbody">
             <div class="mark_map_div">
             <!-- <div class="sp-modal-hd">
                 <div class="row">
@@ -1655,7 +1665,7 @@ body .sp-60-w input {
                
                 </div>
                 </div>
-                <div id="markerModal_load" class="modal_load">
+                <div id="markerModal_load" class="markmodal_load">
 
                 </div>
 
