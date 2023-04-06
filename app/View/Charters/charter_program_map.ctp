@@ -59,7 +59,9 @@ if(empty($scheduleData)){
     max-height: 500px;
     width: auto !important;
 } */
-
+.fancybox-opened {
+  z-index: 999999 !important;
+}
 .mark_map_div{
 border-radius: 10px;
 padding: 0px 10px 10px 10px;
@@ -197,6 +199,7 @@ color: #fff;
    background-color: #00a8f3;
    border-radius: 6px;
    color: #000;
+   -webkit-text-fill-color: #000000;
    font-size: 15px;
    border: solid 1px #ccc;
    width:22% !important;
@@ -235,7 +238,9 @@ margin-right: 10px;
         height: 300px;
 width: 100%;
 border: none !important;
-border-radius: 10px;
+border-radius: 10px!important;
+-webkit-border-radius: 10px;
+-moz-border-radius: 10px;
 margin-top:10px;
     }
     .CS_modal, .Mark_modal{
@@ -1705,7 +1710,7 @@ body .sp-60-w input {
                 <div class="icons_fields" style="text-align:center;">
                 <i style="color: #00a8f3;" class="fa fa-solid fa-calendar"><span class="icon_label charter_from_date_conv" ></span></i>
                 <i style="color: #00a8f3;" class="fa fa-solid fa-clock-o "><span class="icon_label markerduration"></span></i>
-                <i style="color: #00a8f3;" class="fa fa-solid fa-ship" aria-hidden="true"><span class="icon_label markerdistance"></span></i>
+                <i style="color: #00a8f3;" class="fa fa-solid fa-ship" aria-hidden="true"><span class="icon_label markerdistance" style="padding: 0px 0px 0px 5px;"></span></i>
                 </div>
                 <div id="modalmap" style="border: solid 1px #ccc;">
                
