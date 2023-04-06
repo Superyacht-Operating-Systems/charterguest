@@ -87,14 +87,14 @@ width: 150px;
   background-color: #fff;
   padding: 18px;
 border-radius: 10px;
-margin: 15px 5px;
+margin: 15px 5px 20px 5px;
 }
 .Marker_container_div{
     display: flex;
 padding: 18px;
 background-color: #fff;
 border-radius: 10px;
-margin: 15px 5px;
+margin: 15px 5px 20px 5px;
 }
 .marker_desc_div{
     width: 450px;
