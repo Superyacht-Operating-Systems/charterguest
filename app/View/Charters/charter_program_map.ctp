@@ -1336,7 +1336,7 @@ padding-left: 15px!important;
 }
 
 .fancybox-overlay {
-    z-index: 99999999 !important;
+    z-index: 999999 !important;
 }
 span.sp-leftalign {
     width: 300px;
