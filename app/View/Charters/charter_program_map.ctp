@@ -245,7 +245,7 @@ margin-top:10px;
     padding: 18px 8px 18px 8px;
 display: grid;
 }
-..marksub-div {
+.marksub-div {
     padding: 18px 8px 18px 8px;
 }
 .Marker_container_div{
