@@ -220,7 +220,8 @@ margin-right: 10px;
     margin-top: 10px;
 }
     .iti_time{
-        width:90px !important;
+        width:50px !important;
+        padding: 2px 0px;
     }
     .lg_tarea{
         display:none;
@@ -241,10 +242,15 @@ margin-top:10px;
     width:100% !important;
 }
 .inputContainer_div{
+    padding: 18px 8px 18px 8px;
 display: grid;
+}
+..marksub-div {
+    padding: 18px 8px 18px 8px;
 }
 .Marker_container_div{
     display: grid;
+    padding: 18px 8px 18px 8px;
 }
 .loc_img_div{
 width: 100%;
@@ -252,6 +258,9 @@ width: 100%;
 .loc_desc_div{
     margin-right: 0px;
 width: 100%;
+}
+.loc_desc_field {
+  padding: 15px 5px 15px 5px;
 }
 
 .certificat-modal-container .modal-dialog {
@@ -1379,7 +1388,7 @@ span.sp-rightalign {
     padding: 0px 10px 100px 0px;
     }
     .modal_load{
-        max-height: 90vh;
+        max-height: 88vh;
     overflow-y: scroll;
     overflow-x: hidden;
     margin: 5px 0px 5px 8px;

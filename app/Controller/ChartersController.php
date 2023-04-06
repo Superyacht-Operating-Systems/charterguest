@@ -6169,7 +6169,7 @@ class ChartersController extends AppController {
                     </div>
                     <div class="marker_img_div">
                     <div class="mLoc-img_prev">
-                    <a href="'.$titleimagehref.'" class="'.$fancybox.'"><img src="'.$titleimage.'" style="object-fit: fill; height: 150px;" alt="" ></a>
+                    <a href="'.$titleimagehref.'" class="'.$fancybox.'"><img src="'.$titleimage.'" style="object-fit: fill;width: 100%; height: 150px;" alt="" ></a>
                     </div>
                     
                     </div>
@@ -6420,7 +6420,7 @@ class ChartersController extends AppController {
                         
                         </div>
                         <div class="loc_img_prev">
-                        <a href="'.$titleimagehref.'" class="'.$fancybox.'"><img src="'.$titleimage.'" style="object-fit: fill; height: 150px;" alt="" ></a>
+                        <a href="'.$titleimagehref.'" class="'.$fancybox.'"><img src="'.$titleimage.'" style="object-fit: fill; width: 100%;height: 150px;" alt="" ></a>
                         </div>
                         </div>';
                         $popupHtml .= '<input type="hidden" name="schedule_id" value="'.$scheduleId.'"><input type="hidden" class="form-control" name="day_num" id="dayNum" value="'.$dayNum.'">';
