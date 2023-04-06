@@ -192,9 +192,7 @@ color: #fff;
 .location_container,.sp-divrow{
     background-color: #ffffff;
 }
-.sm_tarea{
-        display:none;
-    }
+
 @media only screen and (max-width: 771px){
     .lg_tarea{
         display:none;
@@ -259,6 +257,9 @@ width: 100%;
 }
 
 @media only screen and (min-width: 771px){
+    .sm_tarea{
+        display:none;
+    }
     .CS_modal, .Mark_modal{
     width:650px;
 }
