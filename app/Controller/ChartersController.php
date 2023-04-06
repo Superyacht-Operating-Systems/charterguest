@@ -6285,7 +6285,7 @@ class ChartersController extends AppController {
                                 $colorcode = "";
                               }
 
-                            $popupHtml .= '<div class="marksub-div"><div class="m_loc_desc_div"><div><span style="display: inline-block;position: relative;"><img src="'.$markerimage.'" style="object-fit: fill; height: 35px;" alt="" ><span style="position: absolute;color:#000;top: 4px;right: 10px;">'.$dayNum.'</span></span>&nbsp;&nbsp;&nbsp;<input name="iti_time[]" disabled="true" id="iti_time" style="background-color: #00a8f3;border-radius: 6px;color: #000;font-size: 15px;border: solid 1px #ccc;width:22% !important;margin: 0px;padding: 8px 5px;font-weight: 600;" value="'.$iti_time.'"><ul class="action-icon"><li><i class="fa fa-comments crew_comment_cruisingmap" style="'.$colorcode.$displaynone.'" data-rel="'.$activity['CharterProgramScheduleActivity']['UUID'].'" data-yachtid="'.$yacht_id.'" data-tempname="'.htmlspecialchars($activity['CharterProgramScheduleActivity']['activity_name']).'" title="Comments & Feedback"><input type="hidden" name=comments[] value="" class="messagecomments" /></i></li></ul></div><div class="subloc_name" name="activity_name[]" >'.htmlspecialchars($activity['CharterProgramScheduleActivity']['activity_name']).'</div><input type="hidden" name="activity_id[]" value="'.$activity['CharterProgramScheduleActivity']['UUID'].'"><textarea class="form-control auto_resize loc_desc_field" '.$readonly.' name="messages[]" rows="4" cols="50">'.htmlspecialchars($activity['CharterProgramScheduleActivity']['notes']).'</textarea></div><div class="m_loc_img_div"><div class="sp-upload-img"><a href="'.$activityattachmentimagehref.'" class="'.$activityfancybox.'"><img src="'.$activityattachmentimage.'" style="object-fit: fill; height: 150px;" alt=""></a></div></div></div>
+                            $popupHtml .= '<div class="marksub-div"><div style="display:flex"><div class="m_loc_desc_div"><div class="marksup_header"><span style="display: inline-block;position: relative;"><img src="'.$markerimage.'" style="object-fit: fill; height: 35px;" alt="" ><span style="position: absolute;color:#000;top: 4px;right: 10px;">'.$dayNum.'</span></span>&nbsp;&nbsp;&nbsp;<input name="iti_time[]" disabled="true" id="iti_time" class="iti_time" value="'.$iti_time.'"><ul class="action-icon"><li><i class="fa fa-comments crew_comment_cruisingmap" style="'.$colorcode.$displaynone.'" data-rel="'.$activity['CharterProgramScheduleActivity']['UUID'].'" data-yachtid="'.$yacht_id.'" data-tempname="'.htmlspecialchars($activity['CharterProgramScheduleActivity']['activity_name']).'" title="Comments & Feedback"><input type="hidden" name=comments[] value="" class="messagecomments" /></i></li></ul></div><div class="subloc_name" name="activity_name[]" >'.htmlspecialchars($activity['CharterProgramScheduleActivity']['activity_name']).'</div><input type="hidden" name="activity_id[]" value="'.$activity['CharterProgramScheduleActivity']['UUID'].'"><textarea class="form-control auto_resize loc_desc_field lg_tarea" '.$readonly.' name="messages[]" rows="1" cols="50">'.htmlspecialchars($activity['CharterProgramScheduleActivity']['notes']).'</textarea></div><div class="m_loc_img_div"><div class="sp-upload-img"><a href="'.$activityattachmentimagehref.'" class="'.$activityfancybox.'"><img src="'.$activityattachmentimage.'" style="object-fit: fill; height: 150px;" alt=""></a></div></div></div><textarea class="form-control auto_resize loc_desc_field sm_tarea" '.$readonly.' name="messages[]" rows="1" cols="50">'.htmlspecialchars($activity['CharterProgramScheduleActivity']['notes']).'</textarea></div>
                              ';
                         }
                     }
@@ -6404,15 +6404,15 @@ class ChartersController extends AppController {
                         <div>
 						   <img class="l_count_icon" src="'.BASE_URL.$basefolder.'/app/webroot/img/admin/loc_count.png"><span class="l_count">'.$dayNum.'</span>
                            <input type="text" name="title" value="'.htmlspecialchars($title).'" placeholder="Enter the Title" class="loc_name" '.$readonly.'>
-                            <ul class="action-icon"><li><i class="fa fa-comments " style="color: #00a8f3;float: right;padding: 10px 5px;"></i></li></ul>
+                            <ul class="action-icon"><li><i class="fa fa-comments " style="color: #00a8f3;float: right;"></i></li></ul>
 						</div>
                            <div class="icons_fields">
 <i style="color: #00a8f3;" class="fa fa-solid fa-calendar"><span class="icon_label" >Mon, 1 Jun 2023</span></i>
-<i style="color: #00a8f3;" class="fa fa-solid fa-clock-o "><span class="icon_label">2h 45mins</span></i>
-<i style="color: #00a8f3;" class="fa fa-solid fa-ship" aria-hidden="true"><span class="icon_label">45mm</span></i>
+<i style="color: #00a8f3;" class="fa fa-solid fa-clock-o "><span class="icon_label">2h 45m</span></i>
+<i style="color: #00a8f3;" class="fa fa-solid fa-ship" aria-hidden="true"><span class="icon_label" style="padding: 0px 0px 0px 5px;">45nm</span></i>
 </div>
 						<div>
-						   <textarea class="form-control auto_resize loc_desc_field" name="messagestitle" '.$readonly.' rows="4" cols="50">'.htmlspecialchars($notes).'</textarea>
+						   <textarea class="form-control auto_resize loc_desc_field" name="messagestitle" '.$readonly.' rows="1" cols="50">'.htmlspecialchars($notes).'</textarea>
 						</div>
                          </div>
                         <div class="loc_img_div">
