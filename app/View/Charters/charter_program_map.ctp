@@ -2431,7 +2431,7 @@ function markerOnClick(e) {
                         
                         $("#markerModalclose").attr("data-schuuid",scheduleSameLocationUUID);
                         $("#markerModal").show();
-                        update_mapContainer();
+                       // update_mapContainer();
 
                               // get all the text area elements
                         var textareas = document.querySelectorAll(".auto_resize");
