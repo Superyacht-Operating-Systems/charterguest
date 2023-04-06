@@ -6100,6 +6100,8 @@ class ChartersController extends AppController {
                         /////////////////////
                         
                         $LocationContentFleet = $this->LocationContentFleet->find('first',array('conditions'=>array('location'=>$title,'type'=>'Location')));
+                        $fleetlocationimages = "";
+                        //echo "<pre>";print_r($LocationContentFleet); exit;
                         if(!empty($LocationContentFleet)){
                             $LocationContentFleetyour_image = $LocationContentFleet['LocationContentFleet']['your_image'];
                             //$fleetlocationimages = array();
@@ -6115,8 +6117,11 @@ class ChartersController extends AppController {
                             $fleetlocationimages = array_merge($fleetlocationyour_images,$fleetlocationimagesarr);
                             //echo "<pre>";print_r($fleetlocationimages); exit;
                          }
+                         //echo "<pre>";print_r($fleetlocationimages); exit;
                         //////////////////////
-                        
+                        if(isset($fleetlocationimages) && !empty($fleetlocationimages)){ 
+                            $fleetimagecount = count($fleetlocationimages);
+                        }
                         if(isset($yacht_domain) && $yacht_domain == "charterguest"){
                             $update_BASE_URL = "https://charterguest.net/";
                         }else{
@@ -6202,7 +6207,7 @@ class ChartersController extends AppController {
                     <div class="marker_img_div">
                     <div class="mLoc-img_prev">
                     <a href="'.$titleimagehref.'" rel="gallery01" class="'.$fancybox.'"><img src="'.$titleimage.'" style="object-fit: fill;width: 100%; height: 150px;" alt="" ></a>';
-                    if(isset($fleetlocationimages)){ $fleetimagecount = count($fleetlocationimages);
+                    if(isset($fleetlocationimages) && !empty($fleetlocationimages)){ 
                         foreach($fleetlocationimages as $name){
                             if(!empty($name)){
                             $popupHtml .= '<a href="'.$targetFullGalleryPathhref.'/'.$name.'" data-fancybox="images" rel="gallery01" class="'.$fancybox.'"><img src="'.$name.'" style="object-fit: fill;width: 100%; height: 150px;display:none;" alt="" ></a>';
@@ -6210,13 +6215,15 @@ class ChartersController extends AppController {
                         }
                     }
                     $popupHtml .= '</div>';
-                    // if($fleetimagecount > 1){
+                    if(isset($fleetlocationimages) && !empty($fleetlocationimages)){ 
+                     if($fleetimagecount > 1){
                     //     for($k=0; $k<$fleetimagecount; $k++){
                             $popupHtml .= '<i class="fa fa-dot-circle-o" aria-hidden="true" style="position: absolute;
                             font-size: 12px;
                             color: darkslategray;padding: 2px 5px 5px 65px;"></i>';
                     //     }
-                    // }
+                     }
+                    }
                     $popupHtml .= '</div>
 
                     </div>';
@@ -6486,7 +6493,7 @@ class ChartersController extends AppController {
                         }
 
                         
-
+                        $markerimage = BASE_URL.'/charterguest/app/webroot/css/leaflet/dist/images/marker-icon.png';
                         
                         $readonly = "readonly";
                         $popupHtml .= '<div class="mapPopup sp-mp-detailsrow" data-schuuid="'.$scheduleData['CharterProgramSchedule']['UUID'].'">
@@ -6494,7 +6501,7 @@ class ChartersController extends AppController {
                        <form id="scheduleFormEdit"><div class="inputContainer_div">
                         <div class="loc_desc_div">
                         <div>
-						   <img class="l_count_icon" src="'.BASE_URL.$basefolder.'/app/webroot/img/admin/loc_count.png"><span class="l_count">'.$dayNum.'</span>
+                        <span style="display: inline-block;position: relative;"><img src="'.$markerimage.'" style="object-fit: fill; height: 35px;" alt="" ><span style="position: absolute;color:#000;top: 4px;right: 10px;">'.$dayNum.'</span></span>
                            <input type="text" name="title" value="'.htmlspecialchars($title).'" placeholder="Enter the Title" class="loc_name" '.$readonly.'>
                             <ul class="action-icon"><li><i class="fa fa-comments " style="color: #00a8f3;float: right;"></i></li></ul>
 						</div>
