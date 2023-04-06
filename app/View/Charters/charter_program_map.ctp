@@ -83,7 +83,7 @@ width: 150px;
   font-family: 'monsterrat';
 }
 .marksub-div {
-  display: flex;
+  /* display: flex; */
   background-color: #fff;
   padding: 18px;
 border-radius: 10px;
@@ -192,8 +192,14 @@ color: #fff;
 .location_container,.sp-divrow{
     background-color: #ffffff;
 }
-
+.sm_tarea{
+        display:none;
+    }
 @media only screen and (max-width: 771px){
+    .lg_tarea{
+        display:none;
+    }
+  
     .sp-upload-img{
     width: 100px;
     height: 100px;
