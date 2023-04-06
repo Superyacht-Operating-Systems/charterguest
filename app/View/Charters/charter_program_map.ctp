@@ -206,7 +206,7 @@ color: #fff;
 }
 @media only screen and (max-width: 771px){
     .iti_time{
-        width:40% !important;
+        width:90px !important;
     }
     .lg_tarea{
         display:none;
