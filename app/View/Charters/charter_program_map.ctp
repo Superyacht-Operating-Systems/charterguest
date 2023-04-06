@@ -1331,6 +1331,9 @@ span.sp-rightalign {
 }
 }
 @media screen and (max-width: 990px) {
+    #closeSchedule{
+        margin-left: 6px;
+    }
     .markmodalbody{
         max-height: 90vh;
     overflow-y: scroll;
