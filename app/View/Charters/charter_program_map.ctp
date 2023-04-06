@@ -242,6 +242,7 @@ border-radius: 10px!important;
 -webkit-border-radius: 10px;
 -moz-border-radius: 10px;
 margin-top:10px;
+overflow: hidden;
     }
     .CS_modal, .Mark_modal{
     width:100% !important;
