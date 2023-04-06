@@ -2573,10 +2573,12 @@ function markersnamesmodalmap(selectedTitle){
         
         //console.log(markerArray);  return false;
         var selectedmarkertooltipcontent = "";
-       
+        const selectedTitleFrom = selectedTitle.split("-");
+        //console.log(selectedTitleFrom);
+        let selectedTitleFromWord = $.trim(selectedTitleFrom[0]);
         $.each(markerArray, function(i, val) {
-            //console.log(val);
-            if (val.endplace == selectedTitle) {
+            console.log(val);
+            if (val.daytitle == selectedTitleFromWord) {
                 selectedmarkertooltipcontent = val._tooltip._content;
                 selectedlat = val._latlng.lat;
                 selectedlong = val._latlng.lng;
