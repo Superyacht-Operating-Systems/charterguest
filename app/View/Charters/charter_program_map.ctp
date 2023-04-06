@@ -192,9 +192,7 @@ color: #fff;
 .location_container,.sp-divrow{
     background-color: #ffffff;
 }
-textarea.form-control {
-  height: 50px;
-}
+
 @media only screen and (max-width: 771px){
     .sp-upload-img{
     width: 100px;
