@@ -206,6 +206,13 @@ color: #fff;
 }
 
 @media only screen and (max-width: 771px){
+    ..m_loc_desc_div{
+        width: 100%;
+margin-right: 10px;
+    }
+    .m_loc_img_div {
+  width: 100px;
+}
     .marksup_header{
         margin-top: 10px;
 }
