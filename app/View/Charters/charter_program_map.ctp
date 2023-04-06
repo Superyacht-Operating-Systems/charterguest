@@ -62,7 +62,7 @@ if(empty($scheduleData)){
 
 .mark_map_div{
 border-radius: 10px;
-padding: 10px;
+padding: 0px 10px 10px 10px;
 }
 .m_loc_desc_div {
   width: 450px;
@@ -85,13 +85,13 @@ width: 150px;
 .marksub-div {
   display: flex;
   background-color: #fff;
-  padding: 10px;
+  padding: 18px;
 border-radius: 10px;
 margin: 15px 5px;
 }
 .Marker_container_div{
     display: flex;
-padding: 10px;
+padding: 18px;
 background-color: #fff;
 border-radius: 10px;
 margin: 15px 5px;
@@ -193,6 +193,10 @@ color: #fff;
     background-color: #ffffff;
 }
 @media only screen and (max-width: 771px){
+    .sp-upload-img{
+    width: 100px;
+    height: 100px;
+}
     #modalmap{
         height: 300px;
 width: 100%;
@@ -235,7 +239,7 @@ float: left;
 }
 .mLoc-img_prev{
     width: 50% !important;
-    margin: 0 auto;
+    margin: 15px auto;
 }
 /* marker popup style */
 .marker_desc_div{
@@ -951,10 +955,12 @@ float: right;
 }
 .crew_comment_cruisingmap {
     cursor: pointer !important;
+    color: #00a8f3;
 }
 
 .crew_comment_cruisingmaptitle {
     cursor: pointer !important;
+    color: #00a8f3;
 }
 
 .publish-modal .modal-dialog {
