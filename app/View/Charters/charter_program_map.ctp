@@ -59,9 +59,7 @@ if(empty($scheduleData)){
     max-height: 500px;
     width: auto !important;
 } */
-.fancybox-opened {
-  z-index: 999999 !important;
-}
+
 .mark_map_div{
 border-radius: 10px;
 padding: 0px 10px 10px 10px;
