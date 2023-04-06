@@ -192,6 +192,9 @@ color: #fff;
 .location_container,.sp-divrow{
     background-color: #ffffff;
 }
+textarea.form-control {
+  height: 50px;
+}
 @media only screen and (max-width: 771px){
     .sp-upload-img{
     width: 100px;
@@ -1329,7 +1332,7 @@ span.sp-rightalign {
 }
 @media screen and (max-width: 990px) {
     .modal_load{
-        max-height: 86vh;
+        max-height: 90vh;
     overflow-y: scroll;
     overflow-x: hidden;
     margin: 5px 0px 5px 8px;
@@ -1634,6 +1637,7 @@ body .sp-60-w input {
                 <h4 class="modal-title" id="markerModalLabel" style="text-align: center;font-weight: bold;"></h4>
             </div>
             <div class="modal-body location_Modal_body">
+            <div id="markerModal_load" class="modal_load">
             <div class="mark_map_div">
             <!-- <div class="sp-modal-hd">
                 <div class="row">
@@ -1652,7 +1656,7 @@ body .sp-60-w input {
                
                 </div>
                 </div>
-                <div id="markerModal_load" class="modal_load">
+                
 
                 </div>
 
