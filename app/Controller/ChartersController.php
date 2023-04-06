@@ -6412,7 +6412,7 @@ class ChartersController extends AppController {
 <i style="color: #00a8f3;" class="fa fa-solid fa-ship" aria-hidden="true"><span class="icon_label" style="padding: 0px 0px 0px 5px;">45nm</span></i>
 </div>
 						<div>
-						   <textarea class="form-control auto_resize loc_desc_field" name="messagestitle" '.$readonly.' rows="4" cols="50">'.htmlspecialchars($notes).'</textarea>
+						   <textarea class="form-control auto_resize loc_desc_field" name="messagestitle" '.$readonly.' rows="1" cols="50">'.htmlspecialchars($notes).'</textarea>
 						</div>
                          </div>
                         <div class="loc_img_div">
