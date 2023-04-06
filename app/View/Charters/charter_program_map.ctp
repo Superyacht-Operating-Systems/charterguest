@@ -61,7 +61,6 @@ if(empty($scheduleData)){
 } */
 
 .mark_map_div{
-    background-color: #fff;
 border-radius: 10px;
 padding: 10px;
 }
@@ -197,6 +196,9 @@ color: #fff;
     #modalmap{
         height: 300px;
 width: 100%;
+border: none !important;
+border-radius: 10px;
+margin-top:10px;
     }
     .CS_modal, .Mark_modal{
     width:100% !important;
@@ -252,7 +254,10 @@ width: 100%;
 #modalmap{
         height: 300px;
 width: 455px;
-margin: 0 auto;
+margin:10px auto;
+border: none !important;
+border-radius: 10px;
+
     }
 
 }
@@ -1618,13 +1623,19 @@ body .sp-60-w input {
 <div id="markerModal" class="modal certificat-modal-container cruising-location-Modal"  role="dialog">
     <div class="modal-dialog">
         <div class="modal-content Mark_modal" id="markerModal_id">
-            <div class="modal-header">
+            <div class="modal-header" style="border-bottom: 0px solid #e5e5e5;">
                 <button type="button" class="close" data-schuuid="" id="markerModalclose" aria-hidden="true" style="margin-right: 5px;">×</button>
                 <h4 class="modal-title" id="markerModalLabel" style="text-align: center;font-weight: bold;"></h4>
             </div>
             <div class="modal-body location_Modal_body">
             <div class="mark_map_div">
-            <div class="sp-modal-hd"><div class="row"><div class="col-md-8"><select name="noofdayscard" class="form-control noofdayscard wt-st" style="font-size: 17px !important;font-weight: bold;background:none !important;color:#000 !important;border:solid 1px #ddd !important;"></select></div></div></div>
+            <!-- <div class="sp-modal-hd">
+                <div class="row">
+                    <div class="col-md-8">
+                        <select name="noofdayscard" class="form-control noofdayscard wt-st" style="font-size: 17px !important;font-weight: bold;background:none !important;color:#000 !important;border:solid 1px #ddd !important;"></select>
+                    </div>
+                </div>
+            </div> -->
                 <div style="color: #000;font-size: 15px;text-align:center;width:100%!important;margin: 0px 0px 5px 0px;padding: 8px 5px;font-weight: 600;"><span id="embarkation"></span> to <span id="debarkation"></span> </div>
                 <div class="icons_fields" style="text-align:center;">
                 <i style="color: #00a8f3;" class="fa fa-solid fa-calendar"><span class="icon_label charter_from_date_conv" ></span></i>
