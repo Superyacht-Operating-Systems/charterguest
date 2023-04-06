@@ -2885,6 +2885,25 @@ $(document).ready(function() { //alert();
                 type : "image"
             });
 
+        //     $('.fancybox').fancybox({
+        //     maxWidth: 500,
+        //     maxHeight: 500,
+        //     fitToView: false,
+        //     width: '100%',
+        //     height: '100%',
+            
+        //     beforeShow: function () {
+        //        var newWidth = this.width * 2;
+        //        var newheight = this.height * 2;
+        //        this.width = newWidth;
+        //        this.height = newheight;
+        //    },
+        //     autoSize: false,
+        //     closeClick: false,
+        //     openEffect: 'none',
+        //     closeEffect: 'none'
+        // });
+
             //$('.fancybox').fancybox();
 
                 $(".Tooltip").css("width","50px");

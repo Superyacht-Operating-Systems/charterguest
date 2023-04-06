@@ -6020,6 +6020,7 @@ class ChartersController extends AppController {
                 $popupHtml = '';
                 $this->loadModel('CharterGuest');
                 $this->loadModel('Yacht');
+                $this->loadModel('LocationContentFleet');
                 if(isset($ipaddb) && !empty($ipaddb)){
                     $yachtDbName = $ipaddb;
                     $ydbapp = $this->CharterGuest->query("SELECT * FROM $yachtDbName.yachts Yacht");
@@ -6096,6 +6097,25 @@ class ChartersController extends AppController {
                     }
                     if(isset($attachment) && !empty($attachment)){
                         //echo $yacht_domain; echo $fleetSiteName; echo $yname;
+                        /////////////////////
+                        
+                        $LocationContentFleet = $this->LocationContentFleet->find('first',array('conditions'=>array('location'=>$title,'type'=>'Location')));
+                        if(!empty($LocationContentFleet)){
+                            $LocationContentFleetyour_image = $LocationContentFleet['LocationContentFleet']['your_image'];
+                            //$fleetlocationimages = array();
+                            if(isset($LocationContentFleetyour_image)){
+                                $fleetlocationyour_images =  explode(',',$LocationContentFleetyour_image);
+                            }
+                            $LocationContentFleetimage = $LocationContentFleet['LocationContentFleet']['image'];
+                            if(isset($LocationContentFleetimage)){
+                                $fleetlocationimagesarr =  explode(',',$LocationContentFleetimage);
+                            }
+                            // echo "<pre>";print_r($fleetlocationyour_images);
+                            // echo "<pre>";print_r($fleetlocationimagesarr);
+                            $fleetlocationimages = array_merge($fleetlocationyour_images,$fleetlocationimagesarr);
+                            //echo "<pre>";print_r($fleetlocationimages); exit;
+                         }
+                        //////////////////////
                         
                         if(isset($yacht_domain) && $yacht_domain == "charterguest"){
                             $update_BASE_URL = "https://charterguest.net/";
@@ -6106,23 +6126,35 @@ class ChartersController extends AppController {
                         $noteimg = "style='display:block;'";
                         if($yname == "yacht"){
                             $targetFullPath = BASE_URL.'/SOS/app/webroot/betayacht/app/webroot/img/charter_program_files/itinerary_photos/'.$attachment;
+                            $targetFullGalleryPath = BASE_URL.'/SOS/app/webroot/betayacht/app/webroot/img/charter_program_files/itinerary_photos/';
+                            if(BASE_URL == "http://localhost"){
+                                $targetFullPath = BASE_URL."/fleetrepo/app/webroot/img/charter_program_files/itinerary_photos/".$attachment;
+                                $targetFullGalleryPath = BASE_URL."/fleetrepo/app/webroot/img/charter_program_files/itinerary_photos/";
+                                }
                         }else{
                             //$targetFullPath = BASE_URL.'/'.$yname."/app/webroot/img/charter_program_files/itinerary_photos/".$attachment;
                              $targetFullPath = $update_BASE_URL.'/'.$yname."/app/webroot/img/charter_program_files/itinerary_photos/".$attachment;
-                           
+                             $targetFullGalleryPath = $update_BASE_URL.'/'.$yname."/app/webroot/img/charter_program_files/itinerary_photos/";
                             if (!empty($fleetSiteName)) { // IF yacht is under any Fleet
                                 $targetFullPath = $update_BASE_URL.'/'.$fleetSiteName."/app/webroot/".$yname."/app/webroot/img/charter_program_files/itinerary_photos/".$attachment;
+                                $targetFullGalleryPath = $update_BASE_URL.'/'.$fleetSiteName."/app/webroot/".$yname."/app/webroot/img/charter_program_files/itinerary_photos/";
                             }
+                            if(BASE_URL == "http://localhost"){
+                                $targetFullPath = BASE_URL."/fleetrepo/app/webroot/img/charter_program_files/itinerary_photos/".$attachment;
+                                $targetFullGalleryPath = BASE_URL."/fleetrepo/app/webroot/img/charter_program_files/itinerary_photos/";
+                                }
                         }
 
                         $titleimage = $targetFullPath;
                         $titleimagehref = $targetFullPath;
                         $fancybox = "fancybox";
+                        $targetFullGalleryPathhref = $targetFullGalleryPath;
                     }else{
                         $noteimg = "style='display:none;'";
                         $titleimage = BASE_URL.'/charterguest/app/webroot/img/noimage.png';
                         $titleimagehref = "#";
                         $fancybox = "";
+                        $targetFullGalleryPathhref = "";
                     }
                     $markerimage = BASE_URL.'/charterguest/app/webroot/css/leaflet/dist/images/marker-icon.png';
                     //echo "<pre>"; print_r($titleimage); exit;
@@ -6169,10 +6201,24 @@ class ChartersController extends AppController {
                     </div>
                     <div class="marker_img_div">
                     <div class="mLoc-img_prev">
-                    <a href="'.$titleimagehref.'" class="'.$fancybox.'"><img src="'.$titleimage.'" style="object-fit: fill;width: 100%; height: 150px;" alt="" ></a>
-                    </div>
-                    
-                    </div>
+                    <a href="'.$titleimagehref.'" rel="gallery01" class="'.$fancybox.'"><img src="'.$titleimage.'" style="object-fit: fill;width: 100%; height: 150px;" alt="" ></a>';
+                    if(isset($fleetlocationimages)){ $fleetimagecount = count($fleetlocationimages);
+                        foreach($fleetlocationimages as $name){
+                            if(!empty($name)){
+                            $popupHtml .= '<a href="'.$targetFullGalleryPathhref.'/'.$name.'" data-fancybox="images" rel="gallery01" class="'.$fancybox.'"><img src="'.$name.'" style="object-fit: fill;width: 100%; height: 150px;display:none;" alt="" ></a>';
+                            }
+                        }
+                    }
+                    $popupHtml .= '</div>';
+                    // if($fleetimagecount > 1){
+                    //     for($k=0; $k<$fleetimagecount; $k++){
+                            $popupHtml .= '<i class="fa fa-dot-circle-o" aria-hidden="true" style="position: absolute;
+                            font-size: 12px;
+                            color: darkslategray;padding: 2px 5px 5px 65px;"></i>';
+                    //     }
+                    // }
+                    $popupHtml .= '</div>
+
                     </div>';
                     $popupHtml .= '<input type="hidden" name="schedule_id" value="'.$scheduleId.'"><input type="hidden" class="form-control" name="day_num" id="dayNum" value="'.$dayNum.'">';
                     $popupHtml .= '<input type="hidden" name="yacht_id" value="'.$yacht_id.'">';
@@ -6220,7 +6266,8 @@ class ChartersController extends AppController {
                     $activityData = $this->CharterGuest->query("SELECT * FROM $yachtDbName.charter_program_schedule_activities CharterProgramScheduleActivity WHERE charter_program_schedule_id = '$programScheduleUUID' AND is_deleted = 0 order by sort_order");
                     $timeArray	= array(""=>"Time","00:00"=>"00:00","00:15"=>"00:15","00:30"=>"00:30","00:45"=>"00:45","01:00"=>"01:00","01:15"=>"01:15","01:30"=>"01:30","01:45"=>"01:45","02:00"=>"02:00","02:15"=>"02:15","02:30"=>"02:30","02:45"=>"02:45","03:00"=>"03:00","03:15"=>"03:15","03:30"=>"03:30","03:45"=>"03:45","04:00"=>"04:00","04:15"=>"04:15","04:30"=>"04:30","04:45"=>"04:45","05:00"=>"05:00","05:15"=>"05:15","05:30"=>"05:30","05:45"=>"05:45","06:00"=>"06:00","06:15"=>"06:15","06:30"=>"06:30","06:45"=>"06:45","07:00"=>"07:00","07:15"=>"07:15","07:30"=>"07:30","07:45"=>"07:45","08:00"=>"08:00","08:15"=>"08:15","08:30"=>"08:30","08:45"=>"08:45","09:00"=>"09:00","09:15"=>"09:15","09:30"=>"09:30","09:45"=>"09:45","10:00"=>"10:00","10:15"=>"10:15","10:30"=>"10:30","10:45"=>"10:45","11:00"=>"11:00","11:15"=>"11:15","11:30"=>"11:30","11:45"=>"11:45","12:00"=>"12:00","12:15"=>"12:15","12:30"=>"12:30","12:45"=>"12:45","13:00"=>"13:00","13:15"=>"13:15","13:30"=>"13:30","13:45"=>"13:45","14:00"=>"14:00","14:15"=>"14:15","14:30"=>"14:30","14:45"=>"14:45","15:00"=>"15:00","15:15"=>"15:15","15:30"=>"15:30","15:45"=>"15:45","16:00"=>"16:00","16:15"=>"16:15","16:30"=>"16:30","16:45"=>"16:45","17:00"=>"17:00","17:15"=>"17:15","17:30"=>"17:30","17:45"=>"17:45","18:00"=>"18:00","18:15"=>"18:15","18:30"=>"18:30","18:45"=>"18:45","19:00"=>"19:00","19:15"=>"19:15","19:30"=>"19:30","19:45"=>"19:45","20:00"=>"20:00","20:15"=>"20:15","20:30"=>"20:30","20:45"=>"20:45","21:00"=>"21:00","21:15"=>"21:15","21:30"=>"21:30","21:45"=>"21:45","22:00"=>"22:00","22:15"=>"22:15","22:30"=>"22:30","22:45"=>"22:45","23:00"=>"23:00","23:15"=>"23:15","23:30"=>"23:30","23:45"=>"23:45");  
                     if (count($activityData) != 0) {
-                        foreach ($activityData as $activity) {
+                        $i = 1;
+                        foreach ($activityData as  $activity) {
                             $iti_time = "";
                             $activitynotes = $activity['CharterProgramScheduleActivity']['notes'];
                             $iti_time = $activity['CharterProgramScheduleActivity']['iti_time'];
@@ -6231,6 +6278,27 @@ class ChartersController extends AppController {
                             }
                             $activityattachment = $activity['CharterProgramScheduleActivity']['attachment'];
                             if(isset($activityattachment) && !empty($activityattachment)){
+
+                                ////////////////////////////////////////////////////////////
+                                $LocationContentFleet = $this->LocationContentFleet->find('first',array('conditions'=>array('location'=>$title,'sub_location'=>$activity['CharterProgramScheduleActivity']['activity_name'],'type !='=>'Location')));
+                                //echo "<pre>";print_r($LocationContentFleet); exit;
+                                if(!empty($LocationContentFleet)){
+                                    $LocationContentFleetyour_image_act = $LocationContentFleet['LocationContentFleet']['your_image'];
+                                    //$fleetlocationimages = array();
+                                    if(isset($LocationContentFleetyour_image_act)){
+                                        $fleetlocationyour_images_act =  explode(',',$LocationContentFleetyour_image_act);
+                                    }
+                                    $LocationContentFleetimage_act = $LocationContentFleet['LocationContentFleet']['image'];
+                                    if(isset($LocationContentFleetimage_act)){
+                                        $fleetlocationimagesarr_act =  explode(',',$LocationContentFleetimage_act);
+                                    }
+                                    //echo "<pre>";print_r($fleetlocationyour_images_act);
+                                    // echo "<pre>";print_r($fleetlocationimagesarr_act);
+                                    $fleetlocationimages_act = array_merge($fleetlocationyour_images_act,$fleetlocationimagesarr_act);
+                                    //echo "<pre>";print_r($fleetlocationimages_act); exit;
+                                }
+                                ///////////////////////////////////////////////////////////
+
                                 if(isset($yacht_domain) && $yacht_domain == "charterguest"){
                                     $update_BASE_URL = "https://charterguest.net/";
                                 }else{
@@ -6240,22 +6308,37 @@ class ChartersController extends AppController {
                                 
                                 if($yname == "yacht"){
                                     $targetFullPath = BASE_URL.'/SOS/app/webroot/betayacht/app/webroot/img/charter_program_files/itinerary_photos/'.$activityattachment;
+                                    $targetFullGalleryPath = BASE_URL.'/SOS/app/webroot/betayacht/app/webroot/img/charter_program_files/itinerary_photos/';
+                                    if(BASE_URL == "http://localhost"){
+                                        $targetFullPath = BASE_URL."/fleetrepo/app/webroot/img/charter_program_files/itinerary_photos/".$activityattachment;
+                                        $targetFullGalleryPath = BASE_URL."/fleetrepo/app/webroot/img/charter_program_files/itinerary_photos/";
+                                        }
+
                                 }else{
                                        // $targetFullPath = BASE_URL.'/'.$yname."/app/webroot/img/charter_program_files/itinerary_photos/".$activityattachment;
                                         $targetFullPath = $update_BASE_URL.'/'.$yname."/app/webroot/img/charter_program_files/itinerary_photos/".$activityattachment;
+                                        $targetFullGalleryPath = $update_BASE_URL.'/'.$yname."/app/webroot/img/charter_program_files/itinerary_photos/";
                                         if (!empty($fleetSiteName)) { // IF yacht is under any Fleet
                                             $targetFullPath = $update_BASE_URL.'/'.$fleetSiteName."/app/webroot/".$yname."/app/webroot/img/charter_program_files/itinerary_photos/".$activityattachment;
+                                            $targetFullGalleryPath = $update_BASE_URL.'/'.$fleetSiteName."/app/webroot/".$yname."/app/webroot/img/charter_program_files/itinerary_photos/";
                                         }
+                                        if(BASE_URL == "http://localhost"){
+                                            $targetFullPath = BASE_URL."/fleetrepo/app/webroot/img/charter_program_files/itinerary_photos/".$activityattachment;
+                                            $targetFullGalleryPath = BASE_URL."/fleetrepo/app/webroot/img/charter_program_files/itinerary_photos/";
+                                        }
+
                                 }
 
                                 $activityattachmentimage = $targetFullPath;
                                 $activityattachmentimagehref = $targetFullPath;
                                 $activityfancybox = "fancybox";
+                                $targetFullGalleryPathhref = $targetFullGalleryPath;
                             }else{
                                 $activityattachmentimg = "style='display:none;'";
                                 $activityattachmentimage = BASE_URL.'/charterguest/app/webroot/img/noimage.png';
                                 $activityattachmentimagehref = "#";
                                 $activityfancybox = "";
+                                $targetFullGalleryPathhref = "";
                             }
 
                             $activity_id_chk = $activity['CharterProgramScheduleActivity']['id']; 
@@ -6285,8 +6368,17 @@ class ChartersController extends AppController {
                                 $colorcode = "";
                               }
 
-                            $popupHtml .= '<div class="marksub-div"><div style="display:flex"><div class="m_loc_desc_div"><div class="marksup_header"><input name="iti_time[]" disabled="true" id="iti_time" class="iti_time" value="'.$iti_time.'"><ul class="action-icon"><li><i class="fa fa-comments crew_comment_cruisingmap" style="'.$colorcode.$displaynone.'" data-rel="'.$activity['CharterProgramScheduleActivity']['UUID'].'" data-yachtid="'.$yacht_id.'" data-tempname="'.htmlspecialchars($activity['CharterProgramScheduleActivity']['activity_name']).'" title="Comments & Feedback"><input type="hidden" name=comments[] value="" class="messagecomments" /></i></li></ul></div><div class="subloc_name" name="activity_name[]" >'.htmlspecialchars($activity['CharterProgramScheduleActivity']['activity_name']).'</div><input type="hidden" name="activity_id[]" value="'.$activity['CharterProgramScheduleActivity']['UUID'].'"><textarea class="form-control auto_resize loc_desc_field lg_tarea" '.$readonly.' name="messages[]" rows="1" cols="50">'.htmlspecialchars($activity['CharterProgramScheduleActivity']['notes']).'</textarea></div><div class="m_loc_img_div"><div class="sp-upload-img"><a href="'.$activityattachmentimagehref.'" class="'.$activityfancybox.'"><img src="'.$activityattachmentimage.'" style="object-fit: fill; height: 150px;" alt=""></a></div></div></div><textarea class="form-control auto_resize loc_desc_field sm_tarea" '.$readonly.' name="messages[]" rows="1" cols="50">'.htmlspecialchars($activity['CharterProgramScheduleActivity']['notes']).'</textarea></div>
+                            $popupHtml .= '<div class="marksub-div"><div style="display:flex"><div class="m_loc_desc_div"><div class="marksup_header"><input name="iti_time[]" disabled="true" id="iti_time" class="iti_time" value="'.$iti_time.'"><ul class="action-icon"><li><i class="fa fa-comments crew_comment_cruisingmap" style="'.$colorcode.$displaynone.'" data-rel="'.$activity['CharterProgramScheduleActivity']['UUID'].'" data-yachtid="'.$yacht_id.'" data-tempname="'.htmlspecialchars($activity['CharterProgramScheduleActivity']['activity_name']).'" title="Comments & Feedback"><input type="hidden" name=comments[] value="" class="messagecomments" /></i></li></ul></div><div class="subloc_name" name="activity_name[]" >'.htmlspecialchars($activity['CharterProgramScheduleActivity']['activity_name']).'</div><input type="hidden" name="activity_id[]" value="'.$activity['CharterProgramScheduleActivity']['UUID'].'"><textarea class="form-control auto_resize loc_desc_field lg_tarea" '.$readonly.' name="messages[]" rows="1" cols="50">'.htmlspecialchars($activity['CharterProgramScheduleActivity']['notes']).'</textarea></div><div class="m_loc_img_div"><div class="sp-upload-img"><a href="'.$activityattachmentimagehref.'" class="'.$activityfancybox.'"><img src="'.$activityattachmentimage.'" style="object-fit: fill; height: 150px;" alt=""></a>';
+                            if(isset($fleetlocationimages_act)){
+                                foreach($fleetlocationimages_act as $name){
+                                    if(!empty($name)){
+                                        $popupHtml .= '<a href="'.$targetFullGalleryPathhref.$name.'" data-fancybox="images" rel="gallery'.$i.'" class="'.$activityfancybox.'"><img src="'.$name.'" style="object-fit: fill; height: 150px;display:none;" alt=""></a>';
+                                    }
+                                }
+                            }
+                            $popupHtml .= '</div></div></div><textarea class="form-control auto_resize loc_desc_field sm_tarea" '.$readonly.' name="messages[]" rows="1" cols="50">'.htmlspecialchars($activity['CharterProgramScheduleActivity']['notes']).'</textarea></div>
                              ';
+                             $i++;
                         }
                     }
                     
