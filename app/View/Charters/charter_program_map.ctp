@@ -2298,7 +2298,8 @@ function markerOnClick(e) {
     var consumptiontotal = e.target.consumptiontotal;
     var distancetotal = e.target.distancetotal;
     var durationtotal = e.target.durationtotal;
-    //console.log(consumptiontotal);
+    // console.log(lattitude);
+    // console.log(longitude);
     var day_dates = e.target.day_dates;
     var tablepId = e.target.tablepId;
 
@@ -2424,6 +2425,7 @@ function markerOnClick(e) {
 
 
                                 var frommarker = selectedmarkertitle +' - Day '+selectedmarkerday_num; //alert('llll')
+                                //console.log(frommarker);
                                 routeexists = 1;
                                 drawrouteinmodal(frommarker);
                               
@@ -2435,6 +2437,8 @@ function markerOnClick(e) {
                                     modalmap.invalidateSize();
                                 }, 0);
                                 $("#modalmap").find('.leaflet-control-attribution').hide();
+                                // console.log(lattitude);
+                                // console.log(longitude);
                                 var routemodalmarker = L.marker([lattitude, longitude], {
                                     draggable: false,
                                     pmIgnore: true
@@ -2488,10 +2492,12 @@ function markersnamesmodalmap(selectedTitle){
         
         //console.log(markerArray);  return false;
         var selectedmarkertooltipcontent = "";
-       
+        const selectedTitleFrom = selectedTitle.split("-");
+        //console.log(selectedTitleFrom);
+        let selectedTitleFromWord = $.trim(selectedTitleFrom[0]);
         $.each(markerArray, function(i, val) {
             //console.log(val);
-            if (val.endplace == selectedTitle) {
+            if (val.daytitle == selectedTitleFromWord) {
                 selectedmarkertooltipcontent = val._tooltip._content;
                 selectedlat = val._latlng.lat;
                 selectedlong = val._latlng.lng;
@@ -2541,7 +2547,7 @@ function markersnamesmodalmap(selectedTitle){
         //     defaultline = L.polyline([origin, dest]);
         //     defaultline.addTo(modalmap);
         // }
-
+//console.log(fitzoommap);
         modalmap.fitBounds(fitzoommap);
         //modalmap.setView(new L.LatLng(selectedlat,selectedlong), 4);
 
@@ -2552,7 +2558,7 @@ function markersnamesmodalmap(selectedTitle){
         //$(".Tooltipmodalmap").hide();
     }
 
-    return 1;
+    //return 1;
 }
 
 function drawrouteinmodal(frommarker) { //alert();
@@ -2560,6 +2566,7 @@ function drawrouteinmodal(frommarker) { //alert();
     var drawrouteline = [];
     //var tempendloc = [];
     var nextmarkername;
+    var tableschpid;
     //var toloc =  $(".markersnamesmodalmap").val();
     routeexists = 0;
     $.each(modalrouteline, function(name, value) {
@@ -2575,8 +2582,9 @@ function drawrouteinmodal(frommarker) { //alert();
     //console.log(drawrouteline);
     if (nextmarkername != "undefined" && nextmarkername != "" && nextmarkername != null) { //alert();
         //$(".markersnamesmodalmap").val(nextmarkername).trigger('change');
-       var returnvalue =  markersnamesmodalmap(nextmarkername);
-       if(returnvalue == 1){
+        //console.log(nextmarkername);
+       markersnamesmodalmap(nextmarkername);
+       //if(returnvalue == 1){
         var tempdrawrouteline = [];
         
         $.each(modalrouteline, function(name, value) {
@@ -2611,7 +2619,7 @@ function drawrouteinmodal(frommarker) { //alert();
         }
         drawnItemsModalMap.snakeIn();
         
-    }
+    //}
         
     }
 
