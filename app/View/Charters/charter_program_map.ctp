@@ -128,7 +128,7 @@ width: 450px;
 margin-right: 20px;
 }
 .loc_desc_field{
-    padding: 6px 15px 6px 6px;
+    padding: 15px 15px 15px 6px;
     background: #ffffff !important;
     color: #4d4d4d!important;
     border: solid 0px rgb(243 243 243 / 70%)!important;
