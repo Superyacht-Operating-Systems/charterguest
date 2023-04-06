@@ -192,15 +192,29 @@ color: #fff;
 .location_container,.sp-divrow{
     background-color: #ffffff;
 }
-
+.iti_time{
+   text-align: center;
+   background-color: #00a8f3;
+   border-radius: 6px;
+   color: #000;
+   font-size: 15px;
+   border: solid 1px #ccc;
+   width:22% !important;
+   margin: 0px;
+   padding: 8px 5px;
+   font-weight: 600;
+}
 @media only screen and (max-width: 771px){
+    .iti_time{
+        width:40% !important;
+    }
     .lg_tarea{
         display:none;
     }
   
     .sp-upload-img{
-    width: 100px;
-    height: 100px;
+    width: 100px!important;
+    height: 100px!important;
 }
     #modalmap{
         height: 300px;
