@@ -6404,7 +6404,7 @@ class ChartersController extends AppController {
                         <div>
 						   <img class="l_count_icon" src="'.BASE_URL.$basefolder.'/app/webroot/img/admin/loc_count.png"><span class="l_count">'.$dayNum.'</span>
                            <input type="text" name="title" value="'.htmlspecialchars($title).'" placeholder="Enter the Title" class="loc_name" '.$readonly.'>
-                            <ul class="action-icon"><li><i class="fa fa-comments " style="color: #00a8f3;float: right;padding: 10px 5px;"></i></li></ul>
+                            <ul class="action-icon"><li><i class="fa fa-comments " style="color: #00a8f3;float: right;"></i></li></ul>
 						</div>
                            <div class="icons_fields">
 <i style="color: #00a8f3;" class="fa fa-solid fa-calendar"><span class="icon_label" >Mon, 1 Jun 2023</span></i>
