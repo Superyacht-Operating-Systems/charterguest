@@ -1637,7 +1637,6 @@ body .sp-60-w input {
                 <h4 class="modal-title" id="markerModalLabel" style="text-align: center;font-weight: bold;"></h4>
             </div>
             <div class="modal-body location_Modal_body">
-            <div id="markerModal_load" class="modal_load">
             <div class="mark_map_div">
             <!-- <div class="sp-modal-hd">
                 <div class="row">
@@ -1656,7 +1655,7 @@ body .sp-60-w input {
                
                 </div>
                 </div>
-                
+                <div id="markerModal_load" class="modal_load">
 
                 </div>
 
