@@ -194,6 +194,10 @@ color: #fff;
     background-color: #ffffff;
 }
 @media only screen and (max-width: 771px){
+    #modalmap{
+        height: 300px;
+width: 100%;
+    }
     .CS_modal, .Mark_modal{
     width:100% !important;
 }
@@ -245,6 +249,11 @@ width: 100%;
     .CS_modal, .Mark_modal{
     width:650px;
 }
+#modalmap{
+        height: 300px;
+width: 455px;
+margin: 0 auto;
+    }
 
 }
 
@@ -3383,13 +3392,13 @@ $(document).on("click", ".downloadmappagefile", function(e) { //alert()
             });
         }
 
-        window.addEventListener("resize", update_mapContainer);
-function update_mapContainer() {
- let modelWidth = document.getElementById("markerModal_id").clientWidth;
- let heigth=modelWidth * .75;
- let width=modelWidth * .95;
- document.getElementById('modalmap').style.height= `${heigth}px`;
- document.getElementById('modalmap').style.width= `${width}px`;
-}
+//         window.addEventListener("resize", update_mapContainer);
+// function update_mapContainer() {
+//  let modelWidth = document.getElementById("markerModal_id").clientWidth;
+//  let heigth=modelWidth * .75;
+//  let width=modelWidth * .95;
+//  document.getElementById('modalmap').style.height= `${heigth}px`;
+//  document.getElementById('modalmap').style.width= `${width}px`;
+// }
 </script>
   
