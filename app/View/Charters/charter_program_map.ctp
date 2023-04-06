@@ -204,7 +204,14 @@ color: #fff;
    padding: 8px 5px;
    font-weight: 600;
 }
+
 @media only screen and (max-width: 771px){
+    .marksup_header{
+        margin-top: 10px;
+}
+.subloc_name{
+    margin-top: 10px;
+}
     .iti_time{
         width:90px !important;
     }
@@ -1341,6 +1348,9 @@ span.sp-rightalign {
 .modal_load,.markmodal_load{
     margin:5px 10px 5px 8px;
 }
+#closeSchedule{
+        margin-left: 6px;
+    }
 @media screen and (min-width: 990px) {
 .location_Modal_body{
     /* max-height: 580px; */
@@ -1350,9 +1360,7 @@ span.sp-rightalign {
 }
 }
 @media screen and (max-width: 990px) {
-    #closeSchedule{
-        margin-left: 6px;
-    }
+  
     .markmodalbody{
         max-height: 90vh;
     overflow-y: scroll;
