@@ -107,10 +107,10 @@ width: 150px;
 
 .inputContainer_div{
 display: flex;
-padding: 10px;
+padding: 18px;
 background-color: #fff;
 border-radius: 10px;
-margin: 15px 5px;
+margin: 15px 5px 20px 5px;
 }	
 .loc_name{
     color: #000;
@@ -125,7 +125,7 @@ margin: 15px 5px;
 }
 .loc_desc_div{
 width: 450px;
-margin-right: 10px;
+margin-right: 20px;
 }
 .loc_desc_field{
     padding: 6px 6px;
@@ -913,9 +913,9 @@ display: block;
 .action-icon{
 float: right;
     padding: 0px;
-    height: 32px;
+    /* height: 32px; */
     margin: 0px;
-    width:55px;
+    /* width:55px; */
     display: flex;
     align-items: center;
     /* justify-content: center; */
