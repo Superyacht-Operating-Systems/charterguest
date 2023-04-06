@@ -193,6 +193,7 @@ color: #fff;
     background-color: #ffffff;
 }
 .iti_time{
+    filter: blur(0);
    text-align: center;
    background-color: #00a8f3;
    border-radius: 6px;
