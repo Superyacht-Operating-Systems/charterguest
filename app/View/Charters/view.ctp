@@ -364,7 +364,11 @@ font-weight: bold;
 
 
 
-
+@media screen and (max-width: 767px){
+.md-row-h-8 {
+  top: 237px !important;
+}
+}
 
 @media screen and (max-width: 1200px) {
 
@@ -416,7 +420,7 @@ font-weight: bold;
     left: 15%;
     float: right;
     position: absolute;
-    top: 254px;
+    top: 275px;
 }
 .rowm-md-mob-resize{
        display: inline-block;
