@@ -1452,11 +1452,13 @@ span.sp-rightalign {
 }
 
 }
-
-@media only screen and (max-width:767px){
-.sp-rightalign{
+@media only screen and (max-width: 771px){
+    .sp-rightalign{
     display: none;
 }
+}
+@media only screen and (max-width:767px){
+
 .sp-40-w{
     margin-top: 10px;
     margin-left: 0px;
