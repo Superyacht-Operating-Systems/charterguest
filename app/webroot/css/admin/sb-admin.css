@@ -3946,16 +3946,7 @@ padding-left: 0px;
   padding-left: 0px!important;
 }
 
-.yachtHeaderName {
-font-size: 16px!important;
-    text-align: left;
-    width: auto;
-    max-width: inherit;
-    left: 95px;
-    margin-top: 19px!important;
-    position: fixed;
-    top: 21px;
-}
+
 /*.mrg-label {
     padding: 5px 0px 0px 0px!important;
 }*/
@@ -4237,11 +4228,7 @@ padding-left: 78px;
     display: inline-block;
 /*    margin-left: 25px!important;*/
 }
-.navbar-absalute-top .yachtHeaderName {
-    left: 95px;
-    right: auto;
-    top: 18px!important;
-}
+
 .ch-program-container{
     margin-top: 100px;
 }
@@ -5744,4 +5731,15 @@ body .mydemolabel {
     height: 13px;
    margin: 2px 6px 8px 6px;
 }
+}
+
+  @media only screen and (max-width: 771px){
+.navbar-absalute-top .yachtHeaderName {
+  left: 95px;
+  right: auto;
+  top: 18px !important;
+}
+.yachtHeaderName {
+  font-size: 16px !important;
+  }
 }
