@@ -1304,7 +1304,7 @@ padding-left: 15px!important;
   font-weight:bold;
   min-width: 145px;
 }
-@media only screen and (min-width: 768px) and (max-width: 1092px){
+@media only screen and (min-width: 771px) and (max-width: 1092px){
     #CruisingButton {
   width: 138px !important;
   font-size: 14px;
