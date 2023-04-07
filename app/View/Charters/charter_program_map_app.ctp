@@ -978,9 +978,9 @@ display: block;
 .action-icon{
 float: right;
     padding: 0px;
-    height: 32px;
+    /* height: 32px; */
     margin: 0px;
-    width:55px;
+    /* width:55px; */
     display: flex;
     align-items: center;
     /* justify-content: center; */

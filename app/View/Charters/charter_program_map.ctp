@@ -60,6 +60,9 @@ if(empty($scheduleData)){
     max-height: 500px;
     width: auto !important;
 } */
+.leaflet-container .leaflet-marker-pane img{
+z-index: 1 !important;
+}
 .map_bottom_attr{
 color: #00a8f3;
 display: flex;
