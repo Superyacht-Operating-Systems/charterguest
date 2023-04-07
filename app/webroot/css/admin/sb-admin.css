@@ -4440,19 +4440,7 @@ display: block!important;
   /*  margin-top: -13px!important;*/
 }
 
-.position-mobile-head{
-    display: block;
-    position: absolute;
-    text-transform: uppercase;
-    top: 53px;
-    z-index: 333;
-    color: #fff;
-    font-size: 14px;
-    font-weight: bold;
-    left: 70px;
-     transition-delay:30s;
 
-}
 hr.divider {
     border-top: 3px solid rgba(8, 8, 8, 0.23)!important;
     width: 100%!important; 
@@ -5506,9 +5494,7 @@ width: 137px!important;
 
 
 @media only screen and (min-width: 769px) and (max-width: 1020px){
-.userhead-name .acti-countnav {
-   top:88px!important;
-}
+
 .checkbox-label-row .occfild {
     width: 108px!important;
 }
@@ -5717,6 +5703,18 @@ body .mydemolabel {
 }
 
   @media only screen and (max-width: 771px){
+  .position-mobile-head {
+    display: block;
+    position: absolute;
+    text-transform: uppercase;
+    top: 53px;
+    z-index: 333;
+    color: #fff;
+    font-size: 14px;
+    font-weight: bold;
+    left: 70px;
+    transition-delay: 30s;
+}
 .navbar-absalute-top .yachtHeaderName {
   left: 95px;
   right: auto;
