@@ -6020,7 +6020,7 @@ class ChartersController extends AppController {
                 $popupHtml = '';
                 $this->loadModel('CharterGuest');
                 $this->loadModel('Yacht');
-                $this->loadModel('LocationContentFleet');
+               // $this->loadModel('LocationContentFleet');
                 if(isset($ipaddb) && !empty($ipaddb)){
                     $yachtDbName = $ipaddb;
                     $ydbapp = $this->CharterGuest->query("SELECT * FROM $yachtDbName.yachts Yacht");
@@ -6098,17 +6098,18 @@ class ChartersController extends AppController {
                     if(isset($attachment) && !empty($attachment)){
                         //echo $yacht_domain; echo $fleetSiteName; echo $yname;
                         /////////////////////
-                        
-                        $LocationContentFleet = $this->LocationContentFleet->find('first',array('conditions'=>array('location'=>$title,'type'=>'Location')));
+                        //echo "SELECT * FROM $yachtDbName.location_contents LocationContent WHERE LocationContent.location = '$title' AND LocationContent.type = 'Location'";
+                        $LocationContent = $this->CharterGuest->query("SELECT * FROM $yachtDbName.location_contents LocationContent WHERE LocationContent.location = '$title' AND LocationContent.type = 'Location'");
+                        //$LocationContentFleet = $this->LocationContentFleet->find('first',array('conditions'=>array('location'=>$title,'type'=>'Location')));
                         $fleetlocationimages = "";
-                        //echo "<pre>";print_r($LocationContentFleet); exit;
-                        if(!empty($LocationContentFleet)){
-                            $LocationContentFleetyour_image = $LocationContentFleet['LocationContentFleet']['your_image'];
+                        //echo "<pre>";print_r($LocationContent); exit;
+                        if(!empty($LocationContent)){
+                            $LocationContentFleetyour_image = $LocationContent[0]['LocationContent']['your_image'];
                             //$fleetlocationimages = array();
                             if(isset($LocationContentFleetyour_image)){
                                 $fleetlocationyour_images =  explode(',',$LocationContentFleetyour_image);
                             }
-                            $LocationContentFleetimage = $LocationContentFleet['LocationContentFleet']['image'];
+                            $LocationContentFleetimage = $LocationContent[0]['LocationContent']['image'];
                             if(isset($LocationContentFleetimage)){
                                 $fleetlocationimagesarr =  explode(',',$LocationContentFleetimage);
                             }
@@ -6133,8 +6134,8 @@ class ChartersController extends AppController {
                             $targetFullPath = BASE_URL.'/SOS/app/webroot/betayacht/app/webroot/img/charter_program_files/itinerary_photos/'.$attachment;
                             $targetFullGalleryPath = BASE_URL.'/SOS/app/webroot/betayacht/app/webroot/img/charter_program_files/itinerary_photos/';
                             if(BASE_URL == "http://localhost"){
-                                $targetFullPath = BASE_URL."/fleetrepo/app/webroot/img/charter_program_files/itinerary_photos/".$attachment;
-                                $targetFullGalleryPath = BASE_URL."/fleetrepo/app/webroot/img/charter_program_files/itinerary_photos/";
+                                $targetFullPath = BASE_URL."/superyacht/app/webroot/img/charter_program_files/itinerary_photos/".$attachment;
+                                $targetFullGalleryPath = BASE_URL."/superyacht/app/webroot/img/charter_program_files/itinerary_photos/";
                                 }
                         }else{
                             //$targetFullPath = BASE_URL.'/'.$yname."/app/webroot/img/charter_program_files/itinerary_photos/".$attachment;
@@ -6145,8 +6146,8 @@ class ChartersController extends AppController {
                                 $targetFullGalleryPath = $update_BASE_URL.'/'.$fleetSiteName."/app/webroot/".$yname."/app/webroot/img/charter_program_files/itinerary_photos/";
                             }
                             if(BASE_URL == "http://localhost"){
-                                $targetFullPath = BASE_URL."/fleetrepo/app/webroot/img/charter_program_files/itinerary_photos/".$attachment;
-                                $targetFullGalleryPath = BASE_URL."/fleetrepo/app/webroot/img/charter_program_files/itinerary_photos/";
+                                $targetFullPath = BASE_URL."/superyacht/app/webroot/img/charter_program_files/itinerary_photos/".$attachment;
+                                $targetFullGalleryPath = BASE_URL."/superyacht/app/webroot/img/charter_program_files/itinerary_photos/";
                                 }
                         }
 
@@ -6287,15 +6288,17 @@ class ChartersController extends AppController {
                             if(isset($activityattachment) && !empty($activityattachment)){
 
                                 ////////////////////////////////////////////////////////////
-                                $LocationContentFleet = $this->LocationContentFleet->find('first',array('conditions'=>array('location'=>$title,'sub_location'=>$activity['CharterProgramScheduleActivity']['activity_name'],'type !='=>'Location')));
+                                $actname = $activity['CharterProgramScheduleActivity']['activity_name'];
+                                $LocationContent = $this->CharterGuest->query("SELECT * FROM $yachtDbName.location_contents LocationContent WHERE LocationContent.location = '$title' AND LocationContent.sub_location = '$actname' AND LocationContent.type != 'Location'");
+                                //$LocationContentFleet = $this->LocationContentFleet->find('first',array('conditions'=>array('location'=>$title,'sub_location'=>$activity['CharterProgramScheduleActivity']['activity_name'],'type !='=>'Location')));
                                 //echo "<pre>";print_r($LocationContentFleet); exit;
-                                if(!empty($LocationContentFleet)){
-                                    $LocationContentFleetyour_image_act = $LocationContentFleet['LocationContentFleet']['your_image'];
+                                if(!empty($LocationContent)){
+                                    $LocationContentFleetyour_image_act = $LocationContent[0]['LocationContent']['your_image'];
                                     //$fleetlocationimages = array();
                                     if(isset($LocationContentFleetyour_image_act)){
                                         $fleetlocationyour_images_act =  explode(',',$LocationContentFleetyour_image_act);
                                     }
-                                    $LocationContentFleetimage_act = $LocationContentFleet['LocationContentFleet']['image'];
+                                    $LocationContentFleetimage_act = $LocationContent[0]['LocationContent']['image'];
                                     if(isset($LocationContentFleetimage_act)){
                                         $fleetlocationimagesarr_act =  explode(',',$LocationContentFleetimage_act);
                                     }
@@ -6317,8 +6320,8 @@ class ChartersController extends AppController {
                                     $targetFullPath = BASE_URL.'/SOS/app/webroot/betayacht/app/webroot/img/charter_program_files/itinerary_photos/'.$activityattachment;
                                     $targetFullGalleryPath = BASE_URL.'/SOS/app/webroot/betayacht/app/webroot/img/charter_program_files/itinerary_photos/';
                                     if(BASE_URL == "http://localhost"){
-                                        $targetFullPath = BASE_URL."/fleetrepo/app/webroot/img/charter_program_files/itinerary_photos/".$activityattachment;
-                                        $targetFullGalleryPath = BASE_URL."/fleetrepo/app/webroot/img/charter_program_files/itinerary_photos/";
+                                        $targetFullPath = BASE_URL."/superyacht/app/webroot/img/charter_program_files/itinerary_photos/".$activityattachment;
+                                        $targetFullGalleryPath = BASE_URL."/superyacht/app/webroot/img/charter_program_files/itinerary_photos/";
                                         }
 
                                 }else{
@@ -6330,8 +6333,8 @@ class ChartersController extends AppController {
                                             $targetFullGalleryPath = $update_BASE_URL.'/'.$fleetSiteName."/app/webroot/".$yname."/app/webroot/img/charter_program_files/itinerary_photos/";
                                         }
                                         if(BASE_URL == "http://localhost"){
-                                            $targetFullPath = BASE_URL."/fleetrepo/app/webroot/img/charter_program_files/itinerary_photos/".$activityattachment;
-                                            $targetFullGalleryPath = BASE_URL."/fleetrepo/app/webroot/img/charter_program_files/itinerary_photos/";
+                                            $targetFullPath = BASE_URL."/superyacht/app/webroot/img/charter_program_files/itinerary_photos/".$activityattachment;
+                                            $targetFullGalleryPath = BASE_URL."/superyacht/app/webroot/img/charter_program_files/itinerary_photos/";
                                         }
 
                                 }
