@@ -1456,8 +1456,7 @@ span.sp-rightalign {
     .sp-rightalign{
     display: none;
 }
-}
-@media only screen and (max-width:767px){
+
 
 .sp-40-w{
     margin-top: 10px;
