@@ -48,7 +48,7 @@ if(empty($scheduleData)){
 
 }
 ?>
-<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <style>
     /* .custom-popup .leaflet-popup-content {
@@ -1655,19 +1655,19 @@ body .sp-60-w input {
       
       <div class="modal-body">
         <div class="form-group">
-          1. Tap the location marker to display the days activities.
+          1. Tap the location marker to show the day’s activities.
         </div>
         <div class="form-group">
-          2. Tap the activities text to expand the field.
+          2. Tap the image to enlarge it.
         </div>
         <div class="form-group">
-          3. Tap the image to enlarge it.
+          3. Tap or pinch the Map to enlarge it. 
         </div>
         <div class="form-group">
           4. The Cruising Schedule button lists all the locations.
         </div>
         <div class="form-group">
-        5. Tap the Hide Details button to hide the location cards.
+        5. Tap the Show Details button to display location info.
         </div>
       </div>
       <div class="modal-footer">
