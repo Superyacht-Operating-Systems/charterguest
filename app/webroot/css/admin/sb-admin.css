@@ -5086,13 +5086,6 @@ top: auto;
 }
 
 
-  .container-row-all {
-    margin-top: 24px!important;
-    position: relative;
-    height: 100%;
-    padding: 0px;
-    overflow: inherit;
-}
 .nav-side-menu {
     margin-top: 18px;
 }
@@ -5699,6 +5692,13 @@ body .mydemolabel {
 }
 
   @media only screen and (max-width: 771px){
+  .container-row-all {
+    margin-top: 24px!important;
+    position: relative;
+    height: 100%;
+    padding: 0px;
+    overflow: inherit;
+}
   .navbar-inverse {
     height: 140px;
 }
