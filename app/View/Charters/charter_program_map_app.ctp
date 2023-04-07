@@ -68,8 +68,10 @@ echo $this->Html->script('leaflet/route');
  echo $this->Html->script('leaflet/leaflet.draw.js'); 
 
 ?>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style>
+    .leaflet-container .leaflet-marker-pane img{
+z-index: 1 !important;
+}
     .map_bottom_attr{
 color: #00a8f3;
 display: flex;
@@ -1723,7 +1725,7 @@ var vessel = new L.LayerGroup();
 var markerArray = [];
 var markerCount = 0;
      
-var mbAttr = '<table width=100%><thead><tr style="font-size:12px;font-weight:bold;text-align:center;"><td style="width:33%;border-right: 8px solid #000;">Distance</td><td style="width:33%;border-right: 8px solid #000;">Duration</td><td style="width:34%;border-right: 8px solid #000;">Fuel</td></tr></thead><tbody><tr style="font-size:12px;color:#3388ff;font-weight:bold;text-align:center;"><td style="border-right: 8px solid #000;"><?php echo $RouteDatadisplaydistancevalue; ?></td><td style="border-right: 8px solid #000;"><?php echo $RouteDatadisplayduration; ?></td><td style="border-right: 8px solid #000;"><?php echo $RouteDatatotalconsumption; ?></td></tr></tbody></table>';
+var mbAttr = '<table width=100%><thead><tr style="font-size:12px;font-weight:bold;text-align:center;"><td style="width:33%;border-right: 8px solid #000;"><i class="fa fa-solid fa-ship map_bottom_attr" aria-hidden="true"></i>Distance</td><td style="width:33%;border-right: 8px solid #000;"><i class="fa fa-solid fa-clock-o map_bottom_attr" aria-hidden="true"></i>Duration</td><td style="width:34%;border-right: 8px solid #000;"><i class="fas fa-gas-pump fa-solid map_bottom_attr" aria-hidden="true"></i>Fuel</td></tr></thead><tbody><tr style="font-size:12px;color:#3388ff;font-weight:bold;text-align:center;"><td style="border-right: 8px solid #000;"><?php echo $RouteDatadisplaydistancevalue; ?></td><td style="border-right: 8px solid #000;"><?php echo $RouteDatadisplayduration; ?></td><td style="border-right: 8px solid #000;"><?php echo $RouteDatatotalconsumption; ?></td></tr></tbody></table>';
 mbUrl = 'https://api.mapbox.com/styles/v1/superyachtos/{id}/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1Ijoic3VwZXJ5YWNodG9zIiwiYSI6ImNpdW54eHV5bjAxNmMzMG1sMGpkamVma2cifQ.Y9kj-j0RGCFSE6khFVPyOw';
 var satellite   =   L.tileLayer(mbUrl, {
     id: 'ciurvui5100uz2iqqe929nrlr', 
