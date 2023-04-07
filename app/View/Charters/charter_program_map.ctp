@@ -48,8 +48,8 @@ if(empty($scheduleData)){
 
 }
 ?>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<script src="https://kit.fontawesome.com/97d09b7581.js" crossorigin="anonymous"></script>
+<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> -->
+
 <style>
     /* .custom-popup .leaflet-popup-content {
     overflow-y: auto;
@@ -63,7 +63,7 @@ if(empty($scheduleData)){
 .map_bottom_attr{
 color: #00a8f3;
 display: flex;
-font-size: 20px;
+font-size: 16px;
 margin: 6px auto 2px auto;
 width: fit-content;
 }
