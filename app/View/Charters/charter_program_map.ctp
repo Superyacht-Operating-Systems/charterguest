@@ -49,6 +49,7 @@ if(empty($scheduleData)){
 }
 ?>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 <style>
     /* .custom-popup .leaflet-popup-content {
     overflow-y: auto;
@@ -59,7 +60,13 @@ if(empty($scheduleData)){
     max-height: 500px;
     width: auto !important;
 } */
-
+.map_bottom_attr{
+color: #00a8f3;
+display: flex;
+font-size: 16px;
+margin: 6px auto 2px auto;
+width: fit-content;
+}
 .mark_map_div{
 border-radius: 10px;
 padding: 0px 10px 10px 10px;
@@ -1648,19 +1655,19 @@ body .sp-60-w input {
       
       <div class="modal-body">
         <div class="form-group">
-          1. Tap the location marker to display the days activities.
+          1. Tap the location marker to show the day’s activities.
         </div>
         <div class="form-group">
-          2. Tap the activities text to expand the field.
+          2. Tap the image to enlarge it.
         </div>
         <div class="form-group">
-          3. Tap the image to enlarge it.
+          3. Tap or pinch the Map to enlarge it. 
         </div>
         <div class="form-group">
           4. The Cruising Schedule button lists all the locations.
         </div>
         <div class="form-group">
-        5. Tap the Hide Details button to hide the location cards.
+        5. Tap the Show Details button to display location info.
         </div>
       </div>
       <div class="modal-footer">
@@ -1837,7 +1844,7 @@ var vessel = new L.LayerGroup();
 var markerArray = [];
 var markerCount = 0;
      
-var mbAttr = '<table width=100%><thead><tr style="font-size:12px;font-weight:bold;text-align:center;"><td style="width:33%;border-right: 8px solid #000;">Distance</td><td style="width:33%;border-right: 8px solid #000;">Duration</td><td style="width:34%;border-right: 8px solid #000;">Fuel</td></tr></thead><tbody><tr style="font-size:12px;color:#3388ff;font-weight:bold;text-align:center;"><td style="border-right: 8px solid #000;"><?php echo $RouteDatadisplaydistancevalue; ?></td><td style="border-right: 8px solid #000;"><?php echo $RouteDatadisplayduration; ?></td><td style="border-right: 8px solid #000;"><?php echo $RouteDatatotalconsumption; ?></td></tr></tbody></table>';
+var mbAttr = '<table width=100%><thead><tr style="font-size:12px;font-weight:bold;text-align:center;"><td style="width:33%;border-right: 8px solid #000;"><i class="fa fa-solid fa-ship map_bottom_attr" aria-hidden="true"></i>Distance</td><td style="width:33%;border-right: 8px solid #000;"><i class="fa fa-solid fa-clock-o map_bottom_attr" aria-hidden="true"></i>Duration</td><td style="width:34%;border-right: 8px solid #000;"><i class="fas fa-gas-pump fa-solid map_bottom_attr" aria-hidden="true"></i>Fuel</td></tr></thead><tbody><tr style="font-size:12px;color:#3388ff;font-weight:bold;text-align:center;"><td style="border-right: 8px solid #000;"><?php echo $RouteDatadisplaydistancevalue; ?></td><td style="border-right: 8px solid #000;"><?php echo $RouteDatadisplayduration; ?></td><td style="border-right: 8px solid #000;"><?php echo $RouteDatatotalconsumption; ?></td></tr></tbody></table>';
 mbUrl = 'https://api.mapbox.com/styles/v1/superyachtos/{id}/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1Ijoic3VwZXJ5YWNodG9zIiwiYSI6ImNpdW54eHV5bjAxNmMzMG1sMGpkamVma2cifQ.Y9kj-j0RGCFSE6khFVPyOw';
 var satellite   =   L.tileLayer(mbUrl, {
     id: 'ciurvui5100uz2iqqe929nrlr', 
