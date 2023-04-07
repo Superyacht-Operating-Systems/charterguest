@@ -5084,11 +5084,7 @@ top: auto;
     text-align: left;
     margin-top: -24px;
 }
-.navbar-absalute-top{
-position: absolute;
-z-index: 99;
-width: 100%;
-}
+
 
   .container-row-all {
     margin-top: 24px!important;
@@ -5703,7 +5699,11 @@ body .mydemolabel {
 }
 
   @media only screen and (max-width: 771px){
-
+.navbar-absalute-top{
+position: absolute;
+z-index: 99;
+width: 100%;
+}
   .position-mobile-head {
     display: block;
     position: absolute;
