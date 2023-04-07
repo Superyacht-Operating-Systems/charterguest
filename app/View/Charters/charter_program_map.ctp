@@ -1311,6 +1311,8 @@ padding-left: 15px!important;
   height: 32px;
   padding: 5px !important;
   top: 18px !important;
+  padding: 5px !important;
+    top: 18px !important;
 }
 #HideDetails, #HelpfulTips {
     min-width: 138px;
@@ -1334,6 +1336,8 @@ padding-left: 15px!important;
     height: 24px;
     width: 113px!important;
   top: 18px !important;
+  padding: 0px!important;
+    font-size: 11px!important;
 }
 
 #HideDetails {
