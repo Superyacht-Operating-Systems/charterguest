@@ -1342,16 +1342,42 @@ position: absolute;
 }
 
 }
-textarea.form-control {
+/* textarea.form-control {
     resize: vertical!important;
     overflow: auto!important;
-}
-.modal_load{
+} */
+.modal_load,.markmodal_load{
     margin:5px 10px 5px 8px;
 }
+#closeSchedule{
+        margin-left: 6px;
+    }
+@media screen and (min-width: 990px) {
+.location_Modal_body{
+    /* max-height: 580px; */
+    height: 85vh;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+}
 @media screen and (max-width: 990px) {
+  
+    .markmodalbody{
+        max-height: 91vh;
+    overflow-y: scroll;
+    overflow-x: hidden;
+   
+    }
+    .markmodal_load{
+        margin: 5px 0px 5px 8px;
+    padding: 0px 10px 100px 0px;
+    }
     .modal_load{
-        padding-bottom: 100px;
+        max-height: 88vh;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    margin: 5px 0px 5px 8px;
+    padding: 0px 10px 100px 0px;
     }
     .cruising-location-Modal .modal-content{
        height: 96vh!important;
