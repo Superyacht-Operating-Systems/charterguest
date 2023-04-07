@@ -5086,9 +5086,7 @@ top: auto;
 }
 
 
-.nav-side-menu {
-    margin-top: 18px;
-}
+
 .container-row-all-innerpages{
     margin-top: 34px!important;
     position: relative;
@@ -5688,6 +5686,9 @@ body .mydemolabel {
 }
 
   @media only screen and (max-width: 771px){
+  .nav-side-menu {
+    margin-top: 18px;
+}
   .container-row-all {
     margin-top: 24px!important;
     position: relative;
