@@ -937,9 +937,9 @@ display: block;
 
 }
 
-.leaflet-marker-icon:hover{
+/* .leaflet-marker-icon:hover{
     z-index: 99999999;
-}
+} */
 
 
 
