@@ -1548,7 +1548,7 @@ body .sp-60-w input {
 .text-below-marker {
     font-size: 11px;
     font-weight: 1px solid;
-    margin-top: -35px !important;
+    margin-top: -33px !important;
     margin-left: -3px !important;
     color: #000;
 }
@@ -1556,7 +1556,7 @@ body .sp-60-w input {
 .text-below-marker-modalmap {
     font-size: 11px;
     font-weight: 1px solid;
-    margin-top: -35px !important;
+    margin-top: -33px !important;
     margin-left: -3px !important;
     color: #000;
     z-index:9999 !important;
@@ -1690,9 +1690,128 @@ body .sp-60-w input {
             </div>
             <div class="modal-body location_Modal_body">
                 <div id="cruisinglocationModal_load" class="modal_load">
+                <div class="mapPopup sp-mp-detailsrow" data-schuuid="">
+                <?php 
+                $markerimage = BASE_URL.'/charterguest/app/webroot/css/leaflet/dist/images/marker-icon-itinerary.png';
+                $crusemap = 1;
+                $crusemaparray = array();
+            foreach ($scheduleData as $key => $schedule) { 
 
+            if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !empty($samelocations[$schedule['CharterProgramSchedule']['lattitude']])){
+                $counttitle = count($samelocations[$schedule['CharterProgramSchedule']['lattitude']]);
+                    $SumDaytitle = "";
+                    foreach($samelocations[$schedule['CharterProgramSchedule']['lattitude']] as $val){
+                        $SumDaytitle.= $val.'<br>';
+                    }
+
+
+                $schuuid = $schedule['CharterProgramSchedule']['UUID'];
+                if($samemarkercommentcount[$schedule['CharterProgramSchedule']['lattitude']] == 0){
+                    $marker_msg_count = "style='display:none;'";
+                    $samemkrcount = "";
+                }else if($samemarkercommentcount[$schedule['CharterProgramSchedule']['lattitude']] != 0){
+                    $marker_msg_count = "";
+                    $samemkrcount = $samemarkercommentcount[$schedule['CharterProgramSchedule']['lattitude']];
+                    if(isset($guesttype) && !empty($guesttype)){ //echo $guesttype; exit;
+                        if($guesttype == "guest"){
+                                $marker_msg_count = "style='display:none;'";
+                        }else{
+                                $marker_msg_count = "";
+                        }
+                    }
+                    
+                }
+            
+                $daynumber = $schedule['CharterProgramSchedule']['day_num']; 
+                
+                $attachment = $schedule['CharterProgramSchedule']['attachment'];
+    
+                $fleetlocationimages = $locationimages[$schedule['CharterProgramSchedule']['id']];
+                        if(isset($attachment) && !empty($attachment)){
+                             
+                            if(isset($domain_name) && $domain_name == "charterguest"){
+                                $update_BASE_URL = "https://charterguest.net/";
+                            }else{
+                                $update_BASE_URL = "https://totalsuperyacht.com:8080/";
+                            }
+                            // if($yname == "yacht"){
+                            //     $targetFullPath = BASE_URL.'/SOS/app/webroot/betayacht/app/webroot/img/charter_program_files/itinerary_photos/'.$attachment;
+                            // }else{
+                                $targetFullPath = $update_BASE_URL.'/'.$yachtname.'/app/webroot/img/charter_program_files/itinerary_photos/'.$attachment;
+                                $targetFullGalleryPath = $update_BASE_URL.'/'.$yachtname.'/app/webroot/img/charter_program_files/itinerary_photos/';
+                                
+                                if (!empty($fleetname)) { // IF yacht is under any Fleet
+                                    $targetFullPath = $update_BASE_URL.'/'.$fleetname."/app/webroot/".$yachtname.'/app/webroot/img/charter_program_files/itinerary_photos/'.$attachment;
+                                    $targetFullGalleryPath = $update_BASE_URL.'/'.$fleetname."/app/webroot/".$yachtname.'/app/webroot/img/charter_program_files/itinerary_photos/';
+                                }
+                            //}
+                            if(BASE_URL == "http://localhost"){
+                                $targetFullPath = BASE_URL."/superyacht/app/webroot/img/charter_program_files/itinerary_photos/".$attachment;
+                                $targetFullGalleryPath = BASE_URL."/superyacht/app/webroot/img/charter_program_files/itinerary_photos/";
+                                }
+
+                            $titleimage = $targetFullPath;
+                            $titleimagehref = $targetFullPath;
+                            $fancybox = "fancybox";
+                            $targetFullGalleryPathhref = $targetFullGalleryPath;
+                        }else{
+                            $noteimg = "style='display:none;'";
+                            $titleimage = BASE_URL.'/charterguest/app/webroot/img/noimage.png';
+                            $titleimagehref = "#";
+                            $fancybox = "";
+                            $targetFullGalleryPathhref = "";
+                        }
+                        
+                        $crusemaparray[$crusemap] =  "crusingschedulemap".$crusemap;
+                        ?>
+                       <div class="inputContainer_div">
+                            <div class="loc_desc_div">
+                                <div>
+                                <span style="display: inline-block;position: relative;"><img src="<?php echo $markerimage; ?>" style="object-fit: fill; height: 35px;" alt="" ><span style="position: absolute;color:#000;top: 4px;right: 10px;"><?php echo $daynumber; ?></span></span>
+                                <input type="text" name="title" value="<?php echo htmlspecialchars($schedule['CharterProgramSchedule']['title']); ?>" placeholder="Enter the Title" class="loc_name" readonly/>
+                                    <ul class="action-icon"><li><i class="fa fa-comments " style="color: #00a8f3;float: right;"></i></li></ul>
+                                </div>
+                            <div class="icons_fields">
+                                <i style="color: #00a8f3;" class="fa fa-solid fa-calendar"><span class="icon_label" ><?php echo $schedule['CharterProgramSchedule']['day_dates']; ?></span></i>
+                                <i style="color: #00a8f3;" class="fa fa-solid fa-clock-o "><span class="icon_label"><?php echo $markertotal[$schedule['CharterProgramSchedule']['title'].' - Day '.$schedule['CharterProgramSchedule']['day_num']]['duration'];  ?></span></i>
+                                <i style="color: #00a8f3;" class="fa fa-solid fa-ship" aria-hidden="true"><span class="icon_label" style="padding: 0px 0px 0px 5px;"><?php echo $markertotal[$schedule['CharterProgramSchedule']['title'].' - Day '.$schedule['CharterProgramSchedule']['day_num']]['distance']; ?></span></i>
+                                </div>
+                                <div>
+                                    <textarea class="form-control auto_resize loc_desc_field" name="messagestitle" rows="1" cols="50"><?php echo $schedule['CharterProgramSchedule']['notes']; ?></textarea>
+                                </div>
+                            </div>
+                            <div class="loc_img_div">
+                                <div class="loc_map_div fancyboxmap" id="crusingschedulemap<?php echo $crusemap; ?>">
+                                
+                                </div>
+                                <div class="loc_img_prev">
+                                <a href="<?php echo $titleimagehref; ?>" rel="gallery01" class="<?php echo $fancybox; ?>"><img src="<?php echo $titleimage; ?>" style="object-fit: fill; width: 100%;height: 150px;" alt="" ></a>
+                               <?php if(isset($fleetlocationimages) && !empty($fleetlocationimages)){ 
+                                    $fleetlocationimages =  array_unique($fleetlocationimages);
+                                    foreach($fleetlocationimages as $name){
+                                        if(!empty($name)){ ?>
+                                            <a href="<?php echo $targetFullGalleryPathhref; ?><?php echo $name ?>" data-fancybox="images" rel="gallery01" class="<?php echo $fancybox; ?>"><img src="<?php echo $name; ?>" style="object-fit: fill;width: 100%; height: 150px;display:none;" alt="" ></a>
+                                            <?php  }
+                                    }
+                                } ?>
+                                </div>
+                               <?php if(isset($fleetlocationimages) && !empty($fleetlocationimages)){ 
+                                    $fleetimagecount = count($fleetlocationimages);
+                                    if($fleetimagecount > 1){
+                                    //     for($k=0; $k<$fleetimagecount; $k++){ ?>
+                                    <i class="fa fa-dot-circle-o" aria-hidden="true" style="
+                                            font-size: 12px;
+                                            color: darkslategray;padding: 0px 5px 5px 65px;"></i>
+                                <?php  //     }
+                                    }
+                                    }?>
+                            </div>
+                       </div>
+                    <?php  } 
+                $crusemap++;
+                } ?>
                 </div>
-
+                    </div>
             </div>
         </div>
     </div>
@@ -1868,6 +1987,39 @@ var map = L.map('map', {
     'inertiaThershold'   : 32,
     //'crs': L.CRS.Simple,
 });
+
+<?php 
+if(isset($crusemaparray) && !empty($crusemaparray)){
+foreach($crusemaparray as $key => $val){ ?>
+
+var locsatellite = "schloc"+"<?php echo $key; ?>";
+
+
+locsatellite = L.tileLayer(mbUrl, {
+    id: 'ciurvui5100uz2iqqe929nrlr',
+    unloadInvisibleTiles: false,
+    reuseTiles: true,
+    updateWhenIdle: false,
+    continousWorld: true,
+    noWrap: false,
+});
+
+var idlocmap = "<?php echo $val ?>";
+    idlocmap = L.map('<?php echo $val ?>', {
+    center: [39.73, -104.99],
+    'zoom': 5,
+    'measureControl': true,
+    'worldCopyJump': false,
+    'layers': [locsatellite],
+    'inertiaDecelartion': 3000,
+    'inertiaMaxSpeed': 1500,
+    'inertiaThershold': 32,
+    //'crs': L.CRS.Simple,
+});
+
+<?php }
+}
+?>
   
 //modalmap
 var modalmapsatellite = L.tileLayer(mbUrl, {
@@ -3246,17 +3398,17 @@ if(primaryids.length >= 1){
     $(document).on("click", "#CruisingButton", function(e) {
 
 var scheduleId = $("#charterProgramId").val();
-$("#hideloader").show();
-    $.ajax({
-        type: "POST",
-        url: basefolder+"/"+"charters/getIpadViewCharterProgramSchedules",
-        dataType: 'json',
-        data: { "scheduleId": scheduleId},
-        success:function(result) {
-            $("#hideloader").hide();
-            if (result.status == 'success') {
+// $("#hideloader").show();
+//     $.ajax({
+//         type: "POST",
+//         url: basefolder+"/"+"charters/getIpadViewCharterProgramSchedules_map",
+//         dataType: 'json',
+//         data: { "scheduleId": scheduleId},
+//         success:function(result) {
+//             $("#hideloader").hide();
+//             if (result.status == 'success') {
 
-                $("#cruisinglocationModal_load").html(result.popupHtml);
+//                 $("#cruisinglocationModal_load").html(result.popupHtml);
                 $("#cruisinglocationModal").show();
 
                       // get all the text area elements
@@ -3289,12 +3441,12 @@ for (var i = 0; i < textareas.length; i++) {
                 $(".crew_comment_cruisingmap").remove();
                 $(".leaflet-popup-close-button").remove();
                  
-            }
-        },
-        error: function(jqxhr) { 
-            $("#hideloader").hide();
-        }
-    });
+    //         }
+    //     },
+    //     error: function(jqxhr) { 
+    //         $("#hideloader").hide();
+    //     }
+    // });
 
 });
 

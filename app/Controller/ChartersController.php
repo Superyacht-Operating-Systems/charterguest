@@ -5648,6 +5648,7 @@ class ChartersController extends AppController {
                 $samelocationsDates = array();
                 $samemarkercommentcount = array();
                 $samedayrouteorder = array();
+                $locationimages = array();
                 if(isset($scheduleData)){
                     foreach($scheduleData as $key => $publishmap){
                             if($publishmap['CharterProgramSchedule']['publish_map'] == 1){
@@ -5669,6 +5670,33 @@ class ChartersController extends AppController {
                             $samelocationsScheduleUUID[$publishmap['CharterProgramSchedule']['title']][] = $publishmap['CharterProgramSchedule']['UUID']; //same location
                             $samelocationsDates[$publishmap['CharterProgramSchedule']['title']][] = $scheduleData[$key]['CharterProgramSchedule']['day_dates']; //same location
                             $samemarkercommentcount[$publishmap['CharterProgramSchedule']['lattitude']] += $scheduleData[$key]['CharterProgramSchedule']['marker_msg_count']; //same location
+
+                        ////////////////////////////////
+                                $loctitle = $publishmap['CharterProgramSchedule']['title'];
+                                $LocationContent = $this->CharterGuest->query("SELECT * FROM $yachtDbName.location_contents LocationContent WHERE LocationContent.location = '$loctitle' AND LocationContent.type = 'Location'");
+                            
+                                $fleetlocationimages = "";
+                                //echo "<pre>";print_r($LocationContent); exit;
+                                if(!empty($LocationContent)){
+                                    $LocationContentFleetyour_image = $LocationContent[0]['LocationContent']['your_image'];
+                                    //$fleetlocationimages = array();
+                                    if(isset($LocationContentFleetyour_image)){
+                                        $fleetlocationyour_images =  explode(',',$LocationContentFleetyour_image);
+                                    }
+                                    $LocationContentFleetimage = $LocationContent[0]['LocationContent']['image'];
+                                    if(isset($LocationContentFleetimage)){
+                                        $fleetlocationimagesarr =  explode(',',$LocationContentFleetimage);
+                                    }
+                                    // echo "<pre>";print_r($fleetlocationyour_images);
+                                    // echo "<pre>";print_r($fleetlocationimagesarr);
+                                    $fleetlocationimages = array_merge($fleetlocationyour_images,$fleetlocationimagesarr);
+                                    //echo "<pre>";print_r($fleetlocationimages); exit;
+
+                                    
+                                }
+                                //echo "<pre>";print_r($fleetlocationimages); exit;
+                        /////////////////////////////////
+                        $locationimages[$publishmap['CharterProgramSchedule']['id']] = $fleetlocationimages;
                     
                         }
                 }
@@ -5892,12 +5920,16 @@ class ChartersController extends AppController {
                 $this->set('yacht_id_fromyachtDB', $yacht_id_fromyachtDB);
                 $this->set('guesttype', $guesttype);
                 $this->set('charterGuestDataToMenu', $charterGuestDataToMenu);
-                
+                $this->set('domain_name', $domain_name);
+                $this->set('yachtname', $yachtname);
+                $this->set('fleetname', $fleetname);
                 $this->set('cruising_speed', $cruising_speed);
                 $this->set('cruising_fuel', $cruising_fuel);
                 if(isset($cruising_unit) && !empty($cruising_unit)){
                 $this->set('cruising_unit', $cruising_unit);
                 }
+                $this->set('locationimages', $locationimages);
+               
                 $usersUUID = $this->Session->read("guestListUUID");
                 $CharterGuestConditions = array('users_UUID' => $usersUUID);
                 $charterGuestData = $this->CharterGuest->find('all', array('conditions' => $CharterGuestConditions, 'order' => 'CharterGuest.charter_from_date desc'));
@@ -6209,6 +6241,7 @@ class ChartersController extends AppController {
                     <div class="mLoc-img_prev">
                     <a href="'.$titleimagehref.'" rel="gallery01" class="'.$fancybox.'"><img src="'.$titleimage.'" style="object-fit: fill;width: 100%; height: 150px;" alt="" ></a>';
                     if(isset($fleetlocationimages) && !empty($fleetlocationimages)){ 
+                        $fleetlocationimages =  array_unique($fleetlocationimages);
                         foreach($fleetlocationimages as $name){
                             if(!empty($name)){
                             $popupHtml .= '<a href="'.$targetFullGalleryPathhref.'/'.$name.'" data-fancybox="images" rel="gallery01" class="'.$fancybox.'"><img src="'.$name.'" style="object-fit: fill;width: 100%; height: 150px;display:none;" alt="" ></a>';
@@ -6380,6 +6413,7 @@ class ChartersController extends AppController {
 
                             $popupHtml .= '<div class="marksub-div"><div style="display:flex"><div class="m_loc_desc_div"><div class="marksup_header"><input name="iti_time[]" disabled="true" id="iti_time" class="iti_time" value="'.$iti_time.'"><ul class="action-icon"><li><i class="fa fa-comments crew_comment_cruisingmap" style="'.$colorcode.$displaynone.'" data-rel="'.$activity['CharterProgramScheduleActivity']['UUID'].'" data-yachtid="'.$yacht_id.'" data-tempname="'.htmlspecialchars($activity['CharterProgramScheduleActivity']['activity_name']).'" title="Comments & Feedback"><input type="hidden" name=comments[] value="" class="messagecomments" /></i></li></ul></div><div class="subloc_name" name="activity_name[]" >'.htmlspecialchars($activity['CharterProgramScheduleActivity']['activity_name']).'</div><input type="hidden" name="activity_id[]" value="'.$activity['CharterProgramScheduleActivity']['UUID'].'"><textarea class="form-control auto_resize loc_desc_field lg_tarea" '.$readonly.' name="messages[]" rows="1" cols="50">'.htmlspecialchars($activity['CharterProgramScheduleActivity']['notes']).'</textarea></div><div class="m_loc_img_div"><div class="sp-upload-img"><a href="'.$activityattachmentimagehref.'"  rel="gallery'.$i.'"  class="'.$activityfancybox.'"><img src="'.$activityattachmentimage.'" style="object-fit: fill; height: 150px;" alt=""></a>';
                             if(isset($fleetlocationimages_act)){
+                                $fleetlocationimages_act =  array_unique($fleetlocationimages_act);
                                 foreach($fleetlocationimages_act as $name){
                                     if(!empty($name)){
                                         $popupHtml .= '<a href="'.$targetFullGalleryPathhref.$name.'" data-fancybox="images" rel="gallery'.$i.'" class="'.$activityfancybox.'"><img src="'.$name.'" style="object-fit: fill; height: 150px;display:none;" alt=""></a>';
@@ -6427,6 +6461,136 @@ class ChartersController extends AppController {
 
 
         /*
+     * Load the Charter Program Schedules for Edit
+     * Functionality -  Loading the Charter program schedules with existing details
+     * Developer - Nagarajan
+     * Created date - 28-May-2018
+     * Modified date - 
+     */
+    function getIpadViewCharterProgramSchedules_map() {
+        
+        if($this->request->is('ajax')){
+            $session = $this->Session->read('charter_info');
+            //$yachtDbName = $session['CharterGuest']['ydb_name'];
+            //echo "<pre>";print_r($this->request->data);
+            $result = array();
+            if (isset($this->request->data['scheduleId']) && !empty($this->request->data['scheduleId'])) {
+              $scheduleId = $this->request->data['scheduleId'];
+                
+                $popupHtml = '';
+                $this->loadModel('CharterGuest');
+                $this->loadModel('Yacht');
+                $chprgdata = $this->CharterGuest->find('first',array('conditions'=>array('CharterGuest.charter_program_id'=>$scheduleId)));
+                //echo "<pre>";print_r($chprgdata); exit;
+                $yacht_id = $chprgdata['CharterGuest']['yacht_id'];
+                $yachtCond = array('Yacht.id' => $yacht_id);
+                $Ydata = $this->Yacht->find('first', array('conditions' => $yachtCond));
+                $yachtDbName = $Ydata['Yacht']['ydb_name'];
+                $yname = $Ydata['Yacht']['yname'];
+                $fleetcompanyid = $Ydata['Yacht']['fleetcompany_id'];
+                $yacht_domain = $Ydata['Yacht']['domain_name'];
+                        $this->loadModel("Fleetcompany");
+                        if(isset($fleetcompanyid) && $fleetcompanyid != 0){
+                        $fleetcompanydetails = $this->Fleetcompany->find('first',array('conditions'=>array('id'=>$fleetcompanyid)));
+                        $fleetSiteName = $fleetcompanydetails['Fleetcompany']['fleetname'];
+                        }
+                $scheduleAllData = $this->CharterGuest->query("SELECT * FROM $yachtDbName.charter_program_schedules CharterProgramSchedule WHERE charter_program_id = '$scheduleId' AND is_deleted = 0 order by day_num");
+               // echo "<pre>";print_r($scheduleData); exit;
+                $basefolder = $this->request->base;
+                if (count($scheduleAllData) != 0) {
+                    $popupHtml = '';
+                    foreach($scheduleAllData as $scheduleData){
+                        $title = $scheduleData['CharterProgramSchedule']['title'];
+                        $dayNum = $scheduleData['CharterProgramSchedule']['day_num'];
+                        $programScheduleUUID = $scheduleData['CharterProgramSchedule']['UUID'];
+                        $isFleetUser = $this->Session->read('loggedUserInfo.is_fleet');
+                        $userType = $this->Session->read('loggedUserInfo.user_type');
+
+                        $notes = $scheduleData['CharterProgramSchedule']['notes'];
+                        $attachment = $scheduleData['CharterProgramSchedule']['attachment'];
+                        if(isset($notes) && !empty($notes)){
+                            $noteexist = "style='display:block;'";
+                        }else{
+                            $noteexist = "style='display:none;'";
+                        }
+                        if(isset($attachment) && !empty($attachment)){
+                            $noteimg = "style='display:block;'";
+                            if(isset($yacht_domain) && $yacht_domain == "charterguest"){
+                                $update_BASE_URL = "https://charterguest.net/";
+                            }else{
+                                $update_BASE_URL = "https://totalsuperyacht.com:8080/";
+                            }
+                            // if($yname == "yacht"){
+                            //     $targetFullPath = BASE_URL.'/SOS/app/webroot/betayacht/app/webroot/img/charter_program_files/itinerary_photos/'.$attachment;
+                            // }else{
+                                $targetFullPath = $update_BASE_URL.'/'.$yname.'/app/webroot/img/charter_program_files/itinerary_photos/'.$attachment;
+                                if (!empty($fleetSiteName)) { // IF yacht is under any Fleet
+                                    $targetFullPath = $update_BASE_URL.'/'.$fleetSiteName."/app/webroot/".$yname.'/app/webroot/img/charter_program_files/itinerary_photos/'.$attachment;
+                                }
+                            //}
+
+                            $titleimage = $targetFullPath;
+                            $titleimagehref = $targetFullPath;
+                            $fancybox = "fancybox";
+                        }else{
+                            $noteimg = "style='display:none;'";
+                            $titleimage = BASE_URL.'/charterguest/app/webroot/img/noimage.png';
+                            $titleimagehref = "#";
+                            $fancybox = "";
+                        }
+
+                        
+                        $markerimage = BASE_URL.'/charterguest/app/webroot/css/leaflet/dist/images/marker-icon-itinerary.png';
+                        
+                        $readonly = "readonly";
+                        $popupHtml .= '<div class="mapPopup sp-mp-detailsrow" data-schuuid="'.$scheduleData['CharterProgramSchedule']['UUID'].'">
+                       
+                       <form id="scheduleFormEdit"><div class="inputContainer_div">
+                        <div class="loc_desc_div">
+                        <div>
+                        <span style="display: inline-block;position: relative;"><img src="'.$markerimage.'" style="object-fit: fill; height: 35px;" alt="" ><span style="position: absolute;color:#000;top: 4px;right: 10px;">'.$dayNum.'</span></span>
+                           <input type="text" name="title" value="'.htmlspecialchars($title).'" placeholder="Enter the Title" class="loc_name" '.$readonly.'>
+                            <ul class="action-icon"><li><i class="fa fa-comments " style="color: #00a8f3;float: right;"></i></li></ul>
+						</div>
+                           <div class="icons_fields">
+<i style="color: #00a8f3;" class="fa fa-solid fa-calendar"><span class="icon_label" >Mon, 1 Jun 2023</span></i>
+<i style="color: #00a8f3;" class="fa fa-solid fa-clock-o "><span class="icon_label">2h 45m</span></i>
+<i style="color: #00a8f3;" class="fa fa-solid fa-ship" aria-hidden="true"><span class="icon_label" style="padding: 0px 0px 0px 5px;">45nm</span></i>
+</div>
+						<div>
+						   <textarea class="form-control auto_resize loc_desc_field" name="messagestitle" '.$readonly.' rows="1" cols="50">'.htmlspecialchars($notes).'</textarea>
+						</div>
+                         </div>
+                        <div class="loc_img_div">
+                        <div class="loc_map_div">
+                        
+                        </div>
+                        <div class="loc_img_prev">
+                        <a href="'.$titleimagehref.'" class="'.$fancybox.'"><img src="'.$titleimage.'" style="object-fit: fill; width: 100%;height: 150px;" alt="" ></a>
+                        </div>
+                        </div>';
+                        $popupHtml .= '<input type="hidden" name="schedule_id" value="'.$scheduleId.'"><input type="hidden" class="form-control" name="day_num" id="dayNum" value="'.$dayNum.'">';
+                        $popupHtml .= '<input type="hidden" name="yacht_id" value="'.$yacht_id.'">';
+                        $popupHtml .= '<input type="hidden" id="charterprogramuuid" value="'.$scheduleData['CharterProgramSchedule']['charter_program_id'].'">';
+                        $popupHtml .= '</div></form>';
+                        
+                        
+                        
+                        
+                        //echo "<pre>";print_r($result); exit;
+                    }
+                    $result['status'] = "success";
+                        $result['popupHtml'] = $popupHtml;
+                }
+                
+            }
+            echo json_encode($result);
+            exit;
+        }
+    }
+
+
+    /*
      * Load the Charter Program Schedules for Edit
      * Functionality -  Loading the Charter program schedules with existing details
      * Developer - Nagarajan
