@@ -5443,9 +5443,7 @@ body .sp-60-w {
     width: 92%!important;
     margin-top: 115px;
 }
-.nav-side-menu-full-container .nav-side-menu .sidebar-btn{
-	left: 4px!important;
-}
+
 }
 
 
@@ -5742,6 +5740,9 @@ width: 100%;
 }
 }
 @media only screen and (min-width: 320px) and (max-width: 771px){
+.nav-side-menu-full-container .nav-side-menu .sidebar-btn{
+	left: 4px!important;
+}
 .nav-side-menu-full-container .nav-side-menu .sidebar-btn {
     top: 32px;
 }
