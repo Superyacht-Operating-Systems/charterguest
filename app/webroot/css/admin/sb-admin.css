@@ -5431,11 +5431,7 @@ label.othr-like{width: 100%!important;}
 .sp-60-w {
     width: 100%!important;
 }
-.userhead-name .acti-countnav {
-top: 33px;
-    right: auto;
-    left: 400px;
-}
+
 .ch-card-container {
     margin: 10px 0px 80px 0px;
 }
@@ -5736,7 +5732,7 @@ body .mydemolabel {
   }
 }
 
-@media only screen and (min-width: 771px) and (max-width: 1020px)
+@media only screen and (min-width: 771px) and (max-width: 1020px){
 .navbar-absalute-top .yachtHeaderName {
     position: absolute!important;
     text-align: center;
@@ -5745,4 +5741,12 @@ body .mydemolabel {
     display: inline-block;
     width: 100%;
     max-width: 100%;
+}
+}
+@media only screen and (min-width: 320px) and (max-width: 771px){
+.userhead-name .acti-countnav {
+    top: 33px;
+    right: auto;
+    left: 400px;
+}
 }
