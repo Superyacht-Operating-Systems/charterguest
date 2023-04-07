@@ -2880,7 +2880,7 @@ margin-right: 0px!important;
 /*body {
     background-position: 0px 120px;
 }*/
-.navbar-inverse{height: 140px;}
+
 
 .form-group {
     margin-bottom: 10px!important;
@@ -5699,6 +5699,9 @@ body .mydemolabel {
 }
 
   @media only screen and (max-width: 771px){
+  .navbar-inverse {
+    height: 140px;
+}
 .navbar-absalute-top{
 position: absolute;
 z-index: 99;
