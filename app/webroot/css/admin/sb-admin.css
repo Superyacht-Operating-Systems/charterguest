@@ -5452,9 +5452,6 @@ body .sp-60-w {
 }
 }
 @media only screen and (min-width: 768px) and (max-width: 1020px){
-.userhead-name .acti-countnav {
-    top: 90px;
-}
 
 
 .charte-rightalign {
@@ -5535,9 +5532,7 @@ width: 137px!important;
 .md-no-padd{
   padding-left: 0px;
 }
-.userhead-name .acti-countnav {
-    top: 65px;
-}
+
 .bigitem .hhd-mrg-02{
 padding-top: 84px;
 }
@@ -5741,6 +5736,9 @@ body .mydemolabel {
     display: inline-block;
     width: 100%;
     max-width: 100%;
+}
+.userhead-name .acti-countnav {
+    top: 90px;
 }
 }
 @media only screen and (min-width: 320px) and (max-width: 771px){
