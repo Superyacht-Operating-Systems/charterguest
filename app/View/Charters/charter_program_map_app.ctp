@@ -70,6 +70,300 @@ echo $this->Html->script('leaflet/route');
 ?>
 
 <style>
+    .map_bottom_attr{
+color: #00a8f3;
+display: flex;
+font-size: 16px;
+margin: 6px auto 2px auto;
+width: fit-content;
+}
+.mark_map_div{
+border-radius: 10px;
+padding: 0px 10px 10px 10px;
+}
+.m_loc_desc_div {
+  width: 450px;
+  margin-right: 10px;
+}
+.m_loc_img_div{
+width: 150px;
+}	
+.subloc_name {
+  color: #000;
+  font-size: 15px;
+  border: solid 1px #ffffff;
+  width: 100%;
+  margin: 0px;
+  padding: 8px 5px;
+  font-weight: 600;
+  background-color: #ffffff;
+  font-family: 'monsterrat';
+}
+.marksub-div {
+  /* display: flex; */
+  background-color: #fff;
+  padding: 18px;
+border-radius: 10px;
+margin: 15px 5px 20px 5px;
+}
+.Marker_container_div{
+    display: flex;
+padding: 18px;
+background-color: #fff;
+border-radius: 10px;
+margin: 15px 5px 20px 5px;
+}
+.marker_desc_div{
+    width: 450px;
+margin-right: 10px;
+}
+.marker_img_div{
+width: 150px;
+}
+
+.inputContainer_div{
+display: flex;
+padding: 18px;
+background-color: #fff;
+border-radius: 10px;
+margin: 15px 5px 20px 5px;
+}	
+.loc_name{
+    color: #000;
+    font-size: 15px;
+    border: solid 1px #ffffff;
+    width:68%;
+    margin: 0px;
+    padding: 8px 5px;
+    font-weight: 600;
+    background-color: #ffffff;
+    font-family: 'monsterrat';
+}
+.loc_desc_div{
+width: 450px;
+margin-right: 20px;
+}
+.loc_desc_field{
+    padding: 15px 15px 15px 6px;
+    background: #ffffff !important;
+    color: #4d4d4d!important;
+    border: solid 0px rgb(243 243 243 / 70%)!important;
+    box-shadow: none;
+    font-family: 'Open Sans';
+    text-align: justify;
+white-space: normal;
+}
+.loc_img_div{
+width: 150px;
+}	
+.loc_map_div{
+    float: left;
+border: solid 1px #ccc;
+width: 150px;
+overflow: hidden;
+height: 150px;
+margin-bottom: 10px;
+border-radius: 10px;
+}
+.mLoc-img_prev{
+    border: solid 1px #ccc;
+    width: 150px;
+    overflow: hidden;
+    height: 150px;
+    border-radius: 10px;
+}
+.loc_img_prev{
+    float: left;
+    border: solid 1px #ccc;
+    width: 150px;
+    overflow: hidden;
+    height: 150px;
+    border-radius: 10px;
+}
+.icons_fields{
+    padding: 10px 5px 5px 5px;
+    border-bottom: 2px solid #eee;
+}
+.icon_label{
+    color: #000;
+    padding: 0px 20px 0px 5px;
+    font-family: 'Open Sans';
+}
+.l_count_icon{
+    width:20px;
+    margin-top:5px;
+}
+.l_count{
+    position: relative;
+    left: -14px;
+top: -2px;
+color: #fff;
+}
+.CS_modal .modal-title{
+    font-family: 'monsterrat';
+}
+
+.CS_modal,.Mark_modal{
+    background-color: #eeeeee;
+}
+.location_container,.sp-divrow{
+    background-color: #ffffff;
+}
+.iti_time{
+    filter: blur(0);
+   text-align: center;
+   background-color: #00a8f3;
+   border-radius: 6px;
+   color: #000;
+   -webkit-text-fill-color: #000;
+  -webkit-opacity: 1;
+   font-size: 15px;
+   border: solid 1px #ccc;
+   width:22% !important;
+   margin: 0px;
+   padding: 8px 5px;
+   font-weight: 600;
+}
+
+@media only screen and (max-width: 771px){
+    .m_loc_desc_div{
+        width: 100%;
+margin-right: 10px;
+    }
+    .m_loc_img_div {
+  width: 100px;
+}
+    .marksup_header{
+        margin-top: 10px;
+}
+.subloc_name{
+    margin-top: 10px;
+}
+    .iti_time{
+        width:50px !important;
+        padding: 2px 0px;
+    }
+    .lg_tarea{
+        display:none;
+    }
+  
+    .sp-upload-img{
+    width: 100px!important;
+    height: 100px!important;
+}
+    #modalmap{
+        height: 300px;
+width: 100%;
+border: none !important;
+border-radius: 10px!important;
+-webkit-border-radius: 10px;
+-moz-border-radius: 10px;
+margin-top:10px;
+overflow: hidden;
+    }
+    .CS_modal, .Mark_modal{
+    width:100% !important;
+}
+.inputContainer_div{
+    padding: 18px 8px 18px 8px;
+display: grid;
+}
+.marksub-div {
+    padding: 18px 8px 18px 8px;
+}
+.Marker_container_div{
+    display: grid;
+    padding: 18px 8px 18px 8px;
+}
+.loc_img_div{
+width: 100%;
+}	
+.loc_desc_div{
+    margin-right: 0px;
+width: 100%;
+}
+.loc_desc_field {
+  padding: 15px 5px 15px 5px;
+}
+
+.certificat-modal-container .modal-dialog {
+    width: 95%!important;
+margin: 0 auto;
+margin-top: 15px;
+}
+.loc_map_div{
+    width: 49% !important;
+margin-left: 1%;
+float: right;
+margin-bottom: 0px;
+}
+.loc_img_prev{
+    width: 49% !important;
+margin-right: 1%;
+float: left;
+}
+.mLoc-img_prev{
+    width: 50% !important;
+    margin: 15px auto;
+}
+/* marker popup style */
+.marker_desc_div{
+    margin-right: 0px;
+width: 100%;
+}
+.marker_img_div{
+width: 100%;
+}	
+}
+
+@media only screen and (min-width: 771px){
+    .sm_tarea{
+        display:none;
+    }
+    .CS_modal, .Mark_modal{
+    width:650px;
+}
+#modalmap{
+        height: 300px;
+width: 455px;
+margin:10px auto;
+border: none !important;
+border-radius: 10px;
+
+    }
+
+}
+
+.auto_resize {
+        resize: none!important;
+        overflow: hidden!important;
+        /* border: 1px solid black; */
+      }
+::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+    color:gray!important;
+    opacity: 1!important;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+   color:gray!important;
+     opacity: 1!important;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+   color:gray!important;
+     opacity: 1!important;
+}
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+   color:gray!important;
+     opacity: 1!important;
+}
+::-ms-input-placeholder { /* Microsoft Edge */
+   color:gray!important;
+     opacity: 1!important;
+}
+
+::placeholder { /* Most modern browsers support this now. */
+    color:gray!important;
+}
+
 .wt-st{
     width: 225px;
     margin: 5px 0px;
@@ -1256,13 +1550,12 @@ span.sp-leftalign {
 <!-- sample modal content -->
 <div id="cruisinglocationModal" class="modal certificat-modal-container cruising-location-Modal"  role="dialog">
     <div class="modal-dialog">
-        <div class="modal-content" style="width:620px;">
+        <div class="modal-content CS_modal">
             <div class="modal-header">
                 <button type="button" class="close" id="cruisinglocationModalclose" aria-hidden="true" style="margin-right: 5px;">×</button>
                 <h4 class="modal-title" id="myModalLabel" style="text-align: center;font-weight: bold;"><?php echo $startloc; ?> to <?php echo $endloc; ?></h4>
             </div>
-            <div class="modal-body" style="max-height: 580px;
-    overflow-y: scroll;overflow-x: hidden;">
+            <div class="modal-body location_Modal_body">
                 <div id="cruisinglocationModal_load" class="modal_load">
 
                 </div>
@@ -1275,13 +1568,31 @@ span.sp-leftalign {
 
 <div id="markerModal" class="modal certificat-modal-container cruising-location-Modal"  role="dialog">
     <div class="modal-dialog">
-        <div class="modal-content" style="width:650px;">
-            <div class="modal-header">
+        <div class="modal-content Mark_modal" id="markerModal_id">
+            <div class="modal-header" style="border-bottom: 0px solid #e5e5e5;">
                 <button type="button" class="close" data-schuuid="" id="markerModalclose" aria-hidden="true" style="margin-right: 5px;">×</button>
                 <h4 class="modal-title" id="markerModalLabel" style="text-align: center;font-weight: bold;"></h4>
             </div>
-            <div class="modal-body location_Modal_body">
-                <div id="markerModal_load" class="modal_load">
+            <div class="modal-body location_Modal_body markmodalbody">
+            <div class="mark_map_div">
+            <!-- <div class="sp-modal-hd">
+                <div class="row">
+                    <div class="col-md-8">
+                        <select name="noofdayscard" class="form-control noofdayscard wt-st" style="font-size: 17px !important;font-weight: bold;background:none !important;color:#000 !important;border:solid 1px #ddd !important;"></select>
+                    </div>
+                </div>
+            </div> -->
+                <div style="color: #000;font-size: 15px;text-align:center;width:100%!important;margin: 0px 0px 5px 0px;padding: 8px 5px;font-weight: 600;"><span id="embarkation"></span> to <span id="debarkation"></span> </div>
+                <div class="icons_fields" style="text-align:center;">
+                <i style="color: #00a8f3;" class="fa fa-solid fa-calendar"><span class="icon_label charter_from_date_conv" ></span></i>
+                <i style="color: #00a8f3;" class="fa fa-solid fa-clock-o "><span class="icon_label markerduration"></span></i>
+                <i style="color: #00a8f3;" class="fa fa-solid fa-ship" aria-hidden="true"><span class="icon_label markerdistance" style="padding: 0px 0px 0px 5px;"></span></i>
+                </div>
+                <div id="modalmap" style="border: solid 1px #ccc;">
+               
+                </div>
+                </div>
+                <div id="markerModal_load" class="markmodal_load">
 
                 </div>
 
@@ -1909,6 +2220,23 @@ function markerOnClick(e) {
                         $("#markerModalclose").attr("data-schuuid",scheduleSameLocationUUID);
                         $("#markerModal").show();
 
+                        var textareas = document.querySelectorAll(".auto_resize");
+
+// function to adjust the height of a text area based on its contents
+function adjustTextareaHeight(textarea) {
+textarea.style.minHeight = textarea.style.height;
+textarea.style.height = "auto";
+textarea.style.height = textarea.scrollHeight + "px";
+}
+
+// loop over all the text areas and call the adjustTextareaHeight function for each one
+for (var i = 0; i < textareas.length; i++) {
+var textarea = textareas[i];
+adjustTextareaHeight(textarea);
+textarea.addEventListener("input", function() {
+    adjustTextareaHeight(textarea);
+});
+}
 
                     window.scrollTo(0, 0);
                     $(".leaflet-control-attribution").hide();
