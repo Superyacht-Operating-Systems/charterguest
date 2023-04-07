@@ -417,7 +417,7 @@ border-radius: 10px;
 }
 }
 
-@media only screen and (max-width: 767px){
+@media only screen and (max-width: 771px){
     .nav-side-menu-full-container .nav-side-menu .sidebar {
   width: 120px;
     }
@@ -910,7 +910,7 @@ display: block;
     margin-right: 5%;
 }
 .nav-side-menu{display: none;}
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 771px) {
 .md-text-center{text-align: center!important;}
 .common-form-row {
     margin: 45px 0px 0px 0px;
@@ -1224,7 +1224,7 @@ body .mydemolabel {
 
 
 }
-@media only screen and (max-width:767px){
+@media only screen and (max-width:771px){
 
 body .mydemolabel {
     top: 44px!important;
@@ -1321,7 +1321,7 @@ padding-left: 15px!important;
 }
 
 
-@media (max-width: 767px){
+@media (max-width:771px){
 #HideDetails, #HelpfulTips {
 
     width: 113px;
@@ -1515,7 +1515,7 @@ span.sp-leftalign {
     padding: 10px;
 }
 
-@media only screen and (min-width: 320px) and (max-width: 767px){
+@media only screen and (min-width: 320px) and (max-width: 771px){
 body .sp-60-w {
     width: 100%!important;
 }
