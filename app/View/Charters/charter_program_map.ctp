@@ -1332,7 +1332,7 @@ padding-left: 15px!important;
 }
 #CruisingButton {
     height: 24px;
-    width: 113px;
+    width: 113px!important;
   top: 18px !important;
 }
 
