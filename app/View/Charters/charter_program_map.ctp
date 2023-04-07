@@ -1553,7 +1553,7 @@ body .sp-60-w input {
 .text-below-marker {
     font-size: 11px;
     font-weight: 1px solid;
-    margin-top: -33px !important;
+    margin-top: -35px !important;
     margin-left: -3px !important;
     color: #000;
 }
@@ -1561,7 +1561,7 @@ body .sp-60-w input {
 .text-below-marker-modalmap {
     font-size: 11px;
     font-weight: 1px solid;
-    margin-top: -33px !important;
+    margin-top: -35px !important;
     margin-left: -3px !important;
     color: #000;
     z-index:9999 !important;
@@ -1730,8 +1730,7 @@ body .sp-60-w input {
                 $daynumber = $schedule['CharterProgramSchedule']['day_num']; 
                 
                 $attachment = $schedule['CharterProgramSchedule']['attachment'];
-    
-                $fleetlocationimages = $locationimages[$schedule['CharterProgramSchedule']['id']];
+
                         if(isset($attachment) && !empty($attachment)){
                              
                             if(isset($domain_name) && $domain_name == "charterguest"){
@@ -1768,13 +1767,25 @@ body .sp-60-w input {
                         }
                         
                         $crusemaparray[$crusemap] =  "crusingschedulemap".$crusemap;
+
+                        $fleetlocationimages = $locationimages[$schedule['CharterProgramSchedule']['id']];
+
+                        $locationCommentsdata = $locationComment[$schedule['CharterProgramSchedule']['id']];
+
+                        //echo $locationCommentsdata['programScheduleUUID'];
+                        if(isset($guesttype) && $guesttype == "guest"){
+                                $displaynone = "display:none;";
+                        }else{
+                                $displaynone = "display:block;";
+                        }
                         ?>
+                       
                        <div class="inputContainer_div">
                             <div class="loc_desc_div">
                                 <div>
                                 <span style="display: inline-block;position: relative;"><img src="<?php echo $markerimage; ?>" style="object-fit: fill; height: 35px;" alt="" ><span style="position: absolute;color:#000;top: 4px;right: 10px;"><?php echo $daynumber; ?></span></span>
                                 <input type="text" name="title" value="<?php echo htmlspecialchars($schedule['CharterProgramSchedule']['title']); ?>" placeholder="Enter the Title" class="loc_name" readonly/>
-                                    <ul class="action-icon"><li><i class="fa fa-comments " style="color: #00a8f3;float: right;"></i></li></ul>
+                                    <ul class="action-icon"><li><i class="fa fa-comments crew_comment_cruisingmaptitle" data-rel="<?php echo $locationCommentsdata['programScheduleUUID']; ?>" data-yachtid="<?php echo $locationCommentsdata['yacht_id']; ?>" data-tempname="<?php echo htmlspecialchars($locationCommentsdata['title']); ?>" style="<?php echo $locationCommentsdata['colorcodetitle']; ?><?php echo $displaynone; ?>color: #00a8f3;float: right;"><input type="hidden" name=commentstitle value="" class="messagecommentstitle" /></i></li></ul>
                                 </div>
                             <div class="icons_fields">
                                 <i style="color: #00a8f3;" class="fa fa-solid fa-calendar"><span class="icon_label" ><?php echo $schedule['CharterProgramSchedule']['day_dates']; ?></span></i>
@@ -1812,7 +1823,9 @@ body .sp-60-w input {
                                     }?>
                             </div>
                        </div>
+                       <input type="hidden" id="charterprogramuuid" value="<?php echo $schedule['CharterProgramSchedule']['charter_program_id']; ?>">
                     <?php  } 
+                   
                 $crusemap++;
                 } ?>
                 </div>
@@ -2022,6 +2035,12 @@ var idlocmap = "<?php echo $val ?>";
     //'crs': L.CRS.Simple,
 });
 
+setTimeout(() => {
+    idlocmap.invalidateSize();
+}, 0);
+
+// removed control zoom in and out from modal
+$("#<?php echo $val; ?> .leaflet-control-container").hide();
 <?php }
 }
 ?>
@@ -3051,24 +3070,18 @@ $(document).ready(function() { //alert();
                 type : "image"
             });
 
-        //     $('.fancybox').fancybox({
-        //     maxWidth: 500,
-        //     maxHeight: 500,
-        //     fitToView: false,
-        //     width: '100%',
-        //     height: '100%',
-            
-        //     beforeShow: function () {
-        //        var newWidth = this.width * 2;
-        //        var newheight = this.height * 2;
-        //        this.width = newWidth;
-        //        this.height = newheight;
-        //    },
-        //     autoSize: false,
-        //     closeClick: false,
-        //     openEffect: 'none',
-        //     closeEffect: 'none'
-        // });
+            $('.fancyboxmap').fancybox({
+            //maxWidth	: 400,
+                //maxHeight	: 600,
+                fitToView	: true,
+                width		: '100%',
+                height		: '100%',
+                autoSize	: true,
+                closeClick	: false,
+                autoScale   : true,
+                transitionIn : 'fade',
+                transitionOut: 'fade',
+        });
 
             //$('.fancybox').fancybox();
 
@@ -3442,7 +3455,7 @@ for (var i = 0; i < textareas.length; i++) {
                 //$('.day_dates').text(day_dates);
 
                 $("#closeSchedule").remove();
-                $(".crew_comment_cruisingmaptitle").remove();
+               // $(".crew_comment_cruisingmaptitle").remove();
                 $(".crew_comment_cruisingmap").remove();
                 $(".leaflet-popup-close-button").remove();
                  

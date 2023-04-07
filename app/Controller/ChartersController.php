@@ -5634,7 +5634,8 @@ class ChartersController extends AppController {
                 $Datesarray[$i] = $Store;
                 $i++;
                 }
-                
+                $YachtData =  $this->CharterGuest->query("SELECT * FROM $yachtDbName.yachts Yacht");
+                $yacht_id_for_comments = $YachtData[0]['Yacht']['id'];
                 // Display the dates in array format
                 //echo "<pre>";print_r($Datesarray); //exit;
 
@@ -5649,6 +5650,7 @@ class ChartersController extends AppController {
                 $samemarkercommentcount = array();
                 $samedayrouteorder = array();
                 $locationimages = array();
+                $locationComment = array();
                 if(isset($scheduleData)){
                     foreach($scheduleData as $key => $publishmap){
                             if($publishmap['CharterProgramSchedule']['publish_map'] == 1){
@@ -5695,13 +5697,46 @@ class ChartersController extends AppController {
                                     
                                 }
                                 //echo "<pre>";print_r($fleetlocationimages); exit;
+                                $locationimages[$publishmap['CharterProgramSchedule']['id']] = $fleetlocationimages;
                         /////////////////////////////////
-                        $locationimages[$publishmap['CharterProgramSchedule']['id']] = $fleetlocationimages;
+                       
+                        /*******************comments*/
+                        $programScheduleUUID = $publishmap['CharterProgramSchedule']['UUID'];
+                            $CruisingMapCommentConditons = "activity_id = '$programScheduleUUID' AND activity_name = '$loctitle' AND type = 'schedule' AND publish_map = '1'";
+                            $commentdatatitle = $this->CharterGuest->getCruisingMapComment($yachtDbName, $CruisingMapCommentConditons);
+                        
+                        if(isset($commentdatatitle[0]) && !empty($commentdatatitle[0])){
+                            $commentcounttitle = count($commentdatatitle);
+                        }
+                        else{
+                            $commentcounttitle = 0;
+                        }
+                        $colorcodetitle = "";  
+                        if($commentcounttitle > 0){ //echo "kkkk";
+                            $colorcodetitle = "color:green;";
+                            //echo $is_fleet;
+                            
+                                    if(trim($publishmap['CharterProgramSchedule']['is_crew_commented']) == 1 || trim($publishmap['CharterProgramSchedule']['is_fleet_commented']) == 1){  //echo "lll";
+                                        $colorcodetitle = "color:red;";
+                                    }
+                            
+                        }else{
+                                $colorcodetitle = "";   
+                        }
+
+                        
+                        $locationComment[$publishmap['CharterProgramSchedule']['id']]['colorcodetitle'] = $colorcodetitle;
+                        $locationComment[$publishmap['CharterProgramSchedule']['id']]['programScheduleUUID'] = $programScheduleUUID;
+                        $locationComment[$publishmap['CharterProgramSchedule']['id']]['yacht_id'] = $yacht_id_for_comments;
+                        $locationComment[$publishmap['CharterProgramSchedule']['id']]['title'] = $loctitle;
+                        // <i class="fa fa-comments crew_comment_cruisingmaptitle"  style="'.$colorcodetitle.$displaynone.'" data-rel="'.$scheduleData[0]['CharterProgramSchedule']['UUID'].'" data-yachtid="'.$yacht_id.'" data-tempname="'.htmlspecialchars($scheduleData[0]['CharterProgramSchedule']['title']).'">
+                        /****************comments*/
+
                     
                         }
                 }
 
-                $YachtData =  $this->CharterGuest->query("SELECT * FROM $yachtDbName.yachts Yacht");
+                
                 //echo "<pre>";print_r($YachtData); exit;
                 $cruising_speed = $YachtData[0]['Yacht']['cruising_speed'];
                 $cruising_fuel = $YachtData[0]['Yacht']['cruising_fuel'];
@@ -5929,6 +5964,7 @@ class ChartersController extends AppController {
                 $this->set('cruising_unit', $cruising_unit);
                 }
                 $this->set('locationimages', $locationimages);
+                $this->set('locationComment', $locationComment);
                
                 $usersUUID = $this->Session->read("guestListUUID");
                 $CharterGuestConditions = array('users_UUID' => $usersUUID);
