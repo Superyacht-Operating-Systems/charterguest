@@ -2880,7 +2880,7 @@ margin-right: 0px!important;
 /*body {
     background-position: 0px 120px;
 }*/
-.navbar-inverse{height: 140px;}
+
 
 .form-group {
     margin-bottom: 10px!important;
@@ -3946,16 +3946,7 @@ padding-left: 0px;
   padding-left: 0px!important;
 }
 
-.yachtHeaderName {
-font-size: 16px!important;
-    text-align: left;
-    width: auto;
-    max-width: inherit;
-    left: 95px;
-    margin-top: 19px!important;
-    position: fixed;
-    top: 21px;
-}
+
 /*.mrg-label {
     padding: 5px 0px 0px 0px!important;
 }*/
@@ -4237,11 +4228,7 @@ padding-left: 78px;
     display: inline-block;
 /*    margin-left: 25px!important;*/
 }
-.navbar-absalute-top .yachtHeaderName {
-    left: 95px;
-    right: auto;
-    top: 18px!important;
-}
+
 .ch-program-container{
     margin-top: 100px;
 }
@@ -4453,19 +4440,7 @@ display: block!important;
   /*  margin-top: -13px!important;*/
 }
 
-.position-mobile-head{
-    display: block;
-    position: absolute;
-    text-transform: uppercase;
-    top: 53px;
-    z-index: 333;
-    color: #fff;
-    font-size: 14px;
-    font-weight: bold;
-    left: 70px;
-     transition-delay:30s;
 
-}
 hr.divider {
     border-top: 3px solid rgba(8, 8, 8, 0.23)!important;
     width: 100%!important; 
@@ -5109,22 +5084,9 @@ top: auto;
     text-align: left;
     margin-top: -24px;
 }
-.navbar-absalute-top{
-position: absolute;
-z-index: 99;
-width: 100%;
-}
 
-  .container-row-all {
-    margin-top: 24px!important;
-    position: relative;
-    height: 100%;
-    padding: 0px;
-    overflow: inherit;
-}
-.nav-side-menu {
-    margin-top: 18px;
-}
+
+
 .container-row-all-innerpages{
     margin-top: 34px!important;
     position: relative;
@@ -5444,17 +5406,11 @@ label.othr-like{width: 100%!important;}
 .sp-60-w {
     width: 100%!important;
 }
-.userhead-name .acti-countnav {
-top: 33px;
-    right: auto;
-    left: 400px;
-}
+
 .ch-card-container {
     margin: 10px 0px 80px 0px;
 }
-.nav-side-menu-full-container .nav-side-menu .sidebar-btn {
-    top: 32px;
-}
+
 .label-bold-head {
     top: 40px;
     display: block!important;
@@ -5469,9 +5425,6 @@ body .sp-60-w {
 }
 }
 @media only screen and (min-width: 768px) and (max-width: 1020px){
-.userhead-name .acti-countnav {
-    top: 90px;
-}
 
 
 .charte-rightalign {
@@ -5488,9 +5441,7 @@ body .sp-60-w {
     width: 92%!important;
     margin-top: 115px;
 }
-.nav-side-menu-full-container .nav-side-menu .sidebar-btn{
-	left: 4px!important;
-}
+
 }
 
 
@@ -5526,9 +5477,7 @@ width: 137px!important;
 
 
 @media only screen and (min-width: 769px) and (max-width: 1020px){
-.userhead-name .acti-countnav {
-   top:88px!important;
-}
+
 .checkbox-label-row .occfild {
     width: 108px!important;
 }
@@ -5552,9 +5501,7 @@ width: 137px!important;
 .md-no-padd{
   padding-left: 0px;
 }
-.userhead-name .acti-countnav {
-    top: 65px;
-}
+
 .bigitem .hhd-mrg-02{
 padding-top: 84px;
 }
@@ -5611,15 +5558,7 @@ padding-right: 10px;
 
 }
 @media only screen and (min-width: 768px) and (max-width: 1020px){
-.navbar-absalute-top .yachtHeaderName {
-    position: absolute!important;
-    text-align: center;
-    left: 0;
-    right: 0;
-    display: inline-block;
-    width: 100%;
-    max-width: 100%;
-}
+
 
 .flexrow .two.view-mainrow span.sp-centeralign {
     text-align: center;
@@ -5743,5 +5682,74 @@ body .mydemolabel {
     width: 13px;
     height: 13px;
    margin: 2px 6px 8px 6px;
+}
+}
+
+  @media only screen and (max-width: 771px){
+  .nav-side-menu {
+    margin-top: 18px;
+}
+  .container-row-all {
+    margin-top: 24px!important;
+    position: relative;
+    height: 100%;
+    padding: 0px;
+    overflow: inherit;
+}
+  .navbar-inverse {
+    height: 140px;
+}
+.navbar-absalute-top{
+position: absolute;
+z-index: 99;
+width: 100%;
+}
+  .position-mobile-head {
+    display: block;
+    position: absolute;
+    text-transform: uppercase;
+    top: 53px;
+    z-index: 333;
+    color: #fff;
+    font-size: 14px;
+    font-weight: bold;
+    left: 70px;
+    transition-delay: 30s;
+}
+.navbar-absalute-top .yachtHeaderName {
+  left: 95px;
+  right: auto;
+  top: 18px !important;
+}
+.yachtHeaderName {
+  font-size: 16px !important;
+  }
+}
+
+@media only screen and (min-width: 771px) and (max-width: 1020px){
+.navbar-absalute-top .yachtHeaderName {
+    position: absolute!important;
+    text-align: center;
+    left: 0;
+    right: 0;
+    display: inline-block;
+    width: 100%;
+    max-width: 100%;
+}
+.userhead-name .acti-countnav {
+    top: 90px;
+}
+}
+@media only screen and (min-width: 320px) and (max-width: 771px){
+.nav-side-menu-full-container .nav-side-menu .sidebar-btn{
+	left: 4px!important;
+}
+.nav-side-menu-full-container .nav-side-menu .sidebar-btn {
+    top: 32px;
+}
+.userhead-name .acti-countnav {
+    top: 33px;
+    right: auto;
+    left: 400px;
 }
 }

@@ -417,7 +417,7 @@ border-radius: 10px;
 }
 }
 
-@media only screen and (max-width: 767px){
+@media only screen and (max-width: 771px){
     .nav-side-menu-full-container .nav-side-menu .sidebar {
   width: 120px;
     }
@@ -910,7 +910,7 @@ display: block;
     margin-right: 5%;
 }
 .nav-side-menu{display: none;}
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 771px) {
 .md-text-center{text-align: center!important;}
 .common-form-row {
     margin: 45px 0px 0px 0px;
@@ -1224,7 +1224,7 @@ body .mydemolabel {
 
 
 }
-@media only screen and (max-width:767px){
+@media only screen and (max-width:771px){
 
 body .mydemolabel {
     top: 44px!important;
@@ -1304,13 +1304,15 @@ padding-left: 15px!important;
   font-weight:bold;
   min-width: 145px;
 }
-@media only screen and (min-width: 768px) and (max-width: 1092px){
+@media only screen and (min-width: 771px) and (max-width: 1092px){
     #CruisingButton {
   width: 138px !important;
   font-size: 14px;
   height: 32px;
   padding: 5px !important;
   top: 18px !important;
+  padding: 5px !important;
+    top: 18px !important;
 }
 #HideDetails, #HelpfulTips {
     min-width: 138px;
@@ -1321,7 +1323,7 @@ padding-left: 15px!important;
 }
 
 
-@media (max-width: 767px){
+@media (max-width:771px){
 #HideDetails, #HelpfulTips {
 
     width: 113px;
@@ -1332,8 +1334,10 @@ padding-left: 15px!important;
 }
 #CruisingButton {
     height: 24px;
-    width: 113px;
+    width: 113px!important;
   top: 18px !important;
+  padding: 0px!important;
+    font-size: 11px!important;
 }
 
 #HideDetails {
@@ -1452,11 +1456,12 @@ span.sp-rightalign {
 }
 
 }
-
-@media only screen and (max-width:767px){
-.sp-rightalign{
+@media only screen and (max-width: 771px){
+    .sp-rightalign{
     display: none;
 }
+
+
 .sp-40-w{
     margin-top: 10px;
     margin-left: 0px;
@@ -1514,7 +1519,7 @@ span.sp-leftalign {
     padding: 10px;
 }
 
-@media only screen and (min-width: 320px) and (max-width: 767px){
+@media only screen and (min-width: 320px) and (max-width: 771px){
 body .sp-60-w {
     width: 100%!important;
 }
