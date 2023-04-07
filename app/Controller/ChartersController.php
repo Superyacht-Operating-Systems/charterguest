@@ -6161,7 +6161,7 @@ class ChartersController extends AppController {
                         $fancybox = "";
                         $targetFullGalleryPathhref = "";
                     }
-                    $markerimage = BASE_URL.'/charterguest/app/webroot/css/leaflet/dist/images/marker-icon.png';
+                    $markerimage = BASE_URL.'/charterguest/app/webroot/css/leaflet/dist/images/marker-icon-itinerary.png';
                     //echo "<pre>"; print_r($titleimage); exit;
                     $CruisingMapCommentConditons = "activity_id = '$programScheduleUUID' AND activity_name = '$title' AND type = 'schedule' AND publish_map = '1'";
                          $commentdatatitle = $this->CharterGuest->getCruisingMapComment($yachtDbName, $CruisingMapCommentConditons);
@@ -6493,7 +6493,7 @@ class ChartersController extends AppController {
                         }
 
                         
-                        $markerimage = BASE_URL.'/charterguest/app/webroot/css/leaflet/dist/images/marker-icon.png';
+                        $markerimage = BASE_URL.'/charterguest/app/webroot/css/leaflet/dist/images/marker-icon-itinerary.png';
                         
                         $readonly = "readonly";
                         $popupHtml .= '<div class="mapPopup sp-mp-detailsrow" data-schuuid="'.$scheduleData['CharterProgramSchedule']['UUID'].'">

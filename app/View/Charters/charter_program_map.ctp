@@ -1540,16 +1540,16 @@ body .sp-60-w input {
 .text-below-marker {
     font-size: 11px;
     font-weight: 1px solid;
-    margin-top: -33px !important;
-    margin-left: -2px !important;
+    margin-top: -35px !important;
+    margin-left: -3px !important;
     color: #000;
 }
 
 .text-below-marker-modalmap {
     font-size: 11px;
     font-weight: 1px solid;
-    margin-top: -33px !important;
-    margin-left: -2px !important;
+    margin-top: -35px !important;
+    margin-left: -3px !important;
     color: #000;
     z-index:9999 !important;
 }
