@@ -5748,8 +5748,8 @@ width: 100%;
     top: 32px;
 }
 .userhead-name .acti-countnav {
-    top: 33px;
-    right: auto;
-    left: 400px;
+    top: 21px;
+    right: 0px;
+    left: auto;
 }
 }
