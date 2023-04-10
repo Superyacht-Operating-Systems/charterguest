@@ -3776,16 +3776,8 @@ position: relative;
     text-align: left;
     padding-left: 80px;
 }
-.bigitem .label-bold{
-    text-align: left;
-    padding-left:67px;
-    margin-top: -4px;
-    position: relative;
-}
 
-.hhd-mrg-02 {
-    padding-top: 21px;
-}
+
 .flexrow .two{
   margin-top: -22px!important;
 }
@@ -4211,13 +4203,7 @@ hr.divmar {
 .table tbody > tr > .al-cent {
     padding-top: 1px!important;
 }
-.bigitem .label-bold.hhd-mrg-02{
-padding-left: 78px;
-    margin-top: -4px;
-        top: 53px;
-    left: 0;
-    position: absolute;
-}
+
 
 
 .list-page-container .container-fluid{
@@ -4971,10 +4957,6 @@ body .mydemolabel{
       margin-top: 10px;
 }
 
-.userhead-name .user-hname{
-font-size: 16px!important;
-    top: 78px!important;
-}
 .flexrow .two.view-mainrow{
 margin-top: 9px!important;
     margin-bottom: 7px;
@@ -5075,14 +5057,6 @@ text-align: left;
     padding: 10px 0px 20px 0px;
     right: 0px;
     left: 0px;
-}
-.userhead-name .user-hname{
-top: auto;
-    display: block;
-    left: 97px;
-    position: absolute;
-    text-align: left;
-    margin-top: -24px;
 }
 
 
@@ -5396,7 +5370,7 @@ label.othr-like{width: 100%!important;}
 }
 
 }
-@media only screen and (min-width: 320px) and (max-width: 767px){
+@media only screen and (min-width: 320px) and (max-width: 771px){
 .ch-card-aligncenter{
     width: 320px!important;
     margin: 0 auto;
@@ -5481,30 +5455,18 @@ width: 137px!important;
 .checkbox-label-row .occfild {
     width: 108px!important;
 }
-.bigitem .label-bold {
-    padding-top: 32px!important;
-}
+
 }
 
 
 
 
 @media only screen and (min-width: 768px) and (max-width: 1020px){
-.bigitem .label-bold {
-        text-align: center;
-    padding-left: 0px;
-    padding-top: 18px;
-}
-.bigitem .chhd-mrg-02{
-  padding-top: 8px;
-}
+
 .md-no-padd{
   padding-left: 0px;
 }
 
-.bigitem .hhd-mrg-02{
-padding-top: 84px;
-}
 .col-md-12.label-inline label {
 	padding-top: 5px;
 }
@@ -5724,9 +5686,40 @@ width: 100%;
 .yachtHeaderName {
   font-size: 16px !important;
   }
+  
+  .userhead-name .user-hname {
+ font-size: 16px !important;
+top: 78px !important;
+  display: block;
+  left: 97px;
+  position: absolute;
+  text-align: left;
+  margin-top: -24px;
+}
+.bigitem .label-bold.hhd-mrg-02{
+padding-left: 78px;
+    margin-top: -4px;
+        top: 53px;
+    left: 0;
+    position: absolute;
+}
+.bigitem .label-bold{
+    text-align: left;
+    padding-left:67px;
+    margin-top: -4px;
+    position: relative;
+}
+.hhd-mrg-02 {
+    padding-top: 21px;
+}
+
 }
 
 @media only screen and (min-width: 771px) and (max-width: 1020px){
+.bigitem .label-bold {
+    padding-top: 32px!important;
+}
+
 .navbar-absalute-top .yachtHeaderName {
     position: absolute!important;
     text-align: center;
@@ -5738,6 +5731,19 @@ width: 100%;
 }
 .userhead-name .acti-countnav {
     top: 90px;
+}
+
+.bigitem .label-bold {
+        text-align: center;
+    padding-left: 0px;
+    padding-top: 18px;
+}
+
+.bigitem .hhd-mrg-02{
+padding-top: 84px;
+}
+.bigitem .chhd-mrg-02{
+  padding-top: 8px;
 }
 }
 @media only screen and (min-width: 320px) and (max-width: 771px){

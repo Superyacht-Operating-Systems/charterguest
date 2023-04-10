@@ -36,7 +36,7 @@
     );
 ?>
 <style>
-      @media only screen and (max-width: 767px){
+      @media only screen and (max-width: 771px){
         .navbar-absalute-top {
   z-index: auto;
     }
@@ -623,7 +623,7 @@ input:focus {
     width: 160px !important;
     
 }
-@media only screen and (max-width: 767px){
+@media only screen and (max-width: 771px){
     .nav-side-menu-full-container .nav-side-menu .sidebar {
   width: 120px;
     }
