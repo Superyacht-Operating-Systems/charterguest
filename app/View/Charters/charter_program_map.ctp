@@ -1795,7 +1795,7 @@ body .sp-60-w input {
                                 <div>
                                 <span style="display: inline-block;position: relative;"><img src="<?php echo $markerimage; ?>" style="object-fit: fill; height: 35px;" alt="" ><span style="position: absolute;color:#000;top: 4px;right: 10px;"><?php echo $daynumber; ?></span></span>
                                 <input type="text" name="title" value="<?php echo htmlspecialchars($schedule['CharterProgramSchedule']['title']); ?>" placeholder="Enter the Title" class="loc_name" readonly/>
-                                    <ul class="action-icon"><li><i class="fa fa-comments crew_comment_cruisingmaptitle" data-rel="<?php echo $locationCommentsdata['programScheduleUUID']; ?>" data-yachtid="<?php echo $locationCommentsdata['yacht_id']; ?>" data-tempname="<?php echo htmlspecialchars($locationCommentsdata['title']); ?>" style="<?php echo $locationCommentsdata['colorcodetitle']; ?><?php echo $displaynone; ?>color: #00a8f3;float: right;"><input type="hidden" name=commentstitle value="" class="messagecommentstitle" /></i></li></ul>
+                                    <ul class="action-icon"><li><i class="fa fa-comments crew_comment_cruisingmaptitle" data-rel="<?php echo $locationCommentsdata['programScheduleUUID']; ?>" data-yachtid="<?php echo $locationCommentsdata['yacht_id']; ?>" data-tempname="<?php echo htmlspecialchars($locationCommentsdata['title']); ?>" style="<?php echo $locationCommentsdata['colorcodetitle']; ?><?php echo $displaynone; ?>float: right;"><input type="hidden" name=commentstitle value="" class="messagecommentstitle" /></i></li></ul>
                                 </div>
                             <div class="icons_fields">
                                 <i style="color: #00a8f3;" class="fa fa-solid fa-calendar"><span class="icon_label" ><?php echo $schedule['CharterProgramSchedule']['day_dates']; ?></span></i>
@@ -1820,17 +1820,17 @@ body .sp-60-w input {
                                             <?php  }
                                     }
                                 } ?>
-                                </div>
+                                </div><span style="margin: 5px auto;width: fit-content;display: flow-root;">
                                <?php if(isset($fleetlocationimages) && !empty($fleetlocationimages)){ 
                                     $fleetimagecount = count($fleetlocationimages);
                                     if($fleetimagecount > 1){
-                                    //     for($k=0; $k<$fleetimagecount; $k++){ ?>
-                                    <i class="fa fa-dot-circle-o" aria-hidden="true" style="
-                                            font-size: 12px;
-                                            color: darkslategray;padding: 0px 5px 5px 65px;"></i>
-                                <?php  //     }
+                                         for($k=0; $k<$fleetimagecount; $k++){ ?>
+                                                    <i class="fa fa-dot-circle-o" aria-hidden="true" style="
+                                            font-size: 8px;
+                                            color: darkslategray;"></i>&nbsp;
+                                <?php       }
                                     }
-                                    }?>
+                                    }?></span>
                             </div>
                        </div>
                        <input type="hidden" id="charterprogramuuid" value="<?php echo $schedule['CharterProgramSchedule']['charter_program_id']; ?>">
