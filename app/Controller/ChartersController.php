@@ -6185,7 +6185,11 @@ class ChartersController extends AppController {
                             // echo "<pre>";print_r($fleetlocationimagesarr);
                             $fleetlocationimages = array_merge($fleetlocationyour_images,$fleetlocationimagesarr);
                             //echo "<pre>";print_r($fleetlocationimages); exit;
+                            foreach (array_keys($fleetlocationimages, $attachment) as $key) {
+                                unset($fleetlocationimages[$key]);
+                            }
                          }
+                         
                          //echo "<pre>";print_r($fleetlocationimages); exit;
                         //////////////////////
                         if(isset($fleetlocationimages) && !empty($fleetlocationimages)){ 
@@ -6280,13 +6284,13 @@ class ChartersController extends AppController {
                         $fleetlocationimages =  array_unique($fleetlocationimages);
                         foreach($fleetlocationimages as $name){
                             if(!empty($name)){
-                            $popupHtml .= '<a href="'.$targetFullGalleryPathhref.'/'.$name.'" data-fancybox="images" rel="gallery01" class="'.$fancybox.'"><img src="'.$name.'" style="object-fit: fill;width: 100%; height: 150px;display:none;" alt="" ></a>';
+                            $popupHtml .= '<a href="'.$targetFullGalleryPathhref.'/'.$name.'" data-fancybox="images" rel="gallery1" class="'.$fancybox.'"><img src="'.$name.'" style="object-fit: fill;width: 100%; height: 150px;display:none;" alt="" ></a>';
                             }
                         }
                     }
                     $popupHtml .= '</div><span style="margin: 5px auto;width: fit-content;display: flow-root;">';
                     if(isset($fleetlocationimages) && !empty($fleetlocationimages)){ 
-                        $fleetlocationimages =  array_unique($fleetlocationimages);
+                        //$fleetlocationimages =  array_unique($fleetlocationimages);
                         $fleetimagecountn = count($fleetlocationimages);
                      if($fleetimagecountn > 1){
                          for($k=0; $k<$fleetimagecountn; $k++){
@@ -6377,6 +6381,9 @@ class ChartersController extends AppController {
                                     // echo "<pre>";print_r($fleetlocationimagesarr_act);
                                     $fleetlocationimages_act = array_merge($fleetlocationyour_images_act,$fleetlocationimagesarr_act);
                                     //echo "<pre>";print_r($fleetlocationimages_act); exit;
+                                    foreach (array_keys($fleetlocationimagesarr_act, $activityattachment) as $key) {
+                                        unset($fleetlocationimagesarr_act[$key]);
+                                    }
                                 }
                                 ///////////////////////////////////////////////////////////
 
@@ -6460,7 +6467,7 @@ class ChartersController extends AppController {
                             }
                             $popupHtml .= '</div><span style="margin: 5px auto;width: fit-content;display: flow-root;">';
                             if(isset($fleetlocationimages_act) && !empty($fleetlocationimages_act)){ 
-                                $fleetlocationimages_act =  array_unique($fleetlocationimages_act);
+                                //$fleetlocationimages_act =  array_unique($fleetlocationimages_act);
                                 $fleetimagecount_act = count($fleetlocationimages_act);
                                 if($fleetimagecount_act > 1){
                                //     for($k=0; $k<$fleetimagecount; $k++){
