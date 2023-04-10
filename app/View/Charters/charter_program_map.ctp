@@ -1811,18 +1811,18 @@ body .sp-60-w input {
                                 
                                 </div>
                                 <div class="loc_img_prev">
-                                <a href="<?php echo $titleimagehref; ?>" rel="gallery01" class="<?php echo $fancybox; ?>"><img src="<?php echo $titleimage; ?>" style="object-fit: fill; width: 100%;height: 150px;" alt="" ></a>
+                                <a href="<?php echo $titleimagehref; ?>" rel="galleryloc<?php echo $crusemap; ?>" class="<?php echo $fancybox; ?>"><img src="<?php echo $titleimage; ?>" style="object-fit: fill; width: 100%;height: 150px;" alt="" ></a>
                                <?php if(isset($fleetlocationimages) && !empty($fleetlocationimages)){ 
                                     $fleetlocationimages =  array_unique($fleetlocationimages);
                                     foreach($fleetlocationimages as $name){
                                         if(!empty($name)){ ?>
-                                            <a href="<?php echo $targetFullGalleryPathhref; ?><?php echo $name ?>" data-fancybox="images" rel="gallery01" class="<?php echo $fancybox; ?>"><img src="<?php echo $name; ?>" style="object-fit: fill;width: 100%; height: 150px;display:none;" alt="" ></a>
+                                            <a href="<?php echo $targetFullGalleryPathhref; ?><?php echo $name ?>" data-fancybox="images" rel="galleryloc<?php echo $crusemap ?>" class="<?php echo $fancybox; ?>"><img src="<?php echo $name; ?>" style="object-fit: fill;width: 100%; height: 150px;display:none;" alt="" ></a>
                                             <?php  }
                                     }
                                 } ?>
                                 </div><span style="margin: 5px auto;width: fit-content;display: flow-root;">
                                <?php if(isset($fleetlocationimages) && !empty($fleetlocationimages)){ 
-                                    $fleetimagecount = count($fleetlocationimages);
+                                    $fleetimagecount = count($fleetlocationimages)+1;
                                     if($fleetimagecount > 1){
                                          for($k=0; $k<$fleetimagecount; $k++){ ?>
                                                     <i class="fa fa-dot-circle-o" aria-hidden="true" style="
@@ -1868,6 +1868,7 @@ body .sp-60-w input {
                 <i style="color: #00a8f3;" class="fa fa-solid fa-clock-o "><span class="icon_label markerduration"></span></i>
                 <i style="color: #00a8f3;" class="fa fa-solid fa-ship" aria-hidden="true"><span class="icon_label markerdistance" style="padding: 0px 0px 0px 5px;"></span></i>
                 </div>
+                <select name="markersnames" style="display:none;" class="form-control markersnamesmodalmap"></select>
                 <div id="modalmap" style="border: solid 1px #ccc;">
                
                 </div>
@@ -2611,7 +2612,7 @@ function markerOnClick(e) {
                     // open popup center to map
                     map.setView(e.latlng);
                     //modalmap.setView(e.latlng);
-                    
+                    fitzoommap = [];
                     var popLocation= e.latlng;
                 //setTimeout(function() {
                     // var popup = L.popup({
@@ -2697,6 +2698,34 @@ function markerOnClick(e) {
                                 var selectedmarkerday_num = e.target.day_num;
                                 //console.log(popLocation);
                                 fitzoommap.push(popLocation);
+                                if (markerArray.length > 0) {
+                                        $('.markersnamesmodalmap').find('option').remove();
+                                        $('.markersnamesmodalmap').append($("<option></option>")
+                                            .attr("value", "")
+                                            .text("Select")
+                                        );
+                                        var temptitle = [];                        
+                                                    $.each(markerArray, function(key, value) {   
+                                                        
+                                                        //if(jQuery.inArray(value.daytitle, temptitle) !== -1){
+                                                            
+                                                        //}else{
+
+                                                                $('.markersnamesmodalmap')
+                                                                    .append($("<option></option>")
+                                                                        .attr("id", "marker_" + value.scheduleId)
+                                                                        .attr("data-lat", value._latlng.lat)
+                                                                        .attr("data-long", value._latlng.lng)
+                                                                        .attr("data-schid", value.scheduleId)
+                                                                        .attr("data-daynum", value.day_num)
+                                                                        .attr("value", value.daytitle +' - Day '+value.day_num)
+                                                                        .text(value.daytitle +' - Day '+value.day_num)
+                                                                    );
+                                                                    //temptitle.push(value.daytitle);
+                                                        //}
+
+                                        });
+                                    }
 
                                 // $("#frommarker").val(selectedmarkertitle +' - Day '+selectedmarkerday_num);
                                 // $("#frommarkerlat").val(lattitude);
@@ -2713,7 +2742,7 @@ function markerOnClick(e) {
                                 drawrouteinmodal(frommarker);
                               
                                 // console.log(selectedmarkertitle);
-                                modalmap.fitBounds(fitzoommap);
+                                //modalmap.fitBounds(fitzoommap);
                                 //modalmap.setView(new L.LatLng(lattitude,longitude), 7);
                                 //modalmap.panBy([0,0]);
                                 // console.log(lattitude);  
@@ -2755,18 +2784,8 @@ function markerOnClick(e) {
 }
 
 
-function markersnamesmodalmap(selectedTitle){
+$(document).on("change", ".markersnamesmodalmap", function(e) {
 
-    //selectedTitle = $(this).val();
-    //alert(selectedTitle);
-    //console.log(selectedTitle);
-    if (selectedTitle != "") {
-        // selectedlatlong = $(".markersnamesmodalmap option:selected").attr("data-lat");
-        // selectedlong = $(".markersnamesmodalmap option:selected").attr("data-long");
-        // var schid = $(".markersnamesmodalmap option:selected").attr("data-schid");
-        // var modalmapdaynumber = $(".markersnamesmodalmap option:selected").attr("data-daynum");
-        
-        //console.log(markerArray);  //return false;
         var routemodalmarkerselected = {};
         var textMarkermodalmap = {};
         var selectedlat = "";
@@ -2775,8 +2794,18 @@ function markersnamesmodalmap(selectedTitle){
         var fmlat;
         var modalmapdaynumber = "";
         var defaultline = {};
-
         var selectedmarkertooltipcontent = "";
+    selectedTitle = $(this).val();
+    //alert(selectedTitle);
+    //console.log(selectedTitle);
+    if (selectedTitle != "") {
+        selectedlat = $(".markersnamesmodalmap option:selected").attr("data-lat");
+        selectedlong = $(".markersnamesmodalmap option:selected").attr("data-long");
+        var schid = $(".markersnamesmodalmap option:selected").attr("data-schid");
+        var modalmapdaynumber = $(".markersnamesmodalmap option:selected").attr("data-daynum");
+        
+        //console.log(markerArray);  //return false;
+        
         const selectedTitleFrom = selectedTitle.split("-");
         //console.log(selectedTitleFrom);
         let selectedTitleFromWord = $.trim(selectedTitleFrom[0]);
@@ -2784,15 +2813,21 @@ function markersnamesmodalmap(selectedTitle){
             // console.log("val.daytitle ==="+val.daytitle);
             // console.log("selectedTitleFromWord ==="+selectedTitleFromWord);
             //console.log(val);
-            if ((val.daytitle == selectedTitleFromWord) ) {
-                //console.log('kkk');
-                //selectedmarkertooltipcontent = val._tooltip._content;
-                selectedlat = val._latlng.lat;
-                selectedlong = val._latlng.lng;
-                modalmapdaynumber = val.day_num;
+            // if ((val.daytitle == selectedTitleFromWord) ) {
+            //     //console.log('kkk');
+            //     //selectedmarkertooltipcontent = val._tooltip._content;
+            //     selectedlat = val._latlng.lat;
+            //     selectedlong = val._latlng.lng;
+            //     modalmapdaynumber = val.day_num;
+            //     fitzoommap.push(val._latlng);
+            //     //return false;
+            // }
+
+            if (val.scheduleId == schid) {
+                selectedmarkertooltipcontent = val._tooltip._content;
                 fitzoommap.push(val._latlng);
-                //return false;
             }
+
         });
 
         // console.log(routemodalmarkerselected); 
@@ -2838,25 +2873,25 @@ function markersnamesmodalmap(selectedTitle){
         //     defaultline.addTo(modalmap);
         // }
 
-        modalmap.fitBounds(fitzoommap);
+        //modalmap.fitBounds(fitzoommap);
         //modalmap.setView(new L.LatLng(selectedlat,selectedlong), 4);
 
-        setTimeout(() => {
-            modalmap.invalidateSize();
-        }, 0);
+        // setTimeout(() => {
+        //     modalmap.invalidateSize();
+        // }, 0);
 
         //$(".Tooltipmodalmap").hide();
     }
 
-    return 1;
-}
+    
+});
 
 function drawrouteinmodal(frommarker) { //alert();
     //console.log(modalrouteline);
     var drawrouteline = [];
     //var tempendloc = [];
     var nextmarkername;
-    //var toloc =  $(".markersnamesmodalmap").val();
+    var toloc =  $(".markersnamesmodalmap").val();
     routeexists = 0;
     $.each(modalrouteline, function(name, value) {
             if (value.name == frommarker) {
@@ -2870,9 +2905,9 @@ function drawrouteinmodal(frommarker) { //alert();
     //return false;
     //console.log(drawrouteline);
     if (nextmarkername != "undefined" && nextmarkername != "" && nextmarkername != null) { //alert();
-        //$(".markersnamesmodalmap").val(nextmarkername).trigger('change');
-       var returnvalue =  markersnamesmodalmap(nextmarkername);
-       if(returnvalue == 1){
+        $(".markersnamesmodalmap").val(nextmarkername).trigger('change');
+      // var returnvalue =  markersnamesmodalmap(nextmarkername);
+       //if(returnvalue == 1){
         var tempdrawrouteline = [];
         
         $.each(modalrouteline, function(name, value) {
@@ -2895,8 +2930,7 @@ function drawrouteinmodal(frommarker) { //alert();
         var drawnItemsModalMap = new L.FeatureGroup();
         modalmap.addLayer(drawnItemsModalMap);
         var polyLayersModalMap = [];
-        var polyline2 = "";
-            polyline2 = new L.polyline(specificline, {stroke:true,snakingSpeed: 200,weight:2.5,dashArray: [5,5],color:'#fff',lineCap: "round",lineJoin: "round",smoothFactor: 1});
+        var   polyline2 = new L.polyline(specificline, {stroke:true,snakingSpeed: 200,weight:2.5,dashArray: [5,5],color:'#fff',lineCap: "round",lineJoin: "round",smoothFactor: 1});
 
         polyLayersModalMap.push(polyline2)
 
@@ -2906,8 +2940,19 @@ function drawrouteinmodal(frommarker) { //alert();
             drawnItemsModalMap.addLayer(layer);
         }
         drawnItemsModalMap.snakeIn();
+
+      
         
-    }
+        modalmap.fitBounds(fitzoommap);
+        // setTimeout(() => {
+        //     modalmap.fitBounds(polyline2.getBounds());
+        // }, 100);
+        setTimeout(() => {
+            modalmap.invalidateSize();
+        }, 0);
+
+        
+    //}
         
     }
 
@@ -3064,6 +3109,7 @@ $(document).on("click", ".mapnotemodalclose", function(e) {
     $('#mapnotemodal').hide();
     //mapNoteformclear();
 });
+
 
 $(document).ready(function() { //alert();
             $('.fancybox').fancybox({

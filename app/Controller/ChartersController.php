@@ -5639,7 +5639,7 @@ class ChartersController extends AppController {
                 // Display the dates in array format
                 //echo "<pre>";print_r($Datesarray); //exit;
 
-                $scheduleConditions = "charter_program_id = '$charterProgramId' AND is_deleted = 0";
+                $scheduleConditions = "charter_program_id = '$charterProgramId' AND is_deleted = 0 order by day_num";
                 $scheduleData = $this->CharterGuest->getCharterProgramScheduleData($yachtDbName, $scheduleConditions);
                 //echo "<pre>";print_r($scheduleData); exit;
                 $markertitle = array();
@@ -5682,16 +5682,18 @@ class ChartersController extends AppController {
                                 if(!empty($LocationContent)){
                                     $LocationContentFleetyour_image = $LocationContent[0]['LocationContent']['your_image'];
                                     //$fleetlocationimages = array();
-                                    if(isset($LocationContentFleetyour_image)){
+                                    if(!empty($LocationContentFleetyour_image)){
                                         $fleetlocationyour_images =  explode(',',$LocationContentFleetyour_image);
                                     }
                                     $LocationContentFleetimage = $LocationContent[0]['LocationContent']['image'];
-                                    if(isset($LocationContentFleetimage)){
+                                    if(!empty($LocationContentFleetimage)){
                                         $fleetlocationimagesarr =  explode(',',$LocationContentFleetimage);
                                     }
                                     // echo "<pre>";print_r($fleetlocationyour_images);
                                     // echo "<pre>";print_r($fleetlocationimagesarr);
+                                    if(!empty($LocationContentFleetyour_image) && !empty($LocationContentFleetimage)){
                                     $fleetlocationimages = array_merge($fleetlocationyour_images,$fleetlocationimagesarr);
+                                    }
                                     //echo "<pre>";print_r($fleetlocationimages); exit;
 
                                     
@@ -6174,20 +6176,27 @@ class ChartersController extends AppController {
                         if(!empty($LocationContent)){
                             $LocationContentFleetyour_image = $LocationContent[0]['LocationContent']['your_image'];
                             //$fleetlocationimages = array();
-                            if(isset($LocationContentFleetyour_image)){
+                            if(isset($LocationContentFleetyour_image) && !empty($LocationContentFleetyour_image)){
                                 $fleetlocationyour_images =  explode(',',$LocationContentFleetyour_image);
                             }
                             $LocationContentFleetimage = $LocationContent[0]['LocationContent']['image'];
-                            if(isset($LocationContentFleetimage)){
+                            if(isset($LocationContentFleetimage) && !empty($LocationContentFleetimage)){
                                 $fleetlocationimagesarr =  explode(',',$LocationContentFleetimage);
                             }
                             // echo "<pre>";print_r($fleetlocationyour_images);
                             // echo "<pre>";print_r($fleetlocationimagesarr);
-                            $fleetlocationimages = array_merge($fleetlocationyour_images,$fleetlocationimagesarr);
-                            //echo "<pre>";print_r($fleetlocationimages); exit;
-                            foreach (array_keys($fleetlocationimages, $attachment) as $key) {
-                                unset($fleetlocationimages[$key]);
+                            if(isset($fleetlocationyour_images) && isset($fleetlocationimagesarr)){
+                                $fleetlocationimages = array_merge($fleetlocationyour_images,$fleetlocationimagesarr);
                             }
+                            //echo "<pre>";print_r($fleetlocationimages); exit;
+                            if(!empty($LocationContentFleetyour_image) && !empty($LocationContentFleetimage)){
+                                foreach ($fleetlocationimages as $key => $name) {
+                                    if($name == $attachment){
+                                        unset($fleetlocationimages[$key]);
+                                    }
+                                }
+                            }
+                           
                          }
                          
                          //echo "<pre>";print_r($fleetlocationimages); exit;
@@ -6279,19 +6288,19 @@ class ChartersController extends AppController {
                     </div>
                     <div class="marker_img_div">
                     <div class="mLoc-img_prev">
-                    <a href="'.$titleimagehref.'" rel="gallery01" class="'.$fancybox.'"><img src="'.$titleimage.'" style="object-fit: fill;width: 100%; height: 150px;" alt="" ></a>';
+                    <a href="'.$titleimagehref.'" rel="gallery1" class="'.$fancybox.'"><img src="'.$titleimage.'" style="object-fit: fill;width: 100%; height: 150px;" alt="" ></a>';
                     if(isset($fleetlocationimages) && !empty($fleetlocationimages)){ 
                         $fleetlocationimages =  array_unique($fleetlocationimages);
-                        foreach($fleetlocationimages as $name){
+                        foreach($fleetlocationimages as $name){ //echo $name;
                             if(!empty($name)){
-                            $popupHtml .= '<a href="'.$targetFullGalleryPathhref.'/'.$name.'" data-fancybox="images" rel="gallery1" class="'.$fancybox.'"><img src="'.$name.'" style="object-fit: fill;width: 100%; height: 150px;display:none;" alt="" ></a>';
+                            $popupHtml .= '<a href="'.$targetFullGalleryPathhref.$name.'" data-fancybox="images" rel="gallery1" class="'.$fancybox.'"><img src="'.$name.'" style="object-fit: fill;width: 100%; height: 150px;display:none;" alt="" ></a>';
                             }
                         }
                     }
                     $popupHtml .= '</div><span style="margin: 5px auto;width: fit-content;display: flow-root;">';
                     if(isset($fleetlocationimages) && !empty($fleetlocationimages)){ 
                         //$fleetlocationimages =  array_unique($fleetlocationimages);
-                        $fleetimagecountn = count($fleetlocationimages);
+                        $fleetimagecountn = count($fleetlocationimages)+1;
                      if($fleetimagecountn > 1){
                          for($k=0; $k<$fleetimagecountn; $k++){
                             $popupHtml .= '<i class="fa fa-dot-circle-o" aria-hidden="true" style="
@@ -6367,23 +6376,34 @@ class ChartersController extends AppController {
                                 $LocationContent = $this->CharterGuest->query("SELECT * FROM $yachtDbName.location_contents LocationContent WHERE LocationContent.location = '$title' AND LocationContent.sub_location = '$actname' AND LocationContent.type != 'Location'");
                                 //$LocationContentFleet = $this->LocationContentFleet->find('first',array('conditions'=>array('location'=>$title,'sub_location'=>$activity['CharterProgramScheduleActivity']['activity_name'],'type !='=>'Location')));
                                 //echo "<pre>";print_r($LocationContentFleet); exit;
+                                $fleetlocationimages_act = "";
                                 if(!empty($LocationContent)){
                                     $LocationContentFleetyour_image_act = $LocationContent[0]['LocationContent']['your_image'];
                                     //$fleetlocationimages = array();
-                                    if(isset($LocationContentFleetyour_image_act)){
+                                    if(isset($LocationContentFleetyour_image_act) && !empty($LocationContentFleetyour_image_act)){
                                         $fleetlocationyour_images_act =  explode(',',$LocationContentFleetyour_image_act);
                                     }
                                     $LocationContentFleetimage_act = $LocationContent[0]['LocationContent']['image'];
-                                    if(isset($LocationContentFleetimage_act)){
+                                    if(isset($LocationContentFleetimage_act) && !empty($LocationContentFleetimage_act)){
                                         $fleetlocationimagesarr_act =  explode(',',$LocationContentFleetimage_act);
                                     }
                                     //echo "<pre>";print_r($fleetlocationyour_images_act);
                                     // echo "<pre>";print_r($fleetlocationimagesarr_act);
+                                    if(!empty($fleetlocationyour_images_act) && !empty($fleetlocationimagesarr_act)){
                                     $fleetlocationimages_act = array_merge($fleetlocationyour_images_act,$fleetlocationimagesarr_act);
-                                    //echo "<pre>";print_r($fleetlocationimages_act); exit;
-                                    foreach (array_keys($fleetlocationimagesarr_act, $activityattachment) as $key) {
-                                        unset($fleetlocationimagesarr_act[$key]);
+                                    $fleetlocationimages_act = array_filter($fleetlocationimages_act);
                                     }
+                                    // echo $activityattachment;
+                                    // echo "<pre>";print_r($fleetlocationimages_act); //exit;
+                                    if(!empty($fleetlocationyour_images_act) && !empty($fleetlocationimagesarr_act)){
+                                        foreach ($fleetlocationimages_act as $key => $name) {
+                                            if($name == $activityattachment){
+                                                unset($fleetlocationimages_act[$key]);
+                                            }
+                                        }
+                                    }
+                                   
+                                    //echo "<pre>";print_r($fleetlocationimages_act); exit;
                                 }
                                 ///////////////////////////////////////////////////////////
 
@@ -6457,7 +6477,7 @@ class ChartersController extends AppController {
                               }
 
                             $popupHtml .= '<div class="marksub-div"><div style="display:flex"><div class="m_loc_desc_div"><div class="marksup_header"><input name="iti_time[]" disabled="true" id="iti_time" class="iti_time" value="'.$iti_time.'"><ul class="action-icon"><li><i class="fa fa-comments crew_comment_cruisingmap" style="'.$colorcode.$displaynone.'" data-rel="'.$activity['CharterProgramScheduleActivity']['UUID'].'" data-yachtid="'.$yacht_id.'" data-tempname="'.htmlspecialchars($activity['CharterProgramScheduleActivity']['activity_name']).'" title="Comments & Feedback"><input type="hidden" name=comments[] value="" class="messagecomments" /></i></li></ul></div><div class="subloc_name" name="activity_name[]" >'.htmlspecialchars($activity['CharterProgramScheduleActivity']['activity_name']).'</div><input type="hidden" name="activity_id[]" value="'.$activity['CharterProgramScheduleActivity']['UUID'].'"><textarea class="form-control auto_resize loc_desc_field lg_tarea" '.$readonly.' name="messages[]" rows="1" cols="50">'.htmlspecialchars($activity['CharterProgramScheduleActivity']['notes']).'</textarea></div><div class="m_loc_img_div"><div class="sp-upload-img"><a href="'.$activityattachmentimagehref.'"  rel="gallery'.$i.'"  class="'.$activityfancybox.'"><img src="'.$activityattachmentimage.'" style="object-fit: fill; height: 150px;" alt=""></a>';
-                            if(isset($fleetlocationimages_act)){
+                            if(isset($fleetlocationimages_act) && !empty($fleetlocationimages_act)){
                                 $fleetlocationimages_act =  array_unique($fleetlocationimages_act);
                                 foreach($fleetlocationimages_act as $name){
                                     if(!empty($name)){
@@ -6468,7 +6488,7 @@ class ChartersController extends AppController {
                             $popupHtml .= '</div><span style="margin: 5px auto;width: fit-content;display: flow-root;">';
                             if(isset($fleetlocationimages_act) && !empty($fleetlocationimages_act)){ 
                                 //$fleetlocationimages_act =  array_unique($fleetlocationimages_act);
-                                $fleetimagecount_act = count($fleetlocationimages_act);
+                                $fleetimagecount_act = count($fleetlocationimages_act)+1;
                                 if($fleetimagecount_act > 1){
                                //     for($k=0; $k<$fleetimagecount; $k++){
                                        $popupHtml .= '<i class="fa fa-dot-circle-o" aria-hidden="true" style="
