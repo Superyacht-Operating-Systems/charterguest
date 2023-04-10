@@ -5325,7 +5325,7 @@ class ChartersController extends AppController {
                         // Display the dates in array format
                         //echo "<pre>";print_r($Datesarray); //exit;
         
-                        $scheduleConditions = "charter_program_id = '$charterProgramId' AND is_deleted = 0";
+                        $scheduleConditions = "charter_program_id = '$charterProgramId' AND is_deleted = 0 order by day_num";
                         $scheduleData = $this->CharterGuest->getCharterProgramScheduleData($yachtDbName, $scheduleConditions);
                         //echo "<pre>";print_r($scheduleData); exit;
                         $markertitle = array();
@@ -5335,6 +5335,8 @@ class ChartersController extends AppController {
                         $samelocationsDates = array();
                         $samemarkercommentcount = array();
                         $samedayrouteorder = array();
+                        $locationimages = array();
+                        $locationComment = array();
                         if(isset($scheduleData)){
                             foreach($scheduleData as $key => $publishmap){
                                     if($publishmap['CharterProgramSchedule']['publish_map'] == 1){
@@ -5356,6 +5358,35 @@ class ChartersController extends AppController {
                                     $samelocationsScheduleUUID[$publishmap['CharterProgramSchedule']['title']][] = $publishmap['CharterProgramSchedule']['UUID']; //same location
                                     $samelocationsDates[$publishmap['CharterProgramSchedule']['title']][] = $scheduleData[$key]['CharterProgramSchedule']['day_dates']; //same location
                                     $samemarkercommentcount[$publishmap['CharterProgramSchedule']['lattitude']] += $scheduleData[$key]['CharterProgramSchedule']['marker_msg_count']; //same location
+
+                                    ////////////////////////////////
+                                $loctitle = $publishmap['CharterProgramSchedule']['title'];
+                                $LocationContent = $this->CharterGuest->query("SELECT * FROM $yachtDbName.location_contents LocationContent WHERE LocationContent.location = '$loctitle' AND LocationContent.type = 'Location'");
+                            
+                                $fleetlocationimages = "";
+                                //echo "<pre>";print_r($LocationContent); exit;
+                                if(!empty($LocationContent)){
+                                    $LocationContentFleetyour_image = $LocationContent[0]['LocationContent']['your_image'];
+                                    //$fleetlocationimages = array();
+                                    if(!empty($LocationContentFleetyour_image)){
+                                        $fleetlocationyour_images =  explode(',',$LocationContentFleetyour_image);
+                                    }
+                                    $LocationContentFleetimage = $LocationContent[0]['LocationContent']['image'];
+                                    if(!empty($LocationContentFleetimage)){
+                                        $fleetlocationimagesarr =  explode(',',$LocationContentFleetimage);
+                                    }
+                                    // echo "<pre>";print_r($fleetlocationyour_images);
+                                    // echo "<pre>";print_r($fleetlocationimagesarr);
+                                    if(!empty($LocationContentFleetyour_image) && !empty($LocationContentFleetimage)){
+                                    $fleetlocationimages = array_merge($fleetlocationyour_images,$fleetlocationimagesarr);
+                                    }
+                                    //echo "<pre>";print_r($fleetlocationimages); exit;
+
+                                    
+                                }
+                                //echo "<pre>";print_r($fleetlocationimages); exit;
+                                $locationimages[$publishmap['CharterProgramSchedule']['id']] = $fleetlocationimages;
+                        /////////////////////////////////
                             
                                 }
                         }
@@ -5365,10 +5396,21 @@ class ChartersController extends AppController {
                         $cruising_speed = $YachtData[0]['Yacht']['cruising_speed'];
                         $cruising_fuel = $YachtData[0]['Yacht']['cruising_fuel'];
                         $yacht_id_fromyachtDB = $YachtData[0]['Yacht']['id'];
+                        $fleetname = $YachtData[0]['Yacht']['fleetname'];
+                        $yachtname = $YachtData[0]['Yacht']['yname'];
                         //echo $YachtData['Yacht']['cruising_unit'];
                         if(isset($YachtData[0]['Yacht']['cruising_unit']) && $YachtData[0]['Yacht']['cruising_unit'] != '0' ){
                          $cruising_unit = $YachtData[0]['Yacht']['cruising_unit'];
                         }
+                        if(isset($YachtData[0]['Yacht']['domain_name'])){
+                            $domain_name = $YachtData[0]['Yacht']['domain_name'];
+                            }
+                            if(isset($domain_name) && $domain_name == "charterguest"){
+                                $SITE_URL = "https://charterguest.net/";
+                            }else{
+                                $SITE_URL = "https://totalsuperyacht.com:8080/";
+                            }
+
                         //echo "<pre>";print_r($markername); exit;
                         $Routeorderdata = array();
                         // if(isset($samedayrouteorder) && !empty($samedayrouteorder)){
@@ -5553,13 +5595,19 @@ class ChartersController extends AppController {
                         $this->set('markertotal', $markertotal);
                         $this->set('yacht_id_fromyachtDB', $yacht_id_fromyachtDB);
                         $this->set('ipadurlDB', $yachtDbName);
-                        
+                        $this->set('domain_name', $domain_name);
+                        $this->set('yachtname', $yachtname);
+                        $this->set('fleetname', $fleetname);
                         $this->set('guesttype', "guest");
                         $this->set('cruising_speed', $cruising_speed);
                         $this->set('cruising_fuel', $cruising_fuel);
                         if(isset($cruising_unit) && !empty($cruising_unit)){
                         $this->set('cruising_unit', $cruising_unit);
                         }
+
+                        $this->set('locationimages', $locationimages);
+                        //$this->set('locationComment', $locationComment);
+
                     } else {
                         $this->redirect(array('action' => 'view'));
                     }
