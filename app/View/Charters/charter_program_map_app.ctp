@@ -1237,6 +1237,7 @@ padding-left: 15px!important;
   color:#000;
   z-index: 9999;
   font-weight:bold;
+  border-radius: 20px;
 }
 
 #HideDetails {
@@ -1248,6 +1249,7 @@ padding-left: 15px!important;
   z-index: 9999;
   font-weight:bold;
   min-width: 121px;
+  border-radius: 20px;
 }
 
 #HelpfulTips {
@@ -1259,6 +1261,7 @@ padding-left: 15px!important;
   z-index: 9999;
   font-weight:bold;
   min-width: 121px;
+  border-radius: 20px;
 }
 @media(max-width: 1092px){
 #HideDetails, #HelpfulTips {
@@ -1553,19 +1556,19 @@ span.sp-leftalign {
       
       <div class="modal-body">
         <div class="form-group">
-          1. Tap the location marker to show the day’s activities.
+        1. Tap location marker to show day’s activities.
         </div>
         <div class="form-group">
-          2. Tap the image to enlarge it.
+        2. Tap the image to enlarge it.
         </div>
         <div class="form-group">
-          3. Tap or pinch the Map to enlarge it. 
+        3. Tap or pinch the Map to enlarge it. 
         </div>
         <div class="form-group">
-          4. The Cruising Schedule button lists all the locations.
+        4. The Cruising Schedule lists all the locations.
         </div>
         <div class="form-group">
-        5. Tap the Show Details button to display location info.
+        5. Tap Show Details button for more information.
         </div>
       </div>
       <div class="modal-footer">
