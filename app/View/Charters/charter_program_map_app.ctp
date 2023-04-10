@@ -573,7 +573,13 @@ and (max-device-width : 1024px)
 and (orientation : portrait) {
     .navbar {
   margin-bottom: 10px;
+  min-height: 45px;
 }
+
+.yachtHeaderName {
+  margin-top: 0px !important;
+}
+
     .custom-popup{
     height: 98vh!important;
 }
@@ -1185,9 +1191,9 @@ margin: 0px;padding: 0px;
 .container {
     width: 100%;
 }
-.yachtHeaderName {
+/* .yachtHeaderName {
     margin-top: 4px!important;
-}
+} */
 body .mydemolabel {
     top: 46px!important;
 }
