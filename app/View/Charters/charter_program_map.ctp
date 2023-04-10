@@ -79,6 +79,9 @@ padding: 0px 10px 10px 10px;
 .m_loc_img_div{
 width: 150px;
 }	
+.marksup_header{
+    padding-bottom:5px;
+}
 .subloc_name {
   color: #000;
   font-size: 15px;

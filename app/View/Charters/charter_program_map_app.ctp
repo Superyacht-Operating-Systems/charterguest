@@ -90,6 +90,9 @@ padding: 0px 10px 10px 10px;
 .m_loc_img_div{
 width: 150px;
 }	
+.marksup_header{
+    padding-bottom:5px;
+}
 .subloc_name {
   color: #000;
   font-size: 15px;
@@ -568,7 +571,9 @@ background: none!important;
 and (min-device-width : 768px) 
 and (max-device-width : 1024px) 
 and (orientation : portrait) {
-
+    .navbar {
+  margin-bottom: 10px;
+}
     .custom-popup{
     height: 98vh!important;
 }
@@ -730,6 +735,7 @@ float: left;
     width: 150px;
     overflow: hidden;
     height: 150px;
+    border-radius: 10px;
 }
 .sp-40-w .action-icon{
 display: block;
