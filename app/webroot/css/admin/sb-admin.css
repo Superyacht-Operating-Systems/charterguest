@@ -4971,10 +4971,6 @@ body .mydemolabel{
       margin-top: 10px;
 }
 
-.userhead-name .user-hname{
-font-size: 16px!important;
-    top: 78px!important;
-}
 .flexrow .two.view-mainrow{
 margin-top: 9px!important;
     margin-bottom: 7px;
@@ -5075,14 +5071,6 @@ text-align: left;
     padding: 10px 0px 20px 0px;
     right: 0px;
     left: 0px;
-}
-.userhead-name .user-hname{
-top: auto;
-    display: block;
-    left: 97px;
-    position: absolute;
-    text-align: left;
-    margin-top: -24px;
 }
 
 
@@ -5724,6 +5712,16 @@ width: 100%;
 .yachtHeaderName {
   font-size: 16px !important;
   }
+  
+  .userhead-name .user-hname {
+ font-size: 16px !important;
+top: 78px !important;
+  display: block;
+  left: 97px;
+  position: absolute;
+  text-align: left;
+  margin-top: -24px;
+}
 }
 
 @media only screen and (min-width: 771px) and (max-width: 1020px){
