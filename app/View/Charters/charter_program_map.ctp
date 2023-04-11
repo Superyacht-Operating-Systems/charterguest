@@ -262,6 +262,16 @@ border-radius: 10px!important;
 margin-top:10px;
 overflow: hidden;
     }
+    #modalmapcruisingsch{
+        height: 300px;
+width: 100%;
+border: none !important;
+border-radius: 10px!important;
+-webkit-border-radius: 10px;
+-moz-border-radius: 10px;
+margin-top:10px;
+overflow: hidden;
+    }
     .CS_modal, .Mark_modal{
     width:100% !important;
 }
@@ -332,7 +342,14 @@ border: none !important;
 border-radius: 10px;
 
     }
+    #modalmapcruisingsch{
+        height: 300px;
+width: 580px;
+margin:10px auto;
+border: none !important;
+border-radius: 10px;
 
+    }
 }
 
 .auto_resize {
@@ -1594,6 +1611,15 @@ body .sp-60-w input {
     color: #000;
     z-index:9999 !important;
 }
+
+.text-below-marker-locsch {
+    font-size: 11px;
+    font-weight: 1px solid;
+    margin-top: -35px !important;
+    margin-left: -3px !important;
+    color: #000;
+    z-index:9999 !important;
+}
 </style>  
 
 <?php    echo $this->Html->script('jquery-1.7.2.min');
@@ -1830,7 +1856,7 @@ body .sp-60-w input {
                                 </div>
                             </div>
                             <div class="loc_img_div">
-                                <div class="loc_map_div fancyboxmap" id="crusingschedulemap<?php echo $crusemap; ?>">
+                                <div class="loc_map_div" id="crusingschedulemap<?php echo $crusemap; ?>">
                                 
                                 </div>
                                 <div class="loc_img_prev">
@@ -1899,6 +1925,29 @@ body .sp-60-w input {
                 <div id="markerModal_load" class="markmodal_load">
 
                 </div>
+
+            </div>
+        </div>
+    </div>
+</div><!-- /.modal-content -->
+
+
+<div id="markerModalcruisingsch" class="modal certificat-modal-container"  role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content" id="markerModal_id">
+            <div class="modal-header" style="border-bottom: 0px solid #e5e5e5;">
+                <button type="button" class="close" data-schuuid="" id="markerModalclosecruisingsch" aria-hidden="true" style="margin-right: 5px;">×</button>
+                <h4 class="modal-title" id="markerModalLabelcruisingsch" style="text-align: center;font-weight: bold;"></h4>
+            </div>
+            <div class="modal-body markmodalbodycruisingsch">
+            
+           
+                <select name="markersnamescruisingsch" style="display:none;" class="form-control markersnamesmodalmapcruisingsch"></select>
+                <div id="modalmapcruisingsch" style="border: solid 1px #ccc;">
+               
+                </div>
+               
+               
 
             </div>
         </div>
@@ -2039,9 +2088,12 @@ var map = L.map('map', {
     'inertiaThershold'   : 32,
     //'crs': L.CRS.Simple,
 });
-
+///////////////////////////Cruising schedule modal map//////////////////////////////////////////////
+var CSMPmarkerArray = [];
+var CSMPmarkerCount = 0;
 <?php 
 if(isset($crusemaparray) && !empty($crusemaparray)){
+    $loop= 0;
 foreach($crusemaparray as $key => $val){ ?>
 
 var locsatellite = "schloc"+"<?php echo $key; ?>";
@@ -2058,8 +2110,8 @@ locsatellite = L.tileLayer(mbUrl, {
 
 var idlocmap = "<?php echo $val ?>";
     idlocmap = L.map('<?php echo $val ?>', {
-    center: [39.73, -104.99],
-    'zoom': 5,
+    //center: [39.73, -104.99],
+    //'zoom': 5,
     'measureControl': true,
     'worldCopyJump': false,
     'layers': [locsatellite],
@@ -2069,15 +2121,218 @@ var idlocmap = "<?php echo $val ?>";
     //'crs': L.CRS.Simple,
 });
 
+var markerschloc = L.marker(["<?php echo $scheduleData[$loop]['CharterProgramSchedule']['lattitude']; ?>", "<?php echo $scheduleData[$loop]['CharterProgramSchedule']['longitude']; ?>"],{pmIgnore: true})
+        .bindTooltip("", 
+                    {
+                        permanent: true, 
+                        offset: [0,0],
+                        direction: 'right',
+                        className: "Tooltip",
+                        noWrap: false,
+                    }).on("click", markerOnClickCSMP);
+
+                markerschloc.addTo(idlocmap);
+
+                idlocmap.setView(["<?php echo $scheduleData[$loop]['CharterProgramSchedule']['lattitude']; ?>", "<?php echo $scheduleData[$loop]['CharterProgramSchedule']['longitude']; ?>"], 5);
+
+var textMarkerschloc = L.marker(["<?php echo $scheduleData[$loop]['CharterProgramSchedule']['lattitude']; ?>", "<?php echo $scheduleData[$loop]['CharterProgramSchedule']['longitude']; ?>"], {
+  icon: L.divIcon({
+      html: "<?php echo $scheduleData[$loop]['CharterProgramSchedule']['day_num']; ?>",
+      className: 'text-below-marker-locsch',
+    })
+});
+textMarkerschloc.addTo(idlocmap);
+
+markerschloc.scheduleId = "<?php echo $schedule['CharterProgramSchedule']['charter_program_id']; ?>";
+        markerschloc.tablepId = "<?php echo $schedule['CharterProgramSchedule']['id']; ?>";
+        markerschloc.scheduleUUId = "<?php echo $schedule['CharterProgramSchedule']['UUID']; ?>";
+        markerschloc.daytitle = "<?php echo $schedule['CharterProgramSchedule']['title']; ?>";
+        markerschloc.day_dates = "<?php echo $schedule['CharterProgramSchedule']['day_dates']; ?>";
+        markerschloc.marker_msg_count = "<?php echo $schedule['CharterProgramSchedule']['marker_msg_count']; ?>";
+        markerschloc.distancetotal = "<?php echo $markertotal[$schedule['CharterProgramSchedule']['title'].' - Day '.$schedule['CharterProgramSchedule']['day_num']]['distance']; ?>";
+        markerschloc.durationtotal = "<?php echo $markertotal[$schedule['CharterProgramSchedule']['title'].' - Day '.$schedule['CharterProgramSchedule']['day_num']]['duration'];  ?>";
+        markerschloc.consumptiontotal = "<?php echo $markertotal[$schedule['CharterProgramSchedule']['title'].' - Day '.$schedule['CharterProgramSchedule']['day_num']]['consumption']; ?>";
+        markerschloc.endplace = "<?php echo $markertotal[$schedule['CharterProgramSchedule']['title'].' - Day '.$schedule['CharterProgramSchedule']['day_num']]['endplace']; ?>";
+        markerschloc.counttitle = "<?php echo $counttitle; ?>";
+        markerschloc.scheduleSameLocationUUID = "<?php echo implode(',',$samelocationsScheduleUUID[$schedule['CharterProgramSchedule']['title']]); ?>";
+        markerschloc.samelocationsDates = "<?php echo implode(',',$samelocationsDates[$schedule['CharterProgramSchedule']['title']]); ?>";
+        markerschloc.labeldayanddate = "<?php echo $SumDaytitle; ?>";
+        markerschloc.day_num = "<?php echo $schedule['CharterProgramSchedule']['day_num']; ?>";
+        markerschloc.markerNum = markerCount; 
+        CSMPmarkerArray.push(markerschloc);
+        CSMPmarkerCount++;
+
+
 setTimeout(() => {
     idlocmap.invalidateSize();
-}, 0);
+}, 500);
 
 // removed control zoom in and out from modal
 $("#<?php echo $val; ?> .leaflet-control-container").hide();
-<?php }
+<?php $loop++; }
 }
 ?>
+
+
+
+var modalmapcruisingschsatellite = L.tileLayer(mbUrl, {
+    id: 'ciurvui5100uz2iqqe929nrlr',
+    unloadInvisibleTiles: false,
+    reuseTiles: true,
+    updateWhenIdle: false,
+    continousWorld: true,
+    noWrap: false,
+});
+
+var modalmapcruisingsch = L.map('modalmapcruisingsch', {
+    //center: [39.73, -104.99],
+    'zoom': 5,
+    'measureControl': true,
+    'worldCopyJump': false,
+    'layers': [modalmapcruisingschsatellite],
+    'inertiaDecelartion': 3000,
+    'inertiaMaxSpeed': 1500,
+    'inertiaThershold': 32,
+    //'crs': L.CRS.Simple,
+});
+setTimeout(() => {
+    modalmapcruisingsch.invalidateSize();
+}, 500);
+function ReloadModalMaplayerCSMP(){
+    var modalmapcruisingschsatellite = L.tileLayer(mbUrl, {
+                                            id: 'ciurvui5100uz2iqqe929nrlr',
+                                            unloadInvisibleTiles: false,
+                                            reuseTiles: true,
+                                            updateWhenIdle: false,
+                                            continousWorld: true,
+                                            noWrap: false,
+                                    });
+                                    modalmapcruisingsch.addLayer(modalmapcruisingschsatellite);
+    }
+
+
+var fitzoommapCSMP = [];
+function markerOnClickCSMP(e) {
+    
+    // var scheduleUUId = e.target.scheduleUUId;
+    // var scheduleId = e.target.scheduleId;
+    // var markerNum = e.target.markerNum;
+    // var lattitude = e.latlng.lat;
+    // var longitude = e.latlng.lng;
+    // var consumptiontotal = e.target.consumptiontotal;
+    // var distancetotal = e.target.distancetotal;
+    // var durationtotal = e.target.durationtotal;
+    // //console.log(consumptiontotal);
+    // var day_dates = e.target.day_dates;
+    // var tablepId = e.target.tablepId;
+
+    // var counttitle = e.target.counttitle;
+    // var daytitle = e.target.daytitle;
+    // var scheduleSameLocationUUID = e.target.scheduleSameLocationUUID;
+    // var samelocationsDates = e.target.samelocationsDates;
+
+    // if (scheduleId != "") {
+    //     $("#hideloader").show();
+    //     $.ajax({
+    //         type: "POST",
+    //         url: basefolder+"/"+"charters/editCharterProgramSchedules",
+    //         dataType: 'json',
+    //         data: { "programId": scheduleId,"scheduleId":scheduleUUId,"tablepId":tablepId ,"diffDays": <?php echo $diffDays; ?>, "markerNum": markerNum, "lattitude": lattitude, "longitude": longitude,"guesttype":guesttype,"counttitle":counttitle, "daytitle":daytitle, "scheduleSameLocationUUID":scheduleSameLocationUUID, "samelocationsDates":samelocationsDates, "from":'locationcard' },
+    //         success:function(result) {
+    //             $("#hideloader").hide();
+    //             if (result.status == 'success') {
+    //                 var width = $(window).width();
+    //                 //$(".leaflet-control-attribution").hide();
+                   
+    //                  $("#modalmapcruisingsch .leaflet-control-container").show();
+    //                 // open popup center to map
+                     modalmapcruisingsch.setView(e.latlng);
+                    //modalmap.setView(e.latlng);
+    //                 //fitzoommap = [];
+    //                 var popLocation= e.latlng;
+                       
+                    $("#markerModalcruisingsch").show();
+                    /////////////////////////////itineray modal map///////////////////////////////////////////////////
+
+    //                 ReloadModalMaplayerCSMP();
+    //                             //var popLocation = e.latlng;
+    //                             var tooltipcontent = e.target._tooltip._content;
+    //                             var selectedmarkertitle = e.target.daytitle;
+    //                             var selectedmarkerday_num = e.target.day_num;
+    //                             //console.log(popLocation);
+    //                             fitzoommapCSMP.push(popLocation);
+    //                             if (markerArray.length > 0) {
+    //                                     $('.markersnamesmodalmapcruisingsch').find('option').remove();
+    //                                     $('.markersnamesmodalmapcruisingsch').append($("<option></option>")
+    //                                         .attr("value", "")
+    //                                         .text("Select")
+    //                                     );
+    //                                     var temptitle = [];                        
+    //                                                 $.each(markerArray, function(key, value) {   
+                                                        
+    //                                                     //if(jQuery.inArray(value.daytitle, temptitle) !== -1){
+                                                            
+    //                                                     //}else{
+
+    //                                                             $('.markersnamesmodalmapcruisingsch')
+    //                                                                 .append($("<option></option>")
+    //                                                                     .attr("id", "marker_" + value.scheduleId)
+    //                                                                     .attr("data-lat", value._latlng.lat)
+    //                                                                     .attr("data-long", value._latlng.lng)
+    //                                                                     .attr("data-schid", value.scheduleId)
+    //                                                                     .attr("data-daynum", value.day_num)
+    //                                                                     .attr("value", value.daytitle +' - Day '+value.day_num)
+    //                                                                     .text(value.daytitle +' - Day '+value.day_num)
+    //                                                                 );
+    //                                                                 //temptitle.push(value.daytitle);
+    //                                                     //}
+
+    //                                     });
+    //                                 }
+                            
+
+
+    //                             var frommarker = selectedmarkertitle +' - Day '+selectedmarkerday_num; //alert('llll')
+                              
+    //                             drawrouteinmodalCSMP(frommarker);
+                              
+                               
+    //                             $("#markerModalcruisingsch").find('.leaflet-control-attribution').hide();
+    //                             var routemodalmarker = L.marker([lattitude, longitude], {
+    //                                 draggable: false,
+    //                                 pmIgnore: true
+    //                             }).bindTooltip(tooltipcontent, {
+    //                                 permanent: true,
+    //                                 direction: 'right',
+    //                                 className: "Tooltipmodalmap",
+    //                                 noWrap: false,
+    //                             });
+    //                             routemodalmarker.addTo(modalmapcruisingsch);
+
+    //                             var textMarkermodalmap = L.marker([lattitude,longitude], {
+    //                             icon: L.divIcon({
+    //                                 html: selectedmarkerday_num,
+    //                                 className: 'text-below-marker-modalmap',
+    //                                 })
+    //                             }).addTo(modalmapcruisingsch);
+
+    //                              $(".Tooltipmodalmap").hide();
+    //                 ////////////////////////////////////////////////////////////////////////////////
+                    
+                    
+    //             }
+    //         },
+    //         error: function(jqxhr) { 
+    //             $("#hideloader").hide();
+    //         }
+    //     });
+    // }
+        
+}
+
+
+
+//////////////////////////////Cruising schedule modal map////////////////////////////////////////////
   
 //modalmap
 var modalmapsatellite = L.tileLayer(mbUrl, {
@@ -2979,7 +3234,10 @@ function drawrouteinmodal(frommarker) { //alert();
     }
 
 }
-
+$(document).on("click", "#markerModalclosecruisingsch", function(e) {
+   
+    $("#markerModalcruisingsch").hide();
+});
 
 
 // Closing the popup
@@ -3155,18 +3413,18 @@ $(document).ready(function() { //alert();
                 type : "image"
             });
 
-            $('.fancyboxmap').fancybox({
-            //maxWidth	: 400,
-                //maxHeight	: 600,
-                fitToView	: true,
-                width		: '100%',
-                height		: '100%',
-                autoSize	: true,
-                closeClick	: false,
-                autoScale   : true,
-                transitionIn : 'fade',
-                transitionOut: 'fade',
-        });
+        //     $('.fancyboxmap').fancybox({
+        //     //maxWidth	: 400,
+        //         //maxHeight	: 600,
+        //         fitToView	: true,
+        //         width		: '100%',
+        //         height		: '100%',
+        //         autoSize	: true,
+        //         closeClick	: false,
+        //         autoScale   : true,
+        //         transitionIn : 'fade',
+        //         transitionOut: 'fade',
+        // });
 
             //$('.fancybox').fancybox();
 
