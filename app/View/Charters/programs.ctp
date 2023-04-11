@@ -382,9 +382,9 @@ font-weight: bold;
 .nav-side-menu {
     display: block;
 }
-  .label-bold {
+  /* .label-bold {
         font-size:16px;
-    }
+    } */
 
 .btn-open,
 .btn-eml-send
