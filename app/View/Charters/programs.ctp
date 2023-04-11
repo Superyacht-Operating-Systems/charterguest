@@ -382,16 +382,16 @@ font-weight: bold;
 .nav-side-menu {
     display: block;
 }
-  .label-bold {
+  /* .label-bold {
         font-size:16px;
-    }
+    } */
 
 .btn-open,
 .btn-eml-send
 {font-size: 12px;}
 .list-logout-row img{display:none; }
 
-.md-row-space{margin-bottom:0px!important;}
+/* .md-row-space{margin-bottom:0px!important;} */
     .owl-carousel label {
     width: 100%;
     display: block!important;
@@ -438,11 +438,11 @@ font-weight: bold;
     width: 50%;
     margin-top: -45px;
 }
-.flexrow {
+/* .flexrow {
     width: 100%;
     display: inline-block;
     padding: 0px;
-}
+} */
 .flexrow .three {
         margin-top:0px;
         width: 50%;

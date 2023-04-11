@@ -69,6 +69,9 @@ echo $this->Html->script('leaflet/route');
  echo $this->Html->script('leaflet/L.Polyline.SnakeAnim.js'); 
 ?>
 <style>
+    .navbar {
+  margin-bottom: 0px;
+ }
     .auto_resize::selection {
   color: none;
   background: transparent;
@@ -339,8 +342,11 @@ width: 100%;
         height: 300px;
 width: 455px;
 margin:10px auto;
-border: none !important;
-border-radius: 10px;
+border: 0px solid rgb(204, 204, 204) !important;
+border-radius: 10px!important;
+-webkit-border-radius: 10px;
+-moz-border-radius: 10px;
+overflow: hidden;
 
     }
 
@@ -579,10 +585,12 @@ and (min-device-width : 768px)
 and (max-device-width : 1024px) 
 and (orientation : portrait) {
     .navbar {
-  margin-bottom: 10px;
+  margin-bottom: 0px;
   min-height: 45px;
 }
-
+p {
+  margin: 0 0 0px;
+}
 .yachtHeaderName {
   margin-top: 0px !important;
 }
@@ -3097,8 +3105,8 @@ $(document).ready(function() { //alert();
                 autoSize	: true,
                 closeClick	: false,
                 autoScale   : true,
-                transitionIn : 'fade',
-                transitionOut: 'fade',
+                transitionIn : 'none',
+                transitionOut: 'none',
         });
             $(".Tooltip").css("width","50px");
                 $(".smalltooltip").hide();

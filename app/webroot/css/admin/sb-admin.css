@@ -4879,12 +4879,8 @@ border:none;
 .userhead-name .acti-countnav {
     top: 89px;
 }
-.flexrow .two {
-    margin-top: -2px!important;
-}
-.yachtHeaderName{
-      margin-top:4px!important;
-}
+
+
 .flex-mdrow {
     display: inline-block!important;
       width: 100%;
@@ -4897,9 +4893,7 @@ border:none;
 .right-all{
   text-align: right!important;
 }
-.userhead-name .user-hname{
-      top: 65px;
-}
+
 .common-form-row.map-form-rwo{
       margin-top: 65px;
     margin-bottom: 20px;
@@ -5336,7 +5330,7 @@ label.othr-like{width: 100%!important;}
 
 
 
-@media only screen and (min-width: 900px) and (max-width: 1100px){
+@media only screen and (min-width: 1000px) and (max-width: 1100px){
 .ch-card-aligncenter{
     width: 1000px;
     margin: 0 auto;
@@ -5346,7 +5340,7 @@ label.othr-like{width: 100%!important;}
 }
 
 }
-@media only screen and (min-width: 600px) and (max-width: 900px){
+@media only screen and (min-width: 600px) and (max-width: 1000px){
 .ch-card-aligncenter{
     width: 660px!important;
     margin: 0 auto;
