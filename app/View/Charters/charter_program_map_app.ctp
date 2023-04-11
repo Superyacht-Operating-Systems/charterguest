@@ -69,6 +69,10 @@ echo $this->Html->script('leaflet/route');
  echo $this->Html->script('leaflet/L.Polyline.SnakeAnim.js'); 
 ?>
 <style>
+    .auto_resize::selection {
+  color: none;
+  background: transparent;
+}
     .CS_modal .modal-header {
   padding: 25px 15px 5px 15px;
 }

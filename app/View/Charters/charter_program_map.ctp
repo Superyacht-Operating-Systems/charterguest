@@ -58,7 +58,10 @@ if(empty($scheduleData)){
     max-height: 500px;
     width: auto !important;
 } */
-
+.auto_resize::selection {
+  color: none;
+  background: transparent;
+}
 .CS_modal .modal-header {
   padding: 25px 15px 5px 15px;
 }
