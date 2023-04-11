@@ -2599,9 +2599,6 @@ textarea.addEventListener("input", function() {
                                 //modalmap.panBy([0,0]);
                                 // console.log(lattitude);  
                                 // console.log(longitude);  
-                                setTimeout(() => {
-                                    modalmap.invalidateSize();
-                                }, 0);
                                 $("#modalmap").find('.leaflet-control-attribution').hide();
                                 var routemodalmarker = L.marker([lattitude, longitude], {
                                     draggable: false,

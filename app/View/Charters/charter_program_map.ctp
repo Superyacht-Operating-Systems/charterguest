@@ -2747,9 +2747,7 @@ function markerOnClick(e) {
                                 //modalmap.panBy([0,0]);
                                 // console.log(lattitude);  
                                 // console.log(longitude);  
-                                setTimeout(() => {
-                                    modalmap.invalidateSize();
-                                }, 0);
+                               
                                 $("#modalmap").find('.leaflet-control-attribution').hide();
                                 var routemodalmarker = L.marker([lattitude, longitude], {
                                     draggable: false,
@@ -2925,6 +2923,8 @@ function drawrouteinmodal(frommarker) { //alert();
         let toword = myArrayTo[0];
         $("#embarkation").text(fromword);
         $("#debarkation").text(toword);
+
+
         var specificline = "";
             specificline = tempdrawrouteline;
         var drawnItemsModalMap = new L.FeatureGroup();
@@ -2945,7 +2945,7 @@ function drawrouteinmodal(frommarker) { //alert();
         
         modalmap.fitBounds(fitzoommap);
         // setTimeout(() => {
-        //     modalmap.fitBounds(polyline2.getBounds());
+             //modalmap.fitBounds(polyline2.getBounds());
         // }, 100);
         setTimeout(() => {
             modalmap.invalidateSize();
@@ -2983,9 +2983,9 @@ function markerModalclose(scheduleSameLocationUUID){
                             customMediaQueryRemove();
 
                             // Removed the layer on close the route modal to clear any changes done and not saved.
-                            modalmap.eachLayer(function (layer) {
-                                modalmap.removeLayer(layer);
-                            });
+                            // modalmap.eachLayer(function (layer) {
+                                 modalmap.removeLayer(drawnItemsModalMap);
+                            // });
 }
 
 $(document).on("change", ".noofdayscard", function(e) {
