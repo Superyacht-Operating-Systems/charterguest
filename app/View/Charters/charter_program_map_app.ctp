@@ -1252,7 +1252,11 @@ padding-left: 15px!important;
 }
 }
 
+#CruisingButton:hover , #HideDetails:hover, #HelpfulTips:hover{
+background: #fff !important;
+}
 #CruisingButton {
+    background: #fff !important;
     position: absolute!important;
     top: 18px!important;
     right: 13px!important;
@@ -1265,6 +1269,7 @@ padding-left: 15px!important;
 }
 
 #HideDetails {
+    background: #fff !important;
     position: absolute!important;
     top: 56px!important;
     right: 13px!important;
@@ -1278,6 +1283,7 @@ padding-left: 15px!important;
 }
 
 #HelpfulTips {
+    background: #fff !important;
     position: absolute!important;
     top: 94px!important;
     right: 13px!important;
