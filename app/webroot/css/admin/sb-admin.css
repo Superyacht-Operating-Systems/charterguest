@@ -5336,7 +5336,7 @@ label.othr-like{width: 100%!important;}
 
 
 
-@media only screen and (min-width: 900px) and (max-width: 1100px){
+@media only screen and (min-width: 1000px) and (max-width: 1100px){
 .ch-card-aligncenter{
     width: 1000px;
     margin: 0 auto;
@@ -5346,7 +5346,7 @@ label.othr-like{width: 100%!important;}
 }
 
 }
-@media only screen and (min-width: 600px) and (max-width: 900px){
+@media only screen and (min-width: 600px) and (max-width: 1000px){
 .ch-card-aligncenter{
     width: 660px!important;
     margin: 0 auto;
