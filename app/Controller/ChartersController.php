@@ -5401,6 +5401,15 @@ class ChartersController extends AppController {
                         //echo $YachtData['Yacht']['cruising_unit'];
                         if(isset($YachtData[0]['Yacht']['cruising_unit']) && $YachtData[0]['Yacht']['cruising_unit'] != '0' ){
                          $cruising_unit = $YachtData[0]['Yacht']['cruising_unit'];
+                         if($YachtData[0]['Yacht']['cruising_unit'] == "GAL"){
+                            $cruising_unit = "G";
+                         }else if($YachtData[0]['Yacht']['cruising_unit'] == "LTR"){
+                            $cruising_unit = "L";
+                         }else if($YachtData[0]['Yacht']['cruising_unit'] == "M3"){
+                            $cruising_unit = "M";
+                         }else if($YachtData[0]['Yacht']['cruising_unit'] == "Ltrs"){
+                            $cruising_unit = "L";
+                         }
                         }
                         if(isset($YachtData[0]['Yacht']['domain_name'])){
                             $domain_name = $YachtData[0]['Yacht']['domain_name'];
@@ -5809,6 +5818,15 @@ class ChartersController extends AppController {
                 
                 if(isset($YachtData[0]['Yacht']['cruising_unit']) && $YachtData[0]['Yacht']['cruising_unit'] != '0' ){
                  $cruising_unit = $YachtData[0]['Yacht']['cruising_unit'];
+                 if($YachtData[0]['Yacht']['cruising_unit'] == "GAL"){
+                    $cruising_unit = "G";
+                 }else if($YachtData[0]['Yacht']['cruising_unit'] == "LTR"){
+                    $cruising_unit = "L";
+                 }else if($YachtData[0]['Yacht']['cruising_unit'] == "M3"){
+                    $cruising_unit = "M";
+                 }else if($YachtData[0]['Yacht']['cruising_unit'] == "Ltrs"){
+                    $cruising_unit = "L";
+                 }
                 }
                 //echo "<pre>";print_r($markername); exit;
                 $Routeorderdata = array();
@@ -6336,12 +6354,12 @@ class ChartersController extends AppController {
                     </div>
                     <div class="marker_img_div">
                     <div class="mLoc-img_prev">
-                    <a href="'.$titleimagehref.'" rel="gallery1" class="'.$fancybox.'"><img src="'.$titleimage.'" style="object-fit: fill;width: 100%; height: 150px;" alt="" ></a>';
+                    <a href="'.$titleimagehref.'" rel="gallery1" data-thumbnail="'.$titleimagehref.'" class="'.$fancybox.'"><img src="'.$titleimage.'" style="object-fit: fill;width: 100%; height: 150px;" alt="" ></a>';
                     if(isset($fleetlocationimages) && !empty($fleetlocationimages)){ 
                         $fleetlocationimages =  array_unique($fleetlocationimages);
                         foreach($fleetlocationimages as $name){ //echo $name;
                             if(!empty($name)){
-                            $popupHtml .= '<a href="'.$targetFullGalleryPathhref.$name.'" data-fancybox="images" rel="gallery1" class="'.$fancybox.'"><img src="'.$name.'" style="object-fit: fill;width: 100%; height: 150px;display:none;" alt="" ></a>';
+                            $popupHtml .= '<a href="'.$targetFullGalleryPathhref.$name.'" data-thumbnail="'.$targetFullGalleryPathhref.$name.'" rel="gallery1" class="'.$fancybox.'"><img src="'.$name.'" style="object-fit: fill;width: 100%; height: 150px;display:none;" alt="" ></a>';
                             }
                         }
                     }
@@ -6524,12 +6542,12 @@ class ChartersController extends AppController {
                                 $colorcode = "";
                               }
 
-                            $popupHtml .= '<div class="marksub-div"><div style="display:flex"><div class="m_loc_desc_div"><div class="marksup_header"><input name="iti_time[]" disabled="true" id="iti_time" class="iti_time" value="'.$iti_time.'"><ul class="action-icon"><li><i class="fa fa-comments crew_comment_cruisingmap" style="'.$colorcode.$displaynone.'" data-rel="'.$activity['CharterProgramScheduleActivity']['UUID'].'" data-yachtid="'.$yacht_id.'" data-tempname="'.htmlspecialchars($activity['CharterProgramScheduleActivity']['activity_name']).'" title="Comments & Feedback"><input type="hidden" name=comments[] value="" class="messagecomments" /></i></li></ul></div><div class="subloc_name" name="activity_name[]" >'.htmlspecialchars($activity['CharterProgramScheduleActivity']['activity_name']).'</div><input type="hidden" name="activity_id[]" value="'.$activity['CharterProgramScheduleActivity']['UUID'].'"><textarea class="form-control auto_resize loc_desc_field lg_tarea" '.$readonly.' name="messages[]" rows="1" cols="50">'.htmlspecialchars($activity['CharterProgramScheduleActivity']['notes']).'</textarea></div><div class="m_loc_img_div"><div class="sp-upload-img"><a href="'.$activityattachmentimagehref.'"  rel="gallery'.$i.'"  class="'.$activityfancybox.'"><img src="'.$activityattachmentimage.'" style="object-fit: fill; height: 150px;" alt=""></a>';
+                            $popupHtml .= '<div class="marksub-div"><div style="display:flex"><div class="m_loc_desc_div"><div class="marksup_header"><input name="iti_time[]" disabled="true" id="iti_time" class="iti_time" value="'.$iti_time.'"><ul class="action-icon"><li><i class="fa fa-comments crew_comment_cruisingmap" style="'.$colorcode.$displaynone.'" data-rel="'.$activity['CharterProgramScheduleActivity']['UUID'].'" data-yachtid="'.$yacht_id.'" data-tempname="'.htmlspecialchars($activity['CharterProgramScheduleActivity']['activity_name']).'" title="Comments & Feedback"><input type="hidden" name=comments[] value="" class="messagecomments" /></i></li></ul></div><div class="subloc_name" name="activity_name[]" >'.htmlspecialchars($activity['CharterProgramScheduleActivity']['activity_name']).'</div><input type="hidden" name="activity_id[]" value="'.$activity['CharterProgramScheduleActivity']['UUID'].'"><textarea class="form-control auto_resize loc_desc_field lg_tarea" '.$readonly.' name="messages[]" rows="1" cols="50">'.htmlspecialchars($activity['CharterProgramScheduleActivity']['notes']).'</textarea></div><div class="m_loc_img_div"><div class="sp-upload-img"><a href="'.$activityattachmentimagehref.'"  rel="gallery'.$i.'" data-thumbnail="'.$activityattachmentimagehref.'"  class="'.$activityfancybox.'"><img src="'.$activityattachmentimage.'" style="object-fit: fill; height: 150px;" alt=""></a>';
                             if(isset($fleetlocationimages_act) && !empty($fleetlocationimages_act)){
                                 $fleetlocationimages_act =  array_unique($fleetlocationimages_act);
                                 foreach($fleetlocationimages_act as $name){
                                     if(!empty($name)){
-                                        $popupHtml .= '<a href="'.$targetFullGalleryPathhref.$name.'" data-fancybox="images" rel="gallery'.$i.'" class="'.$activityfancybox.'"><img src="'.$name.'" style="object-fit: fill; height: 150px;display:none;" alt=""></a>';
+                                        $popupHtml .= '<a href="'.$targetFullGalleryPathhref.$name.'" data-thumbnail="'.$targetFullGalleryPathhref.$name.'"rel="gallery'.$i.'" class="'.$activityfancybox.'"><img src="'.$name.'" style="object-fit: fill; height: 150px;display:none;" alt=""></a>';
                                     }
                                 }
                             }

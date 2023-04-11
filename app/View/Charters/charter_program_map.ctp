@@ -652,7 +652,9 @@ position: absolute;
     }
 
 }
-
+#fancybox-thumbs{
+    z-index: 9999999 !important;
+}
     </style>
 
 <?php
@@ -1597,8 +1599,13 @@ body .sp-60-w input {
 <?php    echo $this->Html->script('jquery-1.7.2.min');
         echo $this->Html->script('fancybox/jquery.fancybox');
         echo $this->Html->css('fancybox/jquery.fancybox');
-        
+        echo $this->Html->script('fancybox/jquery.fancybox-thumbs');
+        echo $this->Html->css('fancybox/jquery.fancybox-thumbs');
     ?> 
+    <!-- <link rel="stylesheet" 
+  href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/helpers/jquery.fancybox-thumbs.css" type="text/css" media="screen" />
+<script type="text/javascript" 
+  src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/helpers/jquery.fancybox-thumbs.js"></script> -->
     
 <!--    <div class="back-btn">
         <a href="<?php echo $basefolder."/charters/view"; ?>"><button type="button" class="btn btn-warning" title="Back" data-placement="bottom">
@@ -1827,12 +1834,12 @@ body .sp-60-w input {
                                 
                                 </div>
                                 <div class="loc_img_prev">
-                                <a href="<?php echo $titleimagehref; ?>" rel="galleryloc<?php echo $crusemap; ?>" class="<?php echo $fancybox; ?>"><img src="<?php echo $titleimage; ?>" style="object-fit: fill; width: 100%;height: 150px;" alt="" ></a>
+                                <a href="<?php echo $titleimagehref; ?>" rel="galleryloc<?php echo $crusemap; ?>" data-thumbnail="<?php echo $titleimagehref; ?>" class="<?php echo $fancybox; ?>"><img src="<?php echo $titleimage; ?>" style="object-fit: fill; width: 100%;height: 150px;" alt="" ></a>
                                <?php if(isset($fleetlocationimages) && !empty($fleetlocationimages)){ 
                                     $fleetlocationimages =  array_unique($fleetlocationimages);
                                     foreach($fleetlocationimages as $name){
                                         if(!empty($name)){ ?>
-                                            <a href="<?php echo $targetFullGalleryPathhref; ?><?php echo $name ?>" data-fancybox="images" rel="galleryloc<?php echo $crusemap ?>" class="<?php echo $fancybox; ?>"><img src="<?php echo $name; ?>" style="object-fit: fill;width: 100%; height: 150px;display:none;" alt="" ></a>
+                                            <a href="<?php echo $targetFullGalleryPathhref; ?><?php echo $name; ?>" data-thumbnail="<?php echo $targetFullGalleryPathhref; ?><?php echo $name; ?>" rel="galleryloc<?php echo $crusemap ?>" class="<?php echo $fancybox; ?>"><img src="<?php echo $name; ?>" style="object-fit: fill;width: 100%; height: 150px;display:none;" alt="" ></a>
                                             <?php  }
                                     }
                                 } ?>
@@ -3136,6 +3143,15 @@ $(document).ready(function() { //alert();
                 autoScale   : true,
                 transitionIn : 'fade',
                 transitionOut: 'fade',
+                helpers: {
+                        thumbs: {
+                        width: 100,
+                        height: 75,
+                        source: function(image) {
+                            return $(image.element).data("thumbnail");
+                        }
+                        }
+                    },
                 type : "image"
             });
 
