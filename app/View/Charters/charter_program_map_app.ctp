@@ -3086,8 +3086,8 @@ $(document).ready(function() { //alert();
                 autoSize	: true,
                 closeClick	: false,
                 autoScale   : true,
-                transitionIn : 'fade',
-                transitionOut: 'fade',
+                transitionIn : 'none',
+                transitionOut: 'none',
         });
             $(".Tooltip").css("width","50px");
                 $(".smalltooltip").hide();
