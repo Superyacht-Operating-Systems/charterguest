@@ -438,11 +438,11 @@ font-weight: bold;
     width: 50%;
     margin-top: -45px;
 }
-.flexrow {
+/* .flexrow {
     width: 100%;
     display: inline-block;
     padding: 0px;
-}
+} */
 .flexrow .three {
         margin-top:0px;
         width: 50%;
