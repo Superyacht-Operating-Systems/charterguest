@@ -2599,6 +2599,9 @@ textarea.addEventListener("input", function() {
                                 //modalmap.panBy([0,0]);
                                 // console.log(lattitude);  
                                 // console.log(longitude);  
+                                setTimeout(() => {
+                                    modalmap.invalidateSize();
+                                }, 0);
                                 $("#modalmap").find('.leaflet-control-attribution').hide();
                                 var routemodalmarker = L.marker([lattitude, longitude], {
                                     draggable: false,
@@ -2777,7 +2780,7 @@ function drawrouteinmodal(frommarker) { //alert();
         var specificline = "";
             specificline = tempdrawrouteline;
         var drawnItemsModalMap = new L.FeatureGroup();
-        modalmap.addLayer(drawnItemsModalMap);
+        
         var polyLayersModalMap = [];
         var   polyline2 = new L.polyline(specificline, {stroke:true,snakingSpeed: 200,weight:2.5,dashArray: [5,5],color:'#fff',lineCap: "round",lineJoin: "round",smoothFactor: 1});
 
@@ -2788,11 +2791,12 @@ function drawrouteinmodal(frommarker) { //alert();
         for (let layer of polyLayersModalMap) { //console.log(layer);
             drawnItemsModalMap.addLayer(layer);
         }
+       
+        modalmap.fitBounds(drawnItemsModalMap.getBounds());
+        modalmap.addLayer(drawnItemsModalMap);
+        
         drawnItemsModalMap.snakeIn();
 
-      
-        
-        modalmap.fitBounds(fitzoommap);
         // setTimeout(() => {
         //     modalmap.fitBounds(polyline2.getBounds());
         // }, 100);
