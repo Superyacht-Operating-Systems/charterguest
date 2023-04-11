@@ -391,7 +391,7 @@ font-weight: bold;
 {font-size: 12px;}
 .list-logout-row img{display:none; }
 
-.md-row-space{margin-bottom:0px!important;}
+/* .md-row-space{margin-bottom:0px!important;} */
     .owl-carousel label {
     width: 100%;
     display: block!important;
