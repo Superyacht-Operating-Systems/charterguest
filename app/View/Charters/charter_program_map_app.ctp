@@ -69,6 +69,9 @@ echo $this->Html->script('leaflet/route');
  echo $this->Html->script('leaflet/L.Polyline.SnakeAnim.js'); 
 ?>
 <style>
+    .CS_modal .modal-header {
+  padding: 25px 15px 5px 15px;
+}
     .leaflet-container .leaflet-marker-pane img{
 z-index: 1 !important;
 }
@@ -259,7 +262,7 @@ margin-right: 10px;
     #modalmap{
         height: 300px;
 width: 100%;
-border: none !important;
+border: 0px solid rgb(204, 204, 204) !important;
 border-radius: 10px!important;
 -webkit-border-radius: 10px;
 -moz-border-radius: 10px;
@@ -1254,6 +1257,7 @@ padding-left: 15px!important;
   z-index: 9999;
   font-weight:bold;
   border-radius: 20px;
+  font-size: 12px;
 }
 
 #HideDetails {
@@ -1266,6 +1270,7 @@ padding-left: 15px!important;
   font-weight:bold;
   min-width: 121px;
   border-radius: 20px;
+  font-size: 12px;
 }
 
 #HelpfulTips {
@@ -1880,7 +1885,7 @@ var vessel = new L.LayerGroup();
 var markerArray = [];
 var markerCount = 0;
      
-var mbAttr = '<table width=100%><thead><tr style="font-size:12px;font-weight:bold;text-align:center;"><td style="width:33%;border-radius: 20px;overflow: hidden;background: #fff;"><i class="fa fa-solid fa-ship map_bottom_attr" aria-hidden="true"></i>Distance<span style="color:#00a8f3;"><br><?php echo $RouteDatadisplaydistancevalue; ?></span></td><td style="width:33%;border-radius: 20px;overflow: hidden;background: #fff;"><i class="fa fa-solid fa-clock-o map_bottom_attr" aria-hidden="true"></i>Duration<span style="color:#00a8f3;"><br><?php echo $RouteDatadisplayduration; ?></span></td><td style="width:34%;border-radius: 20px;overflow: hidden;background: #fff;"><i class="fas fa-gas-pump fa-solid map_bottom_attr" aria-hidden="true"></i>Fuel<span style="color:#00a8f3;"><br><?php echo $RouteDatatotalconsumption; ?></span></td></tr></thead><tbody><tr style="font-size:12px;color:#00a8f3;font-weight:bold;text-align:center;"><td></td><td></td><td></td></tr></tbody></table>';
+var mbAttr = '<table width=100%><thead><tr style="font-size:12px;font-weight:bold;text-align:center;"><td style="width:33%;border-radius: 12px;overflow: hidden;background: #fff;"><i class="fa fa-solid fa-ship map_bottom_attr" aria-hidden="true"></i>Distance<span style="color:#00a8f3;"><br><?php echo $RouteDatadisplaydistancevalue; ?></span></td><td style="width:33%;border-radius: 12px;overflow: hidden;background: #fff;"><i class="fa fa-solid fa-clock-o map_bottom_attr" aria-hidden="true"></i>Duration<span style="color:#00a8f3;"><br><?php echo $RouteDatadisplayduration; ?></span></td><td style="width:34%;border-radius: 12px;overflow: hidden;background: #fff;"><i class="fas fa-gas-pump fa-solid map_bottom_attr" aria-hidden="true"></i>Fuel<span style="color:#00a8f3;"><br><?php echo $RouteDatatotalconsumption; ?></span></td></tr></thead><tbody><tr style="font-size:12px;color:#00a8f3;font-weight:bold;text-align:center;"><td></td><td></td><td></td></tr></tbody></table>';
 mbUrl = 'https://api.mapbox.com/styles/v1/superyachtos/{id}/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1Ijoic3VwZXJ5YWNodG9zIiwiYSI6ImNpdW54eHV5bjAxNmMzMG1sMGpkamVma2cifQ.Y9kj-j0RGCFSE6khFVPyOw';
 var satellite   =   L.tileLayer(mbUrl, {
     id: 'ciurvui5100uz2iqqe929nrlr', 
