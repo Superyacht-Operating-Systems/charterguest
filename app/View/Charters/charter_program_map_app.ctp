@@ -289,6 +289,18 @@ border-radius: 10px!important;
 margin-top:10px;
 overflow: hidden;
     }
+
+    #modalmapcruisingsch{
+        height: 300px;
+width: 100%;
+border: 0px solid rgb(204, 204, 204) !important;
+border-radius: 10px!important;
+-webkit-border-radius: 10px;
+-moz-border-radius: 10px;
+margin-top:10px;
+overflow: hidden;
+    }
+
     .CS_modal, .Mark_modal{
     width:100% !important;
 }
@@ -614,6 +626,17 @@ border-radius: 10px!important;
 margin-top:10px;
 overflow: hidden;
     }
+    #modalmapcruisingsch{
+        height: 300px;
+width: 100%;
+border: 3px solid rgb(204, 204, 204) !important;
+border-radius: 10px!important;
+-webkit-border-radius: 10px;
+-moz-border-radius: 10px;
+-khtml-border-radius: 10px;
+margin-top:10px;
+overflow: hidden;
+    }
     .navbar {
   margin-bottom: 0px;
   min-height: 45px;
@@ -639,6 +662,17 @@ and (min-device-width : 768px)
 and (max-device-width : 1024px) 
 and (orientation : landscape) {
     #modalmap{
+        height: 300px;
+width: 100%;
+border: 3px solid rgb(204, 204, 204) !important;
+border-radius: 10px!important;
+-webkit-border-radius: 10px;
+-moz-border-radius: 10px;
+-khtml-border-radius: 10px;
+margin-top:10px;
+overflow: hidden;
+    }
+    #modalmapcruisingsch{
         height: 300px;
 width: 100%;
 border: 3px solid rgb(204, 204, 204) !important;
@@ -1587,12 +1621,22 @@ span.sp-leftalign {
 }
 }
 
+.text-below-marker-locsch {
+    font-size: 11px;
+    font-weight: 1px solid;
+    margin-top: -35px !important;
+    margin-left: -3px !important;
+    color: #000;
+    z-index:9999 !important;
+}
+
 .text-below-marker {
     font-size: 11px;
     font-weight: 1px solid;
     margin-top: -35px !important;
     margin-left: -3px !important;
     color: #000;
+    z-index:9999 !important;
 }
 
 .text-below-marker-modalmap {
@@ -1786,7 +1830,7 @@ span.sp-leftalign {
                                 </div>
                             </div>
                             <div class="loc_img_div">
-                                <div class="loc_map_div fancyboxmap" id="crusingschedulemap<?php echo $crusemap; ?>">
+                                <div class="loc_map_div" id="crusingschedulemap<?php echo $crusemap; ?>">
                                 
                                 </div>
                                 <div class="loc_img_prev">
@@ -1855,6 +1899,27 @@ span.sp-leftalign {
                 <div id="markerModal_load" class="markmodal_load">
 
                 </div>
+
+            </div>
+        </div>
+    </div>
+</div><!-- /.modal-content -->
+
+<div id="markerModalcruisingsch" class="modal certificat-modal-container cruising-location-Modal"  role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content Mark_modal" id="markerModal_id">
+            <div class="modal-header" style="padding:5px;border-bottom: 0px solid #e5e5e5;">
+                <button type="button" class="close" data-schuuid="" id="markerModalclosecruisingsch" aria-hidden="true" style="margin-right: 5px;">×</button>
+            </div>
+            <div class="modal-body location_Modal_body markmodalbody">
+            
+           
+                <select name="markersnamescruisingsch" style="display:none;" class="form-control markersnamesmodalmapcruisingsch"></select>
+                <div id="modalmapcruisingsch" style="border: solid 1px #ccc;">
+               
+                </div>
+               
+               
 
             </div>
         </div>
@@ -1970,10 +2035,10 @@ var satellite   =   L.tileLayer(mbUrl, {
 });
 
 satellite.on('loading', function (event) {
-  console.log('start loading tiles');
+  //console.log('start loading tiles');
 });
 satellite.on('load', function (event) {
-  console.log('all tiles loaded');
+  //console.log('all tiles loaded');
 });
 var map = L.map('map', {
     //center: [39.73, -104.99],
@@ -1987,9 +2052,14 @@ var map = L.map('map', {
     'inertiaThershold'   : 32,
     //'crs': L.CRS.Simple,
 });
+///////////////////////////Cruising schedule modal map//////////////////////////////////////////////
+var CSMPmarkerArray = [];
+var CSMPmarkerCount = 0;
 <?php 
 if(isset($crusemaparray) && !empty($crusemaparray)){
-foreach($crusemaparray as $key => $val){ ?>
+    $loop= 1;
+    $settimeout = 100;
+foreach($scheduleData as $key => $schedule){ ?>
 
 var locsatellite = "schloc"+"<?php echo $key; ?>";
 
@@ -2003,10 +2073,10 @@ locsatellite = L.tileLayer(mbUrl, {
     noWrap: false,
 });
 
-var idlocmap = "<?php echo $val ?>";
-    idlocmap = L.map('<?php echo $val ?>', {
-    center: [39.73, -104.99],
-    'zoom': 5,
+var idlocmap = "<?php echo "crusingschedulemap".$loop; ?>";
+    idlocmap = L.map('<?php echo "crusingschedulemap".$loop; ?>', {
+    center: ["<?php echo $schedule['CharterProgramSchedule']['lattitude']; ?>", "<?php echo $schedule['CharterProgramSchedule']['longitude']; ?>"],
+    'zoom': 1.5,
     'measureControl': true,
     'worldCopyJump': false,
     'layers': [locsatellite],
@@ -2015,16 +2085,96 @@ var idlocmap = "<?php echo $val ?>";
     'inertiaThershold': 32,
     //'crs': L.CRS.Simple,
 });
+// console.log(idlocmap);
+// console.log(locsatellite);
+var markerschloc = L.marker(["<?php echo $schedule['CharterProgramSchedule']['lattitude']; ?>", "<?php echo $schedule['CharterProgramSchedule']['longitude']; ?>"],{pmIgnore: true})
+        .bindTooltip("", 
+                    {
+                        permanent: true, 
+                        offset: [0,0],
+                        direction: 'right',
+                        className: "Tooltip",
+                        noWrap: false,
+                    }).on("click", markerOnClickCSMP);
+
+                markerschloc.addTo(idlocmap);
+
+            
+var textMarkerschloc = L.marker(["<?php echo $schedule['CharterProgramSchedule']['lattitude']; ?>", "<?php echo $schedule['CharterProgramSchedule']['longitude']; ?>"], {
+  icon: L.divIcon({
+      html: "<?php echo $schedule['CharterProgramSchedule']['day_num']; ?>",
+      className: 'text-below-marker-locsch',
+    })
+});
+textMarkerschloc.addTo(idlocmap);
+
+markerschloc.scheduleId = "<?php echo $schedule['CharterProgramSchedule']['charter_program_id']; ?>";
+        markerschloc.tablepId = "<?php echo $schedule['CharterProgramSchedule']['id']; ?>";
+        markerschloc.scheduleUUId = "<?php echo $schedule['CharterProgramSchedule']['UUID']; ?>";
+        markerschloc.daytitle = "<?php echo $schedule['CharterProgramSchedule']['title']; ?>";
+        markerschloc.day_dates = "<?php echo $schedule['CharterProgramSchedule']['day_dates']; ?>";
+        markerschloc.marker_msg_count = "<?php echo $schedule['CharterProgramSchedule']['marker_msg_count']; ?>";
+        markerschloc.distancetotal = "<?php echo $markertotal[$schedule['CharterProgramSchedule']['title'].' - Day '.$schedule['CharterProgramSchedule']['day_num']]['distance']; ?>";
+        markerschloc.durationtotal = "<?php echo $markertotal[$schedule['CharterProgramSchedule']['title'].' - Day '.$schedule['CharterProgramSchedule']['day_num']]['duration'];  ?>";
+        markerschloc.consumptiontotal = "<?php echo $markertotal[$schedule['CharterProgramSchedule']['title'].' - Day '.$schedule['CharterProgramSchedule']['day_num']]['consumption']; ?>";
+        markerschloc.endplace = "<?php echo $markertotal[$schedule['CharterProgramSchedule']['title'].' - Day '.$schedule['CharterProgramSchedule']['day_num']]['endplace']; ?>";
+        markerschloc.counttitle = "<?php echo $counttitle; ?>";
+        markerschloc.scheduleSameLocationUUID = "<?php echo implode(',',$samelocationsScheduleUUID[$schedule['CharterProgramSchedule']['title']]); ?>";
+        markerschloc.samelocationsDates = "<?php echo implode(',',$samelocationsDates[$schedule['CharterProgramSchedule']['title']]); ?>";
+        markerschloc.day_num = "<?php echo $schedule['CharterProgramSchedule']['day_num']; ?>";
+        markerschloc.markerNum = CSMPmarkerCount; 
+        CSMPmarkerArray.push(markerschloc);
+        CSMPmarkerCount++;
+
 
 setTimeout(() => {
-    idlocmap.invalidateSize();
-}, 0);
+     idlocmap.invalidateSize();
+}, "<?php echo $settimeout; ?>");
 
 // removed control zoom in and out from modal
-$("#<?php echo $val; ?> .leaflet-control-container").hide();
-<?php }
+$("#<?php echo "crusingschedulemap".$loop; ?> .leaflet-control-container").hide();
+<?php 
+$loop++; 
+$settimeout = $settimeout+100;
+}
 }
 ?>
+
+
+
+var modalmapcruisingschsatellite = L.tileLayer(mbUrl, {
+    id: 'ciurvui5100uz2iqqe929nrlr',
+    unloadInvisibleTiles: false,
+    reuseTiles: true,
+    updateWhenIdle: false,
+    continousWorld: true,
+    noWrap: false,
+});
+
+var modalmapcruisingsch = L.map('modalmapcruisingsch', {
+    //center: [39.73, -104.99],
+    //'zoom': 5,
+    'measureControl': true,
+    'worldCopyJump': false,
+    'layers': [modalmapcruisingschsatellite],
+    'inertiaDecelartion': 3000,
+    'inertiaMaxSpeed': 1500,
+    'inertiaThershold': 32,
+    //'crs': L.CRS.Simple,
+});
+
+function ReloadModalMaplayerCSMP(){
+    var modalmapcruisingschsatellite = L.tileLayer(mbUrl, {
+                                            id: 'ciurvui5100uz2iqqe929nrlr',
+                                            unloadInvisibleTiles: false,
+                                            reuseTiles: true,
+                                            updateWhenIdle: false,
+                                            continousWorld: true,
+                                            noWrap: false,
+                                    });
+                                    modalmapcruisingsch.addLayer(modalmapcruisingschsatellite);
+    }
+//////////////////////////////Cruising schedule modal map////////////////////////////////////////////
 //modalmap
 var modalmapsatellite = L.tileLayer(mbUrl, {
     id: 'ciurvui5100uz2iqqe929nrlr',
@@ -2431,7 +2581,7 @@ $(document).on("click", "#HideDetails", function(e) {
         $(".owntooltip").hide();
         $("#HideDetails").text("Show Details");
         $(".acti-count-onmarker").hide();
-        $('.text-below-marker').each(function(i, obj) {
+        $('#map .text-below-marker').each(function(i, obj) {
             var t = $(this).find('.acti-count-onmarker').text();
             //console.log(t);
             if(t > 0){
@@ -2469,7 +2619,7 @@ $(document).on("click", ".mapquestionmodalclose", function(e) {
 // added the custom classname to marker and id to tooltip and then onclicking the tooltip found that id and matches with marker classname.
 // then opened the modal using same markerclick function
 if(markerCount > 0){
-$('.leaflet-marker-icon').each(function(i, obj) {
+$('#map .leaflet-marker-icon').each(function(i, obj) {
     if(!$(this).hasClass('text-below-marker')){
         $(this).addClass('myownmarker'+i);
     }
@@ -2478,7 +2628,7 @@ $('.leaflet-marker-icon').each(function(i, obj) {
 // created the day numbers as separated marker label and assign the row id only to markers 
 // For numbers added the attr, on clicking the number on marker icon calling the same marker click function attr id.
 var z = 0
-$('.leaflet-marker-icon').each(function(i, obj) {
+$('#map .leaflet-marker-icon').each(function(i, obj) {
    
    if($(this).hasClass('text-below-marker')){
        $(this).attr('data-markerid', z);
@@ -2495,7 +2645,7 @@ $(document).on("click", ".Tooltip", function(e) {
     
 });
 
-$(document).on("click", ".text-below-marker", function(e) {
+$(document).on("click", "#map .text-below-marker", function(e) {
     var myowntooltip = $(this).attr('data-markerid');
     $(".myownmarker"+myowntooltip).click();
     
@@ -3509,6 +3659,209 @@ function customMediaQueryAdd(){
     });
 }
         
+
+///////////////////////////////Cruising schedule modal locations polyline display///////////////////////////////////
+function markerOnClickCSMP(e) {
+    var scheduleUUId = e.target.scheduleUUId;
+    var scheduleId = e.target.scheduleId;
+    var markerNum = e.target.markerNum;
+    var lattitude = e.latlng.lat;
+    var longitude = e.latlng.lng;
+    var consumptiontotal = e.target.consumptiontotal;
+    var distancetotal = e.target.distancetotal;
+    var durationtotal = e.target.durationtotal;
+    // console.log(lattitude);
+    // console.log(longitude);
+    var day_dates = e.target.day_dates;
+    var tablepId = e.target.tablepId;
+    var counttitle = e.target.counttitle;
+    var daytitle = e.target.daytitle;
+    var scheduleSameLocationUUID = e.target.scheduleSameLocationUUID;
+    var samelocationsDates = e.target.samelocationsDates;
+    $("#modalmapcruisingsch .leaflet-control-container").hide();
+    var popLocation= e.latlng;
+    ReloadModalMaplayerCSMP();
+    //var popLocation = e.latlng;
+    var selectedmarkertitle = e.target.daytitle;
+    var selectedmarkerday_num = e.target.day_num;
+    //console.log(selectedmarkertitle);
+
+    $("#markerModalcruisingsch").show();
+
+    if (markerArray.length > 0) {
+            $('.markersnamesmodalmapcruisingsch').find('option').remove();
+            $('.markersnamesmodalmapcruisingsch').append($("<option></option>")
+                .attr("value", "")
+                .text("Select")
+            );    
+            $.each(markerArray, function(key, value) {   
+                        
+                $('.markersnamesmodalmapcruisingsch')
+                    .append($("<option></option>")
+                        .attr("id", "marker_" + value.scheduleId)
+                        .attr("data-lat", value._latlng.lat)
+                        .attr("data-long", value._latlng.lng)
+                        .attr("data-schid", value.scheduleId)
+                        .attr("data-daynum", value.day_num)
+                        .attr("value", value.daytitle +' - Day '+value.day_num)
+                        .text(value.daytitle +' - Day '+value.day_num)
+                    );
+        });
+    }
+
+        var frommarker = selectedmarkertitle +' - Day '+selectedmarkerday_num; //alert('llll')
+        
+        drawrouteinmodalCSMP(frommarker);
+
+        setTimeout(() => {
+            modalmapcruisingsch.invalidateSize();
+        }, 0);
+        //$("#modalmap").find('.leaflet-control-attribution').hide();
+        var routemodalmarkerCSMP = L.marker([lattitude, longitude], {
+            draggable: false,
+            pmIgnore: true
+        });
+        routemodalmarkerCSMP.addTo(modalmapcruisingsch);
+
+        var textMarkermodalmapCSMP = L.marker([lattitude,longitude], {
+        icon: L.divIcon({
+            html: selectedmarkerday_num,
+            className: 'text-below-marker-locsch',
+            })
+        }).addTo(modalmapcruisingsch);  
+}
+
+$(document).on("change", ".markersnamesmodalmapcruisingsch", function(e) {
+
+        var routemodalmarkerselected = {};
+        var textMarkermodalmap = {};
+        var selectedlat = "";
+        var selectedlong = "";
+        var fmlong;
+        var fmlat;
+        var modalmapdaynumber = "";
+        var defaultline = {};
+        var selectedmarkertooltipcontent = "";
+    //selectedTitle = $(this).val();
+    //alert(selectedTitle);
+    //console.log(selectedTitle);
+    //if (selectedTitle != "") {
+        selectedlat = $(".markersnamesmodalmapcruisingsch option:selected").attr("data-lat");
+        selectedlong = $(".markersnamesmodalmapcruisingsch option:selected").attr("data-long");
+        var schid = $(".markersnamesmodalmapcruisingsch option:selected").attr("data-schid");
+        var modalmapdaynumber = $(".markersnamesmodalmapcruisingsch option:selected").attr("data-daynum");
+        
+        //console.log(markerArray);  //return false;
+        
+        // const selectedTitleFrom = selectedTitle.split("-");
+        // //console.log(selectedTitleFrom);
+        // let selectedTitleFromWord = $.trim(selectedTitleFrom[0]);
+
+        // console.log(routemodalmarkerselected); 
+        //  console.log(selectedlat);  
+        //  console.log(selectedlong);  
+        if (routemodalmarkerselected != "") { //alert();
+            modalmapcruisingsch.removeLayer(routemodalmarkerselected);
+        }
+        if (textMarkermodalmap != "") { //alert();
+            modalmapcruisingsch.removeLayer(textMarkermodalmap);
+        }
+        routemodalmarkerselected = L.marker([selectedlat,selectedlong], {
+            draggable: false,
+            pmIgnore: true
+        });
+        routemodalmarkerselected.addTo(modalmapcruisingsch);
+        // adding day number to marker
+        textMarkermodalmap = L.marker([selectedlat,selectedlong], {
+        icon: L.divIcon({
+            html: modalmapdaynumber,
+            className: 'text-below-marker-locsch',
+            })
+        });
+        textMarkermodalmap.addTo(modalmapcruisingsch);
+    
+});
+
+function drawrouteinmodalCSMP(frommarker) { //alert();
+    // console.log(modalrouteline);
+    // console.log(frommarker);
+    var drawrouteline = [];
+    //var tempendloc = [];
+    var nextmarkername;
+    var toloc =  $(".markersnamesmodalmapcruisingsch").val();
+   
+    $.each(modalrouteline, function(name, value) {
+            if (value.name == frommarker) {
+                drawrouteline.push(value.index);
+                //tempendloc.push(value.end_loc);
+                nextmarkername = value.end_loc; 
+                
+            } 
+    });
+    if (nextmarkername != "undefined" && nextmarkername != "" && nextmarkername != null) { //alert();
+        $(".markersnamesmodalmapcruisingsch").val(nextmarkername).trigger('change');
+      // var returnvalue =  markersnamesmodalmap(nextmarkername);
+       //if(returnvalue == 1){
+        var tempdrawrouteline = [];
+        
+        $.each(modalrouteline, function(name, value) {
+            //console.log(name);
+            //console.log(value.end_loc);
+            //console.log('kkkk')
+                if (value.name == frommarker && value.end_loc == nextmarkername) {
+                    tempdrawrouteline.push(value.index);
+                    
+                }
+        });
+        // const myArrayFrom = frommarker.split("-");
+        // let fromword = myArrayFrom[0];
+        // const myArrayTo = nextmarkername.split("-");
+        // let toword = myArrayTo[0];
+        // $("#embarkation").text(fromword); 
+        // $("#debarkation").text(toword);
+        var specificline = "";
+            specificline = tempdrawrouteline;
+        var drawnItemsModalMapCSMP = new L.FeatureGroup();
+        var polyLayersModalMap = [];
+        var polyline2 = new L.polyline(specificline, {stroke:true,snakingSpeed: 200,weight:2.5,dashArray: [5,5],color:'#fff',lineCap: "round",lineJoin: "round",smoothFactor: 1});
+
+        polyLayersModalMap.push(polyline2)
+
+        // Add the layers to the drawnItemsModalMap feature group 
+
+        for (let layer of polyLayersModalMap) { //console.log(layer);
+            drawnItemsModalMapCSMP.addLayer(layer);
+        }
+        
+//onsole.log(drawnItemsModalMapCSMP);
+        modalmapcruisingsch.fitBounds(drawnItemsModalMapCSMP.getBounds());
+     
+        modalmapcruisingsch.addLayer(drawnItemsModalMapCSMP);
+
+        drawnItemsModalMapCSMP.snakeIn();
+        
+       
+        setTimeout(() => {
+            modalmapcruisingsch.invalidateSize();
+        }, 100);
+        
+    //}
+        
+    }
+
+}
+
+$(document).on("click", "#markerModalclosecruisingsch", function(e) {
+   
+   $("#markerModalcruisingsch").hide();
+
+    // Removed the layer on close the route modal to clear any changes done and not saved.
+    modalmapcruisingsch.eachLayer(function (layer) {
+       modalmapcruisingsch.removeLayer(layer);
+                           });
+});
+
+///////////////////////////////Cruising schedule modal locations polyline display///////////////////////////////
     
 </script>
   

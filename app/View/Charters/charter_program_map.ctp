@@ -3916,8 +3916,7 @@ $(document).on("click", ".downloadmappagefile", function(e) { //alert()
 //  document.getElementById('modalmap').style.width= `${width}px`;
 // }
 
-///////////////////////////////Cruising schedule modal locations polyline display////////////////////////////////////////////////////
-var fitzoommapCSMP = [];
+///////////////////////////////Cruising schedule modal locations polyline display///////////////////////////////////
 function markerOnClickCSMP(e) {
     var scheduleUUId = e.target.scheduleUUId;
     var scheduleId = e.target.scheduleId;
@@ -3935,81 +3934,58 @@ function markerOnClickCSMP(e) {
     var daytitle = e.target.daytitle;
     var scheduleSameLocationUUID = e.target.scheduleSameLocationUUID;
     var samelocationsDates = e.target.samelocationsDates;
+    $("#modalmapcruisingsch .leaflet-control-container").hide();
+    var popLocation= e.latlng;
+    ReloadModalMaplayerCSMP();
+    //var popLocation = e.latlng;
+    var selectedmarkertitle = e.target.daytitle;
+    var selectedmarkerday_num = e.target.day_num;
+    //console.log(selectedmarkertitle);
+
+    $("#markerModalcruisingsch").show();
+
+    if (markerArray.length > 0) {
+            $('.markersnamesmodalmapcruisingsch').find('option').remove();
+            $('.markersnamesmodalmapcruisingsch').append($("<option></option>")
+                .attr("value", "")
+                .text("Select")
+            );    
+            $.each(markerArray, function(key, value) {   
+                        
+                $('.markersnamesmodalmapcruisingsch')
+                    .append($("<option></option>")
+                        .attr("id", "marker_" + value.scheduleId)
+                        .attr("data-lat", value._latlng.lat)
+                        .attr("data-long", value._latlng.lng)
+                        .attr("data-schid", value.scheduleId)
+                        .attr("data-daynum", value.day_num)
+                        .attr("value", value.daytitle +' - Day '+value.day_num)
+                        .text(value.daytitle +' - Day '+value.day_num)
+                    );
+        });
+    }
+
+        var frommarker = selectedmarkertitle +' - Day '+selectedmarkerday_num; //alert('llll')
         
-                     $("#modalmapcruisingsch .leaflet-control-container").hide();
-                    // open popup center to map
-                    modalmapcruisingsch.setView(e.latlng);
-                    //modalmap.setView(e.latlng);
-                    //fitzoommap = [];
-                    var popLocation= e.latlng;
-               
-                   
+        drawrouteinmodalCSMP(frommarker);
 
-                    ReloadModalMaplayerCSMP();
-                                //var popLocation = e.latlng;
-                              
-                                var selectedmarkertitle = e.target.daytitle;
-                                var selectedmarkerday_num = e.target.day_num;
-                                //console.log(selectedmarkertitle);
-                                fitzoommapCSMP.push(popLocation);
-                                if (markerArray.length > 0) {
-                                        $('.markersnamesmodalmapcruisingsch').find('option').remove();
-                                        $('.markersnamesmodalmapcruisingsch').append($("<option></option>")
-                                            .attr("value", "")
-                                            .text("Select")
-                                        );
-                                                        
-                                                    $.each(markerArray, function(key, value) {   
-                                                       
-                                                                $('.markersnamesmodalmapcruisingsch')
-                                                                    .append($("<option></option>")
-                                                                        .attr("id", "marker_" + value.scheduleId)
-                                                                        .attr("data-lat", value._latlng.lat)
-                                                                        .attr("data-long", value._latlng.lng)
-                                                                        .attr("data-schid", value.scheduleId)
-                                                                        .attr("data-daynum", value.day_num)
-                                                                        .attr("value", value.daytitle +' - Day '+value.day_num)
-                                                                        .text(value.daytitle +' - Day '+value.day_num)
-                                                                    );
-                                                                   
-                                                      
+        setTimeout(() => {
+            modalmapcruisingsch.invalidateSize();
+        }, 0);
+        //$("#modalmap").find('.leaflet-control-attribution').hide();
+        var routemodalmarkerCSMP = L.marker([lattitude, longitude], {
+            draggable: false,
+            pmIgnore: true
+        });
+        routemodalmarkerCSMP.addTo(modalmapcruisingsch);
 
-                                        });
-                                    }
-
-                            
-
-                                var frommarker = selectedmarkertitle +' - Day '+selectedmarkerday_num; //alert('llll')
-                                
-                                drawrouteinmodalCSMP(frommarker);
-                              
-                                // console.log(selectedmarkertitle);
-                                //modalmap.fitBounds(fitzoommap);
-                                //modalmap.setView(new L.LatLng(lattitude,longitude), 7);
-                                //modalmap.panBy([0,0]);
-                                // console.log(lattitude);  
-                                // console.log(longitude);  
-                                // setTimeout(() => {
-                                //     modalmap.invalidateSize();
-                                // }, 0);
-                                //$("#modalmap").find('.leaflet-control-attribution').hide();
-                                var routemodalmarkerCSMP = L.marker([lattitude, longitude], {
-                                    draggable: false,
-                                    pmIgnore: true
-                                });
-                                routemodalmarkerCSMP.addTo(modalmapcruisingsch);
-
-                                var textMarkermodalmapCSMP = L.marker([lattitude,longitude], {
-                                icon: L.divIcon({
-                                    html: selectedmarkerday_num,
-                                    className: 'text-below-marker-locsch',
-                                    })
-                                }).addTo(modalmapcruisingsch);
-
-                                $("#markerModalcruisingsch").show();
-        
+        var textMarkermodalmapCSMP = L.marker([lattitude,longitude], {
+        icon: L.divIcon({
+            html: selectedmarkerday_num,
+            className: 'text-below-marker-locsch',
+            })
+        }).addTo(modalmapcruisingsch);  
 }
-
 
 $(document).on("change", ".markersnamesmodalmapcruisingsch", function(e) {
 
@@ -4059,8 +4035,6 @@ $(document).on("change", ".markersnamesmodalmapcruisingsch", function(e) {
             })
         });
         textMarkermodalmap.addTo(modalmapcruisingsch);
-    
-        
     
 });
 
@@ -4143,6 +4117,6 @@ $(document).on("click", "#markerModalclosecruisingsch", function(e) {
                            });
 });
 
-///////////////////////////////Cruising schedule modal locations polyline display///////////////////////////////////////////////////////
+///////////////////////////////Cruising schedule modal locations polyline display///////////////////////////////
 </script>
   
