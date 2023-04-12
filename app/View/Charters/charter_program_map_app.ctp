@@ -69,6 +69,9 @@ echo $this->Html->script('leaflet/route');
  echo $this->Html->script('leaflet/L.Polyline.SnakeAnim.js'); 
 ?>
 <style>
+    .navbar-absalute-top{
+        display:none;
+    }
     .form-control:focus {
   background: transparent !important;
   color: #4d4d4d !important;
