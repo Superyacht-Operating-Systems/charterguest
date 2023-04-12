@@ -438,10 +438,11 @@ background: none!important;
 }
 .fancybox-opened {
     z-index: 999999!important;
+    opacity: 1 !important;
 }
 .fancybox-wrap {
   z-index: 99999;
-  opacity: 1 !important;
+  opacity: 0.1;
 }
 #fancybox-thumbs ul {
   left: auto!important;
