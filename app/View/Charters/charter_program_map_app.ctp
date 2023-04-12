@@ -378,6 +378,18 @@ overflow: hidden;
 
     }
 
+    #modalmapcruisingsch{
+        height: 300px;
+width: 455px;
+margin:10px auto;
+border: 0px solid rgb(204, 204, 204) !important;
+border-radius: 10px!important;
+-webkit-border-radius: 10px;
+-moz-border-radius: 10px;
+overflow: hidden;
+
+    }
+
 }
 
 .auto_resize {
@@ -1913,13 +1925,13 @@ span.sp-leftalign {
     </div>
 </div><!-- /.modal-content -->
 
-<div id="markerModalcruisingsch" class="modal certificat-modal-container cruising-location-Modal"  role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content Mark_modal" id="markerModal_id">
+<div id="markerModalcruisingsch" class="modal certificat-modal-container" role="dialog">
+    <div class="modal-dialog" style="width:480px;">
+        <div class="modal-content" id="markerModal_id">
             <div class="modal-header" style="padding:5px;border-bottom: 0px solid #e5e5e5;">
                 <button type="button" class="close" data-schuuid="" id="markerModalclosecruisingsch" aria-hidden="true" style="margin-right: 5px;">×</button>
             </div>
-            <div class="modal-body location_Modal_body markmodalbody">
+            <div class="modal-body markmodalbodycruisingsch">
             
            
                 <select name="markersnamescruisingsch" style="display:none;" class="form-control markersnamesmodalmapcruisingsch"></select>
@@ -2095,15 +2107,7 @@ var idlocmap = "<?php echo "crusingschedulemap".$loop; ?>";
 });
 // console.log(idlocmap);
 // console.log(locsatellite);
-var markerschloc = L.marker(["<?php echo $schedule['CharterProgramSchedule']['lattitude']; ?>", "<?php echo $schedule['CharterProgramSchedule']['longitude']; ?>"],{pmIgnore: true})
-        .bindTooltip("", 
-                    {
-                        permanent: true, 
-                        offset: [0,0],
-                        direction: 'right',
-                        className: "Tooltip",
-                        noWrap: false,
-                    }).on("click", markerOnClickCSMP);
+var markerschloc = L.marker(["<?php echo $schedule['CharterProgramSchedule']['lattitude']; ?>", "<?php echo $schedule['CharterProgramSchedule']['longitude']; ?>"],{pmIgnore: true}).on("click", markerOnClickCSMP);
 
                 markerschloc.addTo(idlocmap);
 
