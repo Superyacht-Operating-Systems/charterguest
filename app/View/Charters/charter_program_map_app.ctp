@@ -428,6 +428,10 @@ background: none!important;
   z-index: 99999;
   opacity: 1 !important;
 }
+#fancybox-thumbs ul {
+  left: auto!important;
+  margin: 0 auto!important;
+}
 
 .frmclass {
     /* background: #000!important; */
