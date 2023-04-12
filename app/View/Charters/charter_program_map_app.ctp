@@ -69,6 +69,11 @@ echo $this->Html->script('leaflet/route');
  echo $this->Html->script('leaflet/L.Polyline.SnakeAnim.js'); 
 ?>
 <style>
+      @media only screen and (min-width: 767px) and (max-width: 1020px){
+#CruisingButton { 
+ min-width: 137px;
+}
+}
     .navbar-absalute-top{
         display:none;
     }
