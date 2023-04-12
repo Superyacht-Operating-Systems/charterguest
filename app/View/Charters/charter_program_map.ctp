@@ -1282,9 +1282,11 @@ body span.sp-leftalign {
 top: 115px;
 }
 .certificat-modal-container .modal-dialog{
-width: 95%;
+    width: 600px;
+margin: 30px auto;
+/* width: 95%;
     margin: 0 auto;
-    margin-top: 15px;
+    margin-top: 15px; */
 }
 .chat-send button{
 width: 126px;
