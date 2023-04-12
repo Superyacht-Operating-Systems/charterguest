@@ -58,6 +58,11 @@ if(empty($scheduleData)){
     max-height: 500px;
     width: auto !important;
 } */
+.form-control:focus {
+  background: transparent !important;
+  color: #4d4d4d !important;
+  border: solid 0px rgba(243, 243, 243, 0.7) !important;
+}
 .auto_resize::selection {
   color: none;
   background: transparent;
