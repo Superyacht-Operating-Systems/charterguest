@@ -592,6 +592,17 @@ background: none!important;
 and (min-device-width : 768px) 
 and (max-device-width : 1024px) 
 and (orientation : portrait) {
+    #modalmap{
+        height: 300px;
+width: 100%;
+border: 3px solid rgb(204, 204, 204) !important;
+border-radius: 10px!important;
+-webkit-border-radius: 10px;
+-moz-border-radius: 10px;
+-khtml-border-radius: 10px;
+margin-top:10px;
+overflow: hidden;
+    }
     .navbar {
   margin-bottom: 0px;
   min-height: 45px;
@@ -616,6 +627,17 @@ p {
 and (min-device-width : 768px) 
 and (max-device-width : 1024px) 
 and (orientation : landscape) {
+    #modalmap{
+        height: 300px;
+width: 100%;
+border: 3px solid rgb(204, 204, 204) !important;
+border-radius: 10px!important;
+-webkit-border-radius: 10px;
+-moz-border-radius: 10px;
+-khtml-border-radius: 10px;
+margin-top:10px;
+overflow: hidden;
+    }
 
     .custom-popup{
     width: 100%!important;
