@@ -1409,16 +1409,16 @@ background: #fff !important;
 }
 .fancybox-opened {
     z-index: 999999!important;
-    /* opacity: 1 !important; */
+    opacity: 1 !important;
 }
 .fancybox-wrap {
   z-index: 99999;
-  /* opacity: 0.1; */
-  opacity: 1 !important;
+  opacity: 0.1;
+  /* opacity: 1 !important; */
 }
 
 #fancybox-thumbs {
-  left: 45px;
+  left: 45px !important;
   }
 #fancybox-thumbs ul {
   left: auto!important;
