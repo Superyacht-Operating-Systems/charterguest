@@ -418,8 +418,14 @@ position: absolute;
 .fancybox-overlay{
 background: none!important;
 }
+.certificat-modal-container {
+  z-index: 99999;
+}
 .fancybox-opened {
-    z-index: 99999999999!important;
+    z-index: 999999!important;
+}
+.fancybox-wrap {
+  z-index: 99999;
 }
 
 .frmclass {
@@ -1366,7 +1372,7 @@ background: #fff !important;
 
 }
 .fancybox-overlay {
-    z-index: 99999999 !important;
+    z-index: 99999 !important;
 }
 span.sp-leftalign {
     width: 300px;
