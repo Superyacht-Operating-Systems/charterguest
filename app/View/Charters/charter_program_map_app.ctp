@@ -69,6 +69,9 @@ echo $this->Html->script('leaflet/route');
  echo $this->Html->script('leaflet/L.Polyline.SnakeAnim.js'); 
 ?>
 <style>
+    .container-row-all{
+        margin-top: 0px!important;
+    }
       @media only screen and (min-width: 767px) and (max-width: 1020px){
 #CruisingButton { 
  min-width: 137px;
@@ -438,6 +441,11 @@ background: none!important;
 }
 .fancybox-wrap {
   z-index: 99999;
+  opacity: 1 !important;
+}
+#fancybox-thumbs ul {
+  left: auto!important;
+  margin: 0 auto!important;
 }
 
 .frmclass {
