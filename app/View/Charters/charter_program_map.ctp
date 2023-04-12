@@ -1789,14 +1789,14 @@ body .sp-60-w input {
                 $crusemap = 1;
                 $crusemaparray = array();
                 
-                $RD = array();
-                //$RouteData = array_unique($RouteData);
-                foreach ($RouteData as $key => $v) { 
-                    //$vs = explode("-",$v['CharterProgramScheduleRoute']['start_location']);
-                    //$ve = explode("-",$v['CharterProgramScheduleRoute']['end_location']);
-                    $RD[] = $v['CharterProgramScheduleRoute']['start_location'];
-                    $RD[] = $v['CharterProgramScheduleRoute']['end_location'];
-                }
+                // $RD = array();
+                // //$RouteData = array_unique($RouteData);
+                // foreach ($temploc as $key => $v) { 
+                //     //$vs = explode("-",$v['CharterProgramScheduleRoute']['start_location']);
+                //     //$ve = explode("-",$v['CharterProgramScheduleRoute']['end_location']);
+                //     $RD[] = $key;
+                //     //$RD[] = $v['CharterProgramScheduleRoute']['end_location'];
+                // }
                 //echo "<pre>";print_r(($RD));
                 //echo "<pre>";print_r($scheduleData);exit;
             foreach ($scheduleData as $key => $schedule) { 
@@ -2133,7 +2133,7 @@ var CSMPmarkerCount = 0;
 <?php 
 if(isset($crusemaparray) && !empty($crusemaparray)){
     $loop= 1;
-    $settimeout = 100;
+    //$settimeout = 100;
 foreach($scheduleData as $key => $schedule){ ?>
 
 var locsatellite = "schloc"+"<?php echo $key; ?>";
@@ -2192,11 +2192,6 @@ markerschloc.scheduleId = "<?php echo $schedule['CharterProgramSchedule']['chart
         markerschloc.markerNum = CSMPmarkerCount; 
         CSMPmarkerArray.push(markerschloc);
         CSMPmarkerCount++;
-
-
-setTimeout(() => {
-     idlocmap.invalidateSize();
-}, "<?php echo $settimeout; ?>");
 
 // removed control zoom in and out from modal
 $("#<?php echo "crusingschedulemap".$loop; ?> .leaflet-control-container").hide();
@@ -3685,6 +3680,9 @@ for (var i = 0; i < textareas.length; i++) {
   });
 }
 
+        // setTimeout(() => {
+        //     crusingschedulemap1.invalidateSize();
+        // }, 100);
                 
                 $(".leaflet-control-attribution").hide();
                 $("#map .leaflet-control-container").hide();

@@ -5696,7 +5696,7 @@ class ChartersController extends AppController {
                 // Display the dates in array format
                 //echo "<pre>";print_r($Datesarray); //exit;
 
-                $scheduleConditions = "charter_program_id = '$charterProgramId' AND is_deleted = 0";
+                $scheduleConditions = "charter_program_id = '$charterProgramId' AND is_deleted = 0 order by day_num";
                 $scheduleData = $this->CharterGuest->getCharterProgramScheduleData($yachtDbName, $scheduleConditions);
                 //echo "<pre>";print_r($scheduleData); exit;
                 $markertitle = array();
@@ -5843,6 +5843,14 @@ class ChartersController extends AppController {
                     }
 
                     foreach($samedayrouteorder as $title => $value){
+                        $fetchDataLimit = $this->CharterGuest->query("SELECT * FROM $yachtDbName.charter_program_schedule_routes CharterProgramScheduleRoute WHERE charter_program_schedule_uuid = '$charterProgramId' AND is_deleted = 0  AND start_location= '$title' Limit 1");
+                        //echo "<pre>";print_r($fetchData); exit;
+                        //$fetchData = $this->CharterProgramScheduleRoute->find('all', array('conditions' => array('charter_program_schedule_uuid' => $charterProgramId, 'is_deleted' => 0,'start_location'=>$value)));
+                        $RouteorderdataLimit[] = $fetchDataLimit;
+                        
+                    }
+
+                    foreach($samedayrouteorder as $title => $value){
                         $fetchData = $this->CharterGuest->query("SELECT * FROM $yachtDbName.charter_program_schedule_routes CharterProgramScheduleRoute WHERE charter_program_schedule_uuid = '$charterProgramId' AND is_deleted = 0  AND start_location= '$title'");
                         //echo "<pre>";print_r($fetchData); exit;
                         //$fetchData = $this->CharterProgramScheduleRoute->find('all', array('conditions' => array('charter_program_schedule_uuid' => $charterProgramId, 'is_deleted' => 0,'start_location'=>$value)));
@@ -5869,6 +5877,15 @@ class ChartersController extends AppController {
                         foreach($Routeorderdata as $key => $value){
                             foreach($value as $v){
                                 $RouteData[] = $v;
+                            }
+                        }
+                     }
+
+                     $RouteDataLimit = array();
+                    if(isset($RouteorderdataLimit) && !empty($RouteorderdataLimit)){
+                        foreach($RouteorderdataLimit as $key => $value){
+                            foreach($value as $v){
+                                $RouteDataLimit[] = $v;
                             }
                         }
                      }
@@ -6014,6 +6031,7 @@ class ChartersController extends AppController {
                 $this->set('modified', $modified);
                 $this->set('temploc', $temploc);
                 $this->set('RouteData', $RouteData);
+                $this->set('RouteDataLimit', $RouteDataLimit);
                 $this->set('RouteDatadisplaydistancevalue', $RouteDatadisplaydistancevalue);
                 $this->set('RouteDatadisplayduration', $RouteDatadisplayduration);
                 $this->set('RouteDatatotalconsumption', $RouteDatatotalconsumption);
