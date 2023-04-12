@@ -1240,6 +1240,7 @@ hr {
 margin: 0px;padding: 0px;
 }
 .certificat-modal-container .modal-dialog{
+    margin: 30px auto;
   padding-left: 0px;
   width: 600px;
 }

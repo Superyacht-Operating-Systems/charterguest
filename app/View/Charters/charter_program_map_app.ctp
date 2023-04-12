@@ -1199,6 +1199,7 @@ margin: 0px;padding: 0px;
 .certificat-modal-container .modal-dialog{
   padding-left: 0px;
   width: 600px;
+  margin: 30px auto;
 }
 .certificat-modal-container .inbox-widget .inbox-item {
     border-bottom: 1px solid #d6d4d4;
