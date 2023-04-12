@@ -1418,7 +1418,7 @@ background: #fff !important;
 }
 
 #fancybox-thumbs {
-  left: 45px;
+  left: 45px !important;
   }
 #fancybox-thumbs ul {
   left: auto!important;
