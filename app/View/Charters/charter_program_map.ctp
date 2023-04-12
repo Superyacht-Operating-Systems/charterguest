@@ -58,6 +58,11 @@ if(empty($scheduleData)){
     max-height: 500px;
     width: auto !important;
 } */
+.form-control:focus {
+  background: transparent !important;
+  color: #4d4d4d !important;
+  border: solid 0px rgba(243, 243, 243, 0.7) !important;
+}
 .auto_resize::selection {
   color: none;
   background: transparent;
@@ -226,7 +231,7 @@ color: #fff;
    font-weight: 600;
 }
 
-@media only screen and (max-width: 771px){
+@media only screen and (max-width: 766px){
     .m_loc_desc_div{
         width: 100%;
 margin-right: 10px;
@@ -327,12 +332,12 @@ width: 100%;
 }	
 }
 
-@media only screen and (min-width: 771px){
+@media only screen and (min-width: 766px){
     .sm_tarea{
         display:none;
     }
     .CS_modal, .Mark_modal{
-    width:650px;
+    width:650px!important;
 }
 #modalmap{
         height: 300px;
@@ -1235,6 +1240,7 @@ hr {
 margin: 0px;padding: 0px;
 }
 .certificat-modal-container .modal-dialog{
+    margin: 30px auto;
   padding-left: 0px;
   width: 600px;
 }
@@ -1257,7 +1263,7 @@ body .mydemolabel {
 
 
 }
-@media only screen and (max-width:771px){
+@media only screen and (max-width:767px){
 
 body .mydemolabel {
     top: 44px!important;
@@ -1277,9 +1283,11 @@ body span.sp-leftalign {
 top: 115px;
 }
 .certificat-modal-container .modal-dialog{
-width: 95%;
+    width: 600px;
+margin: 30px auto;
+/* width: 95%;
     margin: 0 auto;
-    margin-top: 15px;
+    margin-top: 15px; */
 }
 .chat-send button{
 width: 126px;

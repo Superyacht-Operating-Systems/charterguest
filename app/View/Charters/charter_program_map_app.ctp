@@ -69,6 +69,19 @@ echo $this->Html->script('leaflet/route');
  echo $this->Html->script('leaflet/L.Polyline.SnakeAnim.js'); 
 ?>
 <style>
+      @media only screen and (min-width: 767px) and (max-width: 1020px){
+#CruisingButton { 
+ min-width: 137px;
+}
+}
+    .navbar-absalute-top{
+        display:none;
+    }
+    .form-control:focus {
+  background: transparent !important;
+  color: #4d4d4d !important;
+  border: solid 0px rgba(243, 243, 243, 0.7) !important;
+}
     .navbar {
   margin-bottom: 0px;
  }
@@ -240,7 +253,7 @@ color: #fff;
    font-weight: 600;
 }
 
-@media only screen and (max-width: 771px){
+@media only screen and (max-width: 766px){
     .m_loc_desc_div{
         width: 100%;
 margin-right: 10px;
@@ -331,12 +344,12 @@ width: 100%;
 }	
 }
 
-@media only screen and (min-width: 771px){
+@media only screen and (min-width: 766px){
     .sm_tarea{
         display:none;
     }
     .CS_modal, .Mark_modal{
-    width:650px;
+    width:650px!important;
 }
 #modalmap{
         height: 300px;
@@ -405,8 +418,14 @@ position: absolute;
 .fancybox-overlay{
 background: none!important;
 }
+.certificat-modal-container {
+  z-index: 99999;
+}
 .fancybox-opened {
-    z-index: 99999999999!important;
+    z-index: 999999!important;
+}
+.fancybox-wrap {
+  z-index: 99999;
 }
 
 .frmclass {
@@ -584,6 +603,17 @@ background: none!important;
 and (min-device-width : 768px) 
 and (max-device-width : 1024px) 
 and (orientation : portrait) {
+    #modalmap{
+        height: 300px;
+width: 100%;
+border: 3px solid rgb(204, 204, 204) !important;
+border-radius: 10px!important;
+-webkit-border-radius: 10px;
+-moz-border-radius: 10px;
+-khtml-border-radius: 10px;
+margin-top:10px;
+overflow: hidden;
+    }
     .navbar {
   margin-bottom: 0px;
   min-height: 45px;
@@ -608,6 +638,17 @@ p {
 and (min-device-width : 768px) 
 and (max-device-width : 1024px) 
 and (orientation : landscape) {
+    #modalmap{
+        height: 300px;
+width: 100%;
+border: 3px solid rgb(204, 204, 204) !important;
+border-radius: 10px!important;
+-webkit-border-radius: 10px;
+-moz-border-radius: 10px;
+-khtml-border-radius: 10px;
+margin-top:10px;
+overflow: hidden;
+    }
 
     .custom-popup{
     width: 100%!important;
@@ -1194,6 +1235,7 @@ margin: 0px;padding: 0px;
 .certificat-modal-container .modal-dialog{
   padding-left: 0px;
   width: 600px;
+  margin: 30px auto;
 }
 .certificat-modal-container .inbox-widget .inbox-item {
     border-bottom: 1px solid #d6d4d4;
@@ -1235,9 +1277,11 @@ body span.sp-leftalign {
 top: 115px;
 }
 .certificat-modal-container .modal-dialog{
-width: 90%;
+    width: 600px;
+margin: 30px auto;
+/* width: 90%;
     margin: 0 auto;
-    margin-top: 15px;
+    margin-top: 15px; */
 }
 .chat-send button{
 width: 126px;
@@ -1328,7 +1372,7 @@ background: #fff !important;
 
 }
 .fancybox-overlay {
-    z-index: 99999999 !important;
+    z-index: 99999 !important;
 }
 span.sp-leftalign {
     width: 300px;
