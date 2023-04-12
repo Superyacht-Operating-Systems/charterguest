@@ -1402,7 +1402,21 @@ background: #fff !important;
 }
 
 .fancybox-overlay {
-    z-index: 999999 !important;
+    z-index: 99999 !important;
+}
+.certificat-modal-container {
+  z-index: 99999;
+}
+.fancybox-opened {
+    z-index: 999999!important;
+}
+.fancybox-wrap {
+  z-index: 99999;
+  opacity: 1 !important;
+}
+#fancybox-thumbs ul {
+  left: auto!important;
+  margin: 0 auto!important;
 }
 span.sp-leftalign {
     width: 300px;
