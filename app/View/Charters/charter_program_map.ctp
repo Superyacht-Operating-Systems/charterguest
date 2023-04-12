@@ -1262,7 +1262,7 @@ body .mydemolabel {
 
 
 }
-@media only screen and (max-width:771px){
+@media only screen and (max-width:767px){
 
 body .mydemolabel {
     top: 44px!important;

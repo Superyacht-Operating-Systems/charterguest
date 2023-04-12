@@ -69,6 +69,11 @@ echo $this->Html->script('leaflet/route');
  echo $this->Html->script('leaflet/L.Polyline.SnakeAnim.js'); 
 ?>
 <style>
+    .form-control:focus {
+  background: transparent !important;
+  color: #4d4d4d !important;
+  border: solid 0px rgba(243, 243, 243, 0.7) !important;
+}
     .navbar {
   margin-bottom: 0px;
  }
@@ -240,7 +245,7 @@ color: #fff;
    font-weight: 600;
 }
 
-@media only screen and (max-width: 771px){
+@media only screen and (max-width: 766px){
     .m_loc_desc_div{
         width: 100%;
 margin-right: 10px;
@@ -331,7 +336,7 @@ width: 100%;
 }	
 }
 
-@media only screen and (min-width: 771px){
+@media only screen and (min-width: 766px){
     .sm_tarea{
         display:none;
     }
@@ -1235,9 +1240,11 @@ body span.sp-leftalign {
 top: 115px;
 }
 .certificat-modal-container .modal-dialog{
-width: 90%;
+    width: 600px;
+margin: 30px auto;
+/* width: 90%;
     margin: 0 auto;
-    margin-top: 15px;
+    margin-top: 15px; */
 }
 .chat-send button{
 width: 126px;
