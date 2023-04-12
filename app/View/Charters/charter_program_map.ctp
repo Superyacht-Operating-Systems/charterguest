@@ -231,7 +231,7 @@ color: #fff;
    font-weight: 600;
 }
 
-@media only screen and (max-width: 771px){
+@media only screen and (max-width: 766px){
     .m_loc_desc_div{
         width: 100%;
 margin-right: 10px;
@@ -332,7 +332,7 @@ width: 100%;
 }	
 }
 
-@media only screen and (min-width: 771px){
+@media only screen and (min-width: 766px){
     .sm_tarea{
         display:none;
     }
