@@ -341,7 +341,7 @@ width: 100%;
         display:none;
     }
     .CS_modal, .Mark_modal{
-    width:650px;
+    width:650px!important;
 }
 #modalmap{
         height: 300px;
