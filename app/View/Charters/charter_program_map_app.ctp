@@ -426,6 +426,7 @@ background: none!important;
 }
 .fancybox-wrap {
   z-index: 99999;
+  opacity: 1 !important;
 }
 
 .frmclass {
