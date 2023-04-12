@@ -444,6 +444,9 @@ background: none!important;
   z-index: 99999;
   opacity: 0.1;
 }
+#fancybox-thumbs {
+  left: 45px;
+  }
 #fancybox-thumbs ul {
   left: auto!important;
   margin: 0 auto!important;
