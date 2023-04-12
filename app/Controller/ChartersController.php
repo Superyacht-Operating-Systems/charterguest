@@ -5696,7 +5696,7 @@ class ChartersController extends AppController {
                 // Display the dates in array format
                 //echo "<pre>";print_r($Datesarray); //exit;
 
-                $scheduleConditions = "charter_program_id = '$charterProgramId' AND is_deleted = 0 order by day_num";
+                $scheduleConditions = "charter_program_id = '$charterProgramId' AND is_deleted = 0";
                 $scheduleData = $this->CharterGuest->getCharterProgramScheduleData($yachtDbName, $scheduleConditions);
                 //echo "<pre>";print_r($scheduleData); exit;
                 $markertitle = array();

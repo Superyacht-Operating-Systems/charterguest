@@ -2487,7 +2487,7 @@ var polyline0 = new L.Polyline(latlongstemp, {stroke:true,weight:2.5,dashArray: 
 
 }
 } ?>
-console.log(modalrouteline);
+//console.log(modalrouteline);
 
 setTimeout(() => {
         map.invalidateSize();

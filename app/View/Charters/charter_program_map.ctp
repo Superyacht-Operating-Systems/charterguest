@@ -2162,15 +2162,7 @@ var idlocmap = "<?php echo "crusingschedulemap".$loop; ?>";
 });
 // console.log(idlocmap);
 // console.log(locsatellite);
-var markerschloc = L.marker(["<?php echo $schedule['CharterProgramSchedule']['lattitude']; ?>", "<?php echo $schedule['CharterProgramSchedule']['longitude']; ?>"],{pmIgnore: true})
-        .bindTooltip("", 
-                    {
-                        permanent: true, 
-                        offset: [0,0],
-                        direction: 'right',
-                        className: "Tooltip",
-                        noWrap: false,
-                    }).on("click", markerOnClickCSMP);
+var markerschloc = L.marker(["<?php echo $schedule['CharterProgramSchedule']['lattitude']; ?>", "<?php echo $schedule['CharterProgramSchedule']['longitude']; ?>"],{pmIgnore: true}).on("click", markerOnClickCSMP);
 
                 markerschloc.addTo(idlocmap);
 
