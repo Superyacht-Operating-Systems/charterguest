@@ -1512,7 +1512,7 @@ position: absolute;
 @media screen and (min-width: 990px) {
 .location_Modal_body{
     /* max-height: 580px; */
-    height: 94vh;
+    height: 90vh;
     overflow-y: scroll;
     overflow-x: hidden;
 }
@@ -1530,7 +1530,7 @@ position: absolute;
     padding: 0px 10px 100px 0px;
     }
     .modal_load{
-        max-height: 88vh;
+        max-height: 91vh;
     overflow-y: scroll;
     overflow-x: hidden;
     margin: 5px 0px 5px 8px;
