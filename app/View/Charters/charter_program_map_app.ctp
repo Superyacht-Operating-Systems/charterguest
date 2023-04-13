@@ -382,6 +382,7 @@ border-radius: 10px !important;
 -webkit-border-radius: 10px !important;
 -moz-border-radius: 10px !important;
 -khtml-border-radius: 10px !important;
+-webkit-appearance: none;
 overflow: hidden;
     }
 #modalmap{
@@ -669,6 +670,7 @@ border-radius: 10px !important;
 -webkit-border-radius: 10px !important;
 -moz-border-radius: 10px !important;
 -khtml-border-radius: 10px !important;
+-webkit-appearance: none;
 overflow: hidden;
     }
     #modalmap{
@@ -723,6 +725,7 @@ border-radius: 10px !important;
 -webkit-border-radius: 10px !important;
 -moz-border-radius: 10px !important;
 -khtml-border-radius: 10px !important;
+-webkit-appearance: none;
 overflow: hidden;
     }
     #modalmap{
