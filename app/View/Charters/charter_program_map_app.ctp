@@ -641,12 +641,11 @@ and (orientation : portrait) {
     #modalmap{
         height: 300px;
 width: 100%;
-border: 3px solid rgb(204, 204, 204) !important;
+border: 1px solid rgb(204, 204, 204) !important;
 border-radius: 10px !important;
 -webkit-border-radius: 10px !important;
 -moz-border-radius: 10px !important;
 -khtml-border-radius: 10px !important;
-overflow: hidden;
     }
     #modalmapcruisingsch{
         height: 300px;
@@ -686,7 +685,7 @@ and (orientation : landscape) {
     #modalmap{
         height: 300px;
 width: 100%;
-border: 3px solid rgb(204, 204, 204) !important;
+border: 1px solid rgb(204, 204, 204) !important;
 border-radius: 10px !important;
 -webkit-border-radius: 10px !important;
 -moz-border-radius: 10px !important;
