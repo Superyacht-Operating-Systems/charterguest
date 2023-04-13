@@ -283,21 +283,16 @@ margin-right: 10px;
     width: 100px!important;
     height: 100px!important;
 }
-.map_outer{
-    height: 300px;
-    width: 100%;
-    border: 0px solid rgb(204, 204, 204) !important;
+
+    #modalmap{
+        height: 300px;
+width: 100%;
+border: 0px solid rgb(204, 204, 204) !important;
 border-radius: 10px !important;
 -webkit-border-radius: 10px !important;
 -moz-border-radius: 10px !important;
-}
-    #modalmap{
-        /* height: 300px;
-width: 100%; */
-/* border: 0px solid rgb(204, 204, 204) !important;
-border-radius: 10px !important;
--webkit-border-radius: 10px !important;
--moz-border-radius: 10px !important; */
+-webkit-appearance: none;
+overflow: hidden;
     }
 
     #modalmapcruisingsch{
@@ -373,27 +368,16 @@ width: 100%;
     .CS_modal, .Mark_modal{
     width:650px!important;
 }
-.map_outer{
-    height: 300px;
+
+#modalmap{
+        height: 300px;
 width: 455px;
 margin:0 auto;
-        border: 1px solid rgb(204, 204, 204) !important;
+border: 1px solid rgb(204, 204, 204) !important;
 border-radius: 10px !important;
 -webkit-border-radius: 10px !important;
 -moz-border-radius: 10px !important;
--khtml-border-radius: 10px !important;
--webkit-appearance: none;
 overflow: hidden;
-    }
-#modalmap{
-        /* height: 300px;
-width: 455px;
-margin:0 auto; */
-/* border: 1px solid rgb(204, 204, 204) !important;
-border-radius: 10px !important;
--webkit-border-radius: 10px !important;
--moz-border-radius: 10px !important;
-overflow: hidden; */
 
     }
 
@@ -465,13 +449,14 @@ position: absolute;
 background: none!important;
 }
 .certificat-modal-container {
+  background-color: #000 !important;
   z-index: 99999;
 }
 .fancybox-opened {
     z-index: 999999!important;
     opacity: 1 !important;
 }
-.fancybox-mobile {
+.fancybox-mobile, .fancybox-desktop {
   z-index: 999999 !important;
 }
 .fancybox-wrap {
@@ -662,25 +647,17 @@ background: none!important;
 and (min-device-width : 768px) 
 and (max-device-width : 1024px) 
 and (orientation : portrait) {
-    .map_outer{
+    
+    #modalmap{
         height: 300px;
 width: 100%;
-        border: 1px solid rgb(204, 204, 204) !important;
+border: 1px solid rgb(204, 204, 204) !important;
 border-radius: 10px !important;
 -webkit-border-radius: 10px !important;
 -moz-border-radius: 10px !important;
 -khtml-border-radius: 10px !important;
 -webkit-appearance: none;
 overflow: hidden;
-    }
-    #modalmap{
-        /* height: 300px;
-width: 100%; */
-/* border: 1px solid rgb(204, 204, 204) !important;
-border-radius: 10px !important;
--webkit-border-radius: 10px !important;
--moz-border-radius: 10px !important;
--khtml-border-radius: 10px !important; */
     }
     #modalmapcruisingsch{
         height: 300px;
@@ -692,6 +669,7 @@ border-radius: 10px !important;
 -khtml-border-radius: 10px !important;
 margin-top:10px;
 overflow: hidden;
+
     }
     .navbar {
   margin-bottom: 0px;
@@ -717,25 +695,17 @@ p {
 and (min-device-width : 768px) 
 and (max-device-width : 1024px) 
 and (orientation : landscape) {
-    .map_outer{
+
+    #modalmap{
         height: 300px;
 width: 100%;
-        border: 1px solid rgb(204, 204, 204) !important;
+border: 1px solid rgb(204, 204, 204) !important;
 border-radius: 10px !important;
 -webkit-border-radius: 10px !important;
 -moz-border-radius: 10px !important;
 -khtml-border-radius: 10px !important;
 -webkit-appearance: none;
 overflow: hidden;
-    }
-    #modalmap{
-        /* height: 300px;
-width: 100%; */
-/* border: 1px solid rgb(204, 204, 204) !important;
-border-radius: 10px !important;
--webkit-border-radius: 10px !important;
--moz-border-radius: 10px !important;
--khtml-border-radius: 10px !important; */
     }
     #modalmapcruisingsch{
         height: 300px;
@@ -1334,7 +1304,7 @@ margin: 0px;padding: 0px;
 .certificat-modal-container .modal-dialog{
   padding-left: 0px;
   width: 600px;
-  margin: 30px auto;
+  margin: 10px auto;
 }
 .certificat-modal-container .inbox-widget .inbox-item {
     border-bottom: 1px solid #d6d4d4;
@@ -1542,7 +1512,7 @@ position: absolute;
 @media screen and (min-width: 990px) {
 .location_Modal_body{
     /* max-height: 580px; */
-    height: 85vh;
+    height: 90vh;
     overflow-y: scroll;
     overflow-x: hidden;
 }
@@ -1550,7 +1520,7 @@ position: absolute;
 @media screen and (max-width: 990px) {
   
     .markmodalbody{
-        max-height: 91vh;
+        max-height: 94vh;
     overflow-y: scroll;
     overflow-x: hidden;
    
@@ -1560,14 +1530,14 @@ position: absolute;
     padding: 0px 10px 100px 0px;
     }
     .modal_load{
-        max-height: 88vh;
+        max-height: 91vh;
     overflow-y: scroll;
     overflow-x: hidden;
     margin: 5px 0px 5px 8px;
     padding: 0px 10px 100px 0px;
     }
     .cruising-location-Modal .modal-content{
-       height: 96vh!important;
+       height: 98vh!important;
     }
 .common-form-row.map-form-rwo {
     margin-top: 50px;
@@ -1957,10 +1927,9 @@ span.sp-leftalign {
                 <i style="color: #00a8f3;" class="fa fa-solid fa-ship" aria-hidden="true"><span class="icon_label markerdistance" style="padding: 0px 0px 0px 5px;"></span></i>
                 </div>
                 <select name="markersnames" style="display:none;" class="form-control markersnamesmodalmap"></select>
-                <div class="map_outer">
+               
                 <div id="modalmap" style="border: solid 1px #ccc;">
                
-                </div>
                 </div>
                 </div>
                 <div id="markerModal_load" class="markmodal_load">

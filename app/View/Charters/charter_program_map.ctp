@@ -2154,7 +2154,7 @@ locsatellite = L.tileLayer(mbUrl, {
 var idlocmap = "<?php echo "crusingschedulemap".$loop; ?>";
     idlocmap = L.map('<?php echo "crusingschedulemap".$loop; ?>', {
     center: ["<?php echo $schedule['CharterProgramSchedule']['lattitude']; ?>", "<?php echo $schedule['CharterProgramSchedule']['longitude']; ?>"],
-    'zoom': 8,
+    'zoom': 5,
     'measureControl': true,
     'worldCopyJump': false,
     'layers': [locsatellite],
