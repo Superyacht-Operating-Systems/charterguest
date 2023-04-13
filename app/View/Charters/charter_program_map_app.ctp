@@ -471,7 +471,7 @@ background: none!important;
     z-index: 999999!important;
     opacity: 1 !important;
 }
-.fancybox-mobile {
+.fancybox-mobile, .fancybox-desktop {
   z-index: 999999 !important;
 }
 .fancybox-wrap {
