@@ -647,7 +647,6 @@ border-radius: 10px!important;
 -moz-border-radius: 10px;
 -khtml-border-radius: 10px;
 margin-top:10px;
-overflow: hidden;
     }
     #modalmapcruisingsch{
         height: 300px;
@@ -693,7 +692,6 @@ border-radius: 10px !important;
 -moz-border-radius: 10px !important;
 -khtml-border-radius: 10px !important;
 margin-top:10px;
-overflow: hidden;
     }
     #modalmapcruisingsch{
         height: 300px;
