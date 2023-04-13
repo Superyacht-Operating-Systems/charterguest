@@ -2140,7 +2140,7 @@ locsatellite = L.tileLayer(mbUrl, {
 var idlocmap = "<?php echo "crusingschedulemap".$loop; ?>";
     idlocmap = L.map('<?php echo "crusingschedulemap".$loop; ?>', {
     center: ["<?php echo $schedule['CharterProgramSchedule']['lattitude']; ?>", "<?php echo $schedule['CharterProgramSchedule']['longitude']; ?>"],
-    'zoom': 1.5,
+    'zoom': 5,
     'measureControl': true,
     'worldCopyJump': false,
     'layers': [locsatellite],
@@ -3274,7 +3274,7 @@ for (var i = 0; i < textareas.length; i++) {
 setTimeout(function () {
     window.dispatchEvent(new Event("resize"));
     }, 100);
-    
+
 
                     $(".leaflet-control-attribution").hide();
                     $(".leaflet-control-container").hide();
