@@ -165,7 +165,7 @@ width: 150px;
 .loc_map_div{
     float: left;
 border: solid 1px #ccc;
-width: 150px;
+width: 100%;
 overflow: hidden;
 height: 150px;
 margin-bottom: 10px;
@@ -1980,7 +1980,7 @@ body .sp-60-w input {
             </div>
             <div class="modal-body markmodalbodycruisingsch">
             
-           
+            <div style="color: #000;font-size: 15px;text-align:center;width:100%!important;margin: 0px 0px 5px 0px;padding: 8px 5px;font-weight: 600;"><span id="embarkation_sch"></span> to <span id="debarkation_sch"></span> </div>
                 <select name="markersnamescruisingsch" style="display:none;" class="form-control markersnamesmodalmapcruisingsch"></select>
                 <div id="modalmapcruisingsch" style="border: solid 1px #ccc;">
                
@@ -2133,7 +2133,7 @@ var CSMPmarkerCount = 0;
 <?php 
 if(isset($crusemaparray) && !empty($crusemaparray)){
     $loop= 1;
-    //$settimeout = 100;
+    
 foreach($scheduleData as $key => $schedule){ ?>
 
 var locsatellite = "schloc"+"<?php echo $key; ?>";
@@ -2151,7 +2151,7 @@ locsatellite = L.tileLayer(mbUrl, {
 var idlocmap = "<?php echo "crusingschedulemap".$loop; ?>";
     idlocmap = L.map('<?php echo "crusingschedulemap".$loop; ?>', {
     center: ["<?php echo $schedule['CharterProgramSchedule']['lattitude']; ?>", "<?php echo $schedule['CharterProgramSchedule']['longitude']; ?>"],
-    'zoom': 1.5,
+    'zoom': 8,
     'measureControl': true,
     'worldCopyJump': false,
     'layers': [locsatellite],
@@ -2195,9 +2195,11 @@ markerschloc.scheduleId = "<?php echo $schedule['CharterProgramSchedule']['chart
 
 // removed control zoom in and out from modal
 $("#<?php echo "crusingschedulemap".$loop; ?> .leaflet-control-container").hide();
+
+
 <?php 
 $loop++; 
-$settimeout = $settimeout+100;
+
 }
 }
 ?>
@@ -2740,6 +2742,33 @@ $('#map .leaflet-marker-icon').each(function(i, obj) {
    }
    
 });
+
+/******************************************* */
+<?php 
+if(isset($crusemaparray) && !empty($crusemaparray)){
+    foreach($crusemaparray as $key => $val){ ?>
+
+    $('#<?php echo $val; ?> .leaflet-marker-icon').each(function(i, obj) {
+    
+    if(!$(this).hasClass('text-below-marker-locsch')){
+        $(this).addClass('mylocsh'+i);
+    }
+    
+    });
+
+    var sh = 0
+    $('#<?php echo $val; ?> .leaflet-marker-icon').each(function(i, obj) {
+    
+    if($(this).hasClass('text-below-marker-locsch')){
+        $(this).attr('data-locsh', sh);
+        sh++;
+    }
+    
+    });
+
+<?php } } ?>
+
+/****************************************** */
 }
 $(document).on("click", ".Tooltip", function(e) {
     var myowntooltip = $(this).find('.owntooltip').attr('id');
@@ -2752,6 +2781,14 @@ $(document).on("click", "#map .text-below-marker", function(e) {
     $(".myownmarker"+myowntooltip).click();
     
 });
+
+// $(document).on("click", ".text-below-marker-locsch", function(e) {
+//     var myowntooltip = $(this).attr('data-locsh');
+//     $(".mylocsh"+myowntooltip).click();
+    
+// });
+
+
 /***********************************On clicking marker tooltip open modal of that specific marker */
 var mapmarkerglobalObj = null;
 var fitzoommap = [];
@@ -3680,9 +3717,11 @@ for (var i = 0; i < textareas.length; i++) {
   });
 }
 
-        // setTimeout(() => {
-        //     crusingschedulemap1.invalidateSize();
-        // }, 100);
+      
+    // Display the map tiles fully loaded in crusing schedule modal small map containers on each row
+    setTimeout(function () {
+    window.dispatchEvent(new Event("resize"));
+    }, 100);
                 
                 $(".leaflet-control-attribution").hide();
                 $("#map .leaflet-control-container").hide();
@@ -4079,12 +4118,12 @@ function drawrouteinmodalCSMP(frommarker) { //alert();
                     
                 }
         });
-        // const myArrayFrom = frommarker.split("-");
-        // let fromword = myArrayFrom[0];
-        // const myArrayTo = nextmarkername.split("-");
-        // let toword = myArrayTo[0];
-        // $("#embarkation").text(fromword); 
-        // $("#debarkation").text(toword);
+        const myArrayFrom = frommarker.split("-");
+        let fromword = myArrayFrom[0];
+        const myArrayTo = nextmarkername.split("-");
+        let toword = myArrayTo[0];
+        $("#embarkation_sch").text(fromword); 
+        $("#debarkation_sch").text(toword);
         var specificline = "";
             specificline = tempdrawrouteline;
         var drawnItemsModalMapCSMP = new L.FeatureGroup();
