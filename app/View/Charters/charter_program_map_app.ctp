@@ -1767,7 +1767,7 @@ span.sp-leftalign {
         <div class="modal-content CS_modal">
             <div class="modal-header">
                 <button type="button" class="close" id="cruisinglocationModalclose" aria-hidden="true" style="margin-right: 5px;">×</button>
-                <h4 class="modal-title" id="myModalLabel" style="text-align: center;font-weight: bold;"><?php echo $startloc; ?> to <?php echo $endloc; ?></h4>
+                <h4 class="modal-title" id="myModalLabel" style="text-align: center;font-weight: bold;"><?php echo $scheduleLocation; ?></h4>
             </div>
             <div class="modal-body location_Modal_body">
                 <div id="cruisinglocationModal_load" class="modal_load">
