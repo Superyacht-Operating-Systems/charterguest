@@ -214,6 +214,7 @@ border-radius: 10px;
 .icons_fields{
     padding: 10px 5px 5px 5px;
     border-bottom: 2px solid #eee;
+    margin-bottom: 10px;
 }
 .icon_label{
     color: #000;
@@ -289,7 +290,6 @@ border: 0px solid rgb(204, 204, 204) !important;
 border-radius: 10px !important;
 -webkit-border-radius: 10px !important;
 -moz-border-radius: 10px !important;
-margin-top:10px;
     }
 
     #modalmapcruisingsch{
@@ -368,7 +368,7 @@ width: 100%;
 #modalmap{
         height: 300px;
 width: 455px;
-margin:10px auto;
+margin:0 auto;
 border: 0px solid rgb(204, 204, 204) !important;
 border-radius: 10px !important;
 -webkit-border-radius: 10px !important;
@@ -642,11 +642,11 @@ and (orientation : portrait) {
         height: 300px;
 width: 100%;
 border: 3px solid rgb(204, 204, 204) !important;
-border-radius: 10px!important;
--webkit-border-radius: 10px;
--moz-border-radius: 10px;
--khtml-border-radius: 10px;
-margin-top:10px;
+border-radius: 10px !important;
+-webkit-border-radius: 10px !important;
+-moz-border-radius: 10px !important;
+-khtml-border-radius: 10px !important;
+overflow: hidden;
     }
     #modalmapcruisingsch{
         height: 300px;
@@ -691,7 +691,6 @@ border-radius: 10px !important;
 -webkit-border-radius: 10px !important;
 -moz-border-radius: 10px !important;
 -khtml-border-radius: 10px !important;
-margin-top:10px;
     }
     #modalmapcruisingsch{
         height: 300px;
