@@ -449,6 +449,7 @@ position: absolute;
 background: none!important;
 }
 .certificat-modal-container {
+  background-color: #000 !important;
   z-index: 99999;
 }
 .fancybox-opened {
@@ -1303,7 +1304,7 @@ margin: 0px;padding: 0px;
 .certificat-modal-container .modal-dialog{
   padding-left: 0px;
   width: 600px;
-  margin: 30px auto;
+  margin: 10px auto;
 }
 .certificat-modal-container .inbox-widget .inbox-item {
     border-bottom: 1px solid #d6d4d4;
@@ -1511,7 +1512,7 @@ position: absolute;
 @media screen and (min-width: 990px) {
 .location_Modal_body{
     /* max-height: 580px; */
-    height: 85vh;
+    height: 90vh;
     overflow-y: scroll;
     overflow-x: hidden;
 }
@@ -1519,7 +1520,7 @@ position: absolute;
 @media screen and (max-width: 990px) {
   
     .markmodalbody{
-        max-height: 91vh;
+        max-height: 94vh;
     overflow-y: scroll;
     overflow-x: hidden;
    
@@ -1529,14 +1530,14 @@ position: absolute;
     padding: 0px 10px 100px 0px;
     }
     .modal_load{
-        max-height: 88vh;
+        max-height: 91vh;
     overflow-y: scroll;
     overflow-x: hidden;
     margin: 5px 0px 5px 8px;
     padding: 0px 10px 100px 0px;
     }
     .cruising-location-Modal .modal-content{
-       height: 96vh!important;
+       height: 98vh!important;
     }
 .common-form-row.map-form-rwo {
     margin-top: 50px;
@@ -2111,7 +2112,7 @@ locsatellite = L.tileLayer(mbUrl, {
 var idlocmap = "<?php echo "crusingschedulemap".$loop; ?>";
     idlocmap = L.map('<?php echo "crusingschedulemap".$loop; ?>', {
     center: ["<?php echo $schedule['CharterProgramSchedule']['lattitude']; ?>", "<?php echo $schedule['CharterProgramSchedule']['longitude']; ?>"],
-    'zoom': 5,
+    'zoom': 1.5,
     'measureControl': true,
     'worldCopyJump': false,
     'layers': [locsatellite],
@@ -3245,7 +3246,7 @@ for (var i = 0; i < textareas.length; i++) {
 setTimeout(function () {
     window.dispatchEvent(new Event("resize"));
     }, 100);
-
+    
 
                     $(".leaflet-control-attribution").hide();
                     $(".leaflet-control-container").hide();
