@@ -286,11 +286,10 @@ margin-right: 10px;
         height: 300px;
 width: 100%;
 border: 0px solid rgb(204, 204, 204) !important;
-border-radius: 10px!important;
--webkit-border-radius: 10px;
--moz-border-radius: 10px;
+border-radius: 10px !important;
+-webkit-border-radius: 10px !important;
+-moz-border-radius: 10px !important;
 margin-top:10px;
-overflow: hidden;
     }
 
     #modalmapcruisingsch{
@@ -371,10 +370,9 @@ width: 100%;
 width: 455px;
 margin:10px auto;
 border: 0px solid rgb(204, 204, 204) !important;
-border-radius: 10px!important;
--webkit-border-radius: 10px;
--moz-border-radius: 10px;
-overflow: hidden;
+border-radius: 10px !important;
+-webkit-border-radius: 10px !important;
+-moz-border-radius: 10px !important;
 
     }
 
