@@ -1407,6 +1407,9 @@ background: #fff !important;
 .certificat-modal-container {
   z-index: 99999;
 }
+.fancybox-mobile {
+  z-index: 999999 !important;
+}
 .fancybox-opened {
     z-index: 999999!important;
     opacity: 1 !important;

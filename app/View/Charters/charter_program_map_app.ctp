@@ -450,6 +450,9 @@ background: none!important;
     z-index: 999999!important;
     opacity: 1 !important;
 }
+.fancybox-mobile {
+  z-index: 999999 !important;
+}
 .fancybox-wrap {
   z-index: 99999;
   opacity: 0.1;
