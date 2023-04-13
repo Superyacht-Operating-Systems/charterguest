@@ -283,13 +283,21 @@ margin-right: 10px;
     width: 100px!important;
     height: 100px!important;
 }
-    #modalmap{
-        height: 300px;
-width: 100%;
-border: 0px solid rgb(204, 204, 204) !important;
+.map_outer{
+    height: 300px;
+    width: 100%;
+    border: 0px solid rgb(204, 204, 204) !important;
 border-radius: 10px !important;
 -webkit-border-radius: 10px !important;
 -moz-border-radius: 10px !important;
+}
+    #modalmap{
+        /* height: 300px;
+width: 100%; */
+/* border: 0px solid rgb(204, 204, 204) !important;
+border-radius: 10px !important;
+-webkit-border-radius: 10px !important;
+-moz-border-radius: 10px !important; */
     }
 
     #modalmapcruisingsch{
@@ -365,14 +373,26 @@ width: 100%;
     .CS_modal, .Mark_modal{
     width:650px!important;
 }
-#modalmap{
-        height: 300px;
+.map_outer{
+    height: 300px;
 width: 455px;
 margin:0 auto;
-border: 0px solid rgb(204, 204, 204) !important;
+        border: 1px solid rgb(204, 204, 204) !important;
 border-radius: 10px !important;
 -webkit-border-radius: 10px !important;
 -moz-border-radius: 10px !important;
+-khtml-border-radius: 10px !important;
+overflow: hidden;
+    }
+#modalmap{
+        /* height: 300px;
+width: 455px;
+margin:0 auto; */
+/* border: 1px solid rgb(204, 204, 204) !important;
+border-radius: 10px !important;
+-webkit-border-radius: 10px !important;
+-moz-border-radius: 10px !important;
+overflow: hidden; */
 
     }
 
@@ -448,12 +468,15 @@ background: none!important;
 }
 .fancybox-opened {
     z-index: 999999!important;
-    /* opacity: 1 !important; */
+    opacity: 1 !important;
+}
+.fancybox-mobile {
+  z-index: 999999 !important;
 }
 .fancybox-wrap {
   z-index: 99999;
-  /* opacity: 0.1; */
-  opacity: 1 !important;
+  opacity: 0.1;
+  /* opacity: 1 !important; */
 }
 #fancybox-thumbs {
   left: 45px !important;
@@ -638,15 +661,24 @@ background: none!important;
 and (min-device-width : 768px) 
 and (max-device-width : 1024px) 
 and (orientation : portrait) {
-    #modalmap{
+    .map_outer{
         height: 300px;
 width: 100%;
-border: 3px solid rgb(204, 204, 204) !important;
+        border: 1px solid rgb(204, 204, 204) !important;
 border-radius: 10px !important;
 -webkit-border-radius: 10px !important;
 -moz-border-radius: 10px !important;
 -khtml-border-radius: 10px !important;
 overflow: hidden;
+    }
+    #modalmap{
+        /* height: 300px;
+width: 100%; */
+/* border: 1px solid rgb(204, 204, 204) !important;
+border-radius: 10px !important;
+-webkit-border-radius: 10px !important;
+-moz-border-radius: 10px !important;
+-khtml-border-radius: 10px !important; */
     }
     #modalmapcruisingsch{
         height: 300px;
@@ -683,14 +715,24 @@ p {
 and (min-device-width : 768px) 
 and (max-device-width : 1024px) 
 and (orientation : landscape) {
-    #modalmap{
+    .map_outer{
         height: 300px;
 width: 100%;
-border: 3px solid rgb(204, 204, 204) !important;
+        border: 1px solid rgb(204, 204, 204) !important;
 border-radius: 10px !important;
 -webkit-border-radius: 10px !important;
 -moz-border-radius: 10px !important;
 -khtml-border-radius: 10px !important;
+overflow: hidden;
+    }
+    #modalmap{
+        /* height: 300px;
+width: 100%; */
+/* border: 1px solid rgb(204, 204, 204) !important;
+border-radius: 10px !important;
+-webkit-border-radius: 10px !important;
+-moz-border-radius: 10px !important;
+-khtml-border-radius: 10px !important; */
     }
     #modalmapcruisingsch{
         height: 300px;
@@ -1912,8 +1954,10 @@ span.sp-leftalign {
                 <i style="color: #00a8f3;" class="fa fa-solid fa-ship" aria-hidden="true"><span class="icon_label markerdistance" style="padding: 0px 0px 0px 5px;"></span></i>
                 </div>
                 <select name="markersnames" style="display:none;" class="form-control markersnamesmodalmap"></select>
+                <div class="map_outer">
                 <div id="modalmap" style="border: solid 1px #ccc;">
                
+                </div>
                 </div>
                 </div>
                 <div id="markerModal_load" class="markmodal_load">
