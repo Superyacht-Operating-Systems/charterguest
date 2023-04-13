@@ -283,13 +283,21 @@ margin-right: 10px;
     width: 100px!important;
     height: 100px!important;
 }
-    #modalmap{
-        height: 300px;
-width: 100%;
-border: 0px solid rgb(204, 204, 204) !important;
+.map_outer{
+    height: 300px;
+    width: 100%;
+    border: 0px solid rgb(204, 204, 204) !important;
 border-radius: 10px !important;
 -webkit-border-radius: 10px !important;
 -moz-border-radius: 10px !important;
+}
+    #modalmap{
+        /* height: 300px;
+width: 100%; */
+/* border: 0px solid rgb(204, 204, 204) !important;
+border-radius: 10px !important;
+-webkit-border-radius: 10px !important;
+-moz-border-radius: 10px !important; */
     }
 
     #modalmapcruisingsch{
@@ -366,6 +374,9 @@ width: 100%;
     width:650px!important;
 }
 .map_outer{
+    height: 300px;
+width: 455px;
+margin:0 auto;
         border: 1px solid rgb(204, 204, 204) !important;
 border-radius: 10px !important;
 -webkit-border-radius: 10px !important;
@@ -374,9 +385,9 @@ border-radius: 10px !important;
 overflow: hidden;
     }
 #modalmap{
-        height: 300px;
+        /* height: 300px;
 width: 455px;
-margin:0 auto;
+margin:0 auto; */
 /* border: 1px solid rgb(204, 204, 204) !important;
 border-radius: 10px !important;
 -webkit-border-radius: 10px !important;
@@ -651,6 +662,8 @@ and (min-device-width : 768px)
 and (max-device-width : 1024px) 
 and (orientation : portrait) {
     .map_outer{
+        height: 300px;
+width: 100%;
         border: 1px solid rgb(204, 204, 204) !important;
 border-radius: 10px !important;
 -webkit-border-radius: 10px !important;
@@ -659,8 +672,8 @@ border-radius: 10px !important;
 overflow: hidden;
     }
     #modalmap{
-        height: 300px;
-width: 100%;
+        /* height: 300px;
+width: 100%; */
 /* border: 1px solid rgb(204, 204, 204) !important;
 border-radius: 10px !important;
 -webkit-border-radius: 10px !important;
@@ -703,6 +716,8 @@ and (min-device-width : 768px)
 and (max-device-width : 1024px) 
 and (orientation : landscape) {
     .map_outer{
+        height: 300px;
+width: 100%;
         border: 1px solid rgb(204, 204, 204) !important;
 border-radius: 10px !important;
 -webkit-border-radius: 10px !important;
@@ -711,8 +726,8 @@ border-radius: 10px !important;
 overflow: hidden;
     }
     #modalmap{
-        height: 300px;
-width: 100%;
+        /* height: 300px;
+width: 100%; */
 /* border: 1px solid rgb(204, 204, 204) !important;
 border-radius: 10px !important;
 -webkit-border-radius: 10px !important;
