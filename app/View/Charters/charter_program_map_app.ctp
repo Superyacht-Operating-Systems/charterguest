@@ -655,10 +655,10 @@ overflow: hidden;
         height: 300px;
 width: 100%;
 border: 3px solid rgb(204, 204, 204) !important;
-border-radius: 10px!important;
--webkit-border-radius: 10px;
--moz-border-radius: 10px;
--khtml-border-radius: 10px;
+border-radius: 10px !important;
+-webkit-border-radius: 10px !important;
+-moz-border-radius: 10px !important;
+-khtml-border-radius: 10px !important;
 margin-top:10px;
 overflow: hidden;
     }
@@ -690,10 +690,10 @@ and (orientation : landscape) {
         height: 300px;
 width: 100%;
 border: 3px solid rgb(204, 204, 204) !important;
-border-radius: 10px!important;
--webkit-border-radius: 10px;
--moz-border-radius: 10px;
--khtml-border-radius: 10px;
+border-radius: 10px !important;
+-webkit-border-radius: 10px !important;
+-moz-border-radius: 10px !important;
+-khtml-border-radius: 10px !important;
 margin-top:10px;
 overflow: hidden;
     }
