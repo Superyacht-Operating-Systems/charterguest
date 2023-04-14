@@ -1641,10 +1641,10 @@ border-radius: 4px;
     font-size: 11px;
     font-weight: 1px solid;
     margin-top: -35px !important;
-    margin-left: -6px !important;
+    margin-left: -3px !important;
 color: #000;
 background-color: #fff;
-border-radius: 4px;
+border-radius: 10px;
     z-index:9999 !important;
 }
 
@@ -1652,10 +1652,10 @@ border-radius: 4px;
     font-size: 11px;
     font-weight: 1px solid;
     margin-top: -35px !important;
-    margin-left: -6px !important;
+    margin-left: -3px !important;
 color: #000;
-background-color: #fff;
-border-radius: 4px;
+/* background-color: #fff;
+border-radius: 4px; */
     z-index:9999 !important;
 }
 </style>  

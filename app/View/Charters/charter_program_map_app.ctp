@@ -1666,8 +1666,8 @@ span.sp-leftalign {
     margin-top: -35px !important;
     margin-left: -6px !important;
 color: #000;
-background-color: #fff;
-border-radius: 4px;
+/* background-color: #fff;
+border-radius: 4px; */
     
 }
 
@@ -1691,7 +1691,7 @@ border-radius: 4px;
     margin-left: -6px !important;
 color: #000;
 background-color: #fff;
-border-radius: 4px;
+border-radius: 10px;
     z-index:9999 !important;
 }
 
