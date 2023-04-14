@@ -1662,27 +1662,36 @@ span.sp-leftalign {
 .text-below-marker-locsch {
     font-size: 11px;
     font-weight: 1px solid;
-    margin-top: -35px !important;
-    margin-left: -3px !important;
-    color: #000;
     z-index:9999 !important;
+    margin-top: -35px !important;
+    margin-left: -6px !important;
+color: #000;
+background-color: #fff;
+border-radius: 4px;
+    
 }
 
 .text-below-marker {
     font-size: 11px;
     font-weight: 1px solid;
-    margin-top: -35px !important;
-    margin-left: -3px !important;
-    color: #000;
     z-index:9999 !important;
+    margin-top: -35px !important;
+    margin-left: -6px !important;
+color: #000;
+background-color: #fff;
+border-radius: 4px;
+   
+    
 }
 
 .text-below-marker-modalmap {
     font-size: 11px;
     font-weight: 1px solid;
     margin-top: -35px !important;
-    margin-left: -3px !important;
-    color: #000;
+    margin-left: -6px !important;
+color: #000;
+background-color: #fff;
+border-radius: 4px;
     z-index:9999 !important;
 }
 

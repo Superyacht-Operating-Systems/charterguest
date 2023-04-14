@@ -1630,8 +1630,10 @@ body .sp-60-w input {
     font-size: 11px;
     font-weight: 1px solid;
     margin-top: -35px !important;
-    margin-left: -3px !important;
-    color: #000;
+    margin-left: -6px !important;
+color: #000;
+background-color: #fff;
+border-radius: 4px;
     z-index:9999 !important;
 }
 
@@ -1639,8 +1641,10 @@ body .sp-60-w input {
     font-size: 11px;
     font-weight: 1px solid;
     margin-top: -35px !important;
-    margin-left: -3px !important;
-    color: #000;
+    margin-left: -6px !important;
+color: #000;
+background-color: #fff;
+border-radius: 4px;
     z-index:9999 !important;
 }
 
@@ -1648,8 +1652,10 @@ body .sp-60-w input {
     font-size: 11px;
     font-weight: 1px solid;
     margin-top: -35px !important;
-    margin-left: -3px !important;
-    color: #000;
+    margin-left: -6px !important;
+color: #000;
+background-color: #fff;
+border-radius: 4px;
     z-index:9999 !important;
 }
 </style>  
