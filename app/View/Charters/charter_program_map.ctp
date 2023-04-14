@@ -2430,8 +2430,8 @@ if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !e
 
     var textMarker = L.marker(["<?php echo $schedule['CharterProgramSchedule']['lattitude']; ?>", "<?php echo $schedule['CharterProgramSchedule']['longitude']; ?>"], {
   icon: L.divIcon({
-      html: "<?php echo $markernumberDisplay; ?><span id='<?php echo $schuuid ?>'   class='acti-count-onmarker' <?php echo $marker_msg_count ?> ><?php echo $samemkrcount ?></span>",
-      className: 'text-below-marker',
+    html: "<?php if($markernumberDisplay < 10 ){ ?>    <span>&nbsp;<?php echo $markernumberDisplay; ?></span> <?php } else { ?><span><?php echo $markernumberDisplay; ?></span><?php } ?><span id='<?php echo $schuuid ?>'   class='acti-count-onmarker' <?php echo $marker_msg_count ?> ><?php echo $samemkrcount ?></span>",
+    className: 'text-below-marker',
     })
 }).addTo(map);
 
