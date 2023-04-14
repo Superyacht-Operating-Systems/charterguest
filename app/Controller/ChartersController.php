@@ -6700,7 +6700,8 @@ class ChartersController extends AppController {
                        <form id="scheduleFormEdit"><div class="inputContainer_div">
                         <div class="loc_desc_div">
                         <div>
-                        <span style="display: inline-block;position: relative;"><img src="'.$markerimage.'" style="object-fit: fill; height: 35px;" alt="" ><span style="position: absolute;color:#000;top: 4px;right: 10px;">'.$dayNum.'</span></span>
+                        <span style="display: inline-block;position: relative;"><img src="'.$markerimage.'" style="object-fit: fill; height: 35px;" alt="" >
+                        <span style="position: absolute;color:#000;top: 4.5px;right: 0px;left: -2px;text-align: center;font-size: 14px;">'.$dayNum.'</span></span>
                            <input type="text" name="title" value="'.htmlspecialchars($title).'" placeholder="Enter the Title" class="loc_name" '.$readonly.'>
                             <ul class="action-icon"><li><i class="fa fa-comments " style="color: #00a8f3;float: right;"></i></li></ul>
 						</div>
@@ -6830,7 +6831,8 @@ class ChartersController extends AppController {
                        <form id="scheduleFormEdit"><div class="inputContainer_div">
                         <div class="loc_desc_div">
                         <div>
-                        <span style="display: inline-block;position: relative;"><img src="'.$markerimage.'" style="object-fit: fill; height: 35px;" alt="" ><span style="position: absolute;color:#000;top: 4px;right: 10px;">'.$dayNum.'</span></span>
+                        <span style="display: inline-block;position: relative;"><img src="'.$markerimage.'" style="object-fit: fill; height: 35px;" alt="" >
+                        <span style="position: absolute;color:#000;top: 4.5px;right: 0px;left: -2px;text-align: center;font-size: 14px;">'.$dayNum.'</span></span>
                            <input type="text" name="title" value="'.htmlspecialchars($title).'" placeholder="Enter the Title" class="loc_name" '.$readonly.'>
                             <ul class="action-icon"><li><i class="fa fa-comments " style="color: #00a8f3;float: right;"></i></li></ul>
 						</div>
