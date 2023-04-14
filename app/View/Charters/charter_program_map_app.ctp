@@ -383,7 +383,7 @@ overflow: hidden;
 
     #modalmapcruisingsch{
         height: 600px;
-width: 455px;
+width: 100%;
 margin:10px auto;
 border: 0px solid rgb(204, 204, 204) !important;
 border-radius: 10px!important;
