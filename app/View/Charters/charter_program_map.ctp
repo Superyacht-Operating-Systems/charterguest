@@ -1984,7 +1984,12 @@ body .sp-60-w input {
             <div class="modal-body markmodalbodycruisingsch">
             
             <div style="color: #000;font-size: 15px;text-align:center;width:100%!important;margin: 0px 0px 5px 0px;padding: 8px 5px;font-weight: 600;"><span id="embarkation_sch"></span> to <span id="debarkation_sch"></span> </div>
-                <select name="markersnamescruisingsch" style="display:none;" class="form-control markersnamesmodalmapcruisingsch"></select>
+            <div class="icons_fields" style="text-align:center;border-bottom: none;margin-bottom: 0px;padding-bottom: 0px;">
+                                <i style="color: #00a8f3;" class="fa fa-solid fa-calendar"><span class="icon_label" >05 Jun 2027</span></i>
+                                <i style="color: #00a8f3;" class="fa fa-solid fa-clock-o "><span class="icon_label">1h 16m</span></i>
+                                <i style="color: #00a8f3;" class="fa fa-solid fa-ship" aria-hidden="true"><span class="icon_label" style="padding: 0px 0px 0px 5px;">15.2nm</span></i>
+                                </div>    
+            <select name="markersnamescruisingsch" style="display:none;" class="form-control markersnamesmodalmapcruisingsch"></select>
                 <div id="modalmapcruisingsch" style="border: solid 1px #ccc;">
                
                 </div>

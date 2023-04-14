@@ -452,6 +452,9 @@ background: none!important;
   background-color: #000 !important;
   z-index: 99999;
 }
+.markercs-modal-container{
+    z-index: 99999;
+}
 .fancybox-opened {
     z-index: 999999!important;
     opacity: 1 !important;
@@ -1941,7 +1944,7 @@ span.sp-leftalign {
     </div>
 </div><!-- /.modal-content -->
 
-<div id="markerModalcruisingsch" class="modal certificat-modal-container" role="dialog">
+<div id="markerModalcruisingsch" class="modal markercs-modal-container" role="dialog">
     <div class="modal-dialog" style="width:480px;">
         <div class="modal-content" id="markerModal_id">
             <div class="modal-header" style="padding:5px;border-bottom: 0px solid #e5e5e5;">
@@ -1950,7 +1953,12 @@ span.sp-leftalign {
             <div class="modal-body markmodalbodycruisingsch">
             
             <div style="color: #000;font-size: 15px;text-align:center;width:100%!important;margin: 0px 0px 5px 0px;padding: 8px 5px;font-weight: 600;"><span id="embarkation_sch"></span> to <span id="debarkation_sch"></span> </div>
-                <select name="markersnamescruisingsch" style="display:none;" class="form-control markersnamesmodalmapcruisingsch"></select>
+            <div class="icons_fields" style="text-align:center;border-bottom: none;margin-bottom: 0px;padding-bottom: 0px;">
+                                <i style="color: #00a8f3;" class="fa fa-solid fa-calendar"><span class="icon_label" >05 Jun 2027</span></i>
+                                <i style="color: #00a8f3;" class="fa fa-solid fa-clock-o "><span class="icon_label">1h 16m</span></i>
+                                <i style="color: #00a8f3;" class="fa fa-solid fa-ship" aria-hidden="true"><span class="icon_label" style="padding: 0px 0px 0px 5px;">15.2nm</span></i>
+                                </div>        
+            <select name="markersnamescruisingsch" style="display:none;" class="form-control markersnamesmodalmapcruisingsch"></select>
                 <div id="modalmapcruisingsch" style="border: solid 1px #ccc;">
                
                 </div>
