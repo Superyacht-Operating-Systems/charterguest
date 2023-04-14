@@ -1863,7 +1863,7 @@ border-radius: 10px;
                        <div class="inputContainer_div">
                             <div class="loc_desc_div">
                                 <div>
-                                <span style="display: inline-block;position: relative;"><img src="<?php echo $markerimage; ?>" style="object-fit: fill; height: 35px;" alt="" ><span style="position: absolute;color:#000;top: 4px;right: 10px;"><?php echo $daynumber; ?></span></span>
+                                <span style="display: inline-block;position: relative;"><img src="<?php echo $markerimage; ?>" style="object-fit: fill; height: 35px;" alt="" ><span style="position: absolute;color:#000;top: 4.5px;right: 0px;left: -2px;text-align: center;font-size: 14px;"><?php echo $daynumber; ?></span></span>
                                 <input type="text" name="title" value="<?php echo htmlspecialchars($schedule['CharterProgramSchedule']['title']); ?>" placeholder="Enter the Title" class="loc_name" readonly/>
                                    
                                 </div>
