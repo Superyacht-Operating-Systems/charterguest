@@ -296,7 +296,7 @@ overflow: hidden;
     }
 
     #modalmapcruisingsch{
-        height: 300px;
+        height: 600px;
 width: 100%;
 border: 0px solid rgb(204, 204, 204) !important;
 border-radius: 10px!important;
@@ -382,7 +382,7 @@ overflow: hidden;
     }
 
     #modalmapcruisingsch{
-        height: 300px;
+        height: 600px;
 width: 455px;
 margin:10px auto;
 border: 0px solid rgb(204, 204, 204) !important;
@@ -663,7 +663,7 @@ border-radius: 10px !important;
 overflow: hidden;
     }
     #modalmapcruisingsch{
-        height: 300px;
+        height: 600px;
 width: 100%;
 border: 3px solid rgb(204, 204, 204) !important;
 border-radius: 10px !important;
@@ -711,7 +711,7 @@ border-radius: 10px !important;
 overflow: hidden;
     }
     #modalmapcruisingsch{
-        height: 300px;
+        height: 600px;
 width: 100%;
 border: 3px solid rgb(204, 204, 204) !important;
 border-radius: 10px!important;
@@ -1945,7 +1945,7 @@ span.sp-leftalign {
 </div><!-- /.modal-content -->
 
 <div id="markerModalcruisingsch" class="modal markercs-modal-container" role="dialog">
-    <div class="modal-dialog" style="width:480px;">
+    <div class="modal-dialog" style="width:631.6px;">
         <div class="modal-content" id="markerModal_id">
             <div class="modal-header" style="padding:5px;border-bottom: 0px solid #e5e5e5;">
                 <button type="button" class="close" data-schuuid="" id="markerModalclosecruisingsch" aria-hidden="true" style="margin-right: 5px;">×</button>
