@@ -2138,6 +2138,14 @@ var idlocmap = "<?php echo "crusingschedulemap".$loop; ?>";
     'inertiaThershold': 32,
     //'crs': L.CRS.Simple,
 });
+
+idlocmap.touchZoom.disable();
+idlocmap.doubleClickZoom.disable();
+idlocmap.scrollWheelZoom.disable();
+idlocmap.boxZoom.disable();
+idlocmap.keyboard.disable();
+idlocmap.dragging.disable();
+
 // console.log(idlocmap);
 // console.log(locsatellite);
 var markerschloc = L.marker(["<?php echo $schedule['CharterProgramSchedule']['lattitude']; ?>", "<?php echo $schedule['CharterProgramSchedule']['longitude']; ?>"],{pmIgnore: true}).on("click", markerOnClickCSMP);
@@ -2717,6 +2725,7 @@ function markerOnClick(e) {
     var scheduleSameLocationUUID = e.target.scheduleSameLocationUUID;
     var samelocationsDates = e.target.samelocationsDates;
 
+   
     if (scheduleId != "") {
         $("#hideloader").show();
         $.ajax({
@@ -2737,6 +2746,7 @@ function markerOnClick(e) {
                     $(".leaflet-control-container").hide();
                     fitzoommap = [];
                     var popLocation= e.latlng;
+
                     // var popup = L.popup({keepInView:true,maxHeight:500})
                     // .setLatLng(popLocation)
                     // .setContent(result.popupHtml)
@@ -3224,7 +3234,7 @@ $(document).on("click", "#closeSchedule", function(e) {
             customMediaQueryRemove();
     }
 });
-
+var resizeflag = true;
 $(document).on("click", "#CruisingButton", function(e) {
 
     var scheduleId = $("#charterProgramId").val();
@@ -3261,10 +3271,12 @@ for (var i = 0; i < textareas.length; i++) {
 }
 
 // Display the map tiles fully loaded in crusing schedule modal small map containers on each row
-setTimeout(function () {
-    window.dispatchEvent(new Event("resize"));
-    }, 100);
-    
+if(resizeflag){  
+            setTimeout(function () {
+            window.dispatchEvent(new Event("resize"));
+            resizeflag=false;  
+            }, 100);
+        }
 
                     $(".leaflet-control-attribution").hide();
                     $(".leaflet-control-container").hide();
