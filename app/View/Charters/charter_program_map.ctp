@@ -1658,6 +1658,14 @@ color: #000;
 border-radius: 4px; */
     z-index:9999 !important;
 }
+.CSMPTooltip{
+    opacity: 0 !important;
+    height: 165px;
+    width: 165px;
+    margin-left: -90px;
+    margin-top: -48px;
+    cursor:pointer;
+}
 </style>  
 
 <?php    echo $this->Html->script('jquery-1.7.2.min');
@@ -1905,7 +1913,7 @@ border-radius: 4px; */
                                 </div>
                             </div>
                             <div class="loc_img_div">
-                                <div class="loc_map_div loadEnlargemap" id="crusingschedulemap<?php echo $crusemap; ?>" data-mindex="<?php echo $crusemap; ?>">
+                                <div class="loc_map_div" id="crusingschedulemap<?php echo $crusemap; ?>" data-mindex="mylocsh<?php echo $crusemap; ?>">
                                 
                                 </div>
                                 <div class="loc_img_prev">
@@ -1991,9 +1999,9 @@ border-radius: 4px; */
             
             <div style="color: #000;font-size: 15px;text-align:center;width:100%!important;margin: 0px 0px 5px 0px;padding: 8px 5px;font-weight: 600;"><span id="embarkation_sch"></span> to <span id="debarkation_sch"></span> </div>
             <div class="icons_fields" style="text-align:center;border-bottom: none;margin-bottom: 0px;padding-bottom: 0px;">
-                                <i style="color: #00a8f3;" class="fa fa-solid fa-calendar"><span class="icon_label" >05 Jun 2027</span></i>
-                                <i style="color: #00a8f3;" class="fa fa-solid fa-clock-o "><span class="icon_label">1h 16m</span></i>
-                                <i style="color: #00a8f3;" class="fa fa-solid fa-ship" aria-hidden="true"><span class="icon_label" style="padding: 0px 0px 0px 5px;">15.2nm</span></i>
+                                <i style="color: #00a8f3;" class="fa fa-solid fa-calendar"><span class="icon_label charter_from_date_conv_CSMP" ></span></i>
+                                <i style="color: #00a8f3;" class="fa fa-solid fa-clock-o "><span class="icon_label markerdurationCSMP"></span></i>
+                                <i style="color: #00a8f3;" class="fa fa-solid fa-ship" aria-hidden="true"><span class="icon_label markerdistanceCSMP" style="padding: 0px 0px 0px 5px;"></span></i>
                                 </div>    
             <select name="markersnamescruisingsch" style="display:none;" class="form-control markersnamesmodalmapcruisingsch"></select>
                 <div id="modalmapcruisingsch" style="border: solid 1px #ccc;">
@@ -2201,7 +2209,7 @@ var idlocmap = "<?php echo "crusingschedulemap".$loop; ?>";
     idlocmap = L.map('<?php echo "crusingschedulemap".$loop; ?>', {
     center: ["<?php echo $schedule['CharterProgramSchedule']['lattitude']; ?>", "<?php echo $schedule['CharterProgramSchedule']['longitude']; ?>"],
     'scrollWheelZoom': false,
-    'zoom': 5,
+    'zoom': 8,
     'measureControl': true,
     'worldCopyJump': false,
     'layers': [locsatellite],
@@ -2219,7 +2227,15 @@ idlocmap.keyboard.disable();
 idlocmap.dragging.disable();
 // console.log(idlocmap);
 // console.log(locsatellite);
-var markerschloc = L.marker(["<?php echo $schedule['CharterProgramSchedule']['lattitude']; ?>", "<?php echo $schedule['CharterProgramSchedule']['longitude']; ?>"],{pmIgnore: true}).on("click", markerOnClickCSMP);
+var markerschloc = L.marker(["<?php echo $schedule['CharterProgramSchedule']['lattitude']; ?>", "<?php echo $schedule['CharterProgramSchedule']['longitude']; ?>"],{pmIgnore: true}).bindTooltip("<?php echo "<span class='CSMPown' id='".$loop."'></span>"?>", 
+                    {
+                        permanent: true, 
+                        offset: [0,0],
+                        //sticky:true,
+                        direction: 'right',
+                        className: "CSMPTooltip",
+                        noWrap: true,
+                    }).on("click", markerOnClickCSMP);
 
                 markerschloc.addTo(idlocmap);
 
@@ -2798,26 +2814,11 @@ $(document).on("click", "#map .text-below-marker", function(e) {
     
 });
 
-$(document).on("click", ".loadEnlargemap", function(e) {
-    //e.stopImmediatePropagation();
-    // e.preventDefault();
-    var mapindex = $(this).attr('id');
-    var mindex = $(this).attr('data-mindex');
-     console.log(mindex);
-    // L.DomEvent.stopPropagation(e);
-     //$(".mylocsh"+mindex).click();
+$(document).on("click", ".CSMPTooltip", function(e) {
+    var myowntooltip = $(this).find('.CSMPown').attr('id');
+    $(".mylocsh"+myowntooltip).click();
     
 });
- 
-// function loadEnlargemap(index){
-// console.log(index);
-//      //var mapindex = index;
-//     // if (mapindex < markerCount) {
-//     //     return;
-//     // }
-//      $(".mylocsh"+index).click();
-//     //return false;
-// }
 
 
 /***********************************On clicking marker tooltip open modal of that specific marker */
@@ -4022,7 +4023,7 @@ function markerOnClickCSMP(e) {
     var daytitle = e.target.daytitle;
     var scheduleSameLocationUUID = e.target.scheduleSameLocationUUID;
     var samelocationsDates = e.target.samelocationsDates;
-    $("#modalmapcruisingsch .leaflet-control-container").hide();
+    $("#modalmapcruisingsch .leaflet-control-container").show();
     var popLocation= e.latlng;
     ReloadModalMaplayerCSMP();
     //var popLocation = e.latlng;
@@ -4072,6 +4073,10 @@ function markerOnClickCSMP(e) {
             className: 'text-below-marker-locsch',
             })
         }).addTo(modalmapcruisingsch);  
+        
+                                $(".charter_from_date_conv_CSMP").text(day_dates);
+                                $(".markerdistanceCSMP").text(distancetotal);
+                                $(".markerdurationCSMP").text(durationtotal);
 
        
 }
