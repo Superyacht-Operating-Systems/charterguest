@@ -296,7 +296,7 @@ overflow: hidden;
     }
 
     #modalmapcruisingsch{
-        height: 600px;
+        height: 500px;
 width: 100%;
 border: 0px solid rgb(204, 204, 204) !important;
 border-radius: 10px!important;
@@ -382,7 +382,7 @@ overflow: hidden;
     }
 
     #modalmapcruisingsch{
-        height: 600px;
+        height: 500px;
 width: 100%;
 margin:10px auto;
 border: 0px solid rgb(204, 204, 204) !important;
@@ -454,6 +454,10 @@ background: none!important;
 }
 .markercs-modal-container{
     z-index: 99999;
+    background-color: #000 !important;
+}
+.markercs-modal-container .modal-dialog{
+    margin: 10px auto;
 }
 .fancybox-opened {
     z-index: 999999!important;
@@ -663,7 +667,7 @@ border-radius: 10px !important;
 overflow: hidden;
     }
     #modalmapcruisingsch{
-        height: 600px;
+        height: 500px;
 width: 100%;
 border: 3px solid rgb(204, 204, 204) !important;
 border-radius: 10px !important;
@@ -711,7 +715,7 @@ border-radius: 10px !important;
 overflow: hidden;
     }
     #modalmapcruisingsch{
-        height: 600px;
+        height: 500px;
 width: 100%;
 border: 3px solid rgb(204, 204, 204) !important;
 border-radius: 10px!important;
