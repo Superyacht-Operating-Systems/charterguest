@@ -1388,7 +1388,7 @@ background: #fff !important;
   color:#000;
   z-index: 9999;
   font-weight:bold;
-  border-radius: 20px;
+  border-radius: 10px;
   font-size: 12px;
 }
 
@@ -1402,7 +1402,7 @@ background: #fff !important;
   z-index: 9999;
   font-weight:bold;
   min-width: 121px;
-  border-radius: 20px;
+  border-radius: 10px;
   font-size: 12px;
 }
 
@@ -1416,7 +1416,7 @@ background: #fff !important;
   z-index: 9999;
   font-weight:bold;
   min-width: 121px;
-  border-radius: 20px;
+  border-radius: 10px;
 }
 @media(max-width: 1092px){
 #HideDetails, #HelpfulTips {

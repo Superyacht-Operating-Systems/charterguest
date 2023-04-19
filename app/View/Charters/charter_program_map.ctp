@@ -1324,7 +1324,7 @@ background: #fff !important;
   z-index: 9999;
   font-weight:bold;
   width: 145px;
-  border-radius: 20px;
+  border-radius: 10px;
   font-size: 12px;
 }
 
@@ -1339,7 +1339,7 @@ background: #fff !important;
   z-index: 9999;
   font-weight:bold;
   min-width: 145px;
-  border-radius: 20px;
+  border-radius: 10px;
   font-size: 12px;
 }
 
@@ -1354,7 +1354,7 @@ background: #fff !important;
   z-index: 9999;
   font-weight:bold;
   min-width: 145px;
-  border-radius: 20px;
+  border-radius: 10px;
   font-size: 12px;
 }
 @media only screen and (min-width: 771px) and (max-width: 1092px){
