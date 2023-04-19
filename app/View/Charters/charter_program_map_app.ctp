@@ -446,7 +446,7 @@ position: absolute;
     top: 9px;
 }
 .fancybox-overlay{
-background: none!important;
+background: rgba(0,0,0,0.8) !important;
 }
 .certificat-modal-container {
   background-color: #000 !important;
