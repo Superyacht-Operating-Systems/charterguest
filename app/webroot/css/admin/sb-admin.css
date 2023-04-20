@@ -1688,21 +1688,6 @@ textarea.form-control.text-h{height: 160px;}
     font-weight: bold;
 }
 
-.flexrow .two.view-mainrow span.sp-centeralign{
-      text-align: center;
-    margin: 0 auto;
-    position: absolute;
-    top: -58px;
-    left: 17px;
-    right: auto;
-    display: block!important;
-}
-.flexrow .two.view-mainrow span.sp-rightalign {
-    width: 40%;
-    overflow: hidden;
-        top: 14px;
-    margin: 0px!important;
-}
 
 
 }
@@ -3201,11 +3186,7 @@ label.othr-like {
 }
 
 }
-@media screen and (max-width: 860px) {
-.container {
-    width: 100%;
-}
-}
+
 
 
 @media screen and (max-width:768px) {
@@ -3814,9 +3795,7 @@ table.fd-table tr>th {
 .checkbox-label-row-padd .pdd-none{
   padding-right: 0px;
 }
-.container-row-column{
-  padding-bottom: 10px;
-}
+
 .md-row-h-8{
     top: 254px!important;
 }
@@ -3869,10 +3848,7 @@ position: absolute;
 margin-top: -10px!important;
 }
 
-.list-page-container {
-    margin-top:25px;
-    padding-top: 10px;
-}
+
 #saveBtn {
   margin-right:0px!important;
 }
@@ -3948,7 +3924,7 @@ padding-left: 0px;
 .row-100-width{width:100%!important;}
 .owl-dots{display: block;}
 .tooltip-desk{display: none;}
-.tooltip-mob{    display: inline-block;}
+
 .tooltip-mob a {
     color: #ffffff;
     text-decoration: none;
@@ -4198,9 +4174,7 @@ hr.divmar {
 
 
 
-.list-page-container .container-fluid{
-  padding: 0px;
-}
+
 .Cheese-md-row-input{
       width: 75%!important;
     display: inline-block;
@@ -4933,7 +4907,7 @@ padding-left: 0px;
 }
 }
 
-@media only screen and (max-width:767px){
+@media only screen and (max-width:771px){
 .space-top-0{
       margin-top: 10px;
 }
@@ -5703,6 +5677,32 @@ margin-top: 9px!important;
 .bigitem {
     margin-top: -4px!important;
     padding-bottom: 0px;
+}
+.flexrow .two.view-mainrow span.sp-centeralign{
+      text-align: center;
+    margin: 0 auto;
+    position: absolute;
+    top: -58px;
+    left: 17px;
+    right: auto;
+    display: block!important;
+}
+.flexrow .two.view-mainrow span.sp-rightalign {
+    width: 40%;
+    overflow: hidden;
+        top: 14px;
+    margin: 0px!important;
+}
+.list-page-container {
+    margin-top:25px;
+    padding-top: 10px;
+}
+.list-page-container .container-fluid{
+  padding: 0px;
+}
+.tooltip-mob{    display: inline-block;}
+.container-row-column{
+  padding-bottom: 10px;
 }
 }
 

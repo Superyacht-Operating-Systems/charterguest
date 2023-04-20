@@ -364,7 +364,7 @@ font-weight: bold;
 
 
 
-@media screen and (max-width: 767px){
+@media screen and (max-width: 771px){
 .md-row-h-8 {
   top: 237px !important;
 }
@@ -586,7 +586,7 @@ font-weight: bold;
     width: 100%;
 }
 }
-@media screen and (max-width:768px) {
+@media screen and (max-width:771px) {
 .info-box img{width: 14px;}
 
 }
