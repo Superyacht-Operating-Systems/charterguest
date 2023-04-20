@@ -1667,12 +1667,7 @@ textarea.form-control.text-h{height: 160px;}
 
 
 @media (max-width:767px){
-body .mydemolabel{
-    right: auto;
-    top: 43px!important;
-        left: 95px!important;
-        font-size: 18px!important;
-}
+
 .rain-rwo{
     display: inline-block;
     width: 100%;
@@ -3781,10 +3776,7 @@ position: relative;
 .flexrow .two{
   margin-top: -22px!important;
 }
-.bigitem {
-    margin-top: -4px!important;
-    padding-bottom: 0px;
-}
+
 .bf-head {
     text-align: left;
 }
@@ -4434,9 +4426,7 @@ hr.divider {
 }
 
 
-.yachtHeaderName {
-    margin-top: 9px!important;
-}
+
 .tabport-pl0,
 .occDate{
     width: 56.555555%!important;
@@ -4905,10 +4895,7 @@ border:none;
 .form-group .col-24.pdd-none{
 padding-left: 0px;
 }
-body .mydemolabel{
-  top: 59px!important;
-      font-size: 18px!important;
-}
+
 .label-rigt-align {
     text-align: left;
     left: 0px;
@@ -4951,10 +4938,7 @@ body .mydemolabel{
       margin-top: 10px;
 }
 
-.flexrow .two.view-mainrow{
-margin-top: 9px!important;
-    margin-bottom: 7px;
-}
+
 .md-block.ychat-hd-row{
 margin-top: 0px!important;
     left: 58px;
@@ -5574,12 +5558,7 @@ label.footsize{
       width: 955px;
 }
 }
-@media only screen and (max-width: 767px){
-body .mydemolabel {
-    top: 40px!important;
-    font-size: 16px!important;
-}
-}
+
 @media only screen and (min-width: 768px) and (max-width: 835px){
 .des-pre-w {
   width: 109px;
@@ -5609,7 +5588,7 @@ body .mydemolabel {
     width: 23%!important;
 }
 }
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 771px) {
   .owl-dots {
   width: 300px!important;
   border: none;
@@ -5706,7 +5685,25 @@ padding-left: 78px;
 .hhd-mrg-02 {
     padding-top: 21px;
 }
-
+.yachtHeaderName {
+    margin-top: 9px!important;
+}
+body .mydemolabel {
+    top: 40px!important;
+    font-size: 14px!important;
+}
+body .mydemolabel{
+    right: auto;
+        left: 95px!important;
+}
+.flexrow .two.view-mainrow{
+margin-top: 9px!important;
+    margin-bottom: 7px;
+}
+.bigitem {
+    margin-top: -4px!important;
+    padding-bottom: 0px;
+}
 }
 
 @media only screen and (min-width: 771px) and (max-width: 1020px){
