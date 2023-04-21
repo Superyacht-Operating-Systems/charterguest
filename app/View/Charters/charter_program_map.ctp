@@ -449,7 +449,7 @@ border-radius: 10px;
 }
 }
 
-@media only screen and (max-width: 771px){
+@media only screen and (max-width: 768px){
     .nav-side-menu-full-container .nav-side-menu .sidebar {
   width: 120px;
     }
@@ -944,7 +944,7 @@ display: block;
     margin-right: 5%;
 }
 .nav-side-menu{display: none;}
-@media screen and (max-width: 771px) {
+@media screen and (max-width: 768px) {
 .md-text-center{text-align: center!important;}
 .common-form-row {
     margin: 45px 0px 0px 0px;
@@ -1263,7 +1263,7 @@ body .mydemolabel {
 
 
 }
-@media only screen and (max-width:767px){
+@media only screen and (max-width:768px){
 
 body .mydemolabel {
     top: 44px!important;
@@ -1357,7 +1357,7 @@ background: #fff !important;
   border-radius: 10px;
   font-size: 12px;
 }
-@media only screen and (min-width: 771px) and (max-width: 1092px){
+@media only screen and (min-width: 768px) and (max-width: 1092px){
     #CruisingButton {
   width: 138px !important;
   font-size: 12px;
@@ -1376,7 +1376,7 @@ background: #fff !important;
 }
 
 
-@media (max-width:771px){
+@media (max-width:768px){
 #HideDetails, #HelpfulTips {
 
     width: 113px;
@@ -1532,7 +1532,7 @@ span.sp-rightalign {
 }
 
 }
-@media only screen and (max-width: 771px){
+@media only screen and (max-width: 768px){
     .sp-rightalign{
     display: none;
 }
@@ -1595,7 +1595,7 @@ span.sp-leftalign {
     padding: 10px;
 }
 
-@media only screen and (min-width: 320px) and (max-width: 771px){
+@media only screen and (min-width: 320px) and (max-width: 768px){
 body .sp-60-w {
     width: 100%!important;
 }
