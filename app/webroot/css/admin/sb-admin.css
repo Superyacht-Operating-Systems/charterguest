@@ -4907,7 +4907,7 @@ padding-left: 0px;
 }
 }
 
-@media only screen and (max-width:768px){
+@media only screen and (max-width:771px){
 .space-top-0{
       margin-top: 10px;
 }
@@ -5322,7 +5322,7 @@ label.othr-like{width: 100%!important;}
 }
 
 }
-@media only screen and (min-width: 320px) and (max-width: 768px){
+@media only screen and (min-width: 320px) and (max-width: 771px){
 .ch-card-aligncenter{
     width: 320px!important;
     margin: 0 auto;
@@ -5562,7 +5562,7 @@ label.footsize{
     width: 23%!important;
 }
 }
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 771px) {
   .owl-dots {
   width: 300px!important;
   border: none;
@@ -5594,7 +5594,7 @@ label.footsize{
 }
 }
 
-  @media only screen and (max-width: 768px){
+  @media only screen and (max-width: 771px){
   .nav-side-menu {
     margin-top: 18px;
 }
@@ -5625,8 +5625,15 @@ width: 100%;
     left: 70px;
     transition-delay: 30s;
 }
-
-
+.navbar-absalute-top .yachtHeaderName {
+  left: 95px;
+  right: auto;
+  top: 18px !important;
+}
+.yachtHeaderName {
+  font-size: 16px !important;
+  }
+  
   .userhead-name .user-hname {
  font-size: 16px !important;
 top: 78px !important;
@@ -5655,7 +5662,14 @@ padding-left: 78px;
 .yachtHeaderName {
     margin-top: 9px!important;
 }
-
+body .mydemolabel {
+    top: 40px!important;
+    font-size: 14px!important;
+}
+body .mydemolabel{
+    right: auto;
+        left: 95px!important;
+}
 .flexrow .two.view-mainrow{
 margin-top: 9px!important;
     margin-bottom: 7px;
@@ -5692,9 +5706,19 @@ margin-top: 9px!important;
 }
 }
 
-@media only screen and (min-width: 768px) and (max-width: 1020px){
+@media only screen and (min-width: 771px) and (max-width: 1020px){
 .bigitem .label-bold {
     padding-top: 32px!important;
+}
+
+.navbar-absalute-top .yachtHeaderName {
+    position: absolute!important;
+    text-align: center;
+    left: 0;
+    right: 0;
+    display: inline-block;
+    width: 100%;
+    max-width: 100%;
 }
 .userhead-name .acti-countnav {
     top: 90px;
@@ -5713,7 +5737,7 @@ padding-top: 84px;
   padding-top: 8px;
 }
 }
-@media only screen and (min-width: 320px) and (max-width: 768px){
+@media only screen and (min-width: 320px) and (max-width: 771px){
 .nav-side-menu-full-container .nav-side-menu .sidebar-btn{
 	left: 4px!important;
 }
@@ -5726,47 +5750,3 @@ padding-top: 84px;
     left: auto;
 }
 }
-
-
-/* below and above 768 media query */
-
-@media only screen and (max-width: 768px) {
-.navbar-absalute-top .yachtHeaderName {
-  left: 95px;
-  right: auto;
-  top: 18px !important;
-  margin-top: 9px !important;
-  font-size: 16px !important;
-  width: auto;
-}
-body .mydemolabel {
-    top: 40px!important;
-    font-size: 14px!important;
-    right: auto;
-        left: 95px!important;
-}
-}
-@media only screen and (min-width: 768px) {
-.navbar-absalute-top .yachtHeaderName {
-top: 21px !important;
-  position: absolute !important;
-  text-align: center;
-  left: 0;
-  right: 0;
-  display: inline-block;
-  width: 100%;
-  max-width: 100%;
-  font-size: 30px !important;
-  margin-top: 23px !important;
-}
-body .mydemolabel {
-   position: absolute;
-left: 0 !important;
-right: 0;
-text-align: center;
-top: 76px !important;
-font-size: 30px !important;
-}
-}
-
-
