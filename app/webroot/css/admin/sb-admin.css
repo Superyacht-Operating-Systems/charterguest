@@ -2940,7 +2940,7 @@ margin-right: 0px!important;
 }
 .md-radio-column-box-max{width: 115px;    margin-top: -5px;}
 .ma-t-check{margin-top:1px!important;}
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 768px) {
 .flexrow .two.view-mainrow span.sp-rightalign {
     width: 40%;
     overflow: hidden;
@@ -3189,7 +3189,7 @@ label.othr-like {
 
 
 
-@media screen and (max-width:767px) {
+@media screen and (max-width:768px) {
 .col-xs-127 {
     width: 50%;
     float: left;
@@ -3252,7 +3252,7 @@ label.othr-like {
 
 }
 
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 768px) {
 .cp-head{
     text-align: left!important;
 }
@@ -3731,7 +3731,7 @@ border:none;
     width: 50px;
     text-align: center
 }
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 768px) {
 .sp-nonemob{
   display: none!important;
 }
@@ -4865,7 +4865,7 @@ border:none;
 }
 
 
-@media only screen and (max-width:767px){
+@media only screen and (max-width:768px){
 .form-group .col-24.pdd-none{
 padding-left: 0px;
 }
@@ -4907,7 +4907,7 @@ padding-left: 0px;
 }
 }
 
-@media only screen and (max-width:767px){
+@media only screen and (max-width:768px){
 .space-top-0{
       margin-top: 10px;
 }
@@ -5322,7 +5322,7 @@ label.othr-like{width: 100%!important;}
 }
 
 }
-@media only screen and (min-width: 320px) and (max-width: 767px){
+@media only screen and (min-width: 320px) and (max-width: 768px){
 .ch-card-aligncenter{
     width: 320px!important;
     margin: 0 auto;
@@ -5402,7 +5402,7 @@ width: 137px!important;
 
 
 
-@media only screen and (min-width: 768px) and (max-width: 1020px){
+@media only screen and (min-width: 769px) and (max-width: 1020px){
 
 .checkbox-label-row .occfild {
     width: 108px!important;
@@ -5562,7 +5562,7 @@ label.footsize{
     width: 23%!important;
 }
 }
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 768px) {
   .owl-dots {
   width: 300px!important;
   border: none;
@@ -5594,7 +5594,7 @@ label.footsize{
 }
 }
 
-  @media only screen and (max-width: 767px){
+  @media only screen and (max-width: 768px){
   .nav-side-menu {
     margin-top: 18px;
 }
@@ -5737,7 +5737,7 @@ padding-top: 84px;
   padding-top: 8px;
 }
 }
-@media only screen and (min-width: 320px) and (max-width: 767px){
+@media only screen and (min-width: 320px) and (max-width: 768px){
 .nav-side-menu-full-container .nav-side-menu .sidebar-btn{
 	left: 4px!important;
 }
