@@ -1711,6 +1711,10 @@ border-radius: 10px;
     margin-top: -48px;
     cursor:pointer;
 }
+
+.stationarydays{
+    cursor:pointer;
+}
 </style>  
 
 <?php    echo $this->Html->script('jquery-1.7.2.min');
@@ -2302,6 +2306,13 @@ if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !e
             $SumDaytitle.= $val.'<br>';
         }
 
+        $WeekDaytitle = "";
+        if($schedule['CharterProgramSchedule']['stationary'] == 1 && count($stationarylocations)>1){
+            foreach($stationarylocations[$schedule['CharterProgramSchedule']['lattitude']] as $val){
+                $WeekDaytitle.= $val.'<br><br>';
+            }
+        }
+
     $schuuid = $schedule['CharterProgramSchedule']['UUID'];
     if($schedule['CharterProgramSchedule']['marker_msg_count'] == 0){
         $marker_msg_count = "style='display:none;'";
@@ -2337,6 +2348,9 @@ if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !e
     
     }
     $daynumber = $schedule['CharterProgramSchedule']['day_num'];
+    $kn = $key+1;
+    $tooltipclass = "stationarytooltip".$kn;
+
         if ($schedule['CharterProgramSchedule']['day_num'] == 1) {
         ?>
             day1 = 1;
@@ -2349,12 +2363,12 @@ if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !e
         zoom = 7;
         
         var marker = L.marker(["<?php echo $schedule['CharterProgramSchedule']['lattitude']; ?>", "<?php echo $schedule['CharterProgramSchedule']['longitude']; ?>"],{pmIgnore: true})
-        .bindTooltip("<?php echo "<span class='smalltooltip'>Day ".$daynumber."</span><span class='owntooltip' id=".$key."><b style='font-size: 12px;'>".$SumDaytitle."</b><b style='font-size: 12px;'>".$schedule['CharterProgramSchedule']['title']."<hr>".$endplace."</b><br><b style='font-size: 12px;'>".$distance.$bar.$duration."</b></span>"?>", 
+        .bindTooltip("<?php echo "<span class='smalltooltip'>Day ".$daynumber."</span><span class='owntooltip' id=".$key."><b style='font-size: 12px;'>".$SumDaytitle."</b><b style='font-size: 12px;'>".$schedule['CharterProgramSchedule']['title']."<hr>".$endplace."</b><br><b style='font-size: 12px;'>".$distance.$bar.$duration."</b></span><span class='stationary'>".$WeekDaytitle."</span>"?>", 
                     {
                         permanent: true, 
                         offset: [0,-40],
                         direction: 'right',
-                        className: "Tooltip",
+                        className: "Tooltip <?php echo $tooltipclass; ?>",
                         noWrap: false,
                     })
                 .on("click", markerOnClick);
@@ -2376,6 +2390,8 @@ if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !e
         marker.labeldayanddate = "<?php echo $SumDaytitle; ?>";
         marker.day_num = "<?php echo $schedule['CharterProgramSchedule']['day_num']; ?>";
         marker.markerNum = markerCount; 
+        marker.stationary = "<?php echo $schedule['CharterProgramSchedule']['stationary']; ?>";
+        marker.stationarytooltipnum = "<?php echo $kn; ?>";
         markerArray.push(marker);
         marker.addTo(map);
         markerCount++;
@@ -2399,6 +2415,11 @@ if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !e
  <?php } 
 }?>
 
+map.on('click', function(e) {
+    $('.Tooltip').css('top','');
+    $(".Tooltip").hide();
+});
+
 // script to show the tooltip next to marker on show/hide and also zoomin and zoomout
 map.on('zoomstart', function () {
 
@@ -2411,6 +2432,9 @@ var zoomLevel = map.getZoom();
     if(tooltipdisplay == "block"){ 
         $('.Tooltip').css('top','45px');
     }
+    if(tooltipdisplay == "none"){ 
+                $('.Tooltip').css('top','45px');
+            }
     //alert(zoomLevel);
     // console.log("zoomLevel");
     // console.log(tooltipdisplay);
@@ -2638,6 +2662,7 @@ $(document).on("click", "#HideDetails", function(e) {
         $(".smalltooltip").hide();
         $(".Tooltip").show();
         $(".owntooltip").show();
+        $(".stationary").hide();
         $("#HideDetails").text("Hide Details");
         // $(".leaflet-tooltip").css("opacity", "0");  
         // setTimeout(function(){
@@ -2646,8 +2671,8 @@ $(document).on("click", "#HideDetails", function(e) {
         // },1000);
     }else if(btntext == "Hide Details"){
         //$(".Tooltip").css("margin-top","35px");
-        $(".Tooltip").css("width","50px");
-        $(".smalltooltip").show();
+        $(".Tooltip").css("width","160px");
+        $(".smalltooltip").hide();
         $(".Tooltip").hide();
         $(".owntooltip").hide();
         $("#HideDetails").text("Show Details");
@@ -2662,6 +2687,7 @@ $(document).on("click", "#HideDetails", function(e) {
             }
         
         });
+        $(".stationary").hide();
         // $(".leaflet-tooltip").css("opacity", "0");  
         // setTimeout(function(){
         //         $(".leaflet-tooltip").css("opacity", "1");  
@@ -2769,7 +2795,16 @@ function markerOnClick(e) {
     var daytitle = e.target.daytitle;
     var scheduleSameLocationUUID = e.target.scheduleSameLocationUUID;
     var samelocationsDates = e.target.samelocationsDates;
-
+    var stationary = e.target.stationary;
+    var stationarytooltipnum = e.target.stationarytooltipnum;
+    $(".Tooltip").hide();
+    if(stationary == 1){
+        $('.Tooltip').css('top','');
+        $(".stationarytooltip"+stationarytooltipnum).show();
+        $(".owntooltip").hide();
+        $(".stationary").show();
+        return false;
+    }
    
     if (scheduleId != "") {
         $("#hideloader").show();
@@ -3160,6 +3195,223 @@ function markerModalclose(scheduleSameLocationUUID){
                             });
 }
 
+$(document).on("click", ".stationarydays", function(e) {
+    var scheduleUUId = mapmarkerglobalObj.target.scheduleUUId;
+    var scheduleId = mapmarkerglobalObj.target.scheduleId;
+    var tablepId = mapmarkerglobalObj.target.tablepId;
+    var counttitle = mapmarkerglobalObj.target.counttitle;
+    var daytitle = mapmarkerglobalObj.target.daytitle;
+    var scheduleSameLocationUUID = mapmarkerglobalObj.target.scheduleSameLocationUUID;
+    var samelocationsDates = mapmarkerglobalObj.target.samelocationsDates;
+
+    var markerNum = mapmarkerglobalObj.target.markerNum;
+    var lattitude = mapmarkerglobalObj.latlng.lat;
+    var longitude = mapmarkerglobalObj.latlng.lng;
+    var consumptiontotal = mapmarkerglobalObj.target.consumptiontotal;
+    var distancetotal = mapmarkerglobalObj.target.distancetotal;
+    var durationtotal = mapmarkerglobalObj.target.durationtotal;
+
+   var selectedschuuid = $(this).attr('id');
+   //var selecteddatetext = $(".noofdayscard option:selected").text();
+   var yachtId = $("#yachtId").val();
+  //alert('gg')
+  
+   $("#hideloader").show();
+        $.ajax({
+            type: "POST",
+            url: basefolder+"/"+"charters/editCharterProgramSchedules",
+            dataType: 'json',
+            data: {"programId":scheduleId,"tablepId":tablepId ,"scheduleId": selectedschuuid, "diffDays": <?php echo $diffDays; ?>, "yachtId": yachtId,"counttitle":counttitle, "daytitle":daytitle, "guesttype":"guest","scheduleSameLocationUUID":scheduleSameLocationUUID, "samelocationsDates":samelocationsDates, "from":'daysselection','selecteddatetext':'','ipaddb':'<?php echo $ipadappdb; ?>' },
+            success:function(result) {
+               
+                if (result.status == 'success') {
+                    var width = $(window).width();
+                    $("#hideloader").hide();
+
+                    //console.log(mapmarkerglobalObj);
+                    map.setView(mapmarkerglobalObj.latlng);
+                    
+                    var popLocation= mapmarkerglobalObj.latlng;
+                   
+                    $(".leaflet-control-attribution").hide();
+                    $("#CruisingButton").hide();
+                    $("#HideDetails").hide();
+                    $("#HelpfulTips").hide();
+                    $(".leaflet-control-container").hide();
+                    //setTimeout(function() {
+                        
+                    // var popup = L.popup({
+                    //     autoPan: true
+                    //     })
+                    // .setLatLng(popLocation)
+                    // .setContent(result.popupHtml)
+                    // .openOn(map)
+                    // .on("remove", function () {
+                    //         //msgcount(scheduleSameLocationUUID);
+                    //         $(".leaflet-control-attribution").show();
+                    //         $("#CruisingButton").show();
+                    //         $("#HideDetails").show();
+                    //         $("#HelpfulTips").show();
+                    //         $(".leaflet-control-container").show();
+
+                    //         //for screenview <990 on opening the itinerary modal blacked out the map region
+                    //         // on close modal removed the blacked out css
+                    //         customMediaQueryRemove();
+
+                    //     });
+
+                        $("#markerModal_load").html(result.popupHtml);
+                        $("#markerModalclose").attr("data-schuuid",scheduleSameLocationUUID);
+                        $("#markerModal").show();
+                                // get all the text area elements
+                                var textareas = document.querySelectorAll(".auto_resize");
+
+                                // function to adjust the height of a text area based on its contents
+                                function adjustTextareaHeight(textarea) {
+                                textarea.style.minHeight = textarea.style.height;
+                                textarea.style.height = "auto";
+                                textarea.style.height = textarea.scrollHeight + "px";
+                                }
+
+                                // loop over all the text areas and call the adjustTextareaHeight function for each one
+                                for (var i = 0; i < textareas.length; i++) {
+                                var textarea = textareas[i];
+                                adjustTextareaHeight(textarea);
+                                textarea.addEventListener("input", function() {
+                                    adjustTextareaHeight(textarea);
+                                });
+                                }
+
+                        window.scrollTo(0, 0);
+                        //$('.day_dates').text(day_dates);
+                        $(".leaflet-control-attribution").hide();
+                    $(".leaflet-popup-close-button").addClass('updateCommentscount');
+                   // $('.day_dates').text(day_dates);
+                   $('.noofdayscard').html(result.no_of_days_options);
+                    $("#closeSchedule").remove();
+                    $(".crew_comment_cruisingmaptitle").remove();
+                    $(".crew_comment_cruisingmap").remove();
+                    $(".leaflet-popup-close-button").remove();
+                     // to get reduce msgcount
+                    //  $(popup._closeButton).one('click', function(e){
+                        
+                    //     $("#CruisingButton").show();
+                    //     $("#HideDetails").show();
+                    //     $("#HelpfulTips").show();
+                    //     $(".leaflet-control-attribution").show();
+                    //     $(".leaflet-control-container").show();
+                    // });
+
+                    if(result.modaldisplayDate){
+                            var dateformarker = result.modaldisplayDate;
+                            $(".charter_from_date_conv").text(dateformarker);
+                        }
+
+                        //alert(width);
+                        //for screenview <990 on opening the itinerary modal blacked out the map region
+                        // on close modal removed the blacked out css
+                        if(width<990){
+                            customMediaQueryAdd();
+                            
+                        }else if(width>990){
+                            customMediaQueryRemove();
+                        }
+
+                        /////////////////////////////itineray modal map///////////////////////////////////////////////////
+
+                    ReloadModalMaplayer();
+                                //var popLocation = e.latlng;
+                                var tooltipcontent = mapmarkerglobalObj.target._tooltip._content;
+                                var selectedmarkertitle = mapmarkerglobalObj.target.daytitle;
+                                var selectedmarkerday_num = mapmarkerglobalObj.target.day_num;
+                                //console.log(popLocation);
+                                fitzoommap.push(popLocation);
+                                if (markerArray.length > 0) {
+                                        $('.markersnamesmodalmap').find('option').remove();
+                                        $('.markersnamesmodalmap').append($("<option></option>")
+                                            .attr("value", "")
+                                            .text("Select")
+                                        );
+                                        var temptitle = [];                        
+                                                    $.each(markerArray, function(key, value) {   
+                                                        
+                                                        //if(jQuery.inArray(value.daytitle, temptitle) !== -1){
+                                                            
+                                                        //}else{
+
+                                                                $('.markersnamesmodalmap')
+                                                                    .append($("<option></option>")
+                                                                        .attr("id", "marker_" + value.scheduleId)
+                                                                        .attr("data-lat", value._latlng.lat)
+                                                                        .attr("data-long", value._latlng.lng)
+                                                                        .attr("data-schid", value.scheduleId)
+                                                                        .attr("data-daynum", value.day_num)
+                                                                        .attr("value", value.daytitle +' - Day '+value.day_num)
+                                                                        .text(value.daytitle +' - Day '+value.day_num)
+                                                                    );
+                                                                    //temptitle.push(value.daytitle);
+                                                        //}
+
+                                        });
+                                    }
+
+                                // $("#frommarker").val(selectedmarkertitle +' - Day '+selectedmarkerday_num);
+                                // $("#frommarkerlat").val(lattitude);
+                                // $("#frommarkerlong").val(longitude);
+
+                                $(".markerdistance").text(distancetotal);
+                                $(".markerduration").text(durationtotal);
+                                
+                                //$(".markerconsumption").text(consumptiontotal);
+
+
+                                var frommarker = selectedmarkertitle +' - Day '+selectedmarkerday_num; //alert('llll')
+                                routeexists = 1;
+                                drawrouteinmodal(frommarker);
+                              
+                                // console.log(selectedmarkertitle);
+                                //modalmap.fitBounds(fitzoommap);
+                                //modalmap.setView(new L.LatLng(lattitude,longitude), 7);
+                                //modalmap.panBy([0,0]);
+                                // console.log(lattitude);  
+                                // console.log(longitude);  
+                                // setTimeout(() => {
+                                //     modalmap.invalidateSize();
+                                // }, 0);
+                                $("#modalmap").find('.leaflet-control-attribution').hide();
+                                var routemodalmarker = L.marker([lattitude, longitude], {
+                                    draggable: false,
+                                    pmIgnore: true
+                                }).bindTooltip(tooltipcontent, {
+                                    permanent: true,
+                                    direction: 'right',
+                                    className: "Tooltipmodalmap",
+                                    noWrap: false,
+                                });
+                                routemodalmarker.addTo(modalmap);
+
+                                var textMarkermodalmap = L.marker([lattitude,longitude], {
+                                icon: L.divIcon({
+                                    html: selectedmarkerday_num,
+                                    className: 'text-below-marker-modalmap',
+                                    })
+                                }).addTo(modalmap);
+
+                                 $(".Tooltipmodalmap").hide();
+                    ////////////////////////////////////////////////////////////////////////////////
+
+                    //}, 1000);
+                     
+                }
+            },
+            error: function(jqxhr) { 
+                $("#hideloader").hide();
+            }
+        });
+
+});
+
+
 $(document).on("change", ".noofdayscard", function(e) {
     var scheduleUUId = mapmarkerglobalObj.target.scheduleUUId;
     var scheduleId = mapmarkerglobalObj.target.scheduleId;
@@ -3395,19 +3647,8 @@ $(document).ready(function() { //alert();
                     },
                 type : "image"
             });
-            $('.fancyboxmap').fancybox({
-            //maxWidth	: 400,
-                //maxHeight	: 600,
-                fitToView	: true,
-                width		: '100%',
-                height		: '100%',
-                autoSize	: true,
-                closeClick	: false,
-                autoScale   : true,
-                transitionIn : 'none',
-                transitionOut: 'none',
-        });
-            $(".Tooltip").css("width","50px");
+            
+            $(".Tooltip").css("width","160px");
                 $(".smalltooltip").hide();
                 $(".Tooltip").hide();
                 $(".owntooltip").hide();

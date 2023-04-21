@@ -5318,7 +5318,9 @@ class ChartersController extends AppController {
                                                         $currentDate += (86400)) {
                                                             
                         $Store = date('d M Y',$currentDate);
+                        $StoreDay = date('D d M Y',$currentDate);
                         $Datesarray[$i] = $Store;
+                        $Datesplusdayarray[$i] = $StoreDay;
                         $i++;
                         }
                         
@@ -5337,6 +5339,9 @@ class ChartersController extends AppController {
                         $samedayrouteorder = array();
                         $locationimages = array();
                         $locationComment = array();
+                        $stationarylocations = array();
+                        $basefolder = $this->request->base;
+
                         if(isset($scheduleData)){
                             foreach($scheduleData as $key => $publishmap){
                                     if($publishmap['CharterProgramSchedule']['publish_map'] == 1){
@@ -5346,6 +5351,7 @@ class ChartersController extends AppController {
                                     }
                                     if($Datesarray[$publishmap['CharterProgramSchedule']['day_num']]){
                                         $scheduleData[$key]['CharterProgramSchedule']['day_dates'] = $Datesarray[$publishmap['CharterProgramSchedule']['day_num']];
+                                        $scheduleData[$key]['CharterProgramSchedule']['week_days'] = $Datesplusdayarray[$publishmap['CharterProgramSchedule']['day_num']];
                                     }
                                     $samedayrouteorder[$publishmap['CharterProgramSchedule']['title'].' - Day '.$publishmap['CharterProgramSchedule']['day_num']] = $publishmap['CharterProgramSchedule']['day_num'];
                                    //$mcount = $this->getmsgnotifycountForMarker($publishmap['CharterProgramSchedule']['UUID']);
@@ -5358,6 +5364,9 @@ class ChartersController extends AppController {
                                     $samelocationsScheduleUUID[$publishmap['CharterProgramSchedule']['title']][] = $publishmap['CharterProgramSchedule']['UUID']; //same location
                                     $samelocationsDates[$publishmap['CharterProgramSchedule']['title']][] = $scheduleData[$key]['CharterProgramSchedule']['day_dates']; //same location
                                     $samemarkercommentcount[$publishmap['CharterProgramSchedule']['lattitude']] += $scheduleData[$key]['CharterProgramSchedule']['marker_msg_count']; //same location
+
+                                    $markerimg = BASE_URL.$basefolder.'/app/webroot/css/leaflet/dist/images/marker-icon.png';
+                            $stationarylocations[$publishmap['CharterProgramSchedule']['lattitude']][] = "<span class='stationarydays' id=".$publishmap['CharterProgramSchedule']['UUID']."><img src=".$markerimg." width='15px height='15px' > Day ".$scheduleData[$key]['CharterProgramSchedule']['day_num']."&nbsp;&nbsp;".$scheduleData[$key]['CharterProgramSchedule']['week_days']."</span>"; //same stationarylocations
 
                                     ////////////////////////////////
                                 $loctitle = $publishmap['CharterProgramSchedule']['title'];
@@ -5589,6 +5598,8 @@ class ChartersController extends AppController {
                         $this->set('samelocationsDates', $samelocationsDates);
                         $this->set('samemarkercommentcount', $samemarkercommentcount);
 
+                        $this->set('stationarylocations', $stationarylocations);
+
                         $this->set('charterProgramId', $charterProgramId);
                         $this->set('charterProgData', $charterProgData[0]);
                         $this->set('diffDays', $diffDays);
@@ -5688,7 +5699,9 @@ class ChartersController extends AppController {
                                                 $currentDate += (86400)) {
                                                     
                 $Store = date('d M Y',$currentDate);
+                $StoreDay = date('D d M Y',$currentDate);
                 $Datesarray[$i] = $Store;
+                $Datesplusdayarray[$i] = $StoreDay;
                 $i++;
                 }
                 $YachtData =  $this->CharterGuest->query("SELECT * FROM $yachtDbName.yachts Yacht");
@@ -5708,6 +5721,10 @@ class ChartersController extends AppController {
                 $samedayrouteorder = array();
                 $locationimages = array();
                 $locationComment = array();
+
+                $stationarylocations = array();
+                $basefolder = $this->request->base;
+
                 if(isset($scheduleData)){
                     foreach($scheduleData as $key => $publishmap){
                             if($publishmap['CharterProgramSchedule']['publish_map'] == 1){
@@ -5717,6 +5734,7 @@ class ChartersController extends AppController {
                             }
                             if($Datesarray[$publishmap['CharterProgramSchedule']['day_num']]){
                                 $scheduleData[$key]['CharterProgramSchedule']['day_dates'] = $Datesarray[$publishmap['CharterProgramSchedule']['day_num']];
+                                $scheduleData[$key]['CharterProgramSchedule']['week_days'] = $Datesplusdayarray[$publishmap['CharterProgramSchedule']['day_num']];
                             }
                             $samedayrouteorder[$publishmap['CharterProgramSchedule']['title'].' - Day '.$publishmap['CharterProgramSchedule']['day_num']] = $publishmap['CharterProgramSchedule']['day_num'];
                            //$mcount = $this->getmsgnotifycountForMarker($publishmap['CharterProgramSchedule']['UUID']);
@@ -5729,6 +5747,9 @@ class ChartersController extends AppController {
                             $samelocationsScheduleUUID[$publishmap['CharterProgramSchedule']['title']][] = $publishmap['CharterProgramSchedule']['UUID']; //same location
                             $samelocationsDates[$publishmap['CharterProgramSchedule']['title']][] = $scheduleData[$key]['CharterProgramSchedule']['day_dates']; //same location
                             $samemarkercommentcount[$publishmap['CharterProgramSchedule']['lattitude']] += $scheduleData[$key]['CharterProgramSchedule']['marker_msg_count']; //same location
+
+                            $markerimg = BASE_URL.$basefolder.'/app/webroot/css/leaflet/dist/images/marker-icon.png';
+                            $stationarylocations[$publishmap['CharterProgramSchedule']['lattitude']][] = "<span class='stationarydays' id=".$publishmap['CharterProgramSchedule']['UUID']."><img src=".$markerimg." width='15px height='15px' > Day ".$scheduleData[$key]['CharterProgramSchedule']['day_num']."&nbsp;&nbsp;".$scheduleData[$key]['CharterProgramSchedule']['week_days']."</span>"; //same stationarylocations
 
                         ////////////////////////////////
                                 $loctitle = $publishmap['CharterProgramSchedule']['title'];
@@ -6022,6 +6043,8 @@ class ChartersController extends AppController {
                 $this->set('samelocationsScheduleUUID', $samelocationsScheduleUUID);
                 $this->set('samelocationsDates', $samelocationsDates);
                 $this->set('samemarkercommentcount', $samemarkercommentcount);
+
+                $this->set('stationarylocations', $stationarylocations);
 
                 $this->set('charterProgramId', $charterProgramId);
                 $this->set('charter_company_id_val', $charterProgData[0]['CharterProgram']['charter_company_id']);
