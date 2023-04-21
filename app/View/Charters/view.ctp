@@ -25,6 +25,11 @@
     );
 ?>
 <style>
+  @media only screen and (min-device-width: 768px){
+    body .mydemolabel {
+  font-size: 30px !important;
+}
+  }
 
 .emailSentClass::after {
 content: "SENT";
