@@ -2716,10 +2716,11 @@ $(document).on("click", "#HideDetails", function(e) {
     //     $("#HideDetails").text("Hide Details");
 
     // }
+    
     var btntext = $("#HideDetails").text();
     if(btntext == "Show Details"){
         //$(".Tooltip").css("margin-top","");
-        $(".Tooltip").css("width","160px");
+        $(".Tooltip").css("width","170px");
         $(".smalltooltip").hide();
          $(".Tooltip").show();
         $(".owntooltip").show();
@@ -2738,9 +2739,13 @@ $(document).on("click", "#HideDetails", function(e) {
         //         $(".leaflet-tooltip").css("opacity", "1");  
                 
         // },1000);
+        //map.setView(new L.LatLng(centerLat, centerLng), zoom);
+                if(latlngs.length > 0){
+                    map.fitBounds(latlngs);
+                }
     }else if(btntext == "Hide Details"){
         //$(".Tooltip").css("margin-top","35px");
-        $(".Tooltip").css("width","160px");
+        $(".Tooltip").css("width","170px");
         $(".smalltooltip").hide();
          $(".Tooltip").hide();
         $(".owntooltip").hide();
@@ -2763,6 +2768,12 @@ $(document).on("click", "#HideDetails", function(e) {
         //         $(".leaflet-tooltip").css("opacity", "1");  
                 
         // },1000);
+
+        // map.setView(new L.LatLng(centerLat, centerLng), zoom);
+        //         if(latlngs.length > 0){
+        //             map.fitBounds(latlngs);
+        //         }
+
     }
     
     
@@ -2873,9 +2884,13 @@ function markerOnClick(e) {
     var stationary = e.target.stationary;
     var stationarytooltipnum = e.target.stationarytooltipnum;
     $(".Tooltip").hide();
+    $('.Tooltip').css('top','');
     if(stationary == 1){
         $('.Tooltip').css('top','');
-        map.setView(new L.LatLng(lattitude, longitude), 5);
+        var szoom = map.getZoom();
+        //alert(szoom+1);
+        szoom = szoom+1;
+        map.setView(new L.LatLng(lattitude, longitude), szoom);
         if(latlngs.length > 0){
             map.fitBounds(latlngs);
         }
@@ -3619,7 +3634,7 @@ $(document).ready(function() { //alert();
 
             //$('.fancybox').fancybox();
 
-                $(".Tooltip").css("width","160px");
+                $(".Tooltip").css("width","170px");
                 $(".smalltooltip").hide();
                  $(".Tooltip").hide();
                 $(".owntooltip").hide();
