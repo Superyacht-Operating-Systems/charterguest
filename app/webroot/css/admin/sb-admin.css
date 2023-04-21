@@ -5562,7 +5562,7 @@ label.footsize{
     width: 23%!important;
 }
 }
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 768px) {
   .owl-dots {
   width: 300px!important;
   border: none;
@@ -5594,7 +5594,7 @@ label.footsize{
 }
 }
 
-  @media only screen and (max-width: 767px){
+  @media only screen and (max-width: 768px){
   .nav-side-menu {
     margin-top: 18px;
 }
@@ -5737,7 +5737,7 @@ padding-top: 84px;
   padding-top: 8px;
 }
 }
-@media only screen and (min-width: 320px) and (max-width: 767px){
+@media only screen and (min-width: 320px) and (max-width: 768px){
 .nav-side-menu-full-container .nav-side-menu .sidebar-btn{
 	left: 4px!important;
 }
