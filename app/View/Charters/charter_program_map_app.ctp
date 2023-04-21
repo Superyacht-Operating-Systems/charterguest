@@ -2798,8 +2798,13 @@ function markerOnClick(e) {
     var stationary = e.target.stationary;
     var stationarytooltipnum = e.target.stationarytooltipnum;
     $(".Tooltip").hide();
+    $('.Tooltip').css('top','');
     if(stationary == 1){
         $('.Tooltip').css('top','');
+        map.setView(new L.LatLng(lattitude, longitude), 5);
+        if(latlngs.length > 0){
+            map.fitBounds(latlngs);
+        }
         $(".stationarytooltip"+stationarytooltipnum).show();
         $(".owntooltip").hide();
         $(".stationary").show();
@@ -3412,7 +3417,7 @@ $(document).on("click", ".stationarydays", function(e) {
 });
 
 
-$(document).on("change", ".noofdayscard", function(e) {
+$(document).on("change", ".noofdayscardFreezeCode", function(e) {
     var scheduleUUId = mapmarkerglobalObj.target.scheduleUUId;
     var scheduleId = mapmarkerglobalObj.target.scheduleId;
     var tablepId = mapmarkerglobalObj.target.tablepId;

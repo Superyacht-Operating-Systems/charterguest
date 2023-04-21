@@ -2875,6 +2875,10 @@ function markerOnClick(e) {
     $(".Tooltip").hide();
     if(stationary == 1){
         $('.Tooltip').css('top','');
+        map.setView(new L.LatLng(lattitude, longitude), 5);
+        if(latlngs.length > 0){
+            map.fitBounds(latlngs);
+        }
         $(".stationarytooltip"+stationarytooltipnum).show();
         $(".owntooltip").hide();
         $(".stationary").show();
