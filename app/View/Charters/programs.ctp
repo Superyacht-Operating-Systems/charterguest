@@ -43,6 +43,7 @@
 .bigitem .label-bold.hhd-mrg-02 {
   padding-left: 80px;
   margin-top: -6px;
+  font-size: 14px;
 }
 }
 #loadMore{
