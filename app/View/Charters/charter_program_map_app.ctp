@@ -1364,10 +1364,12 @@ margin: 30px auto;
     margin-top: 15px; */
 }
 .chat-send button{
+    margin-top: 0px !important;
 width: 126px;
     margin-right: 10px;
 }
 .chat-send {
+    width: 100%;
     display: flex;
     justify-content: center;
 }
@@ -1376,6 +1378,7 @@ width: 126px;
     height: 93px;
 }
 .chat-inputbar{
+    width: 100%;
 padding-left: 15px!important;
     padding-right: 15px;
 }
@@ -1893,7 +1896,7 @@ border-radius: 10px;
                                 <i style="color: #00a8f3;" class="fa fa-solid fa-ship" aria-hidden="true"><span class="icon_label" style="padding: 0px 0px 0px 5px;"><?php echo $markertotal[$schedule['CharterProgramSchedule']['title'].' - Day '.$schedule['CharterProgramSchedule']['day_num']]['distance']; ?></span></i>
                                 </div>
                                 <div>
-                                    <textarea class="form-control auto_resize loc_desc_field" name="messagestitle" rows="1" cols="50"><?php echo $schedule['CharterProgramSchedule']['notes']; ?></textarea>
+                                    <textarea class="form-control auto_resize loc_desc_field" name="messagestitle" rows="1" cols="50" readonly><?php echo $schedule['CharterProgramSchedule']['notes']; ?></textarea>
                                 </div>
                             </div>
                             <div class="loc_img_div">

@@ -98,7 +98,7 @@
     </div>
     <div class="row">
         <div class="col-sm-9 chat-inputbar">
-            <textarea type="text" style="background: #eee !important;color: #000!important;border: solid 1px rgb(243 243 243 / 70%)!important;" id="Cruising_crew_comment" class="form-control chat-input" cols="10" rows="3" placeholder="Enter your text"></textarea>
+            <textarea type="text" style="background: #eee !important;color: #000!important;border: solid 1px rgb(243 243 243 / 70%)!important;" id="Cruising_crew_comment" class="form-control chat-input" cols="10" rows="4" placeholder="Enter your text"></textarea>
         </div>
         <div class="col-sm-3 chat-send">
             <button id="CruisingCommentSave" style="font-size: 12px;padding: 10px 12px;" class="btn btn-md btn-info btn-block CruisingCommentSave" data-id='' data-activity_name='' data-UserType='' data-UserName="" data-type="" data-yachtid="">Send</button>
