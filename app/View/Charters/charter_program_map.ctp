@@ -68,7 +68,7 @@ if(empty($scheduleData)){
   background: transparent;
 }
 .CS_modal .modal-header {
-  padding: 5px 15px 5px 15px;
+  padding: 15px 15px 15px 15px;
 }
 .leaflet-container .leaflet-marker-pane img{
 z-index: 1 !important;
