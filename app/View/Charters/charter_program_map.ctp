@@ -68,7 +68,7 @@ if(empty($scheduleData)){
   background: transparent;
 }
 .CS_modal .modal-header {
-  padding: 25px 15px 5px 15px;
+  padding: 5px 15px 5px 15px;
 }
 .leaflet-container .leaflet-marker-pane img{
 z-index: 1 !important;
@@ -1456,7 +1456,7 @@ span.sp-rightalign {
     overflow: auto!important;
 } */
 .modal_load,.markmodal_load{
-    margin:5px 10px 5px 8px;
+    margin:0px 10px 5px 8px;
 }
 #closeSchedule{
         margin-left: 6px;

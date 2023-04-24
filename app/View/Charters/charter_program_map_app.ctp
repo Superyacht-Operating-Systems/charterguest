@@ -93,7 +93,7 @@ echo $this->Html->script('leaflet/route');
   background: transparent;
 }
     .CS_modal .modal-header {
-  padding: 25px 15px 5px 15px;
+  padding: 5px 15px 5px 15px;
 }
     .leaflet-container .leaflet-marker-pane img{
 z-index: 1 !important;
@@ -1511,7 +1511,7 @@ position: absolute;
     overflow: auto!important;
 } */
 .modal_load,.markmodal_load{
-    margin:5px 10px 5px 8px;
+    margin:0px 10px 5px 8px;
 }
 #closeSchedule{
         margin-left: 6px;
@@ -1540,7 +1540,7 @@ position: absolute;
         max-height: 91vh;
     overflow-y: scroll;
     overflow-x: hidden;
-    margin: 5px 0px 5px 8px;
+    margin: 0px 0px 5px 8px;
     padding: 0px 10px 100px 0px;
     }
     .cruising-location-Modal .modal-content{
