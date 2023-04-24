@@ -58,6 +58,13 @@ if(empty($scheduleData)){
     max-height: 500px;
     width: auto !important;
 } */
+.loc_desc_div .form-control:focus {
+ box-shadow: none !important;
+}
+
+.marker_desc_div .form-control:focus {
+ box-shadow: none !important;
+}
 .form-control:focus {
   background: transparent !important;
   color: #4d4d4d !important;

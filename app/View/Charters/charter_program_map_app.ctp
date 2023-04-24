@@ -69,6 +69,16 @@ echo $this->Html->script('leaflet/route');
  echo $this->Html->script('leaflet/L.Polyline.SnakeAnim.js'); 
 ?>
 <style>
+    .loc_desc_div .form-control:focus {
+ box-shadow: none !important;
+}
+
+.marker_desc_div .form-control:focus {
+ box-shadow: none !important;
+}
+    button.close {
+  padding: 0px 0px 2px 0px;
+}
     .container-row-all{
         margin-top: 0px!important;
     }
