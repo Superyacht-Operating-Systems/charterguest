@@ -53,6 +53,11 @@
 .chat-send {
     margin-top: 13px;
 }
+.btn-warning:hover {
+  color: #fff;
+  background-color: #ec971f !important;
+  border-color: #d58512 !important;
+}
 /*Ra*/
     </style>
 <div class="card-box">
@@ -93,11 +98,11 @@
     </div>
     <div class="row">
         <div class="col-sm-9 chat-inputbar">
-            <textarea type="text" style="background: #eee !important;color: #000!important;border: solid 1px rgb(243 243 243 / 70%)!important;" id="Cruising_crew_comment" class="form-control chat-input" cols="10" rows="4" placeholder="Enter your text"></textarea>
+            <textarea type="text" style="background: #eee !important;color: #000!important;border: solid 1px rgb(243 243 243 / 70%)!important;" id="Cruising_crew_comment" class="form-control chat-input" cols="10" rows="3" placeholder="Enter your text"></textarea>
         </div>
         <div class="col-sm-3 chat-send">
-            <button id="CruisingCommentSave" style="font-size: 12px;" class="btn btn-md btn-info btn-block CruisingCommentSave" data-id='' data-activity_name='' data-UserType='' data-UserName="" data-type="" data-yachtid="">Send</button>
-            </br> </br><button id="CruisingCommentMarkUnread" style="margin-top: 14px;font-size: 12px;" class="btn btn-warning btn-block CruisingCommentMarkUnread" data-id1='' data-type1='' data-name1='' data-tempname1="" data-chartertype1='' data-yachtid="">Mark As Unread</button>
+            <button id="CruisingCommentSave" style="font-size: 12px;padding: 10px 12px;" class="btn btn-md btn-info btn-block CruisingCommentSave" data-id='' data-activity_name='' data-UserType='' data-UserName="" data-type="" data-yachtid="">Send</button>
+            <button id="CruisingCommentMarkUnread" style="margin-top: 16px;padding: 10px 12px;font-size: 12px;" class="btn btn-warning btn-block CruisingCommentMarkUnread" data-id1='' data-type1='' data-name1='' data-tempname1="" data-chartertype1='' data-yachtid="">Mark As Unread</button>
         </div>
     </div>
 
