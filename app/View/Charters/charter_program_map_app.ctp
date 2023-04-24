@@ -204,11 +204,15 @@ width: 150px;
 overflow: hidden;
 height: 150px;
 margin-bottom: 10px;
-border-radius: 10px;
+border-top-left-radius: 10px;
+border-top-right-radius: 10px;
+border-bottom-left-radius: 10px;
+border-bottom-right-radius: 10px;
+/* border-radius: 10px;
 -webkit-border-radius: 10px !important;
 -moz-border-radius: 10px !important;
 -khtml-border-radius: 10px !important;
-display:flex;
+display:flex; */
 }
 .mLoc-img_prev{
     border: solid 1px #ccc;
