@@ -73,7 +73,7 @@ echo $this->Html->script('leaflet/route');
  box-shadow: none !important;
 }
 
-.marker_desc_div .form-control:focus {
+.marker_desc_div .form-control:focus, .m_loc_desc_div .form-control:focus {
  box-shadow: none !important;
 }
     button.close {
