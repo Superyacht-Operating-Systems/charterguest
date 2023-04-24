@@ -77,7 +77,7 @@ echo $this->Html->script('leaflet/route');
  box-shadow: none !important;
 }
     button.close {
-  padding: 0px 0px 2px 0px;
+  padding: 0px 0px 3px 0px;
 }
     .container-row-all{
         margin-top: 0px!important;
