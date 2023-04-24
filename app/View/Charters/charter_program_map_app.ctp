@@ -2884,6 +2884,7 @@ function markerOnClick(e) {
                         
                         $("#markerModalclose").attr("data-schuuid",scheduleSameLocationUUID);
                         $("#markerModal").show();
+                        $(".markmodalbody").scrollTop(0);
 
                         var textareas = document.querySelectorAll(".auto_resize");
 
@@ -3298,6 +3299,7 @@ $(document).on("click", ".stationarydays", function(e) {
                         $("#markerModal_load").html(result.popupHtml);
                         $("#markerModalclose").attr("data-schuuid",scheduleSameLocationUUID);
                         $("#markerModal").show();
+                        $(".markmodalbody").scrollTop(0);
                                 // get all the text area elements
                                 var textareas = document.querySelectorAll(".auto_resize");
 
@@ -3506,7 +3508,7 @@ $(document).on("change", ".noofdayscardFreezeCode", function(e) {
                         $("#markerModal_load").html(result.popupHtml);
                         $("#markerModalclose").attr("data-schuuid",scheduleSameLocationUUID);
                         $("#markerModal").show();
-
+                        $(".markmodalbody").scrollTop(0);
 
                         window.scrollTo(0, 0);
                         //$('.day_dates').text(day_dates);
@@ -3582,7 +3584,7 @@ $(document).on("click", "#CruisingButton", function(e) {
 
     //                 $("#cruisinglocationModal_load").html(result.popupHtml);
                     $("#cruisinglocationModal").show();
-
+                    $("#cruisinglocationModal_load").scrollTop(0);
                // get all the text area elements
                var textareas = document.querySelectorAll(".auto_resize");
 

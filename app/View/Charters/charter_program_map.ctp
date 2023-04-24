@@ -2957,6 +2957,7 @@ function markerOnClick(e) {
                         
                         $("#markerModalclose").attr("data-schuuid",scheduleSameLocationUUID);
                         $("#markerModal").show();
+                        $(".markmodalbody").scrollTop(0);
                        // update_mapContainer();
 
                               // get all the text area elements
@@ -3358,6 +3359,7 @@ $(document).on("click", ".stationarydays", function(e) {
                         
                         $("#markerModalclose").attr("data-schuuid",scheduleSameLocationUUID);
                         $("#markerModal").show();
+                        $(".markmodalbody").scrollTop(0);
 
                          // get all the text area elements
                          var textareas = document.querySelectorAll(".auto_resize");
@@ -3537,7 +3539,7 @@ $(document).on("change", ".noofdayscardFreezeCode", function(e) {
                         
                         $("#markerModalclose").attr("data-schuuid",scheduleSameLocationUUID);
                         $("#markerModal").show();
-
+                        $(".markmodalbody").scrollTop(0);
                         window.scrollTo(0, 0);
                         //$('.day_dates').text(day_dates);
                         $('.noofdayscard').html(result.no_of_days_options);
@@ -3992,6 +3994,9 @@ var scheduleId = $("#charterProgramId").val();
 
 //                 $("#cruisinglocationModal_load").html(result.popupHtml);
                 $("#cruisinglocationModal").show();
+                
+                $("#cruisinglocationModal_load").scrollTop(0);
+          
 
                       // get all the text area elements
 var textareas = document.querySelectorAll(".auto_resize");
@@ -4041,9 +4046,13 @@ for (var i = 0; i < textareas.length; i++) {
 });
 
 $(document).on("click", "#cruisinglocationModalclose" ,function() {
+  
+
         $('#cruisinglocationModal').hide();
         $("#map .leaflet-control-attribution").show();
         $("#map .leaflet-control-container").show();
+
+        
     });
 
     // $(document).on("focus", ".textareacont" ,function() {
