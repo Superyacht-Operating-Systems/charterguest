@@ -189,12 +189,16 @@ width: 150px;
 }	
 .loc_map_div{
     float: left;
-border: solid 1px #ccc;
+/* border: solid 1px #ccc; */
 width: 150px;
 overflow: hidden;
 height: 150px;
 margin-bottom: 10px;
 border-radius: 10px;
+-webkit-border-radius: 10px !important;
+-moz-border-radius: 10px !important;
+-khtml-border-radius: 10px !important;
+display:flex;
 }
 .mLoc-img_prev{
     border: solid 1px #ccc;
