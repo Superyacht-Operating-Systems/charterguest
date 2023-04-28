@@ -2828,13 +2828,13 @@ function markerOnClick(e) {
     $('.Tooltip').css('top','');
     if(stationary == 1){
         $('.Tooltip').css('top','');
-        var szoom = map.getZoom();
-        //alert(szoom+1);
-        szoom = szoom+1;
-        map.setView(new L.LatLng(lattitude, longitude), szoom);
-        if(latlngs.length > 0){
-            map.fitBounds(latlngs);
-        }
+        // var szoom = map.getZoom();
+        // //alert(szoom+1);
+        // szoom = szoom+1;
+        // map.setView(new L.LatLng(lattitude, longitude), szoom);
+        // if(latlngs.length > 0){
+        //     map.fitBounds(latlngs);
+        // }
         $(".stationarytooltip"+stationarytooltipnum).show();
         $(".owntooltip").hide();
         $(".stationary").show();
@@ -2853,7 +2853,7 @@ function markerOnClick(e) {
                 if (result.status == 'success') {
                     var width = $(window).width();
                     $("#hideloader").hide();
-                    map.setView(e.latlng);
+                    //map.setView(e.latlng);
                     $(".leaflet-control-attribution").hide();
                     $("#CruisingButton").hide();
                     $("#HideDetails").hide();
@@ -3265,7 +3265,7 @@ $(document).on("click", ".stationarydays", function(e) {
                     $("#hideloader").hide();
 
                     //console.log(mapmarkerglobalObj);
-                    map.setView(mapmarkerglobalObj.latlng);
+                    //map.setView(mapmarkerglobalObj.latlng);
                     
                     var popLocation= mapmarkerglobalObj.latlng;
                    
@@ -3474,7 +3474,7 @@ $(document).on("change", ".noofdayscardFreezeCode", function(e) {
                     var width = $(window).width();
                     $("#hideloader").hide();
                     //console.log(mapmarkerglobalObj);
-                    map.setView(mapmarkerglobalObj.latlng);
+                    //map.setView(mapmarkerglobalObj.latlng);
                     
                     var popLocation= mapmarkerglobalObj.latlng;
                    

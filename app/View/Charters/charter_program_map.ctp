@@ -2897,13 +2897,13 @@ function markerOnClick(e) {
     $('.Tooltip').css('top','');
     if(stationary == 1){
         $('.Tooltip').css('top','');
-        var szoom = map.getZoom();
-        //alert(szoom+1);
-        szoom = szoom+1;
-        map.setView(new L.LatLng(lattitude, longitude), szoom);
-        if(latlngs.length > 0){
-            map.fitBounds(latlngs);
-        }
+        // var szoom = map.getZoom();
+        // //alert(szoom+1);
+        // szoom = szoom+1;
+        // map.setView(new L.LatLng(lattitude, longitude), szoom);
+        // if(latlngs.length > 0){
+        //     map.fitBounds(latlngs);
+        // }
         $(".stationarytooltip"+stationarytooltipnum).show();
         $(".owntooltip").hide();
         $(".stationary").show();
@@ -2926,7 +2926,7 @@ function markerOnClick(e) {
                     $("#HelpfulTips").hide();
                      $("#map .leaflet-control-container").hide();
                     // open popup center to map
-                    map.setView(e.latlng);
+                    //map.setView(e.latlng);
                     //modalmap.setView(e.latlng);
                     //fitzoommap = [];
                     var popLocation= e.latlng;
@@ -3339,7 +3339,7 @@ $(document).on("click", ".stationarydays", function(e) {
                      $("#map .leaflet-control-container").hide();
                     // open popup center to map
                     //console.log(mapmarkerglobalObj);
-                    map.setView(mapmarkerglobalObj.latlng);
+                    //map.setView(mapmarkerglobalObj.latlng);
                     var popLocation= mapmarkerglobalObj.latlng;
                     //setTimeout(function() {
                     // var popup = L.popup({
@@ -3519,7 +3519,7 @@ $(document).on("change", ".noofdayscardFreezeCode", function(e) {
                 if (result.status == 'success') {
                     var width = $(window).width();
                     //console.log(mapmarkerglobalObj);
-                    map.setView(mapmarkerglobalObj.latlng);
+                    //map.setView(mapmarkerglobalObj.latlng);
                     var popLocation= mapmarkerglobalObj.latlng;
                     //setTimeout(function() {
                     // var popup = L.popup({
