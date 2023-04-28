@@ -6479,7 +6479,7 @@ class ChartersController extends AppController {
                             if(isset($activityattachment) && !empty($activityattachment)){
 
                                 ////////////////////////////////////////////////////////////
-                                $actname = $activity['CharterProgramScheduleActivity']['activity_name'];
+                                $actname = mysql_real_escape_string($activity['CharterProgramScheduleActivity']['activity_name']);
                                 $LocationContent = $this->CharterGuest->query("SELECT * FROM $yachtDbName.location_contents LocationContent WHERE LocationContent.location = '$title' AND LocationContent.sub_location = '$actname' AND LocationContent.type != 'Location'");
                                 //$LocationContentFleet = $this->LocationContentFleet->find('first',array('conditions'=>array('location'=>$title,'sub_location'=>$activity['CharterProgramScheduleActivity']['activity_name'],'type !='=>'Location')));
                                 //echo "<pre>";print_r($LocationContentFleet); exit;
