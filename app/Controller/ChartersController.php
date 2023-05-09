@@ -5344,6 +5344,7 @@ class ChartersController extends AppController {
 
                         if(isset($scheduleData)){
                             foreach($scheduleData as $key => $publishmap){
+                                $publishmap['CharterProgramSchedule']['title'] = mysql_real_escape_string($publishmap['CharterProgramSchedule']['title']);
                                     if($publishmap['CharterProgramSchedule']['publish_map'] == 1){
                                         $modified = date('d M Y',strtotime($publishmap['CharterProgramSchedule']['modified']));
                                         $username_modified = $publishmap['CharterProgramSchedule']['username_modified'];
@@ -5369,8 +5370,8 @@ class ChartersController extends AppController {
                             $stationarylocations[$publishmap['CharterProgramSchedule']['lattitude']][] = "<span class='stationarydays' id=".$publishmap['CharterProgramSchedule']['UUID']."><img src=".$markerimg." width='15px height='15px' > Day ".$scheduleData[$key]['CharterProgramSchedule']['day_num']."&nbsp;&nbsp;".$scheduleData[$key]['CharterProgramSchedule']['week_days']."</span>"; //same stationarylocations
 
                                     ////////////////////////////////
-                                //$loctitle = $publishmap['CharterProgramSchedule']['title'];
-                                $loctitle = mysql_real_escape_string($publishmap['CharterProgramSchedule']['title']);
+                                $loctitle = $publishmap['CharterProgramSchedule']['title'];
+                                //$loctitle = mysql_real_escape_string($publishmap['CharterProgramSchedule']['title']);
                                 $LocationContent = $this->CharterGuest->query("SELECT * FROM $yachtDbName.location_contents LocationContent WHERE LocationContent.location = '$loctitle' AND LocationContent.type = 'Location'");
                             
                                 $fleetlocationimages = "";
@@ -5728,6 +5729,7 @@ class ChartersController extends AppController {
 
                 if(isset($scheduleData)){
                     foreach($scheduleData as $key => $publishmap){
+                        $publishmap['CharterProgramSchedule']['title'] = mysql_real_escape_string($publishmap['CharterProgramSchedule']['title']);
                             if($publishmap['CharterProgramSchedule']['publish_map'] == 1){
                                 $modified = date('d M Y',strtotime($publishmap['CharterProgramSchedule']['modified']));
                                 $username_modified = $publishmap['CharterProgramSchedule']['username_modified'];
@@ -5753,8 +5755,10 @@ class ChartersController extends AppController {
                             $stationarylocations[$publishmap['CharterProgramSchedule']['lattitude']][] = "<span class='stationarydays' id=".$publishmap['CharterProgramSchedule']['UUID']."><img src=".$markerimg." width='15px height='15px' > Day ".$scheduleData[$key]['CharterProgramSchedule']['day_num']."&nbsp;&nbsp;".$scheduleData[$key]['CharterProgramSchedule']['week_days']."</span>"; //same stationarylocations
 
                         ////////////////////////////////
-                                //$loctitle = $publishmap['CharterProgramSchedule']['title'];
-                                $loctitle = mysql_real_escape_string($publishmap['CharterProgramSchedule']['title']);
+                                $loctitle = $publishmap['CharterProgramSchedule']['title'];
+                                //$loctitle = mysql_real_escape_string($publishmap['CharterProgramSchedule']['title']);
+                                $loctitlev = str_replace("'", "", $loctitle);    
+                                $loctitle = str_replace('"', "", $loctitlev);   
                                 $LocationContent = $this->CharterGuest->query("SELECT * FROM $yachtDbName.location_contents LocationContent WHERE LocationContent.location = '$loctitle' AND LocationContent.type = 'Location'");
                             
                                 $fleetlocationimages = "";

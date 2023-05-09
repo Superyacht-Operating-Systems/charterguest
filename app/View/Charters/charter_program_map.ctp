@@ -1818,7 +1818,7 @@ border-radius: 4px; */
                 <button type="button" class="close" id="cruisinglocationModalclose" aria-hidden="true" style="margin-right: 5px;">×</button>
                 <h4 class="modal-title" id="myModalLabel" style="text-align: center;font-weight: bold;"><?php echo $scheduleLocation ?></h4>
             </div>
-            <div class="modal-body location_Modal_body">
+            <div class="modal-body location_Modal_body csmp_body">
                 <div id="cruisinglocationModal_load" class="modal_load">
                 <div class="mapPopup sp-mp-detailsrow" data-schuuid="">
                 <?php 
@@ -4010,7 +4010,7 @@ var scheduleId = $("#charterProgramId").val();
 //                 $("#cruisinglocationModal_load").html(result.popupHtml);
                 $("#cruisinglocationModal").show();
                 
-                $("#cruisinglocationModal_load").scrollTop(0);
+                $(".csmp_body").scrollTop(0);
           
 
                       // get all the text area elements
@@ -4302,6 +4302,7 @@ function markerOnClickCSMP(e) {
     // console.log(lattitude);
     // console.log(longitude);
     var day_dates = e.target.day_dates;
+    var week_days = e.target.week_days;
     var tablepId = e.target.tablepId;
     var counttitle = e.target.counttitle;
     var daytitle = e.target.daytitle;
@@ -4359,7 +4360,7 @@ function markerOnClickCSMP(e) {
             })
         }).addTo(modalmapcruisingsch);  
         
-                                $(".charter_from_date_conv_CSMP").text(day_dates);
+                                $(".charter_from_date_conv_CSMP").text(week_days);
                                 $(".markerdistanceCSMP").text(distancetotal);
                                 $(".markerdurationCSMP").text(durationtotal);
 
