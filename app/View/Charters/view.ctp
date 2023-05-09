@@ -25,7 +25,30 @@
     );
 ?>
 <style>
+    @media only screen and (min-width: 1000px) and (max-width: 1200px) {
+    .header-row {
+		width: 940px!important;
+	}
+    .p-prefrenace-name {
+		width: 17% !important;
+	}
+}
+@media only screen and (min-width: 990px) and (max-width: 1000px){
+    .header-row {
+  width: 895px;
+}
+}
 
+@media (min-width: 990px){
+    .container {
+		width: 970px;
+	}
+}
+@media only screen and (min-width: 768px) and (max-width: 771px){
+    .container {
+  width: 100%!important;
+}
+}
 .emailSentClass::after {
 content: "SENT";
 }

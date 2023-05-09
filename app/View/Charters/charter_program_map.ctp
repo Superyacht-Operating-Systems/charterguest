@@ -58,6 +58,12 @@ if(empty($scheduleData)){
     max-height: 500px;
     width: auto !important;
 } */
+@media only screen and (min-width: 768px) and (max-width: 771px){
+    .container {
+  width: 100%!important;
+}
+}
+
 .loc_desc_div .form-control:focus {
  box-shadow: none !important;
 }

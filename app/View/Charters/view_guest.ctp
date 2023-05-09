@@ -25,6 +25,8 @@
     );
 ?>
 <style>
+
+
 .info-modal-pop .modal-body{
     padding: 20px!important;
     margin-left: 0px!important;
