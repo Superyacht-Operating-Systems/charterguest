@@ -27,7 +27,7 @@
 <style>
     @media only screen and (min-width: 1000px) and (max-width: 1200px) {
     .header-row {
-		width: 940px;
+		width: 940px!important;
 	}
     .p-prefrenace-name {
 		width: 17% !important;
