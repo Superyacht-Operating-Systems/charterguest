@@ -25,6 +25,20 @@
     );
 ?>
 <style>
+    @media only screen and (min-width: 1000px) and (max-width: 1200px) {
+    .header-row {
+		width: 940px;
+	}
+    .p-prefrenace-name {
+		width: 17% !important;
+	}
+}
+
+@media (min-width: 990px){
+    .container {
+		width: 970px;
+	}
+}
 .info-modal-pop .modal-body{
     padding: 20px!important;
     margin-left: 0px!important;
