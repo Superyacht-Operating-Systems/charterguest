@@ -39,6 +39,12 @@
 		width: 970px;
 	}
 }
+@media (min-width: 768px){
+    .container {
+  width: 100%;
+}
+}
+
 .info-modal-pop .modal-body{
     padding: 20px!important;
     margin-left: 0px!important;
