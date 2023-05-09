@@ -3214,81 +3214,7 @@ $(document).on("change", ".markersnamesmodalmap", function(e) {
     
 });
 
-function drawrouteinmodal(frommarker) { //alert();
 
-    modalmap.setView(new L.LatLng(ModalMapsinglemarkerlat, ModalMapsinglemarkerlong));
-    $("#embarkation").text(''); 
-    $("#debarkation").text('');
-
-    //console.log(modalrouteline);
-    var drawrouteline = [];
-    //var tempendloc = [];
-    var nextmarkername;
-    var toloc =  $(".markersnamesmodalmap").val();
-    routeexists = 0;
-    $.each(modalrouteline, function(name, value) {
-            if (value.name == frommarker) {
-                drawrouteline.push(value.index);
-                //tempendloc.push(value.end_loc);
-                nextmarkername = value.end_loc; 
-                routeexists = 1;
-            } 
-    });
-    //console.log(nextmarkername);
-    //return false;
-    //console.log(drawrouteline);
-    if (nextmarkername != "undefined" && nextmarkername != "" && nextmarkername != null) { //alert();
-        $(".markersnamesmodalmap").val(nextmarkername).trigger('change');
-      // var returnvalue =  markersnamesmodalmap(nextmarkername);
-       //if(returnvalue == 1){
-        var tempdrawrouteline = [];
-        
-        $.each(modalrouteline, function(name, value) {
-            //console.log(name);
-            //console.log(value.end_loc);
-            //console.log('kkkk')
-                if (value.name == frommarker && value.end_loc == nextmarkername) {
-                    tempdrawrouteline.push(value.index);
-                    routeexists = 1;
-                }
-        });
-        const myArrayFrom = frommarker.split("-");
-        let fromword = myArrayFrom[0];
-        const myArrayTo = nextmarkername.split("-");
-        let toword = myArrayTo[0];
-        $("#embarkation").text(fromword); 
-        $("#debarkation").text(toword);
-        var specificline = "";
-            specificline = tempdrawrouteline;
-        var drawnItemsModalMap = new L.FeatureGroup();
-        var polyLayersModalMap = [];
-        var polyline2 = new L.polyline(specificline, {stroke:true,snakingSpeed: 200,weight:2.5,dashArray: [5,5],color:'#fff',lineCap: "round",lineJoin: "round",smoothFactor: 1});
-
-        polyLayersModalMap.push(polyline2)
-
-        // Add the layers to the drawnItemsModalMap feature group 
-
-        for (let layer of polyLayersModalMap) { //console.log(layer);
-            drawnItemsModalMap.addLayer(layer);
-        }
-        
-//onsole.log(drawnItemsModalMap);
-        modalmap.fitBounds(drawnItemsModalMap.getBounds());
-     
-        modalmap.addLayer(drawnItemsModalMap);
-
-        drawnItemsModalMap.snakeIn();
-        
-       
-        setTimeout(() => {
-            modalmap.invalidateSize();
-        }, 0);
-        
-    //}
-        
-    }
-
-}
 
 
 
@@ -3463,7 +3389,8 @@ $(document).on("click", ".stationarydays", function(e) {
                                 $(".markerduration").text(durationtotal);
                                 
                                 //$(".markerconsumption").text(consumptiontotal);
-
+                                ModalMapsinglemarkerlat = lattitude;
+                                ModalMapsinglemarkerlong = longitude;
 
                                 var frommarker = selectedmarkertitle +' - Day '+selectedmarkerday_num; //alert('llll')
                                 routeexists = 1;
@@ -3512,6 +3439,81 @@ $(document).on("click", ".stationarydays", function(e) {
 
 });
 
+function drawrouteinmodal(frommarker) { //alert();
+
+modalmap.setView(new L.LatLng(ModalMapsinglemarkerlat, ModalMapsinglemarkerlong));
+$("#embarkation").text(''); 
+$("#debarkation").text('');
+
+//console.log(modalrouteline);
+var drawrouteline = [];
+//var tempendloc = [];
+var nextmarkername;
+var toloc =  $(".markersnamesmodalmap").val();
+routeexists = 0;
+$.each(modalrouteline, function(name, value) {
+        if (value.name == frommarker) {
+            drawrouteline.push(value.index);
+            //tempendloc.push(value.end_loc);
+            nextmarkername = value.end_loc; 
+            routeexists = 1;
+        } 
+});
+//console.log(nextmarkername);
+//return false;
+//console.log(drawrouteline);
+if (nextmarkername != "undefined" && nextmarkername != "" && nextmarkername != null) { //alert();
+    $(".markersnamesmodalmap").val(nextmarkername).trigger('change');
+  // var returnvalue =  markersnamesmodalmap(nextmarkername);
+   //if(returnvalue == 1){
+    var tempdrawrouteline = [];
+    
+    $.each(modalrouteline, function(name, value) {
+        //console.log(name);
+        //console.log(value.end_loc);
+        //console.log('kkkk')
+            if (value.name == frommarker && value.end_loc == nextmarkername) {
+                tempdrawrouteline.push(value.index);
+                routeexists = 1;
+            }
+    });
+    const myArrayFrom = frommarker.split("-");
+    let fromword = myArrayFrom[0];
+    const myArrayTo = nextmarkername.split("-");
+    let toword = myArrayTo[0];
+    $("#embarkation").text(fromword); 
+    $("#debarkation").text(toword);
+    var specificline = "";
+        specificline = tempdrawrouteline;
+    var drawnItemsModalMap = new L.FeatureGroup();
+    var polyLayersModalMap = [];
+    var polyline2 = new L.polyline(specificline, {stroke:true,snakingSpeed: 200,weight:2.5,dashArray: [5,5],color:'#fff',lineCap: "round",lineJoin: "round",smoothFactor: 1});
+
+    polyLayersModalMap.push(polyline2)
+
+    // Add the layers to the drawnItemsModalMap feature group 
+
+    for (let layer of polyLayersModalMap) { //console.log(layer);
+        drawnItemsModalMap.addLayer(layer);
+    }
+    
+//onsole.log(drawnItemsModalMap);
+    modalmap.fitBounds(drawnItemsModalMap.getBounds());
+ 
+    modalmap.addLayer(drawnItemsModalMap);
+
+    drawnItemsModalMap.snakeIn();
+    
+   
+    setTimeout(() => {
+        modalmap.invalidateSize();
+    }, 0);
+    
+//}
+    
+}
+
+}
 
 $(document).on("change", ".noofdayscardFreezeCode", function(e) {
     var scheduleUUId = mapmarkerglobalObj.target.scheduleUUId;
