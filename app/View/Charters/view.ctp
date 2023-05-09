@@ -33,6 +33,11 @@
 		width: 17% !important;
 	}
 }
+@media only screen and (min-width: 990px) and (max-width: 1000px){
+    .header-row {
+  width: 895px;
+}
+}
 
 @media (min-width: 990px){
     .container {
