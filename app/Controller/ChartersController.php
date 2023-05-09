@@ -6325,19 +6325,19 @@ class ChartersController extends AppController {
                         
                         $noteimg = "style='display:block;'";
                         if($yname == "yacht"){
-                            $targetFullPath = BASE_URL.'/SOS/app/webroot/betayacht/app/webroot/img/charter_program_files/itinerary_photos/'.$attachment;
-                            $targetFullGalleryPath = BASE_URL.'/SOS/app/webroot/betayacht/app/webroot/img/charter_program_files/itinerary_photos/';
+                            $targetFullPath = BASE_URL.'/SOS/app/webroot/betayacht/app/webroot/img/location_contents/'.$attachment;
+                            $targetFullGalleryPath = BASE_URL.'/SOS/app/webroot/betayacht/app/webroot/img/location_contents/';
                             if(BASE_URL == "http://localhost"){
                                 $targetFullPath = BASE_URL."/superyacht/app/webroot/img/charter_program_files/itinerary_photos/".$attachment;
                                 $targetFullGalleryPath = BASE_URL."/superyacht/app/webroot/img/charter_program_files/itinerary_photos/";
                                 }
                         }else{
                             //$targetFullPath = BASE_URL.'/'.$yname."/app/webroot/img/charter_program_files/itinerary_photos/".$attachment;
-                             $targetFullPath = $update_BASE_URL.'/'.$yname."/app/webroot/img/charter_program_files/itinerary_photos/".$attachment;
-                             $targetFullGalleryPath = $update_BASE_URL.'/'.$yname."/app/webroot/img/charter_program_files/itinerary_photos/";
+                             $targetFullPath = $update_BASE_URL.'/'.$yname."/app/webroot/img/location_contents/".$attachment;
+                             $targetFullGalleryPath = $update_BASE_URL.'/'.$yname."/app/webroot/img/location_contents/";
                             if (!empty($fleetSiteName)) { // IF yacht is under any Fleet
-                                $targetFullPath = $update_BASE_URL.'/'.$fleetSiteName."/app/webroot/".$yname."/app/webroot/img/charter_program_files/itinerary_photos/".$attachment;
-                                $targetFullGalleryPath = $update_BASE_URL.'/'.$fleetSiteName."/app/webroot/".$yname."/app/webroot/img/charter_program_files/itinerary_photos/";
+                                $targetFullPath = $update_BASE_URL.'/'.$fleetSiteName."/app/webroot/".$yname."/app/webroot/img/location_contents/".$attachment;
+                                $targetFullGalleryPath = $update_BASE_URL.'/'.$fleetSiteName."/app/webroot/".$yname."/app/webroot/img/location_contents/";
                             }
                             if(BASE_URL == "http://localhost"){
                                 $targetFullPath = BASE_URL."/superyacht/app/webroot/img/charter_program_files/itinerary_photos/".$attachment;

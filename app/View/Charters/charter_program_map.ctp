@@ -1877,17 +1877,17 @@ border-radius: 4px; */
                             // if($yname == "yacht"){
                             //     $targetFullPath = BASE_URL.'/SOS/app/webroot/betayacht/app/webroot/img/charter_program_files/itinerary_photos/'.$attachment;
                             // }else{
-                                $targetFullPath = $update_BASE_URL.'/'.$yachtname.'/app/webroot/img/charter_program_files/itinerary_photos/'.$attachment;
-                                $targetFullGalleryPath = $update_BASE_URL.'/'.$yachtname.'/app/webroot/img/charter_program_files/itinerary_photos/';
+                                $targetFullPath = $update_BASE_URL.'/'.$yachtname.'/app/webroot/img/location_contents/'.$attachment;
+                                $targetFullGalleryPath = $update_BASE_URL.'/'.$yachtname.'/app/webroot/img/location_contents/';
                                 
                                 if (!empty($fleetname)) { // IF yacht is under any Fleet
-                                    $targetFullPath = $update_BASE_URL.'/'.$fleetname."/app/webroot/".$yachtname.'/app/webroot/img/charter_program_files/itinerary_photos/'.$attachment;
-                                    $targetFullGalleryPath = $update_BASE_URL.'/'.$fleetname."/app/webroot/".$yachtname.'/app/webroot/img/charter_program_files/itinerary_photos/';
+                                    $targetFullPath = $update_BASE_URL.'/'.$fleetname."/app/webroot/".$yachtname.'/app/webroot/img/location_contents/'.$attachment;
+                                    $targetFullGalleryPath = $update_BASE_URL.'/'.$fleetname."/app/webroot/".$yachtname.'/app/webroot/img/location_contents/';
                                 }
                             //}
                             if(BASE_URL == "http://localhost"){
-                                $targetFullPath = BASE_URL."/superyacht/app/webroot/img/charter_program_files/itinerary_photos/".$attachment;
-                                $targetFullGalleryPath = BASE_URL."/superyacht/app/webroot/img/charter_program_files/itinerary_photos/";
+                                $targetFullPath = BASE_URL."/superyacht/app/webroot/img/location_contents/".$attachment;
+                                $targetFullGalleryPath = BASE_URL."/superyacht/app/webroot/img/location_contents/";
                                 }
 
                             $titleimage = $targetFullPath;
@@ -2273,6 +2273,7 @@ markerschloc.scheduleId = "<?php echo $schedule['CharterProgramSchedule']['chart
         markerschloc.scheduleUUId = "<?php echo $schedule['CharterProgramSchedule']['UUID']; ?>";
         markerschloc.daytitle = "<?php echo $schedule['CharterProgramSchedule']['title']; ?>";
         markerschloc.day_dates = "<?php echo $schedule['CharterProgramSchedule']['day_dates']; ?>";
+        markerschloc.week_days = "<?php echo $schedule['CharterProgramSchedule']['week_days']; ?>";
         markerschloc.marker_msg_count = "<?php echo $schedule['CharterProgramSchedule']['marker_msg_count']; ?>";
         markerschloc.distancetotal = "<?php echo $markertotal[$schedule['CharterProgramSchedule']['title'].' - Day '.$schedule['CharterProgramSchedule']['day_num']]['distance']; ?>";
         markerschloc.durationtotal = "<?php echo $markertotal[$schedule['CharterProgramSchedule']['title'].' - Day '.$schedule['CharterProgramSchedule']['day_num']]['duration'];  ?>";
