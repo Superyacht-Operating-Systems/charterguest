@@ -5369,7 +5369,8 @@ class ChartersController extends AppController {
                             $stationarylocations[$publishmap['CharterProgramSchedule']['lattitude']][] = "<span class='stationarydays' id=".$publishmap['CharterProgramSchedule']['UUID']."><img src=".$markerimg." width='15px height='15px' > Day ".$scheduleData[$key]['CharterProgramSchedule']['day_num']."&nbsp;&nbsp;".$scheduleData[$key]['CharterProgramSchedule']['week_days']."</span>"; //same stationarylocations
 
                                     ////////////////////////////////
-                                $loctitle = $publishmap['CharterProgramSchedule']['title'];
+                                //$loctitle = $publishmap['CharterProgramSchedule']['title'];
+                                $loctitle = mysql_real_escape_string($publishmap['CharterProgramSchedule']['title']);
                                 $LocationContent = $this->CharterGuest->query("SELECT * FROM $yachtDbName.location_contents LocationContent WHERE LocationContent.location = '$loctitle' AND LocationContent.type = 'Location'");
                             
                                 $fleetlocationimages = "";
@@ -5752,7 +5753,8 @@ class ChartersController extends AppController {
                             $stationarylocations[$publishmap['CharterProgramSchedule']['lattitude']][] = "<span class='stationarydays' id=".$publishmap['CharterProgramSchedule']['UUID']."><img src=".$markerimg." width='15px height='15px' > Day ".$scheduleData[$key]['CharterProgramSchedule']['day_num']."&nbsp;&nbsp;".$scheduleData[$key]['CharterProgramSchedule']['week_days']."</span>"; //same stationarylocations
 
                         ////////////////////////////////
-                                $loctitle = $publishmap['CharterProgramSchedule']['title'];
+                                //$loctitle = $publishmap['CharterProgramSchedule']['title'];
+                                $loctitle = mysql_real_escape_string($publishmap['CharterProgramSchedule']['title']);
                                 $LocationContent = $this->CharterGuest->query("SELECT * FROM $yachtDbName.location_contents LocationContent WHERE LocationContent.location = '$loctitle' AND LocationContent.type = 'Location'");
                             
                                 $fleetlocationimages = "";
