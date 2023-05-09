@@ -1918,7 +1918,7 @@ border-radius: 4px; */
                                     <ul class="action-icon"><li><i class="fa fa-comments crew_comment_cruisingmaptitle" data-rel="<?php echo $locationCommentsdata['programScheduleUUID']; ?>" data-yachtid="<?php echo $locationCommentsdata['yacht_id']; ?>" data-tempname="<?php echo htmlspecialchars($locationCommentsdata['title']); ?>" style="<?php echo $locationCommentsdata['colorcodetitle']; ?><?php echo $displaynone; ?>float: right;"><input type="hidden" name=commentstitle value="" class="messagecommentstitle" /></i></li></ul>
                                 </div>
                             <div class="icons_fields">
-                                <i style="color: #00a8f3;" class="fa fa-solid fa-calendar"><span class="icon_label" ><?php echo $schedule['CharterProgramSchedule']['day_dates']; ?></span></i>
+                                <i style="color: #00a8f3;" class="fa fa-solid fa-calendar"><span class="icon_label" ><?php echo $schedule['CharterProgramSchedule']['week_days']; ?></span></i>
                                 <i style="color: #00a8f3;" class="fa fa-solid fa-clock-o "><span class="icon_label"><?php echo $markertotal[$schedule['CharterProgramSchedule']['title'].' - Day '.$schedule['CharterProgramSchedule']['day_num']]['duration'];  ?></span></i>
                                 <i style="color: #00a8f3;" class="fa fa-solid fa-ship" aria-hidden="true"><span class="icon_label" style="padding: 0px 0px 0px 5px;"><?php echo $markertotal[$schedule['CharterProgramSchedule']['title'].' - Day '.$schedule['CharterProgramSchedule']['day_num']]['distance']; ?></span></i>
                                 </div>
@@ -2175,7 +2175,7 @@ var modalmapcruisingschsatellite = L.tileLayer(mbUrl, {
 
 var modalmapcruisingsch = L.map('modalmapcruisingsch', {
     //center: [39.73, -104.99],
-    //'zoom': 5,
+    'zoom': 5,
     'measureControl': true,
     'worldCopyJump': false,
     'layers': [modalmapcruisingschsatellite],
@@ -2872,6 +2872,8 @@ var fitzoommap = [];
 var globallocationInSamedayCount = 0;
 
 var routeexists;
+var ModalMapsinglemarkerlat;
+var ModalMapsinglemarkerlong;
 function markerOnClick(e) {
     mapmarkerglobalObj = e;
     var scheduleUUId = e.target.scheduleUUId;
@@ -3053,6 +3055,8 @@ function markerOnClick(e) {
                                 
                                 //$(".markerconsumption").text(consumptiontotal);
 
+                                ModalMapsinglemarkerlat = lattitude;
+                                ModalMapsinglemarkerlong = longitude;
 
                                 var frommarker = selectedmarkertitle +' - Day '+selectedmarkerday_num; //alert('llll')
                                 routeexists = 1;
@@ -3204,6 +3208,11 @@ $(document).on("change", ".markersnamesmodalmap", function(e) {
 });
 
 function drawrouteinmodal(frommarker) { //alert();
+
+    modalmap.setView(new L.LatLng(ModalMapsinglemarkerlat, ModalMapsinglemarkerlong));
+    $("#embarkation").text(''); 
+    $("#debarkation").text('');
+
     //console.log(modalrouteline);
     var drawrouteline = [];
     //var tempendloc = [];
@@ -4273,6 +4282,8 @@ $(document).on("click", ".downloadmappagefile", function(e) { //alert()
 // }
 
 ///////////////////////////////Cruising schedule modal locations polyline display///////////////////////////////////
+var csmpsinglemarkerlat;
+var csmpsinglemarkerlong;
 function markerOnClickCSMP(e) {
     var scheduleUUId = e.target.scheduleUUId;
     var scheduleId = e.target.scheduleId;
@@ -4321,7 +4332,8 @@ function markerOnClickCSMP(e) {
         });
     }
  
-        
+    csmpsinglemarkerlat = lattitude;
+        csmpsinglemarkerlong = longitude;
         var frommarker = selectedmarkertitle +' - Day '+selectedmarkerday_num; //alert('llll')
         
         drawrouteinmodalCSMP(frommarker);
@@ -4402,6 +4414,9 @@ $(document).on("change", ".markersnamesmodalmapcruisingsch", function(e) {
 function drawrouteinmodalCSMP(frommarker) { //alert();
     // console.log(modalrouteline);
     // console.log(frommarker);
+    modalmapcruisingsch.setView(new L.LatLng(csmpsinglemarkerlat, csmpsinglemarkerlong));
+    $("#embarkation_sch").text(''); 
+    $("#debarkation_sch").text('');
     var drawrouteline = [];
     //var tempendloc = [];
     var nextmarkername;

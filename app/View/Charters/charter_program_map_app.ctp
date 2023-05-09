@@ -1736,6 +1736,17 @@ border-radius: 10px;
 .stationarydays{
     cursor:pointer;
 }
+
+body.modal-open {
+    overflow: hidden;
+    overflow-y: hidden;
+}
+
+.modal-open .modal{
+    overflow: hidden;
+    overflow-y: hidden;
+}
+
 </style>  
 
 <?php    echo $this->Html->script('jquery-1.7.2.min');
@@ -1818,7 +1829,7 @@ border-radius: 10px;
                 <button type="button" class="close" id="cruisinglocationModalclose" aria-hidden="true" style="margin-right: 5px;">×</button>
                 <h4 class="modal-title" id="myModalLabel" style="text-align: center;font-weight: bold;"><?php echo $scheduleLocation; ?></h4>
             </div>
-            <div class="modal-body location_Modal_body">
+            <div class="modal-body location_Modal_body csmp_body">
                 <div id="cruisinglocationModal_load" class="modal_load">
                 <div class="mapPopup sp-mp-detailsrow" data-schuuid="">
                 <?php 
@@ -1905,7 +1916,7 @@ border-radius: 10px;
                                    
                                 </div>
                             <div class="icons_fields">
-                                <i style="color: #00a8f3;" class="fa fa-solid fa-calendar"><span class="icon_label" ><?php echo $schedule['CharterProgramSchedule']['day_dates']; ?></span></i>
+                                <i style="color: #00a8f3;" class="fa fa-solid fa-calendar"><span class="icon_label" ><?php echo $schedule['CharterProgramSchedule']['week_days']; ?></span></i>
                                 <i style="color: #00a8f3;" class="fa fa-solid fa-clock-o "><span class="icon_label"><?php echo $markertotal[$schedule['CharterProgramSchedule']['title'].' - Day '.$schedule['CharterProgramSchedule']['day_num']]['duration'];  ?></span></i>
                                 <i style="color: #00a8f3;" class="fa fa-solid fa-ship" aria-hidden="true"><span class="icon_label" style="padding: 0px 0px 0px 5px;"><?php echo $markertotal[$schedule['CharterProgramSchedule']['title'].' - Day '.$schedule['CharterProgramSchedule']['day_num']]['distance']; ?></span></i>
                                 </div>
@@ -2212,6 +2223,7 @@ markerschloc.scheduleId = "<?php echo $schedule['CharterProgramSchedule']['chart
         markerschloc.scheduleUUId = "<?php echo $schedule['CharterProgramSchedule']['UUID']; ?>";
         markerschloc.daytitle = "<?php echo $schedule['CharterProgramSchedule']['title']; ?>";
         markerschloc.day_dates = "<?php echo $schedule['CharterProgramSchedule']['day_dates']; ?>";
+        markerschloc.week_days = "<?php echo $schedule['CharterProgramSchedule']['week_days']; ?>";
         markerschloc.marker_msg_count = "<?php echo $schedule['CharterProgramSchedule']['marker_msg_count']; ?>";
         markerschloc.distancetotal = "<?php echo $markertotal[$schedule['CharterProgramSchedule']['title'].' - Day '.$schedule['CharterProgramSchedule']['day_num']]['distance']; ?>";
         markerschloc.durationtotal = "<?php echo $markertotal[$schedule['CharterProgramSchedule']['title'].' - Day '.$schedule['CharterProgramSchedule']['day_num']]['duration'];  ?>";
@@ -2248,7 +2260,7 @@ var modalmapcruisingschsatellite = L.tileLayer(mbUrl, {
 
 var modalmapcruisingsch = L.map('modalmapcruisingsch', {
     //center: [39.73, -104.99],
-    //'zoom': 5,
+    'zoom': 5,
     'measureControl': true,
     'worldCopyJump': false,
     'layers': [modalmapcruisingschsatellite],
@@ -2401,6 +2413,7 @@ if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !e
         marker.scheduleUUId = "<?php echo $schedule['CharterProgramSchedule']['UUID']; ?>";
         marker.daytitle = "<?php echo $schedule['CharterProgramSchedule']['title']; ?>";
         marker.day_dates = "<?php echo $schedule['CharterProgramSchedule']['day_dates']; ?>";
+        marker.week_days = "<?php echo $schedule['CharterProgramSchedule']['week_days']; ?>";
         marker.marker_msg_count = "<?php echo $schedule['CharterProgramSchedule']['marker_msg_count']; ?>";
         marker.distancetotal = "<?php echo $markertotal[$schedule['CharterProgramSchedule']['title'].' - Day '.$schedule['CharterProgramSchedule']['day_num']]['distance']; ?>";
         marker.durationtotal = "<?php echo $markertotal[$schedule['CharterProgramSchedule']['title'].' - Day '.$schedule['CharterProgramSchedule']['day_num']]['duration'];  ?>";
@@ -2803,6 +2816,8 @@ $(document).on("click", ".CSMPTooltip", function(e) {
 
 var mapmarkerglobalObj = null;
 var fitzoommap = [];
+var ModalMapsinglemarkerlat;
+var ModalMapsinglemarkerlong;
 <?php if(isset($scheduleData)){ ?>
 function markerOnClick(e) {
     mapmarkerglobalObj = e;
@@ -2885,7 +2900,7 @@ function markerOnClick(e) {
                         $("#markerModalclose").attr("data-schuuid",scheduleSameLocationUUID);
                         $("#markerModal").show();
                         $(".markmodalbody").scrollTop(0);
-
+                        $("body").addClass("modal-open");
                         var textareas = document.querySelectorAll(".auto_resize");
 
 // function to adjust the height of a text area based on its contents
@@ -2983,7 +2998,8 @@ textarea.addEventListener("input", function() {
                                 
                                 //$(".markerconsumption").text(consumptiontotal);
 
-
+                                ModalMapsinglemarkerlat = lattitude;
+                                ModalMapsinglemarkerlong = longitude;
                                 var frommarker = selectedmarkertitle +' - Day '+selectedmarkerday_num; //alert('llll')
                                 routeexists = 1;
                                 drawrouteinmodal(frommarker);
@@ -3134,6 +3150,11 @@ textMarkermodalmap.addTo(modalmap);
 
 
 function drawrouteinmodal(frommarker) { //alert();
+
+    modalmap.setView(new L.LatLng(ModalMapsinglemarkerlat, ModalMapsinglemarkerlong));
+    $("#embarkation").text(''); 
+    $("#debarkation").text('');
+
     //console.log(modalrouteline);
     var drawrouteline = [];
     //var tempendloc = [];
@@ -3229,6 +3250,8 @@ function markerModalclose(scheduleSameLocationUUID){
                              modalmap.eachLayer(function (layer) {
                                 modalmap.removeLayer(layer);
                             });
+
+                            $("body").removeClass("modal-open");
 }
 
 $(document).on("click", ".stationarydays", function(e) {
@@ -3300,6 +3323,7 @@ $(document).on("click", ".stationarydays", function(e) {
                         $("#markerModalclose").attr("data-schuuid",scheduleSameLocationUUID);
                         $("#markerModal").show();
                         $(".markmodalbody").scrollTop(0);
+                        $("body").addClass("modal-open");
                                 // get all the text area elements
                                 var textareas = document.querySelectorAll(".auto_resize");
 
@@ -3509,8 +3533,8 @@ $(document).on("change", ".noofdayscardFreezeCode", function(e) {
                         $("#markerModalclose").attr("data-schuuid",scheduleSameLocationUUID);
                         $("#markerModal").show();
                         $(".markmodalbody").scrollTop(0);
-
-                        window.scrollTo(0, 0);
+                        $("body").addClass("modal-open");
+                        //window.scrollTo(0, 0);
                         //$('.day_dates').text(day_dates);
                         $(".leaflet-control-attribution").hide();
                     $(".leaflet-popup-close-button").addClass('updateCommentscount');
@@ -3584,7 +3608,8 @@ $(document).on("click", "#CruisingButton", function(e) {
 
     //                 $("#cruisinglocationModal_load").html(result.popupHtml);
                     $("#cruisinglocationModal").show();
-                    $("#cruisinglocationModal_load").scrollTop(0);
+                    $(".csmp_body").scrollTop(0);
+                    $("body").addClass("modal-open");
                // get all the text area elements
                var textareas = document.querySelectorAll(".auto_resize");
 
@@ -3859,6 +3884,7 @@ $(document).on("click", "#CruisingCommentSave" ,function() {
         $('#cruisinglocationModal').hide();
         $(".leaflet-control-attribution").show();
         $(".leaflet-control-container").show();
+        $("body").removeClass("modal-open");
     });
 
     
@@ -4044,6 +4070,8 @@ function customMediaQueryAdd(){
         
 
 ///////////////////////////////Cruising schedule modal locations polyline display///////////////////////////////////
+var csmpsinglemarkerlat;
+var csmpsinglemarkerlong;
 function markerOnClickCSMP(e) {
     var scheduleUUId = e.target.scheduleUUId;
     var scheduleId = e.target.scheduleId;
@@ -4056,6 +4084,7 @@ function markerOnClickCSMP(e) {
     // console.log(lattitude);
     // console.log(longitude);
     var day_dates = e.target.day_dates;
+    var week_days = e.target.week_days;
     var tablepId = e.target.tablepId;
     var counttitle = e.target.counttitle;
     var daytitle = e.target.daytitle;
@@ -4092,6 +4121,8 @@ function markerOnClickCSMP(e) {
         });
     }
 
+    csmpsinglemarkerlat = lattitude;
+        csmpsinglemarkerlong = longitude;
         var frommarker = selectedmarkertitle +' - Day '+selectedmarkerday_num; //alert('llll')
         
         drawrouteinmodalCSMP(frommarker);
@@ -4113,7 +4144,7 @@ function markerOnClickCSMP(e) {
             })
         }).addTo(modalmapcruisingsch);  
 
-                                 $(".charter_from_date_conv_CSMP").text(day_dates);
+                                 $(".charter_from_date_conv_CSMP").text(week_days);
                                 $(".markerdistanceCSMP").text(distancetotal);
                                 $(".markerdurationCSMP").text(durationtotal);
 }
@@ -4174,6 +4205,10 @@ $(document).on("change", ".markersnamesmodalmapcruisingsch", function(e) {
 function drawrouteinmodalCSMP(frommarker) { //alert();
     // console.log(modalrouteline);
     // console.log(frommarker);
+    modalmapcruisingsch.setView(new L.LatLng(csmpsinglemarkerlat, csmpsinglemarkerlong));
+    $("#embarkation_sch").text(''); 
+    $("#debarkation_sch").text('');
+
     var drawrouteline = [];
     //var tempendloc = [];
     var nextmarkername;
