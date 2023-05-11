@@ -1980,7 +1980,7 @@ body.modal-open {
                     </div>
                 </div>
             </div> -->
-                <div style="color: #000;font-size: 15px;text-align:center;width:100%!important;margin: 0px 0px 5px 0px;padding: 8px 5px;font-weight: 600;"><span id="embarkation"></span> to <span id="debarkation"></span> </div>
+                <div style="color: #000;font-size: 15px;text-align:center;width:100%!important;margin: 0px 0px 5px 0px;padding: 8px 5px;font-weight: 600;"><span id="embarkation"></span>  <span id="debarkation"></span> </div>
                 <div class="icons_fields" style="text-align:center;">
                 <i style="color: #00a8f3;" class="fa fa-solid fa-calendar"><span class="icon_label charter_from_date_conv" ></span></i>
                 <i style="color: #00a8f3;" class="fa fa-solid fa-clock-o "><span class="icon_label markerduration"></span></i>
@@ -2009,7 +2009,7 @@ body.modal-open {
             </div>
             <div class="modal-body markmodalbodycruisingsch">
             
-            <div style="color: #000;font-size: 15px;text-align:center;width:100%!important;margin: 0px 0px 5px 0px;padding: 8px 5px;font-weight: 600;"><span id="embarkation_sch"></span> to <span id="debarkation_sch"></span> </div>
+            <div style="color: #000;font-size: 15px;text-align:center;width:100%!important;margin: 0px 0px 5px 0px;padding: 8px 5px;font-weight: 600;"><span id="embarkation_sch"></span>  <span id="debarkation_sch"></span> </div>
             <div class="icons_fields" style="text-align:center;border-bottom: none;margin-bottom: 0px;padding-bottom: 0px;">
                                 <i style="color: #00a8f3;" class="fa fa-solid fa-calendar"><span class="icon_label charter_from_date_conv_CSMP" ></span></i>
                                 <i style="color: #00a8f3;" class="fa fa-solid fa-clock-o "><span class="icon_label markerdurationCSMP"></span></i>
@@ -3351,6 +3351,7 @@ $(document).on("click", ".stationarydays", function(e) {
 
                                 var frommarker = selectedmarkertitle +' - Day '+selectedmarkerday_num; //alert('llll')
                                 routeexists = 1;
+                                $("#embarkation").text(selectedmarkertitle); 
                                 drawrouteinmodal(frommarker);
                               
                                 // console.log(selectedmarkertitle);
@@ -3399,7 +3400,7 @@ $(document).on("click", ".stationarydays", function(e) {
 function drawrouteinmodal(frommarker) { //alert();
 
 modalmap.setView(new L.LatLng(ModalMapsinglemarkerlat, ModalMapsinglemarkerlong));
-$("#embarkation").text(''); 
+
 $("#debarkation").text('');
 
 //console.log(modalrouteline);
@@ -3438,7 +3439,7 @@ if (nextmarkername != "undefined" && nextmarkername != "" && nextmarkername != n
     let fromword = myArrayFrom[0];
     const myArrayTo = nextmarkername.split("-");
     let toword = myArrayTo[0];
-    $("#embarkation").text(fromword);
+    $("#embarkation").text(fromword+' to ');
     $("#debarkation").text(toword);
     var specificline = "";
         specificline = tempdrawrouteline;
@@ -4125,7 +4126,7 @@ function markerOnClickCSMP(e) {
     csmpsinglemarkerlat = lattitude;
         csmpsinglemarkerlong = longitude;
         var frommarker = selectedmarkertitle +' - Day '+selectedmarkerday_num; //alert('llll')
-        
+        $("#embarkation_sch").text(selectedmarkertitle); 
         drawrouteinmodalCSMP(frommarker);
 
         setTimeout(() => {
@@ -4207,7 +4208,7 @@ function drawrouteinmodalCSMP(frommarker) { //alert();
     // console.log(modalrouteline);
     // console.log(frommarker);
     modalmapcruisingsch.setView(new L.LatLng(csmpsinglemarkerlat, csmpsinglemarkerlong));
-    $("#embarkation_sch").text(''); 
+    
     $("#debarkation_sch").text('');
 
     var drawrouteline = [];
@@ -4242,7 +4243,7 @@ function drawrouteinmodalCSMP(frommarker) { //alert();
         let fromword = myArrayFrom[0];
         const myArrayTo = nextmarkername.split("-");
         let toword = myArrayTo[0];
-        $("#embarkation_sch").text(fromword); 
+        $("#embarkation_sch").text(fromword+' to '); 
         $("#debarkation_sch").text(toword);
         var specificline = "";
             specificline = tempdrawrouteline;
