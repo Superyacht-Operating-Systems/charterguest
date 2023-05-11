@@ -3066,6 +3066,7 @@ function markerOnClick(e) {
                                 ModalMapsinglemarkerlong = longitude;
 
                                 var frommarker = selectedmarkertitle +' - Day '+selectedmarkerday_num; //alert('llll')
+                                $("#embarkation").text(selectedmarkertitle); 
                                 routeexists = 1;
                                 drawrouteinmodal(frommarker);
                               
