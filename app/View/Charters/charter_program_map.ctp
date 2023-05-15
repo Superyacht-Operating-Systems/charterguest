@@ -4013,8 +4013,12 @@ var scheduleId = $("#charterProgramId").val();
 //                 $("#cruisinglocationModal_load").html(result.popupHtml);
                 $("#cruisinglocationModal").show();
                 
-                $(".location_Modal_body").scrollTop(0);
-                document.querySelector('.location_Modal_body').scrollTop = 0;
+                // $(".location_Modal_body").scrollTop(0);
+                // document.querySelector('.location_Modal_body').scrollTop = 0;
+
+                // move scroll to top
+     var div = document.getElementsByClassName("location_Modal_body");
+     div[0].scrollTop = 0;
 
                       // get all the text area elements
 var textareas = document.querySelectorAll(".auto_resize");
