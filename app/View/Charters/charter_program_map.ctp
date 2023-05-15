@@ -4014,7 +4014,7 @@ var scheduleId = $("#charterProgramId").val();
                 $("#cruisinglocationModal").show();
                 
                 $(".location_Modal_body").scrollTop(0);
-          
+                document.querySelector('.location_Modal_body').scrollTop = 0;
 
                       // get all the text area elements
 var textareas = document.querySelectorAll(".auto_resize");
