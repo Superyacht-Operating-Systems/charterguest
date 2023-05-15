@@ -36,6 +36,10 @@
     );
 ?>
 <style>
+      @media only screen and (min-width: 768px) and (max-width: 771px){
+.container {
+  width: 100% !important;
+}}
       @media only screen and (max-width: 771px){
         .navbar-absalute-top {
   z-index: auto;
