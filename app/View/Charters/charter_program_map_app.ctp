@@ -3657,7 +3657,7 @@ if(resizeflag){
         //     }
         // });
  // move scroll to top
- $(".location_Modal_body").scrollTop(0);
+ $(".modal_load").scrollTop(0);
 });
 
 
