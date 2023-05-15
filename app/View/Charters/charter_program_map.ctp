@@ -1572,7 +1572,7 @@ span.sp-leftalign {
     padding-left: 15px;
     margin-top: 29px;
     display: block;
-    padding-left: 78px;
+    padding-left: 80px;
 }
 .position-mobile-head{
         left: 80px;
