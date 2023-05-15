@@ -4013,7 +4013,7 @@ var scheduleId = $("#charterProgramId").val();
 //                 $("#cruisinglocationModal_load").html(result.popupHtml);
                 $("#cruisinglocationModal").show();
                 
-                $(".csmp_body").scrollTop(0);
+                $(".location_Modal_body").scrollTop(0);
           
 
                       // get all the text area elements
