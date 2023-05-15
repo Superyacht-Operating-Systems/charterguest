@@ -4061,8 +4061,6 @@ for (var i = 0; i < textareas.length; i++) {
     // });
   // move scroll to top
     $(".modal_load").scrollTop(0);
-//   var div = document.getElementsByClassName("modal_load");
-//      div[0].scrollTop = 0;
 });
 
 $(document).on("click", "#cruisinglocationModalclose" ,function() {
