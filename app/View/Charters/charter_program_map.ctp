@@ -203,10 +203,11 @@ border-radius: 10px;
     padding: 10px 5px 5px 5px;
     border-bottom: 2px solid #eee;
     margin-bottom: 10px;
+    font-size: 13px;
 }
 .icon_label{
     color: #000;
-    padding: 0px 20px 0px 5px;
+    padding: 0px 10px 0px 5px;
     font-family: 'Open Sans';
 }
 .l_count_icon{
@@ -281,7 +282,7 @@ border-radius: 10px !important;
 overflow: hidden;
     }
     #modalmapcruisingsch{
-        height: 300px;
+        height: 600px;
 width: 100%;
 border: none !important;
 border-radius: 10px!important;
@@ -1650,7 +1651,6 @@ body .sp-60-w input {
 color: #000;
 background-color: #fff;
 border-radius: 4px;
-    z-index:9999 !important;
 }
 
 .text-below-marker-modalmap {
@@ -1661,7 +1661,6 @@ border-radius: 4px;
 color: #000;
 background-color: #fff;
 border-radius: 10px;
-    z-index:9999 !important;
 }
 
 .text-below-marker-locsch {
@@ -1672,7 +1671,6 @@ border-radius: 10px;
 color: #000;
 /* background-color: #fff;
 border-radius: 4px; */
-    z-index:9999 !important;
 }
 .CSMPTooltip{
     opacity: 0 !important;

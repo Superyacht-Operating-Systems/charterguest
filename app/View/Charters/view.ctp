@@ -630,15 +630,21 @@ color: #000;
         background: #4CAF50!important;
         color: #fff;
 }
-
+@media screen and (max-width: 771px) {
+.label-preference , .md-row-h-8 label{
+  font-size: 11px !important;
+  }
+  .md-row-h-18 button {
+  font-size: 11px !important;
+}
+}
 @media screen and (max-width: 360px) {
-.md-row-h-18 {
+/* .md-row-h-18 {
     right: -30px;
-/*    width: 143px!important;*/
 }
 .md-row-h-18 button {
     width: 70px!important;
-}
+} */
 }
 
 .menu .submenu{
