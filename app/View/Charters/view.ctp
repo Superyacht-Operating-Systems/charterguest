@@ -637,6 +637,9 @@ color: #000;
   .md-row-h-18 button {
   font-size: 11px !important;
 }
+#saveBtn {
+    font-size: 11px !important;
+}
 }
 @media screen and (max-width: 360px) {
 /* .md-row-h-18 {
