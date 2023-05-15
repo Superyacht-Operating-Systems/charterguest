@@ -555,7 +555,7 @@ font-weight: bold;
 @media only screen and (max-width:600px){
 .md-row-h-18{
     right: 6px;
-    width: 175px!important;
+    width: 180px!important;
   }
 .md-row-h-8{left: 15px;}
 .label-lunch{
@@ -611,7 +611,7 @@ font-weight: bold;
 }
 @media screen and (max-width:771px) {
 .info-box img{width: 14px;}
-
+.md-row-h-8{left: 15px;}
 }
 
 
