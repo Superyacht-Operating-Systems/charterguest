@@ -4016,9 +4016,7 @@ var scheduleId = $("#charterProgramId").val();
                 // $(".location_Modal_body").scrollTop(0);
                 // document.querySelector('.location_Modal_body').scrollTop = 0;
 
-                // move scroll to top
-     var div = document.getElementsByClassName("location_Modal_body");
-     div[0].scrollTop = 0;
+              
 
                       // get all the text area elements
 var textareas = document.querySelectorAll(".auto_resize");
@@ -4064,7 +4062,9 @@ for (var i = 0; i < textareas.length; i++) {
     //         $("#hideloader").hide();
     //     }
     // });
-
+  // move scroll to top
+  var div = document.getElementsByClassName("location_Modal_body");
+     div[0].scrollTop = 0;
 });
 
 $(document).on("click", "#cruisinglocationModalclose" ,function() {
