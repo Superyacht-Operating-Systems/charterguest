@@ -117,6 +117,20 @@
 ?>
 
 <style>
+    @media (max-width: 768px){
+.modal-dialog {
+    max-width: 360px;
+    margin: 10px auto;
+    font-size: 11px;
+}
+    .modal-body {
+  padding: 5px;
+}
+    .modalmsg p{
+        text-align: left;
+    }
+}
+
       @media only screen and (min-width: 300px) and (max-width: 1024px){
 label {
   font-size: 14px !important;
