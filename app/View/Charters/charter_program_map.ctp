@@ -4063,7 +4063,7 @@ for (var i = 0; i < textareas.length; i++) {
     //     }
     // });
   // move scroll to top
-  var div = document.getElementsByClassName("location_Modal_body");
+  var div = document.getElementsByClassName("modal_load");
      div[0].scrollTop = div[0].scrollHeight-div[0].scrollHeight;
 });
 
