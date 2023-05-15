@@ -3656,7 +3656,8 @@ if(resizeflag){
         //         $("#hideloader").hide();
         //     }
         // });
-
+ // move scroll to top
+ $(".location_Modal_body").scrollTop(0);
 });
 
 
