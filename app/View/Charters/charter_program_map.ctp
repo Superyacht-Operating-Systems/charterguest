@@ -4064,7 +4064,7 @@ for (var i = 0; i < textareas.length; i++) {
     // });
   // move scroll to top
   var div = document.getElementsByClassName("location_Modal_body");
-     div[0].scrollTop = 0;
+     div[0].scrollTop = div[0].scrollHeight-div[0].scrollHeight;
 });
 
 $(document).on("click", "#cruisinglocationModalclose" ,function() {
