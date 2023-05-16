@@ -25,28 +25,7 @@
     );
 ?>
 <style>
-    @media only screen and (max-width: 360px) and (min-width: 320px)  {
-.rowm-md-mob-resize {
-  margin: 65px 0px 10px 0px !important;
-    margin-top: 65px;
-}
-.md-row-h-8 {
-  left: 0px;
-  width: 40% !important;
-}
-.md-row-h-18 {
-  right: 0px;
-  width: 161px !important;
-  margin-right: 0px !important;
-}
-.md-row-h-18 button {
-  width: 75px !important;
-  font-size: 11px !important;
-}
-.btn-open{
-margin-right: 0px;
-}
-}
+ 
     @media only screen and (min-width: 1000px) and (max-width: 1200px) {
     .header-row {
 		width: 940px!important;
