@@ -7951,10 +7951,13 @@ function uploadpassportimage(){
                         $fileExt = end($kaboom);
                         $target_file = "$fileName";
                         $resized_file = WWW_ROOT.$path.DIRECTORY_SEPARATOR.$folder_name.DIRECTORY_SEPARATOR.$imageName;
-                        $wmax = 600;
-                        $hmax = 800;
-                        $resfile = $this->ak_img_resize($target_file, $resized_file, $wmax, $hmax, $fileExt);
+                        //$wmax = 600;
+                        //$hmax = 800;
+                        $wmax = '';
+                        $hmax = 400;
+                        $resfile = $this->reduce_image_width($target_file, $resized_file, $wmax, $hmax, $fileExt);
 
+                        
         //$this->Session->delete("showPopup");
         $result['status'] = "success";
         $result['passport_image'] = $imageName;
@@ -7963,33 +7966,40 @@ function uploadpassportimage(){
     }
 }
 
-function ak_img_resize($target, $newcopy, $w, $h, $ext) {
-    list($w_orig, $h_orig) = getimagesize($target);
-    $scale_ratio = $w_orig / $h_orig;
-    if (($w / $h) > $scale_ratio) {
-           $w = $h * $scale_ratio;
-    } else {
-           $h = $w / $scale_ratio;
-    }
-    $img = "";
-    $ext = strtolower($ext);
-    if ($ext == "gif"){ 
-    $img = imagecreatefromgif($target);
-    } else if($ext =="png"){ 
-    $img = imagecreatefrompng($target);
-    } else { 
-    $img = imagecreatefromjpeg($target);
-    }
-    $tci = imagecreatetruecolor($w, $h);
-    // imagecopyresampled(dst_img, src_img, dst_x, dst_y, src_x, src_y, dst_w, dst_h, src_w, src_h)
-    imagecopyresampled($tci, $img, 0, 0, 0, 0, $w, $h, $w_orig, $h_orig);
-    if ($ext == "gif"){ 
-        imagegif($tci, $newcopy);
-    } else if($ext =="png"){ 
-        imagepng($tci, $newcopy);
-    } else { 
-        imagejpeg($tci, $newcopy, 84);
-    }
+function reduce_image_width($target, $newcopy, $w, $h, $ext) {
+        list($w_orig, $h_orig) = getimagesize($target);
+        //echo $w_orig.'//'.$h_orig;
+        //echo "<pre>";
+         $scale_ratio = $w_orig / $h_orig;
+        //exit;
+        $w = $w_orig;
+        if (($w / $h) > $scale_ratio) {
+               $w = $h * $scale_ratio;
+        } else {
+               $h = $w / $scale_ratio;
+        }
+        //echo "<pre>";
+         //echo $w. 'X' .$h;
+        // exit;
+        $img = "";
+        $ext = strtolower($ext);
+        if ($ext == "gif"){ 
+        $img = imagecreatefromgif($target);
+        } else if($ext =="png"){ 
+        $img = imagecreatefrompng($target);
+        } else { 
+        $img = imagecreatefromjpeg($target);
+        }
+        $tci = imagecreatetruecolor($w, $h);
+        // imagecopyresampled(dst_img, src_img, dst_x, dst_y, src_x, src_y, dst_w, dst_h, src_w, src_h)
+        imagecopyresampled($tci, $img, 0, 0, 0, 0, $w, $h, $w_orig, $h_orig);
+        if ($ext == "gif"){ 
+            imagegif($tci, $newcopy);
+        } else if($ext =="png"){ 
+            imagepng($tci, $newcopy);
+        } else { 
+            imagejpeg($tci, $newcopy, 84);
+        }
 }
 
 
