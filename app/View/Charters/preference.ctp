@@ -119,16 +119,14 @@
 <style>
     @media (max-width: 768px){
 .modal-dialog {
-    max-width: 360px;
+    max-width: 315px;
     margin: 10px auto;
-    font-size: 11px;
+    font-size: 12px;
 }
     .modal-body {
   padding: 5px;
 }
-    .modalmsg p{
-        text-align: left;
-    }
+ 
 }
 
       @media only screen and (min-width: 300px) and (max-width: 1024px){
@@ -676,8 +674,8 @@ if(isset($defaultLastName) && !empty($defaultLastName)){
     <div class="modal-content mc-bord">
       <div class="modal-body">
       <div class="modalmsg"> 
-        <p>If you’re not finished click Save and complete your preferences later.</p>
-        <p>If you are finished click Submit to send your preferences to the yacht.</p>
+        <p>Click Save to complete your preferences later.</p>
+        <p>Click Submit to send your preferences to the yacht.</p>
       </div>
         <div class="text-center">
         <input class="btn btn-primary" type="button" name="pageleave_save" id="pageleave_save" value="Save" />
