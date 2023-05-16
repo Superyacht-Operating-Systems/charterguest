@@ -25,6 +25,9 @@
     );
 ?>
 <style>
+    .md-row-h-8 button{
+        text-transform: uppercase;
+    }
     @media only screen and (max-width: 360px) {
 .rowm-md-mob-resize {
   margin: 27px 0px 10px 0px !important;
@@ -49,6 +52,7 @@
   width: 75px !important;
   font-size: 11px !important;
 }
+
 .btn-open, .btn-open1{
 margin-right: 0px!important;
 }
@@ -687,6 +691,9 @@ color: #000;
   .md-row-h-18 button {
   font-size: 11px !important;
 }
+.md-row-h-8 button{
+font-size: 11px;
+    }
 #saveBtn {
     font-size: 11px !important;
 }
