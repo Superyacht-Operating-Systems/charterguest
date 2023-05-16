@@ -40,8 +40,8 @@
 
 .md-row-h-18 {
   right: 0px!important;
-  max-width: 161px !important;
-  width: 161px !important;
+  max-width: 156px !important;
+  width: 156px !important;
   margin-right: 0px !important;
   float: right !important;
 }
@@ -50,7 +50,7 @@
   font-size: 11px !important;
 }
 .btn-open{
-margin-right: 0px;
+margin-right: 0px!important;
 }
 }
 @media only screen and (min-width: 360px) and (max-width: 600px) {
