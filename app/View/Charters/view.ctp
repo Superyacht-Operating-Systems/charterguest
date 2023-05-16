@@ -49,7 +49,7 @@
   width: 75px !important;
   font-size: 11px !important;
 }
-.btn-open{
+.btn-open, .btn-open1{
 margin-right: 0px!important;
 }
 }
