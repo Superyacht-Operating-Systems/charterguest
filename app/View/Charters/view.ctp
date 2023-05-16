@@ -53,7 +53,7 @@
   font-size: 11px !important;
 }
 
-.btn-open, .btn-open1, .btn-eml-send1{
+.btn-open, .btn-open1, .btn-eml-send{
 margin-right: 0px!important;
 }
 }
