@@ -7928,6 +7928,7 @@ function sessionShowPopupDelete(){
     }
 }
 
+
 function uploadpassportimage(){
     if($this->request->is('ajax')){
         $this->layout = false;
