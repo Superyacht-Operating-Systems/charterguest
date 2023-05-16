@@ -53,7 +53,7 @@
   font-size: 11px !important;
 }
 
-.btn-open, .btn-open1, .emailSentClass{
+.btn-open, .btn-open1, .btn-eml-send1{
 margin-right: 0px!important;
 }
 }
