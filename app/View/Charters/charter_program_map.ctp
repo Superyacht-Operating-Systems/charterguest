@@ -83,9 +83,9 @@ if(empty($scheduleData)){
 .CS_modal .modal-header {
   padding: 15px 15px 15px 15px;
 }
-.leaflet-container .leaflet-marker-pane img{
+/* .leaflet-container .leaflet-marker-pane img{
 z-index: 1 !important;
-}
+} */
 .map_bottom_attr{
 color: #00a8f3;
 display: flex;
