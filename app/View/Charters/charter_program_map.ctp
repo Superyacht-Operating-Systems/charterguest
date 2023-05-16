@@ -1651,6 +1651,7 @@ body .sp-60-w input {
 color: #000;
 background-color: #fff;
 border-radius: 4px;
+z-index:9999 !important;
 }
 
 .text-below-marker-modalmap {
