@@ -2153,7 +2153,8 @@ var satellite   =   L.tileLayer(mbUrl, {
     updateWhenIdle : false,
     continousWorld : true,
     noWrap: false,
-    attribution: mbAttr
+    attribution: mbAttr,
+    minZoom: 3, maxZoom: 18
 });
 
 var map = L.map('map', {
@@ -2175,6 +2176,7 @@ var modalmapcruisingschsatellite = L.tileLayer(mbUrl, {
     updateWhenIdle: false,
     continousWorld: true,
     noWrap: false,
+    minZoom: 3, maxZoom: 18
 });
 
 var modalmapcruisingsch = L.map('modalmapcruisingsch', {
@@ -2197,6 +2199,7 @@ function ReloadModalMaplayerCSMP(){
                                             updateWhenIdle: false,
                                             continousWorld: true,
                                             noWrap: false,
+                                            minZoom: 3, maxZoom: 18
                                     });
                                     modalmapcruisingsch.addLayer(modalmapcruisingschsatellite);
     }
@@ -2221,6 +2224,7 @@ locsatellite = L.tileLayer(mbUrl, {
     updateWhenIdle: false,
     continousWorld: true,
     noWrap: false,
+    minZoom: 3, maxZoom: 18
 });
 
 var idlocmap = "<?php echo "crusingschedulemap".$loop; ?>";
@@ -2309,6 +2313,7 @@ var modalmapsatellite = L.tileLayer(mbUrl, {
     updateWhenIdle: false,
     continousWorld: true,
     noWrap: false,
+    minZoom: 3, maxZoom: 18
 });
 
 //modalmap
@@ -2336,6 +2341,7 @@ function ReloadModalMaplayer(){
                                             updateWhenIdle: false,
                                             continousWorld: true,
                                             noWrap: false,
+                                            minZoom: 3, maxZoom: 18
                                     });
         modalmap.addLayer(modalmapsatellite);
     }
