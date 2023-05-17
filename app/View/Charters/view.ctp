@@ -25,7 +25,7 @@
     );
 ?>
 <style>
-    .gry-btn, .yes-btn {
+    .gry-btn, .yes-btn, .no-btn {
   font-size: 12px;
     }
     @media only screen and (min-width:1024px){
