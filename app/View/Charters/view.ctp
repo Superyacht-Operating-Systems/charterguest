@@ -25,7 +25,11 @@
     );
 ?>
 <style>
-   
+    @media only screen and (min-width: 1024px) and (max-width: 1031px){
+.p-email-name {
+  width: 29%!important;
+}
+	}
       @media only screen and (max-width: 1024px){
 .p-email-name {
   width: 24% !important;
