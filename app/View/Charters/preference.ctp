@@ -117,6 +117,27 @@
 ?>
 
 <style>
+    @media only screen and (min-width:1024px){
+    body .mydemolabel {
+  font-size: 36px !important;
+}
+.yachtHeaderName {
+  font-size: 36px;
+}
+    }
+@media only screen and (min-width:771px) and (max-width:1024px){
+
+.yachtHeaderName {
+    margin-top: 4px!important;
+}
+body .mydemolabel {
+    top: 65px!important;
+  font-size: 30px !important;
+}
+
+
+}
+
     @media (max-width: 768px){
 .modal-dialog {
     max-width: 315px;
