@@ -25,6 +25,26 @@
     );
 ?>
 <style>
+    .gry-btn, .yes-btn {
+  font-size: 12px;
+    }
+    @media only screen and (min-width:1024px){
+    body .mydemolabel {
+  font-size: 36px !important;
+}
+    }
+@media only screen and (min-width:771px) and (max-width:1024px){
+
+.yachtHeaderName {
+    margin-top: 4px!important;
+}
+body .mydemolabel {
+    top: 70px!important;
+  font-size: 30px !important;
+}
+
+
+}
     .md-row-h-8 button{
         text-transform: uppercase;
     }
@@ -160,7 +180,7 @@ content: "SENT";
         padding-left: 94px;
 }
 
-.yachtHeaderName{font-weight: bold;font-size: 46px;}
+.yachtHeaderName{font-weight: bold;font-size: 36px;}
 .container-row-column .row{margin-bottom: 7px;}
 
     table.table tbody tr {
@@ -694,9 +714,7 @@ color: #000;
 .md-row-h-8 button{
 font-size: 11px;
     }
-#saveBtn {
-    font-size: 11px !important;
-}
+
 }
 @media screen and (max-width: 360px) {
 /* .md-row-h-18 {

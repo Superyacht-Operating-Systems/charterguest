@@ -58,6 +58,30 @@ if(empty($scheduleData)){
     max-height: 500px;
     width: auto !important;
 } */
+
+
+
+@media only screen and (min-width:1024px){
+    body .mydemolabel {
+  font-size: 36px !important;
+}
+.yachtHeaderName {
+  font-size: 36px;
+}
+    }
+@media only screen and (min-width:771px) and (max-width:1024px){
+
+.yachtHeaderName {
+    margin-top: 4px!important;
+}
+body .mydemolabel {
+    top: 70px!important;
+  font-size: 30px !important;
+}
+
+
+}
+
 @media only screen and (min-width: 768px) and (max-width: 771px){
     .container {
   width: 100%!important;
@@ -1268,12 +1292,8 @@ margin: 0px;padding: 0px;
 .common-form-row {
     margin-top: 50px;
 }
-.yachtHeaderName {
-    margin-top: 4px!important;
-}
-body .mydemolabel {
-    top: 57px!important;
-}
+
+
 
 
 }
