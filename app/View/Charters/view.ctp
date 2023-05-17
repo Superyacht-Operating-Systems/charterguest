@@ -28,6 +28,9 @@
     .gry-btn, .yes-btn, .no-btn {
   font-size: 12px;
     }
+    .no-btn, .yes-btn {
+        padding: 5px 8px;
+    }
     @media only screen and (min-width:1024px){
     body .mydemolabel {
   font-size: 36px !important;
