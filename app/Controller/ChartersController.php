@@ -5340,6 +5340,7 @@ class ChartersController extends AppController {
                         $locationimages = array();
                         $locationComment = array();
                         $stationarylocations = array();
+                        $samelocations_daynumdisplay = array();
                         $basefolder = $this->request->base;
 
                         if(isset($scheduleData)){
@@ -5365,9 +5366,11 @@ class ChartersController extends AppController {
                                     $samelocationsScheduleUUID[$publishmap['CharterProgramSchedule']['title']][] = $publishmap['CharterProgramSchedule']['UUID']; //same location
                                     $samelocationsDates[$publishmap['CharterProgramSchedule']['title']][] = $scheduleData[$key]['CharterProgramSchedule']['day_dates']; //same location
                                     $samemarkercommentcount[$publishmap['CharterProgramSchedule']['lattitude']] += $scheduleData[$key]['CharterProgramSchedule']['marker_msg_count']; //same location
-
+                                    if($publishmap['CharterProgramSchedule']['stationary'] == 1){
+                                        $samelocations_daynumdisplay[$publishmap['CharterProgramSchedule']['lattitude']][] =$publishmap['CharterProgramSchedule']['day_num'];
+                                            }
                                     $markerimg = BASE_URL.$basefolder.'/app/webroot/css/leaflet/dist/images/marker-icon.png';
-                            $stationarylocations[$publishmap['CharterProgramSchedule']['lattitude']][] = "<span class='stationarydays' id=".$publishmap['CharterProgramSchedule']['UUID']."><img src=".$markerimg." width='15px height='15px' > Day ".$scheduleData[$key]['CharterProgramSchedule']['day_num']."&nbsp;&nbsp;".$scheduleData[$key]['CharterProgramSchedule']['week_days']."</span>"; //same stationarylocations
+                            $stationarylocations[$publishmap['CharterProgramSchedule']['lattitude']][] = "<span class='stationarydays' data-num=".$publishmap['CharterProgramSchedule']['day_num']." id=".$publishmap['CharterProgramSchedule']['UUID']."><img src=".$markerimg." width='15px height='15px' > Day ".$scheduleData[$key]['CharterProgramSchedule']['day_num']."&nbsp;&nbsp;".$scheduleData[$key]['CharterProgramSchedule']['week_days']."</span>"; //same stationarylocations
 
                                     ////////////////////////////////
                                 $loctitle = $publishmap['CharterProgramSchedule']['title'];
@@ -5601,7 +5604,7 @@ class ChartersController extends AppController {
                         $this->set('samemarkercommentcount', $samemarkercommentcount);
 
                         $this->set('stationarylocations', $stationarylocations);
-
+                        $this->set('samelocations_daynumdisplay', $samelocations_daynumdisplay);
                         $this->set('charterProgramId', $charterProgramId);
                         $this->set('charterProgData', $charterProgData[0]);
                         $this->set('diffDays', $diffDays);
@@ -5723,7 +5726,7 @@ class ChartersController extends AppController {
                 $samedayrouteorder = array();
                 $locationimages = array();
                 $locationComment = array();
-
+                $samelocations_daynumdisplay = array();
                 $stationarylocations = array();
                 $basefolder = $this->request->base;
 
@@ -5750,9 +5753,11 @@ class ChartersController extends AppController {
                             $samelocationsScheduleUUID[$publishmap['CharterProgramSchedule']['title']][] = $publishmap['CharterProgramSchedule']['UUID']; //same location
                             $samelocationsDates[$publishmap['CharterProgramSchedule']['title']][] = $scheduleData[$key]['CharterProgramSchedule']['day_dates']; //same location
                             $samemarkercommentcount[$publishmap['CharterProgramSchedule']['lattitude']] += $scheduleData[$key]['CharterProgramSchedule']['marker_msg_count']; //same location
-
+                            if($publishmap['CharterProgramSchedule']['stationary'] == 1){
+                                $samelocations_daynumdisplay[$publishmap['CharterProgramSchedule']['lattitude']][] =$publishmap['CharterProgramSchedule']['day_num'];
+                                    }
                             $markerimg = BASE_URL.$basefolder.'/app/webroot/css/leaflet/dist/images/marker-icon.png';
-                            $stationarylocations[$publishmap['CharterProgramSchedule']['lattitude']][] = "<span class='stationarydays' id=".$publishmap['CharterProgramSchedule']['UUID']."><img src=".$markerimg." width='15px height='15px' > Day ".$scheduleData[$key]['CharterProgramSchedule']['day_num']."&nbsp;&nbsp;".$scheduleData[$key]['CharterProgramSchedule']['week_days']."</span>"; //same stationarylocations
+                            $stationarylocations[$publishmap['CharterProgramSchedule']['lattitude']][] = "<span class='stationarydays' data-num=".$publishmap['CharterProgramSchedule']['day_num']." id=".$publishmap['CharterProgramSchedule']['UUID']."><img src=".$markerimg." width='15px height='15px' > Day ".$scheduleData[$key]['CharterProgramSchedule']['day_num']."&nbsp;&nbsp;".$scheduleData[$key]['CharterProgramSchedule']['week_days']."</span>"; //same stationarylocations
 
                         ////////////////////////////////
                                 $loctitle = $publishmap['CharterProgramSchedule']['title'];
@@ -6051,7 +6056,7 @@ class ChartersController extends AppController {
                 $this->set('samemarkercommentcount', $samemarkercommentcount);
 
                 $this->set('stationarylocations', $stationarylocations);
-
+                $this->set('samelocations_daynumdisplay', $samelocations_daynumdisplay);
                 $this->set('charterProgramId', $charterProgramId);
                 $this->set('charter_company_id_val', $charterProgData[0]['CharterProgram']['charter_company_id']);
                 $this->set('charterProgData', $charterProgData[0]);

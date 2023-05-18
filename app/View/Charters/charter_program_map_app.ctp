@@ -2441,7 +2441,12 @@ if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !e
 <?php foreach ($scheduleData as $key => $schedule) { 
     if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !empty($samelocations[$schedule['CharterProgramSchedule']['lattitude']])){
 
-    $markernumberDisplay = $schedule['CharterProgramSchedule']['day_num'];
+        if($schedule['CharterProgramSchedule']['stationary'] == 1){
+            $markernumberDisplay = $samelocations_daynumdisplay[$schedule['CharterProgramSchedule']['lattitude']][0];
+            
+        }else{
+            $markernumberDisplay = $schedule['CharterProgramSchedule']['day_num'];
+        }
     ?>
 
     var textMarker = L.marker(["<?php echo $schedule['CharterProgramSchedule']['lattitude']; ?>", "<?php echo $schedule['CharterProgramSchedule']['longitude']; ?>"], {
@@ -2682,7 +2687,10 @@ setTimeout(() => {
 // L.control.markerControl({
 //     position: 'topleft'
 // }).addTo(map);
-
+// $(document).on("mouseover", "#HideDetails,#CruisingButton", function(e) {
+//     mapClickEvent = false; // this is for condition to disable the map click function
+//     //stuff to do on mouseover
+// });
 $(document).on("click", "#HideDetails", function(e) {
     mapClickEvent = false; // this is for condition to disable the map click function
     // var disp = $(".Tooltip").css("display");
@@ -2694,7 +2702,9 @@ $(document).on("click", "#HideDetails", function(e) {
     //     $("#HideDetails").text("Hide Details");
 
     // }
-
+    // $(".action-finishMode").click();
+    // $(".button-container").removeClass('active');
+    // $(".leaflet-control").removeClass('activeChild');
     var btntext = $("#HideDetails").text();
     if(btntext == "Show Details"){
         //$(".Tooltip").css("margin-top","");
@@ -2845,7 +2855,7 @@ function markerOnClick(e) {
     var samelocationsDates = e.target.samelocationsDates;
     var stationary = e.target.stationary;
     var stationarytooltipnum = e.target.stationarytooltipnum;
-    $(".Tooltip").hide();
+   // $(".Tooltip").hide();
     $('.Tooltip').css('top','');
     if(stationary == 1){
         $('.Tooltip').css('top','');
@@ -3200,6 +3210,7 @@ $(document).on("click", ".stationarydays", function(e) {
     var durationtotal = mapmarkerglobalObj.target.durationtotal;
 
    var selectedschuuid = $(this).attr('id');
+   var selecteddaynumstationary = $(this).attr('data-num');
    //var selecteddatetext = $(".noofdayscard option:selected").text();
    var yachtId = $("#yachtId").val();
   //alert('gg')
@@ -3325,9 +3336,15 @@ $(document).on("click", ".stationarydays", function(e) {
                                         var temptitle = [];                        
                                                     $.each(markerArray, function(key, value) {   
                                                         
-                                                        //if(jQuery.inArray(value.daytitle, temptitle) !== -1){
-                                                            
-                                                        //}else{
+                                                        if(selecteddaynumstationary == value.day_num){
+                                                                selectedmarkertitle = value.daytitle;
+                                                                selectedmarkerday_num = value.day_num;
+                                                                lattitude = value._latlng.lat;
+                                                                longitude = value._latlng.lng;
+                                                                scheduleId = value.scheduleId;
+                                                                distancetotal = value.distancetotal;
+                                                                durationtotal = value.durationtotal;
+                                                            }
 
                                                                 $('.markersnamesmodalmap')
                                                                     .append($("<option></option>")
@@ -3605,6 +3622,11 @@ var resizeflag = true;
 $(document).on("click", "#CruisingButton", function(e) {
 
     var scheduleId = $("#charterProgramId").val();
+
+    // $(".action-finishMode").click();
+    // $(".button-container").removeClass('active');
+    // $(".leaflet-control").removeClass('activeChild');
+
     // $("#hideloader").show();
     //     $.ajax({
     //         type: "POST",
