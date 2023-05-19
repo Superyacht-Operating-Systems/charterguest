@@ -2335,6 +2335,7 @@ var zoom = 3;
 var day1 = 0;
 var latlngs = [];
 var globaldropdownvarAddOption = "";
+var clickedstationary;
 // Generating the markers for existing records
 <?php foreach ($scheduleData as $key => $schedule) { 
 
@@ -2462,6 +2463,9 @@ if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !e
 
 map.on('click', function(e) {
     $('.Tooltip').css('top','');
+    if(clickedstationary){
+    $(".stationarytooltip"+clickedstationary).hide();
+    }
     //$(".Tooltip").hide();
 });
 
@@ -2475,15 +2479,17 @@ var zoomLevel = map.getZoom();
     $('.Tooltip').css('top','');
     var tooltipdisplay = $('.Tooltip').css('display');
     if(tooltipdisplay == "block"){ 
-        $('.Tooltip').css('top','45px');
+        $('.Tooltip').css('top','');
     }
     if(tooltipdisplay == "none"){ 
-                $('.Tooltip').css('top','45px');
+                $('.Tooltip').css('top','');
             }
     //alert(zoomLevel);
     // console.log("zoomLevel");
     // console.log(tooltipdisplay);
-
+    // if(latlngs.length > 0){
+    //     map.fitBounds(latlngs);
+    // }
 });
 
 // Making the Centre point
@@ -2705,6 +2711,7 @@ $(document).on("click", "#HideDetails", function(e) {
     // $(".action-finishMode").click();
     // $(".button-container").removeClass('active');
     // $(".leaflet-control").removeClass('activeChild');
+    
     var btntext = $("#HideDetails").text();
     if(btntext == "Show Details"){
         //$(".Tooltip").css("margin-top","");
@@ -2718,10 +2725,11 @@ $(document).on("click", "#HideDetails", function(e) {
         // setTimeout(function(){
         //         $(".leaflet-tooltip").css("opacity", "1");  
         $(".acti-count-onmarker").hide();
+        //$('.Tooltip').css('top','');
         // },1000);
-        if(latlngs.length > 0){
-                    map.fitBounds(latlngs);
-                }
+        // if(latlngs.length > 0){
+        //             map.fitBounds(latlngs);
+        //         }
     }else if(btntext == "Hide Details"){
         //$(".Tooltip").css("margin-top","35px");
         $(".Tooltip").css("width","170px");
@@ -2834,6 +2842,7 @@ var mapmarkerglobalObj = null;
 var fitzoommap = [];
 var ModalMapsinglemarkerlat;
 var ModalMapsinglemarkerlong;
+
 <?php if(isset($scheduleData)){ ?>
 function markerOnClick(e) {
     mapmarkerglobalObj = e;
@@ -2866,6 +2875,7 @@ function markerOnClick(e) {
         // if(latlngs.length > 0){
         //     map.fitBounds(latlngs);
         // }
+        clickedstationary = stationarytooltipnum;
         $(".stationarytooltip"+stationarytooltipnum).show();
         $(".owntooltip").hide();
         $(".stationary").show();

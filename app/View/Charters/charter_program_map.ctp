@@ -2374,6 +2374,7 @@ var zoom = 4;
 var day1 = 0;
 var latlngs = [];
 var globaldropdownvarAddOption = "";
+var clickedstationary;
 // Generating the markers for existing records
 <?php foreach ($scheduleData as $key => $schedule) { 
 
@@ -2530,6 +2531,9 @@ if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !e
 
 map.on('click', function(e) {
     $('.Tooltip').css('top','');
+    if(clickedstationary){
+    $(".stationarytooltip"+clickedstationary).hide();
+    }
     //$(".Tooltip").hide();
 });
 // script to show the tooltip next to marker on show/hide and also zoomin and zoomout
@@ -2542,10 +2546,10 @@ map.on('zoomstart', function () {
             $('.Tooltip').css('top','');
             var tooltipdisplay = $('.Tooltip').css('display');
             if(tooltipdisplay == "block"){ 
-                $('.Tooltip').css('top','45px');
+                $('.Tooltip').css('top','');
             }
             if(tooltipdisplay == "none"){ 
-                $('.Tooltip').css('top','45px');
+                $('.Tooltip').css('top','');
             }
             //alert(zoomLevel);
             // console.log("zoomLevel");
@@ -2750,10 +2754,10 @@ var polyline0 = new L.Polyline(latlongstemp, {stroke:true,weight:2.5,dashArray: 
 // L.control.markerControl({
 //     position: 'topleft'
 // }).addTo(map);
-$(document).on("mouseover", "#HideDetails,#CruisingButton", function(e) {
-    mapClickEvent = false; // this is for condition to disable the map click function
-    //stuff to do on mouseover
-});
+// $(document).on("mouseover", "#HideDetails,#CruisingButton", function(e) {
+//     mapClickEvent = false; // this is for condition to disable the map click function
+//     //stuff to do on mouseover
+// });
 $(document).on("click", "#HideDetails", function(e) {
     mapClickEvent = false; // this is for condition to disable the map click function
     //var disp = $(".Tooltip").css("display");
@@ -2765,9 +2769,9 @@ $(document).on("click", "#HideDetails", function(e) {
     //     $("#HideDetails").text("Hide Details");
 
     // }
-    $(".action-finishMode").click();
-    $(".button-container").removeClass('active');
-    $(".leaflet-control").removeClass('activeChild');
+    // $(".action-finishMode").click();
+    // $(".button-container").removeClass('active');
+    // $(".leaflet-control").removeClass('activeChild');
     var btntext = $("#HideDetails").text();
     if(btntext == "Show Details"){
         //$(".Tooltip").css("margin-top","");
@@ -2791,9 +2795,9 @@ $(document).on("click", "#HideDetails", function(e) {
                 
         // },1000);
         //map.setView(new L.LatLng(centerLat, centerLng), zoom);
-                if(latlngs.length > 0){
-                    map.fitBounds(latlngs);
-                }
+                // if(latlngs.length > 0){
+                //     map.fitBounds(latlngs);
+                // }
     }else if(btntext == "Hide Details"){
         //$(".Tooltip").css("margin-top","35px");
         $(".Tooltip").css("width","170px");
@@ -2947,6 +2951,7 @@ function markerOnClick(e) {
         // if(latlngs.length > 0){
         //     map.fitBounds(latlngs);
         // }
+        clickedstationary = stationarytooltipnum;
         $(".stationarytooltip"+stationarytooltipnum).show();
         $(".owntooltip").hide();
         $(".stationary").show();
