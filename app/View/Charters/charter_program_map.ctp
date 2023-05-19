@@ -59,9 +59,7 @@ if(empty($scheduleData)){
     width: auto !important;
 } */
 
-.leaflet-marker-icon.leaflet-interactive, .leaflet-image-layer.leaflet-interactive, .leaflet-pane > svg path.leaflet-interactive {
-  pointer-events: none;
-    }
+
 
 @media only screen and (min-width:1024px){
     body .mydemolabel {
