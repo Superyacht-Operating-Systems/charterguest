@@ -4224,38 +4224,38 @@ $(document).on("click", ".close", function(e) {
 });
 
 function customMediaQueryRemove(){
-        // $("#map .leaflet-tile-pane").css({
-        //         "display":""
-        // });
-        // $("#map .leaflet-overlay-pane").css({
-        //     "display":""
-        // });
-        // $("#map .leaflet-marker-pane").css({
-        //         "display":""
-        // });
-        // $("#map .leaflet-tooltip-pane").css({
-        //         "display":""
-        // });
-        // $("#map .leaflet-container").css({
-        //         "background-color":""
-        // });
+        $("#map .leaflet-tile-pane").css({
+                "display":""
+        });
+        $("#map .leaflet-overlay-pane").css({
+            "display":""
+        });
+        $("#map .leaflet-marker-pane").css({
+                "display":""
+        });
+        $("#map .leaflet-tooltip-pane").css({
+                "display":""
+        });
+        $("#map .leaflet-container").css({
+                "background-color":""
+        });
     }
 function customMediaQueryAdd(){
-    // $("#map .leaflet-tile-pane").css({
-    //         "display":"none"
-    // });
-    // $("#map .leaflet-overlay-pane").css({
-    //         "display":"none"
-    // });
-    // $("#map .leaflet-marker-pane").css({
-    //         "display":"none"
-    // });
-    // $("#map .leaflet-tooltip-pane").css({
-    //         "display":"none"
-    // });
-    // $("#map .leaflet-container").css({
-    //         "background-color":"#000"
-    // });
+    $("#map .leaflet-tile-pane").css({
+            "display":"none"
+    });
+    $("#map .leaflet-overlay-pane").css({
+            "display":"none"
+    });
+    $("#map .leaflet-marker-pane").css({
+            "display":"none"
+    });
+    $("#map .leaflet-tooltip-pane").css({
+            "display":"none"
+    });
+    $("#map .leaflet-container").css({
+            "background-color":"#000"
+    });
 }
 
 
