@@ -2531,9 +2531,12 @@ if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !e
 
 
 // Prevent z-index change on marker hover
+$(document).on("mouseover", ".leaflet-marker-icon", function(e) {
+    this._icon.style.zIndex = textMarker._icon.style.zIndex;
+}
 textMarker.on('mouseover', function () {
   // Reset the z-index to the initial value
-  this._icon.style.zIndex = textMarker._icon.style.zIndex;;
+  this._icon.style.zIndex = textMarker._icon.style.zIndex;
 });
 
 textMarker.on('mouseout', function () {
