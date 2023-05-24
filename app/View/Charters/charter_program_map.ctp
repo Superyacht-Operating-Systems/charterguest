@@ -2529,18 +2529,16 @@ if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !e
  <?php } 
 }?>
 
-// Retrieve the initial z-index value of the marker icon
-var initialZIndex = textMarker._icon.style.zIndex;
 
 // Prevent z-index change on marker hover
 textMarker.on('mouseover', function () {
   // Reset the z-index to the initial value
-  this._icon.style.zIndex = initialZIndex;
+  this._icon.style.zIndex = textMarker._icon.style.zIndex;;
 });
 
 textMarker.on('mouseout', function () {
   // Reset the z-index to the initial value
-  this._icon.style.zIndex = initialZIndex;
+  this._icon.style.zIndex = textMarker._icon.style.zIndex;;
 });
 
 map.on('click', function(e) {
