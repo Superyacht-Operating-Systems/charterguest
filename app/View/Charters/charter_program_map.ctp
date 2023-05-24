@@ -2525,10 +2525,9 @@ if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !e
     className: 'text-below-marker',
     })
 }).addTo(map);
-textMarker.off('mouseover');
  <?php } 
 }?>
-
+map.off('mouseover');
 map.on('click', function(e) {
     $('.Tooltip').css('top','');
     if(clickedstationary){
