@@ -2526,6 +2526,9 @@ if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !e
     })
 }).addTo(map);
 
+ <?php } 
+}?>
+
 // Retrieve the initial z-index value of the marker icon
 var initialZIndex = textMarker._icon.style.zIndex;
 
@@ -2539,10 +2542,6 @@ textMarker.on('mouseout', function () {
   // Reset the z-index to the initial value
   this._icon.style.zIndex = initialZIndex;
 });
-
-
- <?php } 
-}?>
 
 map.on('click', function(e) {
     $('.Tooltip').css('top','');
