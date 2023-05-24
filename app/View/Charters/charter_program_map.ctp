@@ -2456,11 +2456,11 @@ if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !e
         .bindTooltip("<?php echo "<span class='smalltooltip' ".$marker_msg_count.">".$samemkrcount."</span><span class='owntooltip' id=".$key.">".$SumDaytitle."<span id='".$schuuid."'   class='acti-count' ".$marker_msg_count." >".$samemkrcount."</span><b style='font-size: 10px;'>".$schedule['CharterProgramSchedule']['title']."<hr>".$endplace."</b><br><b style='font-size: 10px;'>".$distance.$bar.$duration."</b></span><span class='stationary'>".$WeekDaytitle."</span>"?>", 
                     {
                         permanent: true, 
-                        offset: [0,-40],
+                        offset: [0,0],
                         //sticky:true,
                         direction: 'right',
                         className: "Tooltip <?php echo $tooltipclass; ?>",
-                        noWrap: true,
+                        noWrap: false,
                     })
                 .on("click", markerOnClick);
                 //console.log(marker);
