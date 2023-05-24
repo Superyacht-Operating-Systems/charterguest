@@ -2754,10 +2754,10 @@ var polyline0 = new L.Polyline(latlongstemp, {stroke:true,weight:2.5,dashArray: 
 // L.control.markerControl({
 //     position: 'topleft'
 // }).addTo(map);
-$(document).on("mouseover", "#HideDetails,#CruisingButton", function(e) {
-    mapClickEvent = false; // this is for condition to disable the map click function
-    //stuff to do on mouseover
-});
+// $(document).on("mouseover", "#HideDetails,#CruisingButton", function(e) {
+//     mapClickEvent = false; // this is for condition to disable the map click function
+//     //stuff to do on mouseover
+// });
 $(document).on("click", "#HideDetails", function(e) {
     mapClickEvent = false; // this is for condition to disable the map click function
     //var disp = $(".Tooltip").css("display");
