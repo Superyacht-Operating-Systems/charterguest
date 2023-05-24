@@ -2527,7 +2527,9 @@ if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !e
 }).addTo(map);
  <?php } 
 }?>
-map.off('mouseover');
+ $(document).on("mouseover", "#map .leaflet-marker-icon", function(e) {
+     $(this).style.pointerEvents = 'none';
+ });
 map.on('click', function(e) {
     $('.Tooltip').css('top','');
     if(clickedstationary){
