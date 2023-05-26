@@ -1853,8 +1853,8 @@ border-radius: 4px; */
         <div class="modal-content CS_modal">
             <div class="modal-header">
                 <div style="position: absolute;margin-top: 4px;">
-                    <div id="flag" class="flag-icon flag-icon-us" style="font-size:18px;"></div>
-                    <select id="language-select" onchange="changeLanguage()" class="language_dropdown" style="font-size:18px;top: -5px;">
+                    <div id="flag2" class="flag-icon flag-icon-us" style="font-size:18px;"></div>
+                    <select id="language-select2" onchange="changeLanguage2()" class="language_dropdown" style="font-size:18px;top: -5px;">
                     <option value="Arabic">Arabic</option>
                     <option value="MandarinChinese">Chinese</option>
                     <option value="English" selected>English</option>
@@ -4667,6 +4667,12 @@ var langauges_list = {
 
       var div = document.getElementById("flag");
       div.className = 'flag-icon flag-icon-' +langauges_list[selectedCountry]+'';
+
+      var select2 = document.getElementById("language-select2");
+      var selectedCountry2 = "English"; // Set your desired default value here
+
+      var divflag = document.getElementById("flag2");
+      divflag.className = 'flag-icon flag-icon-' +langauges_list[selectedCountry2]+'';
 });
 function changeLanguage() {
       var selectedCountry = document.getElementById("language-select").value;
@@ -4676,6 +4682,16 @@ function changeLanguage() {
       
       var div = document.getElementById("flag");
       div.className = 'flag-icon flag-icon-' +langauges_list[selectedCountry]+'';
+      // Add your code to handle the language change here
+}
+function changeLanguage2() {
+      var selectedCountry2 = document.getElementById("language-select2").value;
+      
+               //alert(langauges_list[selectedCountry]);
+      console.log("Selected language: " + langauges_list[selectedCountry]);
+      
+      var divflag = document.getElementById("flag2");
+      divflag.className = 'flag-icon flag-icon-' +langauges_list[selectedCountry2]+'';
       // Add your code to handle the language change here
 }
 
