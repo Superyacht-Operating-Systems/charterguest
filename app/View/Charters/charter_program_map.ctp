@@ -1853,7 +1853,7 @@ border-radius: 4px; */
         <div class="modal-content CS_modal">
             <div class="modal-header">
                 <div style="position: absolute;margin-top: 4px;">
-                    <div id="flag" class="flag-icon flag-icon-us" style="font-size:18px"></div>
+                    <div id="flag" class="flag-icon flag-icon-us" style="font-size:18px;top: -5px;"></div>
                     <select id="language-select" onchange="changeLanguage()" class="language_dropdown" style="font-size:18px">
                     <option value="Arabic">Arabic</option>
                     <option value="MandarinChinese">Chinese</option>
