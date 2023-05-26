@@ -4688,7 +4688,7 @@ function changeLanguage2() {
       var selectedCountry2 = document.getElementById("language-select2").value;
       
                //alert(langauges_list[selectedCountry]);
-      console.log("Selected language: " + langauges_list[selectedCountry]);
+      console.log("Selected language: " + langauges_list[selectedCountry2]);
       
       var divflag = document.getElementById("flag2");
       divflag.className = 'flag-icon flag-icon-' +langauges_list[selectedCountry2]+'';
