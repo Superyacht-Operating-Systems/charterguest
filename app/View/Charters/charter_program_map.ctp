@@ -1852,19 +1852,21 @@ border-radius: 4px; */
     <div class="modal-dialog">
         <div class="modal-content CS_modal">
             <div class="modal-header">
-            <div id="flag" class="flag-icon flag-icon-us" style="font-size:18px"></div>
-            <select id="language-select" onchange="changeLanguage()" class="language_dropdown" style="font-size:18px">
-            <option value="Arabic">Arabic</option>
-            <option value="MandarinChinese">Chinese</option>
-            <option value="English" selected>English</option>
-            <option value="French">French</option>
-            <option value="German">German</option>
-            <option value="Greek">Greek</option>
-            <option value="Italian">Italian</option>
-            <option value="Japanese">Japanese</option>
-            <option value="Russian">Russian</option>
-            <option value="Spanish">Spanish</option>
-            </select>
+                <div style="position: absolute;margin-top: 4px;">
+                    <div id="flag" class="flag-icon flag-icon-us" style="font-size:18px"></div>
+                    <select id="language-select" onchange="changeLanguage()" class="language_dropdown" style="font-size:18px">
+                    <option value="Arabic">Arabic</option>
+                    <option value="MandarinChinese">Chinese</option>
+                    <option value="English" selected>English</option>
+                    <option value="French">French</option>
+                    <option value="German">German</option>
+                    <option value="Greek">Greek</option>
+                    <option value="Italian">Italian</option>
+                    <option value="Japanese">Japanese</option>
+                    <option value="Russian">Russian</option>
+                    <option value="Spanish">Spanish</option>
+                    </select> 
+                </div>
                 <button type="button" class="close" id="cruisinglocationModalclose" aria-hidden="true" style="margin-right: 5px;">×</button>
                 <h4 class="modal-title" id="myModalLabel" style="text-align: center;font-weight: bold;"><?php echo $scheduleLocation ?></h4>
             </div>
