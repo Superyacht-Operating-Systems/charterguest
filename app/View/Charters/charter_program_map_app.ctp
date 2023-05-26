@@ -68,7 +68,26 @@ echo $this->Html->script('leaflet/route');
  echo $this->Html->script('leaflet/leaflet.draw.js'); 
  echo $this->Html->script('leaflet/L.Polyline.SnakeAnim.js'); 
 ?>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css">
 <style>
+     .language_dropdown{
+font-size: 18px;
+width: 28px;
+outline: none;
+webkit-aperiance: none;
+webkit-appearance: none;
+moz-appearance: none;
+appearance: none;
+border: 0px;
+background: transparent;
+padding: 1px 14px;
+margin-left: -25px;
+position: absolute;
+z-index: 99999;
+top: 6px;
+cursor: pointer;
+}
+
     .loc_desc_div .form-control:focus {
  box-shadow: none !important;
 }
@@ -1826,6 +1845,21 @@ body.modal-open {
     <div class="modal-dialog">
         <div class="modal-content CS_modal">
             <div class="modal-header">
+                <div style="position: absolute;margin-top: 4px;">
+                    <div id="flag2" class="flag-icon flag-icon-us" style="font-size:18px;"></div>
+                    <select id="language-select2" onchange="changeLanguage2()" class="language_dropdown" style="font-size:18px;top: -5px;">
+                    <option value="Arabic">Arabic</option>
+                    <option value="MandarinChinese">Chinese</option>
+                    <option value="English" selected>English</option>
+                    <option value="French">French</option>
+                    <option value="German">German</option>
+                    <option value="Greek">Greek</option>
+                    <option value="Italian">Italian</option>
+                    <option value="Japanese">Japanese</option>
+                    <option value="Russian">Russian</option>
+                    <option value="Spanish">Spanish</option>
+                    </select> 
+                </div>
                 <button type="button" class="close" id="cruisinglocationModalclose" aria-hidden="true" style="margin-right: 5px;">×</button>
                 <h4 class="modal-title" id="myModalLabel" style="text-align: center;font-weight: bold;"><?php echo $scheduleLocation; ?></h4>
             </div>
@@ -1967,7 +2001,20 @@ body.modal-open {
 <div id="markerModal" class="modal certificat-modal-container cruising-location-Modal"  role="dialog">
     <div class="modal-dialog">
         <div class="modal-content Mark_modal" id="markerModal_id">
-            <div class="modal-header" style="border-bottom: 0px solid #e5e5e5;">
+            <div class="modal-header" style="border-bottom: 0px solid #e5e5e5;padding-bottom: 0px;">
+            <div id="flag" class="flag-icon flag-icon-us" style="font-size:18px"></div>
+            <select id="language-select" onchange="changeLanguage()" class="language_dropdown" style="font-size:18px">
+            <option value="Arabic">Arabic</option>
+            <option value="MandarinChinese">Chinese</option>
+            <option value="English" selected>English</option>
+            <option value="French">French</option>
+            <option value="German">German</option>
+            <option value="Greek">Greek</option>
+            <option value="Italian">Italian</option>
+            <option value="Japanese">Japanese</option>
+            <option value="Russian">Russian</option>
+            <option value="Spanish">Spanish</option>
+            </select>
                 <button type="button" class="close" data-schuuid="" id="markerModalclose" aria-hidden="true" style="margin-right: 5px;">×</button>
                 <h4 class="modal-title" id="markerModalLabel" style="text-align: center;font-weight: bold;"></h4>
             </div>
@@ -4365,6 +4412,50 @@ $(document).on("click", "#markerModalclosecruisingsch", function(e) {
 });
 
 ///////////////////////////////Cruising schedule modal locations polyline display///////////////////////////////
-    
+var langauges_list = {
+	English: "gb",
+	MandarinChinese: "cn",
+	Spanish: "es",
+	French: "fr",
+	German: "de",
+	Greek: "gr",
+	Italian: "it",
+	Arabic: "sa",
+	Russian: "ru",
+	Japanese: "jp"
+}
+    $( document ).ready(function() {
+        var select = document.getElementById("language-select");
+      var selectedCountry = "English"; // Set your desired default value here
+
+      var div = document.getElementById("flag");
+      div.className = 'flag-icon flag-icon-' +langauges_list[selectedCountry]+'';
+
+      var select2 = document.getElementById("language-select2");
+      var selectedCountry2 = "English"; // Set your desired default value here
+
+      var divflag = document.getElementById("flag2");
+      divflag.className = 'flag-icon flag-icon-' +langauges_list[selectedCountry2]+'';
+});
+function changeLanguage() {
+      var selectedCountry = document.getElementById("language-select").value;
+      
+               //alert(langauges_list[selectedCountry]);
+      console.log("Selected language: " + langauges_list[selectedCountry]);
+      
+      var div = document.getElementById("flag");
+      div.className = 'flag-icon flag-icon-' +langauges_list[selectedCountry]+'';
+      // Add your code to handle the language change here
+}
+function changeLanguage2() {
+      var selectedCountry2 = document.getElementById("language-select2").value;
+      
+               //alert(langauges_list[selectedCountry]);
+      console.log("Selected language: " + langauges_list[selectedCountry2]);
+      
+      var divflag = document.getElementById("flag2");
+      divflag.className = 'flag-icon flag-icon-' +langauges_list[selectedCountry2]+'';
+      // Add your code to handle the language change here
+}
 </script>
   
