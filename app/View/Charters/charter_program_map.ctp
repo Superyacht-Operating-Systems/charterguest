@@ -3139,10 +3139,15 @@ function markerOnClick(e) {
                                     noWrap: false,
                                 });
                                 routemodalmarker.addTo(modalmap);
-
+                                if(selectedmarkerday_num < 10 ){
+                                    newdaycount="<span>&nbsp;"+selectedmarkerday_num+"</span>";
+                                }
+                                else{
+                                     newdaycount="<span>"+selectedmarkerday_num+"</span>";
+                                }
                                 var textMarkermodalmap = L.marker([lattitude,longitude], {
                                 icon: L.divIcon({
-                                    html: selectedmarkerday_num,
+                                    html: newdaycount,
                                     className: 'text-below-marker-modalmap',
                                     })
                                 }).addTo(modalmap);
@@ -3229,9 +3234,15 @@ $(document).on("change", ".markersnamesmodalmap", function(e) {
         // });
         routemodalmarkerselected.addTo(modalmap);
         // adding day number to marker
+        if(modalmapdaynumber < 10 ){
+                        newdaycount="<span>&nbsp;"+modalmapdaynumber+"</span>";
+                    }
+                    else{
+                        newdaycount="<span>"+modalmapdaynumber+"</span>";
+                    }
         textMarkermodalmap = L.marker([selectedlat,selectedlong], {
         icon: L.divIcon({
-            html: modalmapdaynumber,
+            html: newdaycount,
             className: 'text-below-marker-modalmap',
             })
         });
@@ -3476,10 +3487,15 @@ $(document).on("click", ".stationarydays", function(e) {
                                     noWrap: false,
                                 });
                                 routemodalmarker.addTo(modalmap);
-
+                                if(selectedmarkerday_num < 10 ){
+                                    newdaycount="<span>&nbsp;"+selectedmarkerday_num+"</span>";
+                                }
+                                else{
+                                     newdaycount="<span>"+selectedmarkerday_num+"</span>";
+                                }
                                 var textMarkermodalmap = L.marker([lattitude,longitude], {
                                 icon: L.divIcon({
-                                    html: selectedmarkerday_num,
+                                    html: newdaycount,
                                     className: 'text-below-marker-modalmap',
                                     })
                                 }).addTo(modalmap);
