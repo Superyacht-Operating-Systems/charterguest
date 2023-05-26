@@ -1677,7 +1677,7 @@ border-radius: 4px;
     font-size: 11px;
     font-weight: 1px solid;
     margin-top: -35px !important;
-    margin-left: -3px !important;
+    /* margin-left: -3px !important; */
 color: #000;
 background-color: #fff;
 border-radius: 10px;
@@ -1687,7 +1687,7 @@ border-radius: 10px;
     font-size: 11px;
     font-weight: 1px solid;
     margin-top: -35px !important;
-    margin-left: -3px !important;
+    /* margin-left: -3px !important; */
 color: #000;
 /* background-color: #fff;
 border-radius: 4px; */
@@ -2281,10 +2281,17 @@ var markerschloc = L.marker(["<?php echo $schedule['CharterProgramSchedule']['la
 
                 markerschloc.addTo(idlocmap);
 
+                if(<?php echo $schedule['CharterProgramSchedule']['day_num']; ?> < 10 ){
+                        newdaycount="<span>&nbsp;"+"<?php echo $schedule['CharterProgramSchedule']['day_num']; ?>"+"</span>";
+                    }
+                    else{
+                        newdaycount="<span>"+"<?php echo $schedule['CharterProgramSchedule']['day_num']; ?>"+"</span>";
+                    }
             
 var textMarkerschloc = L.marker(["<?php echo $schedule['CharterProgramSchedule']['lattitude']; ?>", "<?php echo $schedule['CharterProgramSchedule']['longitude']; ?>"], {
   icon: L.divIcon({
-      html: "<?php echo $schedule['CharterProgramSchedule']['day_num']; ?>",
+    html:newdaycount,
+    //   html: "<?php // echo $schedule['CharterProgramSchedule']['day_num']; ?>",
       className: 'text-below-marker-locsch',
     })
 });
@@ -4414,9 +4421,17 @@ function markerOnClickCSMP(e) {
         });
         routemodalmarkerCSMP.addTo(modalmapcruisingsch);
 
+        if(selectedmarkerday_num < 10 ){
+                        newdaycount="<span>&nbsp;"+selectedmarkerday_num+"</span>";
+                    }
+                    else{
+                        newdaycount="<span>"+selectedmarkerday_num+"</span>";
+                    }
+
         var textMarkermodalmapCSMP = L.marker([lattitude,longitude], {
         icon: L.divIcon({
-            html: selectedmarkerday_num,
+            html: newdaycount,
+            // html: selectedmarkerday_num,
             className: 'text-below-marker-locsch',
             })
         }).addTo(modalmapcruisingsch);  
@@ -4468,10 +4483,18 @@ $(document).on("change", ".markersnamesmodalmapcruisingsch", function(e) {
             pmIgnore: true
         });
         routemodalmarkerselected.addTo(modalmapcruisingsch);
+        if(modalmapdaynumber < 10 ){
+                        newdaycount="<span>&nbsp;"+modalmapdaynumber+"</span>";
+                    }
+                    else{
+                        newdaycount="<span>"+modalmapdaynumber+"</span>";
+                    }
+					
         // adding day number to marker
         textMarkermodalmap = L.marker([selectedlat,selectedlong], {
         icon: L.divIcon({
-            html: modalmapdaynumber,
+            html: newdaycount,
+            // html: modalmapdaynumber,
             className: 'text-below-marker-locsch',
             })
         });
