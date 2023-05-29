@@ -1852,9 +1852,9 @@ border-radius: 4px; */
     <div class="modal-dialog">
         <div class="modal-content CS_modal">
             <div class="modal-header">
-                <div style="position: absolute;margin-top: 4px;">
+                <!-- <div style="position: absolute;margin-top: 4px;"> -->
                     <div id="flag2" class="flag-icon flag-icon-us" style="font-size:18px;"></div>
-                    <select id="language-select2" onchange="changeLanguage2()" class="language_dropdown" style="font-size:18px;top: -5px;">
+                    <select id="language-select2" onchange="changeLanguage2()" class="language_dropdown" style="font-size:18px;top: 10px;">
                     <option value="Arabic">Arabic</option>
                     <option value="MandarinChinese">Chinese</option>
                     <option value="English" selected>English</option>
@@ -1866,7 +1866,7 @@ border-radius: 4px; */
                     <option value="Russian">Russian</option>
                     <option value="Spanish">Spanish</option>
                     </select> 
-                </div>
+                <!-- </div> -->
                 <button type="button" class="close" id="cruisinglocationModalclose" aria-hidden="true" style="margin-right: 5px;">×</button>
                 <h4 class="modal-title" id="myModalLabel" style="text-align: center;font-weight: bold;"><?php echo $scheduleLocation ?></h4>
             </div>
