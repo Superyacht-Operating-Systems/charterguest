@@ -6396,7 +6396,7 @@ class ChartersController extends AppController {
                     <form id="scheduleFormEdit"><div class="inputContainerdiv">
                     <div class="Marker_container_div">
                     <div class="marker_desc_div">
-                    <div><span style="display: inline-block;position: relative;"><img src="'.$markerimage.'" style="object-fit: fill; height: 35px;" alt="" ><span style="position: absolute;color:#000;top: 6px;right: 0px;left: 0px;text-align: center;font-size: 12px;">'.$dayNum.'</span></span>
+                    <div><span style="display: inline-block;position: relative;"><img src="'.$markerimage.'" style="object-fit: cover; height: 35px;" alt="" ><span style="position: absolute;color:#000;top: 6px;right: 0px;left: 0px;text-align: center;font-size: 12px;">'.$dayNum.'</span></span>
                     <input type="text" name="title" value="'.htmlspecialchars($title).'" placeholder="Enter the Title" class="loc_name" '.$readonly.' >
                     <ul class="action-icon"><li><i class="fa fa-comments crew_comment_cruisingmaptitle"  style="'.$colorcodetitle.$displaynone.'" data-rel="'.$scheduleData[0]['CharterProgramSchedule']['UUID'].'" data-yachtid="'.$yacht_id.'" data-tempname="'.htmlspecialchars($scheduleData[0]['CharterProgramSchedule']['title']).'"><input type="hidden" name=commentstitle value="" class="messagecommentstitle" /></i></li></ul>
                     </div>
@@ -6406,12 +6406,12 @@ class ChartersController extends AppController {
                     </div>
                     <div class="marker_img_div">
                     <div class="mLoc-img_prev">
-                    <a href="'.$titleimagehref.'" rel="gallery1" data-thumbnail="'.$titleimagehref.'" class="'.$fancybox.'"><img src="'.$titleimage.'" style="object-fit: fill;width: 100%; height: 150px;" alt="" ></a>';
+                    <a href="'.$titleimagehref.'" rel="gallery1" data-thumbnail="'.$titleimagehref.'" class="'.$fancybox.'"><img src="'.$titleimage.'" style="object-fit: cover;width: 100%; height: 150px;" alt="" ></a>';
                     if(isset($fleetlocationimages) && !empty($fleetlocationimages)){ 
                         $fleetlocationimages =  array_unique($fleetlocationimages);
                         foreach($fleetlocationimages as $name){ //echo $name;
                             if(!empty($name)){
-                            $popupHtml .= '<a href="'.$targetFullGalleryPathhref.$name.'" data-thumbnail="'.$targetFullGalleryPathhref.$name.'" rel="gallery1" class="'.$fancybox.'"><img src="'.$name.'" style="object-fit: fill;width: 100%; height: 150px;display:none;" alt="" ></a>';
+                            $popupHtml .= '<a href="'.$targetFullGalleryPathhref.$name.'" data-thumbnail="'.$targetFullGalleryPathhref.$name.'" rel="gallery1" class="'.$fancybox.'"><img src="'.$name.'" style="object-fit: cover;width: 100%; height: 150px;display:none;" alt="" ></a>';
                             }
                         }
                     }
@@ -6594,12 +6594,12 @@ class ChartersController extends AppController {
                                 $colorcode = "";
                               }
 
-                            $popupHtml .= '<div class="marksub-div"><div style="display:flex"><div class="m_loc_desc_div"><div class="marksup_header"><input name="iti_time[]" disabled="true" id="iti_time" class="iti_time" value="'.$iti_time.'"><ul class="action-icon"><li><i class="fa fa-comments crew_comment_cruisingmap" style="'.$colorcode.$displaynone.'" data-rel="'.$activity['CharterProgramScheduleActivity']['UUID'].'" data-yachtid="'.$yacht_id.'" data-tempname="'.htmlspecialchars($activity['CharterProgramScheduleActivity']['activity_name']).'" title="Comments & Feedback"><input type="hidden" name=comments[] value="" class="messagecomments" /></i></li></ul></div><div class="subloc_name" name="activity_name[]" >'.htmlspecialchars($activity['CharterProgramScheduleActivity']['activity_name']).'</div><input type="hidden" name="activity_id[]" value="'.$activity['CharterProgramScheduleActivity']['UUID'].'"><textarea class="form-control auto_resize loc_desc_field lg_tarea" '.$readonly.' name="messages[]" rows="1" cols="50" readonly>'.htmlspecialchars($activity['CharterProgramScheduleActivity']['notes']).'</textarea></div><div class="m_loc_img_div"><div class="sp-upload-img"><a href="'.$activityattachmentimagehref.'"  rel="gallery'.$i.'" data-thumbnail="'.$activityattachmentimagehref.'"  class="'.$activityfancybox.'"><img src="'.$activityattachmentimage.'" style="object-fit: fill; height: 150px;" alt=""></a>';
+                            $popupHtml .= '<div class="marksub-div"><div style="display:flex"><div class="m_loc_desc_div"><div class="marksup_header"><input name="iti_time[]" disabled="true" id="iti_time" class="iti_time" value="'.$iti_time.'"><ul class="action-icon"><li><i class="fa fa-comments crew_comment_cruisingmap" style="'.$colorcode.$displaynone.'" data-rel="'.$activity['CharterProgramScheduleActivity']['UUID'].'" data-yachtid="'.$yacht_id.'" data-tempname="'.htmlspecialchars($activity['CharterProgramScheduleActivity']['activity_name']).'" title="Comments & Feedback"><input type="hidden" name=comments[] value="" class="messagecomments" /></i></li></ul></div><div class="subloc_name" name="activity_name[]" >'.htmlspecialchars($activity['CharterProgramScheduleActivity']['activity_name']).'</div><input type="hidden" name="activity_id[]" value="'.$activity['CharterProgramScheduleActivity']['UUID'].'"><textarea class="form-control auto_resize loc_desc_field lg_tarea" '.$readonly.' name="messages[]" rows="1" cols="50" readonly>'.htmlspecialchars($activity['CharterProgramScheduleActivity']['notes']).'</textarea></div><div class="m_loc_img_div"><div class="sp-upload-img"><a href="'.$activityattachmentimagehref.'"  rel="gallery'.$i.'" data-thumbnail="'.$activityattachmentimagehref.'"  class="'.$activityfancybox.'"><img src="'.$activityattachmentimage.'" style="object-fit: cover; height: 150px;" alt=""></a>';
                             if(isset($fleetlocationimages_act) && !empty($fleetlocationimages_act)){
                                 $fleetlocationimages_act =  array_unique($fleetlocationimages_act);
                                 foreach($fleetlocationimages_act as $name){
                                     if(!empty($name)){
-                                        $popupHtml .= '<a href="'.$targetFullGalleryPathhref.$name.'" data-thumbnail="'.$targetFullGalleryPathhref.$name.'"rel="gallery'.$i.'" class="'.$activityfancybox.'"><img src="'.$name.'" style="object-fit: fill; height: 150px;display:none;" alt=""></a>';
+                                        $popupHtml .= '<a href="'.$targetFullGalleryPathhref.$name.'" data-thumbnail="'.$targetFullGalleryPathhref.$name.'"rel="gallery'.$i.'" class="'.$activityfancybox.'"><img src="'.$name.'" style="object-fit: cover; height: 150px;display:none;" alt=""></a>';
                                     }
                                 }
                             }
@@ -6734,7 +6734,7 @@ class ChartersController extends AppController {
                        <form id="scheduleFormEdit"><div class="inputContainer_div">
                         <div class="loc_desc_div">
                         <div>
-                        <span style="display: inline-block;position: relative;"><img src="'.$markerimage.'" style="object-fit: fill; height: 35px;" alt="" >
+                        <span style="display: inline-block;position: relative;"><img src="'.$markerimage.'" style="object-fit: cover; height: 35px;" alt="" >
                         <span style="position: absolute;color:#000;top: 6px;right: 0px;left: -1px;text-align: center;font-size: 12px;">'.$dayNum.'</span></span>
                            <input type="text" name="title" value="'.htmlspecialchars($title).'" placeholder="Enter the Title" class="loc_name" '.$readonly.'>
                             <ul class="action-icon"><li><i class="fa fa-comments " style="color: #00a8f3;float: right;"></i></li></ul>
@@ -6753,7 +6753,7 @@ class ChartersController extends AppController {
                         
                         </div>
                         <div class="loc_img_prev">
-                        <a href="'.$titleimagehref.'" class="'.$fancybox.'"><img src="'.$titleimage.'" style="object-fit: fill; width: 100%;height: 150px;" alt="" ></a>
+                        <a href="'.$titleimagehref.'" class="'.$fancybox.'"><img src="'.$titleimage.'" style="object-fit: cover; width: 100%;height: 150px;" alt="" ></a>
                         </div>
                         </div>';
                         $popupHtml .= '<input type="hidden" name="schedule_id" value="'.$scheduleId.'"><input type="hidden" class="form-control" name="day_num" id="dayNum" value="'.$dayNum.'">';
@@ -6865,7 +6865,7 @@ class ChartersController extends AppController {
                        <form id="scheduleFormEdit"><div class="inputContainer_div">
                         <div class="loc_desc_div">
                         <div>
-                        <span style="display: inline-block;position: relative;"><img src="'.$markerimage.'" style="object-fit: fill; height: 35px;" alt="" >
+                        <span style="display: inline-block;position: relative;"><img src="'.$markerimage.'" style="object-fit: cover; height: 35px;" alt="" >
                         <span style="position: absolute;color:#000;top: 4.5px;right: 0px;left: -2px;text-align: center;font-size: 14px;">'.$dayNum.'</span></span>
                            <input type="text" name="title" value="'.htmlspecialchars($title).'" placeholder="Enter the Title" class="loc_name" '.$readonly.'>
                             <ul class="action-icon"><li><i class="fa fa-comments " style="color: #00a8f3;float: right;"></i></li></ul>
@@ -6884,7 +6884,7 @@ class ChartersController extends AppController {
                         
                         </div>
                         <div class="loc_img_prev">
-                        <a href="'.$titleimagehref.'" class="'.$fancybox.'"><img src="'.$titleimage.'" style="object-fit: fill; width: 100%;height: 150px;" alt="" ></a>
+                        <a href="'.$titleimagehref.'" class="'.$fancybox.'"><img src="'.$titleimage.'" style="object-fit: cover; width: 100%;height: 150px;" alt="" ></a>
                         </div>
                         </div>';
                         $popupHtml .= '<input type="hidden" name="schedule_id" value="'.$scheduleId.'"><input type="hidden" class="form-control" name="day_num" id="dayNum" value="'.$dayNum.'">';
