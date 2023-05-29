@@ -4141,7 +4141,7 @@ $(".action-finishMode").click();
 //                 $("#cruisinglocationModal_load").html(result.popupHtml);
                 $("#cruisinglocationModal").show();
                 
-                // $(".csmp_body").scrollTop(0);
+                $(".csmp_body").scrollTop(0);
             
                       // get all the text area elements
 var textareas = document.querySelectorAll(".auto_resize");
