@@ -36,6 +36,9 @@
     );
 ?>
 <style>
+        .card-img img {
+  object-fit: cover;
+}
       @media only screen and (min-width: 768px) and (max-width: 771px){
 .container {
   width: 100% !important;
