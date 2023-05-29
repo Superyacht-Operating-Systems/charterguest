@@ -313,14 +313,6 @@ top: -90px;
 color: #000;
 justify-content: center;
 }
-.img_count{
-    background-color: rgba(255, 255, 255, 0.5);
-border-radius: 10px;
-min-width: 40px;
-display: flex;
-text-align: center;
-justify-content: center;
-}
 
     .m_loc_desc_div{
         width: 100%;

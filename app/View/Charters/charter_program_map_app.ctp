@@ -293,8 +293,31 @@ color: #fff;
    padding: 8px 5px;
    font-weight: 600;
 }
-
+.img_count_div{
+    width: 100%;
+display: flex;
+position: relative;
+top: -90px;
+color: #000;
+justify-content: center;
+}
+.img_count{
+    background-color: rgba(255, 255, 255, 0.5);
+border-radius: 10px;
+min-width: 40px;
+display: flex;
+text-align: center;
+justify-content: center;
+}
 @media only screen and (max-width: 766px){
+    .img_count_div{
+        width: 49%;
+display: flex;
+position: relative;
+top: -90px;
+color: #000;
+justify-content: center;
+}
     .m_loc_desc_div{
         width: 100%;
 margin-right: 10px;
@@ -1972,15 +1995,16 @@ body.modal-open {
                                             <?php  }
                                     }
                                 } ?>
-                                </div><span style="margin: 5px auto;width: fit-content;display: flow-root;">
+                                </div><span class="img_count_div">
                                <?php if(isset($fleetlocationimages) && !empty($fleetlocationimages)){ 
                                     $fleetimagecount = count($fleetlocationimages)+1;
                                     if($fleetimagecount > 1){
-                                         for($k=0; $k<$fleetimagecount; $k++){ ?>
-                                                    <i class="fa fa-dot-circle-o" aria-hidden="true" style="
-                                            font-size: 8px;
-                                            color: darkslategray;"></i>&nbsp;
-                                <?php       }
+                                        ?>
+                                        <span class="img_count">                    
+                                        + <?php echo $fleetimagecount; ?>
+                                        </span>
+                                           
+                                        <?php
                                     }
                                     }?></span>
                             </div>
