@@ -1999,13 +1999,16 @@ border-radius: 4px; */
                                     }
                                 } ?>
                                 </div>
-                                <span style="margin: 5px auto;width: fit-content;display: flow-root;position: relative;top: -90px;background: gray;color: #000;">
+                                <span style="margin: 5px auto;width: fit-content;display: flow-root;position: relative;top: -90px;color: #000;">
                                 
                                <?php  if(isset($fleetlocationimages) && !empty($fleetlocationimages)){ 
                                     $fleetimagecount = count($fleetlocationimages)+1;
                                     if($fleetimagecount > 1){
                                         ?>
-                                            <?php echo $fleetimagecount; ?>
+                                        <span style="background-color: rgba(255, 255, 255, 0.5);padding: 6px;border-radius: 10px;min-width: 40px;display: inline-block;text-align: center;">                    
+                                        <?php echo $fleetimagecount; ?>
+                                        </span>
+                                           
                                         <?php
                                     }
                                 //     if($fleetimagecount > 1){
