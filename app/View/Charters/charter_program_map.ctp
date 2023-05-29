@@ -288,8 +288,40 @@ color: #fff;
    padding: 8px 5px;
    font-weight: 600;
 }
-
+.img_count_div{
+    width: 100%;
+display: flex;
+position: relative;
+top: -90px;
+color: #000;
+justify-content: center;
+}
+.img_count{
+    background-color: rgba(255, 255, 255, 0.5);
+border-radius: 10px;
+min-width: 40px;
+display: flex;
+text-align: center;
+justify-content: center;
+}
 @media only screen and (max-width: 766px){
+    .img_count_div{
+        width: 49%;
+display: flex;
+position: relative;
+top: -90px;
+color: #000;
+justify-content: center;
+}
+.img_count{
+    background-color: rgba(255, 255, 255, 0.5);
+border-radius: 10px;
+min-width: 40px;
+display: flex;
+text-align: center;
+justify-content: center;
+}
+
     .m_loc_desc_div{
         width: 100%;
 margin-right: 10px;
@@ -1999,13 +2031,13 @@ border-radius: 4px; */
                                     }
                                 } ?>
                                 </div>
-                                <span style="margin: 5px auto;width: fit-content;display: flow-root;position: relative;top: -90px;color: #000;">
+                                <span class="img_count_div">
                                 
                                <?php  if(isset($fleetlocationimages) && !empty($fleetlocationimages)){ 
                                     $fleetimagecount = count($fleetlocationimages)+1;
                                     if($fleetimagecount > 1){
                                         ?>
-                                        <span style="background-color: rgba(255, 255, 255, 0.5);border-radius: 10px;min-width: 40px;display: inline-block;text-align: center;">                    
+                                        <span class="img_count">                    
                                         + <?php echo $fleetimagecount; ?>
                                         </span>
                                            
