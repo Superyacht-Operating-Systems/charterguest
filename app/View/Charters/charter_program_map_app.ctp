@@ -293,6 +293,10 @@ color: #fff;
    padding: 8px 5px;
    font-weight: 600;
 }
+.loc_img_prev{
+    z-index: 9999;
+position: relative;
+}
 .img_count_div{
     width: 100%;
 display: flex;
@@ -308,6 +312,8 @@ min-width: 40px;
 display: flex;
 text-align: center;
 justify-content: center;
+z-index: 9999;
+cursor: pointer;
 }
 @media only screen and (max-width: 766px){
     .img_count_div{
