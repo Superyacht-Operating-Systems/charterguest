@@ -1998,17 +1998,25 @@ border-radius: 4px; */
                                             <?php  }
                                     }
                                 } ?>
-                                </div><span style="margin: 5px auto;width: fit-content;display: flow-root;">
-                               <?php if(isset($fleetlocationimages) && !empty($fleetlocationimages)){ 
+                                </div>
+                                <span style="margin: 5px auto;width: fit-content;display: flow-root;position: relative;top: -90px;background: gray;color: #000;">
+                                
+                               <?php  if(isset($fleetlocationimages) && !empty($fleetlocationimages)){ 
                                     $fleetimagecount = count($fleetlocationimages)+1;
                                     if($fleetimagecount > 1){
-                                         for($k=0; $k<$fleetimagecount; $k++){ ?>
-                                                    <i class="fa fa-dot-circle-o" aria-hidden="true" style="
-                                            font-size: 8px;
-                                            color: darkslategray;"></i>&nbsp;
-                                <?php       }
+                                        ?>
+                                            <?php echo $fleetimagecount; ?>
+                                        <?php
                                     }
-                                    }?></span>
+                                //     if($fleetimagecount > 1){
+                                //          for($k=0; $k<$fleetimagecount; $k++){ ?>
+                                                    <!-- <i class="fa fa-dot-circle-o" aria-hidden="true" style="
+                                            font-size: 8px;
+                                             color: darkslategray;"></i>&nbsp; -->
+                                 <?php   //    }
+                                //     }
+                                    }?>
+                                    </span>
                             </div>
                        </div>
                        <input type="hidden" id="charterprogramuuid" value="<?php echo $schedule['CharterProgramSchedule']['charter_program_id']; ?>">
