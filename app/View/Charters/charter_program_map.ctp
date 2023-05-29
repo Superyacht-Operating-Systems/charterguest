@@ -2006,7 +2006,7 @@ border-radius: 4px; */
                                     if($fleetimagecount > 1){
                                         ?>
                                         <span style="background-color: rgba(255, 255, 255, 0.5);padding: 6px;border-radius: 10px;min-width: 40px;display: inline-block;text-align: center;">                    
-                                        <?php echo $fleetimagecount; ?>
+                                        + <?php echo $fleetimagecount; ?>
                                         </span>
                                            
                                         <?php
