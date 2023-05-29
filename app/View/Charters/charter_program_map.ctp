@@ -2005,7 +2005,7 @@ border-radius: 4px; */
                                     $fleetimagecount = count($fleetlocationimages)+1;
                                     if($fleetimagecount > 1){
                                         ?>
-                                        <span style="background-color: rgba(255, 255, 255, 0.5);padding: 6px;border-radius: 10px;min-width: 40px;display: inline-block;text-align: center;">                    
+                                        <span style="background-color: rgba(255, 255, 255, 0.5);border-radius: 10px;min-width: 40px;display: inline-block;text-align: center;">                    
                                         + <?php echo $fleetimagecount; ?>
                                         </span>
                                            
