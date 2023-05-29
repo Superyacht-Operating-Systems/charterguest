@@ -314,6 +314,9 @@ text-align: center;
 justify-content: center;
 z-index: 9999;
 cursor: pointer;
+padding-top: 1px;
+font-size: 14px;
+font-weight: bold;
 }
 @media only screen and (max-width: 766px){
     .img_count_div{
