@@ -6421,7 +6421,7 @@ class ChartersController extends AppController {
                         $fleetimagecountn = count($fleetlocationimages)+1;
                      if($fleetimagecountn > 1){
                           $popupHtml .= '<span class="img_count">                    
-                                        '.$fleetimagecountn.'
+                                       + '.$fleetimagecountn.'
                                         </span>';
                      }
                     }
