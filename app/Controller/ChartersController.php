@@ -6415,16 +6415,14 @@ class ChartersController extends AppController {
                             }
                         }
                     }
-                    $popupHtml .= '</div><span style="margin: 5px auto;width: fit-content;display: flow-root;">';
+                    $popupHtml .= '</div><span class="img_count_div">';
                     if(isset($fleetlocationimages) && !empty($fleetlocationimages)){ 
                         //$fleetlocationimages =  array_unique($fleetlocationimages);
                         $fleetimagecountn = count($fleetlocationimages)+1;
                      if($fleetimagecountn > 1){
-                         for($k=0; $k<$fleetimagecountn; $k++){
-                            $popupHtml .= '<i class="fa fa-dot-circle-o" aria-hidden="true" style="
-                            font-size: 8px;
-                            color: darkslategray;"></i>&nbsp;';
-                         }
+                          $popupHtml .= '<span class="img_count">                    
+                                        '.$fleetimagecountn.'
+                                        </span>';
                      }
                     }
                     $popupHtml .= '</span></div>

@@ -288,6 +288,10 @@ color: #fff;
    padding: 8px 5px;
    font-weight: 600;
 }
+.mLoc-img_prev {
+    z-index: 9999;
+position: relative;
+}
 .loc_img_prev{
     z-index: 9999;
 position: relative;
