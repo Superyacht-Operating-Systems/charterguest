@@ -36,6 +36,12 @@
     );
 ?>
 <style>
+    .col-11 ul li {
+  margin-bottom: 1px;
+  }
+  .action_links{
+    margin: 2px 0px -2px 0px;
+  }
         .card-img img {
   object-fit: cover;
 }
@@ -801,10 +807,11 @@ if(isset($charterGuestData) && !empty($charterGuestData)){
        <div class="col-11">
            <img src="<?php echo $data['charter_logo']; ?>" alt="">
        </div> 
-       <div class="col-11">
+       <div class="col-11 action_links">
         <ul>
             <li><a href="<?php echo $website; ?>" target="_blank" style="text-decoration:none;">Yachts Website</a></li>
             <li><a href="<?php echo $basefolder."/charters/view/".$id."/".$charter_program_id."/".$charter_company_id; ?>">Guest List</a></li>
+            <li><a href="#"><span class="existingCheckFunction" data-guestype="owner" data-associd ="<?php echo $id; ?>">Preference Sheets</span></a></li>
             <?php if($data['map_url'] == "link"){ ?>
                 <li><a href="<?php echo $baseFolder."/charters/charter_program_map/".$charter_program_id.'/'.$data['ydb_name'].'/owner'; ?>" title="Map is Published">Cruising Map</a>  <?php if(isset($msg_count) && $msg_count > 0){ ?><span class="cardbell-icon"><span class="avacard-cunt"><?php echo $msg_count; ?></span><i class="fa fa-bell"></i></span><?php } ?></li>
                 <!-- target="_blank" -->
@@ -812,8 +819,8 @@ if(isset($charterGuestData) && !empty($charterGuestData)){
                 <!-- <li><span datahover="Map is Not Published" title="Map is Not Published"><a href="#" role="button" title="Map is Not Published" aria-current="mapnolink">Cruising Map</a></span></li> -->
                 <li class="btnNoLink"  data-value="<?php echo $id; ?>"><span datahover="Map is Not Published" title="Map is Not Published" ><a   role="button" title="Map is Not Published" aria-current="mapnolink">Cruising Map</a></span></li>
             <?php } ?>
-
-            <li><a href="#"><span class="existingCheckFunction" data-guestype="owner" data-associd ="<?php echo $id; ?>">Preference Sheets</span></a></li>
+            <li><a href="#"><span class="" >Memories</span></a></li>
+            
         </ul>   
 
 
@@ -884,18 +891,19 @@ if(isset($charterAssocData) && !empty($charterAssocData)){
        <div class="col-11">
            <img src="<?php echo $data['charterDetails']['charter_logo']; ?>" alt="">
        </div> 
-       <div class="col-11">
+       <div class="col-11 action_links">
         <ul>
             <li><a href="<?php echo $website; ?>" target="_blank" style="text-decoration:none;">Yachts Website</a></li>
             <li><a href="<?php echo $basefolder."/charters/view_guest/".$charter_program_id."/".$fleetcompany_id; ?>">Guest List</a></li>
+            <li><a href="#"><span class="existingCheckFunction" data-guestype="guest" data-associd ="<?php echo $associd; ?>">Preference Sheets</span></a></li>
+            
             <?php if($data['charterDetails']['map_url'] == "link"){ ?>
               <li><a href="<?php echo $baseFolder."/charters/charter_program_map/".$charter_program_id.'/'.$data['charterDetails']['ydb_name'].'/guest'; ?>" title="Map is Published">Cruising Map</a> </li>
             <?php }else if($data['charterDetails']['map_url'] == "nolink"){  ?>
             <!-- <li><span datahover="Map is Not Published" title="Map is Not Published"><a href="#" role="button" title="Map is Not Published" aria-current="mapnolink">Cruising Map</a></span> </li> -->
             <li class="btnNoLink" data-value="<?php echo $id; ?>"><span datahover="Map is Not Published" title="Map is Not Published"><a   role="button" title="Map is Not Published" aria-current="mapnolink">Cruising Map</a></span></li>
             <?php } ?>
-            <li><a href="#"><span class="existingCheckFunction" data-guestype="guest" data-associd ="<?php echo $associd; ?>">Preference Sheets</span></a></li>
-            
+            <li><a href="#"><span class="" >Memories</span></a></li>
         </ul>   
 
 
