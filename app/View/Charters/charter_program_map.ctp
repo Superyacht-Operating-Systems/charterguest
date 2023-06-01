@@ -4731,7 +4731,7 @@ function changeLanguage() {
       
                //alert(langauges_list[selectedCountry]);
       console.log("Selected language: " + langauges_list[selectedCountry]);
-      alert(selectedCountry);
+      //alert(selectedCountry);
       console.log(ScheduleDataResult);
       $.each( ScheduleDataResult[0]['CharterProgramSchedule'], function( key, value ) {
         //alert( key + ": " + value );
