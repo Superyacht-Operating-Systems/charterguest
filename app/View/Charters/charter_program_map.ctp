@@ -4727,6 +4727,35 @@ function changeLanguage() {
       
                //alert(langauges_list[selectedCountry]);
       console.log("Selected language: " + langauges_list[selectedCountry]);
+      alert(selectedCountry);
+      console.log(ScheduleDataResult);
+      $.each( ScheduleDataResult[0]['CharterProgramSchedule'], function( key, value ) {
+        //alert( key + ": " + value );
+        if ($("#title_"+value) != "undefined") {
+            if(ScheduleDataResult[0]['CharterProgramSchedule']['title_'+selectedCountry] !='' && ScheduleDataResult[0]['CharterProgramSchedule']['title_'+selectedCountry]!=null){
+                $("#title_"+value).val(ScheduleDataResult[0]['CharterProgramSchedule']['title_'+selectedCountry]);
+            }
+            
+        }
+        if ($("#notes_"+value) != "undefined") {
+            $("#notes_"+value).val(ScheduleDataResult[0]['CharterProgramSchedule']['notes_'+selectedCountry]);
+        }
+        });
+
+        $.each( ActivityData, function( key, value ) {
+        //alert( key + ": " + value );
+        console.log(value);
+        if ($("#title_"+value['CharterProgramScheduleActivity']['id']) != "undefined") {
+            //console.log(value['CharterProgramScheduleActivity']['activity_name_'+selectedCountry]);
+           // console.log(value['CharterProgramScheduleActivity']['id']);
+            $("#title_"+value['CharterProgramScheduleActivity']['id']).text(value['CharterProgramScheduleActivity']['activity_name_'+selectedCountry]);
+        }
+        if ($("#notes_"+value['CharterProgramScheduleActivity']['id']) != "undefined") {
+            //console.log(value['CharterProgramScheduleActivity']['activity_name_'+selectedCountry]);
+           // console.log(value['CharterProgramScheduleActivity']['id']);
+            $("#notes_"+value['CharterProgramScheduleActivity']['id']).text(value['CharterProgramScheduleActivity']['notes_'+selectedCountry]);
+        }
+        });
       
       var div = document.getElementById("flag");
       div.className = 'flag-icon flag-icon-' +langauges_list[selectedCountry]+'';
@@ -4734,7 +4763,7 @@ function changeLanguage() {
 }
 function changeLanguage2() {
       var selectedCountry2 = document.getElementById("language-select2").value;
-      alert(selectedCountry2);
+      
                //alert(langauges_list[selectedCountry]);
       console.log("Selected language: " + langauges_list[selectedCountry2]);
       
