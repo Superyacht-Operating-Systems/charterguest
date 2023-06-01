@@ -4482,7 +4482,7 @@ var langauges_list = {
 });
 function changeLanguage() {
       var selectedCountry = document.getElementById("language-select").value;
-      //alert(selectedCountry);
+      alert(selectedCountry);
       console.log(ScheduleDataResult);
       $.each( ScheduleDataResult[0]['CharterProgramSchedule'], function( key, value ) {
         //alert( key + ": " + value );
