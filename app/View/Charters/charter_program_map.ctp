@@ -4734,7 +4734,7 @@ function changeLanguage() {
 }
 function changeLanguage2() {
       var selectedCountry2 = document.getElementById("language-select2").value;
-      
+      alert(selectedCountry2);
                //alert(langauges_list[selectedCountry]);
       console.log("Selected language: " + langauges_list[selectedCountry2]);
       

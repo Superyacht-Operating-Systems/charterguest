@@ -2933,7 +2933,8 @@ var mapmarkerglobalObj = null;
 var fitzoommap = [];
 var ModalMapsinglemarkerlat;
 var ModalMapsinglemarkerlong;
-
+var ActivityData = '';
+var ScheduleDataResult = '';
 <?php if(isset($scheduleData)){ ?>
 function markerOnClick(e) {
     mapmarkerglobalObj = e;
@@ -2955,6 +2956,8 @@ function markerOnClick(e) {
     var samelocationsDates = e.target.samelocationsDates;
     var stationary = e.target.stationary;
     var stationarytooltipnum = e.target.stationarytooltipnum;
+
+   
    // $(".Tooltip").hide();
     $('.Tooltip').css('top','');
     if(stationary == 1){
@@ -2983,6 +2986,7 @@ function markerOnClick(e) {
             success:function(result) {
                 
                 if (result.status == 'success') {
+                    console.log(result);
                     var width = $(window).width();
                     $("#hideloader").hide();
                     //map.setView(e.latlng);
@@ -2993,7 +2997,9 @@ function markerOnClick(e) {
                     $(".leaflet-control-container").hide();
                     fitzoommap = [];
                     var popLocation= e.latlng;
-
+                    ActivityData = result.activityData;
+                    ScheduleDataResult = result.scheduleData;
+                    //console.log(ScheduleDataResult);
                     // var popup = L.popup({keepInView:true,maxHeight:500})
                     // .setLatLng(popLocation)
                     // .setContent(result.popupHtml)
@@ -4476,9 +4482,37 @@ var langauges_list = {
 });
 function changeLanguage() {
       var selectedCountry = document.getElementById("language-select").value;
-      
+      //alert(selectedCountry);
+      //console.log(ScheduleDataResult);
+      $.each( ScheduleDataResult[0]['CharterProgramSchedule'], function( key, value ) {
+        //alert( key + ": " + value );
+        if ($("#title_"+value) != "undefined") {
+            if(ScheduleDataResult[0]['CharterProgramSchedule']['title_'+selectedCountry] !='' && ScheduleDataResult[0]['CharterProgramSchedule']['title_'+selectedCountry]!=null){
+                $("#title_"+value).val(ScheduleDataResult[0]['CharterProgramSchedule']['title_'+selectedCountry]);
+            }
+            
+        }
+        if ($("#notes_"+value) != "undefined") {
+            $("#notes_"+value).val(ScheduleDataResult[0]['CharterProgramSchedule']['notes_'+selectedCountry]);
+        }
+        });
+
+        $.each( ActivityData, function( key, value ) {
+        //alert( key + ": " + value );
+        //console.log(value);
+        if ($("#title_"+value['CharterProgramScheduleActivity']['id']) != "undefined") {
+            //console.log(value['CharterProgramScheduleActivity']['activity_name_'+selectedCountry]);
+           // console.log(value['CharterProgramScheduleActivity']['id']);
+            $("#title_"+value['CharterProgramScheduleActivity']['id']).text(value['CharterProgramScheduleActivity']['activity_name_'+selectedCountry]);
+        }
+        if ($("#notes_"+value['CharterProgramScheduleActivity']['id']) != "undefined") {
+            //console.log(value['CharterProgramScheduleActivity']['activity_name_'+selectedCountry]);
+           // console.log(value['CharterProgramScheduleActivity']['id']);
+            $("#notes_"+value['CharterProgramScheduleActivity']['id']).text(value['CharterProgramScheduleActivity']['notes_'+selectedCountry]);
+        }
+        });
                //alert(langauges_list[selectedCountry]);
-      console.log("Selected language: " + langauges_list[selectedCountry]);
+      //console.log("Selected language: " + langauges_list[selectedCountry]);
       
       var div = document.getElementById("flag");
       div.className = 'flag-icon flag-icon-' +langauges_list[selectedCountry]+'';
