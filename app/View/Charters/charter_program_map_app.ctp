@@ -4483,7 +4483,7 @@ var langauges_list = {
 function changeLanguage() {
       var selectedCountry = document.getElementById("language-select").value;
       //alert(selectedCountry);
-      //console.log(ScheduleDataResult);
+      console.log(ScheduleDataResult);
       $.each( ScheduleDataResult[0]['CharterProgramSchedule'], function( key, value ) {
         //alert( key + ": " + value );
         if ($("#title_"+value) != "undefined") {
@@ -4499,7 +4499,7 @@ function changeLanguage() {
 
         $.each( ActivityData, function( key, value ) {
         //alert( key + ": " + value );
-        //console.log(value);
+        console.log(value);
         if ($("#title_"+value['CharterProgramScheduleActivity']['id']) != "undefined") {
             //console.log(value['CharterProgramScheduleActivity']['activity_name_'+selectedCountry]);
            // console.log(value['CharterProgramScheduleActivity']['id']);
