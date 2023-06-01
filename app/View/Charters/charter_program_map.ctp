@@ -3024,6 +3024,8 @@ var globallocationInSamedayCount = 0;
 var routeexists;
 var ModalMapsinglemarkerlat;
 var ModalMapsinglemarkerlong;
+var ActivityData = '';
+var ScheduleDataResult = '';
 function markerOnClick(e) {
     mapmarkerglobalObj = e;
     var scheduleUUId = e.target.scheduleUUId;
@@ -3083,6 +3085,8 @@ function markerOnClick(e) {
                     //modalmap.setView(e.latlng);
                     //fitzoommap = [];
                     var popLocation= e.latlng;
+                    ActivityData = result.activityData;
+                    ScheduleDataResult = result.scheduleData;
                 //setTimeout(function() {
                     // var popup = L.popup({
                     //     autoPan: true
