@@ -550,7 +550,7 @@ border-radius: 10px;
 }
 @media only screen and (max-width: 771px){
     .map_heightC{
-        height: calc(100vh - 145px);
+        height: calc(100vh - 140px);
     }
     .nav-side-menu-full-container .nav-side-menu .sidebar {
   width: 120px;
@@ -801,7 +801,7 @@ echo $this->Html->script('leaflet/route');
 .wrapper{overflow: hidden;}
 .footer{height: 0px;line-height: 0;padding: 0px;}
 .common-form-row{
-    margin-top:-15px;margin-bottom: 10px;font-weight: bold!important;}
+    margin-top:-15px;margin-bottom: 2px;font-weight: bold!important;}
 /*.back-btn button {
     float: right;
     margin-right: 20px;
