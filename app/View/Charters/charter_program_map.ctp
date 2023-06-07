@@ -50,6 +50,7 @@ if(empty($scheduleData)){
 ?>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css">
 <style>
+  
     .language_dropdown{
 font-size: 18px;
 width: 28px;
@@ -542,8 +543,15 @@ border-radius: 10px;
   padding-left: 15px;
 }
 }
-
+@media only screen and (min-width: 771px){
+    .map_heightC{
+        height: calc(100vh - 170px);
+    }
+}
 @media only screen and (max-width: 771px){
+    .map_heightC{
+        height: calc(100vh - 150px);
+    }
     .nav-side-menu-full-container .nav-side-menu .sidebar {
   width: 120px;
     }
@@ -2185,7 +2193,7 @@ border-radius: 4px; */
 </h1>
 <div class="fixed-row-container map-container">  
  <div class="form-group base-margin">
-<div class="custom-popup " id="map" style="height: calc(100vh - 170px);"></div>
+<div class="custom-popup map_heightC" id="map"></div>
 <button id="CruisingButton">Cruising Schedule</button>
 <button id="HideDetails">Show Details</button>
 <button id="HelpfulTips">Helpful Tips</button>
