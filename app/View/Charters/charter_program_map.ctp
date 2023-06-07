@@ -550,7 +550,7 @@ border-radius: 10px;
 }
 @media only screen and (max-width: 771px){
     .map_heightC{
-        height: calc(100vh - 150px);
+        height: calc(100vh - 145px);
     }
     .nav-side-menu-full-container .nav-side-menu .sidebar {
   width: 120px;
@@ -1597,7 +1597,7 @@ span.sp-rightalign {
     }
 .common-form-row.map-form-rwo {
     margin-top: 38px;
-    margin-bottom: 5px;
+    margin-bottom: 2px;
 }
 .certificat-modal-container{
     background-color: #000!important;
@@ -1665,7 +1665,7 @@ span.sp-leftalign {
         left: 80px;
 }
 .map-container {
-    margin-top: 8px!important;
+    margin-top: 2px!important;
 }
 }
 
