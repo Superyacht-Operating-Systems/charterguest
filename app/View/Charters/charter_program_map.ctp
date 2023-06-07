@@ -793,7 +793,7 @@ echo $this->Html->script('leaflet/route');
 .wrapper{overflow: hidden;}
 .footer{height: 0px;line-height: 0;padding: 0px;}
 .common-form-row{
-    margin-top:10px;margin-bottom: 10px;font-weight: bold!important;}
+    margin-top:-15px;margin-bottom: 10px;font-weight: bold!important;}
 /*.back-btn button {
     float: right;
     margin-right: 20px;
@@ -1043,6 +1043,9 @@ display: block;
 .common-form-row {
     margin: 45px 0px 0px 0px;
 
+}
+.personal-row-container {
+  margin-top: 0px;
 }
 .fixed-row-container{margin-top:0px!important;padding: 0px;}
 .custom-popup .leaflet-popup-content-wrapper {
@@ -1346,7 +1349,7 @@ margin: 0px;padding: 0px;
 }
 @media only screen and (max-width:1024px){
 .common-form-row {
-    margin-top: 50px;
+    margin-top: 35px;
 }
 
 
@@ -1585,8 +1588,8 @@ span.sp-rightalign {
        height: 96vh!important;
     }
 .common-form-row.map-form-rwo {
-    margin-top: 50px;
-    margin-bottom: 20px;
+    margin-top: 38px;
+    margin-bottom: 5px;
 }
 .certificat-modal-container{
     background-color: #000!important;
@@ -1654,7 +1657,7 @@ span.sp-leftalign {
         left: 80px;
 }
 .map-container {
-    margin-top: 18px!important;
+    margin-top: 8px!important;
 }
 }
 
@@ -2182,7 +2185,7 @@ border-radius: 4px; */
 </h1>
 <div class="fixed-row-container map-container">  
  <div class="form-group base-margin">
-<div class="custom-popup " id="map" style="height: calc(100vh - 100px);"></div>
+<div class="custom-popup " id="map" style="height: calc(100vh - 170px);"></div>
 <button id="CruisingButton">Cruising Schedule</button>
 <button id="HideDetails">Show Details</button>
 <button id="HelpfulTips">Helpful Tips</button>
