@@ -68,7 +68,26 @@ echo $this->Html->script('leaflet/route');
  echo $this->Html->script('leaflet/leaflet.draw.js'); 
  echo $this->Html->script('leaflet/L.Polyline.SnakeAnim.js'); 
 ?>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css">
 <style>
+     .language_dropdown{
+font-size: 18px;
+width: 28px;
+outline: none;
+webkit-aperiance: none;
+webkit-appearance: none;
+moz-appearance: none;
+appearance: none;
+border: 0px;
+background: transparent;
+padding: 1px 14px;
+margin-left: -25px;
+position: absolute;
+z-index: 99999;
+top: 6px;
+cursor: pointer;
+}
+
     .loc_desc_div .form-control:focus {
  box-shadow: none !important;
 }
@@ -274,8 +293,44 @@ color: #fff;
    padding: 8px 5px;
    font-weight: 600;
 }
-
+.mLoc-img_prev {
+    z-index: 9999;
+position: relative;
+}
+.loc_img_prev{
+    z-index: 9999;
+position: relative;
+}
+.img_count_div{
+    width: 100%;
+display: flex;
+position: relative;
+top: -90px;
+color: #000;
+justify-content: center;
+}
+.img_count{
+    background-color: rgba(255, 255, 255, 0.5);
+border-radius: 10px;
+min-width: 40px;
+display: flex;
+text-align: center;
+justify-content: center;
+z-index: 9999;
+cursor: pointer;
+padding-top: 1px;
+font-size: 14px;
+font-weight: bold;
+}
 @media only screen and (max-width: 766px){
+    .img_count_div{
+        width: 49%;
+display: flex;
+position: relative;
+top: -90px;
+color: #000;
+justify-content: center;
+}
     .m_loc_desc_div{
         width: 100%;
 margin-right: 10px;
@@ -1687,9 +1742,9 @@ span.sp-leftalign {
 .text-below-marker-locsch {
     font-size: 11px;
     font-weight: 1px solid;
-    z-index:9999 !important;
+    /* z-index:9999 !important; */
     margin-top: -35px !important;
-    margin-left: -3px !important;
+    /* margin-left: -3px !important; */
 color: #000;
 /* background-color: #fff;
 border-radius: 4px; */
@@ -1699,7 +1754,7 @@ border-radius: 4px; */
 .text-below-marker {
     font-size: 11px;
     font-weight: 1px solid;
-    z-index:9999 !important;
+    /* z-index:9999 !important; */
     margin-top: -35px !important;
     margin-left: -6px !important;
 color: #000;
@@ -1713,11 +1768,11 @@ border-radius: 4px;
     font-size: 11px;
     font-weight: 1px solid;
     margin-top: -35px !important;
-    margin-left: -3px !important;
+    /* margin-left: -3px !important; */
 color: #000;
 background-color: #fff;
 border-radius: 10px;
-    z-index:9999 !important;
+    /* z-index:9999 !important; */
 }
 
 #fancybox-thumbs{
@@ -1826,6 +1881,21 @@ body.modal-open {
     <div class="modal-dialog">
         <div class="modal-content CS_modal">
             <div class="modal-header">
+                <!-- <div style="position: absolute;margin-top: 4px;"> -->
+                    <div id="flag2" class="flag-icon flag-icon-us" style="font-size:18px;"></div>
+                    <select id="language-select2" onchange="changeLanguage2()" class="language_dropdown" style="font-size:18px;top: 10px;">
+                    <option value="Arabic">Arabic</option>
+                    <option value="MandarinChinese">Chinese</option>
+                    <option value="English" selected>English</option>
+                    <option value="French">French</option>
+                    <option value="German">German</option>
+                    <option value="Greek">Greek</option>
+                    <option value="Italian">Italian</option>
+                    <option value="Japanese">Japanese</option>
+                    <option value="Russian">Russian</option>
+                    <option value="Spanish">Spanish</option>
+                    </select> 
+                <!-- </div> -->
                 <button type="button" class="close" id="cruisinglocationModalclose" aria-hidden="true" style="margin-right: 5px;">×</button>
                 <h4 class="modal-title" id="myModalLabel" style="text-align: center;font-weight: bold;"><?php echo $scheduleLocation; ?></h4>
             </div>
@@ -1911,7 +1981,7 @@ body.modal-open {
                        <div class="inputContainer_div">
                             <div class="loc_desc_div">
                                 <div>
-                                <span style="display: inline-block;position: relative;"><img src="<?php echo $markerimage; ?>" style="object-fit: fill; height: 35px;" alt="" ><span style="position: absolute;color:#000;top: 6px;right: 0px;left: -1px;text-align: center;font-size: 12px;"><?php echo $daynumber; ?></span></span>
+                                <span style="display: inline-block;position: relative;"><img src="<?php echo $markerimage; ?>" style="object-fit: cover; height: 35px;" alt="" ><span style="position: absolute;color:#000;top: 6px;right: 0px;left: 0px;text-align: center;font-size: 12px;"><?php echo $daynumber; ?></span></span>
                                 <input type="text" name="title" value="<?php echo htmlspecialchars($schedule['CharterProgramSchedule']['title']); ?>" placeholder="Enter the Title" class="loc_name" readonly/>
                                    
                                 </div>
@@ -1929,24 +1999,25 @@ body.modal-open {
                                 
                                 </div>
                                 <div class="loc_img_prev">
-                                <a href="<?php echo $titleimagehref; ?>" rel="galleryloc<?php echo $crusemap; ?>" data-thumbnail="<?php echo $titleimagehref; ?>" class="<?php echo $fancybox; ?>"><img src="<?php echo $titleimage; ?>" style="object-fit: fill; width: 100%;height: 150px;" alt="" ></a>
+                                <a href="<?php echo $titleimagehref; ?>" rel="galleryloc<?php echo $crusemap; ?>" data-thumbnail="<?php echo $titleimagehref; ?>" class="<?php echo $fancybox; ?>"><img src="<?php echo $titleimage; ?>" style="object-fit: cover; width: 100%;height: 150px;" alt="" ></a>
                                <?php if(isset($fleetlocationimages) && !empty($fleetlocationimages)){ 
                                     $fleetlocationimages =  array_unique($fleetlocationimages);
                                     foreach($fleetlocationimages as $name){
                                         if(!empty($name)){ ?>
-                                            <a href="<?php echo $targetFullGalleryPathhref; ?><?php echo $name ?>" data-thumbnail="<?php echo $targetFullGalleryPathhref; ?><?php echo $name ?>"  rel="galleryloc<?php echo $crusemap ?>" class="<?php echo $fancybox; ?>"><img src="<?php echo $name; ?>" style="object-fit: fill;width: 100%; height: 150px;display:none;" alt="" ></a>
+                                            <a href="<?php echo $targetFullGalleryPathhref; ?><?php echo $name ?>" data-thumbnail="<?php echo $targetFullGalleryPathhref; ?><?php echo $name ?>"  rel="galleryloc<?php echo $crusemap ?>" class="<?php echo $fancybox; ?>"><img src="<?php echo $name; ?>" style="object-fit: cover;width: 100%; height: 150px;display:none;" alt="" ></a>
                                             <?php  }
                                     }
                                 } ?>
-                                </div><span style="margin: 5px auto;width: fit-content;display: flow-root;">
+                                </div><span class="img_count_div">
                                <?php if(isset($fleetlocationimages) && !empty($fleetlocationimages)){ 
                                     $fleetimagecount = count($fleetlocationimages)+1;
                                     if($fleetimagecount > 1){
-                                         for($k=0; $k<$fleetimagecount; $k++){ ?>
-                                                    <i class="fa fa-dot-circle-o" aria-hidden="true" style="
-                                            font-size: 8px;
-                                            color: darkslategray;"></i>&nbsp;
-                                <?php       }
+                                        ?>
+                                        <span class="img_count">                    
+                                        + <?php echo $fleetimagecount; ?>
+                                        </span>
+                                           
+                                        <?php
                                     }
                                     }?></span>
                             </div>
@@ -1967,7 +2038,20 @@ body.modal-open {
 <div id="markerModal" class="modal certificat-modal-container cruising-location-Modal"  role="dialog">
     <div class="modal-dialog">
         <div class="modal-content Mark_modal" id="markerModal_id">
-            <div class="modal-header" style="border-bottom: 0px solid #e5e5e5;">
+            <div class="modal-header" style="border-bottom: 0px solid #e5e5e5;padding-bottom: 0px;">
+            <div id="flag" class="flag-icon flag-icon-us" style="font-size:18px"></div>
+            <select id="language-select" onchange="changeLanguage()" class="language_dropdown" style="font-size:18px">
+            <option value="Arabic">Arabic</option>
+            <option value="MandarinChinese">Chinese</option>
+            <option value="English" selected>English</option>
+            <option value="French">French</option>
+            <option value="German">German</option>
+            <option value="Greek">Greek</option>
+            <option value="Italian">Italian</option>
+            <option value="Japanese">Japanese</option>
+            <option value="Russian">Russian</option>
+            <option value="Spanish">Spanish</option>
+            </select>
                 <button type="button" class="close" data-schuuid="" id="markerModalclose" aria-hidden="true" style="margin-right: 5px;">×</button>
                 <h4 class="modal-title" id="markerModalLabel" style="text-align: center;font-weight: bold;"></h4>
             </div>
@@ -2211,10 +2295,17 @@ var markerschloc = L.marker(["<?php echo $schedule['CharterProgramSchedule']['la
 
                 markerschloc.addTo(idlocmap);
 
+                if(<?php echo $schedule['CharterProgramSchedule']['day_num']; ?> < 10 ){
+                        newdaycount="<span>&nbsp;"+"<?php echo $schedule['CharterProgramSchedule']['day_num']; ?>"+"</span>";
+                    }
+                    else{
+                        newdaycount="<span>"+"<?php echo $schedule['CharterProgramSchedule']['day_num']; ?>"+"</span>";
+                    }
             
 var textMarkerschloc = L.marker(["<?php echo $schedule['CharterProgramSchedule']['lattitude']; ?>", "<?php echo $schedule['CharterProgramSchedule']['longitude']; ?>"], {
   icon: L.divIcon({
-      html: "<?php echo $schedule['CharterProgramSchedule']['day_num']; ?>",
+    html:newdaycount,
+    //  html: "<?php //echo $schedule['CharterProgramSchedule']['day_num']; ?>",
       className: 'text-below-marker-locsch',
     })
 });
@@ -2842,7 +2933,8 @@ var mapmarkerglobalObj = null;
 var fitzoommap = [];
 var ModalMapsinglemarkerlat;
 var ModalMapsinglemarkerlong;
-
+var ActivityData = '';
+var ScheduleDataResult = '';
 <?php if(isset($scheduleData)){ ?>
 function markerOnClick(e) {
     mapmarkerglobalObj = e;
@@ -2864,6 +2956,8 @@ function markerOnClick(e) {
     var samelocationsDates = e.target.samelocationsDates;
     var stationary = e.target.stationary;
     var stationarytooltipnum = e.target.stationarytooltipnum;
+
+   
    // $(".Tooltip").hide();
     $('.Tooltip').css('top','');
     if(stationary == 1){
@@ -2892,6 +2986,7 @@ function markerOnClick(e) {
             success:function(result) {
                 
                 if (result.status == 'success') {
+                    console.log(result);
                     var width = $(window).width();
                     $("#hideloader").hide();
                     //map.setView(e.latlng);
@@ -2902,7 +2997,9 @@ function markerOnClick(e) {
                     $(".leaflet-control-container").hide();
                     fitzoommap = [];
                     var popLocation= e.latlng;
-
+                    ActivityData = result.activityData;
+                    ScheduleDataResult = result.scheduleData;
+                    //console.log(ScheduleDataResult);
                     // var popup = L.popup({keepInView:true,maxHeight:500})
                     // .setLatLng(popLocation)
                     // .setContent(result.popupHtml)
@@ -3051,10 +3148,17 @@ textarea.addEventListener("input", function() {
                                     noWrap: false,
                                 });
                                 routemodalmarker.addTo(modalmap);
+                                
+                                if(selectedmarkerday_num < 10 ){
+                                    newdaycount="<span>&nbsp;"+selectedmarkerday_num+"</span>";
+                                }
+                                else{
+                                     newdaycount="<span>"+selectedmarkerday_num+"</span>";
+                                }
 
                                 var textMarkermodalmap = L.marker([lattitude,longitude], {
                                 icon: L.divIcon({
-                                    html: selectedmarkerday_num,
+                                    html: newdaycount,
                                     className: 'text-below-marker-modalmap',
                                     })
                                 }).addTo(modalmap);
@@ -3140,9 +3244,16 @@ routemodalmarkerselected = L.marker([selectedlat,selectedlong], {
 // });
 routemodalmarkerselected.addTo(modalmap);
 // adding day number to marker
+if(modalmapdaynumber < 10 ){
+                        newdaycount="<span>&nbsp;"+modalmapdaynumber+"</span>";
+                    }
+                    else{
+                        newdaycount="<span>"+modalmapdaynumber+"</span>";
+                    }
+
 textMarkermodalmap = L.marker([selectedlat,selectedlong], {
 icon: L.divIcon({
-    html: modalmapdaynumber,
+    html: newdaycount,
     className: 'text-below-marker-modalmap',
     })
 });
@@ -3408,10 +3519,15 @@ $(document).on("click", ".stationarydays", function(e) {
                                     noWrap: false,
                                 });
                                 routemodalmarker.addTo(modalmap);
-
+                                if(selectedmarkerday_num < 10 ){
+                        newdaycount="<span>&nbsp;"+selectedmarkerday_num+"</span>";
+                    }
+                    else{
+                        newdaycount="<span>"+selectedmarkerday_num+"</span>";
+                    }
                                 var textMarkermodalmap = L.marker([lattitude,longitude], {
                                 icon: L.divIcon({
-                                    html: selectedmarkerday_num,
+                                    html: newdaycount,
                                     className: 'text-below-marker-modalmap',
                                     })
                                 }).addTo(modalmap);
@@ -4178,10 +4294,15 @@ function markerOnClickCSMP(e) {
             pmIgnore: true
         });
         routemodalmarkerCSMP.addTo(modalmapcruisingsch);
-
+        if(selectedmarkerday_num < 10 ){
+                        newdaycount="<span>&nbsp;"+selectedmarkerday_num+"</span>";
+                    }
+                    else{
+                        newdaycount="<span>"+selectedmarkerday_num+"</span>";
+                    }
         var textMarkermodalmapCSMP = L.marker([lattitude,longitude], {
         icon: L.divIcon({
-            html: selectedmarkerday_num,
+            html: newdaycount,
             className: 'text-below-marker-locsch',
             })
         }).addTo(modalmapcruisingsch);  
@@ -4232,9 +4353,15 @@ $(document).on("change", ".markersnamesmodalmapcruisingsch", function(e) {
         });
         routemodalmarkerselected.addTo(modalmapcruisingsch);
         // adding day number to marker
+        if(modalmapdaynumber < 10 ){
+                        newdaycount="<span>&nbsp;"+modalmapdaynumber+"</span>";
+                    }
+                    else{
+                        newdaycount="<span>"+modalmapdaynumber+"</span>";
+                    }
         textMarkermodalmap = L.marker([selectedlat,selectedlong], {
         icon: L.divIcon({
-            html: modalmapdaynumber,
+            html: newdaycount,
             className: 'text-below-marker-locsch',
             })
         });
@@ -4328,6 +4455,78 @@ $(document).on("click", "#markerModalclosecruisingsch", function(e) {
 });
 
 ///////////////////////////////Cruising schedule modal locations polyline display///////////////////////////////
-    
+var langauges_list = {
+	English: "gb",
+	MandarinChinese: "cn",
+	Spanish: "es",
+	French: "fr",
+	German: "de",
+	Greek: "gr",
+	Italian: "it",
+	Arabic: "sa",
+	Russian: "ru",
+	Japanese: "jp"
+}
+    $( document ).ready(function() {
+        var select = document.getElementById("language-select");
+      var selectedCountry = "English"; // Set your desired default value here
+
+      var div = document.getElementById("flag");
+      div.className = 'flag-icon flag-icon-' +langauges_list[selectedCountry]+'';
+
+      var select2 = document.getElementById("language-select2");
+      var selectedCountry2 = "English"; // Set your desired default value here
+
+      var divflag = document.getElementById("flag2");
+      divflag.className = 'flag-icon flag-icon-' +langauges_list[selectedCountry2]+'';
+});
+function changeLanguage() {
+      var selectedCountry = document.getElementById("language-select").value;
+      alert(selectedCountry);
+      console.log(ScheduleDataResult);
+      $.each( ScheduleDataResult[0]['CharterProgramSchedule'], function( key, value ) {
+        //alert( key + ": " + value );
+        if ($("#title_"+value) != "undefined") {
+            if(ScheduleDataResult[0]['CharterProgramSchedule']['title_'+selectedCountry] !='' && ScheduleDataResult[0]['CharterProgramSchedule']['title_'+selectedCountry]!=null){
+                $("#title_"+value).val(ScheduleDataResult[0]['CharterProgramSchedule']['title_'+selectedCountry]);
+            }
+            
+        }
+        if ($("#notes_"+value) != "undefined") {
+            $("#notes_"+value).val(ScheduleDataResult[0]['CharterProgramSchedule']['notes_'+selectedCountry]);
+        }
+        });
+
+        $.each( ActivityData, function( key, value ) {
+        //alert( key + ": " + value );
+        console.log(value);
+        if ($("#title_"+value['CharterProgramScheduleActivity']['id']) != "undefined") {
+            //console.log(value['CharterProgramScheduleActivity']['activity_name_'+selectedCountry]);
+           // console.log(value['CharterProgramScheduleActivity']['id']);
+            $("#title_"+value['CharterProgramScheduleActivity']['id']).text(value['CharterProgramScheduleActivity']['activity_name_'+selectedCountry]);
+        }
+        if ($("#notes_"+value['CharterProgramScheduleActivity']['id']) != "undefined") {
+            //console.log(value['CharterProgramScheduleActivity']['activity_name_'+selectedCountry]);
+           // console.log(value['CharterProgramScheduleActivity']['id']);
+            $("#notes_"+value['CharterProgramScheduleActivity']['id']).text(value['CharterProgramScheduleActivity']['notes_'+selectedCountry]);
+        }
+        });
+               //alert(langauges_list[selectedCountry]);
+      //console.log("Selected language: " + langauges_list[selectedCountry]);
+      
+      var div = document.getElementById("flag");
+      div.className = 'flag-icon flag-icon-' +langauges_list[selectedCountry]+'';
+      // Add your code to handle the language change here
+}
+function changeLanguage2() {
+      var selectedCountry2 = document.getElementById("language-select2").value;
+      
+               //alert(langauges_list[selectedCountry]);
+      console.log("Selected language: " + langauges_list[selectedCountry2]);
+      
+      var divflag = document.getElementById("flag2");
+      divflag.className = 'flag-icon flag-icon-' +langauges_list[selectedCountry2]+'';
+      // Add your code to handle the language change here
+}
 </script>
   
