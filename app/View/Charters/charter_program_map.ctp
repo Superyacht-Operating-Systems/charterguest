@@ -84,6 +84,7 @@ cursor: pointer;
 @media only screen and (min-width:1024px){
     body .mydemolabel {
   font-size: 36px !important;
+  top: 56px !important;
 }
 .yachtHeaderName {
   font-size: 36px;
