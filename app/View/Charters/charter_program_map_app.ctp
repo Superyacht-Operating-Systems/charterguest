@@ -1882,6 +1882,7 @@ body.modal-open {
         <div class="modal-content CS_modal">
             <div class="modal-header">
                 <!-- <div style="position: absolute;margin-top: 4px;"> -->
+                    <!-- client asked to hide language for now @jun12 2023
                     <div id="flag2" class="flag-icon flag-icon-us" style="font-size:18px;"></div>
                     <select id="language-select2" onchange="changeLanguage2()" class="language_dropdown" style="font-size:18px;top: 10px;">
                     <option value="Arabic">Arabic</option>
@@ -1895,6 +1896,7 @@ body.modal-open {
                     <option value="Russian">Russian</option>
                     <option value="Spanish">Spanish</option>
                     </select> 
+-->
                 <!-- </div> -->
                 <button type="button" class="close" id="cruisinglocationModalclose" aria-hidden="true" style="margin-right: 5px;">×</button>
                 <h4 class="modal-title" id="myModalLabel" style="text-align: center;font-weight: bold;"><?php echo $scheduleLocation; ?></h4>
@@ -2039,6 +2041,7 @@ body.modal-open {
     <div class="modal-dialog">
         <div class="modal-content Mark_modal" id="markerModal_id">
             <div class="modal-header" style="border-bottom: 0px solid #e5e5e5;padding-bottom: 0px;">
+            <!-- client asked to hide language for now @jun12 2023
             <div id="flag" class="flag-icon flag-icon-us" style="font-size:18px"></div>
             <select id="language-select" onchange="changeLanguage()" class="language_dropdown" style="font-size:18px">
             <option value="Arabic">Arabic</option>
@@ -2052,6 +2055,7 @@ body.modal-open {
             <option value="Russian">Russian</option>
             <option value="Spanish">Spanish</option>
             </select>
+            -->
                 <button type="button" class="close" data-schuuid="" id="markerModalclose" aria-hidden="true" style="margin-right: 5px;">×</button>
                 <h4 class="modal-title" id="markerModalLabel" style="text-align: center;font-weight: bold;"></h4>
             </div>
