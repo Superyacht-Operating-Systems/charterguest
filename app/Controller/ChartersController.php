@@ -8109,7 +8109,7 @@ function getIndividualmsgcountMarer() {
                 $this->autoRender = false;
                 $result = array();
                 $postData = $this->request->data;
-                echo "<pre>";print_r($postData); //exit;
+                //echo "<pre>";print_r($postData); //exit;
                 $downloadcontractfile = $postData['downloadcontractfile'];
                 $filename = $postData['fileName'];
                 $remoteURL = $downloadcontractfile;
@@ -8118,9 +8118,9 @@ function getIndividualmsgcountMarer() {
                 //if(file_exists($remote_file_url)){
                     /* New file name and path for this file */
                     $SITE_URL = Configure::read('BASE_URL');
-                    $sourceImagePath = $_SERVER['DOCUMENT_ROOT']."/charterguest/app/webroot/img/admin/".$filename;
+                    echo $sourceImagePath = $_SERVER['DOCUMENT_ROOT']."/charterguest/app/webroot/img/admin/".$filename;
                     $local_file = $sourceImagePath;
-                    
+                    exit;
                     /* Copy the file from source url to server */
                     $copy = copy( $remote_file_url, $local_file );
                     
