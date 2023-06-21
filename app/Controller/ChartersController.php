@@ -8133,7 +8133,7 @@ function getIndividualmsgcountMarer() {
                     else{
                         chmod($sourceImagePath, 0777);
                         //echo "WOOT! success to copy $filename...\n";
-                        echo $successlink = $SITE_URL."/charterguest/app/webroot/img/admin/"; exit;
+                        $successlink = $SITE_URL."/charterguest/app/webroot/img/admin/";
                         $result['status'] = "success";
                         $result['link'] =$successlink;
                         $result['file'] =$filename;
