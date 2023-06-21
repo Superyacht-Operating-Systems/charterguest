@@ -8109,6 +8109,7 @@ function getIndividualmsgcountMarer() {
                 $this->autoRender = false;
                 $result = array();
                 $postData = $this->request->data;
+                echo "<pre>";print_r($postData); //exit;
                 $downloadcontractfile = $postData['downloadcontractfile'];
                 $filename = $postData['fileName'];
                 $remoteURL = $downloadcontractfile;
