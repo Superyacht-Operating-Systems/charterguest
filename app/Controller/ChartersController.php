@@ -8118,9 +8118,9 @@ function getIndividualmsgcountMarer() {
                 //if(file_exists($remote_file_url)){
                     /* New file name and path for this file */
                     $SITE_URL = Configure::read('BASE_URL');
-                    echo $sourceImagePath = $_SERVER['DOCUMENT_ROOT']."/charterguest/app/webroot/img/admin/".$filename;
+                    $sourceImagePath = $_SERVER['DOCUMENT_ROOT']."/charterguest/app/webroot/img/admin/".$filename;
                     $local_file = $sourceImagePath;
-                    exit;
+                    
                     /* Copy the file from source url to server */
                     $copy = copy( $remote_file_url, $local_file );
                     
