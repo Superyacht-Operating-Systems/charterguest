@@ -4085,13 +4085,13 @@ $(document).on("click", ".clickcommentdiv", function() {
                     primaryidscheck.push($(this).attr('id'));
                 //alert($(this).attr('id'));
                 });
-                thisObj.css("color","green");
+                thisObj.css("color","#000;");
                 var color = thisObj.css("color");
                 //alert(color);
                 var colorgreen = hexc(color);
 
                 if (colorgreen == "#ff0000") {
-                    thisObj.css("color", "green");
+                    thisObj.css("color", "#000;");
                 }
                 if(primaryidscheck.length >= 1){
                     thisObj.css("color", "red");

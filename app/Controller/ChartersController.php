@@ -5802,9 +5802,9 @@ class ChartersController extends AppController {
                         else{
                             $commentcounttitle = 0;
                         }
-                        $colorcodetitle = "";  
+                        $colorcodetitle = "color:#00a8f3;";  
                         if($commentcounttitle > 0){ //echo "kkkk";
-                            $colorcodetitle = "color:green;";
+                            $colorcodetitle = "color:#000;";
                             //echo $is_fleet;
                             
                                     if(trim($publishmap['CharterProgramSchedule']['is_crew_commented']) == 1 || trim($publishmap['CharterProgramSchedule']['is_fleet_commented']) == 1){  //echo "lll";
@@ -5812,7 +5812,7 @@ class ChartersController extends AppController {
                                     }
                             
                         }else{
-                                $colorcodetitle = "";   
+                                $colorcodetitle = "color:#00a8f3;";   
                         }
 
                         
@@ -6373,9 +6373,9 @@ class ChartersController extends AppController {
                       else{
                           $commentcounttitle = 0;
                       }
-                      $colorcodetitle = "";  
+                      $colorcodetitle = "color:#00a8f3;";  
                       if($commentcounttitle > 0){ //echo "kkkk";
-                          $colorcodetitle = "color:green;";
+                          $colorcodetitle = "color:#000;";
                           //echo $is_fleet;
                           
                                 if(trim($scheduleData[0]['CharterProgramSchedule']['is_crew_commented']) == 1 || trim($scheduleData[0]['CharterProgramSchedule']['is_fleet_commented']) == 1){  //echo "lll";
@@ -6383,7 +6383,7 @@ class ChartersController extends AppController {
                                 }
                            
                       }else{
-                            $colorcodetitle = "";   
+                            $colorcodetitle = "color:#00a8f3;";   
                       }
 
                     $popupHtml = '';
