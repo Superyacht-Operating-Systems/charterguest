@@ -2040,7 +2040,7 @@ body.modal-open {
 <div id="markerModal" class="modal certificat-modal-container cruising-location-Modal"  role="dialog">
     <div class="modal-dialog">
         <div class="modal-content Mark_modal" id="markerModal_id">
-            <div class="modal-header" style="border-bottom: 0px solid #e5e5e5;padding-bottom: 0px;">
+            <div class="modal-header" style="border-bottom: 0px solid #e5e5e5;padding-bottom: 5px;">
             <!-- client asked to hide language for now @jun12 2023
             <div id="flag" class="flag-icon flag-icon-us" style="font-size:18px"></div>
             <select id="language-select" onchange="changeLanguage()" class="language_dropdown" style="font-size:18px">
@@ -2068,7 +2068,7 @@ body.modal-open {
                     </div>
                 </div>
             </div> -->
-                <div style="color: #000;font-size: 15px;text-align:center;width:100%!important;margin: 0px 0px 5px 0px;padding: 8px 5px;font-weight: 600;"><span id="embarkation"></span>  <span id="debarkation"></span> </div>
+                <div style="color: #000;font-size: 15px;text-align:center;width:100%!important;margin: 0px 0px 5px 0px;padding:3px 5px 8px 5px;font-weight: 600;"><span id="embarkation"></span>  <span id="debarkation"></span> </div>
                 <div class="icons_fields" style="text-align:center;">
                 <i style="color: #00a8f3;" class="fa fa-solid fa-calendar"><span class="icon_label charter_from_date_conv" ></span></i>
                 <i style="color: #00a8f3;" class="fa fa-solid fa-clock-o "><span class="icon_label markerduration"></span></i>
