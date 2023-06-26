@@ -5728,6 +5728,7 @@ class ChartersController extends AppController {
                 $locationComment = array();
                 $samelocations_daynumdisplay = array();
                 $stationarylocations = array();
+                $samlatlong = array();
                 $basefolder = $this->request->base;
 
                 if(isset($scheduleData)){
@@ -5755,6 +5756,7 @@ class ChartersController extends AppController {
                             $samemarkercommentcount[$publishmap['CharterProgramSchedule']['lattitude']] += $scheduleData[$key]['CharterProgramSchedule']['marker_msg_count']; //same location
                             if($publishmap['CharterProgramSchedule']['stationary'] == 1){
                                 $samelocations_daynumdisplay[$publishmap['CharterProgramSchedule']['lattitude']][] =$publishmap['CharterProgramSchedule']['day_num'];
+                                $samlatlong[$publishmap['CharterProgramSchedule']['title']][] = $publishmap['CharterProgramSchedule']['lattitude'];
                                     }
                             $markerimg = BASE_URL.$basefolder.'/app/webroot/css/leaflet/dist/images/marker-icon.png';
                             $stationarylocations[$publishmap['CharterProgramSchedule']['lattitude']][] = "<span class='stationarydays' data-num=".$publishmap['CharterProgramSchedule']['day_num']." id=".$publishmap['CharterProgramSchedule']['UUID']."><img src=".$markerimg." width='15px height='15px' > Day ".$scheduleData[$key]['CharterProgramSchedule']['day_num']."&nbsp;&nbsp;".$scheduleData[$key]['CharterProgramSchedule']['week_days']."</span>"; //same stationarylocations
@@ -6057,6 +6059,7 @@ class ChartersController extends AppController {
 
                 $this->set('stationarylocations', $stationarylocations);
                 $this->set('samelocations_daynumdisplay', $samelocations_daynumdisplay);
+                $this->set('samlatlong', $samlatlong);
                 $this->set('charterProgramId', $charterProgramId);
                 $this->set('charter_company_id_val', $charterProgData[0]['CharterProgram']['charter_company_id']);
                 $this->set('charterProgData', $charterProgData[0]);

@@ -2504,7 +2504,7 @@ if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !e
         }
 
         $WeekDaytitle = "";
-        if($schedule['CharterProgramSchedule']['stationary'] == 1 && count($stationarylocations)>1){
+        if(count($stationarylocations)>1){
             foreach($stationarylocations[$schedule['CharterProgramSchedule']['lattitude']] as $val){
                 $WeekDaytitle.= $val.'<br><br>';
             }
@@ -2555,6 +2555,14 @@ if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !e
     $consumption = "";
     
     }
+
+    if($schedule['CharterProgramSchedule']['stationary'] == 1){
+        $stclass = "style='position:absolute;top:40px !important;'";
+        //$scheduleData[$key+1]['CharterProgramSchedule']['stationary'] = 1;
+     }else{
+         $stclass = "";
+     }
+
     $daynumber = $schedule['CharterProgramSchedule']['day_num'];
     $kn = $key+1;
     $tooltipclass = "stationarytooltip".$kn;
@@ -2571,7 +2579,7 @@ if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !e
         zoom = 7;
         
         var marker = L.marker(["<?php echo $schedule['CharterProgramSchedule']['lattitude']; ?>", "<?php echo $schedule['CharterProgramSchedule']['longitude']; ?>"],{pmIgnore: true,riseOnHover:true})
-        .bindTooltip("<?php echo "<span class='smalltooltip' ".$marker_msg_count.">".$samemkrcount."</span><span class='owntooltip' id=".$key.">".$SumDaytitle."<span id='".$schuuid."'   class='acti-count' ".$marker_msg_count." >".$samemkrcount."</span><b style='font-size: 10px;'>".$schedule['CharterProgramSchedule']['title']."<hr>".$endplace."</b><br><b style='font-size: 10px;'>".$distance.$bar.$duration."</b></span><span class='stationary'>".$WeekDaytitle."</span>"?>", 
+        .bindTooltip("<?php echo "<span class='smalltooltip' ".$marker_msg_count.">".$samemkrcount."</span><span class='owntooltip' id=".$key.">".$SumDaytitle."<span id='".$schuuid."'   class='acti-count' ".$marker_msg_count." >".$samemkrcount."</span><b style='font-size: 10px;'>".$schedule['CharterProgramSchedule']['title']."<hr>".$endplace."</b><br><b style='font-size: 10px;'>".$distance.$bar.$duration."</b></span><span class='stationary' ".$stclass." >".$WeekDaytitle."</span>"?>", 
                     {
                         permanent: true, 
                         offset: [0,-40],
@@ -2600,7 +2608,11 @@ if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !e
         marker.labeldayanddate = "<?php echo $SumDaytitle; ?>";
         marker.day_num = "<?php echo $schedule['CharterProgramSchedule']['day_num']; ?>";
         marker.markerNum = markerCount; 
-        marker.stationary = "<?php echo $schedule['CharterProgramSchedule']['stationary']; ?>";
+        <?php if (!empty($samlatlong) && in_array($schedule['CharterProgramSchedule']['lattitude'], $samlatlong[$schedule['CharterProgramSchedule']['title']])) { ?>
+            marker.stationary = 1;
+        <?php }else{?>
+            marker.stationary = "<?php echo $schedule['CharterProgramSchedule']['stationary']; ?>";
+        <?php } ?>
         marker.stationarytooltipnum = "<?php echo $kn; ?>";
         markerArray.push(marker);
         marker.addTo(map);
@@ -2629,7 +2641,7 @@ if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !e
         
     }
 
-    if($schedule['CharterProgramSchedule']['stationary'] == 1){
+    if(isset($samelocations_daynumdisplay[$schedule['CharterProgramSchedule']['lattitude']][0])){
         $markernumberDisplay = $samelocations_daynumdisplay[$schedule['CharterProgramSchedule']['lattitude']][0];
         
     }else{
@@ -3063,6 +3075,13 @@ function markerOnClick(e) {
     var samelocationsDates = e.target.samelocationsDates;
     var stationary = e.target.stationary;
     var stationarytooltipnum = e.target.stationarytooltipnum;
+
+     console.log(stationary);
+    
+     console.log(day_dates);
+
+     console.log(stationarytooltipnum);
+
     //$(".Tooltip").hide();
     $('.Tooltip').css('top','');
     if(stationary == 1){
