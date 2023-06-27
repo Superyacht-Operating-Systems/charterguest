@@ -121,7 +121,7 @@
 				      }else{
 				      	$aids = ' ';
 				      }
-				      $schedulecommentQuery	= "SELECT * from $dbname.cruising_map_comments where (activity_id IN ($aids) and crew_newlyaddedcomment = 1 and is_deleted = 0 and type='schedule' and publish_map = 1) OR (activity_id IN ($aids) and fleet_newlyaddedcomment = 1 and is_deleted = 0 and type='schedule' and publish_map = 1) ORDER BY created Desc";
+				      $schedulecommentQuery	= "SELECT * from $dbname.cruising_map_comments where (activity_id IN ($aids) and crew_newlyaddedcomment = 1 and is_deleted = 0 and type='schedule' and publish_map = 1 and guest_read = 'unread') OR (activity_id IN ($aids) and fleet_newlyaddedcomment = 1 and is_deleted = 0 and type='schedule' and publish_map = 1 and guest_read = 'unread') ORDER BY created Desc";
 				      $schedulecomments = $this->query($schedulecommentQuery);
 
                     //   $GuestschedulecommentQuery	= "SELECT * from $dbname.cruising_map_comments where activity_id IN ($aids) and fleet_newlyaddedcomment = 1 and is_deleted = 0 and type='schedule' and publish_map = 1 ORDER BY created Desc";
@@ -145,7 +145,7 @@
                     }else{
                         $actvityids = ' ';
                     }
-                    $activitycommentQuery	= "SELECT * from $dbname.cruising_map_comments where (activity_id IN ($actvityids) and crew_newlyaddedcomment = 1 and is_deleted = 0 and type='activity' and publish_map = 1) OR (activity_id IN ($actvityids) and fleet_newlyaddedcomment = 1 and is_deleted = 0 and type='activity' and publish_map = 1) ORDER BY created Desc";
+                    $activitycommentQuery	= "SELECT * from $dbname.cruising_map_comments where (activity_id IN ($actvityids) and crew_newlyaddedcomment = 1 and is_deleted = 0 and type='activity' and publish_map = 1 and guest_read = 'unread') OR (activity_id IN ($actvityids) and fleet_newlyaddedcomment = 1 and is_deleted = 0 and type='activity' and publish_map = 1 and guest_read = 'unread') ORDER BY created Desc";
                     $activitycomments = $this->query($activitycommentQuery);
 
                     // $guestactivitycommentQuery	= "SELECT * from $dbname.cruising_map_comments where activity_id IN ($actvityids) and fleet_newlyaddedcomment = 1 and is_deleted = 0 and type='activity' and publish_map = 1 ORDER BY created Desc";

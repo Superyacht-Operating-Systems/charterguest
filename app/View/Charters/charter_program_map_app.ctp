@@ -2442,7 +2442,7 @@ if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !e
         }
 
         $WeekDaytitle = "";
-        if($schedule['CharterProgramSchedule']['stationary'] == 1 && count($stationarylocations)>1){
+        if(count($stationarylocations)>1){
             foreach($stationarylocations[$schedule['CharterProgramSchedule']['lattitude']] as $val){
                 $WeekDaytitle.= $val.'<br><br>';
             }
@@ -2482,6 +2482,14 @@ if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !e
     $consumption = "";
     
     }
+
+    if($schedule['CharterProgramSchedule']['stationary'] == 1){
+        $stclass = "style='position:absolute;top:40px !important;'";
+        //$scheduleData[$key+1]['CharterProgramSchedule']['stationary'] = 1;
+     }else{
+         $stclass = "";
+     }
+
     $daynumber = $schedule['CharterProgramSchedule']['day_num'];
     $kn = $key+1;
     $tooltipclass = "stationarytooltip".$kn;
@@ -2498,7 +2506,7 @@ if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !e
         zoom = 7;
         
         var marker = L.marker(["<?php echo $schedule['CharterProgramSchedule']['lattitude']; ?>", "<?php echo $schedule['CharterProgramSchedule']['longitude']; ?>"],{pmIgnore: true})
-        .bindTooltip("<?php echo "<span class='smalltooltip'>Day ".$daynumber."</span><span class='owntooltip' id=".$key."><b style='font-size: 12px;'>".$SumDaytitle."</b><b style='font-size: 12px;'>".$schedule['CharterProgramSchedule']['title']."<hr>".$endplace."</b><br><b style='font-size: 12px;'>".$distance.$bar.$duration."</b></span><span class='stationary'>".$WeekDaytitle."</span>"?>", 
+        .bindTooltip("<?php echo "<span class='smalltooltip'>Day ".$daynumber."</span><span class='owntooltip' id=".$key."><b style='font-size: 12px;'>".$SumDaytitle."</b><b style='font-size: 12px;'>".$schedule['CharterProgramSchedule']['title']."<hr>".$endplace."</b><br><b style='font-size: 12px;'>".$distance.$bar.$duration."</b></span><span class='stationary' ".$stclass." >".$WeekDaytitle."</span>"?>", 
                     {
                         permanent: true, 
                         offset: [0,-40],
@@ -2526,7 +2534,11 @@ if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !e
         marker.labeldayanddate = "<?php echo $SumDaytitle; ?>";
         marker.day_num = "<?php echo $schedule['CharterProgramSchedule']['day_num']; ?>";
         marker.markerNum = markerCount; 
-        marker.stationary = "<?php echo $schedule['CharterProgramSchedule']['stationary']; ?>";
+        <?php if (!empty($samlatlong) && in_array($schedule['CharterProgramSchedule']['lattitude'], $samlatlong[$schedule['CharterProgramSchedule']['title']])) { ?>
+            marker.stationary = 1;
+        <?php }else{?>
+            marker.stationary = "<?php echo $schedule['CharterProgramSchedule']['stationary']; ?>";
+        <?php } ?>
         marker.stationarytooltipnum = "<?php echo $kn; ?>";
         markerArray.push(marker);
         marker.addTo(map);
@@ -2537,7 +2549,7 @@ if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !e
 <?php foreach ($scheduleData as $key => $schedule) { 
     if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !empty($samelocations[$schedule['CharterProgramSchedule']['lattitude']])){
 
-        if($schedule['CharterProgramSchedule']['stationary'] == 1){
+        if(isset($samelocations_daynumdisplay[$schedule['CharterProgramSchedule']['lattitude']][0])){
             $markernumberDisplay = $samelocations_daynumdisplay[$schedule['CharterProgramSchedule']['lattitude']][0];
             
         }else{
@@ -2833,16 +2845,16 @@ $(document).on("click", "#HideDetails", function(e) {
         $(".owntooltip").hide();
         $("#HideDetails").text("Show Details");
         $(".acti-count-onmarker").hide();
-        $('#map .text-below-marker').each(function(i, obj) {
-            var t = $(this).find('.acti-count-onmarker').text();
-            //console.log(t);
-            if(t > 0){
-                $(this).find('.acti-count-onmarker').hide();
-            }else{
-                $(this).find('.acti-count-onmarker').hide();
-            }
+        // $('#map .text-below-marker').each(function(i, obj) {
+        //     // var t = $(this).find('.acti-count-onmarker').text();
+        //     // //console.log(t);
+        //     // if(t > 0){
+        //     //     $(this).find('.acti-count-onmarker').hide();
+        //     // }else{
+        //     //     $(this).find('.acti-count-onmarker').hide();
+        //     // }
         
-        });
+        // });
         $(".stationary").hide();
         // $(".leaflet-tooltip").css("opacity", "0");  
         // setTimeout(function(){
