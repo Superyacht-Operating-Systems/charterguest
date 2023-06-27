@@ -2509,7 +2509,7 @@ if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !e
         .bindTooltip("<?php echo "<span class='smalltooltip'>Day ".$daynumber."</span><span class='owntooltip' id=".$key."><b style='font-size: 12px;'>".$SumDaytitle."</b><b style='font-size: 12px;'>".$schedule['CharterProgramSchedule']['title']."<hr>".$endplace."</b><br><b style='font-size: 12px;'>".$distance.$bar.$duration."</b></span><span class='stationary' ".$stclass." >".$WeekDaytitle."</span>"?>", 
                     {
                         permanent: true, 
-                        offset: [0,-40],
+                        offset: [0,0],
                         direction: 'right',
                         className: "Tooltip <?php echo $tooltipclass; ?>",
                         noWrap: false,
@@ -2583,14 +2583,14 @@ var zoomLevel = map.getZoom();
     //alert(zoomLevel);
     //console.log(zoomLevel);
     //alert(zoomLevel);
-    $('.Tooltip').css('top','');
-    var tooltipdisplay = $('.Tooltip').css('display');
-    if(tooltipdisplay == "block"){ 
-        $('.Tooltip').css('top','');
-    }
-    if(tooltipdisplay == "none"){ 
-                $('.Tooltip').css('top','');
-            }
+    // $('.Tooltip').css('top','');
+    // var tooltipdisplay = $('.Tooltip').css('display');
+    // if(tooltipdisplay == "block"){ 
+    //     $('.Tooltip').css('top','');
+    // }
+    // if(tooltipdisplay == "none"){ 
+    //             $('.Tooltip').css('top','');
+    //         }
     //alert(zoomLevel);
     // console.log("zoomLevel");
     // console.log(tooltipdisplay);
@@ -2832,6 +2832,21 @@ $(document).on("click", "#HideDetails", function(e) {
         // setTimeout(function(){
         //         $(".leaflet-tooltip").css("opacity", "1");  
         $(".acti-count-onmarker").hide();
+        map.eachLayer(function (marker) {
+            var tooltip = marker.getTooltip();
+            marker.unbindTooltip();
+            //tooltip.options.permanent = true;
+            
+            //console.log(marker.stationary);
+            if(marker.stationary != "undefined" || marker.stationary == 0 || marker.stationary == 1){
+                marker.bindTooltip(tooltip);
+            }else{
+                marker.unbindTooltip();
+            }
+            //$(".stationary").hide();
+        //modalmap.removeLayer(layer);
+        });
+        $(".stationary").hide();
         //$('.Tooltip').css('top','');
         // },1000);
         // if(latlngs.length > 0){
@@ -2864,6 +2879,20 @@ $(document).on("click", "#HideDetails", function(e) {
         // if(latlngs.length > 0){
         //             map.fitBounds(latlngs);
         //         }
+        map.eachLayer(function (marker) {
+             var tooltip = marker.getTooltip();
+                marker.unbindTooltip();
+                //tooltip.options.permanent = false;
+                //marker.bindTooltip(tooltip);
+                //$(".stationary").hide();
+        //modalmap.removeLayer(layer);
+        if(marker.stationary != "undefined" || marker.stationary == 0 || marker.stationary == 1){
+                marker.bindTooltip(tooltip);
+            }else{
+                marker.unbindTooltip();
+            }
+         });
+        $(".stationary").hide();
     }
 });
 

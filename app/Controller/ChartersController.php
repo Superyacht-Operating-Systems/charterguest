@@ -7704,18 +7704,18 @@ function markCommentUnread() {
             if(isset($activityId) && !empty($activityId)){
                 if ($isfleet == 1) {
                 
-                    $updateConditions = "UUID = '$activityId'";
-                    $updateValues = "is_crew_commented=1,is_fleet_commented=1,modified=$shipTime";
-                    $scheduleUpdateStatus = $this->CharterGuest->updateCharterProgramScheduleActivityData($yachtDbName, $updateConditions, $updateValues);
+                    // $updateConditions = "UUID = '$activityId'";
+                    // $updateValues = "is_crew_commented=1,is_fleet_commented=1,modified=$shipTime";
+                    // $scheduleUpdateStatus = $this->CharterGuest->updateCharterProgramScheduleActivityData($yachtDbName, $updateConditions, $updateValues);
         
-                    $updateCruisingMapCommentValues = "crew_newlyaddedcomment=1,fleet_newlyaddedcomment=1,modified=$shipTime";
+                    // $updateCruisingMapCommentValues = "crew_newlyaddedcomment=1,fleet_newlyaddedcomment=1,modified=$shipTime";
                     
                 } 
-                $getactivityname =  str_replace("'", "", $activity_name);
-                $getactivityname = str_replace('"', "", $getactivityname);
-                    $updateConditionsCruisingMapComment = "id IN ('".$ids."') AND activity_id = '$activityId' AND activity_name = '$getactivityname' AND type='activity'";
+                // $getactivityname =  str_replace("'", "", $activity_name);
+                // $getactivityname = str_replace('"', "", $getactivityname);
+                //     $updateConditionsCruisingMapComment = "id IN ('".$ids."') AND activity_id = '$activityId' AND activity_name = '$getactivityname' AND type='activity'";
                     
-                    $scheduleUpdateStatus = $this->CharterGuest->updateCruisingMapComment($yachtDbName, $updateConditionsCruisingMapComment, $updateCruisingMapCommentValues);
+                //     $scheduleUpdateStatus = $this->CharterGuest->updateCruisingMapComment($yachtDbName, $updateConditionsCruisingMapComment, $updateCruisingMapCommentValues);
             }
 
 
@@ -7724,18 +7724,40 @@ function markCommentUnread() {
         if(isset($activityId) && !empty($activityId)){
             if ($isfleet == 1) {
                 //echo "llll"; exit;
-                $updateConditions = "UUID = '$activityId'";
-                $updateValues = "is_crew_commented=1,is_fleet_commented=1,modified=$shipTime";
-                $scheduleUpdateStatus = $this->CharterGuest->updateCharterProgramScheduleData($yachtDbName, $updateConditions, $updateValues);
+                // $updateConditions = "UUID = '$activityId'";
+                // $updateValues = "is_crew_commented=1,is_fleet_commented=1,modified=$shipTime";
+                // $scheduleUpdateStatus = $this->CharterGuest->updateCharterProgramScheduleData($yachtDbName, $updateConditions, $updateValues);
     
-                $updateCruisingMapCommentValues = "crew_newlyaddedcomment=1,fleet_newlyaddedcomment=1,modified=$shipTime";
+                // $updateCruisingMapCommentValues = "crew_newlyaddedcomment=1,fleet_newlyaddedcomment=1,modified=$shipTime";
                 
             } 
-            $getactivityname =  str_replace("'", "", $activity_name);
-            $getactivityname = str_replace('"', "", $getactivityname);
-                $updateConditionsCruisingMapComment = "id IN ('".$ids."') AND activity_id = '$activityId' AND activity_name = '$getactivityname' AND type='schedule'";
+            // $getactivityname =  str_replace("'", "", $activity_name);
+            // $getactivityname = str_replace('"', "", $getactivityname);
+            //     $updateConditionsCruisingMapComment = "id IN ('".$ids."') AND activity_id = '$activityId' AND activity_name = '$getactivityname' AND type='schedule'";
                 
-                $scheduleUpdateStatus = $this->CharterGuest->updateCruisingMapComment($yachtDbName, $updateConditionsCruisingMapComment, $updateCruisingMapCommentValues);
+            //     $scheduleUpdateStatus = $this->CharterGuest->updateCruisingMapComment($yachtDbName, $updateConditionsCruisingMapComment, $updateCruisingMapCommentValues);
+        }
+    }
+
+    foreach($postData['ids'] as $key => $val){
+        $CruisingMapCommentConditons = "id = '$val'";
+        $check_primary_data = $this->CharterGuest->getCruisingMapComment($yachtDbName, $CruisingMapCommentConditons);
+        $chk_fleet_newlyaddedcomment = $check_primary_data[0]['CruisingMapComment']['fleet_newlyaddedcomment'];
+        $chk_crew_newlyaddedcomment = $check_primary_data[0]['CruisingMapComment']['crew_newlyaddedcomment'];
+        $chk_guest_newlyaddedcomment = $check_primary_data[0]['CruisingMapComment']['guest_newlyaddedcomment'];
+
+        if($chk_guest_newlyaddedcomment == 0){
+            $updateCruisingMapCommentValues = "guest_read='unread',modified=$shipTime";
+
+            $updateConditionsCruisingMapComment = "id = '$val'";
+        
+            $scheduleUpdateStatus = $this->CharterGuest->updateCruisingMapComment($yachtDbName, $updateConditionsCruisingMapComment, $updateCruisingMapCommentValues);
+
+            // $getactivityname =  str_replace("'", "", $activity_name);
+            // $getactivityname = str_replace('"', "", $getactivityname);
+            //     $updateConditionsCruisingMapComment = "id IN ('".$ids."') AND activity_id = '$activityId' AND activity_name = '$getactivityname' AND type='activity'";
+                
+            //     $scheduleUpdateStatus = $this->CharterGuest->updateCruisingMapComment($yachtDbName, $updateConditionsCruisingMapComment, $updateCruisingMapCommentValues);
         }
     }
     $data['success'] = "success";
