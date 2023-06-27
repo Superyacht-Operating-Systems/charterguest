@@ -5606,7 +5606,7 @@ class ChartersController extends AppController {
                         $this->set('samemarkercommentcount', $samemarkercommentcount);
 
                         $this->set('samlatlong', $samlatlong);
-                        
+
                         $this->set('stationarylocations', $stationarylocations);
                         $this->set('samelocations_daynumdisplay', $samelocations_daynumdisplay);
                         $this->set('charterProgramId', $charterProgramId);
@@ -5813,22 +5813,27 @@ class ChartersController extends AppController {
                         else{
                             $commentcounttitle = 0;
                         }
-                        $colorcodetitle = "color:#00a8f3;";  
+                        $colorcodetitle = "color:#000;";  
+                         $facomment="fa";
                         if($commentcounttitle > 0){ //echo "kkkk";
                             $colorcodetitle = "color:#000;";
+                             $facomment="fa";
                             //echo $is_fleet;
                             
                                     //if(trim($publishmap['CharterProgramSchedule']['is_crew_commented']) == 1 || trim($publishmap['CharterProgramSchedule']['is_fleet_commented']) == 1){  //echo "lll";
                                     if($unreadguest == 1){    
+                                        $facomment="fa";
                                         $colorcodetitle = "color:red;";
                                     }
                             
                         }else{
-                                $colorcodetitle = "color:#00a8f3;";   
+                                $facomment="fa-light";
+                                $colorcodetitle = "color:#000;";   
                         }
 
                         
                         $locationComment[$publishmap['CharterProgramSchedule']['id']]['colorcodetitle'] = $colorcodetitle;
+                         $locationComment[$publishmap['CharterProgramSchedule']['id']]['facomment'] = $facomment;
                         $locationComment[$publishmap['CharterProgramSchedule']['id']]['programScheduleUUID'] = $programScheduleUUID;
                         $locationComment[$publishmap['CharterProgramSchedule']['id']]['yacht_id'] = $yacht_id_for_comments;
                         $locationComment[$publishmap['CharterProgramSchedule']['id']]['title'] = $loctitle;
@@ -6392,18 +6397,22 @@ class ChartersController extends AppController {
                       else{
                           $commentcounttitle = 0;
                       }
-                      $colorcodetitle = "color:#00a8f3;";  
+                      $colorcodetitle = "color:#000;";  
+                      $facomment="fa";
                       if($commentcounttitle > 0){ //echo "kkkk";
                           $colorcodetitle = "color:#000;";
+                          $facomment="fa";
                           //echo $is_fleet;
                           
                                 //if(trim($scheduleData[0]['CharterProgramSchedule']['is_crew_commented']) == 1 || trim($scheduleData[0]['CharterProgramSchedule']['is_fleet_commented']) == 1){  //echo "lll";
                                 if($guestread == 1){   
+                                    $facomment="fa";
                                     $colorcodetitle = "color:red;";
                                 }
                            
                       }else{
-                            $colorcodetitle = "color:#00a8f3;";   
+                            $facomment="fa-light";
+                            $colorcodetitle = "color:#000;";   
                       }
 
                     $popupHtml = '';
@@ -6419,7 +6428,7 @@ class ChartersController extends AppController {
                     <div class="marker_desc_div">
                     <div><span style="display: inline-block;position: relative;"><img src="'.$markerimage.'" style="object-fit: cover; height: 35px;" alt="" ><span style="position: absolute;color:#000;top: 6px;right: 0px;left: 0px;text-align: center;font-size: 12px;">'.$dayNum.'</span></span>
                     <input id="title_'.$scheduleData[0]['CharterProgramSchedule']['id'].'" type="text" name="title" value="'.htmlspecialchars($title).'" placeholder="Enter the Title" class="loc_name" '.$readonly.' >
-                    <ul class="action-icon"><li><i class="fa fa-comments crew_comment_cruisingmaptitle"  style="'.$colorcodetitle.$displaynone.'" data-rel="'.$scheduleData[0]['CharterProgramSchedule']['UUID'].'" data-yachtid="'.$yacht_id.'" data-tempname="'.htmlspecialchars($scheduleData[0]['CharterProgramSchedule']['title']).'"><input type="hidden" name=commentstitle value="" class="messagecommentstitle" /></i></li></ul>
+                    <ul class="action-icon"><li><i class="'.$facomment.' fa-comments crew_comment_cruisingmaptitle"  style="'.$colorcodetitle.$displaynone.'" data-rel="'.$scheduleData[0]['CharterProgramSchedule']['UUID'].'" data-yachtid="'.$yacht_id.'" data-tempname="'.htmlspecialchars($scheduleData[0]['CharterProgramSchedule']['title']).'"><input type="hidden" name=commentstitle value="" class="messagecommentstitle" /></i></li></ul>
                     </div>
                     <div>
                     <textarea id="notes_'.$scheduleData[0]['CharterProgramSchedule']['id'].'" class="form-control auto_resize loc_desc_field" name="messagestitle" '.$readonly.' rows="4" cols="50" readonly>'.htmlspecialchars($notes).'</textarea>
@@ -6609,8 +6618,10 @@ class ChartersController extends AppController {
                                   $commentcount = 0;
                               }
                               $colorcode = "";
+                              $facomment="fa";
                               if($commentcount > 0){
                                 $colorcode = "color:green;";
+                                $facomment="fa";
                                
                                     //if(trim($activity['CharterProgramScheduleActivity']['is_crew_commented']) == 1 || trim($activity['CharterProgramScheduleActivity']['is_fleet_commented']) == 1){
                                     if($guestread == 1){      
@@ -6619,10 +6630,11 @@ class ChartersController extends AppController {
                                 
                                   
                               }else{
+                              $facomment="fa-light";
                                 $colorcode = "";
                               }
 
-                            $popupHtml .= '<div class="marksub-div"><div style="display:flex"><div class="m_loc_desc_div"><div class="marksup_header"><input name="iti_time[]" disabled="true" id="iti_time" class="iti_time" value="'.$iti_time.'"><ul class="action-icon"><li><i class="fa fa-comments crew_comment_cruisingmap" style="'.$colorcode.$displaynone.'" data-rel="'.$activity['CharterProgramScheduleActivity']['UUID'].'" data-yachtid="'.$yacht_id.'" data-tempname="'.htmlspecialchars($activity['CharterProgramScheduleActivity']['activity_name']).'" title="Comments & Feedback"><input type="hidden" name=comments[] value="" class="messagecomments" /></i></li></ul></div><div id="title_'.$activity['CharterProgramScheduleActivity']['id'].'" class="subloc_name" name="activity_name[]" >'.htmlspecialchars($activity['CharterProgramScheduleActivity']['activity_name']).'</div><input type="hidden" name="activity_id[]" value="'.$activity['CharterProgramScheduleActivity']['UUID'].'"><textarea id="notes_'.$activity['CharterProgramScheduleActivity']['id'].'" class="form-control auto_resize loc_desc_field lg_tarea" '.$readonly.' name="messages[]" rows="1" cols="50" readonly>'.htmlspecialchars($activity['CharterProgramScheduleActivity']['notes']).'</textarea></div><div class="m_loc_img_div"><div class="sp-upload-img"><a href="'.$activityattachmentimagehref.'"  rel="gallery'.$i.'" data-thumbnail="'.$activityattachmentimagehref.'"  class="'.$activityfancybox.'"><img src="'.$activityattachmentimage.'" style="object-fit: cover; height: 150px;" alt=""></a>';
+                            $popupHtml .= '<div class="marksub-div"><div style="display:flex"><div class="m_loc_desc_div"><div class="marksup_header"><input name="iti_time[]" disabled="true" id="iti_time" class="iti_time" value="'.$iti_time.'"><ul class="action-icon"><li><i class="'.$facomment.' fa-comments crew_comment_cruisingmap" style="'.$colorcode.$displaynone.'" data-rel="'.$activity['CharterProgramScheduleActivity']['UUID'].'" data-yachtid="'.$yacht_id.'" data-tempname="'.htmlspecialchars($activity['CharterProgramScheduleActivity']['activity_name']).'" title="Comments & Feedback"><input type="hidden" name=comments[] value="" class="messagecomments" /></i></li></ul></div><div id="title_'.$activity['CharterProgramScheduleActivity']['id'].'" class="subloc_name" name="activity_name[]" >'.htmlspecialchars($activity['CharterProgramScheduleActivity']['activity_name']).'</div><input type="hidden" name="activity_id[]" value="'.$activity['CharterProgramScheduleActivity']['UUID'].'"><textarea id="notes_'.$activity['CharterProgramScheduleActivity']['id'].'" class="form-control auto_resize loc_desc_field lg_tarea" '.$readonly.' name="messages[]" rows="1" cols="50" readonly>'.htmlspecialchars($activity['CharterProgramScheduleActivity']['notes']).'</textarea></div><div class="m_loc_img_div"><div class="sp-upload-img"><a href="'.$activityattachmentimagehref.'"  rel="gallery'.$i.'" data-thumbnail="'.$activityattachmentimagehref.'"  class="'.$activityfancybox.'"><img src="'.$activityattachmentimage.'" style="object-fit: cover; height: 150px;" alt=""></a>';
                             if(isset($fleetlocationimages_act) && !empty($fleetlocationimages_act)){
                                 $fleetlocationimages_act =  array_unique($fleetlocationimages_act);
                                 foreach($fleetlocationimages_act as $name){
