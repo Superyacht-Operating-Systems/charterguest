@@ -1,4 +1,11 @@
 <?php 
+
+echo $this->Html->css('admin/font/fontawesomePro/css/fontawesome.css');
+echo $this->Html->css('admin/font/fontawesomePro/css/brands.css');
+echo $this->Html->css('admin/font/fontawesomePro/css/solid.css');
+echo $this->Html->css('admin/font/fontawesomePro/css/light.css');
+echo $this->Html->css('admin/font/fontawesomePro/css/v5-font-face.css');	
+
 $isFleetUser = $this->Session->read('loggedUserInfo.is_fleet');
 $userType = $this->Session->read('loggedUserInfo.user_type');
 $basefolder = $this->request->base; 
@@ -1154,7 +1161,6 @@ float: right;
 }
 .crew_comment_cruisingmap {
     cursor: pointer !important;
-    color: #00a8f3;
 }
 
 .crew_comment_cruisingmaptitle {
@@ -2024,7 +2030,7 @@ border-radius: 4px; */
                                 <div>
                                 <span style="display: inline-block;position: relative;"><img src="<?php echo $markerimage; ?>" style="object-fit: cover; height: 35px;" alt="" ><span style="position: absolute;color:#000;top: 6px;right: 0px;left: -1px;text-align: center;font-size: 12px;"><?php echo $daynumber; ?></span></span>
                                 <input type="text" name="title" value="<?php echo htmlspecialchars($schedule['CharterProgramSchedule']['title']); ?>" placeholder="Enter the Title" class="loc_name" readonly/>
-                                    <ul class="action-icon"><li><i class="fa fa-comments crew_comment_cruisingmaptitle" data-rel="<?php echo $locationCommentsdata['programScheduleUUID']; ?>" data-yachtid="<?php echo $locationCommentsdata['yacht_id']; ?>" data-tempname="<?php echo htmlspecialchars($locationCommentsdata['title']); ?>" style="<?php echo $locationCommentsdata['colorcodetitle']; ?><?php echo $displaynone; ?>float: right;"><input type="hidden" name=commentstitle value="" class="messagecommentstitle" /></i></li></ul>
+                                    <ul class="action-icon"><li><i class="<?php echo $locationCommentsdata['facomment']; ?> fa-comments crew_comment_cruisingmaptitle" data-rel="<?php echo $locationCommentsdata['programScheduleUUID']; ?>" data-yachtid="<?php echo $locationCommentsdata['yacht_id']; ?>" data-tempname="<?php echo htmlspecialchars($locationCommentsdata['title']); ?>" style="<?php echo $locationCommentsdata['colorcodetitle']; ?><?php echo $displaynone; ?>float: right;"><input type="hidden" name=commentstitle value="" class="messagecommentstitle" /></i></li></ul>
                                 </div>
                             <div class="icons_fields">
                                 <i style="color: #00a8f3;" class="fa fa-solid fa-calendar"><span class="icon_label" ><?php echo $schedule['CharterProgramSchedule']['week_days']; ?></span></i>
