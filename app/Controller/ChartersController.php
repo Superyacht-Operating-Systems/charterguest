@@ -7473,7 +7473,7 @@ if($type == "schedule"){
             $getactivityname = str_replace('"', "", $getactivityname);
                 $created = date("Y-m-d H:i:s");
                 $insertValuesActivity = "(activity_id,activity_name,user_name,user_type,comment,crew_newlyaddedcomment,fleet_newlyaddedcomment,guest_newlyaddedcomment,type,created,publish_map,crew_read,fleet_read) "
-                    . "VALUES ('$activityId','$getactivityname','$loggedUserFullName','$loggedUserInfouser_type','$comments','$crew_newlyaddedcomment','$fleet_newlyaddedcomment','$guest_newlyaddedcomment','activity','$created','1',$crew_read,$fleet_read)";
+                    . "VALUES ('$activityId','$getactivityname','$loggedUserFullName','$loggedUserInfouser_type','$comments','$crew_newlyaddedcomment','$fleet_newlyaddedcomment','$guest_newlyaddedcomment','activity','$created','1','$crew_read','$fleet_read')";
             $this->CharterGuest->insertCruisingMapComment($yachtDbName, $insertValuesActivity);    
                     
         }
