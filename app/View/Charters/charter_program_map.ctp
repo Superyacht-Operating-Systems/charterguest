@@ -2563,9 +2563,8 @@ if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !e
     }
 
     if($schedule['CharterProgramSchedule']['stationary'] == 1){
-        //$stclass = "style='position:absolute;top:40px !important;'";
+        $stclass = "style='position:absolute;top:-40px !important;'";
         //$scheduleData[$key+1]['CharterProgramSchedule']['stationary'] = 1;
-        $stclass = "";
      }else{
          $stclass = "";
      }
@@ -3123,7 +3122,7 @@ function markerOnClick(e) {
     //$(".Tooltip").hide();
     $('.Tooltip').css('top','');
     if(stationary == 1){
-        $('.Tooltip').css('top','');
+        //$('.Tooltip').css('top','');
         // var szoom = map.getZoom();
         // //alert(szoom+1);
         // szoom = szoom+1;
@@ -3135,6 +3134,7 @@ function markerOnClick(e) {
         $(".stationarytooltip"+stationarytooltipnum).show();
         $(".owntooltip").hide();
         $(".stationary").show();
+        $(".smalltooltip").hide();
         return false;
     }
     if (scheduleId != "") {
