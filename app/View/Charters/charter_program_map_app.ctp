@@ -3008,7 +3008,7 @@ function markerOnClick(e) {
    // $(".Tooltip").hide();
     $('.Tooltip').css('top','');
     if(stationary == 1){
-        $('.Tooltip').css('top','-45px');
+        $('.Tooltip').css('top','');
         // var szoom = map.getZoom();
         // //alert(szoom+1);
         // szoom = szoom+1;
@@ -3016,10 +3016,25 @@ function markerOnClick(e) {
         // if(latlngs.length > 0){
         //     map.fitBounds(latlngs);
         // }
+        var css_property =
+        {
+            "position": "absolute",
+            "top": "-40px",
+            "background-color": "#fff",
+            "border": "1px solid #fff",
+            "border-radius": "3px",
+            "padding": "6px",
+            "width": "170px",
+            "left": "0px",
+        }
+
+        $(".stationary").css(css_property);
         clickedstationary = stationarytooltipnum;
-        $(".stationarytooltip"+stationarytooltipnum).show();
         $(".owntooltip").hide();
-        $(".stationary").show();
+        $(".smalltooltip").hide();
+        $(".Tooltip").hide();
+        $(".stationarytooltip"+stationarytooltipnum).show();
+        $(".stationarytooltip"+stationarytooltipnum).find(".stationary").show();
         return false;
     }
    
