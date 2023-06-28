@@ -2588,7 +2588,7 @@ if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !e
         .bindTooltip("<?php echo "<span class='smalltooltip' ".$marker_msg_count.">".$samemkrcount."</span><span class='owntooltip' id=".$key.">".$SumDaytitle."<span id='".$schuuid."'   class='acti-count' ".$marker_msg_count." >".$samemkrcount."</span><b style='font-size: 10px;'>".$schedule['CharterProgramSchedule']['title']."<hr>".$endplace."</b><br><b style='font-size: 10px;'>".$distance.$bar.$duration."</b></span><span class='stationary' ".$stclass." >".$WeekDaytitle."</span>"?>", 
                     {
                         permanent: true, 
-                        offset: [0,-40],
+                        offset: [0,0],
                         //sticky:true,
                         direction: 'right',
                         className: "Tooltip <?php echo $tooltipclass; ?>",
@@ -2937,12 +2937,28 @@ $(document).on("click", "#HideDetails", function(e) {
                 // if(latlngs.length > 0){
                 //     map.fitBounds(latlngs);
                 // }
+
+                map.eachLayer(function (marker) {
+             var tooltip = marker.getTooltip();
+                marker.unbindTooltip();
+                //tooltip.options.permanent = false;
+                //marker.bindTooltip(tooltip);
+                //$(".stationary").hide();
+        //modalmap.removeLayer(layer);
+        if(marker.stationary != "undefined" || marker.stationary == 0 || marker.stationary == 1){
+                marker.bindTooltip(tooltip);
+            }else{
+                marker.unbindTooltip();
+            }
+         });
+         $(".stationary").hide();
     }else if(btntext == "Hide Details"){
         //$(".Tooltip").css("margin-top","35px");
         $(".Tooltip").css("width","170px");
         $(".smalltooltip").hide();
          $(".Tooltip").hide();
         $(".owntooltip").hide();
+        $(".stationary").hide();
         $("#HideDetails").text("Show Details");
         $(".acti-count-onmarker").hide();
         $('#map .text-below-marker').each(function(i, obj) {
@@ -2954,6 +2970,21 @@ $(document).on("click", "#HideDetails", function(e) {
                 $(this).find('.acti-count-onmarker').hide();
             }
         
+        });
+
+        map.eachLayer(function (marker) {
+            var tooltip = marker.getTooltip();
+            marker.unbindTooltip();
+            //tooltip.options.permanent = true;
+            
+            //console.log(marker.stationary);
+            if(marker.stationary != "undefined" || marker.stationary == 0 || marker.stationary == 1){
+                marker.bindTooltip(tooltip);
+            }else{
+                marker.unbindTooltip();
+            }
+            //$(".stationary").hide();
+        //modalmap.removeLayer(layer);
         });
 
         $(".stationary").hide();
