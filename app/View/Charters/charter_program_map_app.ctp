@@ -2506,7 +2506,7 @@ if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !e
         zoom = 7;
         
         var marker = L.marker(["<?php echo $schedule['CharterProgramSchedule']['lattitude']; ?>", "<?php echo $schedule['CharterProgramSchedule']['longitude']; ?>"],{pmIgnore: true})
-        .bindTooltip("<?php echo "<span class='smalltooltip'>Day ".$daynumber."</span><span class='owntooltip' id=".$key."><b style='font-size: 12px;'>".$SumDaytitle."</b><b style='font-size: 12px;'>".$schedule['CharterProgramSchedule']['title']."<hr>".$endplace."</b><br><b style='font-size: 12px;'>".$distance.$bar.$duration."</b></span><span class='stationary' ".$stclass." >".$WeekDaytitle."</span>"?>", 
+        .bindTooltip("<?php echo "<span class='owntooltip' id=".$key."><b style='font-size: 12px;'>".$SumDaytitle."</b><b style='font-size: 12px;'>".$schedule['CharterProgramSchedule']['title']."<hr>".$endplace."</b><br><b style='font-size: 12px;'>".$distance.$bar.$duration."</b></span><span class='stationary' ".$stclass." >".$WeekDaytitle."</span>"?>", 
                     {
                         permanent: true, 
                         offset: [0,0],
@@ -2821,6 +2821,7 @@ $(document).on("click", "#HideDetails", function(e) {
     
     var btntext = $("#HideDetails").text();
     if(btntext == "Show Details"){
+        $(".Tooltip").css("top","20px");
         //$(".Tooltip").css("margin-top","");
         $(".Tooltip").css("width","170px");
         $(".smalltooltip").hide();
@@ -2853,6 +2854,7 @@ $(document).on("click", "#HideDetails", function(e) {
         //             map.fitBounds(latlngs);
         //         }
     }else if(btntext == "Hide Details"){
+        $(".Tooltip").css("top","20px");
         //$(".Tooltip").css("margin-top","35px");
         $(".Tooltip").css("width","170px");
         $(".smalltooltip").hide();
@@ -3006,7 +3008,7 @@ function markerOnClick(e) {
    // $(".Tooltip").hide();
     $('.Tooltip').css('top','');
     if(stationary == 1){
-        $('.Tooltip').css('top','');
+        $('.Tooltip').css('top','-45px');
         // var szoom = map.getZoom();
         // //alert(szoom+1);
         // szoom = szoom+1;
@@ -3086,6 +3088,11 @@ textarea.addEventListener("input", function() {
     adjustTextareaHeight(textarea);
 });
 }
+
+setTimeout(function () {
+                            window.dispatchEvent(new Event("resize"));
+                            
+                            }, 100);
 
                     window.scrollTo(0, 0);
                     $(".leaflet-control-attribution").hide();
@@ -3448,6 +3455,11 @@ $(document).on("click", ".stationarydays", function(e) {
                                     adjustTextareaHeight(textarea);
                                 });
                                 }
+
+                                setTimeout(function () {
+                            window.dispatchEvent(new Event("resize"));
+                            
+                            }, 100);
 
                         //window.scrollTo(0, 0);
                         //$('.day_dates').text(day_dates);
@@ -3832,12 +3844,12 @@ for (var i = 0; i < textareas.length; i++) {
 }
 
 // Display the map tiles fully loaded in crusing schedule modal small map containers on each row
-if(resizeflag){  
+//if(resizeflag){  
             setTimeout(function () {
             window.dispatchEvent(new Event("resize"));
-            resizeflag=false;  
+            //resizeflag=false;  
             }, 100);
-        }
+        //}
 
                     $(".leaflet-control-attribution").hide();
                     $(".leaflet-control-container").hide();
@@ -4300,6 +4312,11 @@ function markerOnClickCSMP(e) {
     var selectedmarkertitle = e.target.daytitle;
     var selectedmarkerday_num = e.target.day_num;
     //console.log(selectedmarkertitle);
+
+    setTimeout(function () {
+                            window.dispatchEvent(new Event("resize"));
+                            
+                            }, 100);
 
     $("#markerModalcruisingsch").show();
 

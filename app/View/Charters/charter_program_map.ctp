@@ -2585,7 +2585,7 @@ if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !e
         zoom = 7;
         
         var marker = L.marker(["<?php echo $schedule['CharterProgramSchedule']['lattitude']; ?>", "<?php echo $schedule['CharterProgramSchedule']['longitude']; ?>"],{pmIgnore: true,riseOnHover:true})
-        .bindTooltip("<?php echo "<span class='smalltooltip' ".$marker_msg_count.">".$samemkrcount."</span><span class='owntooltip' id=".$key.">".$SumDaytitle."<span id='".$schuuid."'   class='acti-count' ".$marker_msg_count." >".$samemkrcount."</span><b style='font-size: 10px;'>".$schedule['CharterProgramSchedule']['title']."<hr>".$endplace."</b><br><b style='font-size: 10px;'>".$distance.$bar.$duration."</b></span><span class='stationary' ".$stclass." >".$WeekDaytitle."</span>"?>", 
+        .bindTooltip("<?php echo "<span class='owntooltip' id=".$key.">".$SumDaytitle."<span id='".$schuuid."'   class='acti-count' ".$marker_msg_count." >".$samemkrcount."</span><b style='font-size: 10px;'>".$schedule['CharterProgramSchedule']['title']."<hr>".$endplace."</b><br><b style='font-size: 10px;'>".$distance.$bar.$duration."</b></span><span class='stationary' ".$stclass." >".$WeekDaytitle."</span>"?>", 
                     {
                         permanent: true, 
                         offset: [0,0],
@@ -2614,7 +2614,7 @@ if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !e
         marker.labeldayanddate = "<?php echo $SumDaytitle; ?>";
         marker.day_num = "<?php echo $schedule['CharterProgramSchedule']['day_num']; ?>";
         marker.markerNum = markerCount; 
-        <?php if (!empty($samlatlong) && in_array($schedule['CharterProgramSchedule']['lattitude'], $samlatlong[$schedule['CharterProgramSchedule']['title']])) { ?>
+        <?php if (!empty($samlatlong[$schedule['CharterProgramSchedule']['title']]) && in_array($schedule['CharterProgramSchedule']['lattitude'], $samlatlong[$schedule['CharterProgramSchedule']['title']])) { ?>
             marker.stationary = 1;
         <?php }else{?>
             marker.stationary = "<?php echo $schedule['CharterProgramSchedule']['stationary']; ?>";
@@ -2913,7 +2913,7 @@ $(document).on("click", "#HideDetails", function(e) {
     // $(".leaflet-control").removeClass('activeChild');
     var btntext = $("#HideDetails").text();
     if(btntext == "Show Details"){
-        //$(".Tooltip").css("margin-top","");
+        $(".Tooltip").css("top","20px");
         $(".Tooltip").css("width","170px");
         $(".smalltooltip").hide();
          $(".Tooltip").show();
@@ -2953,6 +2953,7 @@ $(document).on("click", "#HideDetails", function(e) {
          });
          $(".stationary").hide();
     }else if(btntext == "Hide Details"){
+        $(".Tooltip").css("top","20px");
         //$(".Tooltip").css("margin-top","35px");
         $(".Tooltip").css("width","170px");
         $(".smalltooltip").hide();
@@ -3091,6 +3092,7 @@ var ModalMapsinglemarkerlat;
 var ModalMapsinglemarkerlong;
 var ActivityData = '';
 var ScheduleDataResult = '';
+var resizeflagiti = true;
 function markerOnClick(e) {
     mapmarkerglobalObj = e;
     var scheduleUUId = e.target.scheduleUUId;
@@ -3120,9 +3122,9 @@ function markerOnClick(e) {
      console.log(stationarytooltipnum);
 
     //$(".Tooltip").hide();
-    
+    $('.Tooltip').css('top','');
     if(stationary == 1){
-        //$('.Tooltip').css('top','');
+        $('.Tooltip').css('top','-45px');
         // var szoom = map.getZoom();
         // //alert(szoom+1);
         // szoom = szoom+1;
@@ -3133,11 +3135,10 @@ function markerOnClick(e) {
         clickedstationary = stationarytooltipnum;
         $(".stationarytooltip"+stationarytooltipnum).show();
         $(".owntooltip").hide();
-        $(".stationary").show();
         $(".smalltooltip").hide();
+        $(".stationary").show();
         return false;
     }
-    $('.Tooltip').css('top','');
     if (scheduleId != "") {
         $("#hideloader").show();
         $.ajax({
@@ -3209,6 +3210,16 @@ function markerOnClick(e) {
                             adjustTextareaHeight(textarea);
                         });
                         }
+
+                        // Display the map tiles fully loaded in map containers on each row
+                        console.log(resizeflagiti);
+
+                    //if(resizeflagiti){  
+                            setTimeout(function () {
+                            window.dispatchEvent(new Event("resize"));
+                            //resizeflagiti=false;  
+                            }, 100);
+                        //}
                         
                     // display popup from top
                     window.scrollTo(0, 0);
@@ -3236,6 +3247,8 @@ function markerOnClick(e) {
                      /* $(popup._closeButton).one('click', function(e){
                         msgcount();
                     }); */
+
+                    
 
                     /////////////////////////////itineray modal map///////////////////////////////////////////////////
 
@@ -3556,6 +3569,11 @@ $(document).on("click", ".stationarydays", function(e) {
                             adjustTextareaHeight(textarea);
                         });
                         }
+
+                        setTimeout(function () {
+                        window.dispatchEvent(new Event("resize"));
+                        //resizeflag=false;  
+                        }, 100);
 
                         window.scrollTo(0, 0);
                         //$('.day_dates').text(day_dates);
@@ -4289,12 +4307,12 @@ for (var i = 0; i < textareas.length; i++) {
 }
 
       // Display the map tiles fully loaded in crusing schedule modal small map containers on each row
-      if(resizeflag){  
+      //if(resizeflag){  
             setTimeout(function () {
             window.dispatchEvent(new Event("resize"));
-            resizeflag=false;  
+            //resizeflag=false;  
             }, 100);
-        }
+        //}
    
                 
                 $(".leaflet-control-attribution").hide();
@@ -4574,6 +4592,11 @@ function markerOnClickCSMP(e) {
     //console.log(selectedmarkertitle);
 
     $("#markerModalcruisingsch").show();
+
+    setTimeout(function () {
+                            window.dispatchEvent(new Event("resize"));
+                            
+                            }, 100);
 
     if (markerArray.length > 0) {
             $('.markersnamesmodalmapcruisingsch').find('option').remove();
