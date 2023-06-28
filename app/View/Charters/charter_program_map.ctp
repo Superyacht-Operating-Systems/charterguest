@@ -3120,7 +3120,7 @@ function markerOnClick(e) {
      console.log(stationarytooltipnum);
 
     //$(".Tooltip").hide();
-    $('.Tooltip').css('top','');
+    
     if(stationary == 1){
         //$('.Tooltip').css('top','');
         // var szoom = map.getZoom();
@@ -3137,6 +3137,7 @@ function markerOnClick(e) {
         $(".smalltooltip").hide();
         return false;
     }
+    $('.Tooltip').css('top','');
     if (scheduleId != "") {
         $("#hideloader").show();
         $.ajax({
