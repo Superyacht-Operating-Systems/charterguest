@@ -6617,21 +6617,22 @@ class ChartersController extends AppController {
                               else{
                                   $commentcount = 0;
                               }
-                              $colorcode = "";
+                              $colorcode = "color:#000;";
                               $facomment="fa";
                               if($commentcount > 0){
-                                $colorcode = "color:green;";
+                                $colorcode = "color:#000;";
                                 $facomment="fa";
                                
                                     //if(trim($activity['CharterProgramScheduleActivity']['is_crew_commented']) == 1 || trim($activity['CharterProgramScheduleActivity']['is_fleet_commented']) == 1){
-                                    if($guestread == 1){      
+                                    if($guestread == 1){   
+                                        $facomment="fa";   
                                         $colorcode = "color:red;";
                                     }
                                 
                                   
                               }else{
                               $facomment="fa-light";
-                                $colorcode = "";
+                                $colorcode = "color:#000;";
                               }
 
                             $popupHtml .= '<div class="marksub-div"><div style="display:flex"><div class="m_loc_desc_div"><div class="marksup_header"><input name="iti_time[]" disabled="true" id="iti_time" class="iti_time" value="'.$iti_time.'"><ul class="action-icon"><li><i class="'.$facomment.' fa-comments crew_comment_cruisingmap" style="'.$colorcode.$displaynone.'" data-rel="'.$activity['CharterProgramScheduleActivity']['UUID'].'" data-yachtid="'.$yacht_id.'" data-tempname="'.htmlspecialchars($activity['CharterProgramScheduleActivity']['activity_name']).'" title="Comments & Feedback"><input type="hidden" name=comments[] value="" class="messagecomments" /></i></li></ul></div><div id="title_'.$activity['CharterProgramScheduleActivity']['id'].'" class="subloc_name" name="activity_name[]" >'.htmlspecialchars($activity['CharterProgramScheduleActivity']['activity_name']).'</div><input type="hidden" name="activity_id[]" value="'.$activity['CharterProgramScheduleActivity']['UUID'].'"><textarea id="notes_'.$activity['CharterProgramScheduleActivity']['id'].'" class="form-control auto_resize loc_desc_field lg_tarea" '.$readonly.' name="messages[]" rows="1" cols="50" readonly>'.htmlspecialchars($activity['CharterProgramScheduleActivity']['notes']).'</textarea></div><div class="m_loc_img_div"><div class="sp-upload-img"><a href="'.$activityattachmentimagehref.'"  rel="gallery'.$i.'" data-thumbnail="'.$activityattachmentimagehref.'"  class="'.$activityfancybox.'"><img src="'.$activityattachmentimage.'" style="object-fit: cover; height: 150px;" alt=""></a>';

@@ -2563,8 +2563,9 @@ if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !e
     }
 
     if($schedule['CharterProgramSchedule']['stationary'] == 1){
-        $stclass = "style='position:absolute;top:40px !important;'";
+        //$stclass = "style='position:absolute;top:40px !important;'";
         //$scheduleData[$key+1]['CharterProgramSchedule']['stationary'] = 1;
+        $stclass = "";
      }else{
          $stclass = "";
      }
