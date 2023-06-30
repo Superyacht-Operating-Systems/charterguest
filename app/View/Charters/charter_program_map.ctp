@@ -3881,7 +3881,8 @@ $(document).on("click", "#closeSchedule", function(e) {
     $("#HelpfulTips").show();
     $("#map .leaflet-control-container").show();
 
-    
+    var schuuid =  $("#markerModalclose").attr("data-schuuid");
+   markerModalclose(schuuid);
 
     //for screenview <990 on opening the itinerary modal blacked out the map region
     // on close modal removed the blacked out css
@@ -4100,7 +4101,15 @@ $(document).on("click", "#CruisingCommentSave" ,function() {
                 success:function(data) {
                     if(data.success == 'success'){
 	                    $('#cruisingmsgmyModal').hide();
-                        saveobj.css("color","green");
+                        //saveobj.css("color","green");
+                        thisObj.removeClass('fa-light');
+                        thisObj.removeClass('fa');
+                        if(data.facomment){
+                            thisObj.addClass(data.facomment);
+                        }
+                        if(data.colorcode){
+                            thisObj.css("color",data.colorcode);
+                        }
                     }
                 }
        }); 
@@ -4171,21 +4180,24 @@ $(document).on("click", ".clickcommentdiv", function() {
             if (data.success == 'success') {
                 
                 //comments icon color change in itinerary modal
-                var primaryidscheck = [];
-                $(".selectedcomment").each(function(){
-                    primaryidscheck.push($(this).attr('id'));
-                //alert($(this).attr('id'));
-                });
-                thisObj.css("color","#000;");
-                var color = thisObj.css("color");
-                //alert(color);
-                var colorgreen = hexc(color);
+                // var primaryidscheck = [];
+                // $(".selectedcomment").each(function(){
+                //     primaryidscheck.push($(this).attr('id'));
+                // //alert($(this).attr('id'));
+                // });
+                // thisObj.css("color","#000;");
+                // var color = thisObj.css("color");
+                // //alert(color);
+                // var colorgreen = hexc(color);
 
-                if (colorgreen == "#ff0000") {
-                    thisObj.css("color", "#000;");
-                }
-                if(primaryidscheck.length >= 1){
-                    thisObj.css("color", "red");
+                // if (colorgreen == "#ff0000") {
+                //     thisObj.css("color", "#000;");
+                // }
+                // if(primaryidscheck.length >= 1){
+                //     thisObj.css("color", "red");
+                // }
+                if(data.colorcode){
+                    thisObj.css("color", data.colorcode);
                 }
             }
         }
@@ -4208,10 +4220,11 @@ function hexc(colorval) {
 
     function msgcount(scheduleSameLocationUUID){
     //console.log(e);
-    var charterpgid = $(".mapPopup").attr('data-schuuid'); 
+    //var charterpgid = $(".mapPopup").attr('data-schuuid'); 
+    var charterpgid = scheduleSameLocationUUID; 
     //alert(charterpgid);
     var yachtId = $("#yachtId").val();
-    if(charterpgid){
+    if(charterpgid){ //alert();
                     $("#hideloader").show();
                     var data = { "charterpgid": charterpgid,'yachtId':yachtId,'scheduleSameLocationUUID':scheduleSameLocationUUID};
                     $.ajax({
@@ -4222,8 +4235,11 @@ function hexc(colorval) {
                     success:function(result) {
                         $("#hideloader").hide();
                         var mcount = result.status;
+                        //console.log(mcount);
                         var schuuidtoupdateintooltip = result.schuuidtoupdateintooltip;
+                        //console.log($("#"+schuuidtoupdateintooltip));
                         $("#"+schuuidtoupdateintooltip).text(mcount);
+                        $("#"+schuuidtoupdateintooltip).css('display','block');
                         $("#msgcountnotify").text(mcount);
                         if(mcount == 0){
                             $("#msgcountnotify").css('display','none');
@@ -4266,7 +4282,9 @@ if(primaryids.length >= 1){
                 success:function(data) {
                     if(data.success == 'success'){
 	                    $('#cruisingmsgmyModal').hide();
-                        thisObj.css("color","red");
+                        if(data.colorcode){
+                            thisObj.css("color",data.colorcode);
+                        }
                     
                     }
                 }
