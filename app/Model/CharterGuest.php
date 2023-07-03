@@ -189,6 +189,42 @@
     	
     }
 
+
+    public function getmsgcountonclosecruisingschedulemodal($yachtDbName,$puuid){
+    	
+    	// For fleet users
+    	//echo "<pre>"; print_R($yachtDbName);//exit;
+    	//foreach($yachtNames as $name){ 
+    		
+    		 $dbname = $yachtDbName;
+             //$puuid = "62386a7f-fa6c-4916-bb0c-19692b7276f0";
+		      $charter_program_schedulesQuery	= "SELECT id,is_crew_commented,title,UUID from $dbname.charter_program_schedules where charter_program_id='$puuid' and is_deleted = 0";
+		      $charter_program_schedulesvalues = $this->query($charter_program_schedulesQuery);
+             // echo "<pre>"; print_R($charter_program_schedulesvalues);
+              //exit;
+				foreach($charter_program_schedulesvalues as $value){
+					$charter_program_schedules_id_array[] = $value['charter_program_schedules']['id'];
+                    $charter_program_schedules_UUID_array[] = $value['charter_program_schedules']['UUID'];
+				}
+                $return = array();
+                if(isset($charter_program_schedules_UUID_array) && !empty($charter_program_schedules_UUID_array)){
+                    $result = array();
+                    foreach($charter_program_schedules_UUID_array as $uuid){
+                        $result[$uuid] = $this->getCharterMarkerCommentCount($yachtDbName,$uuid);
+                    }
+
+                   
+                    //echo "<pre>";print_r($result);exit;
+                    foreach($result as $key => $val){
+                        $return[$key] = $val;
+                    }
+                   
+                }
+                //echo "<pre>";print_r($return);exit;
+                return $return;
+
+    }
+
     
     
                

@@ -69,6 +69,12 @@
                     	// 	$backgroundcolor = "#E5F6FC !important;";
                     	// }
                         //if($comments['CruisingMapComment']['fleet_newlyaddedcomment'] == 1 || $comments['CruisingMapComment']['crew_newlyaddedcomment'] == 1){
+                            $clickcommentdiv = "clickcommentdiv";
+                            $pointer = "pointer;";
+                            if($comments['CruisingMapComment']['guest_read'] == "NULL" || $comments['CruisingMapComment']['guest_read'] =='' ){
+                                $clickcommentdiv = "";
+                                $pointer = "default;";
+                            }
                         if($comments['CruisingMapComment']['guest_read'] == 'unread'){
                             $backgroundcolor = "#e5f6fc;";
                             $selectedcommentdiv = "selectedcomment";
@@ -79,7 +85,7 @@
                         $id = $comments['CruisingMapComment']['id'];
                         //#E5F6FC
                         ?>
-        <div class="inbox-item clickcommentdiv <?php echo $selectedcommentdiv; ?>" id="<?php echo $id; ?>"  style="background-color:<?php echo $backgroundcolor; ?>;cursor:pointer;">
+        <div class="inbox-item <?php echo $clickcommentdiv; ?> <?php echo $selectedcommentdiv; ?>" id="<?php echo $id; ?>"  style="background-color:<?php echo $backgroundcolor; ?>;cursor:<?php echo $pointer; ?>">
             <div class="col-md-4">
                 <p class="inbox-item-author"><?php echo $comments['CruisingMapComment']['user_name']; ?> : <br>
                 <?php echo date('d M Y : H:i', strtotime($comments['CruisingMapComment']['created'])); ?> </p>

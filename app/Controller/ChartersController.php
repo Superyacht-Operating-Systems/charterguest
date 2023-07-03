@@ -8238,6 +8238,26 @@ function getIndividualmsgcountMarer() {
     
 }
 
+function getmsgcountonclosecruisingschedulemodal() {
+    $this->autoRender = false;
+    if($this->request->is('ajax')){
+        $this->loadModel('CharterGuest');
+        $result = array();
+        //echo "<pre>";print_r($_POST);exit;
+        $yachtId = $_POST['yachtId'];
+        $charterpgid = $_POST['charterpgid'];
+        $this->loadModel('Yacht');
+        $yachtData = $this->Yacht->find("first", array('fields' => array('yfullName','ydb_name'), 'conditions' => array('id' => $yachtId))); 
+        $yachtDbName = $yachtData['Yacht']['ydb_name'];
+        //echo "<pre>";print_r($yachtDbName);exit;
+        $count = $this->CharterGuest->getmsgcountonclosecruisingschedulemodal($yachtDbName,$charterpgid);
+        $result['count'] = $count;
+    
+        echo json_encode($result);
+        exit;
+    }
+}
+
     /*
         * Load The Privacy Policy page and Terms of Use page based on the request.
         * Functionality -  Loading the The Privacy Policy page and Terms of Use page based on the request.

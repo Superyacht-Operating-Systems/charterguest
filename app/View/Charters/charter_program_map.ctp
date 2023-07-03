@@ -4235,12 +4235,12 @@ function hexc(colorval) {
                     success:function(result) {
                         $("#hideloader").hide();
                         var mcount = result.status;
-                        //console.log(mcount);
+                        console.log(mcount);
                         var schuuidtoupdateintooltip = result.schuuidtoupdateintooltip;
                         //console.log($("#"+schuuidtoupdateintooltip));
                         $("#"+schuuidtoupdateintooltip).text(mcount);
-                        $("#"+schuuidtoupdateintooltip).css('display','block');
-                        $("#msgcountnotify").text(mcount);
+                        $("#"+schuuidtoupdateintooltip).css('display','inline-flex');
+                        //$("#msgcountnotify").text(mcount);
                         if(mcount == 0){
                             $("#msgcountnotify").css('display','none');
                             $("#"+schuuidtoupdateintooltip).css('display','none');
@@ -4375,8 +4375,46 @@ $(document).on("click", "#cruisinglocationModalclose" ,function() {
         $("#map .leaflet-control-attribution").show();
         $("#map .leaflet-control-container").show();
 
+        getmsgcountonclosecruisingschedulemodal();
+
         
     });
+
+    function getmsgcountonclosecruisingschedulemodal(){
+    //console.log(e);
+    
+    var charterpgid = $("#charterProgramId").val();
+    //alert(charterpgid);
+    var yachtId = $("#yachtId").val();
+    if(charterpgid){
+                    $("#hideloader").show();
+                    var data = { "charterpgid": charterpgid,'yachtId':yachtId};
+                    $.ajax({
+                    type: "POST",
+                    url: basefolder+"/"+"charters/getmsgcountonclosecruisingschedulemodal",
+                    dataType: 'json',
+                    data: data,
+                    success:function(result) {
+                        $("#hideloader").hide();
+                        var mcount = result.count;
+                        $.each(mcount, function(key, value) {
+
+                            $("#"+key).text(value);
+                            if (value == 0) {
+                                $("#"+key).css('display', 'none');
+                            }else{
+                                $("#"+key).css('display', 'inline-flex');
+                            }
+
+                            });
+                    },
+                    error: function(jqxhr) { 
+                        $("#hideloader").hide();
+                    }
+                
+                    }); 
+                }
+}
 
     // $(document).on("focus", ".textareacont" ,function() {
      
