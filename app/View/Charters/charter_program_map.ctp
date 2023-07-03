@@ -2030,7 +2030,7 @@ border-radius: 4px; */
                                 <div>
                                 <span style="display: inline-block;position: relative;"><img src="<?php echo $markerimage; ?>" style="object-fit: cover; height: 35px;" alt="" ><span style="position: absolute;color:#000;top: 6px;right: 0px;left: -1px;text-align: center;font-size: 12px;"><?php echo $daynumber; ?></span></span>
                                 <input type="text" name="title" value="<?php echo htmlspecialchars($schedule['CharterProgramSchedule']['title']); ?>" placeholder="Enter the Title" class="loc_name" readonly/>
-                                    <ul class="action-icon"><li><i class="<?php echo $locationCommentsdata['facomment']; ?> fa-comments crew_comment_cruisingmaptitle" data-rel="<?php echo $locationCommentsdata['programScheduleUUID']; ?>" data-yachtid="<?php echo $locationCommentsdata['yacht_id']; ?>" data-tempname="<?php echo htmlspecialchars($locationCommentsdata['title']); ?>" style="<?php echo $locationCommentsdata['colorcodetitle']; ?><?php echo $displaynone; ?>float: right;"><input type="hidden" name=commentstitle value="" class="messagecommentstitle" /></i></li></ul>
+                                    <ul class="action-icon"><li><i class="<?php echo $locationCommentsdata['facomment']; ?> fa-comments sch_comment_<?php echo $schedule['CharterProgramSchedule']['UUID']  ?> crew_comment_cruisingmaptitle" data-rel="<?php echo $locationCommentsdata['programScheduleUUID']; ?>" data-yachtid="<?php echo $locationCommentsdata['yacht_id']; ?>" data-tempname="<?php echo htmlspecialchars($locationCommentsdata['title']); ?>" style="<?php echo $locationCommentsdata['colorcodetitle']; ?><?php echo $displaynone; ?>float: right;"><input type="hidden" name=commentstitle value="" class="messagecommentstitle" /></i></li></ul>
                                 </div>
                             <div class="icons_fields">
                                 <i style="color: #00a8f3;" class="fa fa-solid fa-calendar"><span class="icon_label" ><?php echo $schedule['CharterProgramSchedule']['week_days']; ?></span></i>
@@ -4366,6 +4366,35 @@ for (var i = 0; i < textareas.length; i++) {
     // });
   // move scroll to top
     $(".modal_load").scrollTop(0);
+
+    var charterpgid = $("#charterProgramId").val();
+    //alert(charterpgid);
+    var yachtId = $("#yachtId").val();
+
+    $("#hideloader").show();
+$.ajax({
+    type: "POST",
+    url: basefolder+"/"+"charters/cruising_schedule_locations",
+    dataType: 'json',
+    data: { "programId": charterpgid,"yachtId":yachtId},
+    success:function(result) {
+        $("#hideloader").hide();
+        //console.log(result);
+        if (result.status == 'success') {
+            var res = result.commentbadge;
+            $.each(res, function(key, value) {
+                    //console.log($(".sch_comment_"+key));
+                    $(".sch_comment_"+key).removeClass('fa');
+                    $(".sch_comment_"+key).removeClass('fa-light');
+                    $(".sch_comment_"+key).addClass(value.facomment);
+                    $(".sch_comment_"+key).css("color",value.colorcodetitle);
+
+            });
+                
+        }
+    }
+});
+
 });
 
 $(document).on("click", "#cruisinglocationModalclose" ,function() {
