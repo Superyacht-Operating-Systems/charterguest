@@ -5612,7 +5612,7 @@ class ChartersController extends AppController {
                         $this->set('charterProgramId', $charterProgramId);
                         $this->set('charterProgData', $charterProgData[0]);
                         $this->set('diffDays', $diffDays);
-                        $this->set('scheduleData', $scheduleData);
+                        //$this->set('scheduleData', $scheduleData);
                         $this->set('modified', $modified);
                         $this->set('temploc', $temploc);
                         $this->set('RouteData', $RouteData);
@@ -5633,6 +5633,23 @@ class ChartersController extends AppController {
                         if(isset($cruising_unit) && !empty($cruising_unit)){
                         $this->set('cruising_unit', $cruising_unit);
                         }
+
+                        if(!empty($scheduleData)){
+                            $myLastElement = end($scheduleData);
+                            $to_location = $myLastElement['CharterProgramSchedule']['to_location'];
+                            $myLastElement['CharterProgramSchedule']['title'] = $myLastElement['CharterProgramSchedule']['to_location'];
+                            $location_names = $this->CharterGuest->query("SELECT * FROM $yachtDbName.location_contents LocationContent WHERE LocationContent.location = '$to_location' AND LocationContent.type = 'Location'");
+    
+                           // $location_names = $this->LocationContentFleet->find('first', array('conditions' => array('type' => 'Location', 'is_deleted' => 0,'location'=>$to_location)));
+                            $myLastElement['CharterProgramSchedule']['lattitude'] = $location_names[0]['LocationContent']['lattitude'];
+                            $myLastElement['CharterProgramSchedule']['longitude'] = $location_names[0]['LocationContent']['longitude'];
+                            
+                            // //
+                            // //echo "<pre>";print_r($scheduleData);
+                             $scheduleData[count($scheduleData)] = $myLastElement;
+                            //echo "<pre>";print_r($scheduleData); exit;
+                        }
+                        $this->set('scheduleData', $scheduleData);
 
                         $this->set('locationimages', $locationimages);
                         //$this->set('locationComment', $locationComment);
@@ -6079,7 +6096,7 @@ class ChartersController extends AppController {
                 $this->set('charter_company_id_val', $charterProgData[0]['CharterProgram']['charter_company_id']);
                 $this->set('charterProgData', $charterProgData[0]);
                 $this->set('diffDays', $diffDays);
-                $this->set('scheduleData', $scheduleData);
+               // $this->set('scheduleData', $scheduleData);
                 $this->set('modified', $modified);
                 $this->set('temploc', $temploc);
                 $this->set('RouteData', $RouteData);
@@ -6171,7 +6188,24 @@ class ChartersController extends AppController {
                         }
 
                     }
-                    //echo "<pre>";print_r($attachment); exit;
+
+                    if(!empty($scheduleData)){
+                        $myLastElement = end($scheduleData);
+                        $to_location = $myLastElement['CharterProgramSchedule']['to_location'];
+                        $myLastElement['CharterProgramSchedule']['title'] = $myLastElement['CharterProgramSchedule']['to_location'];
+                        $location_names = $this->CharterGuest->query("SELECT * FROM $yachtDbName.location_contents LocationContent WHERE LocationContent.location = '$to_location' AND LocationContent.type = 'Location'");
+
+                       // $location_names = $this->LocationContentFleet->find('first', array('conditions' => array('type' => 'Location', 'is_deleted' => 0,'location'=>$to_location)));
+                        $myLastElement['CharterProgramSchedule']['lattitude'] = $location_names[0]['LocationContent']['lattitude'];
+                        $myLastElement['CharterProgramSchedule']['longitude'] = $location_names[0]['LocationContent']['longitude'];
+                        
+                        // //
+                        // //echo "<pre>";print_r($scheduleData);
+                         $scheduleData[count($scheduleData)] = $myLastElement;
+                        //echo "<pre>";print_r($scheduleData); exit;
+                    }
+                    $this->set('scheduleData', $scheduleData);
+                    //echo "<pre>";print_r($scheduleData); exit;
                     if(isset($attachment) && !empty($attachment)){
                         $this->set('programFiles', $attachment);
                     }

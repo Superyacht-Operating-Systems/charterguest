@@ -1910,7 +1910,7 @@ body.modal-open {
                 $crusemaparray = array();
             foreach ($scheduleData as $key => $schedule) { 
 
-            if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !empty($samelocations[$schedule['CharterProgramSchedule']['lattitude']])){
+            //if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !empty($samelocations[$schedule['CharterProgramSchedule']['lattitude']])){
                 $counttitle = count($samelocations[$schedule['CharterProgramSchedule']['lattitude']]);
                     $SumDaytitle = "";
                     foreach($samelocations[$schedule['CharterProgramSchedule']['lattitude']] as $val){
@@ -2025,7 +2025,7 @@ body.modal-open {
                             </div>
                        </div>
                        <input type="hidden" id="charterprogramuuid" value="<?php echo $schedule['CharterProgramSchedule']['charter_program_id']; ?>">
-                    <?php  } 
+                    <?php // } 
                    
                 $crusemap++;
                 } ?>
@@ -2432,7 +2432,13 @@ var latlngs = [];
 var globaldropdownvarAddOption = "";
 var clickedstationary;
 // Generating the markers for existing records
-<?php foreach ($scheduleData as $key => $schedule) { 
+<?php 
+if(!empty($scheduleData)){
+    $myLastElement = array_pop($scheduleData);  
+    //echo "<pre>";print_r($myLastElement);exit;
+}
+
+foreach ($scheduleData as $key => $schedule) { 
 
 if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !empty($samelocations[$schedule['CharterProgramSchedule']['lattitude']])){
     $counttitle = count($samelocations[$schedule['CharterProgramSchedule']['lattitude']]);
@@ -2546,6 +2552,36 @@ if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !e
 <?php } } ?>
 
 
+<?php
+/********************************end place last marker ************ */
+if(!empty($myLastElement)){
+            $SumDaytitle =$myLastElement['CharterProgramSchedule']['to_location']; ?>
+            
+    var end = L.marker(["<?php echo $myLastElement['CharterProgramSchedule']['lattitude']; ?>", "<?php echo $myLastElement['CharterProgramSchedule']['longitude']; ?>"], {draggable: false,pmIgnore: true})
+                .bindTooltip("<?php echo "<span class='owntooltip daytooltip_".$myLastElement['CharterProgramSchedule']['UUID']."' id=".$key.">".$myLastElement['CharterProgramSchedule']['to_location']."</span>"?>", 
+                    {
+                        permanent: true, 
+                        offset: [0,0],
+                        direction: 'right',
+                        className: "Tooltip",
+                        noWrap: false,
+                    });
+
+                    end.scheduleId = "<?php echo $myLastElement['CharterProgramSchedule']['id']; ?>";
+                    end.scheduleUUId = "<?php echo $myLastElement['CharterProgramSchedule']['UUID']; ?>";
+                    end.daytitle = "<?php echo $myLastElement['CharterProgramSchedule']['title']; ?>";
+                    end.day_num = "<?php echo $myLastElement['CharterProgramSchedule']['day_num']; ?>";
+                    end.markerNum = "<?php echo $myLastElement['CharterProgramSchedule']['day_num']; ?>";
+                    end.day_dates = "<?php echo $myLastElement['CharterProgramSchedule']['day_dates']; ?>";
+                    // end._latlng.lat = "<?php echo $myLastElement['CharterProgramSchedule']['lattitude']; ?>";
+                    // end._latlng.lng = "<?php echo $myLastElement['CharterProgramSchedule']['longitude']; ?>";
+                    markerArray.push(end);
+                    end.addTo(map);
+
+
+ <?php  } /********************************end place last marker ************ */
+ ?>
+
 <?php foreach ($scheduleData as $key => $schedule) { 
     if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !empty($samelocations[$schedule['CharterProgramSchedule']['lattitude']])){
 
@@ -2567,6 +2603,61 @@ if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !e
 
  <?php } 
 }?>
+
+
+/********************************Assigning day number to last marker ************ */
+<?php 
+if(isset($myLastElement['CharterProgramSchedule']['lattitude'])){
+
+$schuuid = $myLastElement['CharterProgramSchedule']['UUID'];
+$primary_id = $myLastElement['CharterProgramSchedule']['id'];
+if($samemarkercommentcount[$myLastElement['CharterProgramSchedule']['UUID']] == 0){
+$marker_msg_count = "style='display:none;'";
+$samemkrcount = "";
+}else if($samemarkercommentcount[$myLastElement['CharterProgramSchedule']['UUID']] != 0){
+$marker_msg_count = "";
+$samemkrcount = $samemarkercommentcount[$myLastElement['CharterProgramSchedule']['UUID']];
+if(isset($guesttype) && !empty($guesttype)){ //echo $guesttype; exit;
+    if($guesttype == "guest"){
+            $marker_msg_count = "style='display:none;'";
+    }else{
+            $marker_msg_count = "";
+    }
+}
+
+}
+if(isset($samelocations_daynumdisplay[$myLastElement['CharterProgramSchedule']['lattitude']][0])){
+$markernumberDisplay = $samelocations_daynumdisplay[$myLastElement['CharterProgramSchedule']['lattitude']][0];
+
+}else{
+$markernumberDisplay = $myLastElement['CharterProgramSchedule']['day_num'];
+}
+
+
+    // if($schedule['CharterProgramSchedule']['lattitude'] == $scheduleData[$key+1]['CharterProgramSchedule']['lattitude'] ){ 
+    //     //$schedule[$key+1]['CharterProgramSchedule']['day_num'] = "";
+    //     $markernumberDisplay = "";
+    // }
+    
+     
+?>
+        
+
+var textMarker = L.marker(["<?php echo $myLastElement['CharterProgramSchedule']['lattitude']; ?>", "<?php echo $myLastElement['CharterProgramSchedule']['longitude']; ?>"], {
+icon: L.divIcon({
+html: "<?php if($markernumberDisplay < 10 ){ ?><span>&nbsp;<?php echo $markernumberDisplay; ?></span> <?php } else { ?><span><?php echo $markernumberDisplay; ?></span><?php } ?>",
+className: 'text-below-marker',
+tooltipAnchor: [ 0, 0 ]
+})
+}).addTo(map);
+
+        
+        //marker._icon.classList.add('lidebarkMarker'+newString+dm_num);
+        
+        //L.DomUtil.addClass(textMarker._icon, 'lidebarkMarker'+newString+dm_num);
+
+<?php }  ?>
+ /********************************Assigning day number to last marker ************ */ 
 
 map.on('click', function(e) {
     $('.Tooltip').css('top','');
