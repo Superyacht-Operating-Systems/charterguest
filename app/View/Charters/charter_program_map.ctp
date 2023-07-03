@@ -4180,11 +4180,11 @@ $(document).on("click", ".clickcommentdiv", function() {
             if (data.success == 'success') {
                 
                 //comments icon color change in itinerary modal
-                // var primaryidscheck = [];
-                // $(".selectedcomment").each(function(){
-                //     primaryidscheck.push($(this).attr('id'));
-                // //alert($(this).attr('id'));
-                // });
+                var primaryidscheck = [];
+                $(".selectedcomment").each(function(){
+                    primaryidscheck.push($(this).attr('id'));
+                //alert($(this).attr('id'));
+                });
                 // thisObj.css("color","#000;");
                 // var color = thisObj.css("color");
                 // //alert(color);
@@ -4193,11 +4193,12 @@ $(document).on("click", ".clickcommentdiv", function() {
                 // if (colorgreen == "#ff0000") {
                 //     thisObj.css("color", "#000;");
                 // }
-                // if(primaryidscheck.length >= 1){
-                //     thisObj.css("color", "red");
-                // }
-                if(data.colorcode){
-                    thisObj.css("color", data.colorcode);
+                if(primaryidscheck.length >= 1){
+                    thisObj.css("color", "red");
+                }else{
+                    if(data.colorcode){
+                        thisObj.css("color", data.colorcode);
+                    }
                 }
             }
         }
