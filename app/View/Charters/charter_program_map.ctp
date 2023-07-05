@@ -2894,7 +2894,7 @@ var latlongstemp = [];
 
 <?php } ?>
 // middle line
-var polyline0 = new L.Polyline(latlongstemp, {stroke:true,weight:2.5,dashArray: [5,5],color:'#fff',lineCap: "round",lineJoin: "round",smoothFactor: 3}).addTo(map);
+var polyline0 = new L.Polyline(latlongstemp, {stroke:true,weight:2.5,dashArray: [5,5],color:'#fff',lineCap: "round",lineJoin: "round",smoothFactor: 5}).addTo(map);
 //map.fitBounds(latlngs);
 // drawnItems.on('pm:edit', function (e) {
 
@@ -3861,7 +3861,7 @@ if (nextmarkername != "undefined" && nextmarkername != "" && nextmarkername != n
         specificline = tempdrawrouteline;
     var drawnItemsModalMap = new L.FeatureGroup();
     var polyLayersModalMap = [];
-    var polyline2 = new L.polyline(specificline, {stroke:true,snakingSpeed: 200,weight:2.5,dashArray: [5,5],color:'#fff',lineCap: "round",lineJoin: "round",smoothFactor: 1});
+    var polyline2 = new L.polyline(specificline, {stroke:true,snakingSpeed: 200,weight:2.5,dashArray: [5,5],color:'#fff',lineCap: "round",lineJoin: "round",smoothFactor: 5});
 
     polyLayersModalMap.push(polyline2)
 
@@ -4951,7 +4951,7 @@ function drawrouteinmodalCSMP(frommarker) { //alert();
             specificline = tempdrawrouteline;
         var drawnItemsModalMapCSMP = new L.FeatureGroup();
         var polyLayersModalMap = [];
-        var polyline2 = new L.polyline(specificline, {stroke:true,snakingSpeed: 200,weight:2.5,dashArray: [5,5],color:'#fff',lineCap: "round",lineJoin: "round",smoothFactor: 1});
+        var polyline2 = new L.polyline(specificline, {stroke:true,snakingSpeed: 200,weight:2.5,dashArray: [5,5],color:'#fff',lineCap: "round",lineJoin: "round",smoothFactor: 5});
 
         polyLayersModalMap.push(polyline2)
 
