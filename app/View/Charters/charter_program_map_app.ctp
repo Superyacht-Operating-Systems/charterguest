@@ -1910,7 +1910,7 @@ body.modal-open {
                 $crusemaparray = array();
             foreach ($scheduleData as $key => $schedule) { 
 
-            if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !empty($samelocations[$schedule['CharterProgramSchedule']['lattitude']])){
+            //if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !empty($samelocations[$schedule['CharterProgramSchedule']['lattitude']])){
                 $counttitle = count($samelocations[$schedule['CharterProgramSchedule']['lattitude']]);
                     $SumDaytitle = "";
                     foreach($samelocations[$schedule['CharterProgramSchedule']['lattitude']] as $val){
@@ -2025,7 +2025,7 @@ body.modal-open {
                             </div>
                        </div>
                        <input type="hidden" id="charterprogramuuid" value="<?php echo $schedule['CharterProgramSchedule']['charter_program_id']; ?>">
-                    <?php  } 
+                    <?php // } 
                    
                 $crusemap++;
                 } ?>
@@ -2432,7 +2432,13 @@ var latlngs = [];
 var globaldropdownvarAddOption = "";
 var clickedstationary;
 // Generating the markers for existing records
-<?php foreach ($scheduleData as $key => $schedule) { 
+<?php 
+if(!empty($scheduleData)){
+    $myLastElement = array_pop($scheduleData);  
+    //echo "<pre>";print_r($myLastElement);exit;
+}
+
+foreach ($scheduleData as $key => $schedule) { 
 
 if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !empty($samelocations[$schedule['CharterProgramSchedule']['lattitude']])){
     $counttitle = count($samelocations[$schedule['CharterProgramSchedule']['lattitude']]);
@@ -2442,7 +2448,7 @@ if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !e
         }
 
         $WeekDaytitle = "";
-        if($schedule['CharterProgramSchedule']['stationary'] == 1 && count($stationarylocations)>1){
+        if(count($stationarylocations)>1){
             foreach($stationarylocations[$schedule['CharterProgramSchedule']['lattitude']] as $val){
                 $WeekDaytitle.= $val.'<br><br>';
             }
@@ -2482,6 +2488,14 @@ if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !e
     $consumption = "";
     
     }
+
+    if($schedule['CharterProgramSchedule']['stationary'] == 1){
+        $stclass = "style='position:absolute;top:40px !important;'";
+        //$scheduleData[$key+1]['CharterProgramSchedule']['stationary'] = 1;
+     }else{
+         $stclass = "";
+     }
+
     $daynumber = $schedule['CharterProgramSchedule']['day_num'];
     $kn = $key+1;
     $tooltipclass = "stationarytooltip".$kn;
@@ -2498,10 +2512,10 @@ if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !e
         zoom = 7;
         
         var marker = L.marker(["<?php echo $schedule['CharterProgramSchedule']['lattitude']; ?>", "<?php echo $schedule['CharterProgramSchedule']['longitude']; ?>"],{pmIgnore: true})
-        .bindTooltip("<?php echo "<span class='smalltooltip'>Day ".$daynumber."</span><span class='owntooltip' id=".$key."><b style='font-size: 12px;'>".$SumDaytitle."</b><b style='font-size: 12px;'>".$schedule['CharterProgramSchedule']['title']."<hr>".$endplace."</b><br><b style='font-size: 12px;'>".$distance.$bar.$duration."</b></span><span class='stationary'>".$WeekDaytitle."</span>"?>", 
+        .bindTooltip("<?php echo "<span class='owntooltip' id=".$key."><b style='font-size: 12px;'>".$SumDaytitle."</b><b style='font-size: 12px;'>".$schedule['CharterProgramSchedule']['title']."<hr>".$endplace."</b><br><b style='font-size: 12px;'>".$distance.$bar.$duration."</b></span><span class='stationary' ".$stclass." >".$WeekDaytitle."</span>"?>", 
                     {
                         permanent: true, 
-                        offset: [0,-40],
+                        offset: [0,0],
                         direction: 'right',
                         className: "Tooltip <?php echo $tooltipclass; ?>",
                         noWrap: false,
@@ -2526,7 +2540,11 @@ if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !e
         marker.labeldayanddate = "<?php echo $SumDaytitle; ?>";
         marker.day_num = "<?php echo $schedule['CharterProgramSchedule']['day_num']; ?>";
         marker.markerNum = markerCount; 
-        marker.stationary = "<?php echo $schedule['CharterProgramSchedule']['stationary']; ?>";
+        <?php if (!empty($samlatlong) && in_array($schedule['CharterProgramSchedule']['lattitude'], $samlatlong[$schedule['CharterProgramSchedule']['title']])) { ?>
+            marker.stationary = 1;
+        <?php }else{?>
+            marker.stationary = "<?php echo $schedule['CharterProgramSchedule']['stationary']; ?>";
+        <?php } ?>
         marker.stationarytooltipnum = "<?php echo $kn; ?>";
         markerArray.push(marker);
         marker.addTo(map);
@@ -2534,10 +2552,40 @@ if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !e
 <?php } } ?>
 
 
+<?php
+/********************************end place last marker ************ */
+if(!empty($myLastElement)){
+            $SumDaytitle =$myLastElement['CharterProgramSchedule']['to_location']; ?>
+            
+    var end = L.marker(["<?php echo $myLastElement['CharterProgramSchedule']['lattitude']; ?>", "<?php echo $myLastElement['CharterProgramSchedule']['longitude']; ?>"], {draggable: false,pmIgnore: true})
+                .bindTooltip("<?php echo "<span class='owntooltip daytooltip_".$myLastElement['CharterProgramSchedule']['UUID']."' id=".$key.">".$myLastElement['CharterProgramSchedule']['to_location']."</span>"?>", 
+                    {
+                        permanent: true, 
+                        offset: [0,0],
+                        direction: 'right',
+                        className: "Tooltip",
+                        noWrap: false,
+                    });
+
+                    end.scheduleId = "<?php echo $myLastElement['CharterProgramSchedule']['id']; ?>";
+                    end.scheduleUUId = "<?php echo $myLastElement['CharterProgramSchedule']['UUID']; ?>";
+                    end.daytitle = "<?php echo $myLastElement['CharterProgramSchedule']['title']; ?>";
+                    end.day_num = "<?php echo $myLastElement['CharterProgramSchedule']['day_num']; ?>";
+                    end.markerNum = "<?php echo $myLastElement['CharterProgramSchedule']['day_num']; ?>";
+                    end.day_dates = "<?php echo $myLastElement['CharterProgramSchedule']['day_dates']; ?>";
+                    // end._latlng.lat = "<?php echo $myLastElement['CharterProgramSchedule']['lattitude']; ?>";
+                    // end._latlng.lng = "<?php echo $myLastElement['CharterProgramSchedule']['longitude']; ?>";
+                    markerArray.push(end);
+                    end.addTo(map);
+
+
+ <?php  } /********************************end place last marker ************ */
+ ?>
+
 <?php foreach ($scheduleData as $key => $schedule) { 
     if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !empty($samelocations[$schedule['CharterProgramSchedule']['lattitude']])){
 
-        if($schedule['CharterProgramSchedule']['stationary'] == 1){
+        if(isset($samelocations_daynumdisplay[$schedule['CharterProgramSchedule']['lattitude']][0])){
             $markernumberDisplay = $samelocations_daynumdisplay[$schedule['CharterProgramSchedule']['lattitude']][0];
             
         }else{
@@ -2556,6 +2604,61 @@ if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !e
  <?php } 
 }?>
 
+
+/********************************Assigning day number to last marker ************ */
+<?php 
+if(isset($myLastElement['CharterProgramSchedule']['lattitude'])){
+
+$schuuid = $myLastElement['CharterProgramSchedule']['UUID'];
+$primary_id = $myLastElement['CharterProgramSchedule']['id'];
+if($samemarkercommentcount[$myLastElement['CharterProgramSchedule']['UUID']] == 0){
+$marker_msg_count = "style='display:none;'";
+$samemkrcount = "";
+}else if($samemarkercommentcount[$myLastElement['CharterProgramSchedule']['UUID']] != 0){
+$marker_msg_count = "";
+$samemkrcount = $samemarkercommentcount[$myLastElement['CharterProgramSchedule']['UUID']];
+if(isset($guesttype) && !empty($guesttype)){ //echo $guesttype; exit;
+    if($guesttype == "guest"){
+            $marker_msg_count = "style='display:none;'";
+    }else{
+            $marker_msg_count = "";
+    }
+}
+
+}
+if(isset($samelocations_daynumdisplay[$myLastElement['CharterProgramSchedule']['lattitude']][0])){
+$markernumberDisplay = $samelocations_daynumdisplay[$myLastElement['CharterProgramSchedule']['lattitude']][0];
+
+}else{
+$markernumberDisplay = $myLastElement['CharterProgramSchedule']['day_num'];
+}
+
+
+    // if($schedule['CharterProgramSchedule']['lattitude'] == $scheduleData[$key+1]['CharterProgramSchedule']['lattitude'] ){ 
+    //     //$schedule[$key+1]['CharterProgramSchedule']['day_num'] = "";
+    //     $markernumberDisplay = "";
+    // }
+    
+     
+?>
+        
+
+var textMarker = L.marker(["<?php echo $myLastElement['CharterProgramSchedule']['lattitude']; ?>", "<?php echo $myLastElement['CharterProgramSchedule']['longitude']; ?>"], {
+icon: L.divIcon({
+html: "<?php if($markernumberDisplay < 10 ){ ?><span>&nbsp;<?php echo $markernumberDisplay; ?></span> <?php } else { ?><span><?php echo $markernumberDisplay; ?></span><?php } ?>",
+className: 'text-below-marker',
+tooltipAnchor: [ 0, 0 ]
+})
+}).addTo(map);
+
+        
+        //marker._icon.classList.add('lidebarkMarker'+newString+dm_num);
+        
+        //L.DomUtil.addClass(textMarker._icon, 'lidebarkMarker'+newString+dm_num);
+
+<?php }  ?>
+ /********************************Assigning day number to last marker ************ */ 
+
 map.on('click', function(e) {
     $('.Tooltip').css('top','');
     if(clickedstationary){
@@ -2571,14 +2674,14 @@ var zoomLevel = map.getZoom();
     //alert(zoomLevel);
     //console.log(zoomLevel);
     //alert(zoomLevel);
-    $('.Tooltip').css('top','');
-    var tooltipdisplay = $('.Tooltip').css('display');
-    if(tooltipdisplay == "block"){ 
-        $('.Tooltip').css('top','');
-    }
-    if(tooltipdisplay == "none"){ 
-                $('.Tooltip').css('top','');
-            }
+    // $('.Tooltip').css('top','');
+    // var tooltipdisplay = $('.Tooltip').css('display');
+    // if(tooltipdisplay == "block"){ 
+    //     $('.Tooltip').css('top','');
+    // }
+    // if(tooltipdisplay == "none"){ 
+    //             $('.Tooltip').css('top','');
+    //         }
     //alert(zoomLevel);
     // console.log("zoomLevel");
     // console.log(tooltipdisplay);
@@ -2694,7 +2797,7 @@ var latlongstemp = [];
 
 <?php } ?>
 // middle line
-var polyline0 = new L.Polyline(latlongstemp, {stroke:true,weight:2.5,dashArray: [5,5],color:'#fff',lineCap: "round",lineJoin: "round",smoothFactor: 3}).addTo(map);
+var polyline0 = new L.Polyline(latlongstemp, {stroke:true,weight:2.5,dashArray: [5,5],color:'#fff',lineCap: "round",lineJoin: "round",smoothFactor: 5}).addTo(map);
 //map.fitBounds(latlngs);
 // drawnItems.on('pm:edit', function (e) {
 
@@ -2809,6 +2912,7 @@ $(document).on("click", "#HideDetails", function(e) {
     
     var btntext = $("#HideDetails").text();
     if(btntext == "Show Details"){
+        $(".Tooltip").css("top","20px");
         //$(".Tooltip").css("margin-top","");
         $(".Tooltip").css("width","170px");
         $(".smalltooltip").hide();
@@ -2820,12 +2924,28 @@ $(document).on("click", "#HideDetails", function(e) {
         // setTimeout(function(){
         //         $(".leaflet-tooltip").css("opacity", "1");  
         $(".acti-count-onmarker").hide();
+        map.eachLayer(function (marker) {
+            var tooltip = marker.getTooltip();
+            marker.unbindTooltip();
+            //tooltip.options.permanent = true;
+            
+            //console.log(marker.stationary);
+            if(marker.stationary != "undefined" || marker.stationary == 0 || marker.stationary == 1){
+                marker.bindTooltip(tooltip);
+            }else{
+                marker.unbindTooltip();
+            }
+            //$(".stationary").hide();
+        //modalmap.removeLayer(layer);
+        });
+        $(".stationary").hide();
         //$('.Tooltip').css('top','');
         // },1000);
         // if(latlngs.length > 0){
         //             map.fitBounds(latlngs);
         //         }
     }else if(btntext == "Hide Details"){
+        $(".Tooltip").css("top","20px");
         //$(".Tooltip").css("margin-top","35px");
         $(".Tooltip").css("width","170px");
         $(".smalltooltip").hide();
@@ -2833,16 +2953,16 @@ $(document).on("click", "#HideDetails", function(e) {
         $(".owntooltip").hide();
         $("#HideDetails").text("Show Details");
         $(".acti-count-onmarker").hide();
-        $('#map .text-below-marker').each(function(i, obj) {
-            var t = $(this).find('.acti-count-onmarker').text();
-            //console.log(t);
-            if(t > 0){
-                $(this).find('.acti-count-onmarker').hide();
-            }else{
-                $(this).find('.acti-count-onmarker').hide();
-            }
+        // $('#map .text-below-marker').each(function(i, obj) {
+        //     // var t = $(this).find('.acti-count-onmarker').text();
+        //     // //console.log(t);
+        //     // if(t > 0){
+        //     //     $(this).find('.acti-count-onmarker').hide();
+        //     // }else{
+        //     //     $(this).find('.acti-count-onmarker').hide();
+        //     // }
         
-        });
+        // });
         $(".stationary").hide();
         // $(".leaflet-tooltip").css("opacity", "0");  
         // setTimeout(function(){
@@ -2852,6 +2972,20 @@ $(document).on("click", "#HideDetails", function(e) {
         // if(latlngs.length > 0){
         //             map.fitBounds(latlngs);
         //         }
+        map.eachLayer(function (marker) {
+             var tooltip = marker.getTooltip();
+                marker.unbindTooltip();
+                //tooltip.options.permanent = false;
+                //marker.bindTooltip(tooltip);
+                //$(".stationary").hide();
+        //modalmap.removeLayer(layer);
+        if(marker.stationary != "undefined" || marker.stationary == 0 || marker.stationary == 1){
+                marker.bindTooltip(tooltip);
+            }else{
+                marker.unbindTooltip();
+            }
+         });
+        $(".stationary").hide();
     }
 });
 
@@ -2973,10 +3107,25 @@ function markerOnClick(e) {
         // if(latlngs.length > 0){
         //     map.fitBounds(latlngs);
         // }
+        var css_property =
+        {
+            "position": "absolute",
+            "top": "-40px",
+            "background-color": "#fff",
+            "border": "1px solid #fff",
+            "border-radius": "3px",
+            "padding": "6px",
+            "width": "170px",
+            "left": "0px",
+        }
+
+        $(".stationary").css(css_property);
         clickedstationary = stationarytooltipnum;
-        $(".stationarytooltip"+stationarytooltipnum).show();
         $(".owntooltip").hide();
-        $(".stationary").show();
+        $(".smalltooltip").hide();
+        $(".Tooltip").hide();
+        $(".stationarytooltip"+stationarytooltipnum).show();
+        $(".stationarytooltip"+stationarytooltipnum).find(".stationary").show();
         return false;
     }
    
@@ -3045,6 +3194,11 @@ textarea.addEventListener("input", function() {
     adjustTextareaHeight(textarea);
 });
 }
+
+setTimeout(function () {
+                            window.dispatchEvent(new Event("resize"));
+                            
+                            }, 100);
 
                     window.scrollTo(0, 0);
                     $(".leaflet-control-attribution").hide();
@@ -3408,6 +3562,11 @@ $(document).on("click", ".stationarydays", function(e) {
                                 });
                                 }
 
+                                setTimeout(function () {
+                            window.dispatchEvent(new Event("resize"));
+                            
+                            }, 100);
+
                         //window.scrollTo(0, 0);
                         //$('.day_dates').text(day_dates);
                         $(".leaflet-control-attribution").hide();
@@ -3600,7 +3759,7 @@ if (nextmarkername != "undefined" && nextmarkername != "" && nextmarkername != n
     var drawnItemsModalMap = new L.FeatureGroup();
     
     var polyLayersModalMap = [];
-    var   polyline2 = new L.polyline(specificline, {stroke:true,snakingSpeed: 200,weight:2.5,dashArray: [5,5],color:'#fff',lineCap: "round",lineJoin: "round",smoothFactor: 1});
+    var   polyline2 = new L.polyline(specificline, {stroke:true,snakingSpeed: 200,weight:2.5,dashArray: [5,5],color:'#fff',lineCap: "round",lineJoin: "round",smoothFactor: 5});
 
     polyLayersModalMap.push(polyline2)
 
@@ -3791,12 +3950,12 @@ for (var i = 0; i < textareas.length; i++) {
 }
 
 // Display the map tiles fully loaded in crusing schedule modal small map containers on each row
-if(resizeflag){  
+//if(resizeflag){  
             setTimeout(function () {
             window.dispatchEvent(new Event("resize"));
-            resizeflag=false;  
+            //resizeflag=false;  
             }, 100);
-        }
+        //}
 
                     $(".leaflet-control-attribution").hide();
                     $(".leaflet-control-container").hide();
@@ -4260,6 +4419,11 @@ function markerOnClickCSMP(e) {
     var selectedmarkerday_num = e.target.day_num;
     //console.log(selectedmarkertitle);
 
+    setTimeout(function () {
+                            window.dispatchEvent(new Event("resize"));
+                            
+                            }, 100);
+
     $("#markerModalcruisingsch").show();
 
     if (markerArray.length > 0) {
@@ -4420,7 +4584,7 @@ function drawrouteinmodalCSMP(frommarker) { //alert();
             specificline = tempdrawrouteline;
         var drawnItemsModalMapCSMP = new L.FeatureGroup();
         var polyLayersModalMap = [];
-        var polyline2 = new L.polyline(specificline, {stroke:true,snakingSpeed: 200,weight:2.5,dashArray: [5,5],color:'#fff',lineCap: "round",lineJoin: "round",smoothFactor: 1});
+        var polyline2 = new L.polyline(specificline, {stroke:true,snakingSpeed: 200,weight:2.5,dashArray: [5,5],color:'#fff',lineCap: "round",lineJoin: "round",smoothFactor: 5});
 
         polyLayersModalMap.push(polyline2)
 
