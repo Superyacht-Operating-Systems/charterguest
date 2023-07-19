@@ -240,8 +240,8 @@ transition: 0.5s;
 
 .ch-card{
     width: 320px;
-    background: #000;
-    border: solid 1px #fff;
+    background: #111112;
+    border: solid 1px #3e3e3e;
     float: left;
     margin-bottom: 15px;
     margin-right: 8px;
