@@ -995,6 +995,7 @@ background: #000;
 }
 
 .form-control {
+border-radius: 4px!important;
     display: block;
     width: 100%;
     height: 34px;
