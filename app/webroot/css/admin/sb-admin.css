@@ -680,6 +680,7 @@ display: none;
   padding-top: 40px;
 }
 .no-btn{
+border-radius: 4px;
     background: #1eabfc;
     color: #fff;
     border: solid 1px #1eabfc;
