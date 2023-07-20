@@ -420,10 +420,13 @@ font-weight: bold;
     width: 18px;
     color: #fff;
     cursor: pointer;
-    border-radius: 100%; 
+    border-radius: 4px; 
         text-align: center;
     display: flex;
     justify-content: center;
+}
+.md-left-text .info-box img{
+    border-radius: 4px; 
 }
 .md-left-text .fa{
     position: relative;
