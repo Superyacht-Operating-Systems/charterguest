@@ -460,7 +460,6 @@ position: relative;
     float: left;
     font-weight: bold;
     padding: 6px 5px;
-    border-radius: 0px;
     height: 30px;
     background: #1AB200!important;
     color: #fff!important;
@@ -673,7 +672,7 @@ display: none;
     font-weight: bold;
     opacity: 40!important;
     padding: 6px 5px;
-    border-radius: 0px;margin:0% 0.3%;
+    margin:0% 0.3%;
     height: 30px;
 
 }
