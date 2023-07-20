@@ -537,7 +537,6 @@ body .menu .menu__item a{
     color: #fff;
     position: absolute;
     right: 255px;
-    border-radius: 0px;
 
 }
 .serch-filter-row{
@@ -769,7 +768,7 @@ color: #fff;
 }
 
 .nav-pills>li>a.nav-anch{
-background: #fff;
+background: #a4a0a0;
 color: #000;
 }
 
@@ -867,7 +866,6 @@ padding-top: 10px!important;
     padding: 8px 23px;
     font-weight: 700;
     margin: 0px;
-    border-radius: 0px;
 }
 .submit .btn{
    color: #fff;
@@ -877,7 +875,6 @@ padding-top: 10px!important;
     padding: 8px 23px;
     font-weight: 700;
     margin: 0px;
-    border-radius: 0px;
 }
  .submit{width: 200px;
     margin: 0 auto;
@@ -4131,7 +4128,7 @@ hr.divmar {
    height: 35px;float: right;
    line-height: 7px;
    font-size: 13px;
-   border-radius: 0px;
+   border-radius: 4px;
    background: rgba(125, 125, 125, 0.84);
    border: none;
    color: #fff;
@@ -4143,7 +4140,7 @@ hr.divmar {
     height: 35px;
     line-height: 7px;
     font-size: 14px;
-    border-radius: 0px;
+    border-radius: 4px;
     background: #1eabfc;
     border: none;
     color: #fff;
