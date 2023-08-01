@@ -493,8 +493,10 @@ class ChartersController extends AppController {
                 $domain_name = $Ydata['Yacht']['domain_name'];
                 }
                 $SITE_URL = "https://totalsuperyacht.com:8080/";
+                $site_full_path = "/var/www/vhosts/wamp/www/";
                 if(isset($domain_name) && $domain_name == "charterguest"){
                     $SITE_URL = "https://charterguest.net/";
+                    $site_full_path = "/var/www/cg-vhosts/";
                 }
                 $fleetname = "";
                 if(isset($charter_company_id) && !empty($charter_company_id)){
@@ -520,7 +522,15 @@ class ChartersController extends AppController {
                             $targetFullPath = $SITE_URL.$fleetname."/app/webroot/".$yname."/app/webroot/img/charter_program_files/charter_program_photo/".$value['CharterGuest']['program_image'];
                         }
                     } else {  
+                        //exit('ll');
                         $targetFullPath = $SITE_URL.$yname."/app/webroot/img/charter_program_files/charter_program_photo/".$value['CharterGuest']['program_image'];
+                    }
+                    $file_folder_path = str_replace("$SITE_URL","$site_full_path","$targetFullPath");
+                    //echo $targetFullPath; echo $site_full_path; echo "<pre>"; echo $file_folder_path; exit;
+                    if(file_exists($file_folder_path)){
+                        $targetFullPath = $targetFullPath;
+                    }else{
+                        $targetFullPath = $this->request->base."/app/webroot/img/noimage_cp.png";
                     }
                     $charterGuestData[$key]['program_image'] = $targetFullPath;
                 }else{
@@ -704,7 +714,7 @@ class ChartersController extends AppController {
                 }
 
              }
-    // echo "<pre>";print_r($charterGuestData); 
+     //echo "<pre>";print_r($charterGuestData); exit;
     //     echo "<pre>";print_r($charterAssocData); exit;
         //echo "<pre>";print_r($mapdetails); exit;
         
