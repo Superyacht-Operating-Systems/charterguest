@@ -674,11 +674,11 @@ class ChartersController extends AppController {
                         }
                         $file_folder_path = str_replace("$SITE_URL","$site_full_path","$targetFullPath");
                     //echo $targetFullPath; echo $site_full_path; echo "<pre>"; echo $file_folder_path; exit;
-                    if(file_exists($file_folder_path)){
-                        $targetFullPath = $targetFullPath;
-                    }else{
-                        $targetFullPath = $this->request->base."/app/webroot/img/noimage_cp.png";
-                    }
+                        if(file_exists($file_folder_path)){
+                            $targetFullPath = $targetFullPath;
+                        }else{
+                            $targetFullPath = $this->request->base."/app/webroot/img/noimage_cp.png";
+                        }
                         $charterAssocData[$key]['charterDetails']['ch_image'] = $targetFullPath;
                     }else{
                         $charterAssocData[$key]['charterDetails']['ch_image'] = "#";
@@ -699,7 +699,15 @@ class ChartersController extends AppController {
                             if (isset($companyData['Fleetcompany']['logo']) && !empty($companyData['Fleetcompany']['logo'])) {
                                 // $fleetLogoUrl = $cloudUrl.$companyData['Fleetcompany']['fleetname']."/img/logo/thumb/".$companyData['Fleetcompany']['logo'];
                                 $fleetLogoUrl = $SITE_URL.'/'."charterguest/img/logo/thumb/".$companyData['Fleetcompany']['logo'];
-                                $charterAssocData[$key]['charterDetails']['charter_logo'] = $fleetLogoUrl;
+                                $file_folder_path = str_replace("$SITE_URL","$site_full_path","$fleetLogoUrl");
+                                //echo $targetFullPath; echo $site_full_path; echo "<pre>"; echo $file_folder_path; exit;
+                                if(file_exists($file_folder_path)){
+                                    $charterAssocData[$key]['charterDetails']['charter_logo'] = $fleetLogoUrl;
+                                }else{
+                                    $charterAssocData[$key]['charterDetails']['charter_logo'] = "#";
+                                }
+                                
+                                
                             } else{
                                 $fleetLogoUrl = $SITE_URL.'/'."charterguest/img/logo/thumb/charter_guest_logo.png";
                                 $charterAssocData[$key]['charterDetails']['charter_logo'] = $fleetLogoUrl;
