@@ -1,5 +1,6 @@
 <?php
     $basefolder = $this->request->base;
+    $noImageUrl = $basefolder."/app/webroot/img/noimage_cp.png";
     $cloudUrl = Configure::read('cloudUrl');
     $session = $this->Session->read('charter_info.CharterGuest');
     $sessionData = $this->Session->read();
@@ -802,8 +803,19 @@ if(isset($charterGuestData) && !empty($charterGuestData)){
      
       <p><?php echo $yname; ?></p>
     <div class="card-img" style="position: relative;">
+        <?php //echo $data['program_image']; 
+         $parsed_url = parse_url($data['program_image']);
+         $file_path = ltrim($parsed_url['path'], '/');
+         $server_file_path = $_SERVER['DOCUMENT_ROOT'] . '/' . $file_path;
+        ?>
+        <?php if(file_exists($server_file_path)){ ?>
         <img src="<?php echo $data['program_image']; ?>">
-            <?php if($data['map_url'] == "link"){ ?>
+           
+        <?php }else{ ?>
+            <img src="<?php echo $noImageUrl; ?>" width="340" height="191">
+        
+        <?php } ?>
+        <?php if($data['map_url'] == "link"){ ?>
                 
                 <?php }else if($data['map_url'] == "nolink"){ ?>
                     <div class="bottom-left" id="Nolink_msg_<?php echo $id; ?>"  style="display:none;position: absolute;bottom: 8px;left: 16px;background-color: #FED8B1;color: #333;padding: 5px 10px;"> Sorry this cruising map is not published yet.</div>
@@ -887,7 +899,19 @@ if(isset($charterAssocData) && !empty($charterAssocData)){
      
       <p><?php echo $yname; ?></p>
     <div class="card-img" style="position: relative;">
-    <img src="<?php echo $ch_image; ?>">
+    <?php //echo $data['program_image']; 
+         $parsed_url1 = parse_url($ch_image);
+         $file_path1 = ltrim($parsed_url1['path'], '/');
+         $server_file_path1 = $_SERVER['DOCUMENT_ROOT'] . '/' . $file_path1;
+        ?>
+        <?php if(file_exists($server_file_path1)){ ?>
+        <img src="<?php echo $ch_image; ?>">
+           
+        <?php }else{ ?>
+            <img src="<?php echo $noImageUrl; ?>" width="340" height="191">
+        
+        <?php } ?>
+    <!--<img src="<?php //echo $ch_image; ?>" > -->
     <?php if($data['charterDetails']['map_url'] == "link"){ ?>
        
         <?php }else if($data['charterDetails']['map_url'] == "nolink"){  ?>
