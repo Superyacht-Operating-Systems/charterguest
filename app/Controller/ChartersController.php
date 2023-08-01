@@ -567,7 +567,14 @@ class ChartersController extends AppController {
                             if (isset($companyData['Fleetcompany']['logo']) && !empty($companyData['Fleetcompany']['logo'])) {
                                 // $fleetLogoUrl = $cloudUrl.$companyData['Fleetcompany']['fleetname']."/img/logo/thumb/".$companyData['Fleetcompany']['logo'];
                                 $fleetLogoUrl = $SITE_URL.'/'."charterguest/img/logo/thumb/".$companyData['Fleetcompany']['logo'];
-                                $charterGuestData[$key]['charter_logo'] = $fleetLogoUrl;
+                                $file_folder_path = str_replace("$SITE_URL","$site_full_path","$fleetLogoUrl");
+                                //echo $targetFullPath; echo $site_full_path; echo "<pre>"; echo $file_folder_path; exit;
+                                if(file_exists($file_folder_path)){
+                                    $charterGuestData[$key]['charter_logo'] = $fleetLogoUrl;
+                                }else{
+                                    $charterGuestData[$key]['charter_logo'] = "#";
+                                }
+                                
                             } else{
                                 $fleetLogoUrl = $SITE_URL.'/'."charterguest/img/logo/thumb/charter_guest_logo.png";
                                 $charterGuestData[$key]['charter_logo'] = $fleetLogoUrl;
