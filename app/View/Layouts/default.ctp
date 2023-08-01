@@ -805,7 +805,7 @@ width: max-content;
     var BASE_FOLDER = "<?php echo $baseFolder; ?>";
 </script> 
 <?php //echo '<pre>'; print_r($this->params); exit;
- if($this->params['controller'] != "charters" && $this->params['action'] != "charter_program_map"){ ?>
+ //if($this->params['controller'] != "charters" && $this->params['action'] != "charter_program_map"){ ?>
 <script type="text/javascript">
 /// existing preference
 var dateToday = new Date();
@@ -818,7 +818,8 @@ $(".dobDatePickerexisting").datepicker({
     yearRange: dobYearRange
 }).attr('readonly','readonly');
 </script>
-<?php } ?>
+<?php//} ?>
+
 <script type="text/javascript">
 // Make Non-editable fields
 $(document).on("keypress", ".existingnonEditable", function(e) {
