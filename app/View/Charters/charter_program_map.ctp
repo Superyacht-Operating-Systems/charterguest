@@ -5117,13 +5117,19 @@ var langauges_list = {
       var selectedCountry = "English"; // Set your desired default value here
 
       var div = document.getElementById("flag");
-      div.className = 'flag-icon flag-icon-' +langauges_list[selectedCountry]+'';
+      if(div){
+        div.className = 'flag-icon flag-icon-' +langauges_list[selectedCountry]+'';
+      }
+      
 
       var select2 = document.getElementById("language-select2");
       var selectedCountry2 = "English"; // Set your desired default value here
 
       var divflag = document.getElementById("flag2");
-      divflag.className = 'flag-icon flag-icon-' +langauges_list[selectedCountry2]+'';
+      if(divflag){
+        divflag.className = 'flag-icon flag-icon-' +langauges_list[selectedCountry2]+'';
+      }
+      
 });
 function changeLanguage() {
       var selectedCountry = document.getElementById("language-select").value;
@@ -5161,7 +5167,10 @@ function changeLanguage() {
         });
       
       var div = document.getElementById("flag");
-      div.className = 'flag-icon flag-icon-' +langauges_list[selectedCountry]+'';
+      if(div){
+        div.className = 'flag-icon flag-icon-' +langauges_list[selectedCountry]+'';
+      }
+      
       // Add your code to handle the language change here
 }
 function changeLanguage2() {
@@ -5171,7 +5180,10 @@ function changeLanguage2() {
       console.log("Selected language: " + langauges_list[selectedCountry2]);
       
       var divflag = document.getElementById("flag2");
-      divflag.className = 'flag-icon flag-icon-' +langauges_list[selectedCountry2]+'';
+      if(divflag){
+        divflag.className = 'flag-icon flag-icon-' +langauges_list[selectedCountry2]+'';
+      }
+      
       // Add your code to handle the language change here
 }
 

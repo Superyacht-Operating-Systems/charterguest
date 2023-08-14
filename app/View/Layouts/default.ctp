@@ -804,6 +804,8 @@ width: max-content;
 <script>
     var BASE_FOLDER = "<?php echo $baseFolder; ?>";
 </script> 
+<?php //echo '<pre>'; print_r($this->params); exit;
+ if($this->params['action'] != "charter_program_map"){ ?>
 <script type="text/javascript">
 /// existing preference
 var dateToday = new Date();
@@ -815,7 +817,10 @@ $(".dobDatePickerexisting").datepicker({
     changeMonth:true,
     yearRange: dobYearRange
 }).attr('readonly','readonly');
+</script>
+<?php } ?>
 
+<script type="text/javascript">
 // Make Non-editable fields
 $(document).on("keypress", ".existingnonEditable", function(e) {
     if (e.which != 8) { // Except the Backspace key

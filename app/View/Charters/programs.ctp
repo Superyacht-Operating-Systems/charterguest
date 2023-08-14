@@ -1,5 +1,6 @@
 <?php
     $basefolder = $this->request->base;
+    $noImageUrl = $basefolder."/app/webroot/img/noimage.png";
     $cloudUrl = Configure::read('cloudUrl');
     $session = $this->Session->read('charter_info.CharterGuest');
     $sessionData = $this->Session->read();
@@ -802,7 +803,8 @@ if(isset($charterGuestData) && !empty($charterGuestData)){
      
       <p><?php echo $yname; ?></p>
     <div class="card-img" style="position: relative;">
-        <img src="<?php echo $data['program_image']; ?>">
+    <?php //echo $data['program_image']; ?>
+        <img src="<?php echo $data['program_image']; ?>" onerror="if (this.src != '<?php echo $noImageUrl; ?>') this.src = '<?php echo $noImageUrl; ?>';">
             <?php if($data['map_url'] == "link"){ ?>
                 
                 <?php }else if($data['map_url'] == "nolink"){ ?>
@@ -887,7 +889,8 @@ if(isset($charterAssocData) && !empty($charterAssocData)){
      
       <p><?php echo $yname; ?></p>
     <div class="card-img" style="position: relative;">
-    <img src="<?php echo $ch_image; ?>">
+    <?php //echo $ch_image; ?>
+    <img src="<?php echo $ch_image; ?>" onerror="if (this.src != '<?php echo $noImageUrl; ?>') this.src = '<?php echo $noImageUrl; ?>';"/>
     <?php if($data['charterDetails']['map_url'] == "link"){ ?>
        
         <?php }else if($data['charterDetails']['map_url'] == "nolink"){  ?>
