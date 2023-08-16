@@ -7485,8 +7485,19 @@ if($type == "schedule"){
     $scheduleConditions = "UUID = '$activityId'";
     $chkpublishscheduleData = $this->CharterGuest->getCharterProgramScheduleData($yachtDbName, $scheduleConditions);
     if (!empty($chkpublishscheduleData)) {
+        //echo "<pre>"; print_r($chkpublishscheduleData); exit;
         $scheduleData = $chkpublishscheduleData[0];
         $publish_map = $scheduleData['CharterProgramSchedule']['publish_map'];
+        $cprogid = $scheduleData['CharterProgramSchedule']['charter_program_id'];
+        $cpconditions = "UUID = '$cprogid'";
+        $getheadandbadata = $this->CharterGuest->getheadandbadata($yachtDbName, $cpconditions);
+        //echo "<pre>"; print_r($getheadandbadata); exit;
+        $bookingagent_email[] = $getheadandbadata[0]['CharterProgram']['email'];
+        $types = array('1','4','7');
+        $obaUsers = $this->CharterGuest->getyachtusersdata($yachtDbName, $types);
+        //echo "<pre>"; print_r($obaUsers); exit;
+        $allUsers = array_merge($obaUsers,$bookingagent_email);
+        //echo "<pre>"; print_r($allUsers); exit;
 
     }
     if(isset($comments) && !empty($comments)){ //echo "lllll"; exit;
@@ -7506,6 +7517,15 @@ if($type == "schedule"){
             $insertValuescommenttitle = "(activity_id,activity_name,user_name,user_type,comment,crew_newlyaddedcomment,fleet_newlyaddedcomment,guest_newlyaddedcomment,type,created,publish_map,crew_read,fleet_read) "
                     . "VALUES ('$activityId','$getactivityname','$loggedUserFullName','$loggedUserInfouser_type','$comments','$crew_newlyaddedcomment','$fleet_newlyaddedcomment','$guest_newlyaddedcomment','schedule','$created','1','$crew_read','$fleet_read')";
             $this->CharterGuest->insertCruisingMapComment($yachtDbName, $insertValuescommenttitle);  
+            
+            // triggering email to head charter & yacht user types 1,4,7
+            $mailData = array();
+            $mailData['user_name'] = $loggedUserFullName;
+            //$mailData['yachtName'] = $session['CruisingMapComment'];
+            $mailData['module_name'] = 'Cruising Map';
+            $mailData['comment'] = $comments;
+            //echo "<pre>"; print_r($mailData); exit;
+            $this->sendCmapOBACommentEmail($mailData,$allUsers);
             
             $CruisingMapCommentConditons = "activity_id = '$activityId' and publish_map = 1";
             $commentdata = $this->CharterGuest->getCruisingMapComment($yachtDbName, $CruisingMapCommentConditons);

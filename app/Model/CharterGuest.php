@@ -63,6 +63,52 @@
         
         return $result;
     }
+    /*
+     * Fetch head charter and booking agent data
+     * Functionality -  Fetching the head charter and booking agent data from specific Yacht DB
+     * Developer - rakesh
+     * Created date - 16Aug2023
+     * Modified date - 
+     */
+    public function getheadandbadata($yachtDbName, $conditions){
+        //echo $yachtDbName; echo $cpconditions; exit;
+        if (!empty($conditions)) {
+            $conditions = " WHERE ".$conditions;
+        }
+        $joins = " LEFT JOIN $yachtDbName.charter_user_yachts CUY ON(CharterProgram.charter_company_id = CUY.charter_company_id and CharterProgram.booking_agent_id = CUY.charter_user_id)";
+        $groups = " GROUP BY CharterProgram.id";
+        $query = "SELECT * FROM $yachtDbName.charter_programs CharterProgram $joins $conditions $groups";
+        //echo $query; exit;
+        $result = $this->query($query);
+        
+        return $result;
+    }
+
+    /*
+     * Fetch oba users data
+     * Functionality -  Fetching the oba data from specific Yacht DB
+     * Developer - rakesh
+     * Created date - 16 Aug2023
+     * Modified date - 
+     */
+    public function getyachtusersdata($yachtDbName, $types){
+        //echo $yachtDbName; print_r($types); exit;
+        $user_types =  implode(",",$types);
+        $query = "SELECT id,email,user_type,notification_email,notify_email,email_notifications_for FROM $yachtDbName.users WHERE users.status = 1 AND users.is_deleted = 0 AND users.user_type IN ($user_types)";
+        //echo $query; exit;
+        $obaUsers = $this->query($query);
+
+        foreach($obaUsers as $userdetails){
+            //echo "<pre>"; print_r($userdetails); exit;
+            if($userdetails['users']['notify_email'] == 0){
+                $sentemail[] = $userdetails['users']['email'];
+            }else{
+                $sentemail[] = $userdetails['users']['notification_email'];
+            }
+        }
+        
+        return array_filter($sentemail);
+    }
 
     function insertCruisingMapComment($yachtDbName, $insertValues) {
         $query = "INSERT INTO $yachtDbName.cruising_map_comments $insertValues";

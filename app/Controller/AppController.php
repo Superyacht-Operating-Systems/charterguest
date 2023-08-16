@@ -196,5 +196,33 @@ class AppController extends Controller {
 				
 				
 			}
-    
+          /* Email function to send email to oba user when fleet commented
+    /* Rakesh @aug09 2023
+    */
+    function sendCmapOBACommentEmail($maildata,$allMails){
+        $subject= "Comment Log";        
+        $obaandshoremanagerEmail=  implode(",",$allMails);
+        //echo "<pre>"; print_r($maildata);  print_r($allMails); exit;
+        $to=$obaandshoremanagerEmail;    
+        $message="
+        <html>
+        <head>
+        <title></title>
+        </head>
+        <body>
+        <div style='font-size:14px; font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif;'>
+        <p>The Fleet Manager <b>".$maildata['user_name']."</b> has added a comment to the <b>".$maildata['module_name']."</b> Module.</p>
+        <br/>
+        <p>Comment: ".$maildata['comment']."</p>
+        <br/>
+        <p>Sincerely,</p>
+        <p>The SOS team</p>
+        <p>Helping you Succeed</p>";           
+        
+       
+		$headers= "MIME-version: 1.0\n";
+        $headers.= "Content-type: text/html; charset= iso-8859-1\n";
+        $headers .= 'From: TotalSuperyacht <mail@totalsuperyacht.com>' . "\r\n";
+		$this->chkSMTPEmail($to,$subject,$message,$headers);
+    }
 }
