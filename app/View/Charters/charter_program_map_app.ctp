@@ -2768,6 +2768,115 @@ for (let layer of polyLayers) { //console.log(layer);
    
 } */?>
 
+function roundPathCorners(rings, radius) {
+  function moveTowardsFractional(movingPoint, targetPoint, fraction) {
+    return {
+      x: movingPoint.x + (targetPoint.x - movingPoint.x) * fraction,
+      y: movingPoint.y + (targetPoint.y - movingPoint.y) * fraction
+    };
+  }
+
+  function pointForCommand(cmd) {
+    return {
+      x: parseFloat(cmd[cmd.length - 2]),
+      y: parseFloat(cmd[cmd.length - 1])
+    };
+  }
+
+  var resultCommands = [];
+  if (+radius) {
+  // negative numbers create artifacts
+    radius = Math.abs(radius);
+  } else {
+    radius = 0.15;
+    //radius = 0.3;
+  }
+
+  for (i = 0, len = rings.length; i < len; i++) {
+    commands = rings[i];
+  	// start point    
+    resultCommands.push(["M", commands[0].x, commands[0].y]);
+    
+    for (var cmdIndex = 1; cmdIndex < commands.length; cmdIndex++) {
+      var prevCmd = resultCommands[resultCommands.length - 1];
+      var curCmd = commands[cmdIndex];
+      var nextCmd = commands[cmdIndex + 1];
+  
+      if (nextCmd && prevCmd) {
+        // Calc the points we're dealing with
+        var prevPoint = pointForCommand(prevCmd); // convert to Object
+        var curPoint = curCmd;
+        var nextPoint = nextCmd;
+        
+        // The start and end of the cuve are just our point moved towards the previous and next points, respectivly
+        var curveStart, curveEnd;
+        
+        curveStart = moveTowardsFractional(
+          curPoint,
+          prevCmd.origPoint || prevPoint,
+          radius
+        );
+        curveEnd = moveTowardsFractional(
+          curPoint,
+          nextCmd.origPoint || nextPoint,
+          radius
+        );
+        
+        // Adjust the current command and add it
+        curCmd = Object.values(curveStart);
+        
+        curCmd.origPoint = curPoint;
+        curCmd.unshift("L");
+        resultCommands.push(curCmd);
+        
+        // The curve control points are halfway between the start/end of the curve and
+        // calculate curve, if radius is different than 0
+        if (radius) {
+          var startControl = moveTowardsFractional(curveStart, curPoint, 0.5);
+          var endControl = moveTowardsFractional(curPoint, curveEnd, 0.5);
+          // Create the curve
+          var curveCmd = [
+            "C",
+            startControl.x,
+            startControl.y,
+            endControl.x,
+            endControl.y,
+            curveEnd.x,
+            curveEnd.y
+          ];
+          // Save the original point for fractional calculations
+          curveCmd.origPoint = curPoint;
+          resultCommands.push(curveCmd);
+        }
+      } else {
+        // Pass through commands that don't qualify
+        var el = Object.values(curCmd);
+        el.unshift("L");
+        resultCommands.push(el);
+      }
+    }
+  }
+
+  return (
+    resultCommands.reduce(function(str, c) {
+      return str + c.join(" ") + " ";
+    }, "") || "M0 0"
+  );
+};
+
+/* corner smooth radius, keep value in range 0 - 0.5 to avoid artifacts */
+//const radius = -0.15
+
+const radius = 0.3
+
+const SmoothPoly = L.Polyline.extend({
+ // override default method to use custom points-to-path method 
+  _updatePath: function() {
+    const path = roundPathCorners(this._parts, radius)
+    this._renderer._setPath(this, path);
+  }
+})
+
 var modalrouteline = new Array();
 <?php if(isset($temploc) && !empty($temploc)){ 
     
@@ -2797,7 +2906,7 @@ var latlongstemp = [];
 
 <?php } ?>
 // middle line
-var polyline0 = new L.Polyline(latlongstemp, {stroke:true,weight:2.5,dashArray: [5,5],color:'#fff',lineCap: "round",lineJoin: "round",smoothFactor: 5}).addTo(map);
+var polyline0 = new SmoothPoly(latlongstemp, {stroke:true,weight:2.5,dashArray: [5,5],color:'#fff',lineCap: "round",lineJoin: "round",smoothFactor: 5}).addTo(map);
 //map.fitBounds(latlngs);
 // drawnItems.on('pm:edit', function (e) {
 
@@ -3759,7 +3868,7 @@ if (nextmarkername != "undefined" && nextmarkername != "" && nextmarkername != n
     var drawnItemsModalMap = new L.FeatureGroup();
     
     var polyLayersModalMap = [];
-    var   polyline2 = new L.polyline(specificline, {stroke:true,snakingSpeed: 200,weight:2.5,dashArray: [5,5],color:'#fff',lineCap: "round",lineJoin: "round",smoothFactor: 5});
+    var   polyline2 = new SmoothPoly(specificline, {stroke:true,snakingSpeed: 200,weight:2.5,dashArray: [5,5],color:'#fff',lineCap: "round",lineJoin: "round",smoothFactor: 5});
 
     polyLayersModalMap.push(polyline2)
 
@@ -4584,7 +4693,7 @@ function drawrouteinmodalCSMP(frommarker) { //alert();
             specificline = tempdrawrouteline;
         var drawnItemsModalMapCSMP = new L.FeatureGroup();
         var polyLayersModalMap = [];
-        var polyline2 = new L.polyline(specificline, {stroke:true,snakingSpeed: 200,weight:2.5,dashArray: [5,5],color:'#fff',lineCap: "round",lineJoin: "round",smoothFactor: 5});
+        var polyline2 = new SmoothPoly(specificline, {stroke:true,snakingSpeed: 200,weight:2.5,dashArray: [5,5],color:'#fff',lineCap: "round",lineJoin: "round",smoothFactor: 5});
 
         polyLayersModalMap.push(polyline2)
 
