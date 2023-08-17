@@ -7525,10 +7525,19 @@ if($type == "schedule"){
             $mailData['module_name'] = 'Cruising Map';
             $mailData['comment'] = $comments;
             $session = $this->Session->read();
+            $login_user_email = $session['charter_info']['CharterGuest']['email'];
             $mailData['charterUserType'] = ($session['charter_info']['CharterGuest']['charter_program_type'] == 2) ? 'Head Charterer' : (($session['charter_info']['CharterGuest']['charter_program_type'] == 1) ? 'Owner' : '');
             //$mailData['charterUserType'] = 
-            //echo "<pre>"; print_r($mailData); exit;
-            $this->sendCmapOBACommentEmail($mailData,$allUsers);
+            //echo "<pre>"; print_r($allUsers);
+            // exclude login user email from the sent list
+            $valueToRemove = $login_user_email;
+            $filteredArray = array_filter($allUsers, function ($value) use ($valueToRemove) {
+                return $value !== $valueToRemove;
+            });
+
+//echo "<pre>"; print_r($filteredArray);
+            //echo "<pre>"; print_r($mailData); print_r($session); print_r($allUsers); exit;
+            $this->sendCmapOBACommentEmail($mailData,$filteredArray);
             
             $CruisingMapCommentConditons = "activity_id = '$activityId' and publish_map = 1";
             $commentdata = $this->CharterGuest->getCruisingMapComment($yachtDbName, $CruisingMapCommentConditons);
