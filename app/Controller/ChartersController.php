@@ -7524,6 +7524,9 @@ if($type == "schedule"){
             //$mailData['yachtName'] = $session['CruisingMapComment'];
             $mailData['module_name'] = 'Cruising Map';
             $mailData['comment'] = $comments;
+            $session = $this->Session->read();
+            $mailData['charterUserType'] = ($session['charter_info']['CharterGuest']['charter_program_type'] == 2) ? 'Head Charterer' : (($session['charter_info']['CharterGuest']['charter_program_type'] == 1) ? 'Owner' : '');
+            //$mailData['charterUserType'] = 
             //echo "<pre>"; print_r($mailData); exit;
             $this->sendCmapOBACommentEmail($mailData,$allUsers);
             
