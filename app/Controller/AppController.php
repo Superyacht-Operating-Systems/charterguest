@@ -213,7 +213,7 @@ class AppController extends Controller {
         </head>
         <body>
         <div style='font-size:14px; font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif;'>
-        <p>The <b>".$maildata['charterUserType']."</b> <b>".$maildata['user_name']."</b> has added a comment to the <b>".$maildata['module_name']."</b> Module.</p>
+        <p>The ".$maildata['charterUserType']." ".$maildata['user_name']." has added a comment to the ".$maildata['module_name'].".</p>
         <br/>
         <p>Comment: ".$maildata['comment']."</p>
         <br/>
