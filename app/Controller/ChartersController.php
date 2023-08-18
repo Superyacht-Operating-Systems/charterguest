@@ -7492,7 +7492,7 @@ if($type == "schedule"){
         $cpconditions = "UUID = '$cprogid'";
         $getheadandbadata = $this->CharterGuest->getheadandbadata($yachtDbName, $cpconditions);
         //echo "<pre>"; print_r($getheadandbadata); exit;
-        $bookingagent_email[] = $getheadandbadata[0]['CharterProgram']['email'];
+        $bookingagent_email[] = $getheadandbadata[0]['CUY']['email'];
         $types = array('1','4','7');
         $obaUsers = $this->CharterGuest->getyachtusersdata($yachtDbName, $types);
         //echo "<pre>"; print_r($obaUsers); exit;
