@@ -7594,16 +7594,16 @@ if($type == "schedule"){
     if (!empty($chkpublishscheduleData)) {
         $scheduleData = $chkpublishscheduleData[0];
         $publish_map = $scheduleData['CharterProgramSchedule']['publish_map'];
-        $cprogid = $scheduleData['CharterProgramSchedule']['charter_program_id'];
+       $cprogid = $scheduleData['CharterProgramSchedule']['charter_program_id'];
         $cpconditions = "UUID = '$cprogid'";
         $getheadandbadata = $this->CharterGuest->getheadandbadata($yachtDbName, $cpconditions);
-        //echo "<pre>"; print_r($getheadandbadata); exit('activity');
+        //echo "<pre>"; print_r($getheadandbadata); exit;
         $bookingagent_email[] = $getheadandbadata[0]['CUY']['email'];
         $types = array('1','4','7');
         $obaUsers = $this->CharterGuest->getyachtusersdata($yachtDbName, $types);
         //echo "<pre>"; print_r($obaUsers); exit;
         $allUsers = array_merge($obaUsers,$bookingagent_email);
-        //echo "<pre>"; print_r($allUsers); exit;
+        echo "<pre>"; print_r($allUsers); exit('active');
 
     }
 
