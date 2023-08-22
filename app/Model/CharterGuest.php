@@ -42,6 +42,19 @@
         return $result;
     }
 
+    /*
+     * Fetch Charter Program Schedule Activity data
+     * Functionality -  Fetching the Charter Program Schedule Activity data from specific Yacht DB
+     * Developer - rakesh
+     * Created date - 22-Aug-2023
+     * Modified date - 
+     */
+    function getCharterProgramScheduleActivityData($yachtDbName, $conditions) {
+        $query = "SELECT * FROM $yachtDbName.charter_program_schedule_activities CharterProgramScheduleActivity WHERE $conditions";
+        $result = $this->query($query);
+        
+        return $result;
+    }
     function updateCruisingMapComment($yachtDbName, $conditions, $updateValues) {
         
         $conditions = " WHERE " . $conditions;
