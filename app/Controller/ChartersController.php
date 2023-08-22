@@ -7607,7 +7607,7 @@ if($type == "schedule"){
         $obaUsers = $this->CharterGuest->getyachtusersdata($yachtDbName, $types);
         //echo "<pre>"; print_r($obaUsers); exit;
         $allUsers = array_merge($obaUsers,$bookingagent_email);
-        echo "<pre>"; print_r($allUsers); exit('active');
+        //echo "<pre>"; print_r($allUsers); exit('active');
 
     }
 
