@@ -7590,7 +7590,7 @@ if($type == "schedule"){
 
     $scheduleConditions = "UUID = '$activityId'";
     $chkpublishscheduleData = $this->CharterGuest->getCharterProgramScheduleData($yachtDbName, $scheduleConditions);
-    //echo "<pre>"; print_r($chkpublishscheduleData); exit('activity');
+    echo "<pre>"; print_r($chkpublishscheduleData); exit('activity');
     if (!empty($chkpublishscheduleData)) {
         $scheduleData = $chkpublishscheduleData[0];
         $publish_map = $scheduleData['CharterProgramSchedule']['publish_map'];
