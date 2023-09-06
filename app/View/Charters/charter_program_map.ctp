@@ -2962,7 +2962,7 @@ function roundPathCorners(rings, radius) {
 };
 
 /* corner smooth radius, keep value in range 0 - 0.5 to avoid artifacts */
-//const radius = -0.15
+//const radius = -0.15 
 
 const radius = 0.3
 
