@@ -84,6 +84,7 @@ class AppController extends Controller {
     	$this->loadModel("User");
     	$emailArrayToSent = array();
     	$emailArrayToSent[] = $to;
+		//echo "<pre>"; print_r($emailArrayToSent); exit;
 	$this->setSmtpSendMail($emailArrayToSent,$message,$subject, $from);
     }
     
@@ -115,7 +116,7 @@ class AppController extends Controller {
 		if(!is_array($to)){
 			$to = explode(',',$to);
 		}
-		
+		//echo "<pre>"; print_r($to); exit;
 		//$mail->setFrom(FROM_EMAIL_ADDRESS, 'Superyacht');"TotalSuperyacht
 		//if($from == ''){
 //			$mail->setFrom(FROM_EMAIL_ADDRESS, 'TotalSuperyacht');
@@ -139,7 +140,8 @@ class AppController extends Controller {
 		$mail->Subject = $subject;
 		$mail->Body    = $message;
 	//	$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
-		
+	//$mail->CharSet = 'UTF-8';
+	//echo "<pre>"; print_r($mail); exit;
 		if(!$mail->send()) {
 		   // echo 'Message could not be sent.';exit;
 		   // echo 'Mailer Error: ' . $mail->ErrorInfo;
@@ -196,5 +198,33 @@ class AppController extends Controller {
 				
 				
 			}
-    
+          /* Email function to send email to oba user when fleet commented
+    /* Rakesh @aug09 2023
+    */
+    function sendCmapOBACommentEmail($maildata,$allMails){
+        $subject= "Comment Log";        
+        //$obaandshoremanagerEmail=  implode(",",$allMails);
+        //echo "<pre>"; print_r($maildata);  print_r($allMails); exit;
+        $to=$allMails;    
+        $message="
+        <html>
+        <head>
+        <title></title>
+        </head>
+        <body>
+        <div style='font-size:14px; font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif;'>
+        <p>The ".$maildata['charterUserType']." ".$maildata['user_name']." has added a comment to the ".$maildata['module_name'].".</p>
+        <br/>
+        <p>Comment: ".$maildata['comment']."</p>
+        <br/>
+        <p>Sincerely,</p>
+        <p>The SOS team</p>
+        <p>Helping you Succeed</p>";           
+        
+       
+		$headers= "MIME-version: 1.0\n";
+        $headers.= "Content-type: text/html; charset= iso-8859-1\n";
+        $headers .= 'From: TotalSuperyacht <mail@totalsuperyacht.com>' . "\r\n";
+		$this->setSmtpSendMail($to,$message,$subject,$headers);
+    }
 }
