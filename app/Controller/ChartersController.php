@@ -4900,7 +4900,9 @@ class ChartersController extends AppController {
        
         //echo "<pre>"; print_r($data); print_r($headCharterData); exit;
         $headChartererName = $headCharterData['CharterGuest']['first_name']." ".$headCharterData['CharterGuest']['last_name'];
-        $cloudURL = Configure::read('cloudUrl')."/charterguest";
+        // Now we moved all the charter guest sites to charterguest.net domain name is fixed @oct23 2023
+        //$cloudURL = Configure::read('cloudUrl')."/charterguest";
+        $cloudURL = "https://charterguest.net/charterguest";
         
         $subject = "Welcome to the charter guest program for the $yachtName";
         $message="
@@ -7041,8 +7043,9 @@ class ChartersController extends AppController {
         $headCharterData = $this->CharterGuest->find('first', array('conditions' => array('charter_program_id' => $data['charter_guest_id'])));
        //echo "<pre>"; print_r($data);print_r($headCharterData); exit;
         $headChartererName = $headCharterData['CharterGuest']['first_name']." ".$headCharterData['CharterGuest']['last_name'];
-        $cloudURL = Configure::read('cloudUrl')."/charterguest";
-        
+        // Now we moved all the charter guest sites to charterguest.net domain name is fixed @oct23 2023
+      //$cloudURL = Configure::read('cloudUrl')."/charterguest";
+        $cloudURL = "https://charterguest.net/charterguest";
         $subject = "Welcome to the charter guest program for the $yachtName";
         $message="
         <html>
