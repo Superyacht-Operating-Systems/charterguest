@@ -1937,7 +1937,14 @@ body.modal-open {
             
                 $daynumber = $schedule['CharterProgramSchedule']['day_num']; 
                 
-                $attachment = $schedule['CharterProgramSchedule']['attachment'];
+                $to_location = $schedule['CharterProgramSchedule']['title'];
+                $attachment = "";
+
+                if($to_location == $debarkation_chprg){ //echo $to_location."=========".$debarkation_chprg;
+                    $attachment = $schedule['CharterProgramSchedule']['debarkation_attachment'];
+                }else if($to_location != $debarkation_chprg){ //echo $to_location."0000000".$debarkation_chprg;
+                    $attachment = $schedule['CharterProgramSchedule']['attachment'];
+                }
 
                         if(isset($attachment) && !empty($attachment)){
                              

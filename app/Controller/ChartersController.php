@@ -5331,6 +5331,8 @@ class ChartersController extends AppController {
                     if (count($charterProgData) != 0) {
                         $startDate = $charterProgData[0]['CharterProgram']['charter_from_date'];
                         $endDate = $charterProgData[0]['CharterProgram']['charter_to_date'];
+                        $embarkation_chprg = $charterProgData[0]['CharterProgram']['embarkation'];
+                        $debarkation_chprg = $charterProgData[0]['CharterProgram']['debarkation'];
                         $diff = date_diff(date_create($endDate), date_create($startDate));
                         $diffDays = $diff->days + 1;
                         
@@ -5631,6 +5633,9 @@ class ChartersController extends AppController {
                         //echo "<pre>";print_r($crusingModaltitle);  exit;
                         $first = reset($crusingModaltitle);
                         $last = end($crusingModaltitle);
+
+                        $this->set('embarkation_chprg', $embarkation_chprg);
+                        $this->set('debarkation_chprg', $debarkation_chprg);
                       
                         $this->set('startloc', $first);
                         $this->set('endloc', $last);
@@ -5679,12 +5684,15 @@ class ChartersController extends AppController {
                            // $location_names = $this->LocationContentFleet->find('first', array('conditions' => array('type' => 'Location', 'is_deleted' => 0,'location'=>$to_location)));
                             $myLastElement['CharterProgramSchedule']['lattitude'] = $location_names[0]['LocationContent']['lattitude'];
                             $myLastElement['CharterProgramSchedule']['longitude'] = $location_names[0]['LocationContent']['longitude'];
+                            $myLastElement['CharterProgramSchedule']['title'] = $myLastElement['CharterProgramSchedule']['to_location'];
+                            $myLastElement['CharterProgramSchedule']['notes'] = $myLastElement['CharterProgramSchedule']['debarkation_desc'];
                             
                             // //
                             // //echo "<pre>";print_r($scheduleData);
                              $scheduleData[count($scheduleData)] = $myLastElement;
                             //echo "<pre>";print_r($scheduleData); exit;
                         }
+
                         $this->set('scheduleData', $scheduleData);
 
                         $this->set('locationimages', $locationimages);
@@ -5738,6 +5746,8 @@ class ChartersController extends AppController {
             if (count($charterProgData) != 0) {
                 $startDate = $charterProgData[0]['CharterProgram']['charter_from_date'];
                 $endDate = $charterProgData[0]['CharterProgram']['charter_to_date'];
+                $embarkation_chprg = $charterProgData[0]['CharterProgram']['embarkation'];
+                $debarkation_chprg = $charterProgData[0]['CharterProgram']['debarkation'];
                 $diff = date_diff(date_create($endDate), date_create($startDate));
                 $diffDays = $diff->days + 1;
                 
@@ -6234,6 +6244,8 @@ class ChartersController extends AppController {
                        // $location_names = $this->LocationContentFleet->find('first', array('conditions' => array('type' => 'Location', 'is_deleted' => 0,'location'=>$to_location)));
                         $myLastElement['CharterProgramSchedule']['lattitude'] = $location_names[0]['LocationContent']['lattitude'];
                         $myLastElement['CharterProgramSchedule']['longitude'] = $location_names[0]['LocationContent']['longitude'];
+                        $myLastElement['CharterProgramSchedule']['title'] = $myLastElement['CharterProgramSchedule']['to_location'];
+                        $myLastElement['CharterProgramSchedule']['notes'] = $myLastElement['CharterProgramSchedule']['debarkation_desc'];
                         
                         // //
                         // //echo "<pre>";print_r($scheduleData);
