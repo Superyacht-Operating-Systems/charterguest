@@ -3581,10 +3581,6 @@ function markerOnClick(e) {
     }
         
 }
-
-
-$(document).on("change", ".markersnamesmodalmap", function(e) {
-
         var routemodalmarkerselected = {};
         var textMarkermodalmap = {};
         var selectedlat = "";
@@ -3594,6 +3590,10 @@ $(document).on("change", ".markersnamesmodalmap", function(e) {
         var modalmapdaynumber = "";
         var defaultline = {};
         var selectedmarkertooltipcontent = "";
+
+$(document).on("change", ".markersnamesmodalmap", function(e) {
+
+        
     selectedTitle = $(this).val();
     //alert(selectedTitle);
     //console.log(selectedTitle);
