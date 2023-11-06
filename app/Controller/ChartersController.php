@@ -6349,6 +6349,7 @@ class ChartersController extends AppController {
                         if($chk_deb_debarkation_flag == 1 && $daytitle == $chk_deb_endlocation){
                             $last_marker_display_iti_modal = 1;
                         }
+                        echo $last_marker_display_iti_modal; exit;
                     if($last_marker_display_iti_modal == 0){
                         $schUUIDs  =  explode(",",$scheduleSameLocationUUID);
                         $samelocationsDatesarr  =  explode(",",$samelocationsDates);
