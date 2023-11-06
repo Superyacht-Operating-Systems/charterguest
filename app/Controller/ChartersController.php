@@ -6346,11 +6346,11 @@ class ChartersController extends AppController {
                         $chk_deb_endlocation = htmlspecialchars($chk_endscheduleData[0]['CharterProgramSchedule']['to_location']);
                         $chk_deb_debarkation_flag = ($chk_endscheduleData[0]['CharterProgramSchedule']['debarkation_flag']);
                         $last_marker_display_iti_modal = 0;
-                        echo $chk_deb_debarkation_flag.'--'.$daytitle.'--'.$chk_deb_endlocation; //exit;
-                        if($chk_deb_debarkation_flag == 1 && $daytitle == $chk_deb_endlocation){
+                        //echo $chk_deb_debarkation_flag.'--'.$daytitle.'--'.$chk_deb_endlocation; //exit;
+                        if($daytitle == $chk_deb_endlocation){
                             $last_marker_display_iti_modal = 1;
                         }
-                        echo $last_marker_display_iti_modal; exit;
+                        //echo $last_marker_display_iti_modal; exit;
                     if($last_marker_display_iti_modal == 0){
                         $schUUIDs  =  explode(",",$scheduleSameLocationUUID);
                         $samelocationsDatesarr  =  explode(",",$samelocationsDates);
