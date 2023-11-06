@@ -2553,6 +2553,7 @@ if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !e
             marker.stationary = "<?php echo $schedule['CharterProgramSchedule']['stationary']; ?>";
         <?php } ?>
         marker.stationarytooltipnum = "<?php echo $kn; ?>";
+        marker.endmarker = "no";
         markerArray.push(marker);
         marker.addTo(map);
         markerCount++;
@@ -2563,7 +2564,7 @@ if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !e
 /********************************end place last marker ************ */
 if(!empty($myLastElement)){
             $SumDaytitle =$myLastElement['CharterProgramSchedule']['to_location']; 
-            $counttitle = count($samelocations[$myLastElement['CharterProgramSchedule']['lattitude']]);
+            $counttitle_endmarker = count($samelocations[$myLastElement['CharterProgramSchedule']['lattitude']]);
             ?>
             
     var end = L.marker(["<?php echo $myLastElement['CharterProgramSchedule']['lattitude']; ?>", "<?php echo $myLastElement['CharterProgramSchedule']['longitude']; ?>"], {draggable: false,pmIgnore: true})
@@ -2587,6 +2588,7 @@ if(!empty($myLastElement)){
                     end.day_dates = "<?php echo $myLastElement['CharterProgramSchedule']['day_dates']; ?>";
                     // end._latlng.lat = "<?php echo $myLastElement['CharterProgramSchedule']['lattitude']; ?>";
                     // end._latlng.lng = "<?php echo $myLastElement['CharterProgramSchedule']['longitude']; ?>";
+                    end.endmarker = "yes";
                     markerArray.push(end);
                     end.addTo(map);
 
@@ -3216,6 +3218,8 @@ function markerOnClick(e) {
     var stationary = e.target.stationary;
     var stationarytooltipnum = e.target.stationarytooltipnum;
 
+    var endmarkerOrnot = e.target.endmarker;
+
    
    // $(".Tooltip").hide();
     $('.Tooltip').css('top','');
@@ -3256,7 +3260,7 @@ function markerOnClick(e) {
             type: "POST",
             url: basefolder+"/"+"charters/editCharterProgramSchedules",
             dataType: 'json',
-            data: { "programId": scheduleId,"scheduleId":scheduleUUId,"tablepId":tablepId ,"diffDays": <?php echo $diffDays; ?>, "markerNum": markerNum, "lattitude": lattitude, "longitude": longitude,"guesttype":guesttype,"counttitle":counttitle, "daytitle":daytitle, "scheduleSameLocationUUID":scheduleSameLocationUUID, "samelocationsDates":samelocationsDates, "from":'locationcard','ipaddb':'<?php echo $ipadappdb; ?>'},
+            data: { "programId": scheduleId,"scheduleId":scheduleUUId,"tablepId":tablepId ,"diffDays": <?php echo $diffDays; ?>, "markerNum": markerNum, "lattitude": lattitude, "longitude": longitude,"guesttype":guesttype,"counttitle":counttitle, "daytitle":daytitle,"endmarkerOrnot":endmarkerOrnot, "scheduleSameLocationUUID":scheduleSameLocationUUID, "samelocationsDates":samelocationsDates, "from":'locationcard','ipaddb':'<?php echo $ipadappdb; ?>'},
             success:function(result) {
                 
                 if (result.status == 'success') {
@@ -3614,13 +3618,15 @@ $(document).on("click", ".stationarydays", function(e) {
    //var selecteddatetext = $(".noofdayscard option:selected").text();
    var yachtId = $("#yachtId").val();
   //alert('gg')
+
+  var endmarkerOrnot = mapmarkerglobalObj.target.endmarker;
   
    $("#hideloader").show();
         $.ajax({
             type: "POST",
             url: basefolder+"/"+"charters/editCharterProgramSchedules",
             dataType: 'json',
-            data: {"programId":scheduleId,"tablepId":tablepId ,"scheduleId": selectedschuuid, "diffDays": <?php echo $diffDays; ?>, "yachtId": yachtId,"counttitle":counttitle, "daytitle":daytitle, "guesttype":"guest","scheduleSameLocationUUID":scheduleSameLocationUUID, "samelocationsDates":samelocationsDates, "from":'daysselection','selecteddatetext':'','ipaddb':'<?php echo $ipadappdb; ?>' },
+            data: {"programId":scheduleId,"tablepId":tablepId ,"scheduleId": selectedschuuid, "diffDays": <?php echo $diffDays; ?>, "yachtId": yachtId,"counttitle":counttitle, "daytitle":daytitle, "guesttype":"guest","endmarkerOrnot":endmarkerOrnot,"scheduleSameLocationUUID":scheduleSameLocationUUID, "samelocationsDates":samelocationsDates, "from":'daysselection','selecteddatetext':'','ipaddb':'<?php echo $ipadappdb; ?>' },
             success:function(result) {
                
                 if (result.status == 'success') {
