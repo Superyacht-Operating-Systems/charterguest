@@ -2633,6 +2633,7 @@ if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !e
             marker.stationary = "<?php echo $schedule['CharterProgramSchedule']['stationary']; ?>";
         <?php } ?>
         marker.stationarytooltipnum = "<?php echo $kn; ?>";
+        marker.endmarker = "no";
         markerArray.push(marker);
         marker.addTo(map);
         markerCount++;
@@ -2643,7 +2644,9 @@ if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !e
 <?php
 /********************************end place last marker ************ */
 if(!empty($myLastElement)){
-            $SumDaytitle =$myLastElement['CharterProgramSchedule']['to_location']; ?>
+            $SumDaytitle =$myLastElement['CharterProgramSchedule']['to_location']; 
+            $counttitle_endmarker = count($samelocations[$myLastElement['CharterProgramSchedule']['lattitude']]);
+            ?>
             
     var end = L.marker(["<?php echo $myLastElement['CharterProgramSchedule']['lattitude']; ?>", "<?php echo $myLastElement['CharterProgramSchedule']['longitude']; ?>"], {draggable: false,pmIgnore: true})
                 .bindTooltip("<?php echo "<span class='owntooltip daytooltip_".$myLastElement['CharterProgramSchedule']['UUID']."' id=".$key.">".$myLastElement['CharterProgramSchedule']['to_location']."</span>"?>", 
@@ -2653,9 +2656,12 @@ if(!empty($myLastElement)){
                         direction: 'right',
                         className: "Tooltip",
                         noWrap: false,
-                    });
+                    }).on("click", markerOnClick);
+
+                    latlngs.push(new L.LatLng(<?php echo $myLastElement['CharterProgramSchedule']['lattitude']; ?>, <?php echo $myLastElement['CharterProgramSchedule']['longitude']; ?>));
 
                     end.scheduleId = "<?php echo $myLastElement['CharterProgramSchedule']['id']; ?>";
+                    end.tablepId = "<?php echo $myLastElement['CharterProgramSchedule']['id']; ?>";
                     end.scheduleUUId = "<?php echo $myLastElement['CharterProgramSchedule']['UUID']; ?>";
                     end.daytitle = "<?php echo $myLastElement['CharterProgramSchedule']['title']; ?>";
                     end.day_num = "<?php echo $myLastElement['CharterProgramSchedule']['day_num']; ?>";
@@ -2663,6 +2669,7 @@ if(!empty($myLastElement)){
                     end.day_dates = "<?php echo $myLastElement['CharterProgramSchedule']['day_dates']; ?>";
                     // end._latlng.lat = "<?php echo $myLastElement['CharterProgramSchedule']['lattitude']; ?>";
                     // end._latlng.lng = "<?php echo $myLastElement['CharterProgramSchedule']['longitude']; ?>";
+                    end.endmarker = "yes";
                     markerArray.push(end);
                     end.addTo(map);
 
