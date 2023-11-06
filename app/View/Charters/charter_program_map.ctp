@@ -2660,7 +2660,7 @@ if(!empty($myLastElement)){
 
                     latlngs.push(new L.LatLng(<?php echo $myLastElement['CharterProgramSchedule']['lattitude']; ?>, <?php echo $myLastElement['CharterProgramSchedule']['longitude']; ?>));
 
-                    end.scheduleId = "<?php echo $myLastElement['CharterProgramSchedule']['id']; ?>";
+                    end.scheduleId = "<?php echo $myLastElement['CharterProgramSchedule']['charter_program_id']; ?>";
                     end.tablepId = "<?php echo $myLastElement['CharterProgramSchedule']['id']; ?>";
                     end.scheduleUUId = "<?php echo $myLastElement['CharterProgramSchedule']['UUID']; ?>";
                     end.daytitle = "<?php echo $myLastElement['CharterProgramSchedule']['title']; ?>";
