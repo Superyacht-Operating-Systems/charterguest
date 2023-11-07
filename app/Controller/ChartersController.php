@@ -6134,6 +6134,9 @@ class ChartersController extends AppController {
                 $this->set('endloc', $last);
                 $this->set('Datesarray', $Datesarray);
 
+                $this->set('embarkation_chprg', $embarkation_chprg);
+                $this->set('debarkation_chprg', $debarkation_chprg);
+
                 $this->set('samelocations', $samelocations);
                 $this->set('samelocationsScheduleUUID', $samelocationsScheduleUUID);
                 $this->set('samelocationsDates', $samelocationsDates);
