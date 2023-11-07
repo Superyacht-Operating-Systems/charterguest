@@ -381,7 +381,7 @@ width: max-content;
                         ?>
                         <?php if (isset($session["yachFullName"]) && !empty($session["yachFullName"])) { echo $session['login_username']; } ?><span class="user-subnamep">  <span class="sp-noe"><?php if(isset($session['preferenceGuestName']) && ( $loginusername != $loginpreferenceGuestName)  ){ ?>for <?php } ?></span><?php if(isset($session['preferenceGuestName']) && ($loginusername != $loginpreferenceGuestName)){ echo $session['preferenceGuestName'];  } ?></span>
                       <?php } else if($programpageCharter == "charters" && $programpagePrograms != "programs"){ ?>
-                        <?php if (isset($session["yachFullName"]) && !empty($session["yachFullName"])) { echo $session['yachFullName']; } ?>
+                        <?php if (isset($session["yachFullName"]) && !empty($session["yachFullName"])) { ?><span class="mappageProgramYname"><?php echo $session['yachFullName']; } ?></span>
                       <?php } ?>  
                     </div>
                     <div class="yachtHeaderName">Charter Guest

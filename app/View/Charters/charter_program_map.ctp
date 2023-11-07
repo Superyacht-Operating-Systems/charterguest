@@ -54,6 +54,9 @@ if(empty($scheduleData)){
     }
 
 }
+// echo $charterGuestDatayacht_id;
+// echo "<pre>";print_r($yfullName);
+$topyname = $yfullName[$charterGuestDatayacht_id]; 
 ?>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css">
 <style>
@@ -2217,6 +2220,7 @@ border-radius: 4px; */
 <button id="HelpfulTips">Helpful Tips</button>
 </div></div>
 </div>
+<input type="hidden" id="topyname" value="<?php echo $topyname; ?>">
 <input type="hidden" id="yachtId" value="<?php echo $yacht_id_fromyachtDB; ?>">
 <input type="hidden" id="charterProgramId" value="<?php echo $charterProgramId; ?>">
 <script>
@@ -4159,6 +4163,11 @@ $(document).ready(function() { //alert();
                     },
                 type : "image"
             });
+
+            var topyname = $("#topyname").val();
+            //setTimeout(function() {
+                    $(".mappageProgramYname").text(topyname);
+            //}, 100);
 
             //$('.fancybox').fancybox();
 

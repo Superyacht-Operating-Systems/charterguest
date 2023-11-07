@@ -5735,6 +5735,10 @@ class ChartersController extends AppController {
             
             $charterGuestDataToMenu = $this->CharterGuest->find("first",array('conditions'=>array('charter_program_id'=>$charterProgramId)));
 
+            $charterGuestDatayacht_id = $charterGuestDataToMenu['CharterGuest']['yacht_id'];
+
+            $this->set('charterGuestDatayacht_id', $charterGuestDatayacht_id);
+
             if(isset($guesttype) && ($guesttype == "owner")){ 
                     $guestlink = "/charters/view/".$charterGuestDataToMenu['CharterGuest']['id']."/".$charterGuestDataToMenu['CharterGuest']['charter_program_id']."/".$charterGuestDataToMenu['CharterGuest']['charter_company_id'];
             }else if(isset($guesttype) && ($guesttype == "guest")){ 
@@ -6257,6 +6261,9 @@ class ChartersController extends AppController {
                     if(isset($attachment) && !empty($attachment)){
                         $this->set('programFiles', $attachment);
                     }
+
+                    $yfullName = $this->Yacht->find('list', array('fields' => array('id','yfullName')));
+                    $this->set('yfullName', $yfullName);
 
             } else {
                 $this->redirect(array('action' => 'view'));
