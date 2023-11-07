@@ -3743,6 +3743,7 @@ $(document).on("click", ".stationarydays", function(e) {
 
    var selectedschuuid = $(this).attr('id');
    var selecteddaynumstationary = $(this).attr('data-num');
+   var datastationaryOrnot = $(this).attr('data-stat');
    //var selecteddatetext = $(".noofdayscard option:selected").text();
    var yachtId = $("#yachtId").val();
    $("#hideloader").show();
@@ -3838,6 +3839,7 @@ $(document).on("click", ".stationarydays", function(e) {
                                 var selectedmarkertitle = mapmarkerglobalObj.target.daytitle;
                                 var selectedmarkerday_num = mapmarkerglobalObj.target.day_num;
                                 //console.log(popLocation);
+                                console.log(selectedmarkertitle);
                                 fitzoommap.push(popLocation);
                                 if (markerArray.length > 0) {
                                         $('.markersnamesmodalmap').find('option').remove();
@@ -3849,7 +3851,7 @@ $(document).on("click", ".stationarydays", function(e) {
                                                     $.each(markerArray, function(key, value) {   
                                                         
                                                         
-                                                            if(selecteddaynumstationary == value.day_num){
+                                                            if(datastationaryOrnot == 1 && selecteddaynumstationary == value.day_num){
                                                                 selectedmarkertitle = value.daytitle;
                                                                 selectedmarkerday_num = value.day_num;
                                                                 lattitude = value._latlng.lat;
@@ -3857,7 +3859,7 @@ $(document).on("click", ".stationarydays", function(e) {
                                                                 scheduleId = value.scheduleId;
                                                                 distancetotal = value.distancetotal;
                                                                 durationtotal = value.durationtotal;
-                                                            }
+                                                            } 
                                                         
 
                                                                 $('.markersnamesmodalmap')
@@ -3888,6 +3890,7 @@ $(document).on("click", ".stationarydays", function(e) {
                                 ModalMapsinglemarkerlong = longitude;
 
                                 var frommarker = selectedmarkertitle +' - Day '+selectedmarkerday_num; //alert('llll')
+                                console.log(frommarker);
                                 $("#embarkation").text(selectedmarkertitle); 
                                 routeexists = 1;
                                 drawrouteinmodal(frommarker);

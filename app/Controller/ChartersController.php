@@ -5410,7 +5410,7 @@ class ChartersController extends AppController {
                                         $samlatlong[$publishmap['CharterProgramSchedule']['title']][] = $publishmap['CharterProgramSchedule']['lattitude'];
                                             }
                                     $markerimg = BASE_URL.$basefolder.'/app/webroot/css/leaflet/dist/images/marker-icon.png';
-                            $stationarylocations[$publishmap['CharterProgramSchedule']['lattitude']][] = "<span class='stationarydays' data-num=".$publishmap['CharterProgramSchedule']['day_num']." id=".$publishmap['CharterProgramSchedule']['UUID']."><img src=".$markerimg." width='15px height='15px' > Day ".$scheduleData[$key]['CharterProgramSchedule']['day_num']."&nbsp;&nbsp;".$scheduleData[$key]['CharterProgramSchedule']['week_days']."</span>"; //same stationarylocations
+                            $stationarylocations[$publishmap['CharterProgramSchedule']['lattitude']][] = "<span class='stationarydays' data-num=".$publishmap['CharterProgramSchedule']['day_num']." data-statdate=".$scheduleData[$key]['CharterProgramSchedule']['day_dates']." data-stat=".$publishmap['CharterProgramSchedule']['stationary']." id=".$publishmap['CharterProgramSchedule']['UUID']."><img src=".$markerimg." width='15px height='15px' > Day ".$scheduleData[$key]['CharterProgramSchedule']['day_num']."&nbsp;&nbsp;".$scheduleData[$key]['CharterProgramSchedule']['week_days']."</span>"; //same stationarylocations
 
                                     ////////////////////////////////
                                 $loctitle = $publishmap['CharterProgramSchedule']['title'];
@@ -5634,6 +5634,13 @@ class ChartersController extends AppController {
                         $first = reset($crusingModaltitle);
                         $last = end($crusingModaltitle);
 
+                        if(!empty($markertotal)){
+                            $myLastmarkertotal = end($markertotal);
+                             $endname = $myLastmarkertotal['endplace']; //exit;
+                             $markertotal[$endname] = $myLastmarkertotal;
+        
+                        }
+
                         $this->set('embarkation_chprg', $embarkation_chprg);
                         $this->set('debarkation_chprg', $debarkation_chprg);
                       
@@ -5830,7 +5837,7 @@ class ChartersController extends AppController {
                                 $samlatlong[$publishmap['CharterProgramSchedule']['title']][] = $publishmap['CharterProgramSchedule']['lattitude'];
                                     }
                             $markerimg = BASE_URL.$basefolder.'/app/webroot/css/leaflet/dist/images/marker-icon.png';
-                            $stationarylocations[$publishmap['CharterProgramSchedule']['lattitude']][] = "<span class='stationarydays' data-num=".$publishmap['CharterProgramSchedule']['day_num']." id=".$publishmap['CharterProgramSchedule']['UUID']."><img src=".$markerimg." width='15px height='15px' > Day ".$scheduleData[$key]['CharterProgramSchedule']['day_num']."&nbsp;&nbsp;".$scheduleData[$key]['CharterProgramSchedule']['week_days']."</span>"; //same stationarylocations
+                            $stationarylocations[$publishmap['CharterProgramSchedule']['lattitude']][] = "<span class='stationarydays' data-num=".$publishmap['CharterProgramSchedule']['day_num']." data-stat=".$publishmap['CharterProgramSchedule']['stationary']." id=".$publishmap['CharterProgramSchedule']['UUID']."><img src=".$markerimg." width='15px height='15px' > Day ".$scheduleData[$key]['CharterProgramSchedule']['day_num']."&nbsp;&nbsp;".$scheduleData[$key]['CharterProgramSchedule']['week_days']."</span>"; //same stationarylocations
 
                         ////////////////////////////////
                                 $loctitle = $publishmap['CharterProgramSchedule']['title'];
@@ -6120,6 +6127,14 @@ class ChartersController extends AppController {
                 
                 //echo "<pre>";print_r($scheduleData);
                 //echo "<pre>";print_r($markertotal); exit;
+
+                if(!empty($markertotal)){
+                    $myLastmarkertotal = end($markertotal);
+                     $endname = $myLastmarkertotal['endplace']; //exit;
+                     $markertotal[$endname] = $myLastmarkertotal;
+
+                }
+                //echo "<pre>";print_r($markertotal); exit;
                 $fromtoConditions = "charter_program_id = '$charterProgramId' AND is_deleted = 0";
                 $fromtoquery = "SELECT * FROM $yachtDbName.charter_program_schedules CharterProgramSchedule WHERE $fromtoConditions order by day_num";
                 $fromtoresult = $this->CharterGuest->query($fromtoquery);
@@ -6244,6 +6259,7 @@ class ChartersController extends AppController {
 
                     if(!empty($scheduleData)){
                         $myLastElement = end($scheduleData);
+                        $org_title = $myLastElement['CharterProgramSchedule']['title'];
                         $to_location = $myLastElement['CharterProgramSchedule']['to_location'];
                         $myLastElement['CharterProgramSchedule']['title'] = $myLastElement['CharterProgramSchedule']['to_location'];
                         $location_names = $this->CharterGuest->query("SELECT * FROM $yachtDbName.location_contents LocationContent WHERE LocationContent.location = '$to_location' AND LocationContent.type = 'Location'");
@@ -6253,6 +6269,7 @@ class ChartersController extends AppController {
                         $myLastElement['CharterProgramSchedule']['longitude'] = $location_names[0]['LocationContent']['longitude'];
                         $myLastElement['CharterProgramSchedule']['title'] = $myLastElement['CharterProgramSchedule']['to_location'];
                         $myLastElement['CharterProgramSchedule']['notes'] = $myLastElement['CharterProgramSchedule']['debarkation_desc'];
+                        $myLastElement['CharterProgramSchedule']['lastarr_title'] = $org_title;
                         
                         // //
                         // //echo "<pre>";print_r($scheduleData);
@@ -6355,12 +6372,14 @@ class ChartersController extends AppController {
                         $chk_endscheduleData = $this->CharterGuest->query("SELECT * FROM $yachtDbName.charter_program_schedules CharterProgramSchedule WHERE UUID = '$scheduleId' AND is_deleted = 0 LIMIT 1");
                         $chk_deb_endlocation = htmlspecialchars($chk_endscheduleData[0]['CharterProgramSchedule']['to_location']);
                         $chk_deb_debarkation_flag = ($chk_endscheduleData[0]['CharterProgramSchedule']['debarkation_flag']);
+                        $chk_deb_stationary_flag = ($chk_endscheduleData[0]['CharterProgramSchedule']['stationary']);
                         $last_marker_display_iti_modal = 0;
                         //echo $chk_deb_debarkation_flag.'--'.$daytitle.'--'.$chk_deb_endlocation; //exit;
-                        if($daytitle == $chk_deb_endlocation){
+                        if($daytitle == $chdata_debarkation){
                             $last_marker_display_iti_modal = 1;
                         }
                         //echo $last_marker_display_iti_modal; exit;
+                    //$modaldisplayDate = "";
                     if($last_marker_display_iti_modal == 0){
                         $schUUIDs  =  explode(",",$scheduleSameLocationUUID);
                         $samelocationsDatesarr  =  explode(",",$samelocationsDates);
@@ -6390,16 +6409,18 @@ class ChartersController extends AppController {
                             if($scheduleId ==  $uuid){
                                 $no_of_days_options .= '<option value="'.$uuid.'" selected>Day '.$scheduleDataNum.$space.$samelocationsDatesarr[$key].'</option>';
                                 $modaldisplayDate = date("D d M Y",strtotime($samelocationsDatesarr[$key]));
+                                
                             }else{
                                 $no_of_days_options .= '<option value="'.$uuid.'">Day '.$scheduleDataNum.$space.$samelocationsDatesarr[$key].'</option>';
                             }
                         }
+                        
                     }else{
                         $no_of_days_options = "";
                         $modaldisplayDate = date("D d M Y",strtotime($chdata_debarkation_date));
                         
                     }
-
+                    //echo "<pre>";print_r($modaldisplayDate); exit;
                 $scheduleData = $this->CharterGuest->query("SELECT * FROM $yachtDbName.charter_program_schedules CharterProgramSchedule WHERE UUID = '$scheduleId' AND is_deleted = 0 LIMIT 1");
                 //echo "<pre>";print_r($scheduleData); exit;
                 $basefolder = $this->request->base;

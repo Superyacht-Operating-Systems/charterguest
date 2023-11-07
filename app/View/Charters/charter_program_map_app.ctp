@@ -3615,6 +3615,7 @@ $(document).on("click", ".stationarydays", function(e) {
 
    var selectedschuuid = $(this).attr('id');
    var selecteddaynumstationary = $(this).attr('data-num');
+   var datastationaryOrnot = $(this).attr('data-stat');
    //var selecteddatetext = $(".noofdayscard option:selected").text();
    var yachtId = $("#yachtId").val();
   //alert('gg')
@@ -3747,7 +3748,7 @@ $(document).on("click", ".stationarydays", function(e) {
                                         var temptitle = [];                        
                                                     $.each(markerArray, function(key, value) {   
                                                         
-                                                        if(selecteddaynumstationary == value.day_num){
+                                                        if(datastationaryOrnot == 1 && selecteddaynumstationary == value.day_num){
                                                                 selectedmarkertitle = value.daytitle;
                                                                 selectedmarkerday_num = value.day_num;
                                                                 lattitude = value._latlng.lat;
