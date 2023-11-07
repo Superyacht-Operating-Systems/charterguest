@@ -185,7 +185,7 @@ class ChartersController extends AppController {
                         $session = $this->Session->read('charter_info.CharterGuest');
                         $this->loadModel('Yacht');
                         $yachtData = $this->Yacht->find('first', array('conditions' => array('id' => $session['yacht_id'])));
-                        echo "<pre>"; print_r($yachtData); exit;
+                        //echo "<pre>"; print_r($yachtData); exit;
                         $this->Session->write("yachFullName", $yachtData['Yacht']['yfullName']);
                         $this->Session->write("yachtID", $yachtData['Yacht']['id']);
                         $this->Session->write("charter_info.CharterGuest.yacht_name", $yachtData['Yacht']['yfullName']);
