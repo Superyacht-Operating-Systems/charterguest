@@ -3896,12 +3896,12 @@ if (nextmarkername != "undefined" && nextmarkername != "" && nextmarkername != n
     for (let layer of polyLayersModalMap) { //console.log(layer);
         drawnItemsModalMap.addLayer(layer);
     }
-   
+setTimeout(() => {
     modalmap.fitBounds(drawnItemsModalMap.getBounds());
     modalmap.addLayer(drawnItemsModalMap);
     
     drawnItemsModalMap.snakeIn();
-
+}, 100);
     // setTimeout(() => {
     //     modalmap.fitBounds(polyline2.getBounds());
     // }, 100);
@@ -4723,16 +4723,18 @@ function drawrouteinmodalCSMP(frommarker) { //alert();
         }
         
 //onsole.log(drawnItemsModalMapCSMP);
+setTimeout(() => {
+
         modalmapcruisingsch.fitBounds(drawnItemsModalMapCSMP.getBounds());
      
         modalmapcruisingsch.addLayer(drawnItemsModalMapCSMP);
 
         drawnItemsModalMapCSMP.snakeIn();
-        
+    }, 100);
        
         setTimeout(() => {
             modalmapcruisingsch.invalidateSize();
-        }, 100);
+        }, 10);
         
     //}
         

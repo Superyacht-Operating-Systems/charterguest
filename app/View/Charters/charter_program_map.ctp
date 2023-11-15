@@ -4002,12 +4002,13 @@ if (nextmarkername != "undefined" && nextmarkername != "" && nextmarkername != n
     }
     
 //onsole.log(drawnItemsModalMap);
+setTimeout(() => {
     modalmap.fitBounds(drawnItemsModalMap.getBounds());
  
     modalmap.addLayer(drawnItemsModalMap);
 
     drawnItemsModalMap.snakeIn();
-    
+}, 100);
    
     setTimeout(() => {
         modalmap.invalidateSize();
@@ -5097,15 +5098,17 @@ function drawrouteinmodalCSMP(frommarker) { //alert();
         }
         
 //onsole.log(drawnItemsModalMapCSMP);
+setTimeout(() => {
         modalmapcruisingsch.fitBounds(drawnItemsModalMapCSMP.getBounds());
      
         modalmapcruisingsch.addLayer(drawnItemsModalMapCSMP);
 
         drawnItemsModalMapCSMP.snakeIn();
+    }, 100);
     
         setTimeout(() => {
             modalmapcruisingsch.invalidateSize();
-        }, 100);
+        }, 10);
         
     //}
     
