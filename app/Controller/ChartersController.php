@@ -5697,7 +5697,7 @@ class ChartersController extends AppController {
                             // //
                             // //echo "<pre>";print_r($scheduleData);
                              $scheduleData[count($scheduleData)] = $myLastElement;
-                            //echo "<pre>";print_r($scheduleData); exit;
+                            echo "<pre>";print_r($scheduleData); exit;
                         }
 
                         $this->set('scheduleData', $scheduleData);
