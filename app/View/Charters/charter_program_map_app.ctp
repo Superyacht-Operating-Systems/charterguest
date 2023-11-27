@@ -1985,6 +1985,14 @@ body.modal-open {
 
                         $fleetlocationimages = $locationimages[$schedule['CharterProgramSchedule']['id']];
 
+                        if(!empty($attachment) && !empty($attachment)){
+                            foreach ($fleetlocationimages as $key => $name) {
+                                if($name == $attachment){
+                                    unset($fleetlocationimages[$key]);
+                                }
+                            }
+                        }
+
                         ?>
                        
                        <div class="inputContainer_div">
