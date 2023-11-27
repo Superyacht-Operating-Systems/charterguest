@@ -6488,6 +6488,8 @@ class ChartersController extends AppController {
                                     }
                                 }
                             }
+
+                            $fleetlocationimages = array_map('trim', $fleetlocationimages);
                            
                          }
                          
