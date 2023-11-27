@@ -2025,6 +2025,14 @@ border-radius: 4px; */
 
                         $fleetlocationimages = $locationimages[$schedule['CharterProgramSchedule']['id']];
 
+                        if(!empty($attachment) && !empty($attachment)){
+                            foreach ($fleetlocationimages as $key => $name) {
+                                if($name == $attachment){
+                                    unset($fleetlocationimages[$key]);
+                                }
+                            }
+                        }
+
                         $locationCommentsdata = $locationComment[$schedule['CharterProgramSchedule']['id']];
 
                         //echo $locationCommentsdata['programScheduleUUID'];
