@@ -5697,12 +5697,13 @@ class ChartersController extends AppController {
                             // //
                             // //echo "<pre>";print_r($scheduleData);
                              $scheduleData[count($scheduleData)] = $myLastElement;
-                            echo "<pre>";print_r($scheduleData); exit;
+                             echo "<pre>";print_r($scheduleData); //exit;
                         }
 
                         $this->set('scheduleData', $scheduleData);
 
                         $this->set('locationimages', $locationimages);
+                        echo "<pre>";print_r($locationimages); exit;
                         //$this->set('locationComment', $locationComment);
 
                     } else {
