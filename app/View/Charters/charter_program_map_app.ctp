@@ -2027,7 +2027,7 @@ body.modal-open {
                                 } ?>
                                 </div><span class="img_count_div">
                                <?php if(isset($fleetlocationimages) && !empty($fleetlocationimages)){ 
-                                    $fleetimagecount = count($fleetlocationimages);
+                                    $fleetimagecount = count($fleetlocationimages)+1;
                                     if($fleetimagecount > 1){
                                         ?>
                                         <span class="img_count">                    
