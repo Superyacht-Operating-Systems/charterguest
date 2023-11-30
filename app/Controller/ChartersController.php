@@ -5417,7 +5417,7 @@ class ChartersController extends AppController {
                                 //$loctitle = mysql_real_escape_string($publishmap['CharterProgramSchedule']['title']);
                                 $LocationContent = $this->CharterGuest->query("SELECT * FROM $yachtDbName.location_contents LocationContent WHERE LocationContent.location = '$loctitle' AND LocationContent.type = 'Location'");
                             
-                                $fleetlocationimages = "";
+                                $fleetlocationimages = array();
                                 //echo "<pre>";print_r($LocationContent); exit;
                                 if(!empty($LocationContent)){
                                     $LocationContentFleetyour_image = $LocationContent[0]['LocationContent']['your_image'];
