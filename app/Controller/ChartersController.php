@@ -6492,6 +6492,12 @@ class ChartersController extends AppController {
                                 $fleetlocationimages = array_merge($fleetlocationyour_images,$fleetlocationimagesarr);
                             //}
                             //echo "<pre>";print_r($fleetlocationimages); exit;
+                            
+
+                            if(isset($fleetlocationimages) && !empty($fleetlocationimages)){ 
+                                $fleetlocationimages = array_map('trim', $fleetlocationimages);
+                            }
+
                             if(!empty($fleetlocationimages)){
                                 foreach ($fleetlocationimages as $key => $name) {
                                     if($name == $attachment){
@@ -6499,12 +6505,10 @@ class ChartersController extends AppController {
                                     }
                                 }
                             }
-
-                            if(isset($fleetlocationimages) && !empty($fleetlocationimages)){ 
-                                $fleetlocationimages = array_map('trim', $fleetlocationimages);
-                            }
                            
                          }
+
+                         
                          
                          //echo "<pre>";print_r($fleetlocationimages); exit;
                         //////////////////////
