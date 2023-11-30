@@ -5439,7 +5439,9 @@ class ChartersController extends AppController {
                                     
                                 }
                                 //echo "<pre>";print_r($fleetlocationimages); exit;
+                                if(!empty($fleetlocationimages) && !empty($fleetlocationimages)){
                                 $trimmed_array = array_map('trim', $fleetlocationimages);
+                                }
                                 $locationimages[$publishmap['CharterProgramSchedule']['id']] = $trimmed_array;
                         /////////////////////////////////
                             
@@ -5870,7 +5872,9 @@ class ChartersController extends AppController {
                                     
                                 }
                                 //echo "<pre>";print_r($fleetlocationimages); exit;
+                                if(!empty($fleetlocationimages) && !empty($fleetlocationimages)){
                                 $trimmed_array = array_map('trim', $fleetlocationimages);
+                                }
                                 $locationimages[$publishmap['CharterProgramSchedule']['id']] = $trimmed_array;
                         /////////////////////////////////
                        
@@ -6490,7 +6494,9 @@ class ChartersController extends AppController {
                                 }
                             }
 
-                            $fleetlocationimages = array_map('trim', $fleetlocationimages);
+                            if(isset($fleetlocationimages) && !empty($fleetlocationimages)){ 
+                                $fleetlocationimages = array_map('trim', $fleetlocationimages);
+                            }
                            
                          }
                          
