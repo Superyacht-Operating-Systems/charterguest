@@ -5413,7 +5413,9 @@ class ChartersController extends AppController {
                             $stationarylocations[$publishmap['CharterProgramSchedule']['lattitude']][] = "<span class='stationarydays' data-num=".$publishmap['CharterProgramSchedule']['day_num']." data-statdate=".$scheduleData[$key]['CharterProgramSchedule']['day_dates']." data-stat=".$publishmap['CharterProgramSchedule']['stationary']." id=".$publishmap['CharterProgramSchedule']['UUID']."><img src=".$markerimg." width='15px height='15px' > Day ".$scheduleData[$key]['CharterProgramSchedule']['day_num']."&nbsp;&nbsp;".$scheduleData[$key]['CharterProgramSchedule']['week_days']."</span>"; //same stationarylocations
 
                                     ////////////////////////////////
-                                echo $loctitle = $publishmap['CharterProgramSchedule']['title'];
+                                $loctitle = $publishmap['CharterProgramSchedule']['title'];
+                                $loctitlev = str_replace("'", "", $loctitle);    
+                                $loctitle = str_replace('"', "", $loctitlev);   
                                 //$loctitle = mysql_real_escape_string($publishmap['CharterProgramSchedule']['title']);
                                 $LocationContent = $this->CharterGuest->query("SELECT * FROM $yachtDbName.location_contents LocationContent WHERE LocationContent.location = '$loctitle' AND LocationContent.type = 'Location'");
                             
@@ -5429,8 +5431,8 @@ class ChartersController extends AppController {
                                     if(!empty($LocationContentFleetimage)){
                                         $fleetlocationimagesarr =  explode(',',$LocationContentFleetimage);
                                     }
-                                    // echo "<pre>";print_r($fleetlocationyour_images);
-                                    // echo "<pre>";print_r($fleetlocationimagesarr);
+                                    echo "<pre>";print_r($fleetlocationyour_images);
+                                    echo "<pre>";print_r($fleetlocationimagesarr);
                                     if(!empty($LocationContentFleetyour_image) && !empty($LocationContentFleetimage)){
                                     $fleetlocationimages = array_merge($fleetlocationyour_images,$fleetlocationimagesarr);
                                     }
