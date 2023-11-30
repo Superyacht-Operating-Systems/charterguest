@@ -5748,7 +5748,7 @@ class ChartersController extends AppController {
                         $this->set('scheduleData', $scheduleData);
 
                         $this->set('locationimages', $locationimages);
-                        //echo "<pre>";print_r($locationimages); exit;
+                        echo "<pre>";print_r($locationimages); exit;
                         //$this->set('locationComment', $locationComment);
 
                     } else {
