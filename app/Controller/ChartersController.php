@@ -5425,10 +5425,12 @@ class ChartersController extends AppController {
                                     $LocationContentFleetyour_image = $LocationContent[0]['LocationContent']['your_image'];
                                     //$fleetlocationimages = array();
                                     if(!empty($LocationContentFleetyour_image)){
+                                        $fleetlocationyour_images = array();
                                         $fleetlocationyour_images =  explode(',',$LocationContentFleetyour_image);
                                     }
                                     $LocationContentFleetimage = $LocationContent[0]['LocationContent']['image'];
                                     if(!empty($LocationContentFleetimage)){
+                                        $fleetlocationimagesarr = array();
                                         $fleetlocationimagesarr =  explode(',',$LocationContentFleetimage);
                                     }
                                     echo "<pre>";print_r($fleetlocationyour_images);
