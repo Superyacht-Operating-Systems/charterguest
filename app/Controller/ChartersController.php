@@ -5689,7 +5689,7 @@ class ChartersController extends AppController {
                         if(isset($cruising_unit) && !empty($cruising_unit)){
                         $this->set('cruising_unit', $cruising_unit);
                         }
-
+                        $myLastElement_locationimages = array();
                         if(!empty($scheduleData)){
                             $myLastElement = end($scheduleData);
                             $to_location = $myLastElement['CharterProgramSchedule']['to_location'];
@@ -5740,7 +5740,7 @@ class ChartersController extends AppController {
                                 if(!empty($myLastElement_fleetlocationimages)){
                                 $trimmed_array = array_map('trim', $myLastElement_fleetlocationimages);
                                 }
-                                $locationimages[$myLastElement['CharterProgramSchedule']['id']] = $trimmed_array;
+                                $myLastElement_locationimages['last'] = $trimmed_array;
 
                              //echo "<pre>";print_r($scheduleData); //exit;
                         }
@@ -5748,7 +5748,9 @@ class ChartersController extends AppController {
                         $this->set('scheduleData', $scheduleData);
 
                         $this->set('locationimages', $locationimages);
-                        echo "<pre>";print_r($locationimages); exit;
+                        $this->set('myLastElement_locationimages', $myLastElement_locationimages);
+                        
+                        //echo "<pre>";print_r($locationimages); exit;
                         //$this->set('locationComment', $locationComment);
 
                     } else {
