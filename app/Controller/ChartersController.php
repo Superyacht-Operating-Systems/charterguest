@@ -5439,6 +5439,7 @@ class ChartersController extends AppController {
                                     
                                 }
                                 //echo "<pre>";print_r($fleetlocationimages); exit;
+                                $trimmed_array = array();
                                 if(!empty($fleetlocationimages) && !empty($fleetlocationimages)){
                                 $trimmed_array = array_map('trim', $fleetlocationimages);
                                 }
