@@ -1982,8 +1982,10 @@ border-radius: 4px; */
 
                 if($to_location == $debarkation_chprg){ //echo $to_location."=========".$debarkation_chprg;
                     $attachment = $schedule['CharterProgramSchedule']['debarkation_attachment'];
+                    $last = 1;
                 }else if($to_location != $debarkation_chprg){ //echo $to_location."0000000".$debarkation_chprg;
                     $attachment = $schedule['CharterProgramSchedule']['attachment'];
+                    $last = 0;
                 }
 
                         if(isset($attachment) && !empty($attachment)){
@@ -2023,7 +2025,11 @@ border-radius: 4px; */
                         
                         $crusemaparray[$crusemap] =  "crusingschedulemap".$crusemap;
 
-                        $fleetlocationimages = $locationimages[$schedule['CharterProgramSchedule']['id']];
+                        if($last == 0){
+                            $fleetlocationimages = $locationimages[$schedule['CharterProgramSchedule']['id']];
+                        }else if($last == 1){
+                            $fleetlocationimages = $myLastElement_locationimages['last'];
+                        }
 
                         if(!empty($attachment) && !empty($attachment)){
                             foreach ($fleetlocationimages as $key => $name) {

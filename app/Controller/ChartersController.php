@@ -5894,23 +5894,24 @@ class ChartersController extends AppController {
                                 $loctitle = str_replace('"', "", $loctitlev);   
                                 $LocationContent = $this->CharterGuest->query("SELECT * FROM $yachtDbName.location_contents LocationContent WHERE LocationContent.location = '$loctitle' AND LocationContent.type = 'Location'");
                             
-                                $fleetlocationimages = "";
+                                $fleetlocationimages = array();
                                 //echo "<pre>";print_r($LocationContent); exit;
                                 if(!empty($LocationContent)){
                                     $LocationContentFleetyour_image = $LocationContent[0]['LocationContent']['your_image'];
-                                    //$fleetlocationimages = array();
+                                    $fleetlocationyour_images = array();
                                     if(!empty($LocationContentFleetyour_image)){
                                         $fleetlocationyour_images =  explode(',',$LocationContentFleetyour_image);
                                     }
                                     $LocationContentFleetimage = $LocationContent[0]['LocationContent']['image'];
+                                    $fleetlocationimagesarr = array();
                                     if(!empty($LocationContentFleetimage)){
                                         $fleetlocationimagesarr =  explode(',',$LocationContentFleetimage);
                                     }
                                     // echo "<pre>";print_r($fleetlocationyour_images);
                                     // echo "<pre>";print_r($fleetlocationimagesarr);
-                                    if(!empty($LocationContentFleetyour_image) && !empty($LocationContentFleetimage)){
+                                    //if(!empty($LocationContentFleetyour_image) && !empty($LocationContentFleetimage)){
                                     $fleetlocationimages = array_merge($fleetlocationyour_images,$fleetlocationimagesarr);
-                                    }
+                                    //}
                                     //echo "<pre>";print_r($fleetlocationimages); exit;
 
                                     
@@ -6326,8 +6327,45 @@ class ChartersController extends AppController {
                         // //echo "<pre>";print_r($scheduleData);
                          $scheduleData[count($scheduleData)] = $myLastElement;
                         //echo "<pre>";print_r($scheduleData); exit;
+
+                                 $myLastElement_loctitle = $myLastElement['CharterProgramSchedule']['to_location'];
+                                $myLastElement_loctitlev = str_replace("'", "", $myLastElement_loctitle);    
+                                $myLastElement_loctitle = str_replace('"', "", $myLastElement_loctitlev);   
+                                //$loctitle = mysql_real_escape_string($publishmap['CharterProgramSchedule']['title']);
+                                $LocationContent = $this->CharterGuest->query("SELECT * FROM $yachtDbName.location_contents LocationContent WHERE LocationContent.location = '$myLastElement_loctitle' AND LocationContent.type = 'Location'");
+                            
+                                $myLastElement_fleetlocationimages = array();
+                                //echo "<pre>";print_r($LocationContent); //exit;
+                                if(!empty($LocationContent)){
+                                    $myLastElement_image = $LocationContent[0]['LocationContent']['your_image'];
+                                    //$fleetlocationimages = array();
+                                    $myLastElement_fleetlocationyour_images = array();
+                                    if(!empty($myLastElement_image)){
+                                        
+                                        $myLastElement_fleetlocationyour_images =  explode(',',$myLastElement_image);
+                                    }
+                                    $myLastElement_LocationContentFleetimage = $LocationContent[0]['LocationContent']['image'];
+                                    $myLastElement_fleetlocationimagesarr = array();
+                                    if(!empty($myLastElement_LocationContentFleetimage)){
+                                        $myLastElement_fleetlocationimagesarr =  explode(',',$myLastElement_LocationContentFleetimage);
+                                    }
+                                    // echo "<pre>";print_r($fleetlocationyour_images);
+                                    // echo "<pre>";print_r($fleetlocationimagesarr);
+                                    //if(!empty($LocationContentFleetyour_image) && !empty($LocationContentFleetimage)){
+                                    $myLastElement_fleetlocationimages = array_merge($myLastElement_fleetlocationyour_images,$myLastElement_fleetlocationimagesarr);
+                                    //}
+                                    //echo "<pre>";print_r($fleetlocationimages); exit;
+
+                                    
+                                }
+                                //echo "<pre>";print_r($fleetlocationimages); //exit;
+                                if(!empty($myLastElement_fleetlocationimages)){
+                                $trimmed_array = array_map('trim', $myLastElement_fleetlocationimages);
+                                }
+                                $myLastElement_locationimages['last'] = $trimmed_array;
                     }
                     $this->set('scheduleData', $scheduleData);
+                    $this->set('myLastElement_locationimages', $myLastElement_locationimages);
                     //echo "<pre>";print_r($scheduleData); exit;
                     if(isset($attachment) && !empty($attachment)){
                         $this->set('programFiles', $attachment);
