@@ -5418,7 +5418,7 @@ class ChartersController extends AppController {
                                 $LocationContent = $this->CharterGuest->query("SELECT * FROM $yachtDbName.location_contents LocationContent WHERE LocationContent.location = '$loctitle' AND LocationContent.type = 'Location'");
                             
                                 $fleetlocationimages = array();
-                                //echo "<pre>";print_r($LocationContent); exit;
+                                echo "<pre>";print_r($LocationContent); //exit;
                                 if(!empty($LocationContent)){
                                     $LocationContentFleetyour_image = $LocationContent[0]['LocationContent']['your_image'];
                                     //$fleetlocationimages = array();
