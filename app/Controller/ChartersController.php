@@ -5420,7 +5420,7 @@ class ChartersController extends AppController {
                                 $LocationContent = $this->CharterGuest->query("SELECT * FROM $yachtDbName.location_contents LocationContent WHERE LocationContent.location = '$loctitle' AND LocationContent.type = 'Location'");
                             
                                 $fleetlocationimages = array();
-                                echo "<pre>";print_r($LocationContent); //exit;
+                                //echo "<pre>";print_r($LocationContent); //exit;
                                 if(!empty($LocationContent)){
                                     $LocationContentFleetyour_image = $LocationContent[0]['LocationContent']['your_image'];
                                     //$fleetlocationimages = array();
@@ -5434,8 +5434,8 @@ class ChartersController extends AppController {
                                     if(!empty($LocationContentFleetimage)){
                                         $fleetlocationimagesarr =  explode(',',$LocationContentFleetimage);
                                     }
-                                    echo "<pre>";print_r($fleetlocationyour_images);
-                                    echo "<pre>";print_r($fleetlocationimagesarr);
+                                    // echo "<pre>";print_r($fleetlocationyour_images);
+                                    // echo "<pre>";print_r($fleetlocationimagesarr);
                                     //if(!empty($LocationContentFleetyour_image) && !empty($LocationContentFleetimage)){
                                     $fleetlocationimages = array_merge($fleetlocationyour_images,$fleetlocationimagesarr);
                                     //}
@@ -5443,7 +5443,7 @@ class ChartersController extends AppController {
 
                                     
                                 }
-                                echo "<pre>";print_r($fleetlocationimages); //exit;
+                                //echo "<pre>";print_r($fleetlocationimages); //exit;
                                 if(!empty($fleetlocationimages)){
                                 $trimmed_array = array_map('trim', $fleetlocationimages);
                                 }
@@ -5711,7 +5711,7 @@ class ChartersController extends AppController {
                         $this->set('scheduleData', $scheduleData);
 
                         $this->set('locationimages', $locationimages);
-                        echo "<pre>";print_r($locationimages); exit;
+                        //echo "<pre>";print_r($locationimages); exit;
                         //$this->set('locationComment', $locationComment);
 
                     } else {
