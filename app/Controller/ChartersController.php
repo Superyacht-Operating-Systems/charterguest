@@ -774,11 +774,11 @@ class ChartersController extends AppController {
         }
         $actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
        
-        echo $actual_link."<br>"; 
+        //echo $actual_link."<br>"; 
         $parts = parse_url($actual_link);
-        echo $parts['path'];
+        //echo $parts['path'];
         $explodepath = explode('/',$parts['path']);
-        echo "<pre>";print_r($explodepath); exit;
+        //echo "<pre>";print_r($explodepath);
         $CharterGuest_id = $explodepath[4];
         $charter_program_id = $explodepath[5];
         $charter_company_id = $explodepath[6];
@@ -5785,9 +5785,9 @@ class ChartersController extends AppController {
         if (!empty($yachtDbName)) {
             $this->loadModel('CharterProgramFile');
             $this->loadModel('CharterGuest');
-            
+            echo "SELECT * FROM $yachtDbName.charter_programs CharterProgram WHERE UUID = '$charterProgramId' AND is_deleted = 0 LIMIT 1";
             $charterProgData = $this->CharterGuest->query("SELECT * FROM $yachtDbName.charter_programs CharterProgram WHERE UUID = '$charterProgramId' AND is_deleted = 0 LIMIT 1");
-            
+            echo "<pre>";print_r($charterProgData);exit;
             $charterGuestDataToMenu = $this->CharterGuest->find("first",array('conditions'=>array('charter_program_id'=>$charterProgramId)));
 
             $charterGuestDatayacht_id = $charterGuestDataToMenu['CharterGuest']['yacht_id'];
