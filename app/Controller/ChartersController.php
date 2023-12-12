@@ -5785,9 +5785,9 @@ class ChartersController extends AppController {
         if (!empty($yachtDbName)) {
             $this->loadModel('CharterProgramFile');
             $this->loadModel('CharterGuest');
-            echo "SELECT * FROM $yachtDbName.charter_programs CharterProgram WHERE UUID = '$charterProgramId' AND is_deleted = 0 LIMIT 1";
-            $charterProgData = $this->CharterGuest->query("SELECT * FROM $yachtDbName.charter_programs CharterProgram WHERE UUID = '$charterProgramId' AND is_deleted = 0 LIMIT 1");
-            echo "<pre>";print_r($charterProgData);exit;
+            
+            $charterProgData = $this->CharterGuest->query("SELECT * FROM $yachtDbName.charter_programs CharterProgram WHERE UUID = '$charterProgramId' LIMIT 1");
+            
             $charterGuestDataToMenu = $this->CharterGuest->find("first",array('conditions'=>array('charter_program_id'=>$charterProgramId)));
 
             $charterGuestDatayacht_id = $charterGuestDataToMenu['CharterGuest']['yacht_id'];
