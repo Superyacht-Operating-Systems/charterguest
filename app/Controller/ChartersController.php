@@ -2775,7 +2775,7 @@ class ChartersController extends AppController {
 
         $fleetname = $this->Session->read('fleetname');
         //echo $charterGuestAssociatelast_fleetid;
-        if(isset($charterGuestAssociatelast_fleetid)){
+        if(isset($charterGuestAssociatelast_fleetid) && $charterGuestAssociatelast_fleetid != 0){
         $this->loadModel('Fleetcompany');
         $companyData = $this->Fleetcompany->find('first', array('fields' => array('management_company_name','logo','fleetname','domain_name'), 'conditions' => array('id' => $charterGuestAssociatelast_fleetid)));
         $domain_name_fleet = $companyData['Fleetcompany']['domain_name'];
