@@ -8508,7 +8508,7 @@ function reduce_image_width($target, $newcopy, $w, $h, $ext) {
         // } else { 
         // $img = imagecreatefromjpeg($target);
         // }
-        /***************** */
+        /********@12dec23 above imagecreatefrompng shows warning so added the below code********* */
         $handle = finfo_open(FILEINFO_MIME); 
         $mime_type = finfo_file($handle, $target);
         $mime_type = mime_content_type($target);
