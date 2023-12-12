@@ -8509,6 +8509,7 @@ function reduce_image_width($target, $newcopy, $w, $h, $ext) {
         $img = imagecreatefromjpeg($target);
         }
         $tci = imagecreatetruecolor($w, $h);
+        echo $img; exit;
         // imagecopyresampled(dst_img, src_img, dst_x, dst_y, src_x, src_y, dst_w, dst_h, src_w, src_h)
         imagecopyresampled($tci, $img, 0, 0, 0, 0, $w, $h, $w_orig, $h_orig);
         if ($ext == "gif"){ 
