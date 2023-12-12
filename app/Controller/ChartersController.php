@@ -8501,15 +8501,30 @@ function reduce_image_width($target, $newcopy, $w, $h, $ext) {
         // exit;
         $img = "";
         $ext = strtolower($ext);
-        if ($ext == "gif"){ 
-        $img = imagecreatefromgif($target);
-        } else if($ext =="png"){ 
-        $img = imagecreatefrompng($target);
-        } else { 
-        $img = imagecreatefromjpeg($target);
+        // if ($ext == "gif"){ 
+        // $img = imagecreatefromgif($target);
+        // } else if($ext =="png"){ 
+        // $img = imagecreatefrompng($target);
+        // } else { 
+        // $img = imagecreatefromjpeg($target);
+        // }
+        /***************** */
+        $handle = finfo_open(FILEINFO_MIME); 
+        $mime_type = finfo_file($handle, $target);
+        $mime_type = mime_content_type($target);
+        switch(strtolower($mime_type)) {
+            case 'image/gif':
+                $img = imageCreateFromGIF($target);
+                break;
+            case 'image/png':
+                $img = imageCreateFromPNG($target);
+                break;
+            case 'image/jpeg':
+                $img = imageCreateFromJPEG($target);
+                break;    
         }
+        /**************** */
         $tci = imagecreatetruecolor($w, $h);
-        echo $img; exit;
         // imagecopyresampled(dst_img, src_img, dst_x, dst_y, src_x, src_y, dst_w, dst_h, src_w, src_h)
         imagecopyresampled($tci, $img, 0, 0, 0, 0, $w, $h, $w_orig, $h_orig);
         if ($ext == "gif"){ 
