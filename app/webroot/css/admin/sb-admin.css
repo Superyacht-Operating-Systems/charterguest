@@ -961,7 +961,7 @@ margin-top:60px;
 
 .col-md-xs-radiobox{width:50px!important;float: left;    margin-right: 10px;}
 .radio label::before{
-       background: #000;
+       background: #202020;
     border: solid 1px rgb(243 243 243 / 70%);
     border-radius: 0px!important;
     content: "";
@@ -983,7 +983,7 @@ margin-top:60px;
 
 }
 .checkbox label::before{
-background: #000;
+background: #202020;
     color: #fff;
     border: solid 1px rgb(243 243 243 / 70%);
 }

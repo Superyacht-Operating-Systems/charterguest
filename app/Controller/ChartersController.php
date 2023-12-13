@@ -808,7 +808,7 @@ class ChartersController extends AppController {
         $programFilesCond = array('CharterProgramFile.charter_program_id' => $charterData['CharterGuest']['charter_program_id'],'CharterProgramFile.yacht_id' => $charterData['CharterGuest']['yacht_id'],'CharterProgramFile.is_deleted'=>0);
         $programFiledata = $this->CharterProgramFile->find('all', array('conditions' => $programFilesCond));
 
-
+        $this->Session->delete("yachFullName");
         $charter_from_date = date("d M Y", strtotime($charterData['CharterGuest']['charter_from_date']));
         if(isset($programFiledata)){
             $programFiles[$charter_from_date]['attachment'] = $programFiledata;
@@ -820,6 +820,7 @@ class ChartersController extends AppController {
         $ydb_name = $Ydata['Yacht']['ydb_name'];
         $yfullNameDisp = $Ydata['Yacht']['yfullName'];
         
+        $this->Session->write("yachFullName", $Ydata['Yacht']['yfullName']);
         // Background image
         // $image = $Ydata['Yacht']['cg_background_image'];
         // if($image){
@@ -5970,13 +5971,15 @@ class ChartersController extends AppController {
                         }
                 }
 
+                $this->Session->delete("yachFullName");
                 
                 //echo "<pre>";print_r($YachtData); exit;
                 $cruising_speed = $YachtData[0]['Yacht']['cruising_speed'];
                 $cruising_fuel = $YachtData[0]['Yacht']['cruising_fuel'];
                 $yacht_id_fromyachtDB = $YachtData[0]['Yacht']['id'];
                 //echo $YachtData['Yacht']['cruising_unit'];
-                
+                $this->Session->write("yachFullName", $YachtData[0]['Yacht']['yfullName']);
+
                 $image = $YachtData[0]['Yacht']['cg_background_image'];
                 $fleetname = $YachtData[0]['Yacht']['fleetname'];
                 $yachtname = $YachtData[0]['Yacht']['yname'];
