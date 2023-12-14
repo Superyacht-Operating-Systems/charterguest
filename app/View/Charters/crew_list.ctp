@@ -911,7 +911,7 @@ font-size: 11px;
         </div>
     </div>
 
-<div  class="container-fluid">
+<div  class="container-fluid" style="background-color:#2a2a2a;">
   <div class="charterer-viewcontainer">  
         <!-- Head charterer id -->
         <input type="hidden" id="headChartererId" value="<?php echo $charterData['CharterGuest']['id']; ?>">

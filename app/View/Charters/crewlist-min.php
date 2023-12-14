@@ -12,8 +12,8 @@
                                             
                                         </div>
                                         <div class="row col-md-12">
-                                            <div class="col-md-9" style="border: 2px solid #5a5a5a;border-radius: 15px;
-background-color: #5a5a5a;padding: 10px 10px 10px 10px;">
+                                            <div class="col-md-9" style="border: 2px solid grey;border-radius: 15px;
+background-color: grey;padding: 10px 10px 10px 10px;">
                                             Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
                                             It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
 
@@ -36,8 +36,8 @@ background-color: #5a5a5a;padding: 10px 10px 10px 10px;">
                                         
                                     </div>
                                         <div class="row col-md-12">
-                                            <div class="col-md-9" style="border: 2px solid #5a5a5a;border-radius: 15px;
-background-color: #5a5a5a;padding: 10px 10px 10px 10px;">
+                                            <div class="col-md-9" style="border: 2px solid grey;border-radius: 15px;
+background-color: grey;padding: 10px 10px 10px 10px;">
                                             Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
 
                                             </div>
