@@ -43,8 +43,8 @@ background-color: #5a5a5a;padding: 10px 10px 10px 10px;">
                                             </div>
                                             <div class="col-md-3">
                                                 <?php 
-                                                //$SITE_URL = "https://charterguest.net/";
-                                                $SITE_URL = "http://localhost/";
+                                                $SITE_URL = "https://charterguest.net/";
+                                                //$SITE_URL = "http://localhost/";
                                                 
                                                 
                                                 $img = $SITE_URL."charterguest/app/webroot/img/220715132544_JOdie.png";

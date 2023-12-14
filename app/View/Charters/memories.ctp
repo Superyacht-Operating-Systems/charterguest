@@ -833,8 +833,8 @@ if(isset($charterGuestData) && !empty($charterGuestData)){
        <li>Memories</li>
             
             <?php 
-                                                //$SITE_URL = "https://charterguest.net/";
-                                                $SITE_URL = "http://localhost/";
+                                                $SITE_URL = "https://charterguest.net/";
+                                                //$SITE_URL = "http://localhost/";
                                                 
                                                 
                                                 $img = $SITE_URL."charterguest/app/webroot/img/youtubeplay.png";
@@ -921,24 +921,22 @@ if(isset($charterAssocData) && !empty($charterAssocData)){
        <div class="col-11">
            <img src="<?php echo $data['charterDetails']['charter_logo']; ?>" alt="">
        </div> 
-       <div class="col-11 action_links">
-        <ul>
-            <li><a href="<?php echo $website; ?>" target="_blank" style="text-decoration:none;">Yachts Website</a></li>
-            <li><a href="<?php echo $basefolder."/charters/view_guest/".$charter_program_id."/".$fleetcompany_id; ?>">Guest List</a></li>
-            <?php if ($dateTimestamp1 >= $dateTimestamp2){ ?>
-            <li><a href="#"><span class="existingCheckFunction" data-guestype="guest" data-associd ="<?php echo $associd; ?>">Preference Sheets</span></a></li>
-            <?php }else{ ?>
-                <li><a href="#"><span class="" >Memories</span></a></li> 
-            <?php } ?>     
-            <?php if($data['charterDetails']['map_url'] == "link"){ ?>
-              <li><a href="<?php echo $baseFolder."/charters/charter_program_map/".$charter_program_id.'/'.$data['charterDetails']['ydb_name'].'/guest'; ?>" title="Map is Published">Cruising Map</a> </li>
-            <?php }else if($data['charterDetails']['map_url'] == "nolink"){  ?>
-            <!-- <li><span datahover="Map is Not Published" title="Map is Not Published"><a href="#" role="button" title="Map is Not Published" aria-current="mapnolink">Cruising Map</a></span> </li> -->
-            <li class="btnNoLink" data-value="<?php echo $id; ?>"><span datahover="Map is Not Published" title="Map is Not Published"><a   role="button" title="Map is Not Published" aria-current="mapnolink">Cruising Map</a></span></li>
-            <?php } ?>
-            <!-- <li><a href="#"><span class="" >Memories</span></a></li> -->
-            <li><a href="#"><span class="" >Crew List</span></a></li>
-        </ul>   
+       <div class="col-11 action_links" style="background: #1f1f1f;color: #d9d9d9;height:126px;">
+       <ul><li>Watch</li>
+       <li>Memories</li>
+            
+            <?php 
+                                                $SITE_URL = "https://charterguest.net/";
+                                                //$SITE_URL = "http://localhost/";
+                                                
+                                                
+                                                $img = $SITE_URL."charterguest/app/webroot/img/youtubeplay.png";
+                                            ?>
+                                            <li><img src="<?php echo $img; ?>" alt="" style="border-radius: 100px;
+    width: 35px;"></li>
+                                           
+            
+       
 
 
        </div> 
