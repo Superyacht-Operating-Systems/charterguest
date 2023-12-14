@@ -755,6 +755,505 @@ class ChartersController extends AppController {
         //exit;
 
     }
+
+    /**
+     * 
+     * Load the charter programs
+     * Functionality - Loading the charter programs with details
+     * After login & from create password page.
+     * 
+     */
+    function memories() {
+        $session = $this->Session->read('charter_info');
+        
+        // echo "<pre>";print_r($sessionAssoc);exit;
+         if (empty($session)) {
+            $this->redirect(array('controller' => 'Charters', 'action' => 'index'));
+         }
+
+        $actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+        //echo "<pre>";print_r($this->Session->read());exit;
+        //echo $actual_link."<br>"; 
+        $parts = parse_url($actual_link);
+        //echo $parts['path'];
+        $explodepath = explode('/',$parts['path']);
+        //echo "<pre>";print_r($explodepath); exit;
+        $usersUUID = $explodepath[4];
+        $CharterGuestConditions = array('users_UUID' => $usersUUID);
+        $GuestListConditions = array('UUID' => $usersUUID);
+        $charterAssocConditions = array('UUID' => $usersUUID);
+        //echo $usersUUID;
+        $this->loadModel('CharterGuest');
+        $this->loadModel('GuestList');
+        $this->loadModel('CharterGuestAssociate');
+        $this->loadModel('Yacht');
+        $this->loadModel('YachtWeblink');
+        $this->loadModel('CharterProgramFile');
+        $this->loadModel('Fleetcompany');
+        $guestListData = $this->GuestList->find('first', array('conditions' => $GuestListConditions));
+        $charterGuestData = $this->CharterGuest->find('all', array('conditions' => $CharterGuestConditions, 'order' => 'CharterGuest.charter_from_date desc'));
+
+        $websiteList = $this->Yacht->find('list', array('fields' => array('id','charter_website')));
+        $yfullName = $this->Yacht->find('list', array('fields' => array('id','yfullName')));
+        $programFiles  = array();
+        $mapdetails = array();
+        //$SITE_URL = Configure::read('BASE_URL');
+        //$SITE_URL = "https://totalsuperyacht.com:8080/";
+       // echo "<pre>";print_r($guestListData); //exit;
+        // echo "<pre>";print_r($charterGuestData); exit;
+        if(isset($charterGuestData) && !empty($charterGuestData)){
+            $commentcounttotal = 0;
+            foreach($charterGuestData as $key => $value){
+                $YachtWeblinkConditionsGuest = array('YachtWeblink.charter_company_id' => $value['CharterGuest']['charter_company_id'],'YachtWeblink.yacht_id' => $value['CharterGuest']['yacht_id'],'YachtWeblink.is_deleted'=>0);
+                $YachtWeblinkdata = $this->YachtWeblink->find('first', array('conditions' => $YachtWeblinkConditionsGuest));
+
+                $programFilesCond = array('CharterProgramFile.charter_program_id' => $value['CharterGuest']['charter_program_id'],'CharterProgramFile.yacht_id' => $value['CharterGuest']['yacht_id'],'CharterProgramFile.is_deleted'=>0);
+                $programFiledata = $this->CharterProgramFile->find('all', array('conditions' => $programFilesCond));
+
+                if(isset($YachtWeblinkdata) && !empty($YachtWeblinkdata)){
+                    $isValid = preg_match("@^https?://@", $YachtWeblinkdata['YachtWeblink']['weblink']);
+                    if($isValid == 0){
+                        $YachtWeblinkdata['YachtWeblink']['weblink'] = 'https://'.$YachtWeblinkdata['YachtWeblink']['weblink'];
+                    }
+                    $charterGuestData[$key]['websitedetails'] = $YachtWeblinkdata;
+                }
+                $charter_from_date = date("d M Y", strtotime($value['CharterGuest']['charter_from_date']));
+                if(isset($programFiledata)){
+                    $programFiles[$charter_from_date]['attachment'] = $programFiledata;
+                    //$programFiles[]['startdate'] = $charter_from_date;
+                }
+                $yacht_id = $value['CharterGuest']['yacht_id'];
+                $charter_company_id = $value['CharterGuest']['charter_company_id'];
+                $yachtCond = array('Yacht.id' => $yacht_id);
+                $Ydata = $this->Yacht->find('first', array('conditions' => $yachtCond));
+                $ydb_name = $Ydata['Yacht']['ydb_name'];
+                $yname = $Ydata['Yacht']['yname'];
+                $domain_name = "";
+                if(isset($Ydata['Yacht']['domain_name'])){
+                $domain_name = $Ydata['Yacht']['domain_name'];
+                }
+                $SITE_URL = "https://totalsuperyacht.com:8080/";
+                $site_full_path = "/var/www/vhosts/wamp/www/";
+                if(isset($domain_name) && $domain_name == "charterguest"){
+                    $SITE_URL = "https://charterguest.net/";
+                    $site_full_path = "/var/www/cg-vhosts/";
+                }
+                $fleetname = "";
+                if(isset($charter_company_id) && !empty($charter_company_id)){
+                    $companyData = $this->Fleetcompany->find('first', array('fields' => array('management_company_name','logo','fleetname'), 'conditions' => array('id' => $charter_company_id)));
+                    $fleetname = $companyData['Fleetcompany']['fleetname'];
+                }
+                if(isset($programFiledata) && isset($fleetname) && !empty($fleetname)){
+                    $programFiles[$charter_from_date]['fleetname'] = $fleetname;
+                    $programFiles[$charter_from_date]['siteurl'] = $SITE_URL;
+                }
+                if(isset($value['CharterGuest']['program_image']) && !empty($value['CharterGuest']['program_image'])){
+                    if (!empty($fleetname)) {
+                        
+                        if($fleetname == "fleetbeta" || $fleetname == "SOS"){
+                            if($fleetname == "fleetbeta" && $yname == "betayacht"){
+                                $targetFullPath = $SITE_URL."fleetbeta/app/webroot/betayacht/app/webroot/img/charter_program_files/charter_program_photo/".$value['CharterGuest']['program_image'];
+                            }else{  
+                                $targetFullPath = $SITE_URL."fleetbeta/app/webroot/img/charter_program_files/charter_program_photo/".$value['CharterGuest']['program_image'];
+                            }
+                        }else if($fleetname != "fleetbeta" || $fleetname != "SOS"){
+                            $targetFullPath = $SITE_URL.$fleetname."/app/webroot/img/charter_program_files/charter_program_photo/".$value['CharterGuest']['program_image'];
+                        }else{
+                            $targetFullPath = $SITE_URL.$fleetname."/app/webroot/".$yname."/app/webroot/img/charter_program_files/charter_program_photo/".$value['CharterGuest']['program_image'];
+                        }
+                    } else {  
+                        //exit('ll');
+                        $targetFullPath = $SITE_URL.$yname."/app/webroot/img/charter_program_files/charter_program_photo/".$value['CharterGuest']['program_image'];
+                    }
+                    $file_folder_path = str_replace("$SITE_URL","$site_full_path","$targetFullPath");
+                    //echo $targetFullPath; echo $site_full_path; echo "<pre>"; echo $file_folder_path; exit;
+                    if(file_exists($file_folder_path)){
+                        $targetFullPath = $targetFullPath;
+                    }else{
+                        $targetFullPath = $this->request->base."/app/webroot/img/noimage_cp.png";
+                    }
+                    $charterGuestData[$key]['program_image'] = $targetFullPath;
+                }else{
+                    $charterGuestData[$key]['program_image'] = "#";
+                }
+                //echo $targetFullPath."<br>"; //exit;
+                $pid = $value['CharterGuest']['charter_program_id'];
+                $charterGuestData[$key]['ydb_name'] = $ydb_name;
+                $scheduleData = $this->CharterProgramFile->query("SELECT * FROM $ydb_name.charter_program_schedules CharterProgramSchedule WHERE charter_program_id = '$pid' AND is_deleted = 0");
+                if(isset($scheduleData) && !empty($scheduleData)){
+                    if(($scheduleData[0]['CharterProgramSchedule']['publish_map'] == 1)){
+                        $map = array();
+                        $map['dbname'] = $ydb_name;
+                        $map['programid'] = $value['CharterGuest']['charter_program_id'];
+                        $commentindividualtotal = $this->charter_program_map_total_msg_count($value['CharterGuest']['charter_program_id'],$ydb_name);
+                        $charterGuestData[$key]['msg_count'] = $commentindividualtotal;
+                        $map['count'] = $commentindividualtotal;
+                        $mapdetails[$charter_from_date] = $map;
+                        $commentcounttotal += $commentindividualtotal;
+                        $charterGuestData[$key]['map_url'] = "link";
+                    }else{
+                        $charterGuestData[$key]['map_url'] = "nolink";
+                    }
+                }else{
+                    $charterGuestData[$key]['map_url'] = "nolink";
+                }
+
+                // $yachtDBData = $this->Yacht->getYachtData($ydb_name);
+                // $image = $yachtDBData[0]['yachts']['cg_background_image'];
+                // $pSheetsColor = $yachtDBData[0]['yachts']['psheets_color'];
+
+                            $this->loadModel('Fleetcompany');
+                            $companyData = $this->Fleetcompany->find('first', array('fields' => array('management_company_name','logo','fleetname'), 'conditions' => array('id' => $value['CharterGuest']['charter_company_id'])));
+                            if (isset($companyData['Fleetcompany']['logo']) && !empty($companyData['Fleetcompany']['logo'])) {
+                                // $fleetLogoUrl = $cloudUrl.$companyData['Fleetcompany']['fleetname']."/img/logo/thumb/".$companyData['Fleetcompany']['logo'];
+                                $fleetLogoUrl = $SITE_URL.'/'."charterguest/img/logo/thumb/".$companyData['Fleetcompany']['logo'];
+                                //$file_folder_path1 = str_replace("$SITE_URL","$site_full_path","$fleetLogoUrl");
+                                //echo $targetFullPath; echo $site_full_path; echo "<pre>"; echo $file_folder_path; exit;
+                                //if(file_exists($file_folder_path1)){
+                                    $charterGuestData[$key]['charter_logo'] = $fleetLogoUrl;
+                               // }else{
+                               //     $charterGuestData[$key]['charter_logo'] = "#";
+                                //}
+                                
+                            } else{
+                                $fleetLogoUrl = $SITE_URL.'/'."charterguest/img/logo/thumb/charter_guest_logo.png";
+                                $charterGuestData[$key]['charter_logo'] = $fleetLogoUrl;
+                            }
+                
+            }//exit;
+            //echo "<pre>";print_r($commentcounttotal); exit;
+
+            $this->Session->write("commentcounttotal", $commentcounttotal);
+
+            $fleetname = $this->Session->read('fleetname');
+            if(isset($programFiles) && !empty($programFiles) ){
+                $attachment = array();
+                //$SITE_URL = Configure::read('BASE_URL');
+                //$SITE_URL = "https://totalsuperyacht.com:8080/";
+                foreach($programFiles as $startdate => $filedata){ 
+                    foreach($filedata['attachment'] as $file){ 
+                        $fleetname = $this->Session->read('fleetname');
+                        if(isset($filedata['fleetname'])){
+                            $fleetname = $filedata['fleetname'];
+                            $companyData1 = $this->Fleetcompany->find('first', array('fields' => array('management_company_name','logo','fleetname','domain_name'), 'conditions' => array('management_company' => $fleetname)));
+                            if(isset($companyData1['Fleetcompany']['domain_name'])){
+                                $fleet_domain_name = $companyData1['Fleetcompany']['domain_name'];
+                            }
+                            
+                        }
+                        // if(isset($fleet_domain_name) && $fleet_domain_name == "charterguest"){
+                        //         $SITE_URL = "https://charterguest.net/";
+                        // }else if(isset($filedata['siteurl'])){
+                            $SITE_URL = $filedata['siteurl'];
+                        //}
+                        $sourceImagePath = $SITE_URL.$fleetname."/app/webroot/img/charter_program_files/".$file['CharterProgramFile']['file_name'];
+                        $attachment[$startdate] = $sourceImagePath;
+                    }
+                } 
+            }
+        //echo "<pre>";print_r($attachment); echo "<pre>";print_r($programFiles); exit;
+
+         }
+
+            //  $charterAssocData = $this->CharterGuestAssociate->find('all', array('conditions' => $charterAssocConditions)); old query
+             $charterAssocData = $this->CharterGuestAssociate->find('all', array(
+                'conditions' => $charterAssocConditions, 
+                "joins" => array(
+                    array(
+                        'table' => 'charter_guests',
+                        'alias' => 'CharterGuest',
+                        'type' => 'LEFT',
+                        'conditions' => array('CharterGuestAssociate.charter_program_id = CharterGuest.charter_program_id')
+                    ),
+                ),
+                'order' => array('CharterGuest.charter_from_date' => 'DESC'),
+                ));
+                // echo " query = "; print_r($this->CharterGuestAssociate->getLastQuery());
+            //  echo "<pre>";print_r($charterAssocData); exit;
+             if(isset($charterAssocData) && !empty($charterAssocData)){
+
+                foreach($charterAssocData as $key => $value){
+                    $chConditions = array('charter_program_id' => $value['CharterGuestAssociate']['charter_program_id']);
+                    $chData = $this->CharterGuest->find('first', array('conditions' => $chConditions));
+                    $charterAssocData[$key]['charterDetails'] = $chData;
+                    
+                        $yachtCond = array('Yacht.id' => $value['CharterGuestAssociate']['yacht_id']);
+                        $charter_company_id = $value['CharterGuestAssociate']['fleetcompany_id'];
+                        $Ydata = $this->Yacht->find('first', array('conditions' => $yachtCond));
+                        if(isset($Ydata['Yacht']['ydb_name'])){
+                        $ydb_name = $Ydata['Yacht']['ydb_name'];
+                        }
+                        $domain_name = "";
+                        if(isset($Ydata['Yacht']['domain_name'])){
+                        $domain_name = $Ydata['Yacht']['domain_name'];
+                        }
+                        $SITE_URL = "https://totalsuperyacht.com:8080/";
+                        $site_full_path = "/var/www/vhosts/wamp/www/";
+                        if(isset($domain_name) && $domain_name == "charterguest"){
+                            $SITE_URL = "https://charterguest.net/";
+                            $site_full_path = "/var/www/cg-vhosts/";
+                        }
+                        $yname = $Ydata['Yacht']['yname'];
+                        $fleetname = "";
+                        if(isset($charter_company_id) && !empty($charter_company_id)){
+                            $companyData = $this->Fleetcompany->find('first', array('fields' => array('management_company_name','logo','fleetname'), 'conditions' => array('id' => $charter_company_id)));
+                            $fleetname = $companyData['Fleetcompany']['fleetname'];
+                        }
+                    if(isset($chData['CharterGuest']['program_image']) && !empty($chData['CharterGuest']['program_image'])){
+                        if (!empty($fleetname)) {
+                            if($fleetname == "fleetbeta" || $fleetname == "SOS"){
+                                if($fleetname == "fleetbeta" && $yname == "betayacht"){
+                                    $targetFullPath = $SITE_URL."fleetbeta/app/webroot/betayacht/app/webroot/img/charter_program_files/charter_program_photo/".$chData['CharterGuest']['program_image'];
+                                }else{  
+                                    $targetFullPath = $SITE_URL."fleetbeta/app/webroot/img/charter_program_files/charter_program_photo/".$chData['CharterGuest']['program_image'];
+                                }
+                            }else if($fleetname != "fleetbeta" || $fleetname != "SOS"){
+                                $targetFullPath = $SITE_URL.$fleetname."/app/webroot/img/charter_program_files/charter_program_photo/".$chData['CharterGuest']['program_image'];
+                            }else{
+                                $targetFullPath = $SITE_URL.$fleetname."/app/webroot/".$yname."/app/webroot/img/charter_program_files/charter_program_photo/".$chData['CharterGuest']['program_image'];
+                            }
+                        } else {
+                            if($yname == "betayacht"){
+                                $targetFullPath = $SITE_URL."fleetbeta/app/webroot/betayacht/app/webroot/img/charter_program_files/charter_program_photo/".$chData['CharterGuest']['program_image'];
+                            }else{
+                            $targetFullPath = $SITE_URL."/".$yname."/app/webroot/img/charter_program_files/charter_program_photo/".$chData['CharterGuest']['program_image'];
+                            }
+                        }
+                        $file_folder_path = str_replace("$SITE_URL","$site_full_path","$targetFullPath");
+                    //echo $targetFullPath; echo $site_full_path; echo "<pre>"; echo $file_folder_path; exit;
+                        if(file_exists($file_folder_path)){
+                            $targetFullPath = $targetFullPath;
+                        }else{
+                            $targetFullPath = $this->request->base."/app/webroot/img/noimage_cp.png";
+                        }
+                        $charterAssocData[$key]['charterDetails']['ch_image'] = $targetFullPath;
+                    }else{
+                        $charterAssocData[$key]['charterDetails']['ch_image'] = "#";
+                    }
+                    $charterAssocData[$key]['charterDetails']['ydb_name'] = $ydb_name;
+                    $YachtWeblinkConditions = array('YachtWeblink.charter_company_id' => $value['CharterGuestAssociate']['fleetcompany_id'],'YachtWeblink.yacht_id' => $value['CharterGuestAssociate']['yacht_id'],'YachtWeblink.is_deleted'=>0);
+                    $YachtWeblink = $this->YachtWeblink->find('first', array('conditions' => $YachtWeblinkConditions));
+                    if(isset($YachtWeblink) && !empty($YachtWeblink['YachtWeblink']['weblink'])){
+                        $isValid = preg_match("@^https?://@", $YachtWeblink['YachtWeblink']['weblink']);
+                        if($isValid == 0){
+                            $YachtWeblink['YachtWeblink']['weblink'] = 'https://'.$YachtWeblink['YachtWeblink']['weblink'];
+                        }
+                        $charterAssocData[$key]['websitedetails'] = $YachtWeblink;
+                    }
+
+                    $this->loadModel('Fleetcompany');
+                            $companyData = $this->Fleetcompany->find('first', array('fields' => array('management_company_name','logo','fleetname'), 'conditions' => array('id' => $value['CharterGuestAssociate']['fleetcompany_id'])));
+                            if (isset($companyData['Fleetcompany']['logo']) && !empty($companyData['Fleetcompany']['logo'])) {
+                                // $fleetLogoUrl = $cloudUrl.$companyData['Fleetcompany']['fleetname']."/img/logo/thumb/".$companyData['Fleetcompany']['logo'];
+                                $fleetLogoUrl = $SITE_URL.'/'."charterguest/img/logo/thumb/".$companyData['Fleetcompany']['logo'];
+                                //$file_folder_path2 = str_replace("$SITE_URL","$site_full_path","$fleetLogoUrl");
+                                //echo $targetFullPath; echo $site_full_path; echo "<pre>"; echo $file_folder_path; exit;
+                                //if(file_exists($file_folder_path2)){
+                                    $charterAssocData[$key]['charterDetails']['charter_logo'] = $fleetLogoUrl;
+                               // }else{
+                               //     $charterAssocData[$key]['charterDetails']['charter_logo'] = "#";
+                               // }
+                                
+                                
+                            } else{
+                                $fleetLogoUrl = $SITE_URL.'/'."charterguest/img/logo/thumb/charter_guest_logo.png";
+                                $charterAssocData[$key]['charterDetails']['charter_logo'] = $fleetLogoUrl;
+                            }
+
+                            $commentindividualtotal = $this->charter_program_map_total_msg_count($value['CharterGuestAssociate']['charter_program_id'],$ydb_name);
+                        $charterAssocData[$key]['charterDetails']['msg_count'] = $commentindividualtotal;
+
+                        $pid = $value['CharterGuestAssociate']['charter_program_id'];
+                        $scheduleData = $this->CharterProgramFile->query("SELECT * FROM $ydb_name.charter_program_schedules CharterProgramSchedule WHERE charter_program_id = '$pid' AND is_deleted = 0");
+                        if(isset($scheduleData) && !empty($scheduleData)){
+                            if(($scheduleData[0]['CharterProgramSchedule']['publish_map'] == 1)){
+                                
+                                $charterAssocData[$key]['charterDetails']['map_url'] = "link";
+                            }else{
+                                $charterAssocData[$key]['charterDetails']['map_url'] = "nolink";
+                            }
+                        }else{
+                            $charterAssocData[$key]['charterDetails']['map_url'] = "nolink";
+                        }
+                }
+
+             }
+     //echo "<pre>";print_r($charterGuestData); exit;
+    //     echo "<pre>";print_r($charterAssocData); exit;
+        //echo "<pre>";print_r($mapdetails); exit;
+        
+        $this->set('charterGuestData', $charterGuestData);
+        $this->set('charterAssocData', $charterAssocData);
+        $this->set('guestListData', $guestListData);
+        $this->set('websiteList', $websiteList);
+        $this->set('yfullName', $yfullName);
+        if(isset($attachment) && !empty($attachment)){
+            $this->set('programFiles', $attachment);
+        }
+        $this->set('mapdetails', $mapdetails);
+        //echo "<pre>";print_r($guestListData);
+        //exit;
+
+    }
+
+    /*
+        * Load the Charter Head's page
+        * Functionality -  Loading the Charter head's page with existing Head charterer details
+        * Developer - Nagarajan
+        * Created date - 24-May-2018
+        * Modified date - 
+    */
+    function crew_list() {
+        $session = $this->Session->read('charter_info');
+        $sessionAssoc = $this->Session->read('charter_assoc_info');
+        // echo "<pre>";print_r($sessionAssoc);exit;
+        if (empty($session)) {
+            $this->redirect(array('action' => 'index'));
+        } else if (!empty($sessionAssoc)) {
+            $this->redirect(array('action' => 'preference'));
+        }
+        $actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+       
+        //echo $actual_link."<br>"; 
+        $parts = parse_url($actual_link);
+        //echo $parts['path'];
+        $explodepath = explode('/',$parts['path']);
+        //echo "<pre>";print_r($explodepath);
+        $CharterGuest_id = $explodepath[4];
+        $charter_program_id = $explodepath[5];
+        $charter_company_id = $explodepath[6];
+        // Fetching the Head Charterer details
+        // $this->Session->delete("selectedCharterProgramUUID");
+
+        // $this->Session->write("selectedCharterProgramUUID", $charter_program_id);
+
+        //echo $this->Session->read("selectedCharterProgramUUID"); exit;
+        $this->Session->write("selectedCHID", $CharterGuest_id);
+        $this->Session->write("selectedCHPRGID", $charter_program_id);
+        $this->Session->write("selectedCHPRGCOMID", $charter_company_id);
+
+        $this->Session->delete("Fromownerguestlist");
+        $this->Session->write("Fromownerguestlist","yes");
+
+        $this->loadModel('CharterGuest');
+        $this->loadModel('CharterProgramFile');
+        $this->loadModel('Yacht');
+        $charterData = $this->CharterGuest->find('first', array('conditions' => array('id' => $CharterGuest_id)));
+        $this->set('charterData', $charterData);
+//        echo "<pre>";print_r($charterData);
+
+        /****************** */
+        $programFiles  = array();
+        $mapdetails = array();
+        $programFilesCond = array('CharterProgramFile.charter_program_id' => $charterData['CharterGuest']['charter_program_id'],'CharterProgramFile.yacht_id' => $charterData['CharterGuest']['yacht_id'],'CharterProgramFile.is_deleted'=>0);
+        $programFiledata = $this->CharterProgramFile->find('all', array('conditions' => $programFilesCond));
+
+        $this->Session->delete("yachFullName");
+        $charter_from_date = date("d M Y", strtotime($charterData['CharterGuest']['charter_from_date']));
+        if(isset($programFiledata)){
+            $programFiles[$charter_from_date]['attachment'] = $programFiledata;
+            //$programFiles[]['startdate'] = $charter_from_date;
+        }
+        $yacht_id = $charterData['CharterGuest']['yacht_id'];
+        $yachtCond = array('Yacht.id' => $yacht_id);
+        $Ydata = $this->Yacht->find('first', array('conditions' => $yachtCond));
+        $ydb_name = $Ydata['Yacht']['ydb_name'];
+        $yfullNameDisp = $Ydata['Yacht']['yfullName'];
+        
+        $this->Session->write("yachFullName", $Ydata['Yacht']['yfullName']);
+        // Background image
+        // $image = $Ydata['Yacht']['cg_background_image'];
+        // if($image){
+        //     $fleetSiteName = $Ydata['Yacht']['fleetname'];
+        //     $yachtSiteName = $Ydata['Yacht']['yname'];
+        //     $cgBackgroundImage = BASE_URL."/".$yachtSiteName.'/app/webroot/betayacht/app/webroot/img/charter_program_files/'.$image;
+        //     if (!empty($fleetSiteName)) { // IF yacht is under any Fleet
+        //         $cgBackgroundImage = BASE_URL."/".$fleetSiteName."/app/webroot/".$yachtSiteName."/app/webroot/img/charter_program_files/".$image;
+        //     }
+        // }else{
+        //     $cgBackgroundImage = "https://totalsuperyacht.com:8080/charterguest/css/admin/images/full-charter.png";
+        // }
+        $YachtData =  $this->CharterGuest->query("SELECT * FROM $ydb_name.yachts Yacht");
+        //echo "<pre>";print_r($YachtData); exit;
+        $image = $YachtData[0]['Yacht']['cg_background_image'];
+        $fleetname = $YachtData[0]['Yacht']['fleetname'];
+        $yachtname = $YachtData[0]['Yacht']['yname'];
+         
+        $YachtDetails = $this->Yacht->query("SELECT * FROM $ydb_name.yachts WHERE id = '$yacht_id' AND is_deleted = 0");
+        //echo "<pre>"; print_r($YachtDetails[0]['yachts']['captain_name']); exit('ddddd');
+        $yachtcaptainname = $YachtDetails[0]['yachts']['captain_name'];
+        $yachtname = $YachtData[0]['Yacht']['yname'];
+        if(isset($YachtData[0]['Yacht']['domain_name'])){
+        $domain_name = $YachtData[0]['Yacht']['domain_name'];
+        }
+                        if(isset($domain_name) && $domain_name == "charterguest"){
+                            $SITE_URL = "https://charterguest.net/";
+                        }else{
+                            $SITE_URL = "https://totalsuperyacht.com:8080/";
+                        }
+        $cgBackgroundImage = $this->getBackgroundImageUrl($image, $fleetname, $yachtname,$SITE_URL);
+        $this->Session->write("cgBackgroundImage", $cgBackgroundImage);
+        // Background image
+        $this->Session->delete("GuestListYname");
+        $this->Session->write("GuestListYname", $yfullNameDisp);
+        $this->Session->delete("GuestCaptaionName");
+        $this->Session->write("GuestCaptaionName", $yachtcaptainname);
+        
+        $pid = $charterData['CharterGuest']['charter_program_id'];
+        //echo "SELECT * FROM $ydb_name.charter_program_schedules CharterProgramSchedule WHERE charter_program_id = '$pid' AND is_deleted = 0";
+        $scheduleData = $this->CharterProgramFile->query("SELECT * FROM $ydb_name.charter_program_schedules CharterProgramSchedule WHERE charter_program_id = '$pid' AND is_deleted = 0");
+        //echo "<pre>";print_r($scheduleData);exit;
+        if(isset($scheduleData) && !empty($scheduleData)){
+            if(($scheduleData[0]['CharterProgramSchedule']['publish_map'] == 1)){
+                $map = array();
+                $map['dbname'] = $ydb_name;
+                $map['programid'] = $charterData['CharterGuest']['charter_program_id'];
+                $mapdetails[$charter_from_date] = $map;
+            }
+        }
+
+        $this->set('mapdetails', $mapdetails);
+        /*********************** */
+        
+        // Fetching the Charter guest associates details
+        $this->loadModel('CharterGuestAssociate');
+        $charterAssocData = $this->CharterGuestAssociate->find('all', array('conditions' => array('charter_guest_id' => $charter_program_id)));
+        $this->set('charterAssocData', $charterAssocData);
+//        echo "<pre>";print_r($charterAssocData);exit;
+        
+        // Fetch the Charter company details
+        $this->loadModel('Fleetcompany');
+        
+        $companyData = $this->Fleetcompany->find('first', array('fields' => array('management_company_name','logo','fleetname'), 'conditions' => array('id' => $charter_company_id)));
+        $this->set('companyData', $companyData);
+        $this->set('charter_company_id', $charter_company_id);
+        $this->set('ismobile',$this->is_mobile);
+        if(isset($companyData['Fleetcompany']['fleetname'])){
+        $fleetname = $companyData['Fleetcompany']['fleetname'];
+        }
+
+        if(isset($programFiles) ){
+            $attachment = array();
+            //$SITE_URL = Configure::read('BASE_URL');
+            foreach($programFiles as $startdate => $filedata){ 
+                foreach($filedata['attachment'] as $file){ 
+                    $sourceImagePath = $SITE_URL.'/'.$fleetname."/app/webroot/img/charter_program_files/".$file['CharterProgramFile']['file_name'];
+                    $attachment[$startdate] = $sourceImagePath;
+
+                }
+            } 
+        }
+
+        $this->set('programFiles', $attachment);
+
+        // Logo url
+        if (isset($companyData['Fleetcompany']['logo']) && !empty($companyData['Fleetcompany']['logo'])) {
+            $fleetLogoUrl = $SITE_URL.'/'."charterguest/img/logo/thumb/".$companyData['Fleetcompany']['logo'];
+        } else{
+            $fleetLogoUrl = $SITE_URL.'/'."charterguest/img/logo/thumb/charter_guest_logo.png";
+        }
+        $this->Session->write("fleetLogoUrl", $fleetLogoUrl);
+    }
     
     /*
         * Load the Charter Head's page
