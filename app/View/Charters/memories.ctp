@@ -663,7 +663,9 @@ input:focus {
 .col-11 ul li {
     margin-bottom: 0px;
 }
-
+.action_links {
+    margin: 10px 0px -2px 0px;
+}
 </style>
 <?php 
     $baseFolder = $this->request->base;
@@ -828,8 +830,8 @@ if(isset($charterGuestData) && !empty($charterGuestData)){
        <div class="col-11">
            <img src="<?php echo $data['charter_logo']; ?>" alt="">
        </div> 
-       <div class="col-11 action_links" style="background: #1f1f1f;color: #d9d9d9;height:126px;">
-       <ul><li>Watch</li>
+       <div class="col-11 action_links" style="background: #1f1f1f;color: #d9d9d9;height:118px;">
+       <ul style="width: 100%;"><li>Watch</li>
        <li>Memories</li>
             
             <?php 
@@ -921,8 +923,8 @@ if(isset($charterAssocData) && !empty($charterAssocData)){
        <div class="col-11">
            <img src="<?php echo $data['charterDetails']['charter_logo']; ?>" alt="">
        </div> 
-       <div class="col-11 action_links" style="background: #1f1f1f;color: #d9d9d9;height:126px;">
-       <ul><li>Watch</li>
+       <div class="col-11 action_links" style="background: #1f1f1f;color: #d9d9d9;height:118px;">
+       <ul style="width: 100%;"><li>Watch</li>
        <li>Memories</li>
             
             <?php 
