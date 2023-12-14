@@ -666,6 +666,18 @@ input:focus {
 .action_links {
     margin: 10px 0px -2px 0px;
 }
+
+.col-11 ul li {
+    list-style: none;
+    width: 100%;
+    position: relative;
+    font-weight: 600;
+    text-align: center;
+    font-size: 12px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
 </style>
 <?php 
     $baseFolder = $this->request->base;
