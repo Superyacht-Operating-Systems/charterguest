@@ -773,6 +773,7 @@ class ChartersController extends AppController {
                         $yachtData = $this->Yacht->find('first', array('conditions' => array('id' => $session['yacht_id'])));
                         //echo "<pre>"; print_r($yachtData); exit;
                         $ydb_name = $yachtData['Yacht']['ydb_name'];
+                        $this->set('yachtData', $yachtData);
                         $charterProgData = $this->Yacht->query("SELECT * FROM $ydb_name.charter_programs CharterProgram WHERE UUID = '$charterProgramId' AND is_deleted = 0");
                         //echo "<pre>"; print_r($charterProgData); exit;
             // $this->loadModel('CharterProgram');
@@ -804,7 +805,9 @@ class ChartersController extends AppController {
                     // );
                     $guestmemoryData = $this->Yacht->query("SELECT * FROM $ydb_name.charter_program_guest_memories CharterProgramGuestMemory WHERE charter_program_schedule_id = '$schduleId' AND is_deleted = 0");
                     //$guestmemoryData = $this->CharterProgramGuestMemory->find('first', array('conditions' => $conditions1));
+                    if (!empty($guestmemoryData[0])) {
                     $schduledata[$schduleId]['GuestMemory'] = $guestmemoryData[0];
+                    }
                 }
                 //echo "<pre>"; print_r($schduledata); exit;
                 $this->set('schduledata', $schduledata);
