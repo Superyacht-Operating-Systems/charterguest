@@ -703,7 +703,30 @@ font-weight: bold;
 .owl-carousel .md-row-h-30 label, .owl-carousel .md-row-h-10 label, .owl-carousel .md-row-h-12 label {
   padding-top: 7px;
 }
+.crewimg{
+    width:100px;
+    height:100px;
+    
 }
+
+.crewimgleft{
+    float:left !important;
+}
+
+.mobdisplay{
+    display:block;
+}
+
+.notmob{
+    display: none;
+}
+
+}
+
+.crewimgright{
+    float:right;
+}
+
 
 
 @media only screen and (max-width:768px){
@@ -783,6 +806,13 @@ font-size: 11px;
 .disableBeforesave {
         background:#0c0a0af2 !important;
         color:#fff;
+}
+
+.charterer-viewcontainer {
+    width: 100%;
+    display: inline-block;
+    padding-top: 0px!important;
+    margin-bottom: 100px;
 }
 </style>
   <div class="modal fade info-modal-pop" id="info-modal" role="dialog">
@@ -872,7 +902,7 @@ font-size: 11px;
 </div>
 </div>
 </div>
-<!-- <h1 class="position-mobile-head rowgustlist-p">Guest List</h1> -->
+<h1 class="position-mobile-head rowgustlist-p">Crew List</h1>
 
             
 
@@ -913,16 +943,6 @@ font-size: 11px;
 
 <div  class="container-fluid" style="background-color:#2a2a2a;">
   <div class="charterer-viewcontainer">  
-        <!-- Head charterer id -->
-        <input type="hidden" id="headChartererId" value="<?php echo $charterData['CharterGuest']['id']; ?>">
-        <!-- Charter program id -->
-        <input type="hidden" id="charterProgramId" value="<?php echo $charterData['CharterGuest']['charter_program_id']; ?>">
-        <!-- Yacht id -->
-        <input type="hidden" id="yachtId" value="<?php echo $charterData['CharterGuest']['yacht_id']; ?>">
-        <!-- company id -->
-        <input type="hidden" id="charter_company_id" value="<?php echo $charter_company_id; ?>">
-        <!-- Charter head salutation -->
-        <input type="hidden" id="existSalutation" value="<?php echo $charterData['CharterGuest']['salutation']; ?>">
 
 <div class="table table-condensed no-border" id="guestDetailsTable">
 <div class="header-row">

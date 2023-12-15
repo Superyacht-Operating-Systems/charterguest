@@ -8,52 +8,54 @@
                                 <div class="charterRow">
                                     <div class="">
                                         <div class="row col-md-12">
-                                            <div class="col-md-9"><h2>David - Captain</h2></div>
+                                            <div class="col-md-9 notmob"><h2>David - Captain</h2></div>
                                             
                                         </div>
                                         <div class="row col-md-12">
-                                            <div class="col-md-9" style="border: 2px solid grey;border-radius: 15px;
-background-color: grey;padding: 10px 10px 10px 10px;">
-                                            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-                                            It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
-
-                                            </div>
-                                            <div class="col-md-3">
+                                            <div class="col-md-3 crewimgleft" style="float:right;">
                                                         <?php 
-                                                        //$SITE_URL = "https://charterguest.net/";
-                                                        $SITE_URL = "http://localhost/";
+                                                        $SITE_URL = "https://charterguest.net/";
+                                                        //$SITE_URL = "http://localhost/";
                                                         
                                                         
                                                         $img = $SITE_URL."charterguest/app/webroot/img/220715132544_JOdie.png";
                                                     ?>
-                                                    <img src="<?php echo $img; ?>" alt="" style="border-radius: 15px;" width="150px" height="150px">
+                                                    <img class="crewimg" src="<?php echo $img; ?>" alt="" style="border-radius: 15px;" width="200px" height="200px">
+                                            </div>
+                                            <div class="col-md-9 pull-left" style="border: 2px solid grey;border-radius: 15px;
+background-color: grey;padding: 10px 10px 10px 10px;height: 200px;
+overflow: auto;">
+                                            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. 
+
                                             </div>
                                         </div>
                                     </div>
-                                    <br/><br/><br/><br/>
+</div>
+                                    <div class="">
                                     <div class="row col-md-12">
                                         <div class="col-md-9"><h2>David - Captain</h2></div>
                                         
                                     </div>
                                         <div class="row col-md-12">
-                                            <div class="col-md-9" style="border: 2px solid grey;border-radius: 15px;
-background-color: grey;padding: 10px 10px 10px 10px;">
-                                            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
-
+                                            <div class="col-md-3 crewimgleft"  style="float:right;">
+                                                        <?php 
+                                                        $SITE_URL = "https://charterguest.net/";
+                                                        //$SITE_URL = "http://localhost/";
+                                                        
+                                                        
+                                                        $img = $SITE_URL."charterguest/app/webroot/img/220715132544_JOdie.png";
+                                                    ?>
+                                                    <img class="crewimg" src="<?php echo $img; ?>" alt="" style="border-radius: 15px;" width="200px" height="200px">
                                             </div>
-                                            <div class="col-md-3">
-                                                <?php 
-                                                $SITE_URL = "https://charterguest.net/";
-                                                //$SITE_URL = "http://localhost/";
-                                                
-                                                
-                                                $img = $SITE_URL."charterguest/app/webroot/img/220715132544_JOdie.png";
-                                            ?>
-                                            <img src="<?php echo $img; ?>" alt="" style="border-radius: 15px;" width="150px" height="150px">
+                                            <div class="col-md-9 pull-left" style="border: 2px solid grey;border-radius: 15px;
+background-color: grey;padding: 10px 10px 10px 10px;height: 200px;
+overflow: auto;">
+                                            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. 
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+</div>
                             
                              
                                
