@@ -773,7 +773,9 @@ class ChartersController extends AppController {
                         $yachtData = $this->Yacht->find('first', array('conditions' => array('id' => $session['yacht_id'])));
                         //echo "<pre>"; print_r($yachtData); exit;
                         $ydb_name = $yachtData['Yacht']['ydb_name'];
-                        $this->set('yachtData', $yachtData);
+                        $yid = $yachtData['Yacht']['id'];
+                        $yachtData = $this->Yacht->query("SELECT * FROM $ydb_name.yachts Yacht WHERE id = '$yid'");
+                        $this->set('yachtData', $yachtData[0]);
                         $charterProgData = $this->Yacht->query("SELECT * FROM $ydb_name.charter_programs CharterProgram WHERE UUID = '$charterProgramId' AND is_deleted = 0");
                         //echo "<pre>"; print_r($charterProgData); exit;
             // $this->loadModel('CharterProgram');
