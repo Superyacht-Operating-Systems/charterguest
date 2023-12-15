@@ -670,7 +670,10 @@ input:focus {
 <script>
     var BASE_FOLDER = "<?php echo $baseFolder; ?>";
 </script> 
-
+<?php 
+                     
+                     $guestListUUID = $this->Session->read('guestListUUID');
+                    ?>
 <div class="flexrow flexrow-full-container">
 <div class="nav-side-menu-full-container">
 <div class="nav-side-menu">
@@ -720,6 +723,7 @@ input:focus {
                    <li class="menu__item" id="MenuHowToVideoCharterHead"><a href="#">Head Charterer</a></li>
                 </ul>
             </li>
+        <li> <a href="<?php echo $baseFolder."/charters/memories/".$guestListUUID; ?>" target="blank">Memories</a></li>    
         <li> <a href="<?php echo $baseFolder."/charters/privacytermsofuse/1" ?>" target="blank">Terms of Use</a></li>
         <li> <a href="<?php echo $baseFolder."/charters/privacytermsofuse/2" ?>" target="blank">Privacy Policy</a></li>
         <?php } ?>
@@ -750,10 +754,7 @@ input:focus {
                        echo $guestListData['GuestList']['email'];
                     } ?></span> -->
 
-                    <?php 
-                     
-                     $guestListUUID = $this->Session->read('guestListUUID');
-                    ?>
+                    
         </div>
 
     </div>
@@ -834,7 +835,7 @@ if(isset($charterGuestData) && !empty($charterGuestData)){
             <?php if ($dateTimestamp1 >= $dateTimestamp2){ ?>
             <li><a href="#"><span class="existingCheckFunction" data-guestype="owner" data-associd ="<?php echo $id; ?>">Preference Sheets</span></a></li>
             <?php }else{ ?>
-                <li><a href="<?php echo $basefolder."/charters/memories/".$guestListUUID; ?>"><span class="" >Memories</span></a></li> 
+                <li><a href="<?php echo $basefolder."/charters/presentations/".$charter_program_id; ?>" target="_blank"><span class="" >Memories</span></a></li> 
             <?php } ?>     
             <?php if($data['map_url'] == "link"){ ?>
                 <li><a href="<?php echo $baseFolder."/charters/charter_program_map/".$charter_program_id.'/'.$data['ydb_name'].'/owner'; ?>" title="Map is Published">Cruising Map</a>  <?php if(isset($msg_count) && $msg_count > 0){ ?><span class="cardbell-icon"><span class="avacard-cunt"><?php echo $msg_count; ?></span><i class="fa fa-bell"></i></span><?php } ?></li>
@@ -930,7 +931,7 @@ if(isset($charterAssocData) && !empty($charterAssocData)){
             <?php if ($dateTimestamp1 >= $dateTimestamp2){ ?>
             <li><a href="#"><span class="existingCheckFunction" data-guestype="guest" data-associd ="<?php echo $associd; ?>">Preference Sheets</span></a></li>
             <?php }else{ ?>
-                <li><a href="<?php echo $basefolder."/charters/memories/".$guestListUUID; ?>"><span class="" >Memories</span></a></li> 
+                <li><a href="<?php echo $basefolder."/charters/presentations/".$charter_program_id; ?>" target="_blank"><span class="" >Memories</span></a></li> 
             <?php } ?>     
             <?php if($data['charterDetails']['map_url'] == "link"){ ?>
               <li><a href="<?php echo $baseFolder."/charters/charter_program_map/".$charter_program_id.'/'.$data['charterDetails']['ydb_name'].'/guest'; ?>" title="Map is Published">Cruising Map</a> </li>

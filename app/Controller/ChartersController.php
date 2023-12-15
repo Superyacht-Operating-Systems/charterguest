@@ -756,6 +756,63 @@ class ChartersController extends AppController {
 
     }
 
+    /*
+     * Load the Charter memories presentation
+     * Functionality -  Loading the Charter guest memoreis presentation
+     * Developer - Rakesh
+     * Created date - 05-June-2023
+     * Modified date - 
+     */
+    function presentations($charterProgramId = null)
+    {
+        if (!empty($charterProgramId)) {
+            //echo $charterProgramId; //exit;
+            $charterProgramId = $charterProgramId;
+            $session = $this->Session->read('charter_info.CharterGuest');
+                        $this->loadModel('Yacht');
+                        $yachtData = $this->Yacht->find('first', array('conditions' => array('id' => $session['yacht_id'])));
+                        //echo "<pre>"; print_r($yachtData); exit;
+                        $ydb_name = $yachtData['Yacht']['ydb_name'];
+                        $charterProgData = $this->Yacht->query("SELECT * FROM $ydb_name.charter_programs CharterProgram WHERE UUID = '$charterProgramId' AND is_deleted = 0");
+                        //echo "<pre>"; print_r($charterProgData); exit;
+            // $this->loadModel('CharterProgram');
+            // $this->loadModel('CharterProgramSchedule');
+            // $this->loadModel('CharterProgramGuestMemory');
+            //$charterProgData = $this->CharterProgram->find("first", array('conditions' => array('UUID' => $charterProgramId, 'is_deleted' => 0)));
+            if (!empty($charterProgData)) {
+            $this->set('charterProgData', $charterProgData[0]);
+            }
+            $schduledata = array();
+            if (!empty($charterProgData)) {
+                //echo "<pre>"; print_r($charterProgData); exit;
+                // $conditions = array(
+                //     'charter_program_id' => $charterProgramId,
+                //     'is_deleted' => 0,
+                // );
+                //$scheduleData = $this->CharterProgramSchedule->find('all', array('conditions' => $conditions, 'order' => array('CharterProgramSchedule.day_num ASC', 'CharterProgramSchedule.serial_no ASC')));
+
+                $scheduleData = $this->Yacht->query("SELECT * FROM $ydb_name.charter_program_schedules CharterProgramSchedule WHERE charter_program_id = '$charterProgramId' AND is_deleted = 0 order by CharterProgramSchedule.day_num ASC, CharterProgramSchedule.serial_no ASC");
+                //echo "<pre>"; print_r($scheduleData);
+                foreach ($scheduleData as $scheduleData) {
+                    //echo "<pre>"; print_r($scheduleData); //exit;
+                    $schduleId = $scheduleData['CharterProgramSchedule']['UUID'];
+                    $schduleIdDay = $scheduleData['CharterProgramSchedule']['day_num'];
+                    $schduledata[$schduleId] = $scheduleData;
+                    // $conditions1 = array(
+                    //     'charter_program_schedule_id' => $schduleId,
+                    //     'is_deleted' => 0,
+                    // );
+                    $guestmemoryData = $this->Yacht->query("SELECT * FROM $ydb_name.charter_program_guest_memories CharterProgramGuestMemory WHERE charter_program_schedule_id = '$schduleId' AND is_deleted = 0");
+                    //$guestmemoryData = $this->CharterProgramGuestMemory->find('first', array('conditions' => $conditions1));
+                    $schduledata[$schduleId]['GuestMemory'] = $guestmemoryData[0];
+                }
+                //echo "<pre>"; print_r($schduledata); exit;
+                $this->set('schduledata', $schduledata);
+                //echo "<pre>"; print_r($scheduleData); exit;
+            }
+        }
+    }
+
     /**
      * 
      * Load the charter programs

@@ -5,61 +5,61 @@
 <div class="owl-mobilecontainer">
 <div class="owl-carousel owl-theme ">
 <!-- Head Charterer info -->
-                                <div class="charterRow">
-                                    <div class="">
-                                        <div class="row col-md-12">
-                                            <div class="col-md-9 notmob"><h2>David - Captain</h2></div>
-                                            
-                                        </div>
-                                        <div class="row col-md-12">
-                                            <div class="col-md-3 crewimgleft" style="float:right;">
-                                                        <?php 
-                                                        $SITE_URL = "https://charterguest.net/";
-                                                        //$SITE_URL = "http://localhost/";
-                                                        
-                                                        
-                                                        $img = $SITE_URL."charterguest/app/webroot/img/220715132544_JOdie.png";
-                                                    ?>
-                                                    <img class="crewimg" src="<?php echo $img; ?>" alt="" style="border-radius: 15px;" width="200px" height="200px">
-                                            </div>
-                                            <div class="col-md-9 pull-left" style="border: 2px solid grey;border-radius: 15px;
-background-color: grey;padding: 10px 10px 10px 10px;height: 200px;
-overflow: auto;">
-                                            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. 
+<div class="charterRow">
+    <div class="">
+        <div class="row col-md-12">
+            <div class="col-md-9 notmob"><h2>David - Captain</h2></div>
+            
+        </div>
+        <div class="row col-md-12">
+            <div class="col-md-3 crewimgleft" style="float:right;">
+                        <?php 
+                        $SITE_URL = "https://charterguest.net/";
+                        //$SITE_URL = "http://localhost/";
+                        
+                        
+                        $img = $SITE_URL."charterguest/app/webroot/img/220715132544_JOdie.png";
+                    ?>
+                    <img class="crewimg" src="<?php echo $img; ?>" alt="" style="border-radius: 15px;" width="200px" height="200px">
+                    <div class="mobdisplay"><p><h3 class="mobh3">Captain</h3></p><p><h3 class="mobh3">David</h3></p></div>
+            </div>
+            <div class="col-md-9 pull-left notmobcontainer" >
+            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. 
 
-                                            </div>
-                                        </div>
-                                    </div>
+            </div>
+        </div>
+    </div>
 </div>
-                                    <div class="">
-                                    <div class="row col-md-12">
-                                        <div class="col-md-9"><h2>David - Captain</h2></div>
-                                        
-                                    </div>
-                                        <div class="row col-md-12">
-                                            <div class="col-md-3 crewimgleft"  style="float:right;">
-                                                        <?php 
-                                                        $SITE_URL = "https://charterguest.net/";
-                                                        //$SITE_URL = "http://localhost/";
-                                                        
-                                                        
-                                                        $img = $SITE_URL."charterguest/app/webroot/img/220715132544_JOdie.png";
-                                                    ?>
-                                                    <img class="crewimg" src="<?php echo $img; ?>" alt="" style="border-radius: 15px;" width="200px" height="200px">
-                                            </div>
-                                            <div class="col-md-9 pull-left" style="border: 2px solid grey;border-radius: 15px;
-background-color: grey;padding: 10px 10px 10px 10px;height: 200px;
-overflow: auto;">
-                                            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. 
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-</div>
+<div class="charterRow">
+    <div class="">
+            <div class="row col-md-12">
+                <div class="col-md-9 notmob"><h2>David - Captain</h2></div>
+                
+            </div>
+            <div class="row col-md-12">
+                <div class="col-md-3 crewimgleft" style="float:right;">
+                            <?php 
+                            $SITE_URL = "https://charterguest.net/";
+                            //$SITE_URL = "http://localhost/";
                             
-                             
-                               
-   
+                            
+                            $img = $SITE_URL."charterguest/app/webroot/img/220715132544_JOdie.png";
+                        ?>
+                        <img class="crewimg" src="<?php echo $img; ?>" alt="" style="border-radius: 15px;" width="200px" height="200px">
+                        <div class="mobdisplay"><p><h3 class="mobh3">Captain</h3></p><p><h3 class="mobh3">David</h3></p></div>
+                </div>
+                <div class="col-md-9 pull-left notmobcontainer" >
+                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. 
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+
+
 
 </div></div>
 <script type="text/javascript">

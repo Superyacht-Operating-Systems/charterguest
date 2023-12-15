@@ -706,7 +706,7 @@ font-weight: bold;
 .crewimg{
     width:100px;
     height:100px;
-    
+    margin: 5px 5px 5px 5px;
 }
 
 .crewimgleft{
@@ -714,19 +714,36 @@ font-weight: bold;
 }
 
 .mobdisplay{
-    display:block;
+    display:block !important;
+    float: right;
 }
 
 .notmob{
     display: none;
 }
 
+.mobh3{
+    font-weight: bolder;
+    padding-left: 10px;
+    font-size: 20px;
+}
+
+
+}
+
+.mobdisplay{
+    display:none;
+    
 }
 
 .crewimgright{
     float:right;
 }
-
+.notmobcontainer{
+border: 2px solid grey;border-radius: 15px;
+background-color: grey;padding: 10px 10px 10px 10px;height: 200px;
+overflow: auto;
+}
 
 
 @media only screen and (max-width:768px){
