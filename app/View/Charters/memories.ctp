@@ -854,8 +854,8 @@ if(isset($charterGuestData) && !empty($charterGuestData)){
                                                 
                                                 $img = $SITE_URL."charterguest/app/webroot/img/youtubeplay.png";
                                             ?>
-                                            <li><img src="<?php echo $img; ?>" alt="" style="border-radius: 100px;
-    width: 35px;"></li>
+                                            <li><a href="<?php echo $baseFolder."/charters/presentations/".$charter_program_id; ?>" target="_blank"><img src="<?php echo $img; ?>" alt="" style="border-radius: 100px;
+    width: 35px;"></a></li>
                                            
             
        
@@ -947,8 +947,8 @@ if(isset($charterAssocData) && !empty($charterAssocData)){
                                                 
                                                 $img = $SITE_URL."charterguest/app/webroot/img/youtubeplay.png";
                                             ?>
-                                            <li><img src="<?php echo $img; ?>" alt="" style="border-radius: 100px;
-    width: 35px;"></li>
+                                            <li><a href="<?php echo $baseFolder."/charters/presentations/".$charter_program_id; ?>" target="_blank"><img src="<?php echo $img; ?>" alt="" style="border-radius: 100px;
+    width: 35px;"></a></li>
                                            
             
        
