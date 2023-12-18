@@ -1240,6 +1240,9 @@ class ChartersController extends AppController {
         $image = $YachtData[0]['Yacht']['cg_background_image'];
         $fleetname = $YachtData[0]['Yacht']['fleetname'];
         $yachtname = $YachtData[0]['Yacht']['yname'];
+
+        $this->set('fleetname', $fleetname);
+        $this->set('yachtname', $yachtname);
          
         $YachtDetails = $this->Yacht->query("SELECT * FROM $ydb_name.yachts WHERE id = '$yacht_id' AND is_deleted = 0");
         //echo "<pre>"; print_r($YachtDetails[0]['yachts']['captain_name']); exit('ddddd');
@@ -1260,6 +1263,8 @@ class ChartersController extends AppController {
         $this->Session->write("GuestListYname", $yfullNameDisp);
         $this->Session->delete("GuestCaptaionName");
         $this->Session->write("GuestCaptaionName", $yachtcaptainname);
+
+        $this->set('domain', $SITE_URL);
         
         $pid = $charterData['CharterGuest']['charter_program_id'];
         //echo "SELECT * FROM $ydb_name.charter_program_schedules CharterProgramSchedule WHERE charter_program_id = '$pid' AND is_deleted = 0";
@@ -1315,6 +1320,12 @@ class ChartersController extends AppController {
             $fleetLogoUrl = $SITE_URL.'/'."charterguest/img/logo/thumb/charter_guest_logo.png";
         }
         $this->Session->write("fleetLogoUrl", $fleetLogoUrl);
+
+        $CrewInfo = $this->CharterProgramFile->query("SELECT * FROM $ydb_name.crew_infos CrewInfo LEFT JOIN $ydb_name.users User ON (CrewInfo.user_id = User.id) LEFT JOIN $ydb_name.positions Position ON (User.position_id = Position.id) WHERE User.status = 1 AND User.user_type IN (0,1,2,7,8) AND User.show_on_cga = 1 order by User.crew_order_list ASC, User.first_name ASC");
+
+        $this->set('CrewInfo', $CrewInfo);
+
+        //echo "<pre>";print_r($CrewInfo);exit;
     }
     
     /*

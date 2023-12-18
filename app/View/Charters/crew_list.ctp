@@ -711,6 +711,7 @@ font-weight: bold;
 
 .crewimgleft{
     float:left !important;
+    margin-top: 15px;
 }
 
 .mobdisplay{
@@ -728,7 +729,26 @@ font-weight: bold;
     font-size: 20px;
 }
 
+.bgnotmob{
+    background-color:transparent !important;
+}
 
+.bgmobdisp{
+    margin-left:10px;
+    margin-right:10px;
+    height: 300px !important;
+}
+
+.mobviewheight{
+    background-color:#2a2a2a;
+    height:450px;
+    margin-top: 10px;
+}
+
+}
+
+.bgnotmob{
+    background-color:#2a2a2a;
 }
 
 .mobdisplay{
@@ -958,7 +978,7 @@ font-size: 11px;
         </div>
     </div>
 
-<div  class="container-fluid" style="background-color:#2a2a2a;">
+<div  class="container-fluid bgnotmob">
   <div class="charterer-viewcontainer">  
 
 <div class="table table-condensed no-border" id="guestDetailsTable">

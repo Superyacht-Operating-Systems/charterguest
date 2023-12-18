@@ -1,14 +1,18 @@
+<?php   
+    $BASE_FOLDER = $this->request->base; 
+?>
 <div class="owl-theme owl-dotsrow">
 <div class="owl-dots ">
 </div>
 </div>
 <div class="owl-mobilecontainer">
 <div class="owl-carousel owl-theme ">
+    <?php foreach($CrewInfo as $val){ ?>
 <!-- Head Charterer info -->
-<div class="charterRow">
+<div class="charterRow mobviewheight">
     <div class="">
         <div class="row col-md-12">
-            <div class="col-md-9 notmob"><h2>David - Captain</h2></div>
+            <div class="col-md-9 notmob"><h2><?php echo $val['User']['first_name'].' '.$val['User']['last_name']; ?> - <?php echo $val['Position']['position_name']; ?></h2></div>
             
         </div>
         <div class="row col-md-12">
@@ -17,44 +21,23 @@
                         $SITE_URL = "https://charterguest.net/";
                         //$SITE_URL = "http://localhost/";
                         
-                        
-                        $img = $SITE_URL."charterguest/app/webroot/img/220715132544_JOdie.png";
+                        if(!empty($fleetname)){
+                            $img = $domain.$fleetname."/app/webroot/".$yachtname."/app/webroot/img/users/profile_pics/".$val['User']['image'];
+                        }else{
+                            $img = $domain.$yachtname."/app/webroot/img/users/profile_pics/".$val['User']['image'];
+                        }
                     ?>
                     <img class="crewimg" src="<?php echo $img; ?>" alt="" style="border-radius: 15px;" width="200px" height="200px">
-                    <div class="mobdisplay"><p><h3 class="mobh3">Captain</h3></p><p><h3 class="mobh3">David</h3></p></div>
+                    <div class="mobdisplay"><p><h3 class="mobh3"><?php echo $val['Position']['position_name']; ?></h3></p><p><h3 class="mobh3"><?php echo $val['User']['first_name'].' '.$val['User']['last_name']; ?></h3></p></div>
             </div>
-            <div class="col-md-9 pull-left notmobcontainer" >
-            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. 
+            <div class="col-md-9 pull-left notmobcontainer bgmobdisp" >
+            <?php echo $val['CrewInfo']['crew_bios']; ?>
 
             </div>
         </div>
     </div>
 </div>
-<div class="charterRow">
-    <div class="">
-            <div class="row col-md-12">
-                <div class="col-md-9 notmob"><h2>David - Captain</h2></div>
-                
-            </div>
-            <div class="row col-md-12">
-                <div class="col-md-3 crewimgleft" style="float:right;">
-                            <?php 
-                            $SITE_URL = "https://charterguest.net/";
-                            //$SITE_URL = "http://localhost/";
-                            
-                            
-                            $img = $SITE_URL."charterguest/app/webroot/img/220715132544_JOdie.png";
-                        ?>
-                        <img class="crewimg" src="<?php echo $img; ?>" alt="" style="border-radius: 15px;" width="200px" height="200px">
-                        <div class="mobdisplay"><p><h3 class="mobh3">Captain</h3></p><p><h3 class="mobh3">David</h3></p></div>
-                </div>
-                <div class="col-md-9 pull-left notmobcontainer" >
-                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. 
-
-                </div>
-            </div>
-        </div>
-    </div>
+<?php } ?>
 </div>
 </div>
 

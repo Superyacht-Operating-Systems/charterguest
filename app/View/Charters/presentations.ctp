@@ -527,5 +527,7 @@ function stopAutoplay() {
     clearInterval(intervalId);
   }
 }
-
+//$(document).ready(function() { //alert();
+  $(".mydemolabel").remove();
+//});
   </script>
