@@ -5,7 +5,7 @@
   echo $this->Html->css('fontawsome-pro/css/light.css');
   echo $this->Html->css('fontawsome-pro/css/v5-font-face.css');	
   
-$basefolder = $this->request->base; 
+$basefolder = $requrl; 
 
 // echo "presentations";
 
@@ -275,7 +275,7 @@ left: 0;
 </style>
 <div id="slides">
     
-    <div class="slide active" style="background-image: url(<?php echo $this->request->base; ?>/app/webroot/img/memories/<?php echo $yachtData['Yacht']['cg_memories_image']; ?>);">
+    <div class="slide active" style="background-image: url(<?php echo $requrl; ?>/app/webroot/img/memories/<?php echo $yachtData['Yacht']['cg_memories_image']; ?>);">
       <div class="slide_divwrap_default">
         <div class="caption" ><?php echo $charterProgData['CharterProgram']['charter_name']; ?></div>                
       </div>
@@ -287,7 +287,7 @@ left: 0;
 
     <?php foreach($schduledata as $key=>$value){ //echo "<pre>"; echo $key; print_r($value);  exit; ?>
 
-      <div class="slide" style="background-image: url(<?php echo $this->request->base; ?>/app/webroot/img/charter_program_files/itinerary_photos/<?php echo $value['CharterProgramSchedule']['attachment']; ?>););">
+      <div class="slide" style="background-image: url(<?php echo $requrl; ?>/app/webroot/img/charter_program_files/itinerary_photos/<?php echo $value['CharterProgramSchedule']['attachment']; ?>););">
         <div class="day_slide" >
 			    <div class="H_title" style="margin: 0px;">Day <?php echo $value['CharterProgramSchedule']['day_num']; ?></div>
 			    <div class="H_title" style="margin: 0px;padding-top: 2px;"><?php echo $value['CharterProgramSchedule']['title']; ?></div> 
@@ -319,7 +319,7 @@ left: 0;
                     <div class="caption_slide" ><?php echo $caption; ?></div>
                     <div class="imgbody" >
                         <div class="img_section_slide">
-                        <img src="<?php echo $this->request->base; ?>/app/webroot/img/memories/<?php echo $attachment; ?>"/>
+                        <img src="<?php echo $requrl; ?>/app/webroot/img/memories/<?php echo $attachment; ?>"/>
                         </div>
                     </div>
                 </div>

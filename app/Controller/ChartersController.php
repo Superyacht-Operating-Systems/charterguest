@@ -777,11 +777,28 @@ class ChartersController extends AppController {
                         $yachtData = $this->Yacht->query("SELECT * FROM $ydb_name.yachts Yacht WHERE id = '$yid'");
                         $this->set('yachtData', $yachtData[0]);
                         $charterProgData = $this->Yacht->query("SELECT * FROM $ydb_name.charter_programs CharterProgram WHERE UUID = '$charterProgramId' AND is_deleted = 0");
-                        //echo "<pre>"; print_r($charterProgData); exit;
-            // $this->loadModel('CharterProgram');
-            // $this->loadModel('CharterProgramSchedule');
-            // $this->loadModel('CharterProgramGuestMemory');
-            //$charterProgData = $this->CharterProgram->find("first", array('conditions' => array('UUID' => $charterProgramId, 'is_deleted' => 0)));
+                       
+        
+                        //echo "<pre>"; print_r($YachtDetails[0]['yachts']['captain_name']); exit('ddddd');
+                        $yachtcaptainname = $yachtData[0]['Yacht']['captain_name'];
+                        $yachtname = $yachtData[0]['Yacht']['yname'];
+                        $fleetname = $yachtData[0]['Yacht']['fleetname'];
+                        if(isset($yachtData[0]['Yacht']['domain_name'])){
+                        $domain_name = $yachtData[0]['Yacht']['domain_name'];
+                        }
+                        if(isset($domain_name) && $domain_name == "charterguest"){
+                            $SITE_URL = "https://charterguest.net/";
+                        }else{
+                            $SITE_URL = "https://totalsuperyacht.com:8080/";
+                        }
+
+                        if(!empty($fleetname)){
+                            $requrl = $domain.$fleetname."/app/webroot/".$yachtname;
+                        }else{
+                            $requrl = $domain.$yachtname;
+                        }
+                        $this->set('requrl', $requrl);
+                        $this->set('schduledata', $schduledata);
             if (!empty($charterProgData)) {
             $this->set('charterProgData', $charterProgData[0]);
             }
