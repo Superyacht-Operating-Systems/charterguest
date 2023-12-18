@@ -793,9 +793,9 @@ class ChartersController extends AppController {
                         }
 
                         if(!empty($fleetname)){
-                            $requrl = $domain_name.$fleetname."/app/webroot/".$yachtname;
+                            $requrl = $SITE_URL.$fleetname."/app/webroot/".$yachtname;
                         }else{
-                            $requrl = $domain_name.$yachtname;
+                            $requrl = $SITE_URL.$yachtname;
                         }
                         $this->set('requrl', $requrl);
                         
