@@ -793,12 +793,12 @@ class ChartersController extends AppController {
                         }
 
                         if(!empty($fleetname)){
-                            $requrl = $domain.$fleetname."/app/webroot/".$yachtname;
+                            $requrl = $domain_name.$fleetname."/app/webroot/".$yachtname;
                         }else{
-                            $requrl = $domain.$yachtname;
+                            $requrl = $domain_name.$yachtname;
                         }
                         $this->set('requrl', $requrl);
-                        $this->set('schduledata', $schduledata);
+                        
             if (!empty($charterProgData)) {
             $this->set('charterProgData', $charterProgData[0]);
             }
