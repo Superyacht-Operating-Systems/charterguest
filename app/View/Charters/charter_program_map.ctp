@@ -2231,6 +2231,7 @@ border-radius: 4px; */
 <div class="fixed-row-container map-container">  
  <div class="form-group base-margin">
 <div class="custom-popup map_heightC" id="map"></div>
+<div class="custom-popup map_heightC" id="windy"></div>
 <button id="CruisingButton">Cruising Schedule</button>
 <button id="HideDetails">Show Details</button>
 <button id="HelpfulTips">Helpful Tips</button>
