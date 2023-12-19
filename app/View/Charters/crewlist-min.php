@@ -9,10 +9,10 @@
 <div class="owl-carousel owl-theme ">
     <?php foreach($CrewInfo as $val){ ?>
 <!-- Head Charterer info -->
-<div class="charterRow mobviewheight">
+<div class="charterRow mobviewheight notmobleftpad">
     <div class="">
         <div class="row col-md-12">
-            <div class="col-md-9 notmob"><h2><?php echo $val['User']['first_name'].' '.$val['User']['last_name']; ?> - <?php echo $val['Position']['position_name']; ?></h2></div>
+            <div class="col-md-9 notmob"><h2 class="titlenotmob"><?php echo $val['User']['first_name'].' '.$val['User']['last_name']; ?> - <?php echo $val['Position']['position_name']; ?></h2></div>
             
         </div>
         <div class="row col-md-12">

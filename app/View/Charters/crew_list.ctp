@@ -65,7 +65,7 @@
   font-size: 36px !important;
 }
     }
-@media only screen and (min-width:771px) and (max-width:1024px){
+/* @media only screen and (min-width:771px) and (max-width:1024px){
 
 .yachtHeaderName {
     margin-top: 4px!important;
@@ -76,7 +76,7 @@ body .mydemolabel {
 }
 
 
-}
+} */
     .md-row-h-8 button{
         text-transform: uppercase;
     }
@@ -109,27 +109,7 @@ body .mydemolabel {
 margin-right: 0px!important;
 }
 }
-@media only screen and (min-width: 360px) and (max-width: 600px) {
-    .md-row-h-18 {
-  right: 6px;
-  width: 180px !important;
-}
-}
-@media only screen and (min-width: 360px) and (max-width: 990px) {
-.md-row-h-18 {
-  width: 175px !important;
-  float: right !important;
-  position: relative;
-  right: 9px;
-}
-.md-row-h-8 {
-  width: 50% !important;
-  left: 15%;
-  float: right;
-  position: absolute;
-  top: 275px;
-}
-}
+
 
     @media only screen and (min-width: 1000px) and (max-width: 2000px) {
     .header-row {
@@ -150,11 +130,7 @@ margin-right: 0px!important;
 		width: 970px;
 	}
 }
-@media only screen and (min-width: 768px) and (max-width: 771px){
-    .container {
-  width: 100%!important;
-}
-}
+
 .emailSentClass::after {
 content: "SENT";
 }
@@ -495,13 +471,6 @@ font-weight: bold;
 .btn-open{width:78px;}
 
 
-
-@media screen and (max-width: 771px){
-.md-row-h-8 {
-  top: 237px !important;
-}
-}
-
 @media screen and (max-width: 2000px) {
 
 .md-row-h-10{width:14%;}
@@ -712,6 +681,7 @@ font-weight: bold;
 .crewimgleft{
     float:left !important;
     margin-top: 15px;
+    margin-bottom: 15px;
 }
 
 .mobdisplay{
@@ -736,14 +706,16 @@ font-weight: bold;
 .bgmobdisp{
     margin-left:10px;
     margin-right:10px;
-    height: 300px !important;
+    height: 400px !important;
 }
 
 .mobviewheight{
     background-color:#2a2a2a;
-    height:450px;
+    height:575px;
     margin-top: 10px;
 }
+
+
 
 }
 
@@ -764,7 +736,14 @@ border: 2px solid grey;border-radius: 15px;
 background-color: grey;padding: 10px 10px 10px 10px;height: 200px;
 overflow: auto;
 }
+.titlenotmob{
+    font-size:24px !important;
+    margin-bottom: 15px;
+}
 
+.notmobleftpad{
+    margin-left: 20px;
+}
 
 @media only screen and (max-width:768px){
 
@@ -777,10 +756,7 @@ overflow: auto;
     width: 100%;
 }
 }
-@media screen and (max-width:771px) {
-.info-box img{width: 14px;}
-.md-row-h-8{left: 15px;}
-}
+
 
 
 
@@ -798,18 +774,7 @@ color: #000;
         background: #4CAF50!important;
         color: #fff;
 }
-@media screen and (max-width: 771px) {
-.label-preference , .md-row-h-8 label{
-  font-size: 11px !important;
-  }
-  .md-row-h-18 button {
-  font-size: 11px !important;
-}
-.md-row-h-8 button{
-font-size: 11px;
-    }
 
-}
 @media screen and (max-width: 360px) {
 /* .md-row-h-18 {
     right: -30px;
