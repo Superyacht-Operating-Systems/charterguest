@@ -380,11 +380,11 @@ width: max-content;
                         }
                         ?>
                         <?php if (isset($session["yachFullName"]) && !empty($session["yachFullName"])) { echo $session['login_username']; } ?><span class="user-subnamep">  <span class="sp-noe"><?php if(isset($session['preferenceGuestName']) && ( $loginusername != $loginpreferenceGuestName)  ){ ?>for <?php } ?></span><?php if(isset($session['preferenceGuestName']) && ($loginusername != $loginpreferenceGuestName)){ echo $session['preferenceGuestName'];  } ?></span>
-                      <?php } else if(($programpageCharter == "charters" && $programpagePrograms != "programs") && ($programpageCharter == "charters" && $programpagePrograms != "memories")){ ?>
+                      <?php } else if(($programpageCharter == "charters" && $programpagePrograms != "programs") && ($programpageCharter == "charters" && $programpagePrograms != "memories") && ($programpageCharter == "charters" && $programpagePrograms != "presentations")){ ?>
                         <?php if (isset($session["yachFullName"]) && !empty($session["yachFullName"])) { ?><span class="mappageProgramYname"><?php echo $session['yachFullName']; } ?></span>
                       <?php } ?>  
                     </div>
-                    <div class="yachtHeaderName">Charter Guest
+                    <div class="yachtHeaderName"><?php if(($programpageCharter == "charters" && $programpagePrograms != "presentations")){ ?>Charter Guest <?php } ?><?php if(($programpageCharter == "charters" && $programpagePrograms == "presentations")){ ?><?php echo $session['yachFullName'];  ?> <?php } ?>
                     <!-- <span class="label-md-header"> <?php //echo isset($companyData['Fleetcompany']['management_company_name']) ? $companyData['Fleetcompany']['management_company_name'] : ""; ?></span>   --></div>                          <div class=""> 
                                  <div class="userhead-name ch-mob-hd">
                                  <?php if($programpageCharter == "charters" && $programpagePrograms == "programs" ){ ?>
@@ -393,8 +393,9 @@ width: max-content;
                                   <?php if($programpageCharter == "charters" && $programpagePrograms == "memories" ){ ?>
                                   <span class="user-hname"><?php if (isset($session["login_username"]) && !empty($session["login_username"])) { echo $session['login_username']; } ?></span>
                                   <?php } ?>
+                                  <?php if($programpageCharter == "charters" && $programpagePrograms != "presentations" ){ ?>
                                   <br><?php if($this->Session->read('commentcounttotal') > 0){ ?><span class="acti-countnav fa fa-bell-o " data-toggle="tooltip" title="Cruising Map Comments"><small id="msgcountnotify"><?php echo $this->Session->read('commentcounttotal'); ?></small></span><?php } ?>
-                                 	
+                                  <?php } ?>
                                  </div>
                                     <div class="list-logout-row">
                                         <?php echo $this->Html->link('  Logout','/',array('escape' =>false,'title' => 'Logout'));?>
