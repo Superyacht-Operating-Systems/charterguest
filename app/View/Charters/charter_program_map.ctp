@@ -1789,6 +1789,12 @@ border-radius: 4px; */
 .stationarydays{
     cursor:pointer;
 }
+
+#windy #plugin-menu {
+    z-index: 999999;
+    position: fixed;
+    top: 0;
+}
 </style>  
 
 <?php    echo $this->Html->script('jquery-1.7.2.min');
