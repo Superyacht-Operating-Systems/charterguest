@@ -791,9 +791,9 @@ position: absolute;
     z-index: 9999999 !important;
 }
     </style>
-
+<script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"></script>
 <?php
-echo $this->Html->script('leaflet/leaflet'); 
+//echo $this->Html->script('leaflet/leaflet'); 
 echo $this->Html->css('leaflet/dist/leaflet');
 
 echo $this->Html->script('leaflet/route'); 
@@ -808,6 +808,8 @@ echo $this->Html->script('leaflet/route');
  
 
 ?>
+
+<script src="https://api.windy.com/assets/map-forecast/libBoot.js"></script>
 <style>
 .wrapper{overflow: hidden;}
 .footer{height: 0px;line-height: 0;padding: 0px;}
@@ -5229,6 +5231,34 @@ function changeLanguage2() {
       
       // Add your code to handle the language change here
 }
+
+
+const optionsWind = {
+    // Required: API key
+    key: '1cDk7fz9oF31QBPeqDjg6LwhBw6Z5wJ9', // REPLACE WITH YOUR KEY !!!
+
+    // Put additional console output
+    verbose: true,
+
+    // Optional: Initial state of the map
+    lat: 50.4,
+    lon: 14.3,
+    zoom: 5,
+};
+
+// Initialize Windy API
+windyInit(optionsWind, windyAPI => {
+    // windyAPI is ready, and contain 'map', 'store',
+    // 'picker' and other usefull stuff
+
+    const { map } = windyAPI;
+    // .map is instance of Leaflet map
+
+    // L.popup()
+    //     .setLatLng([50.4, 14.3])
+    //     .setContent('Hello World')
+    //     .openOn(map);
+});
 
 </script>
   
