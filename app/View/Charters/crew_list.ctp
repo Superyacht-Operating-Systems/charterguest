@@ -715,7 +715,9 @@ font-weight: bold;
     margin-top: 10px;
 }
 
-
+.notmobleftpad{
+    margin-left: 0px;
+}
 
 }
 
