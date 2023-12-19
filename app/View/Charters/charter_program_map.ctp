@@ -5238,27 +5238,38 @@ const optionsWind = {
     // Required: API key
     key: '1cDk7fz9oF31QBPeqDjg6LwhBw6Z5wJ9', // REPLACE WITH YOUR KEY !!!
 
-    // Put additional console output
-    verbose: true,
-
-    // Optional: Initial state of the map
+    // Changing Windy parameters at start-up time
+    // (recommended for faster start-up)
     lat: 50.4,
     lon: 14.3,
     zoom: 5,
+
+    timestamp: Date.now() + 3 * 24 * 60 * 60 * 1000,
+
+    hourFormat: '12h',
 };
 
 // Initialize Windy API
 windyInit(optionsWind, windyAPI => {
-    // windyAPI is ready, and contain 'map', 'store',
-    // 'picker' and other usefull stuff
+    const { store } = windyAPI;
+    // All the params are stored in windyAPI.store
 
-    const { map } = windyAPI;
-    // .map is instance of Leaflet map
+    const levels = store.getAllowed('availLevels');
+    // levels = ['surface', '850h', ... ]
+    // Getting all available values for given key
 
-    // L.popup()
-    //     .setLatLng([50.4, 14.3])
-    //     .setContent('Hello World')
-    //     .openOn(map);
+    let i = 0;
+    setInterval(() => {
+        i = i === levels.length - 1 ? 0 : i + 1;
+
+        // Changing Windy params at runtime
+        store.set('level', levels[i]);
+    }, 500);
+
+    // Observing change of .store value
+    store.on('level', level => {
+        console.log(`Level was changed: ${level}`);
+    });
 });
 
 </script>
