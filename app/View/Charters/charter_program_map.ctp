@@ -558,10 +558,16 @@ border-radius: 10px;
     .map_heightC{
         height: calc(100vh - 170px);
     }
+    .map_heightWD{
+        height: calc(130vh - 170px);
+    }
 }
 @media only screen and (max-width: 771px){
     .map_heightC{
         height: calc(100vh - 140px);
+    }
+    .map_heightWD{
+        height: calc(130vh - 140px);
     }
     .nav-side-menu-full-container .nav-side-menu .sidebar {
   width: 120px;
@@ -2230,8 +2236,8 @@ border-radius: 4px; */
 </h1>
 <div class="fixed-row-container map-container">  
  <div class="form-group base-margin">
-<div class="custom-popup map_heightC" id="map"></div>
-<div class="custom-popup map_heightC" id="windy"></div>
+<div class="custom-popup map_heightC" id="map"></div><br/>
+<div class="custom-popup map_heightWD" id="windy"></div>
 <button id="CruisingButton">Cruising Schedule</button>
 <button id="HideDetails">Show Details</button>
 <button id="HelpfulTips">Helpful Tips</button>
