@@ -2322,7 +2322,7 @@ var satellite   =   L.tileLayer(mbUrl, {
     minZoom: 3, maxZoom: 18
 });
 
-var map = L.map('map', {
+var map = L.map('windy', {
     //center: [39.73, -104.99],
     'zoom': 6,
     'measureControl': true,
