@@ -84,10 +84,10 @@ $actual_link_defaultctp = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on
 		echo $this->fetch('css');
 		echo $this->fetch('script');
 ?>
-    <link href="//vjs.zencdn.net/7.10.2/video-js.min.css" rel="stylesheet">
-<script src="//vjs.zencdn.net/7.10.2/video.min.js"></script>
+    <!-- <link href="//vjs.zencdn.net/7.10.2/video-js.min.css" rel="stylesheet">
+<script src="//vjs.zencdn.net/7.10.2/video.min.js"></script> -->
 
-<?php  echo $this->Html->script('Youtube'); ?>
+<?php  //echo $this->Html->script('Youtube'); ?>
 <style type="text/css">
 .modalmsg-container .modal-dialog{
 padding-left: 0px;
@@ -673,7 +673,7 @@ width: max-content;
       </div>
         <div class="modal-body">
         
-        <video
+        <!-- <video
     id="preferencesheetvideo"
     class="video-js videoclass"
     controls
@@ -691,7 +691,7 @@ width: max-content;
       supports HTML5 video
     </a>
   </p>
-</video>
+</video> -->
         <!-- <video width="100%" height="100%" class="video videoclass" playsinline autoplay muted loop controls="true"  preload="metadata" id="preferencesheetvideo">
         <source src="https://youtu.be/4aMP61dg-cQ" type="video/mp4">
         </video> -->
@@ -714,7 +714,7 @@ width: max-content;
         </button>
       </div>
         <div class="modal-body">
-        <video
+        <!-- <video
     id="charterheadvideo"
     class="video-js videoclass"
     controls
@@ -730,7 +730,7 @@ width: max-content;
       supports HTML5 video
     </a>
   </p>
-</video>
+</video> -->
         <!-- <video width="100%" height="100%" class="video videoclass" playsinline autoplay muted loop controls="true"  preload="metadata" id="charterheadvideo">
         <source src="https://youtu.be/ExAG5mRmGAU" type="video/mp4">
         </video> -->

@@ -5336,7 +5336,7 @@ $(document).on("click", "#WeatherMap", function(e) {
     $("#HelpfulTips").hide();
     $("#WeatherMap").hide();
     $("#closeWeatherMap").show();
-    windy.invalidateSize();
+    //windy.invalidateSize();
 });
 
 $(document).on("click", "#closeWeatherMap", function(e) {
@@ -5348,7 +5348,7 @@ $(document).on("click", "#closeWeatherMap", function(e) {
     $("#HelpfulTips").show();
     $("#WeatherMap").show();
     $("#closeWeatherMap").hide();
-    windy.invalidateSize();
+    //windy.invalidateSize();
 });
 
 
