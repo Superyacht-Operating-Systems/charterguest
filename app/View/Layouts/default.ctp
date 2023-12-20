@@ -84,8 +84,8 @@ $actual_link_defaultctp = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on
 		echo $this->fetch('css');
 		echo $this->fetch('script');
 ?>
-    <!-- <link href="//vjs.zencdn.net/7.10.2/video-js.min.css" rel="stylesheet">
-<script src="//vjs.zencdn.net/7.10.2/video.min.js"></script> -->
+    <link href="//vjs.zencdn.net/7.10.2/video-js.min.css" rel="stylesheet">
+<script src="//vjs.zencdn.net/7.10.2/video.min.js"></script>
 
 <?php  //echo $this->Html->script('Youtube'); ?>
 <style type="text/css">
