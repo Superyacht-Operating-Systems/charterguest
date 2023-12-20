@@ -5329,6 +5329,7 @@ $(document).on("click", "#WeatherMap", function(e) {
     $("#HelpfulTips").hide();
     $("#WeatherMap").hide();
     $("#closeWeatherMap").show();
+    map.invalidateSize();
 });
 
 $(document).on("click", "#closeWeatherMap", function(e) {
@@ -5340,6 +5341,7 @@ $(document).on("click", "#closeWeatherMap", function(e) {
     $("#HelpfulTips").show();
     $("#WeatherMap").show();
     $("#closeWeatherMap").hide();
+    map.invalidateSize();
 });
 
 
