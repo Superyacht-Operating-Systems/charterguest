@@ -1046,7 +1046,7 @@ $(document).on("click", "#MenuHowToVideoCharterHead", function(e) {
 //   $('#charterheadvideo')[0].pause();
 // })
 
-var options = {};
+/*var options = {};
 
 var player = videojs('preferencesheetvideo', options, function onPlayerReady() {
   //videojs.log('Your player is ready!');
@@ -1084,7 +1084,7 @@ headplayer.responsive(true);
 $('#howtovideocharterhead').on('hidden.bs.modal', function () {
   //$('#charterheadvideo')[0].pause();
   headplayer.pause();  
-})
+})*/
 
 $(document).on("click", ".previousSelectionButton", function(e) { 
 
