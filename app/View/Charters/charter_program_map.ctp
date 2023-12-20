@@ -1450,6 +1450,23 @@ background: #fff !important;
   font-size: 12px;
 }
 
+#closeWeatherMap {
+    background: #fff !important;
+    position: absolute!important;
+    top: 5px!important;
+    right: 13px!important;
+    padding: 5px;
+    height: 32px;
+    color: #000;
+    z-index: 9999;
+    font-weight: bold;
+    width: 55px;
+    border-radius: 10px;
+    font-size: 12px;
+    left: 0;
+    margin-left: 5px;
+}
+
 #HideDetails {
     background: #fff !important;
     position: absolute!important;
@@ -1469,6 +1486,20 @@ background: #fff !important;
     background: #fff !important;
     position: absolute!important;
     top: 93.5px!important;
+    right: 13px!important;
+  padding: 5px;
+  height: 32px;
+  color:#000;
+  z-index: 9999;
+  font-weight:bold;
+  min-width: 145px;
+  border-radius: 10px;
+  font-size: 12px;
+}
+#WeatherMap {
+    background: #fff !important;
+    position: absolute!important;
+    top: 131.5px!important;
     right: 13px!important;
   padding: 5px;
   height: 32px;
@@ -2242,11 +2273,13 @@ border-radius: 4px; */
 </h1>
 <div class="fixed-row-container map-container">  
  <div class="form-group base-margin">
-<div class="custom-popup map_heightC" id="map"></div><br/>
-<div class="custom-popup map_heightWD" id="windy"></div>
+<div class="custom-popup map_heightC" id="map"></div>
+<div class="custom-popup map_heightC" id="windy"></div>
 <button id="CruisingButton">Cruising Schedule</button>
 <button id="HideDetails">Show Details</button>
 <button id="HelpfulTips">Helpful Tips</button>
+<button id="WeatherMap">Weather Map</button>
+<button id="closeWeatherMap">Close</button>
 </div></div>
 </div>
 <input type="hidden" id="topyname" value="<?php echo $topyname; ?>">
@@ -4225,7 +4258,8 @@ $(document).ready(function() { //alert();
     $('.leaflet-control-attribution ').find('a').remove();
 
      
-
+    $("#windy").hide();
+    $("#closeWeatherMap").hide();
    
     });
 
@@ -5283,6 +5317,31 @@ windyInit(optionsWind, windyAPI => {
         console.log(`Level was changed: ${level}`);
     });
 });
+
+
+
+$(document).on("click", "#WeatherMap", function(e) {
+   
+   $("#map").hide();
+    $("#windy").show();
+    $("#CruisingButton").hide();
+    $("#HideDetails").hide();
+    $("#HelpfulTips").hide();
+    $("#WeatherMap").hide();
+    $("#closeWeatherMap").show();
+});
+
+$(document).on("click", "#closeWeatherMap", function(e) {
+   
+   $("#map").show();
+    $("#windy").hide();
+    $("#CruisingButton").show();
+    $("#HideDetails").show();
+    $("#HelpfulTips").show();
+    $("#WeatherMap").show();
+    $("#closeWeatherMap").hide();
+});
+
 
 </script>
   
