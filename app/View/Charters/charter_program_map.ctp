@@ -2323,6 +2323,8 @@ var sidebar = (function() {
                             $("#CruisingButton").hide();
                             $("#HideDetails").hide();
                             $("#HelpfulTips").hide();
+                            $("#WeatherMap").hide();
+                            
             }
             // In phone view the left menu should not overflow with map right side buttons
         } else {
@@ -2331,6 +2333,7 @@ var sidebar = (function() {
                     $("#CruisingButton").show();
                     $("#HideDetails").show();
                     $("#HelpfulTips").show();
+                    $("#WeatherMap").show();
                     // In phone view the left menu should not overflow with map right side buttons
         }
     }
@@ -3450,6 +3453,7 @@ function markerOnClick(e) {
                     $("#CruisingButton").hide();
                     $("#HideDetails").hide();
                     $("#HelpfulTips").hide();
+                    $("#WeatherMap").hide();
                      $("#map .leaflet-control-container").hide();
                     // open popup center to map
                     //map.setView(e.latlng);
@@ -3775,6 +3779,7 @@ function markerModalclose(scheduleSameLocationUUID){
                             $("#CruisingButton").show();
                             $("#HideDetails").show();
                             $("#HelpfulTips").show();
+                            $("#WeatherMap").show();
                             $("#map .leaflet-control-container").show();
 
                             //for screenview <990 on opening the itinerary modal blacked out the map region
@@ -3823,6 +3828,7 @@ $(document).on("click", ".stationarydays", function(e) {
                     $("#CruisingButton").hide();
                     $("#HideDetails").hide();
                     $("#HelpfulTips").hide();
+                    $("#WeatherMap").hide();
                      $("#map .leaflet-control-container").hide();
                     // open popup center to map
                     //console.log(mapmarkerglobalObj);
@@ -4164,6 +4170,7 @@ $(document).on("click", "#closeSchedule", function(e) {
     $("#CruisingButton").show();
     $("#HideDetails").show();
     $("#HelpfulTips").show();
+    $("#WeatherMap").show();
     $("#map .leaflet-control-container").show();
 
     var schuuid =  $("#markerModalclose").attr("data-schuuid");
