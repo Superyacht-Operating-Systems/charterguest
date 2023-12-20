@@ -5348,7 +5348,7 @@ $(document).on("click", "#closeWeatherMap", function(e) {
     $("#HelpfulTips").show();
     $("#WeatherMap").show();
     $("#closeWeatherMap").hide();
-    map.invalidateSize();
+    windy.invalidateSize();
 });
 
 
