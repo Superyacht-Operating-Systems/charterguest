@@ -5320,9 +5320,9 @@ windyInit(optionsWind, windyAPI => {
     }, 500);
 
     // Observing change of .store value
-    store.on('level', level => {
-        console.log(`Level was changed: ${level}`);
-    });
+    // store.on('level', level => {
+    //     console.log(`Level was changed: ${level}`);
+    // });
 });
 
 
@@ -5337,9 +5337,7 @@ $(document).on("click", "#WeatherMap", function(e) {
     $("#WeatherMap").hide();
     $("#closeWeatherMap").show();
     //windy.invalidateSize();
-    setTimeout(() => {
-        windy.invalidateSize();
-        }, 10);
+    
 });
 
 $(document).on("click", "#closeWeatherMap", function(e) {
