@@ -5298,8 +5298,8 @@ const optionsWind = {
     verbose: true,
 
     // Optional: Initial state of the map
-    // lat: 50.4,
-    // lon: 14.3,
+    lat: centerLat,
+    lon: centerLng,
     zoom: 7,
 };
 
