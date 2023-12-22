@@ -564,18 +564,14 @@ border-radius: 10px;
 }
 @media only screen and (min-width: 771px){
     .map_heightC{
-        height: calc(100vh - 170px);
-    }
-    .map_heightWD{
-        height: calc(130vh - 170px);
+        /* height: calc(100vh - 170px); */
+        height: calc(100vh - 121px);
     }
 }
 @media only screen and (max-width: 771px){
     .map_heightC{
-        height: calc(100vh - 140px);
-    }
-    .map_heightWD{
-        height: calc(130vh - 140px);
+        /* height: calc(100vh - 140px); */
+        height: calc(100vh - 121px);
     }
     .nav-side-menu-full-container .nav-side-menu .sidebar {
   width: 120px;
@@ -4272,7 +4268,7 @@ $(document).ready(function() { //alert();
     $('.leaflet-control-attribution ').find('a').remove();
 
      
-    //$("#windy").hide();
+    $("#windy").hide();
     $("#closeWeatherMap").hide();
    
     });
