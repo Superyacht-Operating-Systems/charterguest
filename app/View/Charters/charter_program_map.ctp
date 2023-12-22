@@ -1827,6 +1827,11 @@ border-radius: 4px; */
     position: fixed;
     top: 0;
 }
+
+#windy {
+ 
+  position: fixed !important;
+}
 </style>  
 
 <?php    echo $this->Html->script('jquery-1.7.2.min');
@@ -2275,7 +2280,7 @@ border-radius: 4px; */
 <div class="fixed-row-container map-container">  
  <div class="form-group base-margin">
 <div class="custom-popup map_heightC" id="map"></div>
-<div class="custom-popup map_heightC" id="windy"></div>
+<div class="custom-popup map_heightC" id="windy" style="width:100%;height:100%"></div>
 <button id="CruisingButton">Cruising Schedule</button>
 <button id="HideDetails">Show Details</button>
 <button id="HelpfulTips">Helpful Tips</button>
