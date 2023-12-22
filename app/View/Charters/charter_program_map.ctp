@@ -5298,9 +5298,9 @@ const optionsWind = {
     verbose: true,
 
     // Optional: Initial state of the map
-    lat: 50.4,
-    lon: 14.3,
-    zoom: 5,
+    // lat: 50.4,
+    // lon: 14.3,
+    zoom: 7,
 };
 
 // Initialize Windy API
