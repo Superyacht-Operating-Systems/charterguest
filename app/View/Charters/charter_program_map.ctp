@@ -5300,9 +5300,9 @@ const optionsWind = {
     verbose: true,
 
     // Optional: Initial state of the map
-    lat: centerLat,
-    lon: centerLng,
-    zoom: 7,
+    // lat: centerLat,
+    // lon: centerLng,
+    // zoom: 7,
 };
 
 // Initialize Windy API
