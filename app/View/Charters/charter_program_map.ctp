@@ -58,6 +58,8 @@ if(empty($scheduleData)){
 // echo "<pre>";print_r($yfullName);
 $topyname = $yfullName[$charterGuestDatayacht_id]; 
 ?>
+<script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"></script>
+<script src="https://api.windy.com/assets/map-forecast/libBoot.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css">
 <style>
   
@@ -797,7 +799,7 @@ position: absolute;
     z-index: 9999999 !important;
 }
     </style>
-<script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"></script>
+
 <?php
 //echo $this->Html->script('leaflet/leaflet'); 
 echo $this->Html->css('leaflet/dist/leaflet');
@@ -815,7 +817,6 @@ echo $this->Html->script('leaflet/route');
 
 ?>
 
-<script src="https://api.windy.com/assets/map-forecast/libBoot.js"></script>
 <style>
 .wrapper{overflow: hidden;}
 .footer{height: 0px;line-height: 0;padding: 0px;}
