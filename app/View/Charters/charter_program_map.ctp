@@ -4268,7 +4268,7 @@ $(document).ready(function() { //alert();
     $('.leaflet-control-attribution ').find('a').remove();
 
      
-    $("#windy").css("display","none");
+    //$("#windy").css("display","none");
     $("#closeWeatherMap").css("display","none");
    
     });
