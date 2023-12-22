@@ -62,6 +62,12 @@ $topyname = $yfullName[$charterGuestDatayacht_id];
 <script src="https://api.windy.com/assets/map-forecast/libBoot.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css">
 <style>
+    #windy #embed-zoom {
+        position: fixed;
+    }
+    #windy #mobile-ovr-select {
+  position: fixed;
+    }
   
     .language_dropdown{
 font-size: 18px;
