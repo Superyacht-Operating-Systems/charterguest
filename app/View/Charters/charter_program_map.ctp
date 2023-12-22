@@ -5307,6 +5307,9 @@ const optionsWind = {
 windyInit(optionsWind, windyAPI => {
     const { map } = windyAPI;
     // .map is instance of Leaflet map
+    if(latlngs.length > 0){
+        map.fitBounds(latlngs);
+    }
 });
 
 
