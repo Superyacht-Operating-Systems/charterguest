@@ -4268,8 +4268,8 @@ $(document).ready(function() { //alert();
     $('.leaflet-control-attribution ').find('a').remove();
 
      
-    $("#windy").hide();
-    $("#closeWeatherMap").hide();
+    $("#windy").css("display","none");
+    $("#closeWeatherMap").css("display","none");
    
     });
 
@@ -5319,12 +5319,12 @@ windyInit(optionsWind, windyAPI => {
 $(document).on("click", "#WeatherMap", function(e) {
    
    $("#map").hide();
-    $("#windy").show();
+    $("#windy").css("display","block");
     $("#CruisingButton").hide();
     $("#HideDetails").hide();
     $("#HelpfulTips").hide();
     $("#WeatherMap").hide();
-    $("#closeWeatherMap").show();
+    $("#closeWeatherMap").css("display","block");
     //windy.invalidateSize();
     
 });
@@ -5332,12 +5332,12 @@ $(document).on("click", "#WeatherMap", function(e) {
 $(document).on("click", "#closeWeatherMap", function(e) {
    
    $("#map").show();
-    $("#windy").hide();
+    $("#windy").css("display","none");
     $("#CruisingButton").show();
     $("#HideDetails").show();
     $("#HelpfulTips").show();
     $("#WeatherMap").show();
-    $("#closeWeatherMap").hide();
+    $("#closeWeatherMap").css("display","none");
     //windy.invalidateSize();
 });
 
