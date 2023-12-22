@@ -4266,7 +4266,7 @@ $(document).ready(function() { //alert();
     $('.leaflet-control-attribution ').find('a').remove();
 
      
-    $("#windy").hide();
+    //$("#windy").hide();
     $("#closeWeatherMap").hide();
    
     });
