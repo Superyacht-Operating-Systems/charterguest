@@ -2275,7 +2275,7 @@ border-radius: 4px; */
 <div class="fixed-row-container map-container">  
  <div class="form-group base-margin">
 <div class="custom-popup map_heightC" id="map"></div>
-<div class="custom-popup" id="windy"></div>
+<div class="custom-popup map_heightC" id="windy"></div>
 <button id="CruisingButton">Cruising Schedule</button>
 <button id="HideDetails">Show Details</button>
 <button id="HelpfulTips">Helpful Tips</button>
@@ -5313,26 +5313,26 @@ windyInit(optionsWind, windyAPI => {
 
 $(document).on("click", "#WeatherMap", function(e) {
    
-   $("#map").hide();
-    $("#windy").show();
-    $("#CruisingButton").hide();
-    $("#HideDetails").hide();
-    $("#HelpfulTips").hide();
-    $("#WeatherMap").hide();
-    $("#closeWeatherMap").show();
+   //$("#map").hide();
+    // $("#windy").show();
+    // $("#CruisingButton").hide();
+    // $("#HideDetails").hide();
+    // $("#HelpfulTips").hide();
+    // $("#WeatherMap").hide();
+    // $("#closeWeatherMap").show();
     //windy.invalidateSize();
     
 });
 
 $(document).on("click", "#closeWeatherMap", function(e) {
    
-   $("#map").show();
-    $("#windy").hide();
-    $("#CruisingButton").show();
-    $("#HideDetails").show();
-    $("#HelpfulTips").show();
-    $("#WeatherMap").show();
-    $("#closeWeatherMap").hide();
+//    $("#map").show();
+//     $("#windy").hide();
+//     $("#CruisingButton").show();
+//     $("#HideDetails").show();
+//     $("#HelpfulTips").show();
+//     $("#WeatherMap").show();
+//     $("#closeWeatherMap").hide();
     //windy.invalidateSize();
 });
 
