@@ -755,6 +755,595 @@ class ChartersController extends AppController {
         //exit;
 
     }
+
+    /*
+     * Load the Charter memories presentation
+     * Functionality -  Loading the Charter guest memoreis presentation
+     * Developer - Rakesh
+     * Created date - 05-June-2023
+     * Modified date - 
+     */
+    function presentations($charterProgramId = null)
+    {
+        if (!empty($charterProgramId)) {
+            //echo $charterProgramId; //exit;
+            $charterProgramId = $charterProgramId;
+            $session = $this->Session->read('charter_info.CharterGuest');
+                        $this->loadModel('Yacht');
+                        $yachtData = $this->Yacht->find('first', array('conditions' => array('id' => $session['yacht_id'])));
+                        //echo "<pre>"; print_r($yachtData); exit;
+                        $ydb_name = $yachtData['Yacht']['ydb_name'];
+                        $yid = $yachtData['Yacht']['id'];
+                        $yachtData = $this->Yacht->query("SELECT * FROM $ydb_name.yachts Yacht WHERE id = '$yid'");
+                        $this->set('yachtData', $yachtData[0]);
+                        $charterProgData = $this->Yacht->query("SELECT * FROM $ydb_name.charter_programs CharterProgram WHERE UUID = '$charterProgramId' AND is_deleted = 0");
+                       
+        
+                        //echo "<pre>"; print_r($YachtDetails[0]['yachts']['captain_name']); exit('ddddd');
+                        $yachtcaptainname = $yachtData[0]['Yacht']['captain_name'];
+                        $yachtname = $yachtData[0]['Yacht']['yname'];
+                        $fleetname = $yachtData[0]['Yacht']['fleetname'];
+                        if(isset($yachtData[0]['Yacht']['domain_name'])){
+                        $domain_name = $yachtData[0]['Yacht']['domain_name'];
+                        }
+                        if(isset($domain_name) && $domain_name == "charterguest"){
+                            $SITE_URL = "https://charterguest.net/";
+                        }else{
+                            $SITE_URL = "https://totalsuperyacht.com:8080/";
+                        }
+
+                        if(!empty($fleetname)){
+                            $requrl = $SITE_URL.$fleetname."/app/webroot/".$yachtname;
+                        }else{
+                            $requrl = $SITE_URL.$yachtname;
+                        }
+                        $this->set('requrl', $requrl);
+                        
+            if (!empty($charterProgData)) {
+            $this->set('charterProgData', $charterProgData[0]);
+            }
+            $schduledata = array();
+            if (!empty($charterProgData)) {
+                //echo "<pre>"; print_r($charterProgData); exit;
+                // $conditions = array(
+                //     'charter_program_id' => $charterProgramId,
+                //     'is_deleted' => 0,
+                // );
+                //$scheduleData = $this->CharterProgramSchedule->find('all', array('conditions' => $conditions, 'order' => array('CharterProgramSchedule.day_num ASC', 'CharterProgramSchedule.serial_no ASC')));
+
+                $scheduleData = $this->Yacht->query("SELECT * FROM $ydb_name.charter_program_schedules CharterProgramSchedule WHERE charter_program_id = '$charterProgramId' AND is_deleted = 0 order by CharterProgramSchedule.day_num ASC, CharterProgramSchedule.serial_no ASC");
+                //echo "<pre>"; print_r($scheduleData);
+                foreach ($scheduleData as $scheduleData) {
+                    //echo "<pre>"; print_r($scheduleData); //exit;
+                    $schduleId = $scheduleData['CharterProgramSchedule']['UUID'];
+                    $schduleIdDay = $scheduleData['CharterProgramSchedule']['day_num'];
+                    $schduledata[$schduleId] = $scheduleData;
+                    // $conditions1 = array(
+                    //     'charter_program_schedule_id' => $schduleId,
+                    //     'is_deleted' => 0,
+                    // );
+                    $guestmemoryData = $this->Yacht->query("SELECT * FROM $ydb_name.charter_program_guest_memories CharterProgramGuestMemory WHERE charter_program_schedule_id = '$schduleId' AND is_deleted = 0");
+                    //$guestmemoryData = $this->CharterProgramGuestMemory->find('first', array('conditions' => $conditions1));
+                    if (!empty($guestmemoryData[0])) {
+                    $schduledata[$schduleId]['GuestMemory'] = $guestmemoryData[0];
+                    }
+                }
+                //echo "<pre>"; print_r($schduledata); exit;
+                $this->set('schduledata', $schduledata);
+                //echo "<pre>"; print_r($scheduleData); exit;
+            }
+        }
+    }
+
+    /**
+     * 
+     * Load the charter programs
+     * Functionality - Loading the charter programs with details
+     * After login & from create password page.
+     * 
+     */
+    function memories() {
+        $session = $this->Session->read('charter_info');
+        
+        // echo "<pre>";print_r($sessionAssoc);exit;
+         if (empty($session)) {
+            $this->redirect(array('controller' => 'Charters', 'action' => 'index'));
+         }
+
+        $actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+        //echo "<pre>";print_r($this->Session->read());exit;
+        //echo $actual_link."<br>"; 
+        $parts = parse_url($actual_link);
+        //echo $parts['path'];
+        $explodepath = explode('/',$parts['path']);
+        //echo "<pre>";print_r($explodepath); exit;
+        $usersUUID = $explodepath[4];
+        $CharterGuestConditions = array('users_UUID' => $usersUUID);
+        $GuestListConditions = array('UUID' => $usersUUID);
+        $charterAssocConditions = array('UUID' => $usersUUID);
+        //echo $usersUUID;
+        $this->loadModel('CharterGuest');
+        $this->loadModel('GuestList');
+        $this->loadModel('CharterGuestAssociate');
+        $this->loadModel('Yacht');
+        $this->loadModel('YachtWeblink');
+        $this->loadModel('CharterProgramFile');
+        $this->loadModel('Fleetcompany');
+        $guestListData = $this->GuestList->find('first', array('conditions' => $GuestListConditions));
+        $charterGuestData = $this->CharterGuest->find('all', array('conditions' => $CharterGuestConditions, 'order' => 'CharterGuest.charter_from_date desc'));
+
+        $websiteList = $this->Yacht->find('list', array('fields' => array('id','charter_website')));
+        $yfullName = $this->Yacht->find('list', array('fields' => array('id','yfullName')));
+        $programFiles  = array();
+        $mapdetails = array();
+        //$SITE_URL = Configure::read('BASE_URL');
+        //$SITE_URL = "https://totalsuperyacht.com:8080/";
+       // echo "<pre>";print_r($guestListData); //exit;
+        // echo "<pre>";print_r($charterGuestData); exit;
+        if(isset($charterGuestData) && !empty($charterGuestData)){
+            $commentcounttotal = 0;
+            foreach($charterGuestData as $key => $value){
+                $YachtWeblinkConditionsGuest = array('YachtWeblink.charter_company_id' => $value['CharterGuest']['charter_company_id'],'YachtWeblink.yacht_id' => $value['CharterGuest']['yacht_id'],'YachtWeblink.is_deleted'=>0);
+                $YachtWeblinkdata = $this->YachtWeblink->find('first', array('conditions' => $YachtWeblinkConditionsGuest));
+
+                $programFilesCond = array('CharterProgramFile.charter_program_id' => $value['CharterGuest']['charter_program_id'],'CharterProgramFile.yacht_id' => $value['CharterGuest']['yacht_id'],'CharterProgramFile.is_deleted'=>0);
+                $programFiledata = $this->CharterProgramFile->find('all', array('conditions' => $programFilesCond));
+
+                if(isset($YachtWeblinkdata) && !empty($YachtWeblinkdata)){
+                    $isValid = preg_match("@^https?://@", $YachtWeblinkdata['YachtWeblink']['weblink']);
+                    if($isValid == 0){
+                        $YachtWeblinkdata['YachtWeblink']['weblink'] = 'https://'.$YachtWeblinkdata['YachtWeblink']['weblink'];
+                    }
+                    $charterGuestData[$key]['websitedetails'] = $YachtWeblinkdata;
+                }
+                $charter_from_date = date("d M Y", strtotime($value['CharterGuest']['charter_from_date']));
+                if(isset($programFiledata)){
+                    $programFiles[$charter_from_date]['attachment'] = $programFiledata;
+                    //$programFiles[]['startdate'] = $charter_from_date;
+                }
+                $yacht_id = $value['CharterGuest']['yacht_id'];
+                $charter_company_id = $value['CharterGuest']['charter_company_id'];
+                $yachtCond = array('Yacht.id' => $yacht_id);
+                $Ydata = $this->Yacht->find('first', array('conditions' => $yachtCond));
+                $ydb_name = $Ydata['Yacht']['ydb_name'];
+                $yname = $Ydata['Yacht']['yname'];
+                $domain_name = "";
+                if(isset($Ydata['Yacht']['domain_name'])){
+                $domain_name = $Ydata['Yacht']['domain_name'];
+                }
+                $SITE_URL = "https://totalsuperyacht.com:8080/";
+                $site_full_path = "/var/www/vhosts/wamp/www/";
+                if(isset($domain_name) && $domain_name == "charterguest"){
+                    $SITE_URL = "https://charterguest.net/";
+                    $site_full_path = "/var/www/cg-vhosts/";
+                }
+                $fleetname = "";
+                if(isset($charter_company_id) && !empty($charter_company_id)){
+                    $companyData = $this->Fleetcompany->find('first', array('fields' => array('management_company_name','logo','fleetname'), 'conditions' => array('id' => $charter_company_id)));
+                    $fleetname = $companyData['Fleetcompany']['fleetname'];
+                }
+                if(isset($programFiledata) && isset($fleetname) && !empty($fleetname)){
+                    $programFiles[$charter_from_date]['fleetname'] = $fleetname;
+                    $programFiles[$charter_from_date]['siteurl'] = $SITE_URL;
+                }
+                if(isset($value['CharterGuest']['program_image']) && !empty($value['CharterGuest']['program_image'])){
+                    if (!empty($fleetname)) {
+                        
+                        if($fleetname == "fleetbeta" || $fleetname == "SOS"){
+                            if($fleetname == "fleetbeta" && $yname == "betayacht"){
+                                $targetFullPath = $SITE_URL."fleetbeta/app/webroot/betayacht/app/webroot/img/charter_program_files/charter_program_photo/".$value['CharterGuest']['program_image'];
+                            }else{  
+                                $targetFullPath = $SITE_URL."fleetbeta/app/webroot/img/charter_program_files/charter_program_photo/".$value['CharterGuest']['program_image'];
+                            }
+                        }else if($fleetname != "fleetbeta" || $fleetname != "SOS"){
+                            $targetFullPath = $SITE_URL.$fleetname."/app/webroot/img/charter_program_files/charter_program_photo/".$value['CharterGuest']['program_image'];
+                        }else{
+                            $targetFullPath = $SITE_URL.$fleetname."/app/webroot/".$yname."/app/webroot/img/charter_program_files/charter_program_photo/".$value['CharterGuest']['program_image'];
+                        }
+                    } else {  
+                        //exit('ll');
+                        $targetFullPath = $SITE_URL.$yname."/app/webroot/img/charter_program_files/charter_program_photo/".$value['CharterGuest']['program_image'];
+                    }
+                    $file_folder_path = str_replace("$SITE_URL","$site_full_path","$targetFullPath");
+                    //echo $targetFullPath; echo $site_full_path; echo "<pre>"; echo $file_folder_path; exit;
+                    if(file_exists($file_folder_path)){
+                        $targetFullPath = $targetFullPath;
+                    }else{
+                        $targetFullPath = $this->request->base."/app/webroot/img/noimage_cp.png";
+                    }
+                    $charterGuestData[$key]['program_image'] = $targetFullPath;
+                }else{
+                    $charterGuestData[$key]['program_image'] = "#";
+                }
+                //echo $targetFullPath."<br>"; //exit;
+                $pid = $value['CharterGuest']['charter_program_id'];
+                $charterGuestData[$key]['ydb_name'] = $ydb_name;
+                $scheduleData = $this->CharterProgramFile->query("SELECT * FROM $ydb_name.charter_program_schedules CharterProgramSchedule WHERE charter_program_id = '$pid' AND is_deleted = 0");
+                if(isset($scheduleData) && !empty($scheduleData)){
+                    if(($scheduleData[0]['CharterProgramSchedule']['publish_map'] == 1)){
+                        $map = array();
+                        $map['dbname'] = $ydb_name;
+                        $map['programid'] = $value['CharterGuest']['charter_program_id'];
+                        $commentindividualtotal = $this->charter_program_map_total_msg_count($value['CharterGuest']['charter_program_id'],$ydb_name);
+                        $charterGuestData[$key]['msg_count'] = $commentindividualtotal;
+                        $map['count'] = $commentindividualtotal;
+                        $mapdetails[$charter_from_date] = $map;
+                        $commentcounttotal += $commentindividualtotal;
+                        $charterGuestData[$key]['map_url'] = "link";
+                    }else{
+                        $charterGuestData[$key]['map_url'] = "nolink";
+                    }
+                }else{
+                    $charterGuestData[$key]['map_url'] = "nolink";
+                }
+
+                // $yachtDBData = $this->Yacht->getYachtData($ydb_name);
+                // $image = $yachtDBData[0]['yachts']['cg_background_image'];
+                // $pSheetsColor = $yachtDBData[0]['yachts']['psheets_color'];
+
+                            $this->loadModel('Fleetcompany');
+                            $companyData = $this->Fleetcompany->find('first', array('fields' => array('management_company_name','logo','fleetname'), 'conditions' => array('id' => $value['CharterGuest']['charter_company_id'])));
+                            if (isset($companyData['Fleetcompany']['logo']) && !empty($companyData['Fleetcompany']['logo'])) {
+                                // $fleetLogoUrl = $cloudUrl.$companyData['Fleetcompany']['fleetname']."/img/logo/thumb/".$companyData['Fleetcompany']['logo'];
+                                $fleetLogoUrl = $SITE_URL.'/'."charterguest/img/logo/thumb/".$companyData['Fleetcompany']['logo'];
+                                //$file_folder_path1 = str_replace("$SITE_URL","$site_full_path","$fleetLogoUrl");
+                                //echo $targetFullPath; echo $site_full_path; echo "<pre>"; echo $file_folder_path; exit;
+                                //if(file_exists($file_folder_path1)){
+                                    $charterGuestData[$key]['charter_logo'] = $fleetLogoUrl;
+                               // }else{
+                               //     $charterGuestData[$key]['charter_logo'] = "#";
+                                //}
+                                
+                            } else{
+                                $fleetLogoUrl = $SITE_URL.'/'."charterguest/img/logo/thumb/charter_guest_logo.png";
+                                $charterGuestData[$key]['charter_logo'] = $fleetLogoUrl;
+                            }
+                
+            }//exit;
+            //echo "<pre>";print_r($commentcounttotal); exit;
+
+            $this->Session->write("commentcounttotal", $commentcounttotal);
+
+            $fleetname = $this->Session->read('fleetname');
+            if(isset($programFiles) && !empty($programFiles) ){
+                $attachment = array();
+                //$SITE_URL = Configure::read('BASE_URL');
+                //$SITE_URL = "https://totalsuperyacht.com:8080/";
+                foreach($programFiles as $startdate => $filedata){ 
+                    foreach($filedata['attachment'] as $file){ 
+                        $fleetname = $this->Session->read('fleetname');
+                        if(isset($filedata['fleetname'])){
+                            $fleetname = $filedata['fleetname'];
+                            $companyData1 = $this->Fleetcompany->find('first', array('fields' => array('management_company_name','logo','fleetname','domain_name'), 'conditions' => array('management_company' => $fleetname)));
+                            if(isset($companyData1['Fleetcompany']['domain_name'])){
+                                $fleet_domain_name = $companyData1['Fleetcompany']['domain_name'];
+                            }
+                            
+                        }
+                        // if(isset($fleet_domain_name) && $fleet_domain_name == "charterguest"){
+                        //         $SITE_URL = "https://charterguest.net/";
+                        // }else if(isset($filedata['siteurl'])){
+                            $SITE_URL = $filedata['siteurl'];
+                        //}
+                        $sourceImagePath = $SITE_URL.$fleetname."/app/webroot/img/charter_program_files/".$file['CharterProgramFile']['file_name'];
+                        $attachment[$startdate] = $sourceImagePath;
+                    }
+                } 
+            }
+        //echo "<pre>";print_r($attachment); echo "<pre>";print_r($programFiles); exit;
+
+         }
+
+            //  $charterAssocData = $this->CharterGuestAssociate->find('all', array('conditions' => $charterAssocConditions)); old query
+             $charterAssocData = $this->CharterGuestAssociate->find('all', array(
+                'conditions' => $charterAssocConditions, 
+                "joins" => array(
+                    array(
+                        'table' => 'charter_guests',
+                        'alias' => 'CharterGuest',
+                        'type' => 'LEFT',
+                        'conditions' => array('CharterGuestAssociate.charter_program_id = CharterGuest.charter_program_id')
+                    ),
+                ),
+                'order' => array('CharterGuest.charter_from_date' => 'DESC'),
+                ));
+                // echo " query = "; print_r($this->CharterGuestAssociate->getLastQuery());
+            //  echo "<pre>";print_r($charterAssocData); exit;
+             if(isset($charterAssocData) && !empty($charterAssocData)){
+
+                foreach($charterAssocData as $key => $value){
+                    $chConditions = array('charter_program_id' => $value['CharterGuestAssociate']['charter_program_id']);
+                    $chData = $this->CharterGuest->find('first', array('conditions' => $chConditions));
+                    $charterAssocData[$key]['charterDetails'] = $chData;
+                    
+                        $yachtCond = array('Yacht.id' => $value['CharterGuestAssociate']['yacht_id']);
+                        $charter_company_id = $value['CharterGuestAssociate']['fleetcompany_id'];
+                        $Ydata = $this->Yacht->find('first', array('conditions' => $yachtCond));
+                        if(isset($Ydata['Yacht']['ydb_name'])){
+                        $ydb_name = $Ydata['Yacht']['ydb_name'];
+                        }
+                        $domain_name = "";
+                        if(isset($Ydata['Yacht']['domain_name'])){
+                        $domain_name = $Ydata['Yacht']['domain_name'];
+                        }
+                        $SITE_URL = "https://totalsuperyacht.com:8080/";
+                        $site_full_path = "/var/www/vhosts/wamp/www/";
+                        if(isset($domain_name) && $domain_name == "charterguest"){
+                            $SITE_URL = "https://charterguest.net/";
+                            $site_full_path = "/var/www/cg-vhosts/";
+                        }
+                        $yname = $Ydata['Yacht']['yname'];
+                        $fleetname = "";
+                        if(isset($charter_company_id) && !empty($charter_company_id)){
+                            $companyData = $this->Fleetcompany->find('first', array('fields' => array('management_company_name','logo','fleetname'), 'conditions' => array('id' => $charter_company_id)));
+                            $fleetname = $companyData['Fleetcompany']['fleetname'];
+                        }
+                    if(isset($chData['CharterGuest']['program_image']) && !empty($chData['CharterGuest']['program_image'])){
+                        if (!empty($fleetname)) {
+                            if($fleetname == "fleetbeta" || $fleetname == "SOS"){
+                                if($fleetname == "fleetbeta" && $yname == "betayacht"){
+                                    $targetFullPath = $SITE_URL."fleetbeta/app/webroot/betayacht/app/webroot/img/charter_program_files/charter_program_photo/".$chData['CharterGuest']['program_image'];
+                                }else{  
+                                    $targetFullPath = $SITE_URL."fleetbeta/app/webroot/img/charter_program_files/charter_program_photo/".$chData['CharterGuest']['program_image'];
+                                }
+                            }else if($fleetname != "fleetbeta" || $fleetname != "SOS"){
+                                $targetFullPath = $SITE_URL.$fleetname."/app/webroot/img/charter_program_files/charter_program_photo/".$chData['CharterGuest']['program_image'];
+                            }else{
+                                $targetFullPath = $SITE_URL.$fleetname."/app/webroot/".$yname."/app/webroot/img/charter_program_files/charter_program_photo/".$chData['CharterGuest']['program_image'];
+                            }
+                        } else {
+                            if($yname == "betayacht"){
+                                $targetFullPath = $SITE_URL."fleetbeta/app/webroot/betayacht/app/webroot/img/charter_program_files/charter_program_photo/".$chData['CharterGuest']['program_image'];
+                            }else{
+                            $targetFullPath = $SITE_URL."/".$yname."/app/webroot/img/charter_program_files/charter_program_photo/".$chData['CharterGuest']['program_image'];
+                            }
+                        }
+                        $file_folder_path = str_replace("$SITE_URL","$site_full_path","$targetFullPath");
+                    //echo $targetFullPath; echo $site_full_path; echo "<pre>"; echo $file_folder_path; exit;
+                        if(file_exists($file_folder_path)){
+                            $targetFullPath = $targetFullPath;
+                        }else{
+                            $targetFullPath = $this->request->base."/app/webroot/img/noimage_cp.png";
+                        }
+                        $charterAssocData[$key]['charterDetails']['ch_image'] = $targetFullPath;
+                    }else{
+                        $charterAssocData[$key]['charterDetails']['ch_image'] = "#";
+                    }
+                    $charterAssocData[$key]['charterDetails']['ydb_name'] = $ydb_name;
+                    $YachtWeblinkConditions = array('YachtWeblink.charter_company_id' => $value['CharterGuestAssociate']['fleetcompany_id'],'YachtWeblink.yacht_id' => $value['CharterGuestAssociate']['yacht_id'],'YachtWeblink.is_deleted'=>0);
+                    $YachtWeblink = $this->YachtWeblink->find('first', array('conditions' => $YachtWeblinkConditions));
+                    if(isset($YachtWeblink) && !empty($YachtWeblink['YachtWeblink']['weblink'])){
+                        $isValid = preg_match("@^https?://@", $YachtWeblink['YachtWeblink']['weblink']);
+                        if($isValid == 0){
+                            $YachtWeblink['YachtWeblink']['weblink'] = 'https://'.$YachtWeblink['YachtWeblink']['weblink'];
+                        }
+                        $charterAssocData[$key]['websitedetails'] = $YachtWeblink;
+                    }
+
+                    $this->loadModel('Fleetcompany');
+                            $companyData = $this->Fleetcompany->find('first', array('fields' => array('management_company_name','logo','fleetname'), 'conditions' => array('id' => $value['CharterGuestAssociate']['fleetcompany_id'])));
+                            if (isset($companyData['Fleetcompany']['logo']) && !empty($companyData['Fleetcompany']['logo'])) {
+                                // $fleetLogoUrl = $cloudUrl.$companyData['Fleetcompany']['fleetname']."/img/logo/thumb/".$companyData['Fleetcompany']['logo'];
+                                $fleetLogoUrl = $SITE_URL.'/'."charterguest/img/logo/thumb/".$companyData['Fleetcompany']['logo'];
+                                //$file_folder_path2 = str_replace("$SITE_URL","$site_full_path","$fleetLogoUrl");
+                                //echo $targetFullPath; echo $site_full_path; echo "<pre>"; echo $file_folder_path; exit;
+                                //if(file_exists($file_folder_path2)){
+                                    $charterAssocData[$key]['charterDetails']['charter_logo'] = $fleetLogoUrl;
+                               // }else{
+                               //     $charterAssocData[$key]['charterDetails']['charter_logo'] = "#";
+                               // }
+                                
+                                
+                            } else{
+                                $fleetLogoUrl = $SITE_URL.'/'."charterguest/img/logo/thumb/charter_guest_logo.png";
+                                $charterAssocData[$key]['charterDetails']['charter_logo'] = $fleetLogoUrl;
+                            }
+
+                            $commentindividualtotal = $this->charter_program_map_total_msg_count($value['CharterGuestAssociate']['charter_program_id'],$ydb_name);
+                        $charterAssocData[$key]['charterDetails']['msg_count'] = $commentindividualtotal;
+
+                        $pid = $value['CharterGuestAssociate']['charter_program_id'];
+                        $scheduleData = $this->CharterProgramFile->query("SELECT * FROM $ydb_name.charter_program_schedules CharterProgramSchedule WHERE charter_program_id = '$pid' AND is_deleted = 0");
+                        if(isset($scheduleData) && !empty($scheduleData)){
+                            if(($scheduleData[0]['CharterProgramSchedule']['publish_map'] == 1)){
+                                
+                                $charterAssocData[$key]['charterDetails']['map_url'] = "link";
+                            }else{
+                                $charterAssocData[$key]['charterDetails']['map_url'] = "nolink";
+                            }
+                        }else{
+                            $charterAssocData[$key]['charterDetails']['map_url'] = "nolink";
+                        }
+                }
+
+             }
+     //echo "<pre>";print_r($charterGuestData); exit;
+    //     echo "<pre>";print_r($charterAssocData); exit;
+        //echo "<pre>";print_r($mapdetails); exit;
+        
+        $this->set('charterGuestData', $charterGuestData);
+        $this->set('charterAssocData', $charterAssocData);
+        $this->set('guestListData', $guestListData);
+        $this->set('websiteList', $websiteList);
+        $this->set('yfullName', $yfullName);
+        if(isset($attachment) && !empty($attachment)){
+            $this->set('programFiles', $attachment);
+        }
+        $this->set('mapdetails', $mapdetails);
+        //echo "<pre>";print_r($guestListData);
+        //exit;
+
+    }
+
+    /*
+        * Load the Charter Head's page
+        * Functionality -  Loading the Charter head's page with existing Head charterer details
+        * Developer - Nagarajan
+        * Created date - 24-May-2018
+        * Modified date - 
+    */
+    function crew_list() {
+        $session = $this->Session->read('charter_info');
+        $sessionAssoc = $this->Session->read('charter_assoc_info');
+        // echo "<pre>";print_r($sessionAssoc);exit;
+        if (empty($session)) {
+            $this->redirect(array('action' => 'index'));
+        } else if (!empty($sessionAssoc)) {
+            $this->redirect(array('action' => 'preference'));
+        }
+        $actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+       
+        //echo $actual_link."<br>"; 
+        $parts = parse_url($actual_link);
+        //echo $parts['path'];
+        $explodepath = explode('/',$parts['path']);
+        //echo "<pre>";print_r($explodepath);
+        $CharterGuest_id = $explodepath[4];
+        $charter_program_id = $explodepath[5];
+        $charter_company_id = $explodepath[6];
+        // Fetching the Head Charterer details
+        // $this->Session->delete("selectedCharterProgramUUID");
+
+        // $this->Session->write("selectedCharterProgramUUID", $charter_program_id);
+
+        //echo $this->Session->read("selectedCharterProgramUUID"); exit;
+        $this->Session->write("selectedCHID", $CharterGuest_id);
+        $this->Session->write("selectedCHPRGID", $charter_program_id);
+        $this->Session->write("selectedCHPRGCOMID", $charter_company_id);
+
+        $this->Session->delete("Fromownerguestlist");
+        $this->Session->write("Fromownerguestlist","yes");
+
+        $this->loadModel('CharterGuest');
+        $this->loadModel('CharterProgramFile');
+        $this->loadModel('Yacht');
+        $charterData = $this->CharterGuest->find('first', array('conditions' => array('id' => $CharterGuest_id)));
+        $this->set('charterData', $charterData);
+//        echo "<pre>";print_r($charterData);
+
+        /****************** */
+        $programFiles  = array();
+        $mapdetails = array();
+        $programFilesCond = array('CharterProgramFile.charter_program_id' => $charterData['CharterGuest']['charter_program_id'],'CharterProgramFile.yacht_id' => $charterData['CharterGuest']['yacht_id'],'CharterProgramFile.is_deleted'=>0);
+        $programFiledata = $this->CharterProgramFile->find('all', array('conditions' => $programFilesCond));
+
+        $this->Session->delete("yachFullName");
+        $charter_from_date = date("d M Y", strtotime($charterData['CharterGuest']['charter_from_date']));
+        if(isset($programFiledata)){
+            $programFiles[$charter_from_date]['attachment'] = $programFiledata;
+            //$programFiles[]['startdate'] = $charter_from_date;
+        }
+        $yacht_id = $charterData['CharterGuest']['yacht_id'];
+        $yachtCond = array('Yacht.id' => $yacht_id);
+        $Ydata = $this->Yacht->find('first', array('conditions' => $yachtCond));
+        $ydb_name = $Ydata['Yacht']['ydb_name'];
+        $yfullNameDisp = $Ydata['Yacht']['yfullName'];
+        
+        $this->Session->write("yachFullName", $Ydata['Yacht']['yfullName']);
+        // Background image
+        // $image = $Ydata['Yacht']['cg_background_image'];
+        // if($image){
+        //     $fleetSiteName = $Ydata['Yacht']['fleetname'];
+        //     $yachtSiteName = $Ydata['Yacht']['yname'];
+        //     $cgBackgroundImage = BASE_URL."/".$yachtSiteName.'/app/webroot/betayacht/app/webroot/img/charter_program_files/'.$image;
+        //     if (!empty($fleetSiteName)) { // IF yacht is under any Fleet
+        //         $cgBackgroundImage = BASE_URL."/".$fleetSiteName."/app/webroot/".$yachtSiteName."/app/webroot/img/charter_program_files/".$image;
+        //     }
+        // }else{
+        //     $cgBackgroundImage = "https://totalsuperyacht.com:8080/charterguest/css/admin/images/full-charter.png";
+        // }
+        $YachtData =  $this->CharterGuest->query("SELECT * FROM $ydb_name.yachts Yacht");
+        //echo "<pre>";print_r($YachtData); exit;
+        $image = $YachtData[0]['Yacht']['cg_background_image'];
+        $fleetname = $YachtData[0]['Yacht']['fleetname'];
+        $yachtname = $YachtData[0]['Yacht']['yname'];
+
+        $this->set('fleetname', $fleetname);
+        $this->set('yachtname', $yachtname);
+         
+        $YachtDetails = $this->Yacht->query("SELECT * FROM $ydb_name.yachts WHERE id = '$yacht_id' AND is_deleted = 0");
+        //echo "<pre>"; print_r($YachtDetails[0]['yachts']['captain_name']); exit('ddddd');
+        $yachtcaptainname = $YachtDetails[0]['yachts']['captain_name'];
+        $yachtname = $YachtData[0]['Yacht']['yname'];
+        if(isset($YachtData[0]['Yacht']['domain_name'])){
+        $domain_name = $YachtData[0]['Yacht']['domain_name'];
+        }
+                        if(isset($domain_name) && $domain_name == "charterguest"){
+                            $SITE_URL = "https://charterguest.net/";
+                        }else{
+                            $SITE_URL = "https://totalsuperyacht.com:8080/";
+                        }
+        $cgBackgroundImage = $this->getBackgroundImageUrl($image, $fleetname, $yachtname,$SITE_URL);
+        $this->Session->write("cgBackgroundImage", $cgBackgroundImage);
+        // Background image
+        $this->Session->delete("GuestListYname");
+        $this->Session->write("GuestListYname", $yfullNameDisp);
+        $this->Session->delete("GuestCaptaionName");
+        $this->Session->write("GuestCaptaionName", $yachtcaptainname);
+
+        $this->set('domain', $SITE_URL);
+        
+        $pid = $charterData['CharterGuest']['charter_program_id'];
+        //echo "SELECT * FROM $ydb_name.charter_program_schedules CharterProgramSchedule WHERE charter_program_id = '$pid' AND is_deleted = 0";
+        $scheduleData = $this->CharterProgramFile->query("SELECT * FROM $ydb_name.charter_program_schedules CharterProgramSchedule WHERE charter_program_id = '$pid' AND is_deleted = 0");
+        //echo "<pre>";print_r($scheduleData);exit;
+        if(isset($scheduleData) && !empty($scheduleData)){
+            if(($scheduleData[0]['CharterProgramSchedule']['publish_map'] == 1)){
+                $map = array();
+                $map['dbname'] = $ydb_name;
+                $map['programid'] = $charterData['CharterGuest']['charter_program_id'];
+                $mapdetails[$charter_from_date] = $map;
+            }
+        }
+
+        $this->set('mapdetails', $mapdetails);
+        /*********************** */
+        
+        // Fetching the Charter guest associates details
+        $this->loadModel('CharterGuestAssociate');
+        $charterAssocData = $this->CharterGuestAssociate->find('all', array('conditions' => array('charter_guest_id' => $charter_program_id)));
+        $this->set('charterAssocData', $charterAssocData);
+//        echo "<pre>";print_r($charterAssocData);exit;
+        
+        // Fetch the Charter company details
+        $this->loadModel('Fleetcompany');
+        
+        $companyData = $this->Fleetcompany->find('first', array('fields' => array('management_company_name','logo','fleetname'), 'conditions' => array('id' => $charter_company_id)));
+        $this->set('companyData', $companyData);
+        $this->set('charter_company_id', $charter_company_id);
+        $this->set('ismobile',$this->is_mobile);
+        if(isset($companyData['Fleetcompany']['fleetname'])){
+        $fleetname = $companyData['Fleetcompany']['fleetname'];
+        }
+
+        if(isset($programFiles) ){
+            $attachment = array();
+            //$SITE_URL = Configure::read('BASE_URL');
+            foreach($programFiles as $startdate => $filedata){ 
+                foreach($filedata['attachment'] as $file){ 
+                    $sourceImagePath = $SITE_URL.'/'.$fleetname."/app/webroot/img/charter_program_files/".$file['CharterProgramFile']['file_name'];
+                    $attachment[$startdate] = $sourceImagePath;
+
+                }
+            } 
+        }
+
+        $this->set('programFiles', $attachment);
+
+        // Logo url
+        if (isset($companyData['Fleetcompany']['logo']) && !empty($companyData['Fleetcompany']['logo'])) {
+            $fleetLogoUrl = $SITE_URL.'/'."charterguest/img/logo/thumb/".$companyData['Fleetcompany']['logo'];
+        } else{
+            $fleetLogoUrl = $SITE_URL.'/'."charterguest/img/logo/thumb/charter_guest_logo.png";
+        }
+        $this->Session->write("fleetLogoUrl", $fleetLogoUrl);
+
+        $CrewInfo = $this->CharterProgramFile->query("SELECT * FROM $ydb_name.crew_infos CrewInfo LEFT JOIN $ydb_name.users User ON (CrewInfo.user_id = User.id) LEFT JOIN $ydb_name.positions Position ON (User.position_id = Position.id) WHERE User.status = 1 AND User.user_type IN (0,1,2,7,8) AND User.show_on_cga = 1 order by User.crew_order_list ASC, User.first_name ASC");
+
+        $this->set('CrewInfo', $CrewInfo);
+
+        //echo "<pre>";print_r($CrewInfo);exit;
+    }
     
     /*
         * Load the Charter Head's page
@@ -808,7 +1397,7 @@ class ChartersController extends AppController {
         $programFilesCond = array('CharterProgramFile.charter_program_id' => $charterData['CharterGuest']['charter_program_id'],'CharterProgramFile.yacht_id' => $charterData['CharterGuest']['yacht_id'],'CharterProgramFile.is_deleted'=>0);
         $programFiledata = $this->CharterProgramFile->find('all', array('conditions' => $programFilesCond));
 
-
+        $this->Session->delete("yachFullName");
         $charter_from_date = date("d M Y", strtotime($charterData['CharterGuest']['charter_from_date']));
         if(isset($programFiledata)){
             $programFiles[$charter_from_date]['attachment'] = $programFiledata;
@@ -820,6 +1409,7 @@ class ChartersController extends AppController {
         $ydb_name = $Ydata['Yacht']['ydb_name'];
         $yfullNameDisp = $Ydata['Yacht']['yfullName'];
         
+        $this->Session->write("yachFullName", $Ydata['Yacht']['yfullName']);
         // Background image
         // $image = $Ydata['Yacht']['cg_background_image'];
         // if($image){
@@ -2775,7 +3365,7 @@ class ChartersController extends AppController {
 
         $fleetname = $this->Session->read('fleetname');
         //echo $charterGuestAssociatelast_fleetid;
-        if(isset($charterGuestAssociatelast_fleetid)){
+        if(isset($charterGuestAssociatelast_fleetid) && $charterGuestAssociatelast_fleetid != 0){
         $this->loadModel('Fleetcompany');
         $companyData = $this->Fleetcompany->find('first', array('fields' => array('management_company_name','logo','fleetname','domain_name'), 'conditions' => array('id' => $charterGuestAssociatelast_fleetid)));
         $domain_name_fleet = $companyData['Fleetcompany']['domain_name'];
@@ -5331,6 +5921,8 @@ class ChartersController extends AppController {
                     if (count($charterProgData) != 0) {
                         $startDate = $charterProgData[0]['CharterProgram']['charter_from_date'];
                         $endDate = $charterProgData[0]['CharterProgram']['charter_to_date'];
+                        $embarkation_chprg = $charterProgData[0]['CharterProgram']['embarkation'];
+                        $debarkation_chprg = $charterProgData[0]['CharterProgram']['debarkation'];
                         $diff = date_diff(date_create($endDate), date_create($startDate));
                         $diffDays = $diff->days + 1;
                         
@@ -5408,36 +6000,44 @@ class ChartersController extends AppController {
                                         $samlatlong[$publishmap['CharterProgramSchedule']['title']][] = $publishmap['CharterProgramSchedule']['lattitude'];
                                             }
                                     $markerimg = BASE_URL.$basefolder.'/app/webroot/css/leaflet/dist/images/marker-icon.png';
-                            $stationarylocations[$publishmap['CharterProgramSchedule']['lattitude']][] = "<span class='stationarydays' data-num=".$publishmap['CharterProgramSchedule']['day_num']." id=".$publishmap['CharterProgramSchedule']['UUID']."><img src=".$markerimg." width='15px height='15px' > Day ".$scheduleData[$key]['CharterProgramSchedule']['day_num']."&nbsp;&nbsp;".$scheduleData[$key]['CharterProgramSchedule']['week_days']."</span>"; //same stationarylocations
+                            $stationarylocations[$publishmap['CharterProgramSchedule']['lattitude']][] = "<span class='stationarydays' data-num=".$publishmap['CharterProgramSchedule']['day_num']." data-statdate=".$scheduleData[$key]['CharterProgramSchedule']['day_dates']." data-stat=".$publishmap['CharterProgramSchedule']['stationary']." id=".$publishmap['CharterProgramSchedule']['UUID']."><img src=".$markerimg." width='15px height='15px' > Day ".$scheduleData[$key]['CharterProgramSchedule']['day_num']."&nbsp;&nbsp;".$scheduleData[$key]['CharterProgramSchedule']['week_days']."</span>"; //same stationarylocations
 
                                     ////////////////////////////////
                                 $loctitle = $publishmap['CharterProgramSchedule']['title'];
+                                $loctitlev = str_replace("'", "", $loctitle);    
+                                $loctitle = str_replace('"', "", $loctitlev);   
                                 //$loctitle = mysql_real_escape_string($publishmap['CharterProgramSchedule']['title']);
                                 $LocationContent = $this->CharterGuest->query("SELECT * FROM $yachtDbName.location_contents LocationContent WHERE LocationContent.location = '$loctitle' AND LocationContent.type = 'Location'");
                             
-                                $fleetlocationimages = "";
-                                //echo "<pre>";print_r($LocationContent); exit;
+                                $fleetlocationimages = array();
+                                //echo "<pre>";print_r($LocationContent); //exit;
                                 if(!empty($LocationContent)){
                                     $LocationContentFleetyour_image = $LocationContent[0]['LocationContent']['your_image'];
                                     //$fleetlocationimages = array();
+                                    $fleetlocationyour_images = array();
                                     if(!empty($LocationContentFleetyour_image)){
+                                        
                                         $fleetlocationyour_images =  explode(',',$LocationContentFleetyour_image);
                                     }
                                     $LocationContentFleetimage = $LocationContent[0]['LocationContent']['image'];
+                                    $fleetlocationimagesarr = array();
                                     if(!empty($LocationContentFleetimage)){
                                         $fleetlocationimagesarr =  explode(',',$LocationContentFleetimage);
                                     }
                                     // echo "<pre>";print_r($fleetlocationyour_images);
                                     // echo "<pre>";print_r($fleetlocationimagesarr);
-                                    if(!empty($LocationContentFleetyour_image) && !empty($LocationContentFleetimage)){
+                                    //if(!empty($LocationContentFleetyour_image) && !empty($LocationContentFleetimage)){
                                     $fleetlocationimages = array_merge($fleetlocationyour_images,$fleetlocationimagesarr);
-                                    }
+                                    //}
                                     //echo "<pre>";print_r($fleetlocationimages); exit;
 
                                     
                                 }
-                                //echo "<pre>";print_r($fleetlocationimages); exit;
-                                $locationimages[$publishmap['CharterProgramSchedule']['id']] = $fleetlocationimages;
+                                //echo "<pre>";print_r($fleetlocationimages); //exit;
+                                if(!empty($fleetlocationimages)){
+                                $trimmed_array = array_map('trim', $fleetlocationimages);
+                                }
+                                $locationimages[$publishmap['CharterProgramSchedule']['id']] = $trimmed_array;
                         /////////////////////////////////
                             
                                 }
@@ -5631,6 +6231,16 @@ class ChartersController extends AppController {
                         //echo "<pre>";print_r($crusingModaltitle);  exit;
                         $first = reset($crusingModaltitle);
                         $last = end($crusingModaltitle);
+
+                        if(!empty($markertotal)){
+                            $myLastmarkertotal = end($markertotal);
+                             $endname = $myLastmarkertotal['endplace']; //exit;
+                             $markertotal[$endname] = $myLastmarkertotal;
+        
+                        }
+
+                        $this->set('embarkation_chprg', $embarkation_chprg);
+                        $this->set('debarkation_chprg', $debarkation_chprg);
                       
                         $this->set('startloc', $first);
                         $this->set('endloc', $last);
@@ -5669,7 +6279,7 @@ class ChartersController extends AppController {
                         if(isset($cruising_unit) && !empty($cruising_unit)){
                         $this->set('cruising_unit', $cruising_unit);
                         }
-
+                        $myLastElement_locationimages = array();
                         if(!empty($scheduleData)){
                             $myLastElement = end($scheduleData);
                             $to_location = $myLastElement['CharterProgramSchedule']['to_location'];
@@ -5679,15 +6289,58 @@ class ChartersController extends AppController {
                            // $location_names = $this->LocationContentFleet->find('first', array('conditions' => array('type' => 'Location', 'is_deleted' => 0,'location'=>$to_location)));
                             $myLastElement['CharterProgramSchedule']['lattitude'] = $location_names[0]['LocationContent']['lattitude'];
                             $myLastElement['CharterProgramSchedule']['longitude'] = $location_names[0]['LocationContent']['longitude'];
+                            $myLastElement['CharterProgramSchedule']['title'] = $myLastElement['CharterProgramSchedule']['to_location'];
+                            $myLastElement['CharterProgramSchedule']['notes'] = $myLastElement['CharterProgramSchedule']['debarkation_desc'];
                             
                             // //
                             // //echo "<pre>";print_r($scheduleData);
                              $scheduleData[count($scheduleData)] = $myLastElement;
-                            //echo "<pre>";print_r($scheduleData); exit;
+
+                                $myLastElement_loctitle = $myLastElement['CharterProgramSchedule']['to_location'];
+                                $myLastElement_loctitlev = str_replace("'", "", $myLastElement_loctitle);    
+                                $myLastElement_loctitle = str_replace('"', "", $myLastElement_loctitlev);   
+                                //$loctitle = mysql_real_escape_string($publishmap['CharterProgramSchedule']['title']);
+                                $LocationContent = $this->CharterGuest->query("SELECT * FROM $yachtDbName.location_contents LocationContent WHERE LocationContent.location = '$myLastElement_loctitle' AND LocationContent.type = 'Location'");
+                            
+                                $myLastElement_fleetlocationimages = array();
+                                //echo "<pre>";print_r($LocationContent); //exit;
+                                if(!empty($LocationContent)){
+                                    $myLastElement_image = $LocationContent[0]['LocationContent']['your_image'];
+                                    //$fleetlocationimages = array();
+                                    $myLastElement_fleetlocationyour_images = array();
+                                    if(!empty($myLastElement_image)){
+                                        
+                                        $myLastElement_fleetlocationyour_images =  explode(',',$myLastElement_image);
+                                    }
+                                    $myLastElement_LocationContentFleetimage = $LocationContent[0]['LocationContent']['image'];
+                                    $myLastElement_fleetlocationimagesarr = array();
+                                    if(!empty($myLastElement_LocationContentFleetimage)){
+                                        $myLastElement_fleetlocationimagesarr =  explode(',',$myLastElement_LocationContentFleetimage);
+                                    }
+                                    // echo "<pre>";print_r($fleetlocationyour_images);
+                                    // echo "<pre>";print_r($fleetlocationimagesarr);
+                                    //if(!empty($LocationContentFleetyour_image) && !empty($LocationContentFleetimage)){
+                                    $myLastElement_fleetlocationimages = array_merge($myLastElement_fleetlocationyour_images,$myLastElement_fleetlocationimagesarr);
+                                    //}
+                                    //echo "<pre>";print_r($fleetlocationimages); exit;
+
+                                    
+                                }
+                                //echo "<pre>";print_r($fleetlocationimages); //exit;
+                                if(!empty($myLastElement_fleetlocationimages)){
+                                $trimmed_array = array_map('trim', $myLastElement_fleetlocationimages);
+                                }
+                                $myLastElement_locationimages['last'] = $trimmed_array;
+
+                             //echo "<pre>";print_r($scheduleData); //exit;
                         }
+
                         $this->set('scheduleData', $scheduleData);
 
                         $this->set('locationimages', $locationimages);
+                        $this->set('myLastElement_locationimages', $myLastElement_locationimages);
+                        
+                        //echo "<pre>";print_r($locationimages); exit;
                         //$this->set('locationComment', $locationComment);
 
                     } else {
@@ -5723,9 +6376,13 @@ class ChartersController extends AppController {
             $this->loadModel('CharterProgramFile');
             $this->loadModel('CharterGuest');
             
-            $charterProgData = $this->CharterGuest->query("SELECT * FROM $yachtDbName.charter_programs CharterProgram WHERE UUID = '$charterProgramId' AND is_deleted = 0 LIMIT 1");
+            $charterProgData = $this->CharterGuest->query("SELECT * FROM $yachtDbName.charter_programs CharterProgram WHERE UUID = '$charterProgramId' LIMIT 1");
             
             $charterGuestDataToMenu = $this->CharterGuest->find("first",array('conditions'=>array('charter_program_id'=>$charterProgramId)));
+
+            $charterGuestDatayacht_id = $charterGuestDataToMenu['CharterGuest']['yacht_id'];
+
+            $this->set('charterGuestDatayacht_id', $charterGuestDatayacht_id);
 
             if(isset($guesttype) && ($guesttype == "owner")){ 
                     $guestlink = "/charters/view/".$charterGuestDataToMenu['CharterGuest']['id']."/".$charterGuestDataToMenu['CharterGuest']['charter_program_id']."/".$charterGuestDataToMenu['CharterGuest']['charter_company_id'];
@@ -5738,6 +6395,8 @@ class ChartersController extends AppController {
             if (count($charterProgData) != 0) {
                 $startDate = $charterProgData[0]['CharterProgram']['charter_from_date'];
                 $endDate = $charterProgData[0]['CharterProgram']['charter_to_date'];
+                $embarkation_chprg = $charterProgData[0]['CharterProgram']['embarkation'];
+                $debarkation_chprg = $charterProgData[0]['CharterProgram']['debarkation'];
                 $diff = date_diff(date_create($endDate), date_create($startDate));
                 $diffDays = $diff->days + 1;
                 
@@ -5816,7 +6475,7 @@ class ChartersController extends AppController {
                                 $samlatlong[$publishmap['CharterProgramSchedule']['title']][] = $publishmap['CharterProgramSchedule']['lattitude'];
                                     }
                             $markerimg = BASE_URL.$basefolder.'/app/webroot/css/leaflet/dist/images/marker-icon.png';
-                            $stationarylocations[$publishmap['CharterProgramSchedule']['lattitude']][] = "<span class='stationarydays' data-num=".$publishmap['CharterProgramSchedule']['day_num']." id=".$publishmap['CharterProgramSchedule']['UUID']."><img src=".$markerimg." width='15px height='15px' > Day ".$scheduleData[$key]['CharterProgramSchedule']['day_num']."&nbsp;&nbsp;".$scheduleData[$key]['CharterProgramSchedule']['week_days']."</span>"; //same stationarylocations
+                            $stationarylocations[$publishmap['CharterProgramSchedule']['lattitude']][] = "<span class='stationarydays' data-num=".$publishmap['CharterProgramSchedule']['day_num']." data-stat=".$publishmap['CharterProgramSchedule']['stationary']." id=".$publishmap['CharterProgramSchedule']['UUID']."><img src=".$markerimg." width='15px height='15px' > Day ".$scheduleData[$key]['CharterProgramSchedule']['day_num']."&nbsp;&nbsp;".$scheduleData[$key]['CharterProgramSchedule']['week_days']."</span>"; //same stationarylocations
 
                         ////////////////////////////////
                                 $loctitle = $publishmap['CharterProgramSchedule']['title'];
@@ -5825,29 +6484,33 @@ class ChartersController extends AppController {
                                 $loctitle = str_replace('"', "", $loctitlev);   
                                 $LocationContent = $this->CharterGuest->query("SELECT * FROM $yachtDbName.location_contents LocationContent WHERE LocationContent.location = '$loctitle' AND LocationContent.type = 'Location'");
                             
-                                $fleetlocationimages = "";
+                                $fleetlocationimages = array();
                                 //echo "<pre>";print_r($LocationContent); exit;
                                 if(!empty($LocationContent)){
                                     $LocationContentFleetyour_image = $LocationContent[0]['LocationContent']['your_image'];
-                                    //$fleetlocationimages = array();
+                                    $fleetlocationyour_images = array();
                                     if(!empty($LocationContentFleetyour_image)){
                                         $fleetlocationyour_images =  explode(',',$LocationContentFleetyour_image);
                                     }
                                     $LocationContentFleetimage = $LocationContent[0]['LocationContent']['image'];
+                                    $fleetlocationimagesarr = array();
                                     if(!empty($LocationContentFleetimage)){
                                         $fleetlocationimagesarr =  explode(',',$LocationContentFleetimage);
                                     }
                                     // echo "<pre>";print_r($fleetlocationyour_images);
                                     // echo "<pre>";print_r($fleetlocationimagesarr);
-                                    if(!empty($LocationContentFleetyour_image) && !empty($LocationContentFleetimage)){
+                                    //if(!empty($LocationContentFleetyour_image) && !empty($LocationContentFleetimage)){
                                     $fleetlocationimages = array_merge($fleetlocationyour_images,$fleetlocationimagesarr);
-                                    }
+                                    //}
                                     //echo "<pre>";print_r($fleetlocationimages); exit;
 
                                     
                                 }
                                 //echo "<pre>";print_r($fleetlocationimages); exit;
-                                $locationimages[$publishmap['CharterProgramSchedule']['id']] = $fleetlocationimages;
+                                if(!empty($fleetlocationimages) && !empty($fleetlocationimages)){
+                                $trimmed_array = array_map('trim', $fleetlocationimages);
+                                }
+                                $locationimages[$publishmap['CharterProgramSchedule']['id']] = $trimmed_array;
                         /////////////////////////////////
                        
                         /*******************comments*/
@@ -5897,13 +6560,15 @@ class ChartersController extends AppController {
                         }
                 }
 
+                $this->Session->delete("yachFullName");
                 
                 //echo "<pre>";print_r($YachtData); exit;
                 $cruising_speed = $YachtData[0]['Yacht']['cruising_speed'];
                 $cruising_fuel = $YachtData[0]['Yacht']['cruising_fuel'];
                 $yacht_id_fromyachtDB = $YachtData[0]['Yacht']['id'];
                 //echo $YachtData['Yacht']['cruising_unit'];
-                
+                $this->Session->write("yachFullName", $YachtData[0]['Yacht']['yfullName']);
+
                 $image = $YachtData[0]['Yacht']['cg_background_image'];
                 $fleetname = $YachtData[0]['Yacht']['fleetname'];
                 $yachtname = $YachtData[0]['Yacht']['yname'];
@@ -6106,6 +6771,14 @@ class ChartersController extends AppController {
                 
                 //echo "<pre>";print_r($scheduleData);
                 //echo "<pre>";print_r($markertotal); exit;
+
+                if(!empty($markertotal)){
+                    $myLastmarkertotal = end($markertotal);
+                     $endname = $myLastmarkertotal['endplace']; //exit;
+                     $markertotal[$endname] = $myLastmarkertotal;
+
+                }
+                //echo "<pre>";print_r($markertotal); exit;
                 $fromtoConditions = "charter_program_id = '$charterProgramId' AND is_deleted = 0";
                 $fromtoquery = "SELECT * FROM $yachtDbName.charter_program_schedules CharterProgramSchedule WHERE $fromtoConditions order by day_num";
                 $fromtoresult = $this->CharterGuest->query($fromtoquery);
@@ -6119,6 +6792,9 @@ class ChartersController extends AppController {
                 $this->set('startloc', $first);
                 $this->set('endloc', $last);
                 $this->set('Datesarray', $Datesarray);
+
+                $this->set('embarkation_chprg', $embarkation_chprg);
+                $this->set('debarkation_chprg', $debarkation_chprg);
 
                 $this->set('samelocations', $samelocations);
                 $this->set('samelocationsScheduleUUID', $samelocationsScheduleUUID);
@@ -6227,6 +6903,7 @@ class ChartersController extends AppController {
 
                     if(!empty($scheduleData)){
                         $myLastElement = end($scheduleData);
+                        $org_title = $myLastElement['CharterProgramSchedule']['title'];
                         $to_location = $myLastElement['CharterProgramSchedule']['to_location'];
                         $myLastElement['CharterProgramSchedule']['title'] = $myLastElement['CharterProgramSchedule']['to_location'];
                         $location_names = $this->CharterGuest->query("SELECT * FROM $yachtDbName.location_contents LocationContent WHERE LocationContent.location = '$to_location' AND LocationContent.type = 'Location'");
@@ -6234,17 +6911,60 @@ class ChartersController extends AppController {
                        // $location_names = $this->LocationContentFleet->find('first', array('conditions' => array('type' => 'Location', 'is_deleted' => 0,'location'=>$to_location)));
                         $myLastElement['CharterProgramSchedule']['lattitude'] = $location_names[0]['LocationContent']['lattitude'];
                         $myLastElement['CharterProgramSchedule']['longitude'] = $location_names[0]['LocationContent']['longitude'];
+                        $myLastElement['CharterProgramSchedule']['title'] = $myLastElement['CharterProgramSchedule']['to_location'];
+                        $myLastElement['CharterProgramSchedule']['notes'] = $myLastElement['CharterProgramSchedule']['debarkation_desc'];
+                        $myLastElement['CharterProgramSchedule']['lastarr_title'] = $org_title;
                         
                         // //
                         // //echo "<pre>";print_r($scheduleData);
                          $scheduleData[count($scheduleData)] = $myLastElement;
                         //echo "<pre>";print_r($scheduleData); exit;
+
+                                 $myLastElement_loctitle = $myLastElement['CharterProgramSchedule']['to_location'];
+                                $myLastElement_loctitlev = str_replace("'", "", $myLastElement_loctitle);    
+                                $myLastElement_loctitle = str_replace('"', "", $myLastElement_loctitlev);   
+                                //$loctitle = mysql_real_escape_string($publishmap['CharterProgramSchedule']['title']);
+                                $LocationContent = $this->CharterGuest->query("SELECT * FROM $yachtDbName.location_contents LocationContent WHERE LocationContent.location = '$myLastElement_loctitle' AND LocationContent.type = 'Location'");
+                            
+                                $myLastElement_fleetlocationimages = array();
+                                //echo "<pre>";print_r($LocationContent); //exit;
+                                if(!empty($LocationContent)){
+                                    $myLastElement_image = $LocationContent[0]['LocationContent']['your_image'];
+                                    //$fleetlocationimages = array();
+                                    $myLastElement_fleetlocationyour_images = array();
+                                    if(!empty($myLastElement_image)){
+                                        
+                                        $myLastElement_fleetlocationyour_images =  explode(',',$myLastElement_image);
+                                    }
+                                    $myLastElement_LocationContentFleetimage = $LocationContent[0]['LocationContent']['image'];
+                                    $myLastElement_fleetlocationimagesarr = array();
+                                    if(!empty($myLastElement_LocationContentFleetimage)){
+                                        $myLastElement_fleetlocationimagesarr =  explode(',',$myLastElement_LocationContentFleetimage);
+                                    }
+                                    // echo "<pre>";print_r($fleetlocationyour_images);
+                                    // echo "<pre>";print_r($fleetlocationimagesarr);
+                                    //if(!empty($LocationContentFleetyour_image) && !empty($LocationContentFleetimage)){
+                                    $myLastElement_fleetlocationimages = array_merge($myLastElement_fleetlocationyour_images,$myLastElement_fleetlocationimagesarr);
+                                    //}
+                                    //echo "<pre>";print_r($fleetlocationimages); exit;
+
+                                    
+                                }
+                                //echo "<pre>";print_r($fleetlocationimages); //exit;
+                                if(!empty($myLastElement_fleetlocationimages)){
+                                $trimmed_array = array_map('trim', $myLastElement_fleetlocationimages);
+                                }
+                                $myLastElement_locationimages['last'] = $trimmed_array;
                     }
                     $this->set('scheduleData', $scheduleData);
+                    $this->set('myLastElement_locationimages', $myLastElement_locationimages);
                     //echo "<pre>";print_r($scheduleData); exit;
                     if(isset($attachment) && !empty($attachment)){
                         $this->set('programFiles', $attachment);
                     }
+
+                    $yfullName = $this->Yacht->find('list', array('fields' => array('id','yfullName')));
+                    $this->set('yfullName', $yfullName);
 
             } else {
                 $this->redirect(array('action' => 'view'));
@@ -6286,16 +7006,17 @@ class ChartersController extends AppController {
                 $tablepId = $this->request->data['tablepId'];
 
                 $daytitle = $this->request->data['daytitle'];
-                $counttitle = $this->request->data['counttitle'];
-                $scheduleSameLocationUUID = $this->request->data['scheduleSameLocationUUID'];
-                $samelocationsDates = $this->request->data['samelocationsDates'];
+                $counttitle = isset($this->request->data['counttitle']) ? $this->request->data['counttitle'] : '';
+                $scheduleSameLocationUUID = isset($this->request->data['scheduleSameLocationUUID']) ? $this->request->data['scheduleSameLocationUUID'] : '';
+                $samelocationsDates = isset($this->request->data['samelocationsDates']) ? $this->request->data['samelocationsDates'] : '';
                 $fromlocationcard = $this->request->data['from'];
                 //$selecteddatetext = $this->request->data['selecteddatetext'];
 
 
                 $popupHtml = '';
                 $this->loadModel('CharterGuest');
-                $this->loadModel('Yacht');
+                $this->loadModel('Yacht');                
+
                // $this->loadModel('LocationContentFleet');
                 if(isset($ipaddb) && !empty($ipaddb)){
                     $yachtDbName = $ipaddb;
@@ -6304,12 +7025,17 @@ class ChartersController extends AppController {
                     $yname = $ydbapp[0]['Yacht']['yname'];
                     $fleetcompanyid = $ydbapp[0]['Yacht']['fleetcompany_id'];
                     $yacht_domain = $ydbapp[0]['Yacht']['domain_name'];
+                    $chdata = $this->CharterGuest->query("SELECT * FROM $yachtDbName.charter_programs CharterProgram where UUID = '$programId'");
+                    $chdata_debarkation = $chdata[0]['CharterProgram']['debarkation'];
+                    $chdata_debarkation_date = $chdata[0]['CharterProgram']['charter_to_date'];
                 }else{
                     $chprgdata = $this->CharterGuest->find('first',array('conditions'=>array('CharterGuest.charter_program_id'=>$programId)));
                     $yacht_id = $chprgdata['CharterGuest']['yacht_id'];
                     $embarkation = $chprgdata['CharterGuest']['embarkation'];
                     $debarkation = $chprgdata['CharterGuest']['debarkation'];
+                    $chdata_debarkation = $chprgdata['CharterGuest']['debarkation'];
                     $charter_from_date = $chprgdata['CharterGuest']['charter_from_date'];
+                    $chdata_debarkation_date = $chprgdata['CharterGuest']['charter_to_date'];
                     //$charter_from_date_conv = date("M jS F Y",strtotime($charter_from_date));
                     $yachtCond = array('Yacht.id' => $yacht_id);
                     $Ydata = $this->Yacht->find('first', array('conditions' => $yachtCond));
@@ -6323,18 +7049,32 @@ class ChartersController extends AppController {
                         $fleetcompanydetails = $this->Fleetcompany->find('first',array('conditions'=>array('id'=>$fleetcompanyid)));
                         $fleetSiteName = $fleetcompanydetails['Fleetcompany']['fleetname'];
                         }
+
+                        $chk_endscheduleData = $this->CharterGuest->query("SELECT * FROM $yachtDbName.charter_program_schedules CharterProgramSchedule WHERE UUID = '$scheduleId' AND is_deleted = 0 LIMIT 1");
+                        $chk_deb_endlocation = htmlspecialchars($chk_endscheduleData[0]['CharterProgramSchedule']['to_location']);
+                        $chk_deb_debarkation_flag = ($chk_endscheduleData[0]['CharterProgramSchedule']['debarkation_flag']);
+                        $chk_deb_stationary_flag = ($chk_endscheduleData[0]['CharterProgramSchedule']['stationary']);
+                        $last_marker_display_iti_modal = 0;
+                        //echo $chk_deb_debarkation_flag.'--'.$daytitle.'--'.$chk_deb_endlocation; //exit;
+                        if($daytitle == $chdata_debarkation){
+                            $last_marker_display_iti_modal = 1;
+                        }
+                        //echo $last_marker_display_iti_modal; exit;
+                    //$modaldisplayDate = "";
+                    if($last_marker_display_iti_modal == 0){
                         $schUUIDs  =  explode(",",$scheduleSameLocationUUID);
                         $samelocationsDatesarr  =  explode(",",$samelocationsDates);
                         //$samelocationsDatestext = $samelocationsDatesarr[0]; 
-                if($fromlocationcard == "locationcard"){ //clicking from marker or location card
-                    if($counttitle > 1){
-                        $scheduleId = $schUUIDs[0]; 
-                    }
-                }elseif($fromlocationcard == "daysselection"){ // selection from marker popup
-                    //$samelocationsDatestext = $selecteddatetext;
-                }
-                        
-                        
+                      
+                        if($fromlocationcard == "locationcard"){ //clicking from marker or location card
+                            if($counttitle > 1){
+                                $scheduleId = $schUUIDs[0]; 
+                            }
+                        }elseif($fromlocationcard == "daysselection"){ // selection from marker popup
+                            //$samelocationsDatestext = $selecteddatetext;
+                        }
+                                
+                        //echo "<pre>"; print_r($schUUIDs); exit; 
                         $no_of_days_options = "";
                         $modaldisplayDate = "";
                         foreach($schUUIDs as $key => $uuid){
@@ -6350,27 +7090,51 @@ class ChartersController extends AppController {
                             if($scheduleId ==  $uuid){
                                 $no_of_days_options .= '<option value="'.$uuid.'" selected>Day '.$scheduleDataNum.$space.$samelocationsDatesarr[$key].'</option>';
                                 $modaldisplayDate = date("D d M Y",strtotime($samelocationsDatesarr[$key]));
+                                
                             }else{
                                 $no_of_days_options .= '<option value="'.$uuid.'">Day '.$scheduleDataNum.$space.$samelocationsDatesarr[$key].'</option>';
                             }
                         }
-
+                        
+                    }else{
+                        $no_of_days_options = "";
+                        $modaldisplayDate = date("D d M Y",strtotime($chdata_debarkation_date));
+                        
+                    }
+                    //echo "<pre>";print_r($modaldisplayDate); exit;
                 $scheduleData = $this->CharterGuest->query("SELECT * FROM $yachtDbName.charter_program_schedules CharterProgramSchedule WHERE UUID = '$scheduleId' AND is_deleted = 0 LIMIT 1");
                 //echo "<pre>";print_r($scheduleData); exit;
                 $basefolder = $this->request->base;
                 if (count($scheduleData) != 0) {
-                    $title = htmlspecialchars($scheduleData[0]['CharterProgramSchedule']['title']);
+                    if($last_marker_display_iti_modal == 0){
+                        $title = htmlspecialchars($scheduleData[0]['CharterProgramSchedule']['title']);
+                    }else if($last_marker_display_iti_modal == 1){
+                        $title = htmlspecialchars($scheduleData[0]['CharterProgramSchedule']['to_location']);
+                    } 
+                    $sch_endlocation = htmlspecialchars($scheduleData[0]['CharterProgramSchedule']['to_location']);
+                    $debarkation_flag = ($scheduleData[0]['CharterProgramSchedule']['debarkation_flag']);
                     $dayNum = $scheduleData[0]['CharterProgramSchedule']['day_num'];
                     $programScheduleUUID = $scheduleData[0]['CharterProgramSchedule']['UUID'];
                     $isFleetUser = $this->Session->read('loggedUserInfo.is_fleet');
                     $userType = $this->Session->read('loggedUserInfo.user_type');
-
-                    $notes = $scheduleData[0]['CharterProgramSchedule']['notes'];
-                    $attachment = $scheduleData[0]['CharterProgramSchedule']['attachment'];
+                    if($last_marker_display_iti_modal == 0){
+                        $notes = $scheduleData[0]['CharterProgramSchedule']['notes'];
+                    }else if($last_marker_display_iti_modal == 1){
+                        $notes = $scheduleData[0]['CharterProgramSchedule']['debarkation_desc'];
+                    }
+                    if($last_marker_display_iti_modal == 0){
+                        $attachment = $scheduleData[0]['CharterProgramSchedule']['attachment'];
+                    }else if($last_marker_display_iti_modal == 1){
+                        $attachment = $scheduleData[0]['CharterProgramSchedule']['debarkation_attachment'];
+                    }
                     if(isset($notes) && !empty($notes)){
                         $noteexist = "style='display:block;'";
                     }else{
                         $noteexist = "style='display:none;'";
+                    }
+                    $act_deb_flag = 0;
+                    if($debarkation_flag == 1 && $daytitle == $chdata_debarkation){
+                        $act_deb_flag = 1;
                     }
                     if(isset($attachment) && !empty($attachment)){
                         //echo $yacht_domain; echo $fleetSiteName; echo $yname;
@@ -6382,21 +7146,28 @@ class ChartersController extends AppController {
                         //echo "<pre>";print_r($LocationContent); exit;
                         if(!empty($LocationContent)){
                             $LocationContentFleetyour_image = $LocationContent[0]['LocationContent']['your_image'];
-                            //$fleetlocationimages = array();
+                            $fleetlocationyour_images = array();
                             if(isset($LocationContentFleetyour_image) && !empty($LocationContentFleetyour_image)){
                                 $fleetlocationyour_images =  explode(',',$LocationContentFleetyour_image);
                             }
                             $LocationContentFleetimage = $LocationContent[0]['LocationContent']['image'];
+                            $fleetlocationimagesarr = array();
                             if(isset($LocationContentFleetimage) && !empty($LocationContentFleetimage)){
                                 $fleetlocationimagesarr =  explode(',',$LocationContentFleetimage);
                             }
                             // echo "<pre>";print_r($fleetlocationyour_images);
                             // echo "<pre>";print_r($fleetlocationimagesarr);
-                            if(isset($fleetlocationyour_images) && isset($fleetlocationimagesarr)){
+                            //if(isset($fleetlocationyour_images) && isset($fleetlocationimagesarr)){
                                 $fleetlocationimages = array_merge($fleetlocationyour_images,$fleetlocationimagesarr);
-                            }
+                            //}
                             //echo "<pre>";print_r($fleetlocationimages); exit;
-                            if(!empty($LocationContentFleetyour_image) && !empty($LocationContentFleetimage)){
+                            
+
+                            if(isset($fleetlocationimages) && !empty($fleetlocationimages)){ 
+                                $fleetlocationimages = array_map('trim', $fleetlocationimages);
+                            }
+
+                            if(!empty($fleetlocationimages)){
                                 foreach ($fleetlocationimages as $key => $name) {
                                     if($name == $attachment){
                                         unset($fleetlocationimages[$key]);
@@ -6405,6 +7176,8 @@ class ChartersController extends AppController {
                             }
                            
                          }
+
+                         
                          
                          //echo "<pre>";print_r($fleetlocationimages); exit;
                         //////////////////////
@@ -6572,7 +7345,7 @@ class ChartersController extends AppController {
                     // }
                     //print_r($sch_inarray); 
                     //echo "SELECT * FROM $yachtDbName.charter_program_schedule_activities CharterProgramScheduleActivity WHERE charter_program_schedule_id IN ($sch_inarray)"; exit;
-                    $activityData = $this->CharterGuest->query("SELECT * FROM $yachtDbName.charter_program_schedule_activities CharterProgramScheduleActivity WHERE charter_program_schedule_id = '$programScheduleUUID' AND is_deleted = 0 order by sort_order");
+                    $activityData = $this->CharterGuest->query("SELECT * FROM $yachtDbName.charter_program_schedule_activities CharterProgramScheduleActivity WHERE charter_program_schedule_id = '$programScheduleUUID' AND debarkation_flag= '$act_deb_flag' AND is_deleted = 0 order by sort_order");
                     $timeArray	= array(""=>"Time","00:00"=>"00:00","00:15"=>"00:15","00:30"=>"00:30","00:45"=>"00:45","01:00"=>"01:00","01:15"=>"01:15","01:30"=>"01:30","01:45"=>"01:45","02:00"=>"02:00","02:15"=>"02:15","02:30"=>"02:30","02:45"=>"02:45","03:00"=>"03:00","03:15"=>"03:15","03:30"=>"03:30","03:45"=>"03:45","04:00"=>"04:00","04:15"=>"04:15","04:30"=>"04:30","04:45"=>"04:45","05:00"=>"05:00","05:15"=>"05:15","05:30"=>"05:30","05:45"=>"05:45","06:00"=>"06:00","06:15"=>"06:15","06:30"=>"06:30","06:45"=>"06:45","07:00"=>"07:00","07:15"=>"07:15","07:30"=>"07:30","07:45"=>"07:45","08:00"=>"08:00","08:15"=>"08:15","08:30"=>"08:30","08:45"=>"08:45","09:00"=>"09:00","09:15"=>"09:15","09:30"=>"09:30","09:45"=>"09:45","10:00"=>"10:00","10:15"=>"10:15","10:30"=>"10:30","10:45"=>"10:45","11:00"=>"11:00","11:15"=>"11:15","11:30"=>"11:30","11:45"=>"11:45","12:00"=>"12:00","12:15"=>"12:15","12:30"=>"12:30","12:45"=>"12:45","13:00"=>"13:00","13:15"=>"13:15","13:30"=>"13:30","13:45"=>"13:45","14:00"=>"14:00","14:15"=>"14:15","14:30"=>"14:30","14:45"=>"14:45","15:00"=>"15:00","15:15"=>"15:15","15:30"=>"15:30","15:45"=>"15:45","16:00"=>"16:00","16:15"=>"16:15","16:30"=>"16:30","16:45"=>"16:45","17:00"=>"17:00","17:15"=>"17:15","17:30"=>"17:30","17:45"=>"17:45","18:00"=>"18:00","18:15"=>"18:15","18:30"=>"18:30","18:45"=>"18:45","19:00"=>"19:00","19:15"=>"19:15","19:30"=>"19:30","19:45"=>"19:45","20:00"=>"20:00","20:15"=>"20:15","20:30"=>"20:30","20:45"=>"20:45","21:00"=>"21:00","21:15"=>"21:15","21:30"=>"21:30","21:45"=>"21:45","22:00"=>"22:00","22:15"=>"22:15","22:30"=>"22:30","22:45"=>"22:45","23:00"=>"23:00","23:15"=>"23:15","23:30"=>"23:30","23:45"=>"23:45");  
                     //echo "<pre>"; print_r($activityData); exit;
                     if (count($activityData) != 0) {
@@ -8320,13 +9093,29 @@ function reduce_image_width($target, $newcopy, $w, $h, $ext) {
         // exit;
         $img = "";
         $ext = strtolower($ext);
-        if ($ext == "gif"){ 
-        $img = imagecreatefromgif($target);
-        } else if($ext =="png"){ 
-        $img = imagecreatefrompng($target);
-        } else { 
-        $img = imagecreatefromjpeg($target);
+        // if ($ext == "gif"){ 
+        // $img = imagecreatefromgif($target);
+        // } else if($ext =="png"){ 
+        // $img = imagecreatefrompng($target);
+        // } else { 
+        // $img = imagecreatefromjpeg($target);
+        // }
+        /********@12dec23 above imagecreatefrompng shows warning so added the below code********* */
+        $handle = finfo_open(FILEINFO_MIME); 
+        $mime_type = finfo_file($handle, $target);
+        $mime_type = mime_content_type($target);
+        switch(strtolower($mime_type)) {
+            case 'image/gif':
+                $img = imageCreateFromGIF($target);
+                break;
+            case 'image/png':
+                $img = imageCreateFromPNG($target);
+                break;
+            case 'image/jpeg':
+                $img = imageCreateFromJPEG($target);
+                break;    
         }
+        /**************** */
         $tci = imagecreatetruecolor($w, $h);
         // imagecopyresampled(dst_img, src_img, dst_x, dst_y, src_x, src_y, dst_w, dst_h, src_w, src_h)
         imagecopyresampled($tci, $img, 0, 0, 0, 0, $w, $h, $w_orig, $h_orig);

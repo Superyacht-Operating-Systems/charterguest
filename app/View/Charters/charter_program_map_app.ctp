@@ -1937,7 +1937,16 @@ body.modal-open {
             
                 $daynumber = $schedule['CharterProgramSchedule']['day_num']; 
                 
-                $attachment = $schedule['CharterProgramSchedule']['attachment'];
+                $to_location = $schedule['CharterProgramSchedule']['title'];
+                $attachment = "";
+
+                if($to_location == $debarkation_chprg){ //echo $to_location."=========".$debarkation_chprg;
+                    $attachment = $schedule['CharterProgramSchedule']['debarkation_attachment'];
+                    $last = 1;
+                }else if($to_location != $debarkation_chprg){ //echo $to_location."0000000".$debarkation_chprg;
+                    $attachment = $schedule['CharterProgramSchedule']['attachment'];
+                    $last = 0;
+                }
 
                         if(isset($attachment) && !empty($attachment)){
                              
@@ -1976,7 +1985,19 @@ body.modal-open {
                         
                         $crusemaparray[$crusemap] =  "crusingschedulemap".$crusemap;
 
-                        $fleetlocationimages = $locationimages[$schedule['CharterProgramSchedule']['id']];
+                        if($last == 0){
+                            $fleetlocationimages = $locationimages[$schedule['CharterProgramSchedule']['id']];
+                        }else if($last == 1){
+                            $fleetlocationimages = $myLastElement_locationimages['last'];
+                        }
+
+                        if(!empty($attachment) && !empty($attachment)){
+                            foreach ($fleetlocationimages as $key => $name) {
+                                if($name == $attachment){
+                                    unset($fleetlocationimages[$key]);
+                                }
+                            }
+                        }
 
                         ?>
                        
@@ -2546,6 +2567,7 @@ if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !e
             marker.stationary = "<?php echo $schedule['CharterProgramSchedule']['stationary']; ?>";
         <?php } ?>
         marker.stationarytooltipnum = "<?php echo $kn; ?>";
+        marker.endmarker = "no";
         markerArray.push(marker);
         marker.addTo(map);
         markerCount++;
@@ -2555,7 +2577,9 @@ if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !e
 <?php
 /********************************end place last marker ************ */
 if(!empty($myLastElement)){
-            $SumDaytitle =$myLastElement['CharterProgramSchedule']['to_location']; ?>
+            $SumDaytitle =$myLastElement['CharterProgramSchedule']['to_location']; 
+            $counttitle_endmarker = count($samelocations[$myLastElement['CharterProgramSchedule']['lattitude']]);
+            ?>
             
     var end = L.marker(["<?php echo $myLastElement['CharterProgramSchedule']['lattitude']; ?>", "<?php echo $myLastElement['CharterProgramSchedule']['longitude']; ?>"], {draggable: false,pmIgnore: true})
                 .bindTooltip("<?php echo "<span class='owntooltip daytooltip_".$myLastElement['CharterProgramSchedule']['UUID']."' id=".$key.">".$myLastElement['CharterProgramSchedule']['to_location']."</span>"?>", 
@@ -2565,9 +2589,12 @@ if(!empty($myLastElement)){
                         direction: 'right',
                         className: "Tooltip",
                         noWrap: false,
-                    });
+                    }).on("click", markerOnClick);
 
-                    end.scheduleId = "<?php echo $myLastElement['CharterProgramSchedule']['id']; ?>";
+                    latlngs.push(new L.LatLng(<?php echo $myLastElement['CharterProgramSchedule']['lattitude']; ?>, <?php echo $myLastElement['CharterProgramSchedule']['longitude']; ?>));
+
+                    end.scheduleId = "<?php echo $myLastElement['CharterProgramSchedule']['charter_program_id']; ?>";
+                    end.tablepId = "<?php echo $myLastElement['CharterProgramSchedule']['id']; ?>";
                     end.scheduleUUId = "<?php echo $myLastElement['CharterProgramSchedule']['UUID']; ?>";
                     end.daytitle = "<?php echo $myLastElement['CharterProgramSchedule']['title']; ?>";
                     end.day_num = "<?php echo $myLastElement['CharterProgramSchedule']['day_num']; ?>";
@@ -2575,6 +2602,7 @@ if(!empty($myLastElement)){
                     end.day_dates = "<?php echo $myLastElement['CharterProgramSchedule']['day_dates']; ?>";
                     // end._latlng.lat = "<?php echo $myLastElement['CharterProgramSchedule']['lattitude']; ?>";
                     // end._latlng.lng = "<?php echo $myLastElement['CharterProgramSchedule']['longitude']; ?>";
+                    end.endmarker = "yes";
                     markerArray.push(end);
                     end.addTo(map);
 
@@ -3204,6 +3232,8 @@ function markerOnClick(e) {
     var stationary = e.target.stationary;
     var stationarytooltipnum = e.target.stationarytooltipnum;
 
+    var endmarkerOrnot = e.target.endmarker;
+
    
    // $(".Tooltip").hide();
     $('.Tooltip').css('top','');
@@ -3244,7 +3274,7 @@ function markerOnClick(e) {
             type: "POST",
             url: basefolder+"/"+"charters/editCharterProgramSchedules",
             dataType: 'json',
-            data: { "programId": scheduleId,"scheduleId":scheduleUUId,"tablepId":tablepId ,"diffDays": <?php echo $diffDays; ?>, "markerNum": markerNum, "lattitude": lattitude, "longitude": longitude,"guesttype":guesttype,"counttitle":counttitle, "daytitle":daytitle, "scheduleSameLocationUUID":scheduleSameLocationUUID, "samelocationsDates":samelocationsDates, "from":'locationcard','ipaddb':'<?php echo $ipadappdb; ?>'},
+            data: { "programId": scheduleId,"scheduleId":scheduleUUId,"tablepId":tablepId ,"diffDays": <?php echo $diffDays; ?>, "markerNum": markerNum, "lattitude": lattitude, "longitude": longitude,"guesttype":guesttype,"counttitle":counttitle, "daytitle":daytitle,"endmarkerOrnot":endmarkerOrnot, "scheduleSameLocationUUID":scheduleSameLocationUUID, "samelocationsDates":samelocationsDates, "from":'locationcard','ipaddb':'<?php echo $ipadappdb; ?>'},
             success:function(result) {
                 
                 if (result.status == 'success') {
@@ -3599,16 +3629,19 @@ $(document).on("click", ".stationarydays", function(e) {
 
    var selectedschuuid = $(this).attr('id');
    var selecteddaynumstationary = $(this).attr('data-num');
+   var datastationaryOrnot = $(this).attr('data-stat');
    //var selecteddatetext = $(".noofdayscard option:selected").text();
    var yachtId = $("#yachtId").val();
   //alert('gg')
+
+  var endmarkerOrnot = mapmarkerglobalObj.target.endmarker;
   
    $("#hideloader").show();
         $.ajax({
             type: "POST",
             url: basefolder+"/"+"charters/editCharterProgramSchedules",
             dataType: 'json',
-            data: {"programId":scheduleId,"tablepId":tablepId ,"scheduleId": selectedschuuid, "diffDays": <?php echo $diffDays; ?>, "yachtId": yachtId,"counttitle":counttitle, "daytitle":daytitle, "guesttype":"guest","scheduleSameLocationUUID":scheduleSameLocationUUID, "samelocationsDates":samelocationsDates, "from":'daysselection','selecteddatetext':'','ipaddb':'<?php echo $ipadappdb; ?>' },
+            data: {"programId":scheduleId,"tablepId":tablepId ,"scheduleId": selectedschuuid, "diffDays": <?php echo $diffDays; ?>, "yachtId": yachtId,"counttitle":counttitle, "daytitle":daytitle, "guesttype":"guest","endmarkerOrnot":endmarkerOrnot,"scheduleSameLocationUUID":scheduleSameLocationUUID, "samelocationsDates":samelocationsDates, "from":'daysselection','selecteddatetext':'','ipaddb':'<?php echo $ipadappdb; ?>' },
             success:function(result) {
                
                 if (result.status == 'success') {
@@ -3729,7 +3762,7 @@ $(document).on("click", ".stationarydays", function(e) {
                                         var temptitle = [];                        
                                                     $.each(markerArray, function(key, value) {   
                                                         
-                                                        if(selecteddaynumstationary == value.day_num){
+                                                        if(datastationaryOrnot == 1 && selecteddaynumstationary == value.day_num){
                                                                 selectedmarkertitle = value.daytitle;
                                                                 selectedmarkerday_num = value.day_num;
                                                                 lattitude = value._latlng.lat;
@@ -3877,12 +3910,12 @@ if (nextmarkername != "undefined" && nextmarkername != "" && nextmarkername != n
     for (let layer of polyLayersModalMap) { //console.log(layer);
         drawnItemsModalMap.addLayer(layer);
     }
-   
+setTimeout(() => {
     modalmap.fitBounds(drawnItemsModalMap.getBounds());
     modalmap.addLayer(drawnItemsModalMap);
     
     drawnItemsModalMap.snakeIn();
-
+}, 100);
     // setTimeout(() => {
     //     modalmap.fitBounds(polyline2.getBounds());
     // }, 100);
@@ -4704,16 +4737,18 @@ function drawrouteinmodalCSMP(frommarker) { //alert();
         }
         
 //onsole.log(drawnItemsModalMapCSMP);
+setTimeout(() => {
+
         modalmapcruisingsch.fitBounds(drawnItemsModalMapCSMP.getBounds());
      
         modalmapcruisingsch.addLayer(drawnItemsModalMapCSMP);
 
         drawnItemsModalMapCSMP.snakeIn();
-        
+    }, 100);
        
         setTimeout(() => {
             modalmapcruisingsch.invalidateSize();
-        }, 100);
+        }, 10);
         
     //}
         

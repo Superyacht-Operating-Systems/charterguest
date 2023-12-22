@@ -54,6 +54,9 @@ if(empty($scheduleData)){
     }
 
 }
+// echo $charterGuestDatayacht_id;
+// echo "<pre>";print_r($yfullName);
+$topyname = $yfullName[$charterGuestDatayacht_id]; 
 ?>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css">
 <style>
@@ -555,10 +558,16 @@ border-radius: 10px;
     .map_heightC{
         height: calc(100vh - 170px);
     }
+    .map_heightWD{
+        height: calc(130vh - 170px);
+    }
 }
 @media only screen and (max-width: 771px){
     .map_heightC{
         height: calc(100vh - 140px);
+    }
+    .map_heightWD{
+        height: calc(130vh - 140px);
     }
     .nav-side-menu-full-container .nav-side-menu .sidebar {
   width: 120px;
@@ -788,9 +797,9 @@ position: absolute;
     z-index: 9999999 !important;
 }
     </style>
-
+<script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"></script>
 <?php
-echo $this->Html->script('leaflet/leaflet'); 
+//echo $this->Html->script('leaflet/leaflet'); 
 echo $this->Html->css('leaflet/dist/leaflet');
 
 echo $this->Html->script('leaflet/route'); 
@@ -805,6 +814,8 @@ echo $this->Html->script('leaflet/route');
  
 
 ?>
+
+<script src="https://api.windy.com/assets/map-forecast/libBoot.js"></script>
 <style>
 .wrapper{overflow: hidden;}
 .footer{height: 0px;line-height: 0;padding: 0px;}
@@ -1439,6 +1450,23 @@ background: #fff !important;
   font-size: 12px;
 }
 
+#closeWeatherMap {
+    background: #fff !important;
+    position: absolute!important;
+    top: 5px!important;
+    right: 13px!important;
+    padding: 5px;
+    height: 32px;
+    color: #000;
+    z-index: 9999;
+    font-weight: bold;
+    width: 55px;
+    border-radius: 10px;
+    font-size: 12px;
+    left: 0;
+    margin-left: 5px;
+}
+
 #HideDetails {
     background: #fff !important;
     position: absolute!important;
@@ -1458,6 +1486,20 @@ background: #fff !important;
     background: #fff !important;
     position: absolute!important;
     top: 93.5px!important;
+    right: 13px!important;
+  padding: 5px;
+  height: 32px;
+  color:#000;
+  z-index: 9999;
+  font-weight:bold;
+  min-width: 145px;
+  border-radius: 10px;
+  font-size: 12px;
+}
+#WeatherMap {
+    background: #fff !important;
+    position: absolute!important;
+    top: 131.5px!important;
     right: 13px!important;
   padding: 5px;
   height: 32px;
@@ -1778,6 +1820,12 @@ border-radius: 4px; */
 .stationarydays{
     cursor:pointer;
 }
+
+#windy #plugin-menu {
+    z-index: 999999;
+    position: fixed;
+    top: 0;
+}
 </style>  
 
 <?php    echo $this->Html->script('jquery-1.7.2.min');
@@ -1974,7 +2022,16 @@ border-radius: 4px; */
             
                 $daynumber = $schedule['CharterProgramSchedule']['day_num']; 
                 
-                $attachment = $schedule['CharterProgramSchedule']['attachment'];
+                $to_location = $schedule['CharterProgramSchedule']['title'];
+                $attachment = "";
+
+                if($to_location == $debarkation_chprg){ //echo $to_location."=========".$debarkation_chprg;
+                    $attachment = $schedule['CharterProgramSchedule']['debarkation_attachment'];
+                    $last = 1;
+                }else if($to_location != $debarkation_chprg){ //echo $to_location."0000000".$debarkation_chprg;
+                    $attachment = $schedule['CharterProgramSchedule']['attachment'];
+                    $last = 0;
+                }
 
                         if(isset($attachment) && !empty($attachment)){
                              
@@ -2013,7 +2070,19 @@ border-radius: 4px; */
                         
                         $crusemaparray[$crusemap] =  "crusingschedulemap".$crusemap;
 
-                        $fleetlocationimages = $locationimages[$schedule['CharterProgramSchedule']['id']];
+                        if($last == 0){
+                            $fleetlocationimages = $locationimages[$schedule['CharterProgramSchedule']['id']];
+                        }else if($last == 1){
+                            $fleetlocationimages = $myLastElement_locationimages['last'];
+                        }
+
+                        if(!empty($attachment) && !empty($attachment)){
+                            foreach ($fleetlocationimages as $key => $name) {
+                                if($name == $attachment){
+                                    unset($fleetlocationimages[$key]);
+                                }
+                            }
+                        }
 
                         $locationCommentsdata = $locationComment[$schedule['CharterProgramSchedule']['id']];
 
@@ -2205,11 +2274,15 @@ border-radius: 4px; */
 <div class="fixed-row-container map-container">  
  <div class="form-group base-margin">
 <div class="custom-popup map_heightC" id="map"></div>
+<div class="custom-popup map_heightC" id="windy"></div>
 <button id="CruisingButton">Cruising Schedule</button>
 <button id="HideDetails">Show Details</button>
 <button id="HelpfulTips">Helpful Tips</button>
+<button id="WeatherMap">Weather Map</button>
+<button id="closeWeatherMap">Close</button>
 </div></div>
 </div>
+<input type="hidden" id="topyname" value="<?php echo $topyname; ?>">
 <input type="hidden" id="yachtId" value="<?php echo $yacht_id_fromyachtDB; ?>">
 <input type="hidden" id="charterProgramId" value="<?php echo $charterProgramId; ?>">
 <script>
@@ -2250,6 +2323,8 @@ var sidebar = (function() {
                             $("#CruisingButton").hide();
                             $("#HideDetails").hide();
                             $("#HelpfulTips").hide();
+                            $("#WeatherMap").hide();
+                            
             }
             // In phone view the left menu should not overflow with map right side buttons
         } else {
@@ -2258,6 +2333,7 @@ var sidebar = (function() {
                     $("#CruisingButton").show();
                     $("#HideDetails").show();
                     $("#HelpfulTips").show();
+                    $("#WeatherMap").show();
                     // In phone view the left menu should not overflow with map right side buttons
         }
     }
@@ -2626,6 +2702,7 @@ if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !e
             marker.stationary = "<?php echo $schedule['CharterProgramSchedule']['stationary']; ?>";
         <?php } ?>
         marker.stationarytooltipnum = "<?php echo $kn; ?>";
+        marker.endmarker = "no";
         markerArray.push(marker);
         marker.addTo(map);
         markerCount++;
@@ -2636,7 +2713,9 @@ if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !e
 <?php
 /********************************end place last marker ************ */
 if(!empty($myLastElement)){
-            $SumDaytitle =$myLastElement['CharterProgramSchedule']['to_location']; ?>
+            $SumDaytitle =$myLastElement['CharterProgramSchedule']['to_location']; 
+            $counttitle_endmarker = count($samelocations[$myLastElement['CharterProgramSchedule']['lattitude']]);
+            ?>
             
     var end = L.marker(["<?php echo $myLastElement['CharterProgramSchedule']['lattitude']; ?>", "<?php echo $myLastElement['CharterProgramSchedule']['longitude']; ?>"], {draggable: false,pmIgnore: true})
                 .bindTooltip("<?php echo "<span class='owntooltip daytooltip_".$myLastElement['CharterProgramSchedule']['UUID']."' id=".$key.">".$myLastElement['CharterProgramSchedule']['to_location']."</span>"?>", 
@@ -2646,9 +2725,12 @@ if(!empty($myLastElement)){
                         direction: 'right',
                         className: "Tooltip",
                         noWrap: false,
-                    });
+                    }).on("click", markerOnClick);
 
-                    end.scheduleId = "<?php echo $myLastElement['CharterProgramSchedule']['id']; ?>";
+                    latlngs.push(new L.LatLng(<?php echo $myLastElement['CharterProgramSchedule']['lattitude']; ?>, <?php echo $myLastElement['CharterProgramSchedule']['longitude']; ?>));
+
+                    end.scheduleId = "<?php echo $myLastElement['CharterProgramSchedule']['charter_program_id']; ?>";
+                    end.tablepId = "<?php echo $myLastElement['CharterProgramSchedule']['id']; ?>";
                     end.scheduleUUId = "<?php echo $myLastElement['CharterProgramSchedule']['UUID']; ?>";
                     end.daytitle = "<?php echo $myLastElement['CharterProgramSchedule']['title']; ?>";
                     end.day_num = "<?php echo $myLastElement['CharterProgramSchedule']['day_num']; ?>";
@@ -2656,6 +2738,7 @@ if(!empty($myLastElement)){
                     end.day_dates = "<?php echo $myLastElement['CharterProgramSchedule']['day_dates']; ?>";
                     // end._latlng.lat = "<?php echo $myLastElement['CharterProgramSchedule']['lattitude']; ?>";
                     // end._latlng.lng = "<?php echo $myLastElement['CharterProgramSchedule']['longitude']; ?>";
+                    end.endmarker = "yes";
                     markerArray.push(end);
                     end.addTo(map);
 
@@ -3370,6 +3453,7 @@ function markerOnClick(e) {
                     $("#CruisingButton").hide();
                     $("#HideDetails").hide();
                     $("#HelpfulTips").hide();
+                    $("#WeatherMap").hide();
                      $("#map .leaflet-control-container").hide();
                     // open popup center to map
                     //map.setView(e.latlng);
@@ -3567,10 +3651,6 @@ function markerOnClick(e) {
     }
         
 }
-
-
-$(document).on("change", ".markersnamesmodalmap", function(e) {
-
         var routemodalmarkerselected = {};
         var textMarkermodalmap = {};
         var selectedlat = "";
@@ -3580,6 +3660,10 @@ $(document).on("change", ".markersnamesmodalmap", function(e) {
         var modalmapdaynumber = "";
         var defaultline = {};
         var selectedmarkertooltipcontent = "";
+
+$(document).on("change", ".markersnamesmodalmap", function(e) {
+
+        
     selectedTitle = $(this).val();
     //alert(selectedTitle);
     //console.log(selectedTitle);
@@ -3695,6 +3779,7 @@ function markerModalclose(scheduleSameLocationUUID){
                             $("#CruisingButton").show();
                             $("#HideDetails").show();
                             $("#HelpfulTips").show();
+                            $("#WeatherMap").show();
                             $("#map .leaflet-control-container").show();
 
                             //for screenview <990 on opening the itinerary modal blacked out the map region
@@ -3725,6 +3810,7 @@ $(document).on("click", ".stationarydays", function(e) {
 
    var selectedschuuid = $(this).attr('id');
    var selecteddaynumstationary = $(this).attr('data-num');
+   var datastationaryOrnot = $(this).attr('data-stat');
    //var selecteddatetext = $(".noofdayscard option:selected").text();
    var yachtId = $("#yachtId").val();
    $("#hideloader").show();
@@ -3742,6 +3828,7 @@ $(document).on("click", ".stationarydays", function(e) {
                     $("#CruisingButton").hide();
                     $("#HideDetails").hide();
                     $("#HelpfulTips").hide();
+                    $("#WeatherMap").hide();
                      $("#map .leaflet-control-container").hide();
                     // open popup center to map
                     //console.log(mapmarkerglobalObj);
@@ -3820,6 +3907,7 @@ $(document).on("click", ".stationarydays", function(e) {
                                 var selectedmarkertitle = mapmarkerglobalObj.target.daytitle;
                                 var selectedmarkerday_num = mapmarkerglobalObj.target.day_num;
                                 //console.log(popLocation);
+                                console.log(selectedmarkertitle);
                                 fitzoommap.push(popLocation);
                                 if (markerArray.length > 0) {
                                         $('.markersnamesmodalmap').find('option').remove();
@@ -3831,7 +3919,7 @@ $(document).on("click", ".stationarydays", function(e) {
                                                     $.each(markerArray, function(key, value) {   
                                                         
                                                         
-                                                            if(selecteddaynumstationary == value.day_num){
+                                                            if(datastationaryOrnot == 1 && selecteddaynumstationary == value.day_num){
                                                                 selectedmarkertitle = value.daytitle;
                                                                 selectedmarkerday_num = value.day_num;
                                                                 lattitude = value._latlng.lat;
@@ -3839,7 +3927,7 @@ $(document).on("click", ".stationarydays", function(e) {
                                                                 scheduleId = value.scheduleId;
                                                                 distancetotal = value.distancetotal;
                                                                 durationtotal = value.durationtotal;
-                                                            }
+                                                            } 
                                                         
 
                                                                 $('.markersnamesmodalmap')
@@ -3870,6 +3958,7 @@ $(document).on("click", ".stationarydays", function(e) {
                                 ModalMapsinglemarkerlong = longitude;
 
                                 var frommarker = selectedmarkertitle +' - Day '+selectedmarkerday_num; //alert('llll')
+                                console.log(frommarker);
                                 $("#embarkation").text(selectedmarkertitle); 
                                 routeexists = 1;
                                 drawrouteinmodal(frommarker);
@@ -3981,12 +4070,13 @@ if (nextmarkername != "undefined" && nextmarkername != "" && nextmarkername != n
     }
     
 //onsole.log(drawnItemsModalMap);
+setTimeout(() => {
     modalmap.fitBounds(drawnItemsModalMap.getBounds());
  
     modalmap.addLayer(drawnItemsModalMap);
 
     drawnItemsModalMap.snakeIn();
-    
+}, 100);
    
     setTimeout(() => {
         modalmap.invalidateSize();
@@ -4080,6 +4170,7 @@ $(document).on("click", "#closeSchedule", function(e) {
     $("#CruisingButton").show();
     $("#HideDetails").show();
     $("#HelpfulTips").show();
+    $("#WeatherMap").show();
     $("#map .leaflet-control-container").show();
 
     var schuuid =  $("#markerModalclose").attr("data-schuuid");
@@ -4146,6 +4237,11 @@ $(document).ready(function() { //alert();
                 type : "image"
             });
 
+            var topyname = $("#topyname").val();
+            //setTimeout(function() {
+                    $(".mappageProgramYname").text(topyname);
+            //}, 100);
+
             //$('.fancybox').fancybox();
 
                 $(".Tooltip").css("width","170px");
@@ -4169,7 +4265,8 @@ $(document).ready(function() { //alert();
     $('.leaflet-control-attribution ').find('a').remove();
 
      
-
+    $("#windy").hide();
+    $("#closeWeatherMap").hide();
    
     });
 
@@ -5071,15 +5168,17 @@ function drawrouteinmodalCSMP(frommarker) { //alert();
         }
         
 //onsole.log(drawnItemsModalMapCSMP);
+setTimeout(() => {
         modalmapcruisingsch.fitBounds(drawnItemsModalMapCSMP.getBounds());
      
         modalmapcruisingsch.addLayer(drawnItemsModalMapCSMP);
 
         drawnItemsModalMapCSMP.snakeIn();
+    }, 100);
     
         setTimeout(() => {
             modalmapcruisingsch.invalidateSize();
-        }, 100);
+        }, 10);
         
     //}
     
@@ -5186,6 +5285,56 @@ function changeLanguage2() {
       
       // Add your code to handle the language change here
 }
+
+
+const optionsWind = {
+    // Required: API key
+    key: '1cDk7fz9oF31QBPeqDjg6LwhBw6Z5wJ9', // REPLACE WITH YOUR KEY !!!
+
+    // Changing Windy parameters at start-up time
+    // (recommended for faster start-up)
+    // Put additional console output
+    verbose: true,
+
+    // Optional: Initial state of the map
+    lat: 50.4,
+    lon: 14.3,
+    zoom: 5,
+};
+
+// Initialize Windy API
+windyInit(optionsWind, windyAPI => {
+    const { map } = windyAPI;
+    // .map is instance of Leaflet map
+});
+
+
+
+$(document).on("click", "#WeatherMap", function(e) {
+   
+   $("#map").hide();
+    $("#windy").show();
+    $("#CruisingButton").hide();
+    $("#HideDetails").hide();
+    $("#HelpfulTips").hide();
+    $("#WeatherMap").hide();
+    $("#closeWeatherMap").show();
+    //windy.invalidateSize();
+    
+});
+
+$(document).on("click", "#closeWeatherMap", function(e) {
+   
+   $("#map").show();
+    $("#windy").hide();
+    $("#CruisingButton").show();
+    $("#HideDetails").show();
+    $("#HelpfulTips").show();
+    $("#WeatherMap").show();
+    $("#closeWeatherMap").hide();
+    //windy.invalidateSize();
+});
+
 
 </script>
   
