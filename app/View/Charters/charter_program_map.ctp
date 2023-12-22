@@ -5319,6 +5319,7 @@ windyInit(optionsWind, windyAPI => {
 $(document).on("click", "#WeatherMap", function(e) {
    
    $("#map").hide();
+    $("#windy").css("visibility","unset");
     $("#windy").css("display","block");
     $("#CruisingButton").hide();
     $("#HideDetails").hide();
