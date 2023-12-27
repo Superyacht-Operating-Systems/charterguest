@@ -1185,7 +1185,7 @@ $(document).on("click", ".previousWineSelectionCartclose", function(e) {
   
 });
 
-
+jQuery.noConflict();
 // Since confModal is essentially a nested modal it's enforceFocus method
 // must be no-op'd or the following error results 
 // "Uncaught RangeError: Maximum call stack size exceeded"
