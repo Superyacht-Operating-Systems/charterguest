@@ -5314,20 +5314,20 @@ var boatMarker = L.boatMarker([DBLatitude,DBLongitude], {
 			var heading = DBHeading;
 
 			// start simulation
-			// window.setInterval(function() {
+			window.setInterval(function() {
 
-			// 	var speed = getRandomArbitrary(8.0, 16.0);
-			// 	var direction = getRandomArbitrary((heading - 50) % 360, (heading - 40) % 360);
+				var speed = DBTrueHeading;
+				var direction = getRandomArbitrary((heading - 50) % 360, (heading - 40) % 360);
 
-			// 	if(heading > 30)
-			// 		heading -= 0.5;
+				if(heading > 30)
+					heading -= 0.5;
 
-			 	//boatMarker.setHeadingWind(heading, speed, direction);
+			 	boatMarker.setHeadingWind(heading, speed, direction);
 
-			// 	var destination = turf.destination(boatMarker.toGeoJSON(), 0.02, 60, "kilometers");
-			// 	boatMarker.setLatLng(destination.geometry.coordinates.reverse());
+				var destination = turf.destination(boatMarker.toGeoJSON(), 0.02, 60, "kilometers");
+				boatMarker.setLatLng(destination.geometry.coordinates.reverse());
 
-			// }, 488);
+			}, 488);
 
 
 const optionsWind = {
@@ -5359,6 +5359,24 @@ windyInit(optionsWind, windyAPI => {
 
 			WindboatMarker.setHeading(DBHeading);
             WindboatMarker.setSpeed(DBTrueHeading);
+
+            var heading = DBHeading;
+
+			// start simulation
+			window.setInterval(function() {
+
+				var speed = DBTrueHeading;
+				var direction = getRandomArbitrary((heading - 50) % 360, (heading - 40) % 360);
+
+				if(heading > 30)
+					heading -= 0.5;
+
+                WindboatMarker.setHeadingWind(heading, speed, direction);
+
+				var destination = turf.destination(WindboatMarker.toGeoJSON(), 0.02, 60, "kilometers");
+				WindboatMarker.setLatLng(destination.geometry.coordinates.reverse());
+
+			}, 488);
 });
 
 
