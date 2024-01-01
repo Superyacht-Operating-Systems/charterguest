@@ -5352,14 +5352,13 @@ windyInit(optionsWind, windyAPI => {
     if(latlngs.length > 0){
         map.fitBounds(latlngs);
     }
-    L.popup()
-        .setLatLng([DBLatitude,DBLongitude])
-        .setContent('Hello World')
-        .openOn(map);
 
-        var windboat = L.marker([DBLatitude,DBLongitude]);
+        var WindboatMarker = L.boatMarker([DBLatitude,DBLongitude], {
+			    color: "#00a7f2"
+			}).addTo(map);
 
-        windboat.addTo(map);
+			WindboatMarker.setHeading(DBHeading);
+            WindboatMarker.setSpeed(DBTrueHeading);
 });
 
 
