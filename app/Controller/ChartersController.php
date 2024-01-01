@@ -6339,6 +6339,11 @@ class ChartersController extends AppController {
 
                         $this->set('locationimages', $locationimages);
                         $this->set('myLastElement_locationimages', $myLastElement_locationimages);
+
+                        $AisPosition = $this->CharterGuest->query("SELECT * FROM $yachtDbName.ais_positions AisPosition ORDER BY id DESC LIMIT 1");
+                        if(isset($AisPosition) && !empty($AisPosition)){
+                        $this->set('AisPosition', $AisPosition[0]['AisPosition']);
+                        }
                         
                         //echo "<pre>";print_r($locationimages); exit;
                         //$this->set('locationComment', $locationComment);
