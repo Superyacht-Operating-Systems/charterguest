@@ -1556,6 +1556,9 @@ background: #fff !important;
     height: 32px;
     padding: 0px!important;
 }
+#closeWeatherMap {
+    margin-left: 5px;
+}
 }
 @media (max-width: 767px){
 #HideDetails, #HelpfulTips,#WeatherMap {
@@ -1572,7 +1575,9 @@ background: #fff !important;
 #HelpfulTips {
     top: 74px!important;
 }
-
+#closeWeatherMap {
+    margin-left: 5px;
+}
 }
 .fancybox-overlay {
     z-index: 99999 !important;
