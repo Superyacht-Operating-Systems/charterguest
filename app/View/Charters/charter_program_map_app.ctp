@@ -1494,7 +1494,7 @@ background: #fff !important;
 #closeWeatherMap {
     background: #fff !important;
     position: absolute!important;
-    top: 5px!important;
+    top: 40px!important;
     right: 13px!important;
     padding: 5px;
     height: 32px;
@@ -1505,7 +1505,7 @@ background: #fff !important;
     border-radius: 10px;
     font-size: 12px;
     left: 0;
-    margin-left: 5px;
+    margin-left: 95px;
 }
 
 #HideDetails {
