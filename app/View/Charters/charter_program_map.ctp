@@ -820,9 +820,10 @@ echo $this->Html->script('leaflet/route');
 
  echo $this->Html->script('leaflet/leaflet.boatmarker.min.js'); 
  
+ echo $this->Html->script('leaflet/turf.min.js'); 
 
 ?>
-<script src="https://api.tiles.mapbox.com/mapbox.js/plugins/turf/v2.0.0/turf.min.js"></script>
+<!-- <script src="https://api.tiles.mapbox.com/mapbox.js/plugins/turf/v2.0.0/turf.min.js"></script> -->
 <style>
 .wrapper{overflow: hidden;}
 .footer{height: 0px;line-height: 0;padding: 0px;}
