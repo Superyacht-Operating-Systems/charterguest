@@ -5296,8 +5296,10 @@ function changeLanguage2() {
 
 var DBHeading = "<?php echo $AisPosition['COG']; ?>";
 var DBTrueHeading = "<?php echo $AisPosition['TrueHeading']; ?>";
-var DBLongitude = "<?php echo $AisPosition['Longitude']; ?>";
-var DBLatitude = "<?php echo $AisPosition['Latitude']; ?>";
+// var DBLongitude = "<?php echo $AisPosition['Longitude']; ?>";
+// var DBLatitude = "<?php echo $AisPosition['Latitude']; ?>";
+var DBLongitude = "<?php echo $testlong; ?>";
+var DBLatitude = "<?php echo $testlat; ?>";
 var boatMarker = L.boatMarker([DBLatitude,DBLongitude], {
 			    color: "#00a7f2"
 			}).addTo(map);

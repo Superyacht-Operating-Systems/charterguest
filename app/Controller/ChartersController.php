@@ -6914,7 +6914,8 @@ class ChartersController extends AppController {
                         $myLastElement['CharterProgramSchedule']['title'] = $myLastElement['CharterProgramSchedule']['to_location'];
                         $myLastElement['CharterProgramSchedule']['notes'] = $myLastElement['CharterProgramSchedule']['debarkation_desc'];
                         $myLastElement['CharterProgramSchedule']['lastarr_title'] = $org_title;
-                        
+                        $this->set('testlat', $location_names[0]['LocationContent']['lattitude']);
+                        $this->set('testlong', $location_names[0]['LocationContent']['longitude']);
                         // //
                         // //echo "<pre>";print_r($scheduleData);
                          $scheduleData[count($scheduleData)] = $myLastElement;
