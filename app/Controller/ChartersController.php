@@ -6963,6 +6963,11 @@ class ChartersController extends AppController {
                         $this->set('programFiles', $attachment);
                     }
 
+                    $AisPosition = $this->CharterGuest->query("SELECT * FROM $yachtDbName.ais_positions AisPosition ORDER BY id DESC LIMIT 1");
+                    if(isset($AisPosition) && !empty($AisPosition)){
+                    $this->set('AisPosition', $AisPosition[0]['AisPosition']);
+                    }
+                    //echo "<pre>";print_r($AisPosition); exit;
                     $yfullName = $this->Yacht->find('list', array('fields' => array('id','yfullName')));
                     $this->set('yfullName', $yfullName);
 

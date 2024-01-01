@@ -817,10 +817,12 @@ echo $this->Html->script('leaflet/route');
  echo $this->Html->script('leaflet/leaflet.draw.js'); 
 
  echo $this->Html->script('leaflet/L.Polyline.SnakeAnim.js'); 
+
+ echo $this->Html->script('leaflet/leaflet.boatmarker.min.js'); 
  
 
 ?>
-
+<script src="https://api.tiles.mapbox.com/mapbox.js/plugins/turf/v2.0.0/turf.min.js"></script>
 <style>
 .wrapper{overflow: hidden;}
 .footer{height: 0px;line-height: 0;padding: 0px;}
@@ -5291,6 +5293,39 @@ function changeLanguage2() {
       
       // Add your code to handle the language change here
 }
+
+var DBHeading = "<?php echo $AisPosition['COG']; ?>";
+var DBTrueHeading = "<?php echo $AisPosition['TrueHeading']; ?>";
+var DBLongitude = "<?php echo $AisPosition['Longitude']; ?>";
+var DBLatitude = "<?php echo $AisPosition['Latitude']; ?>";
+var boatMarker = L.boatMarker([DBLatitude,DBLongitude], {
+			    color: "#00a7f2"
+			}).addTo(map);
+
+			boatMarker.setHeading(DBHeading);
+            boatMarker.setSpeed(DBTrueHeading);
+
+			function getRandomArbitrary(min, max) {
+			    return Math.random() * (max - min) + min;
+			}
+
+			var heading = DBHeading;
+
+			// start simulation
+			// window.setInterval(function() {
+
+			// 	var speed = getRandomArbitrary(8.0, 16.0);
+			// 	var direction = getRandomArbitrary((heading - 50) % 360, (heading - 40) % 360);
+
+			// 	if(heading > 30)
+			// 		heading -= 0.5;
+
+			 	//boatMarker.setHeadingWind(heading, speed, direction);
+
+			// 	var destination = turf.destination(boatMarker.toGeoJSON(), 0.02, 60, "kilometers");
+			// 	boatMarker.setLatLng(destination.geometry.coordinates.reverse());
+
+			// }, 488);
 
 
 const optionsWind = {
