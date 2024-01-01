@@ -5356,6 +5356,10 @@ windyInit(optionsWind, windyAPI => {
         .setLatLng([DBLatitude,DBLongitude])
         .setContent('Hello World')
         .openOn(map);
+
+        var windboat = L.marker([DBLatitude,DBLongitude]);
+
+        windboat.addTo(map);
 });
 
 
