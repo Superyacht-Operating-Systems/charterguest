@@ -5352,6 +5352,10 @@ windyInit(optionsWind, windyAPI => {
     if(latlngs.length > 0){
         map.fitBounds(latlngs);
     }
+    L.popup()
+        .setLatLng([DBLatitude,DBLongitude])
+        .setContent('Hello World')
+        .openOn(map);
 });
 
 
