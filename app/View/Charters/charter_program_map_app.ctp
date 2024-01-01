@@ -2216,10 +2216,10 @@ body.modal-open {
     <button id="HideDetails">Show Details</button>
     <button id="HelpfulTips">Helpful Tips</button>
     <button id="WeatherMap">Weather Map</button>
-    
+    <button id="closeWeatherMap">Close</button>
 </div>
 <div class="custom-popup" id="windy" style="height: 600px;position:relative;outline:none;">
-<button id="closeWeatherMap">Close</button></div>
+</div>
 <?php if(empty($no_cruising_select)){?>
 <?php } ?>
 
