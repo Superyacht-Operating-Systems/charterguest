@@ -2369,6 +2369,7 @@ var sidebar = (function() {
                             $("#HideDetails").hide();
                             $("#HelpfulTips").hide();
                             $("#WeatherMap").hide();
+                            $("#GuestNews").hide();
                             
             }
             // In phone view the left menu should not overflow with map right side buttons
@@ -2379,6 +2380,7 @@ var sidebar = (function() {
                     $("#HideDetails").show();
                     $("#HelpfulTips").show();
                     $("#WeatherMap").show();
+                    $("#GuestNews").show();
                     // In phone view the left menu should not overflow with map right side buttons
         }
     }
@@ -3499,6 +3501,7 @@ function markerOnClick(e) {
                     $("#HideDetails").hide();
                     $("#HelpfulTips").hide();
                     $("#WeatherMap").hide();
+                    $("#GuestNews").hide();
                      $("#map .leaflet-control-container").hide();
                     // open popup center to map
                     //map.setView(e.latlng);
@@ -3837,6 +3840,7 @@ function markerModalclose(scheduleSameLocationUUID){
                             $("#HideDetails").show();
                             $("#HelpfulTips").show();
                             $("#WeatherMap").show();
+                            $("#GuestNews").show();
                             $("#map .leaflet-control-container").show();
 
                             //for screenview <990 on opening the itinerary modal blacked out the map region
@@ -3886,6 +3890,7 @@ $(document).on("click", ".stationarydays", function(e) {
                     $("#HideDetails").hide();
                     $("#HelpfulTips").hide();
                     $("#WeatherMap").hide();
+                    $("#GuestNews").hide();
                      $("#map .leaflet-control-container").hide();
                     // open popup center to map
                     //console.log(mapmarkerglobalObj);
@@ -4234,6 +4239,7 @@ $(document).on("click", "#closeSchedule", function(e) {
     $("#HideDetails").show();
     $("#HelpfulTips").show();
     $("#WeatherMap").show();
+    $("#GuestNews").show();
     $("#map .leaflet-control-container").show();
 
     var schuuid =  $("#markerModalclose").attr("data-schuuid");
@@ -5441,6 +5447,7 @@ $(document).on("click", "#WeatherMap", function(e) {
     $("#HideDetails").hide();
     $("#HelpfulTips").hide();
     $("#WeatherMap").hide();
+    $("#GuestNews").hide();
     $("#closeWeatherMap").css("display","block");
     //windy.invalidateSize();
     
@@ -5454,6 +5461,7 @@ $(document).on("click", "#closeWeatherMap", function(e) {
     $("#HideDetails").show();
     $("#HelpfulTips").show();
     $("#WeatherMap").show();
+    $("#GuestNews").show();
     $("#closeWeatherMap").css("display","none");
     //windy.invalidateSize();
 });

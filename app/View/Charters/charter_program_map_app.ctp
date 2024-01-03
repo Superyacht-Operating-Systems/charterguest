@@ -5025,6 +5025,7 @@ $(document).on("click", "#WeatherMap", function(e) {
     $("#HideDetails").hide();
     $("#HelpfulTips").hide();
     $("#WeatherMap").hide();
+    $("#GuestNews").hide();
     $("#closeWeatherMap").css("display","block");
     //windy.invalidateSize();
     
@@ -5038,6 +5039,7 @@ $(document).on("click", "#closeWeatherMap", function(e) {
     $("#HideDetails").show();
     $("#HelpfulTips").show();
     $("#WeatherMap").show();
+    $("#GuestNews").show();
     $("#closeWeatherMap").css("display","none");
     //windy.invalidateSize();
 });
