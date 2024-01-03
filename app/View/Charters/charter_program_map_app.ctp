@@ -1548,9 +1548,23 @@ background: #fff !important;
   border-radius: 10px;
   /* font-size: 12px; */
 }
+#GuestNews {
+    background: #fff !important;
+    position: absolute!important;
+    top: 170px!important;
+    right: 13px!important;
+  padding: 5px;
+  /* height: 32px; */
+  color:#000;
+  z-index: 9999;
+  font-weight:bold;
+  min-width: 121px;
+  border-radius: 10px;
+  /* font-size: 12px; */
+}
 
 @media(max-width: 1092px){
-#HideDetails, #HelpfulTips,#WeatherMap {
+#HideDetails, #HelpfulTips,#WeatherMap,#GuestNews {
     width: 137px;
     font-size: 12px;
     height: 32px;
@@ -1561,7 +1575,7 @@ background: #fff !important;
 }
 }
 @media (max-width: 767px){
-#HideDetails, #HelpfulTips,#WeatherMap {
+#HideDetails, #HelpfulTips,#WeatherMap,#GuestNews {
 
     width: 108px;
     height: 25px;
@@ -1896,6 +1910,24 @@ body.modal-open {
     </div>
 </div><!-- /.modal-content -->
 
+<!-- sample modal content -->
+<div id="guestNewsModal" class="modal certificat-modal-container sm-cruisingmsgmyModal"  role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" id="newsmodal" aria-hidden="true">×</button>
+                <h4 class="modal-title" id="myModalLabel" style="text-align:center;">Guest News</h4>
+            </div>
+            <div class="modal-body">
+                <div id="charterguestnews">
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div><!-- /.modal-content -->
+
 <!--help modal start here-->
 <div id="mapquestionmodal" class="modal uplaod-modal" role="dialog">
   <div class="modal-dialog">
@@ -2221,6 +2253,7 @@ body.modal-open {
     <button id="HideDetails">Show Details</button>
     <button id="HelpfulTips">Helpful Tips</button>
     <button id="WeatherMap">Weather Map</button>
+    <button id="GuestNews">Guest News</button>
 </div>
 <div class="custom-popup" id="windy" style="height: 600px;position:relative;outline:none;">
 </div>
@@ -5008,6 +5041,97 @@ $(document).on("click", "#closeWeatherMap", function(e) {
     $("#closeWeatherMap").css("display","none");
     //windy.invalidateSize();
 });
+
+
+$(document).on("click", "#GuestNews" ,function() {
+        //alert('jjj');
+       
+        
+        var yachtId = $("#yachtId").val();
+        var charprogid = $("#charterProgramId").val();
+        //alert(activity_name);
+        commenttitlecheck = 0;
+        $.ajax({
+                type: "POST",
+                url: basefolder+"/"+"charters/getGuestNews",
+                dataType: 'json',
+                data: { 'charprogid': charprogid,
+                        'yachtId':yachtId
+                    },
+                success:function(data) {
+                    //console.log(data);
+                    $('#charterguestnews').html(data.view);
+                    // $('.CruisingNewsSave').attr('data-id',data.activityId);
+                    // $('.CruisingNewsSave').attr('data-activity_name',data.activity_name);
+                    // $('.CruisingNewsSave').attr('data-UserType',data.UserType);
+                    // $('.CruisingNewsSave').attr('data-UserName',data.UserName);
+                    // $('.CruisingNewsSave').attr('data-type',data.type);
+                    // $('.CruisingNewsSave').attr('data-yachtid',yachtid);
+                    
+                   
+                    $('#guestNewsModal').show();
+                   
+                    
+                    //alert(data.isfleet);
+                    $("#hideloader").hide();
+                    
+                }
+       });
+    });
+
+$(document).on("click", ".clicknewsdiv", function() { 
+    //alert('kkk');
+    var clickcommentObj = $(this);
+    var color = $(this).css("background-color");
+            //alert(color);
+    var yachtId = $("#yachtId").val();
+    var selectedcomment = hexc(color);
+    //console.log(selectedcomment);
+    if (selectedcomment == "#e5f6fc") { //console.log('ll');
+        $(this).css("background-color","#ffffff");
+        $(this).removeClass('selectedcomment');
+        var id = $(this).attr('id');
+        var read = "read";
+    }else{ console.log('gg');
+        $(this).css("background-color","#e5f6fc");
+        $(this).addClass('selectedcomment');
+        var id = $(this).attr('id');
+        var read = "unread";
+    }
+
+    //return false;
+
+
+    $.ajax({
+        type: "POST",
+        dataType: 'json',
+        url: basefolder+"/"+"charters/markGuestNewsUnread",
+        data: {
+            'primaryid': id,
+            'read': read,
+            'yachtId':yachtId
+        },
+        success: function(data) {
+            if (data.success == 'success') {
+                
+                //comments icon color change in itinerary modal
+                var primaryidscheck = [];
+                $(".selectedcomment").each(function(){
+                    primaryidscheck.push($(this).attr('id'));
+                //alert($(this).attr('id'));
+                });
+            
+            }
+        }
+    });
+
+
+});
+
+$(document).on("click", "#newsmodal" ,function() {
+        $('#guestNewsModal').hide();
+    });
+
 
 </script>
   

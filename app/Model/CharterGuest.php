@@ -33,6 +33,14 @@
         return $result;
     }
 
+    function getGuestNews($yachtDbName, $conditions) {
+        $orders = "  ORDER BY created desc";
+        $query = "SELECT * FROM $yachtDbName.charter_program_news CharterProgramNew WHERE $conditions $orders"; //exit;
+        $result = $this->query($query);
+        
+        return $result;
+    }
+
     function updateCharterProgramScheduleActivityData($yachtDbName, $conditions, $updateValues) {
         $conditions = " WHERE " . $conditions;
         $updateValues = " SET " . $updateValues;
@@ -60,6 +68,17 @@
         $conditions = " WHERE " . $conditions;
         $updateValues = " SET " . $updateValues;
         $query = "UPDATE $yachtDbName.cruising_map_comments $updateValues $conditions";
+        
+        $result = $this->query($query);
+        
+        return $result;
+    }
+
+    function updateGuestNews($yachtDbName, $conditions, $updateValues) {
+        
+        $conditions = " WHERE " . $conditions;
+        $updateValues = " SET " . $updateValues;
+        $query = "UPDATE $yachtDbName.charter_program_news $updateValues $conditions";
         
         $result = $this->query($query);
         

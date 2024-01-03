@@ -8103,6 +8103,80 @@ class ChartersController extends AppController {
         
     }
 
+    function getGuestNews() {
+        // echo "<pre>";
+         //print_r($this->request->data);exit;
+         $this->loadModel('Yacht');
+         $this->loadModel('CharterGuest');
+         
+         $charprogid = $this->request->data['charprogid'];
+         $yachtid = $this->request->data['yachtId'];
+ 
+         $yachtData = $this->Yacht->find("first", array('fields' => array('yfullName','ydb_name'), 'conditions' => array('id' => $yachtid))); 
+         $yachtDbName = $yachtData['Yacht']['ydb_name'];
+ 
+ 
+         $activity_id_chk = $charprogid;      
+         if(isset($activity_id_chk) && !empty($activity_id_chk)){
+             $CruisingMapCommentConditons = "charter_program_uuid = '$activity_id_chk'";
+             $comments = $this->CharterGuest->getGuestNews($yachtDbName, $CruisingMapCommentConditons);
+         }
+ 
+         //$comments = $this->CruisingMapComment->find('all', array('conditions' => array('CruisingMapComment.activity_name' => $activity_name), 'order' => 'CruisingMapComment.created desc'));
+         $usertype = $this->Session->read('loggedfleetuser.user_type');
+         $isfleet = 1;
+         if ($isfleet == 1) {
+             if ($usertype == 1) {
+                 $usertype_comment = "Administrator";
+             } else if ($usertype == 2) {
+                 $usertype_comment = "Manager";
+             } else if ($usertype == 4) {
+                 $usertype_comment = "DPA / TSA";
+             } else if ($usertype == 5) {
+                 $usertype_comment = "Owner";
+             } else if ($usertype == 6) {
+                 $usertype_comment = "Working Staff";
+             }
+         } else {
+             if ($usertype == 0) {
+                 $usertype_comment = "Crew Member";
+             } else if ($usertype == 1) {
+                 $usertype_comment = "OBA";
+             } else if ($usertype == 2) {
+                 $usertype_comment = "HOD";
+             } else if ($usertype == 3) {
+                 $usertype_comment = "Superadmin";
+             } else if ($usertype == 4) {
+                 $usertype_comment = "DPA / TSA";
+             }
+         }
+         //bellow condition to update when crew / fleet viewed their comments.
+         $dateTime = date('Y-m-d H:i:s');
+         $shipTime = "'" . date('Y-m-d H:i:s') . "'";
+        
+         $comment_user_name = $this->Session->read('loggedfleetuser.first_name') . ' ' . $this->Session->read('loggedfleetuser.last_name');
+         $r = array();
+         //print_r($comments); exit;
+         $view = new View();
+         $view->layout = 'ajax'; // Optional, use if you want a "clean" view
+         //$view->set('comments', $comments);
+         //$view->set('UserType',$usertype_comment);
+         //$view->set('UserName',$comment_user_name);
+
+         $r['view'] = $view->element('charter_program_news', array('comments' => $comments));
+         //$r['UserType'] = $usertype_comment;
+         $r['UserName'] = $comment_user_name;
+         $r['isfleet'] = $isfleet;
+         $r['cprog_id'] = $charprogid;
+ 
+         // Get msgcount
+        // $msgcount = $this->gettotalmsgnotifycount();
+         //$r['msgcount'] = $msgcount;
+         // echo "<pre"; print_r($r); exit;
+         echo json_encode($r);
+         exit;
+     }
+
     function getComments() {
         // echo "<pre>";
          //print_r($this->request->data);exit;
@@ -8474,6 +8548,69 @@ if($type == "schedule"){
     $data['success'] = "success";
         echo json_encode($data);
         exit;
+}
+
+function markGuestNewsUnread() {
+
+    $isfleet = 1;
+    //print_r($is_fleet);
+    //exit;
+    $this->layout = 'ajax';
+    $this->loadModel('CharterGuest');
+    $this->loadModel('Yacht');
+    $postData = $this->request->data;
+     //echo "<pre>";
+    //print_r($postData); exit;
+        $primaryid = $postData['primaryid'];
+        $read = $postData['read'];
+        $yachtId = $postData['yachtId'];
+
+    $yachtData = $this->Yacht->find("first", array('fields' => array('yfullName','ydb_name'), 'conditions' => array('id' => $yachtId))); 
+    $yachtDbName = $yachtData['Yacht']['ydb_name'];
+    
+    $dateTime = date('Y-m-d H:i:s');
+    $shipTime = "'" . date('Y-m-d H:i:s') . "'";
+
+    $CruisingMapCommentConditons = "id = '$primaryid'";
+    $check_primary_data = $this->CharterGuest->getGuestNews($yachtDbName, $CruisingMapCommentConditons);
+    $chk_fleet_newlyaddedcomment = $check_primary_data[0]['CharterProgramNew']['fleet_newlyaddedcomment'];
+    $chk_crew_newlyaddedcomment = $check_primary_data[0]['CharterProgramNew']['crew_newlyaddedcomment'];
+    $chk_guest_newlyaddedcomment = $check_primary_data[0]['CharterProgramNew']['guest_newlyaddedcomment'];
+
+    //echo $commentsaved; exit;
+    if($read == "unread"){
+                     
+                        if(isset($activityId) && !empty($activityId)){
+                            
+
+                            if($chk_guest_newlyaddedcomment == 0){
+                                $updateCruisingMapCommentValues = "guest_read='unread',modified=$shipTime";
+                                $updateConditionsCruisingMapComment = "id = '$primaryid'";
+                                
+                                $scheduleUpdateStatus = $this->CharterGuest->updateGuestNews($yachtDbName, $updateConditionsCruisingMapComment, $updateCruisingMapCommentValues);
+
+                                
+                            }
+                        }
+                    
+    }else if($read == "read"){
+                    
+
+                        if($chk_guest_newlyaddedcomment == 0){
+                            $updateCruisingMapCommentValues = "guest_read='read',modified=$shipTime";
+                        $updateConditionsCruisingMapComment = "id = '$primaryid'";
+                        
+                        $scheduleUpdateStatus = $this->CharterGuest->updateGuestNews($yachtDbName, $updateConditionsCruisingMapComment, $updateCruisingMapCommentValues);
+
+                       
+                        }
+                
+
+    }
+    $data['success'] = "success";
+    
+    echo json_encode($data);
+    exit;
 }
 
 function markSingleCommentUnread() {
