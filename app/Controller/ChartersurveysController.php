@@ -16,7 +16,7 @@ class ChartersurveysController extends AppController {
         * Created date - 19-June-2018
         * Modified date - 
     */
-    function survey($charterGuestId, $charterAssocId, $charterCompanyId,$success=null) {
+    public function survey($charterGuestId, $charterAssocId, $charterCompanyId,$success=null) {
             // echo $charterGuestId;
              //echo $charterAssocId;
             // echo $charterCompanyId;
@@ -99,7 +99,7 @@ class ChartersurveysController extends AppController {
         * Created date - 20-June-2018
         * Modified date - 
     */
-    function add_edit() {
+    public function add_edit() {
         //echo "<pre>";print_r($this->request->data);exit;
         $this->loadModel('CharterGuestSurvey');
         $this->loadModel('Yacht');

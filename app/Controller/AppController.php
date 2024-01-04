@@ -41,7 +41,7 @@ class AppController extends Controller {
 	// 	}
 	// }
     
-    function beforeFilter() {
+    public function beforeFilter() {
        // echo "<pre>"; print_r($this->params); exit;
 		 if($this->params['action'] != 'charter_program_map'){
 			//echo "<pre>"; print_r($this->params); exit;
@@ -56,7 +56,7 @@ class AppController extends Controller {
     }
    
 
-	function checkAdminSession() {
+	public function checkAdminSession() {
         $session=$this->Session->read();
 		//echo "<pre>"; print_r($session); exit;
         if (!$this->Session->check('login_username')){ //echo "kk"; exit;
@@ -74,7 +74,7 @@ class AppController extends Controller {
      * @param string $headers
      * @param string $from
      */
-    function chkSMTPEmail($to,$subject,$message,$headers, $from = ''){
+    public function chkSMTPEmail($to,$subject,$message,$headers, $from = ''){
     	$pos = strpos($_SERVER['HTTP_HOST'],'totalsuperyacht.com');
     	$this->localHost = 0;
     	if ($pos === false || $_SERVER['HTTP_HOST']=='localhost') {
@@ -96,7 +96,7 @@ class AppController extends Controller {
      * @param string $subject
      * @param string $from
      */
-    function setSmtpSendMail($to,$message,$subject, $from ='')
+    public function setSmtpSendMail($to,$message,$subject, $from ='')
     {	
     	require_once('../webroot/PHPMailer-master/PHPMailerAutoload.php');
     	
@@ -153,7 +153,7 @@ class AppController extends Controller {
     }
 
 
-	function charter_program_map_total_msg_count($prgUUID,$yachtdb) {
+	public function charter_program_map_total_msg_count($prgUUID,$yachtdb) {
 		//        echo "<pre>";print_r($this->Session->read());exit;
 		//echo $prgUUID.''.$yachtdb;
 				Configure::write('debug',0);
@@ -201,7 +201,7 @@ class AppController extends Controller {
           /* Email function to send email to oba user when fleet commented
     /* Rakesh @aug09 2023
     */
-    function sendCmapOBACommentEmail($maildata,$allMails){
+    public function sendCmapOBACommentEmail($maildata,$allMails){
         $subject= "Comment Log";        
         //$obaandshoremanagerEmail=  implode(",",$allMails);
         //echo "<pre>"; print_r($maildata);  print_r($allMails); exit;

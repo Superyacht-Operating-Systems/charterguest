@@ -15,7 +15,7 @@
             * Created date - 20-Feb-2014
             * Modified date - 
         */
-        function index()
+        public function index()
         {   
 
       	$session = $this->Session->read();

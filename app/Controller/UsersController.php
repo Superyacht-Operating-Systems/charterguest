@@ -5,12 +5,12 @@ class UsersController extends AppController {
     var $name = 'Users';
     public $components = array('Paginator','Email');
 
-    function beforeFilter() {
+    public function beforeFilter() {
         parent::beforeFilter();
     }
 
     
-    function admin_login() {       
+    public function admin_login() {       
          $baseurl = Configure::read('BASE_URL'); 
         $this->layout = 'login';
         if (isset($this->data) && (!empty($this->data))) {            
@@ -337,7 +337,7 @@ class UsersController extends AppController {
         }
     }
     
-    function admin_forgot_password() {
+    public function admin_forgot_password() {
         $this->layout = 'login';
        
             //$this->Admin->validate=$this->Admin->validateForgotPassword;
@@ -428,7 +428,7 @@ class UsersController extends AppController {
         return implode($pass); //turn the array into a string
     }
     
-    function admin_secure_check($uniqueKey,$sitename) {
+    public function admin_secure_check($uniqueKey,$sitename) {
         $this->layout = 'admin_login';
         $this->set('title', 'Forgot Password');
         $this->set('title_for_layout', 'Forgot Password');
@@ -450,7 +450,7 @@ class UsersController extends AppController {
         }
     }
     
-    function sendmail($firstName,$lastName,$to,$link){
+    public function sendmail($firstName,$lastName,$to,$link){
         $name=$firstName.''.$lastName;      
         $subject = "Retrieve Password";        
         

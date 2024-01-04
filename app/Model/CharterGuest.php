@@ -18,14 +18,14 @@
      * Created date - 12-July-2018
      * Modified date - 
      */
-    function getCharterProgramScheduleData($yachtDbName, $conditions) {
+    public function getCharterProgramScheduleData($yachtDbName, $conditions) {
         $query = "SELECT * FROM $yachtDbName.charter_program_schedules CharterProgramSchedule WHERE $conditions";
         $result = $this->query($query);
         
         return $result;
     }
 
-    function getCruisingMapComment($yachtDbName, $conditions) {
+    public function getCruisingMapComment($yachtDbName, $conditions) {
         $orders = "  ORDER BY created desc";
         $query = "SELECT * FROM $yachtDbName.cruising_map_comments CruisingMapComment WHERE $conditions $orders"; //exit;
         $result = $this->query($query);
@@ -33,7 +33,7 @@
         return $result;
     }
 
-    function getGuestNews($yachtDbName, $conditions) {
+    public function getGuestNews($yachtDbName, $conditions) {
         $orders = "  ORDER BY created desc";
         $query = "SELECT * FROM $yachtDbName.charter_program_news CharterProgramNew WHERE $conditions $orders"; //exit;
         $result = $this->query($query);
@@ -41,7 +41,7 @@
         return $result;
     }
 
-    function updateCharterProgramScheduleActivityData($yachtDbName, $conditions, $updateValues) {
+    public function updateCharterProgramScheduleActivityData($yachtDbName, $conditions, $updateValues) {
         $conditions = " WHERE " . $conditions;
         $updateValues = " SET " . $updateValues;
          $query = "UPDATE $yachtDbName.charter_program_schedule_activities $updateValues $conditions";
@@ -57,13 +57,13 @@
      * Created date - 22-Aug-2023
      * Modified date - 
      */
-    function getCharterProgramScheduleActivityData($yachtDbName, $conditions) {
+    public function getCharterProgramScheduleActivityData($yachtDbName, $conditions) {
         $query = "SELECT * FROM $yachtDbName.charter_program_schedule_activities CharterProgramScheduleActivity WHERE $conditions";
         $result = $this->query($query);
         
         return $result;
     }
-    function updateCruisingMapComment($yachtDbName, $conditions, $updateValues) {
+    public function updateCruisingMapComment($yachtDbName, $conditions, $updateValues) {
         
         $conditions = " WHERE " . $conditions;
         $updateValues = " SET " . $updateValues;
@@ -74,7 +74,7 @@
         return $result;
     }
 
-    function updateGuestNews($yachtDbName, $conditions, $updateValues) {
+    public function updateGuestNews($yachtDbName, $conditions, $updateValues) {
         
         $conditions = " WHERE " . $conditions;
         $updateValues = " SET " . $updateValues;
@@ -85,7 +85,7 @@
         return $result;
     }
 
-    function updateCharterProgramScheduleData($yachtDbName, $conditions, $updateValues) {
+    public function updateCharterProgramScheduleData($yachtDbName, $conditions, $updateValues) {
         
         $conditions = " WHERE " . $conditions;
         $updateValues = " SET " . $updateValues;
@@ -142,7 +142,7 @@
         return array_filter($sentemail);
     }
 
-    function insertCruisingMapComment($yachtDbName, $insertValues) {
+    public function insertCruisingMapComment($yachtDbName, $insertValues) {
         $query = "INSERT INTO $yachtDbName.cruising_map_comments $insertValues";
         $result = $this->query($query);
         //$lastInsertedData = $this->query('select last_insert_id() as id');

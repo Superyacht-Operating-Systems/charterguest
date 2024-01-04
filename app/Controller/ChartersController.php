@@ -16,12 +16,12 @@ class ChartersController extends AppController {
         * Created date - 23-May-2018
         * Modified date - 
     */
-    function index() {          
+    public function index() {          
         $this->Session->destroy();
         $this->layout = 'login';        
     }
     
-    function forgot_password() {       
+    public function forgot_password() {       
         Configure::write('debug',0);
        $this->Session->destroy();
         //exit('ddddddd');
@@ -31,7 +31,7 @@ class ChartersController extends AppController {
          //$this->redirect(array('action' => 'forgot_password'));
     }
     
-   function verifyEmail() {
+    public function verifyEmail() {
         //echo "<pre>"; print_r($this->request->data); exit;
         if ($this->request->is('ajax')) {
             $this->layout = false;
@@ -150,7 +150,7 @@ class ChartersController extends AppController {
         * Created date - 24-May-2018
         * Modified date - 
     */
-    function verifyToken() {
+    public function verifyToken() {
         
         if($this->request->is('ajax')){
             $this->layout = false;
@@ -363,7 +363,7 @@ class ChartersController extends AppController {
         * Created date - 27-July-2018
         * Modified date - 
     */
-    function createPassword() {
+    public function createPassword() {
         
         if($this->request->is('ajax')){
             $this->layout = false;
@@ -423,7 +423,7 @@ class ChartersController extends AppController {
      * After login & from create password page.
      * 
      */
-    function programs() {
+    public function programs() {
         $session = $this->Session->read('charter_info');
         
         // echo "<pre>";print_r($sessionAssoc);exit;
@@ -763,7 +763,7 @@ class ChartersController extends AppController {
      * Created date - 05-June-2023
      * Modified date - 
      */
-    function presentations($charterProgramId = null)
+    public function presentations($charterProgramId = null)
     {
         if (!empty($charterProgramId)) {
             //echo $charterProgramId; //exit;
@@ -842,7 +842,7 @@ class ChartersController extends AppController {
      * After login & from create password page.
      * 
      */
-    function memories() {
+    public function memories() {
         $session = $this->Session->read('charter_info');
         
         // echo "<pre>";print_r($sessionAssoc);exit;
@@ -1182,7 +1182,7 @@ class ChartersController extends AppController {
         * Created date - 24-May-2018
         * Modified date - 
     */
-    function crew_list() {
+    public function crew_list() {
         $session = $this->Session->read('charter_info');
         $sessionAssoc = $this->Session->read('charter_assoc_info');
         // echo "<pre>";print_r($sessionAssoc);exit;
@@ -1352,7 +1352,7 @@ class ChartersController extends AppController {
         * Created date - 24-May-2018
         * Modified date - 
     */
-    function view() {
+    public function view() {
         $session = $this->Session->read('charter_info');
         $sessionAssoc = $this->Session->read('charter_assoc_info');
         // echo "<pre>";print_r($sessionAssoc);exit;
@@ -1512,7 +1512,7 @@ class ChartersController extends AppController {
         * Created date - 24-May-2018
         * Modified date - 
     */
-    function view_guest($charter_program_id,$charter_company_id) {
+    public function view_guest($charter_program_id,$charter_company_id) {
         //echo "<pre>";print_r($this->is_mobile);exit;
 
         //echo "<pre>";print_r($explodepath);
@@ -1644,7 +1644,7 @@ class ChartersController extends AppController {
         * Created date - 29-May-2018
         * Modified date - 
     */
-    function preference() {
+    public function preference() {
 
         $this->Session->write("isgenerateProductOrderPdf", false);
         $this->Session->write("isgenerateWineOrderPdf", false); 
@@ -3410,7 +3410,7 @@ class ChartersController extends AppController {
          //echo "<pre>";print_r($attachment);exit;
     }
 
-    function use_submitted_date(){
+    public function use_submitted_date(){
         //echo '<pre>'; print_r($this->params); exit;
       
            $this->loadModel('GuestList');
@@ -3421,7 +3421,7 @@ class ChartersController extends AppController {
     }
 
 
-    function fleet_company_button_color(){
+    public function fleet_company_button_color(){
         //echo '<pre>'; print_r($this->params); //exit;
         $this->loadModel('CharterGuest');
         $guestDetails = $this->CharterGuest->find('first', array('conditions' => array('charter_program_id' => $this->params->pass[0])));
@@ -3434,7 +3434,7 @@ class ChartersController extends AppController {
            return $companyData;
     }
 
-    function existingCheckFunction(){
+    public function existingCheckFunction(){
 
         // echo "<pre>";print_r($personalDetails); //exit;
         // display modal for preference to use existing or create new only to not submitted records.
@@ -3528,7 +3528,7 @@ class ChartersController extends AppController {
     }
     
 
-    function checkPersonalDetails() {
+    public function checkPersonalDetails() {
         if($this->request->is('ajax')){
             $this->layout = 'ajax';
             $this->autoRender = false;
@@ -3602,7 +3602,7 @@ class ChartersController extends AppController {
 
     }
 
-    function createNewPreference(){
+    public function createNewPreference(){
 
         if($this->request->is('ajax')){
             $this->layout = 'ajax';
@@ -3743,7 +3743,7 @@ class ChartersController extends AppController {
         * Created date - 06-Aug-2018
         * Modified date - 
     */
-    function getSessionData() {
+    public function getSessionData() {
         $session = $this->Session->read('charter_info');
         $sessionAssoc = $this->Session->read('charter_assoc_info');
         $result = array();
@@ -3765,7 +3765,7 @@ class ChartersController extends AppController {
         * Created date - 31-July-2018
         * Modified date - 
     */
-    function filterWineListPagination() {
+    public function filterWineListPagination() {
         if($this->request->is('ajax')){
             $this->layout = 'ajax';
             $this->autoRender = false;
@@ -3793,7 +3793,7 @@ class ChartersController extends AppController {
         * Created date - 31-July-2018
         * Modified date - 
     */
-    function filterWineList() {
+    public function filterWineList() {
         if($this->request->is('ajax')){
             $this->layout = 'ajax';
             $this->autoRender = false;
@@ -3824,7 +3824,7 @@ class ChartersController extends AppController {
         * Created date - 31-July-2018
         * Modified date - 
     */
-    function fetchWineList($filters = array()) {
+    public function fetchWineList($filters = array()) {
         
         $this->loadModel('WineList');
         
@@ -3939,7 +3939,7 @@ class ChartersController extends AppController {
         * Created date - 03-Aug-2018
         * Modified date - 
     */
-    function selectedWineList() {
+    public function selectedWineList() {
         
         // Get Charter guest & assoc ids from session
         $sessionData = $this->getSessionData();
@@ -3977,7 +3977,7 @@ class ChartersController extends AppController {
         * Created date - 03-Aug-2018
         * Modified date - 
     */
-    function addWineToCart() {
+    public function addWineToCart() {
         if($this->request->is('ajax')){
             $this->layout = 'ajax';
             $this->autoRender = false;
@@ -4035,7 +4035,7 @@ class ChartersController extends AppController {
         * Created date - 16 Jun 2020
         * Modified date - 
     */
-    function saveBSProduct(){
+    public function saveBSProduct(){
          if($this->request->is('ajax')){
             $this->layout = 'ajax';
             $this->autoRender = false;
@@ -4077,7 +4077,7 @@ class ChartersController extends AppController {
         * Created date - 16 Jun 2020
         * Modified date - 
     */
-    function saveWLProduct(){
+    public function saveWLProduct(){
          if($this->request->is('ajax')){
             $this->layout = 'ajax';
             $this->autoRender = false;
@@ -4135,7 +4135,7 @@ class ChartersController extends AppController {
         * Created date - 03-Aug-2018
         * Modified date - 
     */
-    function getSelectedWineList() {
+    public function getSelectedWineList() {
         if($this->request->is('ajax')){
             $this->layout = 'ajax';
             $this->autoRender = false;
@@ -4210,7 +4210,7 @@ class ChartersController extends AppController {
         * Created date - 03-Aug-2018
         * Modified date - 
     */
-    function removeWineFromCart() {
+    public function removeWineFromCart() {
         if($this->request->is('ajax')){
             $this->layout = 'ajax';
             $this->autoRender = false;
@@ -4271,7 +4271,7 @@ class ChartersController extends AppController {
         * Created date - 06-Aug-2018
         * Modified date - 
     */
-    function removeWineFromPreference() {
+    public function removeWineFromPreference() {
         if($this->request->is('ajax')){
             $this->layout = 'ajax';
             $this->autoRender = false;
@@ -4311,7 +4311,7 @@ class ChartersController extends AppController {
         * Created date - 07-Aug-2018
         * Modified date - 
     */
-    function generateWineOrderPdf() {
+    public function generateWineOrderPdf() {
 
         $this->Session->write("isgenerateWineOrderPdf", false);        
         $this->layout = 'ajax';
@@ -4427,7 +4427,7 @@ class ChartersController extends AppController {
     }
 
 
-    function addPreviousWineToCart() {
+    public function addPreviousWineToCart() {
         if($this->request->is('ajax')){
             $this->layout = 'ajax';
             $this->autoRender = false;
@@ -4485,7 +4485,7 @@ class ChartersController extends AppController {
         * Created date - 10-Aug-2018
         * Modified date - 
     */
-    function filterProductList() {
+    public function filterProductList() {
         if($this->request->is('ajax')){
             $this->layout = 'ajax';
             $this->autoRender = false;
@@ -4516,7 +4516,7 @@ class ChartersController extends AppController {
         * Created date - 10-Aug-2018
         * Modified date - 
     */
-    function fetchProductList($filters = array()) {
+    public function fetchProductList($filters = array()) {
         
         $this->loadModel('ProductList');
         
@@ -4572,7 +4572,7 @@ class ChartersController extends AppController {
         * Created date - 10-Aug-2018
         * Modified date - 
     */
-    function filterProductListPagination() {
+    public function filterProductListPagination() {
         if($this->request->is('ajax')){
             $this->layout = 'ajax';
             $this->autoRender = false;
@@ -4598,7 +4598,7 @@ class ChartersController extends AppController {
         * Created date - 10-Aug-2018
         * Modified date - 
     */
-    function selectedProductList() {
+    public function selectedProductList() {
         
         // Get Charter guest & assoc ids from session
         $sessionData = $this->getSessionData();
@@ -4640,7 +4640,7 @@ class ChartersController extends AppController {
         * Created date - 10-Aug-2018
         * Modified date - 
     */
-    function addProductToCart() {
+    public function addProductToCart() {
         if($this->request->is('ajax')){
             $this->layout = 'ajax';
             $this->autoRender = false;
@@ -4697,7 +4697,7 @@ class ChartersController extends AppController {
         * Created date - 10-Aug-2018
         * Modified date - 
     */
-    function removeProductFromCart() {
+    public function removeProductFromCart() {
         if($this->request->is('ajax')){
             $this->layout = 'ajax';
             $this->autoRender = false;
@@ -4757,7 +4757,7 @@ class ChartersController extends AppController {
         * Created date - 06-Aug-2018
         * Modified date - 
     */
-    function removeProductFromPreference() {
+    public function removeProductFromPreference() {
         if($this->request->is('ajax')){
             $this->layout = 'ajax';
             $this->autoRender = false;
@@ -4796,7 +4796,7 @@ class ChartersController extends AppController {
         * Created date - 10-Aug-2018
         * Modified date - 
     */
-    function getSelectedProductList() {
+    public function getSelectedProductList() {
         if($this->request->is('ajax')){
             $this->layout = 'ajax';
             $this->autoRender = false;
@@ -4872,7 +4872,7 @@ class ChartersController extends AppController {
         * Created date - 13-Aug-2018
         * Modified date - 
     */
-    function generateProductOrderPdf() {
+    public function generateProductOrderPdf() {
         
         $this->Session->write("isgenerateProductOrderPdf", false);
         $this->layout = 'ajax';
@@ -4977,7 +4977,7 @@ class ChartersController extends AppController {
     }
 
 
-    function addPreviousSpiritToCart() {
+    public function addPreviousSpiritToCart() {
         if($this->request->is('ajax')){
             $this->layout = 'ajax';
             $this->autoRender = false;
@@ -5035,7 +5035,7 @@ class ChartersController extends AppController {
         * Created date - 06-June-2018
         * Modified date - 
     */
-    function sendRecordsToYacht($yDBName,$charterHeadProgramId,$charterHeadId,$charterAssocId,$guest_uuid) {
+    public function sendRecordsToYacht($yDBName,$charterHeadProgramId,$charterHeadId,$charterAssocId,$guest_uuid) {
         //  echo $charterHeadProgramId."kk<br/>";
         //  echo $charterHeadId."aa<br/>";
         //  echo $charterAssocId."aa<br/>";
@@ -5230,7 +5230,7 @@ class ChartersController extends AppController {
         * Created date - 24-May-2018
         * Modified date - 
     */
-    function saveAndSendMail() {
+    public function saveAndSendMail() {
         
         if($this->request->is('ajax')){
             $this->layout = false;
@@ -5475,7 +5475,7 @@ class ChartersController extends AppController {
      * Created date - 24-May-2018
      * Modified date - 
      */
-    function sendCharterNotifyAssociateGuestMail($data,$userToken) {
+    public function sendCharterNotifyAssociateGuestMail($data,$userToken) {
         
         $salutation = $data['salutation'];
         $firstName = $data['first_name'];
@@ -5534,7 +5534,7 @@ class ChartersController extends AppController {
      * Created date - 
      * Modified date - 
      */
-    function sendAlreadySubmittedPreferenceMail($data,$userToken) {
+    public function sendAlreadySubmittedPreferenceMail($data,$userToken) {
         //echo $headcharterName; exit;
         $firstName = $data['first_name'];
         $lastName = $data['last_name'];
@@ -5580,7 +5580,7 @@ class ChartersController extends AppController {
     //so on very first time clicking send button will take any other row of guest data typed that also insert to the table without duplication
     // for that this Otherrowdata is added in ajax call, it should work only the first time clicking email button not on resend.
     // on send email button on each row of guest this function will call from saveAndSendMail function
-    function saveOtherRowRecord($data,$fleetcompany_id){
+    public function saveOtherRowRecord($data,$fleetcompany_id){
         
         if (!empty($data['charter_program_id']) && !empty($data['yacht_id']) && !empty($data['charter_guest_id'])) {
             $charterProgramId = $data['charter_program_id'];
@@ -5717,7 +5717,7 @@ class ChartersController extends AppController {
         * Created date - 09-July-2018
         * Modified date - 
     */
-    function saveGuests() {
+    public function saveGuests() {
         
         if($this->request->is('ajax')){
             $this->layout = false;
@@ -5907,7 +5907,7 @@ class ChartersController extends AppController {
      * Created date - 28-May-2018
      * Modified date - 
      */
-    function charter_program_map_app($prgUUID = null,$yachtdb = null) {
+    public function charter_program_map_app($prgUUID = null,$yachtdb = null) {
         //        echo "<pre>";print_r($this->Session->read());exit;
                 Configure::write('debug',0);
                 $session = $this->Session->read('charter_info');
@@ -6366,7 +6366,7 @@ class ChartersController extends AppController {
      * Created date - 28-May-2018
      * Modified date - 
      */
-    function charter_program_map($prgUUID,$yachtdb,$guesttype) {
+    public function charter_program_map($prgUUID,$yachtdb,$guesttype) {
 //        echo "<pre>";print_r($this->Session->read());exit;
         Configure::write('debug',0);
         $session = $this->Session->read('charter_info');
@@ -6994,7 +6994,7 @@ class ChartersController extends AppController {
      * Created date - 28-May-2018
      * Modified date - 
      */
-    function editCharterProgramSchedules() {
+    public function editCharterProgramSchedules() {
         
         if($this->request->is('ajax')){
             //echo "<pre>";print_r($this->request->data); exit;
@@ -7552,7 +7552,7 @@ class ChartersController extends AppController {
      * Created date - 28-May-2018
      * Modified date - 
      */
-    function getIpadViewCharterProgramSchedules_map() {
+    public function getIpadViewCharterProgramSchedules_map() {
         
         if($this->request->is('ajax')){
             $session = $this->Session->read('charter_info');
@@ -7683,7 +7683,7 @@ class ChartersController extends AppController {
      * Created date - 28-May-2018
      * Modified date - 
      */
-    function getIpadViewCharterProgramSchedules() {
+    public function getIpadViewCharterProgramSchedules() {
         
         if($this->request->is('ajax')){
             $session = $this->Session->read('charter_info');
@@ -7814,7 +7814,7 @@ class ChartersController extends AppController {
      * Created date - 24-May-2018
      * Modified date - 
      */
-    function sendCharterNotifyMail($data,$userToken) {
+    public function sendCharterNotifyMail($data,$userToken) {
         
         $salutation = $data['salutation'];
         $firstName = $data['first_name'];
@@ -7868,7 +7868,7 @@ class ChartersController extends AppController {
 
     
     // Random unique token creation
-    function uniqueToken($length = 8) {
+    public function uniqueToken($length = 8) {
          Configure::write('debug',0);
         //generate a random id encrypt it and store it in $rnd_id 
         $rnd_id = crypt(uniqid(rand(),1)); 
@@ -7894,7 +7894,7 @@ class ChartersController extends AppController {
         * Created date - 31-July-2018
         * Modified date - 
     */
-    function dumpWineList() {
+    public function dumpWineList() {
         
         // Generate filters
         $limit = 1000;
@@ -7947,7 +7947,7 @@ class ChartersController extends AppController {
         * Created date - 31-July-2018
         * Modified date - 
     */
-    function storeWineList($wineList) {
+    public function storeWineList($wineList) {
         
         if (isset($wineList['results']) && !empty($wineList['results'])) {
             $this->loadModel('WineList');
@@ -8011,7 +8011,7 @@ class ChartersController extends AppController {
         * Created date - 09-Aug-2018
         * Modified date - 
     */
-    function dumpProductList() {
+    public function dumpProductList() {
         
         // Generate filters
         $limit = 100;
@@ -8066,7 +8066,7 @@ class ChartersController extends AppController {
         * Created date - 09-Aug-2018
         * Modified date - 
     */
-    function storeProductList($productList) {
+    public function storeProductList($productList) {
         
         if (isset($productList['result']) && !empty($productList['result'])) {
             $this->loadModel('ProductList');
@@ -8103,7 +8103,7 @@ class ChartersController extends AppController {
         
     }
 
-    function getGuestNews() {
+    public function getGuestNews() {
         // echo "<pre>";
          //print_r($this->request->data);exit;
          $this->loadModel('Yacht');
@@ -8177,7 +8177,7 @@ class ChartersController extends AppController {
          exit;
      }
 
-    function getComments() {
+     public function getComments() {
         // echo "<pre>";
          //print_r($this->request->data);exit;
          $this->loadModel("CruisingMapComment");
@@ -8297,7 +8297,7 @@ class ChartersController extends AppController {
 
     
 
-     function saveComments() {
+     public function saveComments() {
 
         $is_fleet = 1;
         //print_r($is_fleet);
@@ -8550,7 +8550,7 @@ if($type == "schedule"){
         exit;
 }
 
-function markGuestNewsUnread() {
+public function markGuestNewsUnread() {
 
     $isfleet = 1;
     //print_r($is_fleet);
@@ -8613,7 +8613,7 @@ function markGuestNewsUnread() {
     exit;
 }
 
-function markSingleCommentUnread() {
+public function markSingleCommentUnread() {
 
     $isfleet = 1;
     //print_r($is_fleet);
@@ -8810,7 +8810,7 @@ function markSingleCommentUnread() {
 }
 
 
-function markCommentUnread() {
+public function markCommentUnread() {
 
     $isfleet = 1;
     //print_r($is_fleet);
@@ -8911,7 +8911,7 @@ function markCommentUnread() {
 }
 
 
-function getPreviousCharterProgramSelections() {
+public function getPreviousCharterProgramSelections() {
     // echo "<pre>";
      //print_r($this->request->data);exit;
     
@@ -8962,7 +8962,7 @@ function getPreviousCharterProgramSelections() {
      exit;
  }
 
- function getPreviousSelectedBeerWine() {
+ public function getPreviousSelectedBeerWine() {
     // echo "<pre>";
      //print_r($this->request->data);exit;
      $this->layout = 'ajax';
@@ -9108,7 +9108,7 @@ function getPreviousCharterProgramSelections() {
  }
 
 
- function saveusesubmittedpreferences() {
+ public function saveusesubmittedpreferences() {
         
     if($this->request->is('ajax')){
         $this->layout = false;
@@ -9172,7 +9172,7 @@ function getPreviousCharterProgramSelections() {
     
 }
 
-function sessionShowPopupDelete(){
+public function sessionShowPopupDelete(){
     if($this->request->is('ajax')){
         $this->layout = false;
         $this->autoRender = false;
@@ -9186,7 +9186,7 @@ function sessionShowPopupDelete(){
 }
 
 
-function uploadpassportimage(){
+public function uploadpassportimage(){
     if($this->request->is('ajax')){
         $this->layout = false;
         $this->autoRender = false;
@@ -9224,7 +9224,7 @@ function uploadpassportimage(){
     }
 }
 
-function reduce_image_width($target, $newcopy, $w, $h, $ext) {
+public function reduce_image_width($target, $newcopy, $w, $h, $ext) {
         list($w_orig, $h_orig) = getimagesize($target);
         //echo $w_orig.'//'.$h_orig;
         //echo "<pre>";
@@ -9277,7 +9277,7 @@ function reduce_image_width($target, $newcopy, $w, $h, $ext) {
 }
 
 
-function getIndividualmsgcountMarer() {
+public function getIndividualmsgcountMarer() {
     //echo "<pre>";print_r($this->request->data);exit;
     if($this->request->is('ajax')){
         $this->loadModel('CharterGuest');
@@ -9313,7 +9313,7 @@ function getIndividualmsgcountMarer() {
     
 }
 
-function getmsgcountonclosecruisingschedulemodal() {
+public function getmsgcountonclosecruisingschedulemodal() {
     $this->autoRender = false;
     if($this->request->is('ajax')){
         $this->loadModel('CharterGuest');
@@ -9340,7 +9340,7 @@ function getmsgcountonclosecruisingschedulemodal() {
         * Created date - 09-June-2022
         * Modified date - 
     */
-    function privacytermsofuse() {    
+    public function privacytermsofuse() {    
         $actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";    
         $str_arr = explode ("/", $actual_link); 
         $id = $str_arr[count($str_arr)-1];
@@ -9351,7 +9351,7 @@ function getmsgcountonclosecruisingschedulemodal() {
         // print_r($details);exit;
     }
 
-    function getBackgroundImageUrl($image, $fleetname, $yachtname, $SITE_URL){
+    public function getBackgroundImageUrl($image, $fleetname, $yachtname, $SITE_URL){
         if($image){
             $cgBackgroundImage = $SITE_URL.'/'.$yachtname.'/app/webroot/img/charter_program_files/'.$image;
             if (!empty($fleetname)) { // IF yacht is under any Fleet
@@ -9363,7 +9363,7 @@ function getmsgcountonclosecruisingschedulemodal() {
         return $cgBackgroundImage;
     }
 
-    function getFleetLogoUrl($fleetcompany_id){
+    public function getFleetLogoUrl($fleetcompany_id){
         //$SITE_URL = Configure::read('BASE_URL');
         $this->loadModel('Fleetcompany');
         $companyData = $this->Fleetcompany->find('first', array('fields' => array('management_company_name','logo','fleetname','domain_name'), 'conditions' => array('id' => $fleetcompany_id)));
@@ -9385,7 +9385,7 @@ function getmsgcountonclosecruisingschedulemodal() {
         return $fleetLogoUrl;
     }
 
-    function downloadcontractfile(){
+    public function downloadcontractfile(){
         error_reporting(0);
         // echo "<pre>";print_r($personalDetails); //exit;
         // display modal for preference to use existing or create new only to not submitted records.
@@ -9485,7 +9485,7 @@ function getmsgcountonclosecruisingschedulemodal() {
         }
 
 
-        function cruising_schedule_locations() {
+        public function cruising_schedule_locations() {
             //        echo "<pre>";print_r($this->Session->read());exit;
             $this->autoRender = false;
             if($this->request->is('ajax')){
