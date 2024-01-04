@@ -103,14 +103,13 @@
      * Modified date - 
      */
     public function getheadandbadata($yachtDbName, $conditions){
-        //echo $yachtDbName; echo $cpconditions; exit;
         if (!empty($conditions)) {
             $conditions = " WHERE ".$conditions;
         }
         $joins = " LEFT JOIN $yachtDbName.charter_user_yachts CUY ON(CharterProgram.charter_company_id = CUY.charter_company_id and CharterProgram.booking_agent_id = CUY.charter_user_id)";
         $groups = " GROUP BY CharterProgram.id";
         $query = "SELECT * FROM $yachtDbName.charter_programs CharterProgram $joins $conditions $groups";
-        //echo $query; exit;
+        
         $result = $this->query($query);
         
         return $result;
@@ -124,14 +123,14 @@
      * Modified date - 
      */
     public function getyachtusersdata($yachtDbName, $types){
-        //echo $yachtDbName; print_r($types); exit;
+        
         $user_types =  implode(",",$types);
         $query = "SELECT id,email,user_type,notification_email,notify_email,email_notifications_for FROM $yachtDbName.users WHERE users.status = 1 AND users.is_deleted = 0 AND users.user_type IN ($user_types)";
-        //echo $query; exit;
+        
         $obaUsers = $this->query($query);
 
         foreach($obaUsers as $userdetails){
-            //echo "<pre>"; print_r($userdetails); exit;
+            
             if($userdetails['users']['notify_email'] == 0){
                 $sentemail[] = $userdetails['users']['email'];
             }else{
@@ -145,23 +144,20 @@
     public function insertCruisingMapComment($yachtDbName, $insertValues) {
         $query = "INSERT INTO $yachtDbName.cruising_map_comments $insertValues";
         $result = $this->query($query);
-        //$lastInsertedData = $this->query('select last_insert_id() as id');
-        //return $lastInsertedData[0][0]['id'];
+        
         return $result;
     }
 
     public function getCharterMarkerCommentCount($yachtDbName,$puuid){
     	
     	// For fleet users
-    	//echo "<pre>"; print_R($yachtDbName);//exit;
-    	//foreach($yachtNames as $name){ 
+    	
     		
     		 $dbname = $yachtDbName;
-             //$puuid = "62386a7f-fa6c-4916-bb0c-19692b7276f0";
+             
 		      $charter_program_schedulesQuery	= "SELECT id,is_crew_commented,title,UUID from $dbname.charter_program_schedules where UUID='$puuid' and is_deleted = 0";
 		      $charter_program_schedulesvalues = $this->query($charter_program_schedulesQuery);
-             // echo "<pre>"; print_R($charter_program_schedulesvalues);
-              //exit;
+             
 				foreach($charter_program_schedulesvalues as $value){
 					$charter_program_schedules_id_array[] = $value['charter_program_schedules']['id'];
                     $charter_program_schedules_UUID_array[] = "'".$value['charter_program_schedules']['UUID']."'";
@@ -177,13 +173,11 @@
                 }
 
                 
-                //echo $uuidprog; 
-                //exit;
+                
                 if(isset($uuidprog)){
                     $schedule_activitiesQuery	= "SELECT id,is_crew_commented,UUID from $dbname.charter_program_schedule_activities where (is_crew_commented = 1 and is_deleted = 0 and charter_program_schedule_id IN ($uuidprog)) OR (is_fleet_commented = 1 and is_deleted = 0 and charter_program_schedule_id IN ($uuidprog))";
                     $schedule_activitiesQueryvalues = $this->query($schedule_activitiesQuery);
-                    //echo "<pre>"; print_R($schedule_activitiesQueryvalues);
-                    //exit;
+                    
                     foreach($schedule_activitiesQueryvalues as $value){
                         $schedule_activities_id_array[] = "'".$value['charter_program_schedule_activities']['UUID']."'";
                     
@@ -201,20 +195,14 @@
 				      }
 				      $schedulecommentQuery	= "SELECT * from $dbname.cruising_map_comments where (activity_id IN ($aids) and crew_newlyaddedcomment = 1 and is_deleted = 0 and type='schedule' and publish_map = 1 and guest_read = 'unread') OR (activity_id IN ($aids) and fleet_newlyaddedcomment = 1 and is_deleted = 0 and type='schedule' and publish_map = 1 and guest_read = 'unread') ORDER BY created Desc";
 				      $schedulecomments = $this->query($schedulecommentQuery);
-
-                    //   $GuestschedulecommentQuery	= "SELECT * from $dbname.cruising_map_comments where activity_id IN ($aids) and fleet_newlyaddedcomment = 1 and is_deleted = 0 and type='schedule' and publish_map = 1 ORDER BY created Desc";
-				    //   $Guestsschedulecomments = $this->query($GuestschedulecommentQuery);
 				     
                 	 foreach($schedulecomments as $value){
                 	 	$scount[] = $value['cruising_map_comments']['activity_id'];
                 	 }
 
-                    //  foreach($Guestsschedulecomments as $value){
-                    //     $scount[] = $value['cruising_map_comments']['activity_id'];
-                    // }
+                   
 				   }
-                   //echo "<pre>"; print_R($scount);
-                   //exit;
+                   
                    if(isset($schedule_activities_id_array) && !empty($schedule_activities_id_array)){
                     $schedule_activities_id_array = array_unique($schedule_activities_id_array);
                     $actvityids = implode(',',$schedule_activities_id_array);
@@ -226,19 +214,14 @@
                     $activitycommentQuery	= "SELECT * from $dbname.cruising_map_comments where (activity_id IN ($actvityids) and crew_newlyaddedcomment = 1 and is_deleted = 0 and type='activity' and publish_map = 1 and guest_read = 'unread') OR (activity_id IN ($actvityids) and fleet_newlyaddedcomment = 1 and is_deleted = 0 and type='activity' and publish_map = 1 and guest_read = 'unread') ORDER BY created Desc";
                     $activitycomments = $this->query($activitycommentQuery);
 
-                    // $guestactivitycommentQuery	= "SELECT * from $dbname.cruising_map_comments where activity_id IN ($actvityids) and fleet_newlyaddedcomment = 1 and is_deleted = 0 and type='activity' and publish_map = 1 ORDER BY created Desc";
-                    // $guestactivitycomments = $this->query($guestactivitycommentQuery);
                    
                    foreach($activitycomments as $value){
                        $actcount[] = $value['cruising_map_comments']['activity_id'];
                    }
 
-                //    foreach($guestactivitycomments as $value){
-                //     $actcount[] = $value['cruising_map_comments']['activity_id'];
-                //     }
+               
                  }
-                 //echo "<pre>"; print_R($actcount);
-                 //exit;        
+                   
                  $count = "";  
                                 if(!empty($scount)){
                                     
@@ -254,7 +237,7 @@
                                 
                                 
 				
-				//echo "<pre>"; print_R($count);exit;
+				
 				if(!empty($count)){
                 	$result = $count;
 				}else{
@@ -271,15 +254,13 @@
     public function getmsgcountonclosecruisingschedulemodal($yachtDbName,$puuid){
     	
     	// For fleet users
-    	//echo "<pre>"; print_R($yachtDbName);//exit;
-    	//foreach($yachtNames as $name){ 
+    	
     		
     		 $dbname = $yachtDbName;
-             //$puuid = "62386a7f-fa6c-4916-bb0c-19692b7276f0";
+            
 		      $charter_program_schedulesQuery	= "SELECT id,is_crew_commented,title,UUID from $dbname.charter_program_schedules where charter_program_id='$puuid' and is_deleted = 0";
 		      $charter_program_schedulesvalues = $this->query($charter_program_schedulesQuery);
-             // echo "<pre>"; print_R($charter_program_schedulesvalues);
-              //exit;
+            
 				foreach($charter_program_schedulesvalues as $value){
 					$charter_program_schedules_id_array[] = $value['charter_program_schedules']['id'];
                     $charter_program_schedules_UUID_array[] = $value['charter_program_schedules']['UUID'];
@@ -292,13 +273,13 @@
                     }
 
                    
-                    //echo "<pre>";print_r($result);exit;
+                    
                     foreach($result as $key => $val){
                         $return[$key] = $val;
                     }
                    
                 }
-                //echo "<pre>";print_r($return);exit;
+                
                 return $return;
 
     }
