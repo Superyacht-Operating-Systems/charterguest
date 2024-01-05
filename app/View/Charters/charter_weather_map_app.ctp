@@ -1921,10 +1921,7 @@ body.modal-open {
         <?php if(empty($charterName)){ ?>
         <span style="font-size: 16px;color:#fff;float:right;"><?php echo $no_cruising_select; ?></span>
         <?php } ?>
-<!--         <a>
-            <span style="margin-left: 10%;" class="mob-none">   
-                <?php echo $this->Html->link('Back','view',array('id' => 'charterProgramView', 'class' => 'btn btn-warning','title' => '<< Back'));?> 
-            </span><span class="go-back-btn"><i class="fa fa-long-arrow-left"></i></span></a> -->
+
         </span>
     </div>
 </div> 
@@ -1935,8 +1932,6 @@ body.modal-open {
 </div>
 
 <!-- <button id="closeWeatherMap">Close</button> -->
-<?php if(empty($no_cruising_select)){?>
-<?php } ?>
 
 <input type="hidden" id="yachtId" value="<?php echo $yacht_id_fromyachtDB; ?>">
 <input type="hidden" id="charterProgramId" value="<?php echo $charterProgramId; ?>">
@@ -2038,7 +2033,7 @@ $(document).ready(function() { //alert();
     //$("#closeWeatherMap").css("display","none");
    
     });
-    var latlngs = [];
+    //var latlngs = [];
 
 var DBHeading = "<?php echo $AisPosition['COG']; ?>";
 var DBTrueHeading = "<?php echo $AisPosition['TrueHeading']; ?>";
@@ -2055,8 +2050,6 @@ var boatMarker = L.boatMarker([DBLatitude,DBLongitude], {
 
 			var heading = DBHeading;
 
-             latlngs.push(new L.LatLng(<?php echo $AisPosition['Latitude']; ?>, <?php echo $AisPosition['Longitude']; ?>));
-
 const optionsWind = {
     // Required: API key
     key: '1cDk7fz9oF31QBPeqDjg6LwhBw6Z5wJ9', // REPLACE WITH YOUR KEY !!!
@@ -2067,9 +2060,9 @@ const optionsWind = {
     verbose: true,
 
     // Optional: Initial state of the map
-    // lat: DBLatitude,
-    // lon: DBLongitude,
-    // zoom: 5,
+     lat: DBLatitude,
+     lon: DBLongitude,
+     zoom: 5,
 };
 
 // Initialize Windy API
