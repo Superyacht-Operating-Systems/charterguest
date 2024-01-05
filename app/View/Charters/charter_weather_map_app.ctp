@@ -1906,7 +1906,28 @@ body.modal-open {
 
 
 
-
+<div class="row common-form-row">
+    <div class="w-33 col-lg-4 col-md-4 col-sm-4 mob-none">  
+        <span class="lgdev" style="font-size: 18px;color:#fff;"><?php echo $schedulePeriod; ?></span>
+        <span class="mddev" style="font-size: 18px;color:#fff;"><?php echo $schedulePeriodWithOutYear; ?></span>
+        
+    </div>
+    <div class="w-20 col-lg-4 col-md-4 col-sm-4 text-center mob-none">  
+    <span style="font-size: 18px;color:#fff;"><?php echo $scheduleLocation; ?>
+        
+    </div>
+    <div class="w-33 col-lg-4 col-md-4 col-sm-4">
+        <span style="font-size: 18px;color:#fff;float:right;"><?php echo $charterName; ?></span>
+        <?php if(empty($charterName)){ ?>
+        <span style="font-size: 16px;color:#fff;float:right;"><?php echo $no_cruising_select; ?></span>
+        <?php } ?>
+<!--         <a>
+            <span style="margin-left: 10%;" class="mob-none">   
+                <?php echo $this->Html->link('Back','view',array('id' => 'charterProgramView', 'class' => 'btn btn-warning','title' => '<< Back'));?> 
+            </span><span class="go-back-btn"><i class="fa fa-long-arrow-left"></i></span></a> -->
+        </span>
+    </div>
+</div> 
 
 <div class="custom-popup" id="windy" style="height: 600px;position:relative;outline:none;">
 </div>
