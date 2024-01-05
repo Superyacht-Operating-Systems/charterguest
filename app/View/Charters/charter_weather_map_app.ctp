@@ -2034,7 +2034,7 @@ var boatMarker = L.boatMarker([DBLatitude,DBLongitude], {
 
 			var heading = DBHeading;
 
-            // latlngs.push(new L.LatLng(<?php echo $AisPosition['Latitude']; ?>, <?php echo $AisPosition['Longitude']; ?>));
+             latlngs.push(new L.LatLng(<?php echo $AisPosition['Latitude']; ?>, <?php echo $AisPosition['Longitude']; ?>));
 
 const optionsWind = {
     // Required: API key

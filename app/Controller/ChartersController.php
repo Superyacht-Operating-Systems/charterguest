@@ -6796,7 +6796,7 @@ class ChartersController extends AppController {
                         $this->set('AisPosition', $AisPosition[0]['AisPosition']);
                         }
                         
-                        echo "<pre>";print_r($AisPosition); exit;
+                        //echo "<pre>";print_r($locationimages); exit;
                         //$this->set('locationComment', $locationComment);
 
                     } else {
