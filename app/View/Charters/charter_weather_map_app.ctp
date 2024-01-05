@@ -2034,7 +2034,7 @@ var boatMarker = L.boatMarker([DBLatitude,DBLongitude], {
 
 			var heading = DBHeading;
 
-            latlngs.push(new L.LatLng(<?php echo $AisPosition['Latitude']; ?>, <?php echo $AisPosition['Longitude']; ?>));
+            // latlngs.push(new L.LatLng(<?php echo $AisPosition['Latitude']; ?>, <?php echo $AisPosition['Longitude']; ?>));
 
 const optionsWind = {
     // Required: API key
@@ -2056,9 +2056,9 @@ windyInit(optionsWind, windyAPI => {
     const { map } = windyAPI;
     // .map is instance of Leaflet map
 
-    if(latlngs.length > 0){
-        map.fitBounds(latlngs);
-    }
+    // if(latlngs.length > 0){
+    //     map.fitBounds(latlngs);
+    // }
 
         var WindboatMarker = L.boatMarker([DBLatitude,DBLongitude], {
 			    color: "#00a7f2"
