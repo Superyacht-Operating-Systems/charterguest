@@ -2017,7 +2017,7 @@ $(document).ready(function() { //alert();
     //$("#closeWeatherMap").css("display","none");
    
     });
-
+    var latlngs = [];
 
 var DBHeading = "<?php echo $AisPosition['COG']; ?>";
 var DBTrueHeading = "<?php echo $AisPosition['TrueHeading']; ?>";
@@ -2034,6 +2034,7 @@ var boatMarker = L.boatMarker([DBLatitude,DBLongitude], {
 
 			var heading = DBHeading;
 
+            latlngs.push(new L.LatLng(<?php echo $AisPosition['lattitude']; ?>, <?php echo $AisPosition['longitude']; ?>));
 
 const optionsWind = {
     // Required: API key
@@ -2045,15 +2046,19 @@ const optionsWind = {
     verbose: true,
 
     // Optional: Initial state of the map
-    lat: DBLongitude,
-    lon: DBLatitude,
-    zoom: 5,
+    // lat: DBLatitude,
+    // lon: DBLongitude,
+    // zoom: 5,
 };
 
 // Initialize Windy API
 windyInit(optionsWind, windyAPI => {
     const { map } = windyAPI;
     // .map is instance of Leaflet map
+
+    if(latlngs.length > 0){
+        map.fitBounds(latlngs);
+    }
 
         var WindboatMarker = L.boatMarker([DBLatitude,DBLongitude], {
 			    color: "#00a7f2"
