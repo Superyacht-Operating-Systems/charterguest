@@ -1875,10 +1875,10 @@ body.modal-open {
 </style>  
 
 <?php    echo $this->Html->script('jquery-1.7.2.min');
-        echo $this->Html->script('fancybox/jquery.fancybox');
-        echo $this->Html->css('fancybox/jquery.fancybox');
-        echo $this->Html->script('fancybox/jquery.fancybox-thumbs');
-        echo $this->Html->css('fancybox/jquery.fancybox-thumbs');
+        // echo $this->Html->script('fancybox/jquery.fancybox');
+        // echo $this->Html->css('fancybox/jquery.fancybox');
+        // echo $this->Html->script('fancybox/jquery.fancybox-thumbs');
+        // echo $this->Html->css('fancybox/jquery.fancybox-thumbs');
     ?> 
     <!-- <link rel="stylesheet" 
   href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/helpers/jquery.fancybox-thumbs.css" type="text/css" media="screen" />
@@ -2045,9 +2045,9 @@ const optionsWind = {
     verbose: true,
 
     // Optional: Initial state of the map
-    // lat: DBLatitude,
-    // lon: DBLongitude,
-    // zoom: 7,
+    lat: DBLongitude,
+    lon: DBLatitude,
+    zoom: 5,
 };
 
 // Initialize Windy API
