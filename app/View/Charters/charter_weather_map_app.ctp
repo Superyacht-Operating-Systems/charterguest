@@ -2032,27 +2032,7 @@ var boatMarker = L.boatMarker([DBLatitude,DBLongitude], {
 			boatMarker.setHeading(DBHeading);
             boatMarker.setSpeed(DBTrueHeading);
 
-			function getRandomArbitrary(min, max) {
-			    return Math.random() * (max - min) + min;
-			}
-
 			var heading = DBHeading;
-
-			// start simulation
-			// window.setInterval(function() {
-
-			// 	var speed = getRandomArbitrary(8.0, 16.0);
-			// 	var direction = getRandomArbitrary((heading - 50) % 360, (heading - 40) % 360);
-
-			// 	if(heading > 30)
-			// 		heading -= 0.5;
-
-			 	//boatMarker.setHeadingWind(heading, speed, direction);
-
-			// 	var destination = turf.destination(boatMarker.toGeoJSON(), 0.02, 60, "kilometers");
-			// 	boatMarker.setLatLng(destination.geometry.coordinates.reverse());
-
-			// }, 488);
 
 
 const optionsWind = {
@@ -2065,9 +2045,9 @@ const optionsWind = {
     verbose: true,
 
     // Optional: Initial state of the map
-    lat: DBLatitude,
-    lon: DBLongitude,
-    zoom: 7,
+    // lat: DBLatitude,
+    // lon: DBLongitude,
+    // zoom: 7,
 };
 
 // Initialize Windy API
