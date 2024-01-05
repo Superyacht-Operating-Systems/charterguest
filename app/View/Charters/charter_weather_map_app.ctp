@@ -2062,7 +2062,7 @@ const optionsWind = {
     // Optional: Initial state of the map
      lat: DBLatitude,
      lon: DBLongitude,
-     zoom: 5,
+     zoom: 6,
 };
 
 // Initialize Windy API
