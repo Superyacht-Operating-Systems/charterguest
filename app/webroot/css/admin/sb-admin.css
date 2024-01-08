@@ -5598,6 +5598,9 @@ label.footsize{
   .nav-side-menu {
     margin-top: 18px;
 }
+.bigitem .label-bold {
+  padding-top: 44px!important;
+}
   .container-row-all {
     margin-top: 24px!important;
     position: relative;
@@ -5707,11 +5710,11 @@ margin-top: 9px!important;
 }
 
 @media only screen and (min-width: 771px) and (max-width: 1020px){
-.bigitem .label-bold {
+/* .bigitem .label-bold {
     padding-top: 32px!important;
-}
+} */
 
-.navbar-absalute-top .yachtHeaderName {
+/* .navbar-absalute-top .yachtHeaderName {
     position: absolute!important;
     text-align: center;
     left: 0;
@@ -5719,7 +5722,7 @@ margin-top: 9px!important;
     display: inline-block;
     width: 100%;
     max-width: 100%;
-}
+} */
 .userhead-name .acti-countnav {
     top: 90px;
 }
@@ -5735,18 +5738,5 @@ padding-top: 84px;
 }
 .bigitem .chhd-mrg-02{
   padding-top: 8px;
-}
-}
-@media only screen and (min-width: 320px) and (max-width: 771px){
-.nav-side-menu-full-container .nav-side-menu .sidebar-btn{
-	left: 4px!important;
-}
-.nav-side-menu-full-container .nav-side-menu .sidebar-btn {
-    top: 32px;
-}
-.userhead-name .acti-countnav {
-    top: 21px;
-    right: 0px;
-    left: auto;
 }
 }
