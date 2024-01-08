@@ -58,8 +58,22 @@ if(empty($scheduleData)){
 // echo "<pre>";print_r($yfullName);
 $topyname = $yfullName[$charterGuestDatayacht_id]; 
 ?>
+<script>
+//$ = jQuery.noConflict();</script>
+<script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"></script>
+<script src="https://api.windy.com/assets/map-forecast/libBoot.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css">
 <style>
+    .myIconClass{
+    margin-left: -12px !important;
+    margin-top: -41px !important;
+}
+    #windy #embed-zoom {
+        position: fixed;
+    }
+    #windy #mobile-ovr-select {
+  position: fixed;
+    }
   
     .language_dropdown{
 font-size: 18px;
@@ -556,18 +570,14 @@ border-radius: 10px;
 }
 @media only screen and (min-width: 771px){
     .map_heightC{
-        height: calc(100vh - 170px);
-    }
-    .map_heightWD{
-        height: calc(130vh - 170px);
+        /* height: calc(100vh - 170px); */
+        height: calc(100vh - 121px);
     }
 }
 @media only screen and (max-width: 771px){
     .map_heightC{
-        height: calc(100vh - 140px);
-    }
-    .map_heightWD{
-        height: calc(130vh - 140px);
+        /* height: calc(100vh - 140px); */
+        height: calc(100vh - 121px);
     }
     .nav-side-menu-full-container .nav-side-menu .sidebar {
   width: 120px;
@@ -797,7 +807,7 @@ position: absolute;
     z-index: 9999999 !important;
 }
     </style>
-<script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"></script>
+
 <?php
 //echo $this->Html->script('leaflet/leaflet'); 
 echo $this->Html->css('leaflet/dist/leaflet');
@@ -811,11 +821,13 @@ echo $this->Html->script('leaflet/route');
  echo $this->Html->script('leaflet/leaflet.draw.js'); 
 
  echo $this->Html->script('leaflet/L.Polyline.SnakeAnim.js'); 
+
+ echo $this->Html->script('leaflet/leaflet.boatmarker.min.js'); 
  
+ echo $this->Html->script('leaflet/turf.min.js'); 
 
 ?>
-
-<script src="https://api.windy.com/assets/map-forecast/libBoot.js"></script>
+<!-- <script src="https://api.tiles.mapbox.com/mapbox.js/plugins/turf/v2.0.0/turf.min.js"></script> -->
 <style>
 .wrapper{overflow: hidden;}
 .footer{height: 0px;line-height: 0;padding: 0px;}
@@ -1500,6 +1512,20 @@ background: #fff !important;
     background: #fff !important;
     position: absolute!important;
     top: 131.5px!important;
+    right: 13px!important;
+  padding: 5px;
+  height: 32px;
+  color:#000;
+  z-index: 9999;
+  font-weight:bold;
+  min-width: 145px;
+  border-radius: 10px;
+  font-size: 12px;
+}
+#GuestNews {
+    background: #fff !important;
+    position: absolute!important;
+    top: 170px!important;
     right: 13px!important;
   padding: 5px;
   height: 32px;
@@ -2257,6 +2283,24 @@ border-radius: 4px; */
     </div>
 </div><!-- /.modal-content -->
 
+<!-- sample modal content -->
+<div id="guestNewsModal" class="modal certificat-modal-container sm-cruisingmsgmyModal"  role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" id="newsmodal" aria-hidden="true">×</button>
+                <h4 class="modal-title" id="myModalLabel" style="text-align:center;">Guest News</h4>
+            </div>
+            <div class="modal-body">
+                <div id="charterguestnews">
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div><!-- /.modal-content -->
+
 <div class="row common-form-row map-form-rwo view-mainrow">
         <span class="sp-leftalign"><?php echo $schedulePeriod; ?></span>
                 <span class="yacht-centerlabel" ><?php echo $scheduleLocation; ?>
@@ -2279,6 +2323,7 @@ border-radius: 4px; */
 <button id="HideDetails">Show Details</button>
 <button id="HelpfulTips">Helpful Tips</button>
 <button id="WeatherMap">Weather Map</button>
+<button id="GuestNews">Guest News</button>
 <button id="closeWeatherMap">Close</button>
 </div></div>
 </div>
@@ -2324,6 +2369,7 @@ var sidebar = (function() {
                             $("#HideDetails").hide();
                             $("#HelpfulTips").hide();
                             $("#WeatherMap").hide();
+                            $("#GuestNews").hide();
                             
             }
             // In phone view the left menu should not overflow with map right side buttons
@@ -2334,6 +2380,7 @@ var sidebar = (function() {
                     $("#HideDetails").show();
                     $("#HelpfulTips").show();
                     $("#WeatherMap").show();
+                    $("#GuestNews").show();
                     // In phone view the left menu should not overflow with map right side buttons
         }
     }
@@ -2351,7 +2398,7 @@ $('.menu > .menu__item').hover(function(){
 
 <script>
     var guesttype = '<?php echo $guesttype;?>';
-
+    var Wmarker= '<?php echo BASE_URL.'/charterguest/app/webroot/css/leaflet/dist/images/marker-icon.png'; ?>';
 var basefolder = '<?php echo $basefolder;?>';
 var vessel = new L.LayerGroup();
 var markerArray = [];
@@ -3454,6 +3501,7 @@ function markerOnClick(e) {
                     $("#HideDetails").hide();
                     $("#HelpfulTips").hide();
                     $("#WeatherMap").hide();
+                    $("#GuestNews").hide();
                      $("#map .leaflet-control-container").hide();
                     // open popup center to map
                     //map.setView(e.latlng);
@@ -3615,9 +3663,15 @@ function markerOnClick(e) {
                                 //     modalmap.invalidateSize();
                                 // }, 0);
                                 $("#modalmap").find('.leaflet-control-attribution').hide();
+                                var myIcon = L.icon({
+                                iconUrl: Wmarker,
+                                iconSize: [25, 41],
+                                className:'myIconClass',
+                            });
                                 var routemodalmarker = L.marker([lattitude, longitude], {
                                     draggable: false,
-                                    pmIgnore: true
+                                    pmIgnore: true,
+                                    icon:myIcon
                                 }).bindTooltip(tooltipcontent, {
                                     permanent: true,
                                     direction: 'right',
@@ -3708,9 +3762,15 @@ $(document).on("change", ".markersnamesmodalmap", function(e) {
         if (textMarkermodalmap != "") { //alert();
             modalmap.removeLayer(textMarkermodalmap);
         }
+        var myIcon = L.icon({
+                                iconUrl: Wmarker,
+                                iconSize: [25, 41],
+                                className:'myIconClass',
+                            });
         routemodalmarkerselected = L.marker([selectedlat,selectedlong], {
             draggable: false,
-            pmIgnore: true
+            pmIgnore: true,
+            icon:myIcon
         });
         // .bindTooltip(selectedmarkertooltipcontent, {
         //     permanent: true,
@@ -3780,6 +3840,7 @@ function markerModalclose(scheduleSameLocationUUID){
                             $("#HideDetails").show();
                             $("#HelpfulTips").show();
                             $("#WeatherMap").show();
+                            $("#GuestNews").show();
                             $("#map .leaflet-control-container").show();
 
                             //for screenview <990 on opening the itinerary modal blacked out the map region
@@ -3829,6 +3890,7 @@ $(document).on("click", ".stationarydays", function(e) {
                     $("#HideDetails").hide();
                     $("#HelpfulTips").hide();
                     $("#WeatherMap").hide();
+                    $("#GuestNews").hide();
                      $("#map .leaflet-control-container").hide();
                     // open popup center to map
                     //console.log(mapmarkerglobalObj);
@@ -3973,9 +4035,15 @@ $(document).on("click", ".stationarydays", function(e) {
                                 //     modalmap.invalidateSize();
                                 // }, 0);
                                 $("#modalmap").find('.leaflet-control-attribution').hide();
+                                var myIcon = L.icon({
+                                iconUrl: Wmarker,
+                                iconSize: [25, 41],
+                                className:'myIconClass',
+                            });
                                 var routemodalmarker = L.marker([lattitude, longitude], {
                                     draggable: false,
-                                    pmIgnore: true
+                                    pmIgnore: true,
+                                    icon:myIcon
                                 }).bindTooltip(tooltipcontent, {
                                     permanent: true,
                                     direction: 'right',
@@ -4171,6 +4239,7 @@ $(document).on("click", "#closeSchedule", function(e) {
     $("#HideDetails").show();
     $("#HelpfulTips").show();
     $("#WeatherMap").show();
+    $("#GuestNews").show();
     $("#map .leaflet-control-container").show();
 
     var schuuid =  $("#markerModalclose").attr("data-schuuid");
@@ -4214,6 +4283,7 @@ $(document).on("click", ".mapnotemodalclose", function(e) {
 
 
 $(document).ready(function() { //alert();
+    //$ = jQuery.noConflict();
             $('.fancybox').fancybox({
                 //maxWidth	: 400,
                 //maxHeight	: 600,
@@ -4265,8 +4335,8 @@ $(document).ready(function() { //alert();
     $('.leaflet-control-attribution ').find('a').remove();
 
      
-    $("#windy").hide();
-    $("#closeWeatherMap").hide();
+    $("#windy").css("visibility","hidden");
+    $("#closeWeatherMap").css("display","none");
    
     });
 
@@ -4504,6 +4574,9 @@ $(document).on("click", ".clickcommentdiv", function() {
 
 
 });
+
+
+
 
 function hexc(colorval) {
     var parts = colorval.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
@@ -5026,9 +5099,15 @@ function markerOnClickCSMP(e) {
 
         
         //$("#modalmap").find('.leaflet-control-attribution').hide();
+        var myIcon = L.icon({
+                                iconUrl: Wmarker,
+                                iconSize: [25, 41],
+                                className:'myIconClass',
+                            });
         var routemodalmarkerCSMP = L.marker([lattitude, longitude], {
             draggable: false,
-            pmIgnore: true
+            pmIgnore: true,
+            icon:myIcon
         });
         routemodalmarkerCSMP.addTo(modalmapcruisingsch);
 
@@ -5089,9 +5168,15 @@ $(document).on("change", ".markersnamesmodalmapcruisingsch", function(e) {
         if (textMarkermodalmap != "") { //alert();
             modalmapcruisingsch.removeLayer(textMarkermodalmap);
         }
+        var myIcon = L.icon({
+                                iconUrl: Wmarker,
+                                iconSize: [25, 41],
+                                className:'myIconClass',
+                            });
         routemodalmarkerselected = L.marker([selectedlat,selectedlong], {
             draggable: false,
-            pmIgnore: true
+            pmIgnore: true,
+            icon:myIcon
         });
         routemodalmarkerselected.addTo(modalmapcruisingsch);
         if(modalmapdaynumber < 10 ){
@@ -5286,6 +5371,39 @@ function changeLanguage2() {
       // Add your code to handle the language change here
 }
 
+var DBHeading = "<?php echo $AisPosition['COG']; ?>";
+var DBTrueHeading = "<?php echo $AisPosition['TrueHeading']; ?>";
+var DBLongitude = "<?php echo $AisPosition['Longitude']; ?>";
+var DBLatitude = "<?php echo $AisPosition['Latitude']; ?>";
+var boatMarker = L.boatMarker([DBLatitude,DBLongitude], {
+			    color: "#00a7f2"
+			}).addTo(map);
+
+			boatMarker.setHeading(DBHeading);
+            boatMarker.setSpeed(DBTrueHeading);
+
+			function getRandomArbitrary(min, max) {
+			    return Math.random() * (max - min) + min;
+			}
+
+			var heading = DBHeading;
+
+			// start simulation
+			// window.setInterval(function() {
+
+			// 	var speed = getRandomArbitrary(8.0, 16.0);
+			// 	var direction = getRandomArbitrary((heading - 50) % 360, (heading - 40) % 360);
+
+			// 	if(heading > 30)
+			// 		heading -= 0.5;
+
+			 	//boatMarker.setHeadingWind(heading, speed, direction);
+
+			// 	var destination = turf.destination(boatMarker.toGeoJSON(), 0.02, 60, "kilometers");
+			// 	boatMarker.setLatLng(destination.geometry.coordinates.reverse());
+
+			// }, 488);
+
 
 const optionsWind = {
     // Required: API key
@@ -5297,15 +5415,25 @@ const optionsWind = {
     verbose: true,
 
     // Optional: Initial state of the map
-    lat: 50.4,
-    lon: 14.3,
-    zoom: 5,
+    // lat: centerLat,
+    // lon: centerLng,
+    // zoom: 7,
 };
 
 // Initialize Windy API
 windyInit(optionsWind, windyAPI => {
     const { map } = windyAPI;
     // .map is instance of Leaflet map
+    if(latlngs.length > 0){
+        map.fitBounds(latlngs);
+    }
+
+        var WindboatMarker = L.boatMarker([DBLatitude,DBLongitude], {
+			    color: "#00a7f2"
+			}).addTo(map);
+
+			WindboatMarker.setHeading(DBHeading);
+            WindboatMarker.setSpeed(DBTrueHeading);
 });
 
 
@@ -5313,12 +5441,14 @@ windyInit(optionsWind, windyAPI => {
 $(document).on("click", "#WeatherMap", function(e) {
    
    $("#map").hide();
-    $("#windy").show();
+    $("#windy").css("visibility","unset");
+    $("#windy").css("display","block");
     $("#CruisingButton").hide();
     $("#HideDetails").hide();
     $("#HelpfulTips").hide();
     $("#WeatherMap").hide();
-    $("#closeWeatherMap").show();
+    $("#GuestNews").hide();
+    $("#closeWeatherMap").css("display","block");
     //windy.invalidateSize();
     
 });
@@ -5326,15 +5456,105 @@ $(document).on("click", "#WeatherMap", function(e) {
 $(document).on("click", "#closeWeatherMap", function(e) {
    
    $("#map").show();
-    $("#windy").hide();
+    $("#windy").css("display","none");
     $("#CruisingButton").show();
     $("#HideDetails").show();
     $("#HelpfulTips").show();
     $("#WeatherMap").show();
-    $("#closeWeatherMap").hide();
+    $("#GuestNews").show();
+    $("#closeWeatherMap").css("display","none");
     //windy.invalidateSize();
 });
 
+   
+    $(document).on("click", "#GuestNews" ,function() {
+        //alert('jjj');
+       
+        
+        var yachtId = $("#yachtId").val();
+        var charprogid = $("#charterProgramId").val();
+        //alert(activity_name);
+        commenttitlecheck = 0;
+        $.ajax({
+                type: "POST",
+                url: basefolder+"/"+"charters/getGuestNews",
+                dataType: 'json',
+                data: { 'charprogid': charprogid,
+                        'yachtId':yachtId
+                    },
+                success:function(data) {
+                    //console.log(data);
+                    $('#charterguestnews').html(data.view);
+                    // $('.CruisingNewsSave').attr('data-id',data.activityId);
+                    // $('.CruisingNewsSave').attr('data-activity_name',data.activity_name);
+                    // $('.CruisingNewsSave').attr('data-UserType',data.UserType);
+                    // $('.CruisingNewsSave').attr('data-UserName',data.UserName);
+                    // $('.CruisingNewsSave').attr('data-type',data.type);
+                    // $('.CruisingNewsSave').attr('data-yachtid',yachtid);
+                    
+                   
+                    $('#guestNewsModal').show();
+                   
+                    
+                    //alert(data.isfleet);
+                    $("#hideloader").hide();
+                    
+                }
+       });
+    });
+
+$(document).on("click", ".clicknewsdiv", function() { 
+    //alert('kkk');
+    var clickcommentObj = $(this);
+    var color = $(this).css("background-color");
+            //alert(color);
+    var yachtId = $("#yachtId").val();
+    var selectedcomment = hexc(color);
+    //console.log(selectedcomment);
+    if (selectedcomment == "#e5f6fc") { //console.log('ll');
+        $(this).css("background-color","#ffffff");
+        $(this).removeClass('selectedcomment');
+        var id = $(this).attr('id');
+        var read = "read";
+    }else{ console.log('gg');
+        $(this).css("background-color","#e5f6fc");
+        $(this).addClass('selectedcomment');
+        var id = $(this).attr('id');
+        var read = "unread";
+    }
+
+    //return false;
+
+
+    $.ajax({
+        type: "POST",
+        dataType: 'json',
+        url: basefolder+"/"+"charters/markGuestNewsUnread",
+        data: {
+            'primaryid': id,
+            'read': read,
+            'yachtId':yachtId
+        },
+        success: function(data) {
+            if (data.success == 'success') {
+                
+                //comments icon color change in itinerary modal
+                var primaryidscheck = [];
+                $(".selectedcomment").each(function(){
+                    primaryidscheck.push($(this).attr('id'));
+                //alert($(this).attr('id'));
+                });
+            
+            }
+        }
+    });
+
+
+});
+
+$(document).on("click", "#newsmodal" ,function() {
+        $('#guestNewsModal').hide();
+    });
 
 </script>
   

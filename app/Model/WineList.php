@@ -3,7 +3,7 @@
        
         var $name = 'WineList';
 
-        function getLastQuery() {
+        public function getLastQuery() {
             $dbo = $this->getDatasource();
             $logs = $dbo->getLog();
             $lastLog = end($logs['log']);

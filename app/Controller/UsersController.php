@@ -5,12 +5,12 @@ class UsersController extends AppController {
     var $name = 'Users';
     public $components = array('Paginator','Email');
 
-    function beforeFilter() {
+    public function beforeFilter() {
         parent::beforeFilter();
     }
 
     
-    function admin_login() {       
+    public function admin_login() {       
          $baseurl = Configure::read('BASE_URL'); 
         $this->layout = 'login';
         if (isset($this->data) && (!empty($this->data))) {            
@@ -21,10 +21,7 @@ class UsersController extends AppController {
         $userpassword = md5($password); 
         
         if(!empty($fleetname) && !empty($sitename)){
-        //$this->loadModel('Yacht');
-        //$yachtData = $this->Yacht->find('first',array('conditions'=>array('Yacht.yname' =>$sitename,'Yacht.fleetname'=>$fleetname,'Yacht.status'=>1)));
-        //pr($yachtData); exit;    
-            //if(!empty($yachtData)){
+        
                 
              if($this->User->setDatabase($sitename)){
 
@@ -41,8 +38,7 @@ class UsersController extends AppController {
 			 
                          $yachtid = $yachtInfo['Yacht']['id'];
                          $dbyachtdetail = $this->Yacht->query("SELECT * FROM `yachts` WHERE `id` = '$yachtid'");
-                         //pr($dbyachtdetail); exit;
-                         //$userdatediff = "";
+                         
                          $fleetname = $dbyachtdetail[0]['yachts']['fleetname'];
                             if(trim($userInfo['User']['end_date'])!='' && trim($userInfo['User']['end_date'])!='0000-00-00'){
                                     $dateenduser=strtotime($userInfo['User']['end_date']);
@@ -50,7 +46,7 @@ class UsersController extends AppController {
                                     $userdatediff=$dateenduser-$currdate;
                             }
                             
-                            //pr($yachtInfo);die;
+                            
                             if($userdatediff>0){
                                 if($yachtInfo['Yacht']['status']==1){
 
@@ -64,10 +60,10 @@ class UsersController extends AppController {
                                     $this->Session->write('loggedcaptainname', $yachtInfo['Yacht']['captain_name']);
                                     $this->Session->write('loggedyachtid', $yachtInfo['Yacht']['id']);
                                     $this->Session->write('loggedyname', $yachtInfo['Yacht']['yname']);
-                                    //$this->Session->write('loggedsmtp', $yachtInfo['Yacht']['smtp_host']);
+                                    
                                     $this->Session->write('loggedexpdate', $yachtInfo['Yacht']['expirydate']);
                                     $this->Session->write('loggedismmodule', $yachtInfo['Yacht']['ismmodule']);
-                                    //$this->Session->write('loggedminiismmodule', $yachtInfo['Yacht']['miniismmodule']);
+                                    
                                     $this->Session->write('loggedsyncmodule', $yachtInfo['Yacht']['syncmodule']);
                                     $this->Session->write('loggedfleetname', $yachtInfo['Yacht']['fleetname']);
                                     $this->Session->write('loggedpassword', $password);
@@ -75,13 +71,13 @@ class UsersController extends AppController {
                                     // if logged in fleet user is an oba then change ADMIN_SESSION
                                     $loggedFleetEmail = $userInfo['User']['email'];
                                     $loggedFleetUserInfo = $this->User->find('first',array('conditions'=>array('User.email'=>$loggedFleetEmail),'fields'=>array('User.id')));
-                                 //  echo'<pre>';print_r($loggedFleetUserInfo);
+                                 
                                     if(!empty($loggedFleetUserInfo)){
                                         $this->Session->write('ADMIN_SESSION', $loggedFleetUserInfo['User']['id']);
                                     }else{
                                         $this->Session->write('ADMIN_SESSION', $userInfo['User']['id']);
                                     }			    
-                                   //   echo'<pre>';print_r($_SESSION);die('*******');
+                                   
                                     $this->Session->write('navigationflag', 0);
                                     $this->Session->write('navigationflagISM', 0);
                                     $this->Session->write('navigationflagwhole', 0);
@@ -93,7 +89,7 @@ class UsersController extends AppController {
 
                                     $this->loadModel("Usermanydepartment");
                                     $deptdatauser=$this->Usermanydepartment->find("all",array("conditions"=>array("Usermanydepartment.user_id"=>$userInfo['User']['id'])));
-                                    //pr($deptdatauser); die;
+                                    
                                     if(!empty($deptdatauser) && count($deptdatauser)>0){
                                         $visible=1;
                                     }else{
@@ -108,11 +104,11 @@ class UsersController extends AppController {
                                     }else{
                                         $this->Session->write('sitelogincounter', 1);
                                     }		
-                                        //pr($session); die;
+                                        
 
                                     $datediffcheck=strtotime($session['loggedexpdate'])-strtotime(date("Y-m-d"));
                                 }else{
-                                    //$this->Session->setFlash("Yacht is Deactivated Please contact to Super Admin", 'default', array('class' => 'flashError'));
+                                    
                                     $this->redirect($baseurl.'/'.$fleetname.'/app/webroot/'.$sitename.'/admin/users/login');
                                 }
                             }else{
@@ -133,13 +129,11 @@ class UsersController extends AppController {
                                     }else  if ($userInfo['User']['user_type'] == 4) {
                                         $this->redirect($baseurl.'/'.$fleetname.'/app/webroot/'.$sitename.'/admin/templatechecklists/calender');
                                     }else { $session = $this->Session->read();
-                                        //echo '<pre>';print_r($session);
-                                        //echo $baseurl.'/SOS/app/webroot/'.$sitename.'/admin/templatechecklists/calender';
-                                       // exit;
+                                        
                                         $this->redirect($baseurl.'/'.$fleetname.'/app/webroot/'.$sitename.'/admin/templatechecklists/calender');
                                     }
                            }
-                         //$this->redirect($baseurl.'/'.$fleetname.'/app/webroot/'.$sitename.'/');
+                        
                          
                    }else{
                        
@@ -153,12 +147,10 @@ class UsersController extends AppController {
                 $this->redirect($baseurl.'/clientlogin/');
             }    
 
-            //}else{
-               // $this->Session->setFlash("Fleetname & Sitename details are not matched", 'default', array('class' => 'flashError'));
-            //}
+           
         
         }elseif(!empty($sitename) && $fleetname == "" ){
-            //$this->redirect($baseurl.'/SOS/app/webroot/'.$sitename.'/admin/users/urlchange/',[$username,$password]);
+            
             if($this->User->setDatabase($sitename)){
 
             $userData = $this->User->find('first',array('conditions'=>array('User.username' =>$username,'User.password'=>$userpassword,'User.status'=>1,'User.is_deleted' => 0)));
@@ -170,14 +162,14 @@ class UsersController extends AppController {
                          
                          $this->loadModel('Yacht');
                          $yachtInfo = $this->Yacht->find('first', array('fields' => array('ydb_name', 'yname', 'id', 'expirydate','yfullName','ismmodule','syncmodule','status','ytimezone','smtp_host','captain_name','fleetname'), 'conditions' => array('id' => $userInfo['User']['yacht_id'])));
-                         //$userdatediff = "";				
+                         			
                             if(trim($userInfo['User']['end_date'])!='' && trim($userInfo['User']['end_date'])!='0000-00-00'){
                                     $dateenduser=strtotime($userInfo['User']['end_date']);
                                     $currdate=strtotime(date("Y-m-d"));
                                     $userdatediff=$dateenduser-$currdate;
                             }
                             
-                            //pr($yachtInfo);die;
+                            
                             if($userdatediff>0){
                                 if($yachtInfo['Yacht']['status']==1){
 
@@ -194,7 +186,7 @@ class UsersController extends AppController {
                                     $this->Session->write('loggedsmtp', $yachtInfo['Yacht']['smtp_host']);
                                     $this->Session->write('loggedexpdate', $yachtInfo['Yacht']['expirydate']);
                                     $this->Session->write('loggedismmodule', $yachtInfo['Yacht']['ismmodule']);
-                                    //$this->Session->write('loggedminiismmodule', $yachtInfo['Yacht']['miniismmodule']);
+                                    
                                     $this->Session->write('loggedsyncmodule', $yachtInfo['Yacht']['syncmodule']);
                                     $this->Session->write('loggedfleetname', $yachtInfo['Yacht']['fleetname']);
                                     $this->Session->write('loggedpassword', $password);
@@ -202,13 +194,13 @@ class UsersController extends AppController {
                                     // if logged in fleet user is an oba then change ADMIN_SESSION
                                     $loggedFleetEmail = $userInfo['User']['email'];
                                     $loggedFleetUserInfo = $this->User->find('first',array('conditions'=>array('User.email'=>$loggedFleetEmail),'fields'=>array('User.id')));
-                                 //  echo'<pre>';print_r($loggedFleetUserInfo);
+                                 
                                     if(!empty($loggedFleetUserInfo)){
                                         $this->Session->write('ADMIN_SESSION', $loggedFleetUserInfo['User']['id']);
                                     }else{
                                         $this->Session->write('ADMIN_SESSION', $userInfo['User']['id']);
                                     }			    
-                                   //   echo'<pre>';print_r($_SESSION);die('*******');
+                                   
                                     $this->Session->write('navigationflag', 0);
                                     $this->Session->write('navigationflagISM', 0);
                                     $this->Session->write('navigationflagwhole', 0);
@@ -218,7 +210,7 @@ class UsersController extends AppController {
                                     
                                     $this->loadModel("Usermanydepartment");
                                     $deptdatauser=$this->Usermanydepartment->find("all",array("conditions"=>array("Usermanydepartment.user_id"=>$userInfo['User']['id'])));
-                                    //pr($deptdatauser); die;
+                                    
                                     if(!empty($deptdatauser) && count($deptdatauser)>0){
                                         $visible=1;
                                     }else{
@@ -233,11 +225,11 @@ class UsersController extends AppController {
                                     }else{
                                         $this->Session->write('sitelogincounter', 1);
                                     }		
-                                        //pr($session); die;
+                                        
 
                                     $datediffcheck=strtotime($session['loggedexpdate'])-strtotime(date("Y-m-d"));
                                 }else{
-                                    //$this->Session->setFlash("Yacht is Deactivated Please contact to Super Admin", 'default', array('class' => 'flashError'));
+                                    
                                     $this->redirect($baseurl.'/'.$sitename.'/admin/users/login');
                                 }
                             }else{
@@ -258,13 +250,11 @@ class UsersController extends AppController {
                                     }else  if ($userInfo['User']['user_type'] == 4) {
                                         $this->redirect($baseurl.'/'.$sitename.'/admin/templatechecklists/calender');
                                     }else { $session = $this->Session->read();
-                                        //echo '<pre>';print_r($session);
-                                        //echo $baseurl.'/SOS/app/webroot/'.$sitename.'/admin/templatechecklists/calender';
-                                       // exit;
+                                        
                                         $this->redirect($baseurl.'/'.$sitename.'/admin/templatechecklists/calender');
                                     }
                            }
-                         //$this->redirect($baseurl.'/SOS/app/webroot/'.$sitename.'/');
+                         
                          
                          
                    }else{
@@ -281,14 +271,11 @@ class UsersController extends AppController {
          
         $this->loadModel('Fleetcompany');
             $datafleet=$this->Fleetcompany->find("first",array("conditions"=>array("Fleetcompany.fleetname"=>$fleetname,"Fleetcompany.status"=>1)));
-        //pr($yachtData);   exit;
+        
         if(!empty($datafleet)){
-            //$this->loadModel('Fleetcompany');
-            //$datafleet=$this->Fleetcompany->find("first",array("conditions"=>array("Fleetcompany.fleetname"=>$fleetname,"Fleetcompany.status"=>1)));
-           
                 $this->loadModel('Fleetuser');
                 $fleetData = $this->Fleetuser->find("first",array("conditions"=>array("Fleetuser.username"=>$username,"Fleetuser.password"=>$userpassword,"Fleetuser.status"=>1,"Fleetuser.user_type"=>array(1,2,3,4,6),'Fleetuser.fleetcompany_id'=>$datafleet['Fleetcompany']['id'])));
-                //pr($fleetData);
+                
                 if(!empty($fleetData)){
                     
                     $userdatedifffleet=0;
@@ -324,7 +311,7 @@ class UsersController extends AppController {
 			$this->redirect($baseurl.'/'.$fleetname.'/admin/fleetcompanies/login');
 		    }
                     
-                     //$this->redirect('http://www.totalsuperyacht.com:8080/'.$fleetname.'/');
+                     
                 }else{
                     $this->Session->setFlash("Username & Password details are not matched", 'default', array('class' => 'flashError')); 
                 }
@@ -337,11 +324,10 @@ class UsersController extends AppController {
         }
     }
     
-    function admin_forgot_password() {
+    public function admin_forgot_password() {
         $this->layout = 'login';
        
-            //$this->Admin->validate=$this->Admin->validateForgotPassword;
-            //if($this->Admin->validates()) { 
+           
             if (isset($this->data) && (!empty($this->data))) {       
                 $getStatus = $this->checkEmailValidation($this->data['email']);
                 if ($getStatus) {
@@ -349,19 +335,16 @@ class UsersController extends AppController {
                     if($this->User->setDatabase($sitename)){
                         
                          $userArr = $this->User->find('first',array('conditions'=>array('User.email' =>trim($this->data['email']),'User.status'=>1,'User.is_deleted' => 0)));
-                        //print_r($userArr); exit;
-                    //$this->loadModel('Fleetuser');
-                    //$userArr = $this->Fleetuser->find('first', array('conditions' => array('Fleetuser.email' => trim($this->data['email']), 'Fleetuser.status' => 1), 'fields' => array('Fleetuser.id', 'Fleetuser.first_name', 'Fleetuser.last_name', 'Fleetuser.email')));
+                        
          if(!empty($userArr)){
                     if (count($userArr) > 0) {
                         $passwd = $this->getRandPass();
                         $this->User->id = $userArr['User']['id'];
                         $hashCode = md5(uniqid(rand(), true));
                         $this->User->saveField('password', $hashCode, false);
-                        //App::import('Model', 'Emailtemplate');
-                        //$this->Emailtemplate = new Emailtemplate;
+                       
                         $SITE_URL = Configure::read('BASE_URL');
-                        //$to = $userArr['Admin']['email'];
+                        
                         $link = '<a href = "' . $SITE_URL . '/users/admin_secure_check/' . $hashCode . '/'.$sitename.'">Link </a>';
                         $template = "<p>{Email}</p><p>{LastName}</p><p>{FirstName}</p><p>[LINK]</p>";
                         $to = $userArr['User']['email'];
@@ -372,10 +355,10 @@ class UsersController extends AppController {
 
                         $data1 = str_replace('[LINK]', $link, $data1);
                         $subject = ucfirst(str_replace('_', ' ', "Forgot Password"));
-                        //$send_mail = $this->PHPMailer->sendmail($to, $subject, $data1);
+                        
                         $this->sendmail($userArr['User']['first_name'],$userArr['User']['last_name'],$userArr['User']['email'],$link);
                        
-                        //$send_mail = $this->sendEmail($to, $subject, $data1); 
+                        
                         $this->Session->setFlash('Please check your mailbox to access the account.', 'default', array('class' => 'alert alert-danger'));
                         $this->redirect(array('controller' => 'users', 'action' => 'login'));
                        
@@ -428,7 +411,7 @@ class UsersController extends AppController {
         return implode($pass); //turn the array into a string
     }
     
-    function admin_secure_check($uniqueKey,$sitename) {
+    public function admin_secure_check($uniqueKey,$sitename) {
         $this->layout = 'admin_login';
         $this->set('title', 'Forgot Password');
         $this->set('title_for_layout', 'Forgot Password');
@@ -450,7 +433,7 @@ class UsersController extends AppController {
         }
     }
     
-    function sendmail($firstName,$lastName,$to,$link){
+    public function sendmail($firstName,$lastName,$to,$link){
         $name=$firstName.''.$lastName;      
         $subject = "Retrieve Password";        
         
@@ -473,14 +456,10 @@ class UsersController extends AppController {
         </div>
         </body>
         </html>";
-    //echo $message; die;
-    //die;
         // Always set content-type when sending HTML email
         $headers= "MIME-version: 1.0\n";
         $headers.= "Content-type: text/html; charset= iso-8859-1\n";
         $headers .= 'From: <'.FROM_EMAIL_ADDRESS.'>' . "\r\n";
-        //ini_set("sendmail_from", "smtp@sos-tc.com");
-       //$isMail= mail('sharma.pragti@gmail.com','test subject',$message);
         $isMail=mail($to,$subject,$message,$headers);       
         
     }

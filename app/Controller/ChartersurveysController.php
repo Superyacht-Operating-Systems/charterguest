@@ -16,11 +16,8 @@ class ChartersurveysController extends AppController {
         * Created date - 19-June-2018
         * Modified date - 
     */
-    function survey($charterGuestId, $charterAssocId, $charterCompanyId,$success=null) {
-            // echo $charterGuestId;
-             //echo $charterAssocId;
-            // echo $charterCompanyId;
-        if (!empty($charterGuestId) && ($charterAssocId != "") && !empty($charterCompanyId)) { //echo "rrr";
+    public function survey($charterGuestId, $charterAssocId, $charterCompanyId,$success=null) {
+        if (!empty($charterGuestId) && ($charterAssocId != "") && !empty($charterCompanyId)) { 
             $charterGuestId = ($charterGuestId);
             $charterAssocId = ($charterAssocId);
             $charterCompanyId = base64_decode($charterCompanyId);
@@ -37,7 +34,7 @@ class ChartersurveysController extends AppController {
             
             if ($charterAssocId == 0) { // Head Charterer
                 $charterGuestData = $this->CharterGuest->find('first', array('conditions' => array('charter_program_id' => $charterGuestId)));
-                //echo "<pre>";print_r($charterGuestData);exit;
+                
                 if (empty($charterGuestData)) {
                     $this->redirect(array('controller' => 'Charters'));
                 }
@@ -68,9 +65,7 @@ class ChartersurveysController extends AppController {
             
             // Checking the Charter company availability and Existing Questions
             $questionData = $this->CharterSurveyQuestion->find('all', array('conditions' => array('charter_company_id' => $charterCompanyId), 'group' => array('question_number')));
-//            if (empty($questionData)) {
-//                $this->redirect(array('controller' => 'Charters'));
-//            }
+
             $this->set('questionData', $questionData);
             
             // Fetching the existing Survey details
@@ -82,11 +77,9 @@ class ChartersurveysController extends AppController {
                 $this->set('modalshow', 'startmodal');
             }
             
-//            echo "<pre>";print_r($data);
-//            echo "<pre>";print_r($questionData);
-//            echo "<pre>";print_r($surveyData);exit;
+
             
-        } else { //echo "kk";exit;
+        } else { 
             $this->redirect(array('controller' => 'Charters'));
         }
         
@@ -99,8 +92,8 @@ class ChartersurveysController extends AppController {
         * Created date - 20-June-2018
         * Modified date - 
     */
-    function add_edit() {
-        //echo "<pre>";print_r($this->request->data);exit;
+    public function add_edit() {
+        
         $this->loadModel('CharterGuestSurvey');
         $this->loadModel('Yacht');
         if (!empty($this->request->data)) {
@@ -120,7 +113,7 @@ class ChartersurveysController extends AppController {
                 $data['created'] = date('Y-m-d H:i:s');
                 $this->CharterGuestSurvey->create();
             }
-            //$this->set('modalshow', 'endmodal');
+            
             if ($this->CharterGuestSurvey->save($data)) {
                 $surveyRowId = $data['id'];
                 if (empty($surveyRowId)) {

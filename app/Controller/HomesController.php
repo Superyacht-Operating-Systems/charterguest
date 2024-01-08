@@ -15,11 +15,10 @@
             * Created date - 20-Feb-2014
             * Modified date - 
         */
-        function index()
+        public function index()
         {   
 
       	$session = $this->Session->read();
-           //pr($session); exit;
            if(isset($session['loggedYachtDbname']) && $session['loggedYachtDbname']!=''){
                 $this->redirect(array('controller' => 'admin/users', 'action' => 'index'));
            }else{

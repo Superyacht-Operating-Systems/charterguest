@@ -41,25 +41,25 @@ class AppController extends Controller {
 	// 	}
 	// }
     
-    function beforeFilter() {
-       // echo "<pre>"; print_r($this->params); exit;
+    public function beforeFilter() {
+       
 		 if($this->params['action'] != 'charter_program_map'){
-			//echo "<pre>"; print_r($this->params); exit;
+			
 			$this->CheckAdminSession();
 		}
 
         if ($this->RequestHandler->isMobile()) {
             $this->is_mobile = true;
             $this->set('is_mobile', true );
-            //$this->autoRender = false;
+            
         }
     }
    
 
-	function checkAdminSession() {
+	public function checkAdminSession() {
         $session=$this->Session->read();
-		//echo "<pre>"; print_r($session); exit;
-        if (!$this->Session->check('login_username')){ //echo "kk"; exit;
+		
+        if (!$this->Session->check('login_username')){ 
            
 	    	return true;
         }
@@ -74,7 +74,7 @@ class AppController extends Controller {
      * @param string $headers
      * @param string $from
      */
-    function chkSMTPEmail($to,$subject,$message,$headers, $from = ''){
+    public function chkSMTPEmail($to,$subject,$message,$headers, $from = ''){
     	$pos = strpos($_SERVER['HTTP_HOST'],'totalsuperyacht.com');
     	$this->localHost = 0;
     	if ($pos === false || $_SERVER['HTTP_HOST']=='localhost') {
@@ -84,7 +84,7 @@ class AppController extends Controller {
     	$this->loadModel("User");
     	$emailArrayToSent = array();
     	$emailArrayToSent[] = $to;
-		//echo "<pre>"; print_r($emailArrayToSent); exit;
+		
 	$this->setSmtpSendMail($emailArrayToSent,$message,$subject, $from);
     }
     
@@ -96,7 +96,7 @@ class AppController extends Controller {
      * @param string $subject
      * @param string $from
      */
-    function setSmtpSendMail($to,$message,$subject, $from ='')
+    public function setSmtpSendMail($to,$message,$subject, $from ='')
     {	
     	require_once('../webroot/PHPMailer-master/PHPMailerAutoload.php');
     	
@@ -116,46 +116,33 @@ class AppController extends Controller {
 		if(!is_array($to)){
 			$to = explode(',',$to);
 		}
-		//echo "<pre>"; print_r($to); exit;
-		//$mail->setFrom(FROM_EMAIL_ADDRESS, 'Superyacht');"TotalSuperyacht
-		//if($from == ''){
-//			$mail->setFrom(FROM_EMAIL_ADDRESS, 'TotalSuperyacht');
+	
 			$mail->setFrom(FROM_EMAIL_ADDRESS, 'Charter Guest');
-		//}else{
-		//	$mail->setFrom($from, 'TotalSuperyacht');
-		//}
+		
 		foreach ($to as $val){
 			$mail->addAddress($val);   
 		}                                               // Add a recipient
-		//$mail->addAddress('ellen@example.com');               // Name is optional
-		//$mail->addReplyTo('info@example.com', 'Information');
-		//$mail->addCC('cc@example.com');
+		
 		$mail->addBCC('admin@superyachtos.com');
 		$mail->addBCC('rakesh.avula@gmail.com');
 		
-		//$mail->addAttachment('/var/tmp/file.tar.gz');         // Add attachments
-		//$mail->addAttachment('/tmp/image.jpg', 'new.jpg');    // Optional name
 		$mail->isHTML(true);                                  // Set email format to HTML
 		
 		$mail->Subject = $subject;
 		$mail->Body    = $message;
-	//	$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
-	//$mail->CharSet = 'UTF-8';
-	//echo "<pre>"; print_r($mail); exit;
+	
 		if(!$mail->send()) {
-		   // echo 'Message could not be sent.';exit;
-		   // echo 'Mailer Error: ' . $mail->ErrorInfo;
+		   
 		   return;
 		} else {
-		    //echo 'Message has been sent';exit;
+		    
 		}
     	return;
     }
 
 
-	function charter_program_map_total_msg_count($prgUUID,$yachtdb) {
-		//        echo "<pre>";print_r($this->Session->read());exit;
-		//echo $prgUUID.''.$yachtdb;
+	public function charter_program_map_total_msg_count($prgUUID,$yachtdb) {
+		
 				Configure::write('debug',0);
 				$session = $this->Session->read('charter_info');
 				$yachtDbName = $yachtdb;
@@ -165,16 +152,12 @@ class AppController extends Controller {
 				   
 					$this->loadModel('CharterGuest');
 					$charterProgData = $this->CharterGuest->query("SELECT * FROM $yachtDbName.charter_programs CharterProgram WHERE UUID = '$charterProgramId' AND is_deleted = 0 LIMIT 1");
-					//echo "<pre>";print_r($charterProgData); //exit;
+					
 					if (count($charterProgData) != 0) {
-						//echo "kk";
-						
-						// Display the dates in array format
-						//
 		
 						$scheduleConditions = "charter_program_id = '$charterProgramId' AND is_deleted = 0";
 						$scheduleData = $this->CharterGuest->getCharterProgramScheduleData($yachtDbName, $scheduleConditions);
-						//echo "<pre>";print_r($scheduleData); exit;
+						
 						$markertitle = array();
 						$markername = array();
 						if(isset($scheduleData)){
@@ -182,7 +165,7 @@ class AppController extends Controller {
 							foreach($scheduleData as $key => $publishmap){
 									
 		
-								   //$mcount = $this->getmsgnotifycountForMarker($publishmap['CharterProgramSchedule']['UUID']);
+
 								   $msgcount += $this->CharterGuest->getCharterMarkerCommentCount($yachtDbName,$publishmap['CharterProgramSchedule']['UUID']);
 		
 								   
@@ -192,7 +175,7 @@ class AppController extends Controller {
 						
 						
 					} 
-					//echo $msgcount; exit;
+					
 				return $msgcount;
 				} 
 				
@@ -201,10 +184,8 @@ class AppController extends Controller {
           /* Email function to send email to oba user when fleet commented
     /* Rakesh @aug09 2023
     */
-    function sendCmapOBACommentEmail($maildata,$allMails){
+    public function sendCmapOBACommentEmail($maildata,$allMails){
         $subject= "Comment Log";        
-        //$obaandshoremanagerEmail=  implode(",",$allMails);
-        //echo "<pre>"; print_r($maildata);  print_r($allMails); exit;
         $to=$allMails;    
         $message="
         <html>
