@@ -70,10 +70,10 @@
 .yachtHeaderName {
     margin-top: 4px!important;
 }
-body .mydemolabel {
+/* body .mydemolabel {
     top: 70px!important;
   font-size: 30px !important;
-}
+} */
 
 
 }
