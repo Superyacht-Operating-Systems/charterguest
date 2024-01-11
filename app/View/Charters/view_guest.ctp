@@ -732,8 +732,8 @@ color: #000;
                 $maplink = $baseFolder."/charters/charter_program_map/".$charter_program_id.'/'.$ydb_name.'/guest';
 
         } ?>
-        <li class="menu__item"> <a href="<?php echo $maplink; ?>" title="<?php echo $title; ?>">Cruising Map</a>
-        </li>    
+        <!-- <li class="menu__item"> <a href="<?php echo $maplink; ?>" title="<?php echo $title; ?>">Cruising Map</a>
+        </li>     -->
         <li class="menu__item" ><a>How To Video</a>
            <ul class="submenu">
                    <li class="menu__item" id="MenuHowToVideo"><a href="#">Preference Sheets</a></li>

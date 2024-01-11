@@ -467,7 +467,6 @@ class ChartersController extends AppController {
 
                 $programFilesCond = array('CharterProgramFile.charter_program_id' => $value['CharterGuest']['charter_program_id'],'CharterProgramFile.yacht_id' => $value['CharterGuest']['yacht_id'],'CharterProgramFile.is_deleted'=>0);
                 $programFiledata = $this->CharterProgramFile->find('all', array('conditions' => $programFilesCond));
-
                 if(isset($YachtWeblinkdata) && !empty($YachtWeblinkdata)){
                     $isValid = preg_match("@^https?://@", $YachtWeblinkdata['YachtWeblink']['weblink']);
                     if($isValid == 0){
@@ -490,6 +489,14 @@ class ChartersController extends AppController {
                 if(isset($Ydata['Yacht']['domain_name'])){
                 $domain_name = $Ydata['Yacht']['domain_name'];
                 }
+                /**************Yacht contract files  ************************************/
+                $puuid = $value['CharterGuest']['charter_program_id'];
+                $YFileData = $this->CharterProgramFile->query("SELECT * FROM $ydb_name.charter_program_files CharterProgramFile WHERE charter_program_id = '$puuid' AND is_deleted = 0");
+                if(isset($YFileData) && !empty($YFileData)){
+                    $programFiles[$charter_from_date]['attachment'] = $YFileData;
+                }
+                /**************Yacht contract files  ************************************/
+
                 $SITE_URL = "https://totalsuperyacht.com:8080/";
                 $site_full_path = "/var/www/vhosts/wamp/www/";
                 if(isset($domain_name) && $domain_name == "charterguest"){

@@ -840,7 +840,7 @@ font-size: 11px;
         }else if(!empty($mapdetails)){
                 $title  = "";
         } ?>
-        <li class="menu__item"> <a href="#" title="<?php echo $title; ?>">Cruising Map</a>
+        <?php /*?> <li class="menu__item"> <a href="#" title="<?php echo $title; ?>">Cruising Map</a>
             <?php if(isset($mapdetails)){ ?>
                 <ul class="submenu">
                     <?php foreach($mapdetails as $startdate => $data){ ?>
@@ -852,7 +852,7 @@ font-size: 11px;
                 </ul>
             <?php } ?>
     
-        </li>    
+        </li>  <?php */ ?>  
         <li class="menu__item" ><a href="#">How To Video</a>
            <ul class="submenu">
                    <li class="menu__item" id="MenuHowToVideo"><a href="#">Preference Sheets</a></li>

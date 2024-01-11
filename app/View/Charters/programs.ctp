@@ -723,7 +723,7 @@ input:focus {
                    <li class="menu__item" id="MenuHowToVideoCharterHead"><a href="#">Head Charterer</a></li>
                 </ul>
             </li>
-        <li> <a href="<?php echo $baseFolder."/charters/memories/".$guestListUUID; ?>" target="blank">Memories</a></li>    
+        <!-- <li> <a href="<?php //echo $baseFolder."/charters/memories/".$guestListUUID; ?>" target="blank">Memories</a></li>     -->
         <li> <a href="<?php echo $baseFolder."/charters/privacytermsofuse/1" ?>" target="blank">Terms of Use</a></li>
         <li> <a href="<?php echo $baseFolder."/charters/privacytermsofuse/2" ?>" target="blank">Privacy Policy</a></li>
         <?php } ?>

@@ -107,6 +107,7 @@ margin-bottom: 0px!important;
 .H_title{
 font-weight: 500;
 line-height: 1.1;
+color:#000;
 }
 #slides {
   width: calc(70vh * (16/9));
@@ -196,7 +197,7 @@ margin: 2.2rem auto 2.6vw; */
 height: calc((90.2vh * 9) / 16);
 width: 90.2vh;
   margin: 1.2rem auto 3.3vh;
-  z-index: -1;
+  z-index: 0;
 position: relative;
 }
 .img_section_slide img{
