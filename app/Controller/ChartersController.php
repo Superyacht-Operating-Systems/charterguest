@@ -916,6 +916,13 @@ class ChartersController extends AppController {
                 if(isset($Ydata['Yacht']['domain_name'])){
                 $domain_name = $Ydata['Yacht']['domain_name'];
                 }
+                /**************Yacht contract files  ************************************/
+                $puuid = $value['CharterGuest']['charter_program_id'];
+                $YFileData = $this->CharterProgramFile->query("SELECT * FROM $ydb_name.charter_program_files CharterProgramFile WHERE charter_program_id = '$puuid' AND is_deleted = 0");
+                if(isset($YFileData) && !empty($YFileData)){
+                    $programFiles[$charter_from_date]['attachment'] = $YFileData;
+                }
+                /**************Yacht contract files  ************************************/
                 $SITE_URL = "https://totalsuperyacht.com:8080/";
                 $site_full_path = "/var/www/vhosts/wamp/www/";
                 if(isset($domain_name) && $domain_name == "charterguest"){
@@ -1273,6 +1280,13 @@ class ChartersController extends AppController {
         if(isset($YachtData[0]['Yacht']['domain_name'])){
         $domain_name = $YachtData[0]['Yacht']['domain_name'];
         }
+        /**************Yacht contract files  ************************************/
+        $puuid = $charterData['CharterGuest']['charter_program_id'];
+        $YFileData = $this->CharterProgramFile->query("SELECT * FROM $ydb_name.charter_program_files CharterProgramFile WHERE charter_program_id = '$puuid' AND is_deleted = 0");
+        if(isset($YFileData) && !empty($YFileData)){
+            $programFiles[$charter_from_date]['attachment'] = $YFileData;
+        }
+        /**************Yacht contract files  ************************************/
                         if(isset($domain_name) && $domain_name == "charterguest"){
                             $SITE_URL = "https://charterguest.net/";
                         }else{
@@ -1440,6 +1454,15 @@ class ChartersController extends AppController {
         if(isset($YachtData[0]['Yacht']['domain_name'])){
         $domain_name = $YachtData[0]['Yacht']['domain_name'];
         }
+
+        /**************Yacht contract files  ************************************/
+        $puuid = $charterData['CharterGuest']['charter_program_id'];
+        $YFileData = $this->CharterProgramFile->query("SELECT * FROM $ydb_name.charter_program_files CharterProgramFile WHERE charter_program_id = '$puuid' AND is_deleted = 0");
+        if(isset($YFileData) && !empty($YFileData)){
+            $programFiles[$charter_from_date]['attachment'] = $YFileData;
+        }
+        /**************Yacht contract files  ************************************/
+
                         if(isset($domain_name) && $domain_name == "charterguest"){
                             $SITE_URL = "https://charterguest.net/";
                         }else{
@@ -1567,6 +1590,15 @@ class ChartersController extends AppController {
         if(isset($Ydata['Yacht']['domain_name'])){
         $domain_name = $Ydata['Yacht']['domain_name'];
         }
+
+        /**************Yacht contract files  ************************************/
+        $puuid = $charterData['CharterGuest']['charter_program_id'];
+        $YFileData = $this->CharterProgramFile->query("SELECT * FROM $ydb_name.charter_program_files CharterProgramFile WHERE charter_program_id = '$puuid' AND is_deleted = 0");
+        if(isset($YFileData) && !empty($YFileData)){
+            $programFiles[$charter_from_date]['attachment'] = $YFileData;
+        }
+        /**************Yacht contract files  ************************************/
+
                             if(isset($domain_name) && $domain_name == "charterguest"){
                                 $SITE_URL = "https://charterguest.net/";
                             }else{
@@ -3367,6 +3399,15 @@ class ChartersController extends AppController {
         if(isset($programFiledata)){
             $programFiles[$charter_from_date]['attachment'] = $programFiledata;
         }
+
+
+        /**************Yacht contract files  ************************************/
+        $puuid = $this->Session->read('selectedCharterProgramUUID');
+        $YFileData = $this->CharterProgramFile->query("SELECT * FROM $ydb_name.charter_program_files CharterProgramFile WHERE charter_program_id = '$puuid' AND is_deleted = 0");
+        if(isset($YFileData) && !empty($YFileData)){
+            $programFiles[$charter_from_date]['attachment'] = $YFileData;
+        }
+        /**************Yacht contract files  ************************************/
 
         $fleetname = $this->Session->read('fleetname');
         //echo $charterGuestAssociatelast_fleetid;
@@ -7327,6 +7368,13 @@ class ChartersController extends AppController {
                             if(isset($Ydata['Yacht']['domain_name'])){
                             $domain_name = $Ydata['Yacht']['domain_name'];
                             }
+                            /**************Yacht contract files  ************************************/
+                            $puuid = $value['CharterGuest']['charter_program_id'];
+                            $YFileData = $this->CharterProgramFile->query("SELECT * FROM $ydb_name.charter_program_files CharterProgramFile WHERE charter_program_id = '$puuid' AND is_deleted = 0");
+                            if(isset($YFileData) && !empty($YFileData)){
+                                $programFiles[$charter_from_date]['attachment'] = $YFileData;
+                            }
+                            /**************Yacht contract files  ************************************/
                             $SITE_URL = "https://totalsuperyacht.com:8080/";
                             if(isset($domain_name) && $domain_name == "charterguest"){
                                 $SITE_URL = "https://charterguest.net/";
