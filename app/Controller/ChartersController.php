@@ -833,8 +833,25 @@ class ChartersController extends AppController {
                     $schduledata[$schduleId]['GuestMemory'] = $guestmemoryData[0];
                     }
                 }
+
+                foreach ($schduledata as $key => $value) {
+                        
+                    $myLastElement = end($schduledata);
+                    $to_location = $myLastElement['CharterProgramSchedule']['to_location'];
+                    $myLastElement['CharterProgramSchedule']['title'] = $myLastElement['CharterProgramSchedule']['to_location'];
+                    
+                    $UUID = $myLastElement['CharterProgramSchedule']['UUID'];
+                    $deb[$UUID] = $myLastElement;
+                   
+                    $guestmemoryData =  $this->Yacht->query("SELECT * FROM $ydb_name.charter_program_guest_memories CharterProgramGuestMemory WHERE charter_program_schedule_id = '$UUID' AND is_deleted = 0 AND deb_flag = 1");
+                    if (!empty($guestmemoryData[0])) {
+                    $deb[$UUID]['GuestMemory'] = $guestmemoryData[0];
+                    }
+
+                }
                 //echo "<pre>"; print_r($schduledata); exit;
                 $this->set('schduledata', $schduledata);
+                $this->set('deb', $deb);
                 //echo "<pre>"; print_r($scheduleData); exit;
             }
         }

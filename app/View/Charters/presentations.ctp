@@ -331,6 +331,52 @@ left: 0;
 
       <?php } ?>
     <?php } ?>
+
+    <?php foreach($deb as $key=>$value){ //echo "<pre>"; echo $key; print_r($value);  exit; ?>
+
+<div class="slide" style="background-image: url(<?php echo $requrl; ?>/app/webroot/img/charter_program_files/itinerary_photos/<?php echo $value['CharterProgramSchedule']['attachment']; ?>););">
+  <div class="day_slide" >
+    <div class="H_title" style="margin: 0px;">Day <?php echo $value['CharterProgramSchedule']['day_num']; ?></div>
+    <div class="H_title" style="margin: 0px;padding-top: 2px;"><?php echo $value['CharterProgramSchedule']['title']; ?></div> 
+  </div>
+</div>
+<?php for($i=1;$i<=6;$i++){ 
+  $attachment = "";
+  $caption = "";
+?>
+  <?php 
+  
+  if(isset($value["GuestMemory"]["CharterProgramGuestMemory"]["caption$i"]) && $value["GuestMemory"]["CharterProgramGuestMemory"]["caption$i"]!=''){ 
+  
+    $caption=$value["GuestMemory"]["CharterProgramGuestMemory"]["caption$i"];
+
+  } 
+
+  if(isset($value["GuestMemory"]["CharterProgramGuestMemory"]["caption$i"."_attachment"]) && $value["GuestMemory"]["CharterProgramGuestMemory"]["caption$i"."_attachment"]!=''){ 
+  
+    $attachment=$value["GuestMemory"]["CharterProgramGuestMemory"]["caption$i"."_attachment"];
+
+  } 
+   
+   ?>
+   <?php if(isset($attachment) && $attachment!=''){ ?>
+    <div class="slide slideDiv">
+      <div class="row sliderrow">
+          <div class="col-lg-9 col-md-9 col-xs-9 col-sm-9 slide_divwrap">
+              <div class="caption_slide" ><?php echo $caption; ?></div>
+              <div class="imgbody" >
+                  <div class="img_section_slide">
+                  <img src="<?php echo $requrl; ?>/app/webroot/img/memories/<?php echo $attachment; ?>"/>
+                  </div>
+              </div>
+          </div>
+      </div>
+    </div>
+
+   <?php } ?>
+
+<?php } ?>
+<?php } ?>
     
 
     
