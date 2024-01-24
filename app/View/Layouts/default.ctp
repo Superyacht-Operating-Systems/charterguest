@@ -56,10 +56,10 @@ $actual_link_defaultctp = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on
                 echo $this->Html->css('admin/sb-admin');
                 echo $this->Html->css('admin/login');     
                 echo $this->Html->css('admin/font/css/font-awesome.min');
-                echo $this->Html->css('admin/font/fontawesomePro/css/all.css');
                 echo $this->Html->css('admin/font/fontawesomePro/css/fontawesome.css');
                 echo $this->Html->css('admin/font/fontawesomePro/css/brands.css');
                 echo $this->Html->css('admin/font/fontawesomePro/css/solid.css');
+                echo $this->Html->css('admin/font/fontawesome-new-web/css/all.css');
                 echo $this->Html->css('admin/custom_admin');
                 echo $this->Html->css('jquery-ui');
                 echo $this->Html->css('jquery-ui.theme');
