@@ -164,9 +164,9 @@
 				}
 
                 if(isset($charter_program_schedules_UUID_array) && !empty($charter_program_schedules_UUID_array)){
-                    $uuidprog = implode(',',$charter_program_schedules_UUID_array);
-                    if(isset($uuidprog) && !empty($uuidprog)){
-                        $uuidprog = $uuidprog;
+                    $uuidprog_ids = implode(',',$charter_program_schedules_UUID_array);
+                    if(isset($uuidprog_ids) && !empty($uuidprog_ids)){
+                        $uuidprog = $uuidprog_ids;
                     }else{
                         $uuidprog = ' ';
                     }
@@ -187,9 +187,9 @@
 				
 				   if(isset($charter_program_schedules_UUID_array) && !empty($charter_program_schedules_UUID_array)){
                     $charter_program_schedules_UUID_array = array_unique($charter_program_schedules_UUID_array);
-				      $aids = implode(',',$charter_program_schedules_UUID_array);
-				      if(isset($aids) && !empty($aids)){
-				      	$aids = $aids;
+				      $aids_ids = implode(',',$charter_program_schedules_UUID_array);
+				      if(isset($aids_ids) && !empty($aids_ids)){
+				      	$aids = $aids_ids;
 				      }else{
 				      	$aids = ' ';
 				      }
@@ -205,9 +205,9 @@
                    
                    if(isset($schedule_activities_id_array) && !empty($schedule_activities_id_array)){
                     $schedule_activities_id_array = array_unique($schedule_activities_id_array);
-                    $actvityids = implode(',',$schedule_activities_id_array);
-                    if(isset($actvityids) && !empty($actvityids)){
-                        $actvityids = $actvityids;
+                    $actvityids_val = implode(',',$schedule_activities_id_array);
+                    if(isset($actvityids_val) && !empty($actvityids_val)){
+                        $actvityids = $actvityids_val;
                     }else{
                         $actvityids = ' ';
                     }

@@ -326,7 +326,7 @@ class UsersController extends AppController {
     
     public function admin_forgot_password() {
         $this->layout = 'login';
-       
+        $baseurl = Configure::read('BASE_URL'); 
            
             if (isset($this->data) && (!empty($this->data))) {       
                 $getStatus = $this->checkEmailValidation($this->data['email']);

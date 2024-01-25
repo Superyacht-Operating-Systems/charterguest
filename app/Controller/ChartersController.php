@@ -533,7 +533,8 @@ class ChartersController extends AppController {
                     $file_folder_path = str_replace("$SITE_URL","$site_full_path","$targetFullPath");
                     //echo $targetFullPath; echo $site_full_path; echo "<pre>"; echo $file_folder_path; exit;
                     if(file_exists($file_folder_path)){
-                        $targetFullPath = $targetFullPath;
+                        $AssigntargetFullPath = $targetFullPath;
+                        $targetFullPath = $AssigntargetFullPath;
                     }else{
                         $targetFullPath = $this->request->base."/app/webroot/img/noimage_cp.png";
                     }
@@ -686,9 +687,7 @@ class ChartersController extends AppController {
                         }
                         $file_folder_path = str_replace("$SITE_URL","$site_full_path","$targetFullPath");
                     //echo $targetFullPath; echo $site_full_path; echo "<pre>"; echo $file_folder_path; exit;
-                        if(file_exists($file_folder_path)){
-                            $targetFullPath = $targetFullPath;
-                        }else{
+                        if(!file_exists($file_folder_path)){
                             $targetFullPath = $this->request->base."/app/webroot/img/noimage_cp.png";
                         }
                         $charterAssocData[$key]['charterDetails']['ch_image'] = $targetFullPath;
@@ -771,8 +770,7 @@ class ChartersController extends AppController {
     public function presentations($charterProgramId = null)
     {
         if (!empty($charterProgramId)) {
-            //echo $charterProgramId; //exit;
-            $charterProgramId = $charterProgramId;
+            
             $session = $this->Session->read('charter_info.CharterGuest');
                         $this->loadModel('Yacht');
                         $yachtData = $this->Yacht->find('first', array('conditions' => array('id' => $session['yacht_id'])));
@@ -975,9 +973,7 @@ class ChartersController extends AppController {
                     }
                     $file_folder_path = str_replace("$SITE_URL","$site_full_path","$targetFullPath");
                     //echo $targetFullPath; echo $site_full_path; echo "<pre>"; echo $file_folder_path; exit;
-                    if(file_exists($file_folder_path)){
-                        $targetFullPath = $targetFullPath;
-                    }else{
+                    if(!file_exists($file_folder_path)){
                         $targetFullPath = $this->request->base."/app/webroot/img/noimage_cp.png";
                     }
                     $charterGuestData[$key]['program_image'] = $targetFullPath;
@@ -1129,9 +1125,7 @@ class ChartersController extends AppController {
                         }
                         $file_folder_path = str_replace("$SITE_URL","$site_full_path","$targetFullPath");
                     //echo $targetFullPath; echo $site_full_path; echo "<pre>"; echo $file_folder_path; exit;
-                        if(file_exists($file_folder_path)){
-                            $targetFullPath = $targetFullPath;
-                        }else{
+                        if(!file_exists($file_folder_path)){
                             $targetFullPath = $this->request->base."/app/webroot/img/noimage_cp.png";
                         }
                         $charterAssocData[$key]['charterDetails']['ch_image'] = $targetFullPath;
@@ -1557,7 +1551,7 @@ class ChartersController extends AppController {
         * Created date - 24-May-2018
         * Modified date - 
     */
-    public function view_guest($charter_program_id,$charter_company_id) {
+    public function view_guest($charter_program_id_params,$charter_company_id_params) {
         //echo "<pre>";print_r($this->is_mobile);exit;
 
         //echo "<pre>";print_r($explodepath);
@@ -1568,8 +1562,8 @@ class ChartersController extends AppController {
              $this->redirect(array('controller' => 'Charters', 'action' => 'index'));
          }
         
-        $charter_program_id = $charter_program_id;
-        $charter_company_id = $charter_company_id;
+        $charter_program_id = $charter_program_id_params;
+        $charter_company_id = $charter_company_id_params;
         // Fetching the Head Charterer details
        
         $this->Session->delete("Fromownerguestlist");
@@ -7028,7 +7022,7 @@ class ChartersController extends AppController {
                                     
                                 }
                                 //echo "<pre>";print_r($fleetlocationimages); exit;
-                                if(!empty($fleetlocationimages) && !empty($fleetlocationimages)){
+                                if(!empty($fleetlocationimages)){
                                 $trimmed_array = array_map('trim', $fleetlocationimages);
                                 }
                                 $locationimages[$publishmap['CharterProgramSchedule']['id']] = $trimmed_array;
@@ -9103,7 +9097,7 @@ public function markSingleCommentUnread() {
                     if($chartertype1 == "activity"){
 
                             if(isset($activityId) && !empty($activityId)){
-                                if ($isfleet == 1) {
+                                //if ($isfleet == 1) {
                                 
                                     // $updateConditions = "UUID = '$activityId'";
                                     // $updateValues = "is_crew_commented=1,is_fleet_commented=1,modified=$shipTime";
@@ -9111,7 +9105,7 @@ public function markSingleCommentUnread() {
                         
                                     // $updateCruisingMapCommentValues = "crew_newlyaddedcomment=1,fleet_newlyaddedcomment=1,modified=$shipTime";
                                     
-                                } 
+                                //} 
                                 // $getactivityname =  str_replace("'", "", $activity_name);
                                 // $getactivityname = str_replace('"', "", $getactivityname);
                                 //     $updateConditionsCruisingMapComment = "id = '$primaryid' AND activity_id = '$activityId' AND activity_name = '$getactivityname' AND type='activity'";
@@ -9135,7 +9129,7 @@ public function markSingleCommentUnread() {
 
                     }else if($chartertype1 == "schedule"){
                         if(isset($activityId) && !empty($activityId)){
-                            if ($isfleet == 1) {
+                            //if ($isfleet == 1) {
                                 //echo "llll"; exit;
                                 // $updateConditions = "UUID = '$activityId'";
                                 // $updateValues = "is_crew_commented=1,is_fleet_commented=1,modified=$shipTime";
@@ -9143,7 +9137,7 @@ public function markSingleCommentUnread() {
                     
                                 // $updateCruisingMapCommentValues = "crew_newlyaddedcomment=1,fleet_newlyaddedcomment=1,modified=$shipTime";
                                 
-                            } 
+                            //} 
                             // $getactivityname =  str_replace("'", "", $activity_name);
                             // $getactivityname = str_replace('"', "", $getactivityname);
                             //     $updateConditionsCruisingMapComment = "id = '$primaryid' AND activity_id = '$activityId' AND activity_name = '$getactivityname' AND type='schedule'";
@@ -9206,7 +9200,7 @@ public function markSingleCommentUnread() {
                                 
                         }
                         
-                }else{
+                }else if($chartertype1 == "schedule"){
 
                     if(isset($activityId) && !empty($activityId)){
 
@@ -9467,14 +9461,14 @@ public function getPreviousCharterProgramSelections() {
      
     
      
-     $r = array();
-     $view = new View();
-     $view->layout = 'ajax'; // Optional, use if you want a "clean" view
+    //  $r = array();
+    //  $view = new View();
+    //  $view->layout = 'ajax'; // Optional, use if you want a "clean" view
      
-     $r['view'] = $view->element('previous_charter_program_list', array('charterProgramData' => $charterProgramData,'type'=>$type));
+    //  $r['view'] = $view->element('previous_charter_program_list', array('charterProgramData' => $charterProgramData,'type'=>$type));
      
-     echo json_encode($r);
-     exit;
+    //  echo json_encode($r);
+    //  exit;
  }
 
 
@@ -9653,6 +9647,7 @@ public function getIndividualmsgcountMarer() {
 
         if(count($scheduleSameLocationUUID) > 1){
             $lastschuuid = reset($scheduleSameLocationUUID);
+            $mcount = "";
             foreach($scheduleSameLocationUUID as $schuuid){
                 $mcount += $this->CharterGuest->getCharterMarkerCommentCount($yachtDbName,$schuuid);
             }
