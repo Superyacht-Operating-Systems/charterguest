@@ -1572,7 +1572,20 @@ background: #fff !important;
 
 
 @media (max-width:771px){
-#HideDetails, #HelpfulTipss{
+    #WeatherMap {
+    top: 103.5px!important;
+}
+#GuestNews {
+    top: 132px!important;
+}
+
+
+#HideDetails,
+ #HelpfulTips,
+ #WeatherMap, 
+#GuestNews,
+ #HelpfulTips
+ {
  
     width: 113px;
     height: 24px;
