@@ -1997,7 +1997,9 @@ body.modal-open {
                 $crusemap = 1;
                 $crusemaparray = array();
             foreach ($scheduleData as $key => $schedule) { 
-
+                $schedule['CharterProgramSchedule']['title'] = trim($schedule['CharterProgramSchedule']['title']);
+                $schedule['CharterProgramSchedule']['title'] = str_replace('"', "", $schedule['CharterProgramSchedule']['title']);
+                $schedule['CharterProgramSchedule']['title'] = str_replace("'", "", $schedule['CharterProgramSchedule']['title']);
             //if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !empty($samelocations[$schedule['CharterProgramSchedule']['lattitude']])){
                 $counttitle = count($samelocations[$schedule['CharterProgramSchedule']['lattitude']]);
                     $SumDaytitle = "";
@@ -2363,7 +2365,11 @@ var CSMPmarkerCount = 0;
 if(isset($crusemaparray) && !empty($crusemaparray)){
     $loop= 1;
     
-foreach($scheduleData as $key => $schedule){ ?>
+foreach($scheduleData as $key => $schedule){ 
+    $schedule['CharterProgramSchedule']['title'] = trim($schedule['CharterProgramSchedule']['title']);
+    $schedule['CharterProgramSchedule']['title'] = str_replace('"', "", $schedule['CharterProgramSchedule']['title']);
+    $schedule['CharterProgramSchedule']['title'] = str_replace("'", "", $schedule['CharterProgramSchedule']['title']);
+    ?>
 
 var locsatellite = "schloc"+"<?php echo $key; ?>";
 
@@ -2569,6 +2575,10 @@ if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !e
         }
 
     $schuuid = $schedule['CharterProgramSchedule']['UUID'];
+    $schedule['CharterProgramSchedule']['title'] = trim($schedule['CharterProgramSchedule']['title']);
+    $title_loc_temp = str_replace('"', "", $schedule['CharterProgramSchedule']['title']);
+    $title_loc_temp2 = str_replace("'", "", $title_loc_temp);
+    $schedule['CharterProgramSchedule']['title'] = $title_loc_temp2;
     if($schedule['CharterProgramSchedule']['marker_msg_count'] == 0){
         $marker_msg_count = "style='display:none;'";
     }else if($schedule['CharterProgramSchedule']['marker_msg_count'] != 0){
@@ -3513,8 +3523,10 @@ setTimeout(function () {
 
                                 ModalMapsinglemarkerlat = lattitude;
                                 ModalMapsinglemarkerlong = longitude;
-                                var frommarker = selectedmarkertitle +' - Day '+selectedmarkerday_num; //alert('llll')
-                                $("#embarkation").text(selectedmarkertitle); 
+                                var vvs = selectedmarkertitle.trim();
+                                var valTitle = vvs.replaceAll('"', '').replaceAll("'", '');
+                                var frommarker = valTitle +' - Day '+selectedmarkerday_num; //alert('llll')
+                                $("#embarkation").text(valTitle); 
                                 routeexists = 1;
                                 drawrouteinmodal(frommarker);
                               
@@ -3892,9 +3904,12 @@ $(document).on("click", ".stationarydays", function(e) {
                                 ModalMapsinglemarkerlat = lattitude;
                                 ModalMapsinglemarkerlong = longitude;
 
-                                var frommarker = selectedmarkertitle +' - Day '+selectedmarkerday_num; //alert('llll')
+                                var vvs = selectedmarkertitle.trim();
+                                var valTitle = vvs.replaceAll('"', '').replaceAll("'", '');
+                                var frommarker = valTitle +' - Day '+selectedmarkerday_num; //alert('llll')
+                                console.log(frommarker);
+                                $("#embarkation").text(valTitle); 
                                 routeexists = 1;
-                                $("#embarkation").text(selectedmarkertitle); 
                                 drawrouteinmodal(frommarker);
                               
                                 // console.log(selectedmarkertitle);
@@ -3983,9 +3998,9 @@ if (nextmarkername != "undefined" && nextmarkername != "" && nextmarkername != n
                 routeexists = 1;
             }
     });
-    const myArrayFrom = frommarker.split("-");
+    const myArrayFrom = frommarker.split("- Day");
     let fromword = myArrayFrom[0];
-    const myArrayTo = nextmarkername.split("-");
+    const myArrayTo = nextmarkername.split("- Day");
     let toword = myArrayTo[0];
     $("#embarkation").text(fromword+' to ');
     $("#debarkation").text(toword);
@@ -4685,8 +4700,10 @@ function markerOnClickCSMP(e) {
 
     csmpsinglemarkerlat = lattitude;
         csmpsinglemarkerlong = longitude;
-        var frommarker = selectedmarkertitle +' - Day '+selectedmarkerday_num; //alert('llll')
-        $("#embarkation_sch").text(selectedmarkertitle); 
+        var vvs = selectedmarkertitle.trim();
+        var selectedmarkertitleV = vvs.replaceAll('"', '').replaceAll("'", '');
+        var frommarker = selectedmarkertitleV +' - Day '+selectedmarkerday_num; //alert('llll')
+        $("#embarkation_sch").text(selectedmarkertitleV); 
         drawrouteinmodalCSMP(frommarker);
 
         setTimeout(() => {
@@ -4810,9 +4827,9 @@ function drawrouteinmodalCSMP(frommarker) { //alert();
                     
                 }
         });
-        const myArrayFrom = frommarker.split("-");
+        const myArrayFrom = frommarker.split("- Day");
         let fromword = myArrayFrom[0];
-        const myArrayTo = nextmarkername.split("-");
+        const myArrayTo = nextmarkername.split("- Day");
         let toword = myArrayTo[0];
         $("#embarkation_sch").text(fromword+' to '); 
         $("#debarkation_sch").text(toword);

@@ -2503,7 +2503,11 @@ var CSMPmarkerCount = 0;
 if(isset($crusemaparray) && !empty($crusemaparray)){
     $loop= 1;
     
-foreach($scheduleData as $key => $schedule){ ?>
+foreach($scheduleData as $key => $schedule){ 
+    $schedule['CharterProgramSchedule']['title'] = trim($schedule['CharterProgramSchedule']['title']);
+    $schedule['CharterProgramSchedule']['title'] = str_replace('"', "", $schedule['CharterProgramSchedule']['title']);
+    $schedule['CharterProgramSchedule']['title'] = str_replace("'", "", $schedule['CharterProgramSchedule']['title']);
+    ?>
 
 var locsatellite = "schloc"+"<?php echo $key; ?>";
 
@@ -2678,6 +2682,10 @@ if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !e
 
 
     $schuuid = $schedule['CharterProgramSchedule']['UUID'];
+    $schedule['CharterProgramSchedule']['title'] = trim($schedule['CharterProgramSchedule']['title']);
+    $title_loc_temp = str_replace('"', "", $schedule['CharterProgramSchedule']['title']);
+    $title_loc_temp2 = str_replace("'", "", $title_loc_temp);
+    $schedule['CharterProgramSchedule']['title'] = $title_loc_temp2;
     if($samemarkercommentcount[$schedule['CharterProgramSchedule']['lattitude']] == 0){
         $marker_msg_count = "style='display:none;'";
         $samemkrcount = "";
@@ -4157,9 +4165,9 @@ if (nextmarkername != "undefined" && nextmarkername != "" && nextmarkername != n
                 routeexists = 1;
             }
     });
-    const myArrayFrom = frommarker.split("-");
+    const myArrayFrom = frommarker.split("- Day");
     let fromword = myArrayFrom[0];
-    const myArrayTo = nextmarkername.split("-");
+    const myArrayTo = nextmarkername.split("- Day");
     let toword = myArrayTo[0];
     $("#embarkation").text(fromword+' to '); 
     $("#debarkation").text(toword);
@@ -5086,6 +5094,7 @@ function markerOnClickCSMP(e) {
     var consumptiontotal = e.target.consumptiontotal;
     var distancetotal = e.target.distancetotal;
     var durationtotal = e.target.durationtotal;
+    console.log(durationtotal);
     // console.log(lattitude);
     // console.log(longitude);
     var day_dates = e.target.day_dates;
@@ -5209,8 +5218,8 @@ $(document).on("change", ".markersnamesmodalmapcruisingsch", function(e) {
         // let selectedTitleFromWord = $.trim(selectedTitleFrom[0]);
 
         // console.log(routemodalmarkerselected); 
-          console.log(selectedlat);  
-          console.log(selectedlong);  
+          //console.log(selectedlat);  
+          //console.log(selectedlong);  
         if (routemodalmarkerselected != "") { //alert();
             modalmapcruisingsch.removeLayer(routemodalmarkerselected);
         }
@@ -5249,7 +5258,7 @@ $(document).on("change", ".markersnamesmodalmapcruisingsch", function(e) {
 
 function drawrouteinmodalCSMP(frommarker) { //alert();
      //console.log(modalrouteline);
-     console.log(frommarker);
+     //console.log(frommarker);
     modalmapcruisingsch.setView(new L.LatLng(csmpsinglemarkerlat, csmpsinglemarkerlong));
     
     $("#debarkation_sch").text('');
@@ -5259,7 +5268,7 @@ function drawrouteinmodalCSMP(frommarker) { //alert();
     var toloc =  $(".markersnamesmodalmapcruisingsch").val();
    
     $.each(modalrouteline, function(name, value) {
-        console.log(value.name);
+        //console.log(value.name);
             if (value.name == frommarker) {
                 drawrouteline.push(value.index);
                 //tempendloc.push(value.end_loc);
@@ -5267,7 +5276,7 @@ function drawrouteinmodalCSMP(frommarker) { //alert();
                 
             } 
     });
-    console.log(nextmarkername);
+    //console.log(nextmarkername);
     if (nextmarkername != "undefined" && nextmarkername != "" && nextmarkername != null) { //alert();
         $(".markersnamesmodalmapcruisingsch").val(nextmarkername).trigger('change');
       // var returnvalue =  markersnamesmodalmap(nextmarkername);
@@ -5275,17 +5284,17 @@ function drawrouteinmodalCSMP(frommarker) { //alert();
         var tempdrawrouteline = [];
         
         $.each(modalrouteline, function(name, value) {
-            console.log(name);
-            console.log(value.end_loc);
-            console.log('kkkk')
+            // console.log(name);
+            // console.log(value.end_loc);
+            // console.log('kkkk')
                 if (value.name == frommarker && value.end_loc == nextmarkername) {
                     tempdrawrouteline.push(value.index);
                     
                 }
         });
-        const myArrayFrom = frommarker.split("-");
+        const myArrayFrom = frommarker.split("- Day");
         let fromword = myArrayFrom[0];
-        const myArrayTo = nextmarkername.split("-");
+        const myArrayTo = nextmarkername.split("- Day");
         let toword = myArrayTo[0];
         $("#embarkation_sch").text(fromword+' to '); 
         $("#debarkation_sch").text(toword);
