@@ -89,6 +89,12 @@ echo $this->Html->script('leaflet/route');
     position: fixed;
     top: 0;
 }
+
+.myIconClass{
+    margin-left: -12px !important;
+    margin-top: -41px !important;
+}
+
      .language_dropdown{
 font-size: 18px;
 width: 28px;
@@ -2322,6 +2328,7 @@ document.addEventListener('orientationchange', () => {
 /* orientationchange end */
 
  var guesttype = '<?php echo $guesttype;?>';
+ var Wmarker= '<?php echo BASE_URL.'/charterguest/app/webroot/css/leaflet/dist/images/marker-icon.png'; ?>';
 var basefolder = '<?php echo $basefolder;?>';
 var vessel = new L.LayerGroup();
 var markerArray = [];
@@ -3540,9 +3547,15 @@ setTimeout(function () {
                                     modalmap.invalidateSize();
                                 }, 0);
                                 $("#modalmap").find('.leaflet-control-attribution').hide();
+                                var myIcon = L.icon({
+                                iconUrl: Wmarker,
+                                iconSize: [25, 41],
+                                className:'myIconClass',
+                            });
                                 var routemodalmarker = L.marker([lattitude, longitude], {
                                     draggable: false,
-                                    pmIgnore: true
+                                    pmIgnore: true,
+                                    icon:myIcon
                                 }).bindTooltip(tooltipcontent, {
                                     permanent: true,
                                     direction: 'right',
@@ -3634,9 +3647,15 @@ if (routemodalmarkerselected != "") { //alert();
 if (textMarkermodalmap != "") { //alert();
     modalmap.removeLayer(textMarkermodalmap);
 }
+var myIcon = L.icon({
+                                iconUrl: Wmarker,
+                                iconSize: [25, 41],
+                                className:'myIconClass',
+                            });
 routemodalmarkerselected = L.marker([selectedlat,selectedlong], {
     draggable: false,
-    pmIgnore: true
+    pmIgnore: true,
+    icon:myIcon
 });
 // .bindTooltip(selectedmarkertooltipcontent, {
 //     permanent: true,
@@ -3922,9 +3941,15 @@ $(document).on("click", ".stationarydays", function(e) {
                                 //     modalmap.invalidateSize();
                                 // }, 0);
                                 $("#modalmap").find('.leaflet-control-attribution').hide();
+                                var myIcon = L.icon({
+                                iconUrl: Wmarker,
+                                iconSize: [25, 41],
+                                className:'myIconClass',
+                            });
                                 var routemodalmarker = L.marker([lattitude, longitude], {
                                     draggable: false,
-                                    pmIgnore: true
+                                    pmIgnore: true,
+                                    icon:myIcon
                                 }).bindTooltip(tooltipcontent, {
                                     permanent: true,
                                     direction: 'right',
@@ -4709,10 +4734,18 @@ function markerOnClickCSMP(e) {
         setTimeout(() => {
             modalmapcruisingsch.invalidateSize();
         }, 0);
+
+        var myIcon = L.icon({
+                                iconUrl: Wmarker,
+                                iconSize: [25, 41],
+                                className:'myIconClass',
+                            });
+
         //$("#modalmap").find('.leaflet-control-attribution').hide();
         var routemodalmarkerCSMP = L.marker([lattitude, longitude], {
             draggable: false,
-            pmIgnore: true
+            pmIgnore: true,
+            icon:myIcon
         });
         routemodalmarkerCSMP.addTo(modalmapcruisingsch);
         if(selectedmarkerday_num < 10 ){
@@ -4768,9 +4801,15 @@ $(document).on("change", ".markersnamesmodalmapcruisingsch", function(e) {
         if (textMarkermodalmap != "") { //alert();
             modalmapcruisingsch.removeLayer(textMarkermodalmap);
         }
+        var myIcon = L.icon({
+                                iconUrl: Wmarker,
+                                iconSize: [25, 41],
+                                className:'myIconClass',
+                            });
         routemodalmarkerselected = L.marker([selectedlat,selectedlong], {
             draggable: false,
-            pmIgnore: true
+            pmIgnore: true,
+            icon:myIcon
         });
         routemodalmarkerselected.addTo(modalmapcruisingsch);
         // adding day number to marker
