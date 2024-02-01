@@ -2293,7 +2293,7 @@ border-radius: 4px; */
             </div>
             <div class="modal-body">
                 <div id="charterguestnews">
-
+                <?php echo $this->element('charter_program_news', array('comments' => $comments)); ?>
                 </div>
 
             </div>
@@ -5471,36 +5471,29 @@ $(document).on("click", "#closeWeatherMap", function(e) {
         //alert('jjj');
        
         
-        var yachtId = $("#yachtId").val();
-        var charprogid = $("#charterProgramId").val();
+        //var yachtId = $("#yachtId").val();
+        //var charprogid = $("#charterProgramId").val();
         //alert(activity_name);
-        commenttitlecheck = 0;
-        $.ajax({
-                type: "POST",
-                url: basefolder+"/"+"charters/getGuestNews",
-                dataType: 'json',
-                data: { 'charprogid': charprogid,
-                        'yachtId':yachtId
-                    },
-                success:function(data) {
-                    //console.log(data);
-                    $('#charterguestnews').html(data.view);
-                    // $('.CruisingNewsSave').attr('data-id',data.activityId);
-                    // $('.CruisingNewsSave').attr('data-activity_name',data.activity_name);
-                    // $('.CruisingNewsSave').attr('data-UserType',data.UserType);
-                    // $('.CruisingNewsSave').attr('data-UserName',data.UserName);
-                    // $('.CruisingNewsSave').attr('data-type',data.type);
-                    // $('.CruisingNewsSave').attr('data-yachtid',yachtid);
-                    
+        //commenttitlecheck = 0;
+        // $.ajax({
+        //         type: "POST",
+        //         url: basefolder+"/"+"charters/getGuestNews",
+        //         dataType: 'json',
+        //         data: { 'charprogid': charprogid,
+        //                 'yachtId':yachtId
+        //             },
+        //         success:function(data) {
+        //             //console.log(data);
+        //             $('#charterguestnews').html(data.view);
                    
                     $('#guestNewsModal').show();
                    
                     
-                    //alert(data.isfleet);
-                    $("#hideloader").hide();
+    //                 //alert(data.isfleet);
+    //                 $("#hideloader").hide();
                     
-                }
-       });
+    //             }
+    //    });
     });
 
 $(document).on("click", ".clicknewsdiv", function() { 

@@ -7493,7 +7493,13 @@ class ChartersController extends AppController {
                     //echo "<pre>";print_r($AisPosition); exit;
                     $yfullName = $this->Yacht->find('list', array('fields' => array('id','yfullName')));
                     $this->set('yfullName', $yfullName);
-
+ 
+                        $activity_id_chk = $charterProgramId;      
+                        if(isset($activity_id_chk) && !empty($activity_id_chk)){
+                            $CruisingMapCommentConditons = "charter_program_uuid = '$activity_id_chk'";
+                            $news = $this->CharterGuest->getGuestNews($yachtDbName, $CruisingMapCommentConditons);
+                        }
+                    $this->set('news', $news);
             } else {
                 $this->redirect(array('action' => 'view'));
             }
