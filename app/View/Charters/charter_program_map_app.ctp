@@ -1920,7 +1920,7 @@ body.modal-open {
             </div>
             <div class="modal-body">
                 <div id="charterguestnews">
-
+                <?php echo $this->element('charter_program_news', array('comments' => $comments)); ?>
                 </div>
 
             </div>
@@ -5049,20 +5049,20 @@ $(document).on("click", "#GuestNews" ,function() {
         //alert('jjj');
        
         
-        var yachtId = $("#yachtId").val();
-        var charprogid = $("#charterProgramId").val();
-        //alert(activity_name);
-        commenttitlecheck = 0;
-        $.ajax({
-                type: "POST",
-                url: basefolder+"/"+"charters/getGuestNews",
-                dataType: 'json',
-                data: { 'charprogid': charprogid,
-                        'yachtId':yachtId
-                    },
-                success:function(data) {
-                    //console.log(data);
-                    $('#charterguestnews').html(data.view);
+        // var yachtId = $("#yachtId").val();
+        // var charprogid = $("#charterProgramId").val();
+        // //alert(activity_name);
+        // commenttitlecheck = 0;
+        // $.ajax({
+        //         type: "POST",
+        //         url: basefolder+"/"+"charters/getGuestNews",
+        //         dataType: 'json',
+        //         data: { 'charprogid': charprogid,
+        //                 'yachtId':yachtId
+        //             },
+        //         success:function(data) {
+        //             //console.log(data);
+        //             $('#charterguestnews').html(data.view);
                     // $('.CruisingNewsSave').attr('data-id',data.activityId);
                     // $('.CruisingNewsSave').attr('data-activity_name',data.activity_name);
                     // $('.CruisingNewsSave').attr('data-UserType',data.UserType);
@@ -5074,11 +5074,11 @@ $(document).on("click", "#GuestNews" ,function() {
                     $('#guestNewsModal').show();
                    
                     
-                    //alert(data.isfleet);
-                    $("#hideloader").hide();
+    //                 //alert(data.isfleet);
+    //                 $("#hideloader").hide();
                     
-                }
-       });
+    //             }
+    //    });
     });
 
 $(document).on("click", ".clicknewsdiv", function() { 
