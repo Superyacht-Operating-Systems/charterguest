@@ -64,6 +64,18 @@ $topyname = $yfullName[$charterGuestDatayacht_id];
 <script src="https://api.windy.com/assets/map-forecast/libBoot.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css">
 <style>
+.sm-cruisingmsgmyModal .mx-box {
+    max-height: 400px;
+    min-height: 400px;
+    overflow-y: scroll;
+}
+
+body .sm-cruisingmsgmyModal  .inbox-item-text{
+    margin-left:5px!important;
+}
+ .mx-box .col-md-12:first-child{
+    font-weight:bold;
+ }
     .myIconClass{
     margin-left: -12px !important;
     margin-top: -41px !important;
@@ -1384,6 +1396,7 @@ margin: 0px;padding: 0px;
 }
 .inbox-widget .inbox-item .inbox-item-text {
     color: #000000!important;
+    padding-left:5px;
 }
 @media only screen and (max-width:1024px){
 .common-form-row {
@@ -1546,7 +1559,10 @@ background: #fff !important;
   padding: 5px !important;
     top: 18px !important;
 }
-#HideDetails, #HelpfulTips {
+#HideDetails,
+ #HelpfulTips,
+#WeatherMap, 
+#GuestNews{
     min-width: 138px;
     font-size: 12px;
     height: 32px;
@@ -1556,8 +1572,21 @@ background: #fff !important;
 
 
 @media (max-width:771px){
-#HideDetails, #HelpfulTips {
+    #WeatherMap {
+    top: 103.5px!important;
+}
+#GuestNews {
+    top: 132px!important;
+}
 
+
+#HideDetails,
+ #HelpfulTips,
+ #WeatherMap, 
+#GuestNews,
+ #HelpfulTips
+ {
+ 
     width: 113px;
     height: 24px;
     padding: 0px!important;
@@ -1678,8 +1707,8 @@ span.sp-rightalign {
     background-color: #000!important;
   }
   .certificat-modal-container .mx-box {
-    max-height: 46vh;
-    min-height: 46vh;
+    max-height: 400px;
+    min-height: 400px;
 }
 .card-box {
     margin-bottom: 0px;
