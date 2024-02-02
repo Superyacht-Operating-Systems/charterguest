@@ -2122,9 +2122,13 @@ body.modal-open {
                                <?php if(isset($fleetlocationimages) && !empty($fleetlocationimages)){ 
                                     $fleetlocationimages =  array_unique($fleetlocationimages);
                                     foreach($fleetlocationimages as $name){
-                                        if(!empty($name)){ ?>
+                                        if(!empty($name)){ 
+                                            $fname = $targetFullGalleryPathhref.$name;
+                                            if(file_exists($fname)) {
+                                            ?>
                                             <a href="<?php echo $targetFullGalleryPathhref; ?><?php echo $name ?>" data-thumbnail="<?php echo $targetFullGalleryPathhref; ?><?php echo $name ?>"  rel="galleryloc<?php echo $crusemap ?>" class="<?php echo $fancybox; ?>"><img src="<?php echo $name; ?>" style="object-fit: cover;width: 100%; height: 150px;display:none;" alt="" ></a>
                                             <?php  }
+                                        }
                                     }
                                 } ?>
                                 </div><span class="img_count_div">
