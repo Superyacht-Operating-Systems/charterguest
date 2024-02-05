@@ -115,7 +115,8 @@ color:#000;
   /* width: 95vw!important; 
   height: calc((95vw * 9) / 16); */
   margin: 0rem auto;
-  border: 2px solid;
+  border: ridge 15px;
+    border-radius: 15px;
 
 
 }
@@ -273,6 +274,14 @@ left: 0;
     /* display: block; */
     margin: 0 5px;
   }
+  @media only screen and (max-width: 900px) {
+    #slides{
+      width: 100%;
+      margin-top:70px;
+    }
+}
+
+
 </style>
 <div id="slides">
     
