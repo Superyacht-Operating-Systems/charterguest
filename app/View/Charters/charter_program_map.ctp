@@ -58,11 +58,11 @@ if(empty($scheduleData)){
 // echo "<pre>";print_r($yfullName);
 $topyname = $yfullName[$charterGuestDatayacht_id]; 
 ?>
-<script> console.warn = () => {};
+<script>
 //$ = jQuery.noConflict();</script>
 <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"></script>
-<?php echo $this->Html->script('libBoot.js'); ?>
-<!-- <script src="https://api.windy.com/assets/map-forecast/libBoot.js"></script> -->
+<?php //echo $this->Html->script('libBoot.js'); ?>
+<script src="https://api.windy.com/assets/map-forecast/libBoot.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css">
 <style>
 .sm-cruisingmsgmyModal .mx-box {
