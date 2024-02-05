@@ -1,10 +1,10 @@
 <?php 
 
-echo $this->Html->css('admin/font/fontawesomePro/css/fontawesome.css');
-echo $this->Html->css('admin/font/fontawesomePro/css/brands.css');
-echo $this->Html->css('admin/font/fontawesomePro/css/solid.css');
-echo $this->Html->css('admin/font/fontawesomePro/css/light.css');
-echo $this->Html->css('admin/font/fontawesomePro/css/v5-font-face.css');	
+// echo $this->Html->css('admin/font/fontawesomePro/css/fontawesome.css');
+// echo $this->Html->css('admin/font/fontawesomePro/css/brands.css');
+// echo $this->Html->css('admin/font/fontawesomePro/css/solid.css');
+// echo $this->Html->css('admin/font/fontawesomePro/css/light.css');
+// echo $this->Html->css('admin/font/fontawesomePro/css/v5-font-face.css');	
 
 $isFleetUser = $this->Session->read('loggedUserInfo.is_fleet');
 $userType = $this->Session->read('loggedUserInfo.user_type');
