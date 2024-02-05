@@ -61,7 +61,8 @@ $topyname = $yfullName[$charterGuestDatayacht_id];
 <script>
 //$ = jQuery.noConflict();</script>
 <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"></script>
-<script src="https://api.windy.com/assets/map-forecast/libBoot.js"></script>
+<?php echo $this->Html->script('libBoot.js'); ?>
+<!-- <script src="https://api.windy.com/assets/map-forecast/libBoot.js"></script> -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css">
 <style>
 .sm-cruisingmsgmyModal .mx-box {
