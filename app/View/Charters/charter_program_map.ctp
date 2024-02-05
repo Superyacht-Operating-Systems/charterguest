@@ -58,7 +58,7 @@ if(empty($scheduleData)){
 // echo "<pre>";print_r($yfullName);
 $topyname = $yfullName[$charterGuestDatayacht_id]; 
 ?>
-<script>
+<script> console.warn = () => {};
 //$ = jQuery.noConflict();</script>
 <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"></script>
 <?php echo $this->Html->script('libBoot.js'); ?>
