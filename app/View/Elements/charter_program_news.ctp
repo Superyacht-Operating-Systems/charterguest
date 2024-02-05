@@ -62,7 +62,9 @@
     </style>
 <div class="card-box">
     <div class="inbox-widget nicescroll mx-box">
-                    <?php foreach($comments as $comments){ 
+                    <?php //$news= array();
+                    if(isset($news) && !empty($news)){
+                    foreach($news as $comments){ 
                         //  if($comments['CruisingMapComment']['user_type'] == "OBA" || $comments['CruisingMapComment']['user_type'] == "HOD" || $comments['CruisingMapComment']['user_type'] == "Superadmin" || $comments['CruisingMapComment']['user_type'] == "Crew Member" ){
                     	// 	$backgroundcolor = "#F2F2F2 !important;";
                     	// }else{
@@ -101,7 +103,9 @@
                  ?></p>
             </div>
         </div>
-                    <?php } ?>
+                    <?php } }else{?>
+                        <p style="color:grey;"><?php echo "There is no news at this time." ?></p>
+                        <?php } ?>
     </div>
     <!-- <div class="row">
         <div class="col-sm-9 chat-inputbar">

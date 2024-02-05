@@ -1,10 +1,10 @@
 <?php 
 
-echo $this->Html->css('admin/font/fontawesomePro/css/fontawesome.css');
-echo $this->Html->css('admin/font/fontawesomePro/css/brands.css');
-echo $this->Html->css('admin/font/fontawesomePro/css/solid.css');
-echo $this->Html->css('admin/font/fontawesomePro/css/light.css');
-echo $this->Html->css('admin/font/fontawesomePro/css/v5-font-face.css');	
+// echo $this->Html->css('admin/font/fontawesomePro/css/fontawesome.css');
+// echo $this->Html->css('admin/font/fontawesomePro/css/brands.css');
+// echo $this->Html->css('admin/font/fontawesomePro/css/solid.css');
+// echo $this->Html->css('admin/font/fontawesomePro/css/light.css');
+// echo $this->Html->css('admin/font/fontawesomePro/css/v5-font-face.css');	
 
 $isFleetUser = $this->Session->read('loggedUserInfo.is_fleet');
 $userType = $this->Session->read('loggedUserInfo.user_type');
@@ -2049,7 +2049,9 @@ border-radius: 4px; */
                 //echo "<pre>";print_r(($RD));
                 //echo "<pre>";print_r($scheduleData);exit;
             foreach ($scheduleData as $key => $schedule) { 
-
+                $schedule['CharterProgramSchedule']['title'] = trim($schedule['CharterProgramSchedule']['title']);
+                $schedule['CharterProgramSchedule']['title'] = str_replace('"', "", $schedule['CharterProgramSchedule']['title']);
+                $schedule['CharterProgramSchedule']['title'] = str_replace("'", "", $schedule['CharterProgramSchedule']['title']);
             //if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !empty($samelocations[$schedule['CharterProgramSchedule']['lattitude']])){
                 $counttitle = count($samelocations[$schedule['CharterProgramSchedule']['lattitude']]);
                     $SumDaytitle = "";
@@ -2174,9 +2176,13 @@ border-radius: 4px; */
                                <?php if(isset($fleetlocationimages) && !empty($fleetlocationimages)){ 
                                     $fleetlocationimages =  array_unique($fleetlocationimages);
                                     foreach($fleetlocationimages as $name){
-                                        if(!empty($name)){ ?>
+                                        if(!empty($name)){ 
+                                            $fname = $targetFullGalleryPathhref.$name;
+                                            if(file_exists($fname)) {
+                                            ?>
                                             <a href="<?php echo $targetFullGalleryPathhref; ?><?php echo $name; ?>" data-thumbnail="<?php echo $targetFullGalleryPathhref; ?><?php echo $name; ?>" rel="galleryloc<?php echo $crusemap ?>" class="<?php echo $fancybox; ?>"><img src="<?php echo $name; ?>" style="object-fit: cover;width: 100%; height: 150px;display:none;" alt="" ></a>
-                                            <?php  }
+                                            <?php } 
+                                        }
                                     }
                                 } ?>
                                 </div>
@@ -2322,7 +2328,7 @@ border-radius: 4px; */
             </div>
             <div class="modal-body">
                 <div id="charterguestnews">
-
+                <?php echo $this->element('charter_program_news', array('comments' => $comments)); ?>
                 </div>
 
             </div>
@@ -2501,7 +2507,11 @@ var CSMPmarkerCount = 0;
 if(isset($crusemaparray) && !empty($crusemaparray)){
     $loop= 1;
     
-foreach($scheduleData as $key => $schedule){ ?>
+foreach($scheduleData as $key => $schedule){ 
+    $schedule['CharterProgramSchedule']['title'] = trim($schedule['CharterProgramSchedule']['title']);
+    $schedule['CharterProgramSchedule']['title'] = str_replace('"', "", $schedule['CharterProgramSchedule']['title']);
+    $schedule['CharterProgramSchedule']['title'] = str_replace("'", "", $schedule['CharterProgramSchedule']['title']);
+    ?>
 
 var locsatellite = "schloc"+"<?php echo $key; ?>";
 
@@ -2676,6 +2686,10 @@ if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !e
 
 
     $schuuid = $schedule['CharterProgramSchedule']['UUID'];
+    $schedule['CharterProgramSchedule']['title'] = trim($schedule['CharterProgramSchedule']['title']);
+    $title_loc_temp = str_replace('"', "", $schedule['CharterProgramSchedule']['title']);
+    $title_loc_temp2 = str_replace("'", "", $title_loc_temp);
+    $schedule['CharterProgramSchedule']['title'] = $title_loc_temp2;
     if($samemarkercommentcount[$schedule['CharterProgramSchedule']['lattitude']] == 0){
         $marker_msg_count = "style='display:none;'";
         $samemkrcount = "";
@@ -3649,6 +3663,13 @@ function markerOnClick(e) {
                                                             
                                                         //}else{
 
+                                                            if(value.daytitle){
+                                                                    var vvd = value.daytitle.trim();
+                                                                    var valTitle = vvd.replaceAll('"', '').replaceAll("'", '');
+                                                            }else{
+                                                                var valTitle = "";
+                                                            }
+
                                                                 $('.markersnamesmodalmap')
                                                                     .append($("<option></option>")
                                                                         .attr("id", "marker_" + value.scheduleId)
@@ -3656,8 +3677,8 @@ function markerOnClick(e) {
                                                                         .attr("data-long", value._latlng.lng)
                                                                         .attr("data-schid", value.scheduleId)
                                                                         .attr("data-daynum", value.day_num)
-                                                                        .attr("value", value.daytitle +' - Day '+value.day_num)
-                                                                        .text(value.daytitle +' - Day '+value.day_num)
+                                                                        .attr("value", valTitle +' - Day '+value.day_num)
+                                                                        .text(valTitle +' - Day '+value.day_num)
                                                                     );
                                                                     //temptitle.push(value.daytitle);
                                                         //}
@@ -3676,9 +3697,10 @@ function markerOnClick(e) {
 
                                 ModalMapsinglemarkerlat = lattitude;
                                 ModalMapsinglemarkerlong = longitude;
-
-                                var frommarker = selectedmarkertitle +' - Day '+selectedmarkerday_num; //alert('llll')
-                                $("#embarkation").text(selectedmarkertitle); 
+                                var vvs = selectedmarkertitle.trim();
+                                var valTitle = vvs.replaceAll('"', '').replaceAll("'", '');
+                                var frommarker = valTitle +' - Day '+selectedmarkerday_num; //alert('llll')
+                                $("#embarkation").text(valTitle); 
                                 routeexists = 1;
                                 drawrouteinmodal(frommarker);
                               
@@ -4047,10 +4069,11 @@ $(document).on("click", ".stationarydays", function(e) {
                                 //$(".markerconsumption").text(consumptiontotal);
                                 ModalMapsinglemarkerlat = lattitude;
                                 ModalMapsinglemarkerlong = longitude;
-
-                                var frommarker = selectedmarkertitle +' - Day '+selectedmarkerday_num; //alert('llll')
+                                var vvs = selectedmarkertitle.trim();
+                                var valTitle = vvs.replaceAll('"', '').replaceAll("'", '');
+                                var frommarker = valTitle +' - Day '+selectedmarkerday_num; //alert('llll')
                                 console.log(frommarker);
-                                $("#embarkation").text(selectedmarkertitle); 
+                                $("#embarkation").text(valTitle); 
                                 routeexists = 1;
                                 drawrouteinmodal(frommarker);
                               
@@ -4146,9 +4169,9 @@ if (nextmarkername != "undefined" && nextmarkername != "" && nextmarkername != n
                 routeexists = 1;
             }
     });
-    const myArrayFrom = frommarker.split("-");
+    const myArrayFrom = frommarker.split("- Day");
     let fromword = myArrayFrom[0];
-    const myArrayTo = nextmarkername.split("-");
+    const myArrayTo = nextmarkername.split("- Day");
     let toword = myArrayTo[0];
     $("#embarkation").text(fromword+' to '); 
     $("#debarkation").text(toword);
@@ -5075,6 +5098,7 @@ function markerOnClickCSMP(e) {
     var consumptiontotal = e.target.consumptiontotal;
     var distancetotal = e.target.distancetotal;
     var durationtotal = e.target.durationtotal;
+    console.log(durationtotal);
     // console.log(lattitude);
     // console.log(longitude);
     var day_dates = e.target.day_dates;
@@ -5106,6 +5130,13 @@ function markerOnClickCSMP(e) {
                 .text("Select")
             );    
             $.each(markerArray, function(key, value) {   
+
+                            if(value.daytitle){
+                                var vvd = value.daytitle.trim();
+                                var valTitle = vvd.replaceAll('"', '').replaceAll("'", '');
+                            }else{
+                                var valTitle = "";
+                            }
                         
                 $('.markersnamesmodalmapcruisingsch')
                     .append($("<option></option>")
@@ -5114,16 +5145,18 @@ function markerOnClickCSMP(e) {
                         .attr("data-long", value._latlng.lng)
                         .attr("data-schid", value.scheduleId)
                         .attr("data-daynum", value.day_num)
-                        .attr("value", value.daytitle +' - Day '+value.day_num)
-                        .text(value.daytitle +' - Day '+value.day_num)
+                        .attr("value", valTitle +' - Day '+value.day_num)
+                        .text(valTitle +' - Day '+value.day_num)
                     );
         });
     }
  
     csmpsinglemarkerlat = lattitude;
         csmpsinglemarkerlong = longitude;
-        var frommarker = selectedmarkertitle +' - Day '+selectedmarkerday_num; //alert('llll')
-        $("#embarkation_sch").text(selectedmarkertitle); 
+        var vvs = selectedmarkertitle.trim();
+        var selectedmarkertitleV = vvs.replaceAll('"', '').replaceAll("'", '');
+        var frommarker = selectedmarkertitleV +' - Day '+selectedmarkerday_num; //alert('llll')
+        $("#embarkation_sch").text(selectedmarkertitleV); 
         drawrouteinmodalCSMP(frommarker);
 
         
@@ -5189,8 +5222,8 @@ $(document).on("change", ".markersnamesmodalmapcruisingsch", function(e) {
         // let selectedTitleFromWord = $.trim(selectedTitleFrom[0]);
 
         // console.log(routemodalmarkerselected); 
-        //  console.log(selectedlat);  
-        //  console.log(selectedlong);  
+          //console.log(selectedlat);  
+          //console.log(selectedlong);  
         if (routemodalmarkerselected != "") { //alert();
             modalmapcruisingsch.removeLayer(routemodalmarkerselected);
         }
@@ -5228,8 +5261,8 @@ $(document).on("change", ".markersnamesmodalmapcruisingsch", function(e) {
 });
 
 function drawrouteinmodalCSMP(frommarker) { //alert();
-    // console.log(modalrouteline);
-    // console.log(frommarker);
+     //console.log(modalrouteline);
+     //console.log(frommarker);
     modalmapcruisingsch.setView(new L.LatLng(csmpsinglemarkerlat, csmpsinglemarkerlong));
     
     $("#debarkation_sch").text('');
@@ -5239,6 +5272,7 @@ function drawrouteinmodalCSMP(frommarker) { //alert();
     var toloc =  $(".markersnamesmodalmapcruisingsch").val();
    
     $.each(modalrouteline, function(name, value) {
+        //console.log(value.name);
             if (value.name == frommarker) {
                 drawrouteline.push(value.index);
                 //tempendloc.push(value.end_loc);
@@ -5246,6 +5280,7 @@ function drawrouteinmodalCSMP(frommarker) { //alert();
                 
             } 
     });
+    //console.log(nextmarkername);
     if (nextmarkername != "undefined" && nextmarkername != "" && nextmarkername != null) { //alert();
         $(".markersnamesmodalmapcruisingsch").val(nextmarkername).trigger('change');
       // var returnvalue =  markersnamesmodalmap(nextmarkername);
@@ -5253,17 +5288,17 @@ function drawrouteinmodalCSMP(frommarker) { //alert();
         var tempdrawrouteline = [];
         
         $.each(modalrouteline, function(name, value) {
-            //console.log(name);
-            //console.log(value.end_loc);
-            //console.log('kkkk')
+            // console.log(name);
+            // console.log(value.end_loc);
+            // console.log('kkkk')
                 if (value.name == frommarker && value.end_loc == nextmarkername) {
                     tempdrawrouteline.push(value.index);
                     
                 }
         });
-        const myArrayFrom = frommarker.split("-");
+        const myArrayFrom = frommarker.split("- Day");
         let fromword = myArrayFrom[0];
-        const myArrayTo = nextmarkername.split("-");
+        const myArrayTo = nextmarkername.split("- Day");
         let toword = myArrayTo[0];
         $("#embarkation_sch").text(fromword+' to '); 
         $("#debarkation_sch").text(toword);
@@ -5500,36 +5535,29 @@ $(document).on("click", "#closeWeatherMap", function(e) {
         //alert('jjj');
        
         
-        var yachtId = $("#yachtId").val();
-        var charprogid = $("#charterProgramId").val();
+        //var yachtId = $("#yachtId").val();
+        //var charprogid = $("#charterProgramId").val();
         //alert(activity_name);
-        commenttitlecheck = 0;
-        $.ajax({
-                type: "POST",
-                url: basefolder+"/"+"charters/getGuestNews",
-                dataType: 'json',
-                data: { 'charprogid': charprogid,
-                        'yachtId':yachtId
-                    },
-                success:function(data) {
-                    //console.log(data);
-                    $('#charterguestnews').html(data.view);
-                    // $('.CruisingNewsSave').attr('data-id',data.activityId);
-                    // $('.CruisingNewsSave').attr('data-activity_name',data.activity_name);
-                    // $('.CruisingNewsSave').attr('data-UserType',data.UserType);
-                    // $('.CruisingNewsSave').attr('data-UserName',data.UserName);
-                    // $('.CruisingNewsSave').attr('data-type',data.type);
-                    // $('.CruisingNewsSave').attr('data-yachtid',yachtid);
-                    
+        //commenttitlecheck = 0;
+        // $.ajax({
+        //         type: "POST",
+        //         url: basefolder+"/"+"charters/getGuestNews",
+        //         dataType: 'json',
+        //         data: { 'charprogid': charprogid,
+        //                 'yachtId':yachtId
+        //             },
+        //         success:function(data) {
+        //             //console.log(data);
+        //             $('#charterguestnews').html(data.view);
                    
                     $('#guestNewsModal').show();
                    
                     
-                    //alert(data.isfleet);
-                    $("#hideloader").hide();
+    //                 //alert(data.isfleet);
+    //                 $("#hideloader").hide();
                     
-                }
-       });
+    //             }
+    //    });
     });
 
 $(document).on("click", ".clicknewsdiv", function() { 

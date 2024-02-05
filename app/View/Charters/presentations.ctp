@@ -286,9 +286,13 @@ left: 0;
       </div>
     </div>
 
-    <?php foreach($schduledata as $key=>$value){ //echo "<pre>"; echo $key; print_r($value);  exit; ?>
-
-      <div class="slide" style="background-image: url(<?php echo $requrl; ?>/app/webroot/img/charter_program_files/itinerary_photos/<?php echo $value['CharterProgramSchedule']['attachment']; ?>););">
+    <?php foreach($schduledata as $key=>$value){ //echo "<pre>"; echo $key; print_r($value);  exit; 
+      $fname = $requrl.$value['CharterProgramSchedule']['attachment'];
+       if(file_exists($fname)) { ?>
+      <div class="slide" style="background-image: url(<?php echo $requrl; ?>/app/webroot/img/charter_program_files/itinerary_photos/<?php echo $value['CharterProgramSchedule']['attachment']; ?>);">
+      <?php   }else{ ?>
+        <div class="slide" style="background-image:none;">
+        <?php } ?>
         <div class="day_slide" >
 			    <div class="H_title" style="margin: 0px;">Day <?php echo $value['CharterProgramSchedule']['day_num']; ?></div>
 			    <div class="H_title" style="margin: 0px;padding-top: 2px;"><?php echo $value['CharterProgramSchedule']['title']; ?></div> 
@@ -332,9 +336,16 @@ left: 0;
       <?php } ?>
     <?php } ?>
 
-    <?php foreach($deb as $key=>$value){ //echo "<pre>"; echo $key; print_r($value);  exit; ?>
+    <?php foreach($deb as $key=>$value){ //echo "<pre>"; echo $key; print_r($value);  exit; 
+       $fname = $requrl.$value['CharterProgramSchedule']['attachment'];
+       if(file_exists($fname)) { ?>
+        <div class="slide" style="background-image: url(<?php echo $requrl; ?>/app/webroot/img/charter_program_files/itinerary_photos/<?php echo $value['CharterProgramSchedule']['attachment']; ?>);">
+    <?php   }else{ ?>
+      <div class="slide" style="background-image:none;">
+     <?php  }
+      ?>
 
-<div class="slide" style="background-image: url(<?php echo $requrl; ?>/app/webroot/img/charter_program_files/itinerary_photos/<?php echo $value['CharterProgramSchedule']['attachment']; ?>););">
+
   <div class="day_slide" >
     <div class="H_title" style="margin: 0px;">Day <?php echo $value['CharterProgramSchedule']['day_num']; ?></div>
     <div class="H_title" style="margin: 0px;padding-top: 2px;"><?php echo $value['CharterProgramSchedule']['title']; ?></div> 

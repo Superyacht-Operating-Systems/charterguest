@@ -89,6 +89,12 @@ echo $this->Html->script('leaflet/route');
     position: fixed;
     top: 0;
 }
+
+.myIconClass{
+    margin-left: -12px !important;
+    margin-top: -41px !important;
+}
+
      .language_dropdown{
 font-size: 18px;
 width: 28px;
@@ -1920,7 +1926,7 @@ body.modal-open {
             </div>
             <div class="modal-body">
                 <div id="charterguestnews">
-
+                <?php echo $this->element('charter_program_news', array('comments' => $comments)); ?>
                 </div>
 
             </div>
@@ -1997,7 +2003,9 @@ body.modal-open {
                 $crusemap = 1;
                 $crusemaparray = array();
             foreach ($scheduleData as $key => $schedule) { 
-
+                $schedule['CharterProgramSchedule']['title'] = trim($schedule['CharterProgramSchedule']['title']);
+                $schedule['CharterProgramSchedule']['title'] = str_replace('"', "", $schedule['CharterProgramSchedule']['title']);
+                $schedule['CharterProgramSchedule']['title'] = str_replace("'", "", $schedule['CharterProgramSchedule']['title']);
             //if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !empty($samelocations[$schedule['CharterProgramSchedule']['lattitude']])){
                 $counttitle = count($samelocations[$schedule['CharterProgramSchedule']['lattitude']]);
                     $SumDaytitle = "";
@@ -2114,9 +2122,13 @@ body.modal-open {
                                <?php if(isset($fleetlocationimages) && !empty($fleetlocationimages)){ 
                                     $fleetlocationimages =  array_unique($fleetlocationimages);
                                     foreach($fleetlocationimages as $name){
-                                        if(!empty($name)){ ?>
+                                        if(!empty($name)){ 
+                                            $fname = $targetFullGalleryPathhref.$name;
+                                            if(file_exists($fname)) {
+                                            ?>
                                             <a href="<?php echo $targetFullGalleryPathhref; ?><?php echo $name ?>" data-thumbnail="<?php echo $targetFullGalleryPathhref; ?><?php echo $name ?>"  rel="galleryloc<?php echo $crusemap ?>" class="<?php echo $fancybox; ?>"><img src="<?php echo $name; ?>" style="object-fit: cover;width: 100%; height: 150px;display:none;" alt="" ></a>
                                             <?php  }
+                                        }
                                     }
                                 } ?>
                                 </div><span class="img_count_div">
@@ -2320,6 +2332,7 @@ document.addEventListener('orientationchange', () => {
 /* orientationchange end */
 
  var guesttype = '<?php echo $guesttype;?>';
+ var Wmarker= '<?php echo BASE_URL.'/charterguest/app/webroot/css/leaflet/dist/images/marker-icon.png'; ?>';
 var basefolder = '<?php echo $basefolder;?>';
 var vessel = new L.LayerGroup();
 var markerArray = [];
@@ -2363,7 +2376,11 @@ var CSMPmarkerCount = 0;
 if(isset($crusemaparray) && !empty($crusemaparray)){
     $loop= 1;
     
-foreach($scheduleData as $key => $schedule){ ?>
+foreach($scheduleData as $key => $schedule){ 
+    $schedule['CharterProgramSchedule']['title'] = trim($schedule['CharterProgramSchedule']['title']);
+    $schedule['CharterProgramSchedule']['title'] = str_replace('"', "", $schedule['CharterProgramSchedule']['title']);
+    $schedule['CharterProgramSchedule']['title'] = str_replace("'", "", $schedule['CharterProgramSchedule']['title']);
+    ?>
 
 var locsatellite = "schloc"+"<?php echo $key; ?>";
 
@@ -2569,6 +2586,10 @@ if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !e
         }
 
     $schuuid = $schedule['CharterProgramSchedule']['UUID'];
+    $schedule['CharterProgramSchedule']['title'] = trim($schedule['CharterProgramSchedule']['title']);
+    $title_loc_temp = str_replace('"', "", $schedule['CharterProgramSchedule']['title']);
+    $title_loc_temp2 = str_replace("'", "", $title_loc_temp);
+    $schedule['CharterProgramSchedule']['title'] = $title_loc_temp2;
     if($schedule['CharterProgramSchedule']['marker_msg_count'] == 0){
         $marker_msg_count = "style='display:none;'";
     }else if($schedule['CharterProgramSchedule']['marker_msg_count'] != 0){
@@ -3513,8 +3534,10 @@ setTimeout(function () {
 
                                 ModalMapsinglemarkerlat = lattitude;
                                 ModalMapsinglemarkerlong = longitude;
-                                var frommarker = selectedmarkertitle +' - Day '+selectedmarkerday_num; //alert('llll')
-                                $("#embarkation").text(selectedmarkertitle); 
+                                var vvs = selectedmarkertitle.trim();
+                                var valTitle = vvs.replaceAll('"', '').replaceAll("'", '');
+                                var frommarker = valTitle +' - Day '+selectedmarkerday_num; //alert('llll')
+                                $("#embarkation").text(valTitle); 
                                 routeexists = 1;
                                 drawrouteinmodal(frommarker);
                               
@@ -3528,9 +3551,15 @@ setTimeout(function () {
                                     modalmap.invalidateSize();
                                 }, 0);
                                 $("#modalmap").find('.leaflet-control-attribution').hide();
+                                var myIcon = L.icon({
+                                iconUrl: Wmarker,
+                                iconSize: [25, 41],
+                                className:'myIconClass',
+                            });
                                 var routemodalmarker = L.marker([lattitude, longitude], {
                                     draggable: false,
-                                    pmIgnore: true
+                                    pmIgnore: true,
+                                    icon:myIcon
                                 }).bindTooltip(tooltipcontent, {
                                     permanent: true,
                                     direction: 'right',
@@ -3622,9 +3651,15 @@ if (routemodalmarkerselected != "") { //alert();
 if (textMarkermodalmap != "") { //alert();
     modalmap.removeLayer(textMarkermodalmap);
 }
+var myIcon = L.icon({
+                                iconUrl: Wmarker,
+                                iconSize: [25, 41],
+                                className:'myIconClass',
+                            });
 routemodalmarkerselected = L.marker([selectedlat,selectedlong], {
     draggable: false,
-    pmIgnore: true
+    pmIgnore: true,
+    icon:myIcon
 });
 // .bindTooltip(selectedmarkertooltipcontent, {
 //     permanent: true,
@@ -3892,9 +3927,12 @@ $(document).on("click", ".stationarydays", function(e) {
                                 ModalMapsinglemarkerlat = lattitude;
                                 ModalMapsinglemarkerlong = longitude;
 
-                                var frommarker = selectedmarkertitle +' - Day '+selectedmarkerday_num; //alert('llll')
+                                var vvs = selectedmarkertitle.trim();
+                                var valTitle = vvs.replaceAll('"', '').replaceAll("'", '');
+                                var frommarker = valTitle +' - Day '+selectedmarkerday_num; //alert('llll')
+                                console.log(frommarker);
+                                $("#embarkation").text(valTitle); 
                                 routeexists = 1;
-                                $("#embarkation").text(selectedmarkertitle); 
                                 drawrouteinmodal(frommarker);
                               
                                 // console.log(selectedmarkertitle);
@@ -3907,9 +3945,15 @@ $(document).on("click", ".stationarydays", function(e) {
                                 //     modalmap.invalidateSize();
                                 // }, 0);
                                 $("#modalmap").find('.leaflet-control-attribution').hide();
+                                var myIcon = L.icon({
+                                iconUrl: Wmarker,
+                                iconSize: [25, 41],
+                                className:'myIconClass',
+                            });
                                 var routemodalmarker = L.marker([lattitude, longitude], {
                                     draggable: false,
-                                    pmIgnore: true
+                                    pmIgnore: true,
+                                    icon:myIcon
                                 }).bindTooltip(tooltipcontent, {
                                     permanent: true,
                                     direction: 'right',
@@ -3983,9 +4027,9 @@ if (nextmarkername != "undefined" && nextmarkername != "" && nextmarkername != n
                 routeexists = 1;
             }
     });
-    const myArrayFrom = frommarker.split("-");
+    const myArrayFrom = frommarker.split("- Day");
     let fromword = myArrayFrom[0];
-    const myArrayTo = nextmarkername.split("-");
+    const myArrayTo = nextmarkername.split("- Day");
     let toword = myArrayTo[0];
     $("#embarkation").text(fromword+' to ');
     $("#debarkation").text(toword);
@@ -4685,17 +4729,27 @@ function markerOnClickCSMP(e) {
 
     csmpsinglemarkerlat = lattitude;
         csmpsinglemarkerlong = longitude;
-        var frommarker = selectedmarkertitle +' - Day '+selectedmarkerday_num; //alert('llll')
-        $("#embarkation_sch").text(selectedmarkertitle); 
+        var vvs = selectedmarkertitle.trim();
+        var selectedmarkertitleV = vvs.replaceAll('"', '').replaceAll("'", '');
+        var frommarker = selectedmarkertitleV +' - Day '+selectedmarkerday_num; //alert('llll')
+        $("#embarkation_sch").text(selectedmarkertitleV); 
         drawrouteinmodalCSMP(frommarker);
 
         setTimeout(() => {
             modalmapcruisingsch.invalidateSize();
         }, 0);
+
+        var myIcon = L.icon({
+                                iconUrl: Wmarker,
+                                iconSize: [25, 41],
+                                className:'myIconClass',
+                            });
+
         //$("#modalmap").find('.leaflet-control-attribution').hide();
         var routemodalmarkerCSMP = L.marker([lattitude, longitude], {
             draggable: false,
-            pmIgnore: true
+            pmIgnore: true,
+            icon:myIcon
         });
         routemodalmarkerCSMP.addTo(modalmapcruisingsch);
         if(selectedmarkerday_num < 10 ){
@@ -4751,9 +4805,15 @@ $(document).on("change", ".markersnamesmodalmapcruisingsch", function(e) {
         if (textMarkermodalmap != "") { //alert();
             modalmapcruisingsch.removeLayer(textMarkermodalmap);
         }
+        var myIcon = L.icon({
+                                iconUrl: Wmarker,
+                                iconSize: [25, 41],
+                                className:'myIconClass',
+                            });
         routemodalmarkerselected = L.marker([selectedlat,selectedlong], {
             draggable: false,
-            pmIgnore: true
+            pmIgnore: true,
+            icon:myIcon
         });
         routemodalmarkerselected.addTo(modalmapcruisingsch);
         // adding day number to marker
@@ -4810,9 +4870,9 @@ function drawrouteinmodalCSMP(frommarker) { //alert();
                     
                 }
         });
-        const myArrayFrom = frommarker.split("-");
+        const myArrayFrom = frommarker.split("- Day");
         let fromword = myArrayFrom[0];
-        const myArrayTo = nextmarkername.split("-");
+        const myArrayTo = nextmarkername.split("- Day");
         let toword = myArrayTo[0];
         $("#embarkation_sch").text(fromword+' to '); 
         $("#debarkation_sch").text(toword);
@@ -5049,20 +5109,20 @@ $(document).on("click", "#GuestNews" ,function() {
         //alert('jjj');
        
         
-        var yachtId = $("#yachtId").val();
-        var charprogid = $("#charterProgramId").val();
-        //alert(activity_name);
-        commenttitlecheck = 0;
-        $.ajax({
-                type: "POST",
-                url: basefolder+"/"+"charters/getGuestNews",
-                dataType: 'json',
-                data: { 'charprogid': charprogid,
-                        'yachtId':yachtId
-                    },
-                success:function(data) {
-                    //console.log(data);
-                    $('#charterguestnews').html(data.view);
+        // var yachtId = $("#yachtId").val();
+        // var charprogid = $("#charterProgramId").val();
+        // //alert(activity_name);
+        // commenttitlecheck = 0;
+        // $.ajax({
+        //         type: "POST",
+        //         url: basefolder+"/"+"charters/getGuestNews",
+        //         dataType: 'json',
+        //         data: { 'charprogid': charprogid,
+        //                 'yachtId':yachtId
+        //             },
+        //         success:function(data) {
+        //             //console.log(data);
+        //             $('#charterguestnews').html(data.view);
                     // $('.CruisingNewsSave').attr('data-id',data.activityId);
                     // $('.CruisingNewsSave').attr('data-activity_name',data.activity_name);
                     // $('.CruisingNewsSave').attr('data-UserType',data.UserType);
@@ -5074,11 +5134,11 @@ $(document).on("click", "#GuestNews" ,function() {
                     $('#guestNewsModal').show();
                    
                     
-                    //alert(data.isfleet);
-                    $("#hideloader").hide();
+    //                 //alert(data.isfleet);
+    //                 $("#hideloader").hide();
                     
-                }
-       });
+    //             }
+    //    });
     });
 
 $(document).on("click", ".clicknewsdiv", function() { 
