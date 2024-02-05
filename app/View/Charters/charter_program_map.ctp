@@ -1,5 +1,5 @@
 <?php 
-
+error_reporting(E_ERROR | E_PARSE);
 echo $this->Html->css('admin/font/fontawesomePro/css/fontawesome.css');
 echo $this->Html->css('admin/font/fontawesomePro/css/brands.css');
 echo $this->Html->css('admin/font/fontawesomePro/css/solid.css');
