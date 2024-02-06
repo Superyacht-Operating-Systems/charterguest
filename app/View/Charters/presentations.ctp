@@ -11,6 +11,14 @@ $basefolder = $requrl;
 
 ?>
 <style>
+.wrapper{
+margin:0 auto;
+width: 100%;
+}
+.slides-row{
+  display: inline-block;
+    width: 100%;
+}
     @media only screen and (max-width: 999px){
 #page-wrapper {
   background: transparent;
@@ -107,6 +115,7 @@ margin-bottom: 0px!important;
 .H_title{
 font-weight: 500;
 line-height: 1.1;
+color:#000;
 }
 #slides {
   width: calc(70vh * (16/9));
@@ -114,7 +123,8 @@ line-height: 1.1;
   /* width: 95vw!important; 
   height: calc((95vw * 9) / 16); */
   margin: 0rem auto;
-  border: 2px solid;
+  border: ridge 15px;
+    border-radius: 15px;
 
 
 }
@@ -196,7 +206,7 @@ margin: 2.2rem auto 2.6vw; */
 height: calc((90.2vh * 9) / 16);
 width: 90.2vh;
   margin: 1.2rem auto 3.3vh;
-  z-index: -1;
+  z-index: 0;
 position: relative;
 }
 .img_section_slide img{
@@ -272,7 +282,52 @@ left: 0;
     /* display: block; */
     margin: 0 5px;
   }
+
+  @media only screen and (max-width: 1024px){
+    .slides-row {
+    margin-top: 70px;
+}
+  }
+
+  @media only screen and (max-width: 900px) {
+    #slides{
+      width:100%;
+    }
+    .slides-row{
+      padding:0px 20px;
+    }
+    .slide.active {
+    background-size: 100% 100%;
+ display: block;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+    background-position: center;
+}
+.navbar-absalute-top .yachtHeaderName {
+    left: 36px;
+    right: 0;
+    top: 18px !important;
+}
+.slides-row {
+}
+}
+@media only screen and (max-width: 500px) {
+#slides {
+    height: 300px;
+}
+}
+
+
+/* @media only screen and (max-width: 480px) {
+  #slides{
+    height: 50vh;
+    }
+} */
 </style>
+
+<div class="slides-row">
 <div id="slides">
     
     <div class="slide active" style="background-image: url(<?php echo $requrl; ?>/app/webroot/img/memories/<?php echo $yachtData['Yacht']['cg_memories_image']; ?>);">
@@ -285,9 +340,13 @@ left: 0;
       </div>
     </div>
 
-    <?php foreach($schduledata as $key=>$value){ //echo "<pre>"; echo $key; print_r($value);  exit; ?>
-
-      <div class="slide" style="background-image: url(<?php echo $requrl; ?>/app/webroot/img/charter_program_files/itinerary_photos/<?php echo $value['CharterProgramSchedule']['attachment']; ?>););">
+    <?php foreach($schduledata as $key=>$value){ //echo "<pre>"; echo $key; print_r($value);  exit; 
+      $fname = $requrl.$value['CharterProgramSchedule']['attachment'];
+       if(file_exists($fname)) { ?>
+      <div class="slide" style="background-image: url(<?php echo $requrl; ?>/app/webroot/img/charter_program_files/itinerary_photos/<?php echo $value['CharterProgramSchedule']['attachment']; ?>);">
+      <?php   }else{ ?>
+        <div class="slide" style="background-image:none;">
+        <?php } ?>
         <div class="day_slide" >
 			    <div class="H_title" style="margin: 0px;">Day <?php echo $value['CharterProgramSchedule']['day_num']; ?></div>
 			    <div class="H_title" style="margin: 0px;padding-top: 2px;"><?php echo $value['CharterProgramSchedule']['title']; ?></div> 
@@ -330,6 +389,59 @@ left: 0;
 
       <?php } ?>
     <?php } ?>
+
+    <?php foreach($deb as $key=>$value){ //echo "<pre>"; echo $key; print_r($value);  exit; 
+       $fname = $requrl.$value['CharterProgramSchedule']['attachment'];
+       if(file_exists($fname)) { ?>
+        <div class="slide" style="background-image: url(<?php echo $requrl; ?>/app/webroot/img/charter_program_files/itinerary_photos/<?php echo $value['CharterProgramSchedule']['attachment']; ?>);">
+    <?php   }else{ ?>
+      <div class="slide" style="background-image:none;">
+     <?php  }
+      ?>
+
+
+  <div class="day_slide" >
+    <div class="H_title" style="margin: 0px;">Day <?php echo $value['CharterProgramSchedule']['day_num']; ?></div>
+    <div class="H_title" style="margin: 0px;padding-top: 2px;"><?php echo $value['CharterProgramSchedule']['title']; ?></div> 
+  </div>
+</div></div>
+<?php for($i=1;$i<=6;$i++){ 
+  $attachment = "";
+  $caption = "";
+?>
+  <?php 
+  
+  if(isset($value["GuestMemory"]["CharterProgramGuestMemory"]["caption$i"]) && $value["GuestMemory"]["CharterProgramGuestMemory"]["caption$i"]!=''){ 
+  
+    $caption=$value["GuestMemory"]["CharterProgramGuestMemory"]["caption$i"];
+
+  } 
+
+  if(isset($value["GuestMemory"]["CharterProgramGuestMemory"]["caption$i"."_attachment"]) && $value["GuestMemory"]["CharterProgramGuestMemory"]["caption$i"."_attachment"]!=''){ 
+  
+    $attachment=$value["GuestMemory"]["CharterProgramGuestMemory"]["caption$i"."_attachment"];
+
+  } 
+   
+   ?>
+   <?php if(isset($attachment) && $attachment!=''){ ?>
+    <div class="slide slideDiv">
+      <div class="row sliderrow">
+          <div class="col-lg-9 col-md-9 col-xs-9 col-sm-9 slide_divwrap">
+              <div class="caption_slide" ><?php echo $caption; ?></div>
+              <div class="imgbody" >
+                  <div class="img_section_slide">
+                  <img src="<?php echo $requrl; ?>/app/webroot/img/memories/<?php echo $attachment; ?>"/>
+                  </div>
+              </div>
+          </div>
+      </div>
+    </div>
+
+   <?php } ?>
+
+<?php } ?>
+<?php } ?>
     
 
     

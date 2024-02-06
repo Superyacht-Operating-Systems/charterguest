@@ -591,7 +591,7 @@ margin-top: 50px;
                  }else if(isset($assocprefenceID) && !empty($assocprefenceID)){ 
                     $usertypeformap = "guest";
                  }?>    
-                <li class="menu__item"> <a href="#" title="<?php echo $title; ?>">Cruising Map</a>
+                <?php /* ?><li class="menu__item"> <a href="#" title="<?php echo $title; ?>">Cruising Map</a>
                     <?php  if(isset($mapdetails)){ ?>
                         <ul class="submenu">
                             <?php foreach($mapdetails as $startdate => $data){ ?>
@@ -601,7 +601,7 @@ margin-top: 50px;
                                 } ?>
                         </ul>
                     <?php } ?>
-                </li>  
+                </li>  <?php */ ?>
             <?php /*}else if(isset($assocprefenceID) && !empty($assocprefenceID)){ ?>
             <li class="menu__item pagleave"><a href="<?php echo $baseFolder."/charters/charter_program_map/".$charterHeadProgramId.'/'.$ydb_name.'/guest'; ?>">Cruising Map</a></li>
             <?php } */?>
