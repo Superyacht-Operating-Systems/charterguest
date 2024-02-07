@@ -120,7 +120,7 @@ cursor: pointer;
 
 @media only screen and (min-width:1024px){
     body .mydemolabel {
-  font-size: 36px !important;
+  /* font-size: 36px !important; */
   top: 56px !important;
 }
 .yachtHeaderName {
@@ -128,13 +128,13 @@ cursor: pointer;
 }
     }
 @media only screen and (min-width:771px) and (max-width:1024px){
-
+/* 
 .yachtHeaderName {
     margin-top: 4px!important;
-}
+} */
 body .mydemolabel {
     top: 70px!important;
-  font-size: 30px !important;
+  /* font-size: 30px !important; */
 }
 
 
@@ -1401,7 +1401,7 @@ margin: 0px;padding: 0px;
 }
 @media only screen and (max-width:1024px){
 .common-form-row {
-    margin-top: 35px;
+    margin-top: 38px;
 }
 
 
