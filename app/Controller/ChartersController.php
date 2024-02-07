@@ -848,7 +848,7 @@ class ChartersController extends AppController {
                     }
 
                 }
-                echo "<pre>"; print_r($schduledata); exit;
+                //echo "<pre>"; print_r($schduledata); exit;
                 $this->set('schduledata', $schduledata);
                 $this->set('deb', $deb);
                 //echo "<pre>"; print_r($scheduleData); exit;
