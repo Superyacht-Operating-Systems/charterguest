@@ -341,12 +341,12 @@ left: 0;
     </div>
 
     <?php foreach($schduledata as $key=>$value){ //echo "<pre>"; echo $key; print_r($value);  exit; 
-      $fname = $requrl.'/app/webroot/img/charter_program_files/itinerary_photos/'.$value['CharterProgramSchedule']['attachment'];
-       if(file_exists($fname)) { ?>
+      /*$fname = $requrl.'/app/webroot/img/charter_program_files/itinerary_photos/'.$value['CharterProgramSchedule']['attachment'];
+       if(file_exists($fname)) { */?>
       <div class="slide" style="background-image: url(<?php echo $requrl; ?>/app/webroot/img/charter_program_files/itinerary_photos/<?php echo $value['CharterProgramSchedule']['attachment']; ?>);">
-      <?php   }else{ ?>
+      <?php  /* }else{ ?>
         <div class="slide" style="background-image:none;">
-        <?php } ?>
+        <?php } */?>
         <div class="day_slide" >
 			    <div class="H_title" style="margin: 0px;">Day <?php echo $value['CharterProgramSchedule']['day_num']; ?></div>
 			    <div class="H_title" style="margin: 0px;padding-top: 2px;"><?php echo $value['CharterProgramSchedule']['title']; ?></div> 
@@ -391,12 +391,12 @@ left: 0;
     <?php } ?>
 
     <?php foreach($deb as $key=>$value){ //echo "<pre>"; echo $key; print_r($value);  exit; 
-       $fname = $requrl.'/app/webroot/img/charter_program_files/itinerary_photos/'.$value['CharterProgramSchedule']['attachment'];
-       if(file_exists($fname)) { ?>
+      /* $fname = $requrl.'/app/webroot/img/charter_program_files/itinerary_photos/'.$value['CharterProgramSchedule']['attachment'];
+       if(file_exists($fname)) { */?>
         <div class="slide" style="background-image: url(<?php echo $requrl; ?>/app/webroot/img/charter_program_files/itinerary_photos/<?php echo $value['CharterProgramSchedule']['attachment']; ?>);">
-    <?php   }else{ ?>
+    <?php /*  }else{ ?>
       <div class="slide" style="background-image:none;">
-     <?php  }
+     <?php  }*/
       ?>
 
 
