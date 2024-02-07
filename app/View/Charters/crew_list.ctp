@@ -719,7 +719,7 @@ font-weight: bold;
 .mobviewheight{
     background-color:#2a2a2a;
     height:575px;
-    margin-top: 10px;
+    margin-top: 30px;
 }
 
 .notmobleftpad{
