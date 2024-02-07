@@ -11,6 +11,14 @@ $basefolder = $requrl;
 
 ?>
 <style>
+.wrapper{
+margin:0 auto;
+width: 100%;
+}
+.slides-row{
+  display: inline-block;
+    width: 100%;
+}
     @media only screen and (max-width: 999px){
 #page-wrapper {
   background: transparent;
@@ -274,15 +282,52 @@ left: 0;
     /* display: block; */
     margin: 0 5px;
   }
+
+  @media only screen and (max-width: 1024px){
+    .slides-row {
+    margin-top: 70px;
+}
+  }
+
   @media only screen and (max-width: 900px) {
     #slides{
-      width: 100%;
-      margin-top:70px;
+      width:100%;
     }
+    .slides-row{
+      padding:0px 20px;
+    }
+    .slide.active {
+    background-size: 100% 100%;
+ display: block;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+    background-position: center;
+}
+.navbar-absalute-top .yachtHeaderName {
+    left: 36px;
+    right: 0;
+    top: 18px !important;
+}
+.slides-row {
+}
+}
+@media only screen and (max-width: 500px) {
+#slides {
+    height: 300px;
+}
 }
 
 
+/* @media only screen and (max-width: 480px) {
+  #slides{
+    height: 50vh;
+    }
+} */
 </style>
+
+<div class="slides-row">
 <div id="slides">
     
     <div class="slide active" style="background-image: url(<?php echo $requrl; ?>/app/webroot/img/memories/<?php echo $yachtData['Yacht']['cg_memories_image']; ?>);">
@@ -359,7 +404,7 @@ left: 0;
     <div class="H_title" style="margin: 0px;">Day <?php echo $value['CharterProgramSchedule']['day_num']; ?></div>
     <div class="H_title" style="margin: 0px;padding-top: 2px;"><?php echo $value['CharterProgramSchedule']['title']; ?></div> 
   </div>
-</div>
+</div></div>
 <?php for($i=1;$i<=6;$i++){ 
   $attachment = "";
   $caption = "";
