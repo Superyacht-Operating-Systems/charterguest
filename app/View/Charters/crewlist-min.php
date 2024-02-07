@@ -1,6 +1,20 @@
 <?php   
     $BASE_FOLDER = $this->request->base; 
 ?>
+<style>
+@media (min-width: 991px){
+.col-md-3 {
+    width: 25%;
+}
+.col-md-9 {
+    width: 75%;
+}
+
+}
+</style>
+
+
+
 <div class="owl-theme owl-dotsrow">
 <div class="owl-dots ">
 </div>

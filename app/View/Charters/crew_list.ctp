@@ -831,6 +831,11 @@ color: #000;
     padding-top: 0px!important;
     margin-bottom: 100px;
 }
+
+@media only screen and (max-width: 771px){
+.flexrow .two.view-mainrow span.sp-leftalign {
+    margin-top: 10px;
+}}
 </style>
   <div class="modal fade info-modal-pop" id="info-modal" role="dialog">
     <div class="modal-dialog">

@@ -123,11 +123,18 @@ color:#000;
   /* width: 95vw!important; 
   height: calc((95vw * 9) / 16); */
   margin: 0rem auto;
+
+}
+
+
+.img_section_slide img {
   border: ridge 15px;
-    border-radius: 15px;
+    border-radius: 6px;
 
 
 }
+
+
 
 .slide {
   position: relative;
@@ -318,7 +325,6 @@ left: 0;
     height: 300px;
 }
 }
-
 
 /* @media only screen and (max-width: 480px) {
   #slides{

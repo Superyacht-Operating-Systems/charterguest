@@ -5434,9 +5434,7 @@ padding-top: 13px!important;
 }
 @media only screen and (min-width: 300px) and (max-width: 1020px){
 
-.yacht-centerlabel{
-  display: none;
-}
+
 .dietary-requirements-row .md-label-size{
   padding-left: 0px;
 }
@@ -5736,5 +5734,12 @@ padding-top: 84px;
 } */
 .bigitem .chhd-mrg-02{
   padding-top: 8px;
+}
+}
+
+@media only screen and (max-width:991px){
+
+.yacht-centerlabel{
+  display: none;
 }
 }
