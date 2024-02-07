@@ -800,6 +800,7 @@ class ChartersController extends AppController {
                         }else{
                             $requrl = $SITE_URL.$yachtname;
                         }
+                        $requrl = "https://192.10.10.45/superyacht/";
                         $this->set('requrl', $requrl);
                         
             if (!empty($charterProgData)) {
