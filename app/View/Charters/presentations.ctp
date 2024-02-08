@@ -125,8 +125,11 @@ color:#000;
   margin: 0rem auto;
 
 }
-
-
+.StartImage{
+  border: ridge 15px;
+    border-radius: 6px;
+}
+.LocationImage,
 .img_section_slide img {
   border: ridge 15px;
     border-radius: 6px;
@@ -204,17 +207,6 @@ margin: auto;
   text-align: center;
 font-weight: 500;
 line-height: 1.1;
-}
-.img_section_slide{
- 
-/* height: calc((68.7vw * 9) / 16);
-width: 68.7vw;
-margin: 2.2rem auto 2.6vw; */
-height: calc((90.2vh * 9) / 16);
-width: 90.2vh;
-  margin: 1.2rem auto 3.3vh;
-  z-index: 0;
-position: relative;
 }
 .img_section_slide img{
 width: 100%;
@@ -325,6 +317,27 @@ left: 0;
     height: 300px;
 }
 }
+
+@media only screen and (max-width: 600px) {
+  .img_section_slide {
+    width: 100%!important;
+    height: 290px!important;
+    overflow:hidden;
+}
+
+}
+@media only screen and (max-width: 500px) {
+  .img_section_slide {
+    width: 100%!important;
+    height: 250px!important;
+    overflow: hidden;
+    position: relative;
+    top: -50px;
+
+}
+}
+
+
 
 /* @media only screen and (max-width: 480px) {
   #slides{
