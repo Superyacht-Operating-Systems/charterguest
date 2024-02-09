@@ -772,7 +772,7 @@ class ChartersController extends AppController {
         if (!empty($charterProgramId)) {
             
             $session = $this->Session->read('charter_info.CharterGuest');
-
+                    $this->loadModel('CharterGuest');
                     $chConditions = array('charter_program_id' => $charterProgramId);
                     $chData = $this->CharterGuest->find('first', array('conditions' => $chConditions));
                     $y_id = $chData['CharterGuest']['yacht_id'];
