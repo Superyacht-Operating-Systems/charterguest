@@ -524,7 +524,7 @@ function setBGType(){
         });
 		slidesDiv.forEach(function(slide, index) {
 			var backgroundImageIndex = index % 5; 
-			slide.style.backgroundImage = 'url('+basefolder+'/app/webroot/img/presentations/slide_bg' + (backgroundImageIndex + 1) + '.png)';
+			slide.style.backgroundImage = 'url('+basefolder+'/app/webroot/img/presentations/slide_new' + (backgroundImageIndex + 1) + '.png)';
 		});
 	  }else if(selectedType=='Kids'){
       $('.slide_divwrap .caption_slide').css({
