@@ -836,6 +836,13 @@ color: #000;
 .flexrow .two.view-mainrow span.sp-leftalign {
     margin-top: 10px;
 }}
+@media only screen and (min-width: 772px) and (max-width: 990px){
+.yacht-centerlabel{
+    display:none;
+}
+}
+
+
 </style>
   <div class="modal fade info-modal-pop" id="info-modal" role="dialog">
     <div class="modal-dialog">
