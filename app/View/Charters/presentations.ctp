@@ -539,7 +539,7 @@ function setBGType(){
         });
 	    slidesDiv.forEach(function(slide, index) {
 			var backgroundImageIndex = index % 5; 
-			slide.style.backgroundImage = 'url('+basefolder+'/app/webroot/img/presentations/kids_slide_bg' + (backgroundImageIndex + 1) + '.png)';
+			slide.style.backgroundImage = 'url('+basefolder+'/app/webroot/img/presentations/Kids_Slide' + (backgroundImageIndex + 1) + '.png)';
 		});
 	  }else if(selectedType=='Romantic'){
       $('.slide_divwrap .caption_slide').css({
@@ -553,7 +553,7 @@ function setBGType(){
             'padding-left':'0px'
         });
 	     slidesDiv.forEach(function(slide, index) {
-			slide.style.backgroundImage = 'url('+basefolder+'/app/webroot/img/presentations/romantic_slide_bg.png)';
+			slide.style.backgroundImage = 'url('+basefolder+'/app/webroot/img/presentations/Romantic.png)';
 		});
 	  }else if(selectedType=='Elegant'){
       $('.slide_divwrap .caption_slide').css({
@@ -567,7 +567,7 @@ function setBGType(){
             'padding-left':'3px'
         });
 	     slidesDiv.forEach(function(slide, index) {
-			slide.style.backgroundImage = 'url('+basefolder+'/app/webroot/img/presentations/elegant_slide_bg.png)';
+			slide.style.backgroundImage = 'url('+basefolder+'/app/webroot/img/presentations/Elegant.png)';
 		});
 	  }else{
       $('.slide_divwrap .caption_slide').css({
