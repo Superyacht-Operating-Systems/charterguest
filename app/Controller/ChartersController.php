@@ -776,9 +776,13 @@ class ChartersController extends AppController {
                     $chConditions = array('charter_program_id' => $charterProgramId);
                     $chData = $this->CharterGuest->find('first', array('conditions' => $chConditions));
                     $y_id = $chData['CharterGuest']['yacht_id'];
+                    $this->Session->delete("yachFullName");
                         $this->loadModel('Yacht');
                         $yachtData = $this->Yacht->find('first', array('conditions' => array('id' => $y_id)));
                         //echo "<pre>"; print_r($yachtData); exit;
+
+                        $this->Session->write("yachFullName", $yachtData['Yacht']['yfullName']);
+
                         $ydb_name = $yachtData['Yacht']['ydb_name'];
                         $yid = $yachtData['Yacht']['id'];
                         $yachtData = $this->Yacht->query("SELECT * FROM $ydb_name.yachts Yacht WHERE id = '$yid'");
