@@ -190,7 +190,7 @@ pointer-events: auto!important;
 	}
 
   .slide_divwrap{
-  margin-top: 6.5rem;
+  margin-top: 4.5rem;
   width: 100%;
 }
 .caption{
@@ -332,9 +332,13 @@ left: 0;
     height: 250px!important;
     overflow: hidden;
     position: relative;
-    top: -50px;
 
 }
+.caption_slide {
+    font-size: 16px!important;
+    margin-top: -30px;
+}
+
 }
 
 
