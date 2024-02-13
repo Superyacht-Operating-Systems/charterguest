@@ -509,7 +509,7 @@ $( document ).ready(function() {
   setBGType();
 });
 
-function setBGType(){
+function setBGType(){ 
  var selectedType = document.getElementById("bg_type").value;
       if(selectedType == 'Party' ){
         $('.slide_divwrap .caption_slide').css({
