@@ -776,6 +776,7 @@ class ChartersController extends AppController {
                     $chConditions = array('charter_program_id' => $charterProgramId);
                     $chData = $this->CharterGuest->find('first', array('conditions' => $chConditions));
                     $y_id = $chData['CharterGuest']['yacht_id'];
+
                     $this->Session->delete("yachFullName");
                         $this->loadModel('Yacht');
                         $yachtData = $this->Yacht->find('first', array('conditions' => array('id' => $y_id)));
@@ -810,6 +811,16 @@ class ChartersController extends AppController {
                         }
                         //$requrl = "https://192.10.10.45/superyacht";
                         $this->set('requrl', $requrl);
+                        $this->Session->delete("fleetLogoUrl");
+                        $this->loadModel('Fleetcompany');
+                $companyData = $this->Fleetcompany->find('first', array('fields' => array('management_company_name','logo','fleetname'), 'conditions' => array('id' => $chData['CharterGuest']['charter_company_id'])));
+                if (isset($companyData['Fleetcompany']['logo']) && !empty($companyData['Fleetcompany']['logo'])) {
+                    $fleetLogoUrl = $SITE_URL.'/'.$companyData['Fleetcompany']['fleetname']."/img/logo/thumb/".$companyData['Fleetcompany']['logo'];
+                    //$fleetLogoUrl = $SITE_URL.'/'."charterguest/img/logo/thumb/".$companyData['Fleetcompany']['logo'];
+                } else{
+                    $fleetLogoUrl = $SITE_URL.'/'."charterguest/img/logo/thumb/charter_guest_logo.png";
+                }
+                $this->Session->write("fleetLogoUrl", $fleetLogoUrl);
                         
             if (!empty($charterProgData)) {
             $this->set('charterProgData', $charterProgData[0]);
