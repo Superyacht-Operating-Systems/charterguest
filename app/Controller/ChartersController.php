@@ -659,7 +659,7 @@ class ChartersController extends AppController {
                         $site_full_path = "/var/www/vhosts/wamp/www/";
                         if(isset($domain_name) && $domain_name == "charterguest"){
                             $SITE_URL = "https://charterguest.net/";
-                            $site_full_path = "/var/www/cg-vhosts/";
+                            $site_full_path = "/var/www/cg-vhost/";
                         }
                         $yname = $Ydata['Yacht']['yname'];
                         $fleetname = "";
@@ -964,7 +964,7 @@ class ChartersController extends AppController {
                 $site_full_path = "/var/www/vhosts/wamp/www/";
                 if(isset($domain_name) && $domain_name == "charterguest"){
                     $SITE_URL = "https://charterguest.net/";
-                    $site_full_path = "/var/www/cg-vhosts/";
+                    $site_full_path = "/var/www/cg-vhost/";
                 }
                 $fleetname = "";
                 if(isset($charter_company_id) && !empty($charter_company_id)){
@@ -1117,7 +1117,7 @@ class ChartersController extends AppController {
                         $site_full_path = "/var/www/vhosts/wamp/www/";
                         if(isset($domain_name) && $domain_name == "charterguest"){
                             $SITE_URL = "https://charterguest.net/";
-                            $site_full_path = "/var/www/cg-vhosts/";
+                            $site_full_path = "/var/www/cg-vhost/";
                         }
                         $yname = $Ydata['Yacht']['yname'];
                         $fleetname = "";
