@@ -542,7 +542,7 @@ class ChartersController extends AppController {
                 }else{
                     $charterGuestData[$key]['program_image'] = "#";
                 }
-                //echo $targetFullPath."<br>"; //exit;
+                echo $targetFullPath."<br>"; //exit;
                 $pid = $value['CharterGuest']['charter_program_id'];
                 $charterGuestData[$key]['ydb_name'] = $ydb_name;
                 $scheduleData = $this->CharterProgramFile->query("SELECT * FROM $ydb_name.charter_program_schedules CharterProgramSchedule WHERE charter_program_id = '$pid' AND is_deleted = 0");
@@ -586,7 +586,7 @@ class ChartersController extends AppController {
                                 $charterGuestData[$key]['charter_logo'] = $fleetLogoUrl;
                             }
                 
-            }//exit;
+            }exit;
             //echo "<pre>";print_r($commentcounttotal); exit;
 
             $this->Session->write("commentcounttotal", $commentcounttotal);
@@ -742,7 +742,7 @@ class ChartersController extends AppController {
                 }
 
              }
-     echo "<pre>";print_r($charterGuestData); exit;
+     //echo "<pre>";print_r($charterGuestData); exit;
     //     echo "<pre>";print_r($charterAssocData); exit;
         //echo "<pre>";print_r($mapdetails); exit;
         
