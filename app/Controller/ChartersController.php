@@ -501,7 +501,7 @@ class ChartersController extends AppController {
                 $site_full_path = "/var/www/vhosts/wamp/www/";
                 if(isset($domain_name) && $domain_name == "charterguest"){
                     $SITE_URL = "https://charterguest.net/";
-                    $site_full_path = "/var/www/cg-vhosts/";
+                    $site_full_path = "/var/www/cg-vhost/";
                 }
                 $fleetname = "";
                 if(isset($charter_company_id) && !empty($charter_company_id) &&  $charter_company_id != 0){
@@ -513,7 +513,7 @@ class ChartersController extends AppController {
                     $programFiles[$charter_from_date]['siteurl'] = $SITE_URL;
                 }
                 if(isset($value['CharterGuest']['program_image']) && !empty($value['CharterGuest']['program_image'])){
-                    if (!empty($fleetname)) { echo "fleet"."<br>";
+                    if (!empty($fleetname)) { //echo "fleet"."<br>";
                         
                         if($fleetname == "fleetbeta" || $fleetname == "SOS"){
                             if($fleetname == "fleetbeta" && $yname == "betayacht"){
@@ -526,7 +526,7 @@ class ChartersController extends AppController {
                         }else{
                             $targetFullPath = $SITE_URL.$fleetname."/app/webroot/".$yname."/app/webroot/img/charter_program_files/charter_program_photo/".$value['CharterGuest']['program_image'];
                         }
-                    } else {  echo "nofleet"."<br>";
+                    } else {  //echo "nofleet"."<br>";
                         //exit('ll');
                         $targetFullPath = $SITE_URL.$yname."/app/webroot/img/charter_program_files/charter_program_photo/".$value['CharterGuest']['program_image'];
                     }
