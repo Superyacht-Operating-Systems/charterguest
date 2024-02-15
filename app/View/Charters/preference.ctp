@@ -639,21 +639,21 @@ margin-top: 50px;
 
     <nav class="menu"> 
         <ul id="prefmenu" class="menu menu-level1 no-style nav nav-pills nav-justified2">
-          <li class="<?php echo $personalDetailsTab; ?>"><a data-toggle="tab" href="#personal_det" class="nav-anch pl-wt">Personal</a></li>
-          <li class="<?php echo $mealPreferenceTab; ?>"><a data-toggle="tab" href="#meals" class="nav-anch meal-wt">Meal Service</a></li>
-          <li class="<?php echo $foodPreferenceTab; ?>"><a data-toggle="tab" href="#food" class="nav-anch food_wt">Food</a></li>
-          <li class="<?php echo $beveragePreferenceTab; ?>"><a data-toggle="tab" href="#beverage" class="nav-anch beverage-wt">Beverage</a></li>
+          <li class="<?php echo $personalDetailsTab; ?> chkpersonalvflag"><a data-toggle="tab" href="#personal_det" class="nav-anch pl-wt">Personal</a></li>
+          <li class="<?php echo $mealPreferenceTab; ?> chkpersonal"><a data-toggle="tab" href="#meals" class="nav-anch meal-wt">Meal Service</a></li>
+          <li class="<?php echo $foodPreferenceTab; ?> chkpersonal"><a data-toggle="tab" href="#food" class="nav-anch food_wt">Food</a></li>
+          <li class="<?php echo $beveragePreferenceTab; ?> chkpersonal"><a data-toggle="tab" href="#beverage" class="nav-anch beverage-wt">Beverage</a></li>
           <?php if(isset($ownerprefenceID)){
               //if($sessionCH == 2){ ?>
-          <li class="<?php echo $spiritPreferenceTab; ?>"><a data-toggle="tab" href="#spirit" class="nav-anch BS-wt mobwt-95">Beer & Spirit</a></li>
-          <li class="<?php echo $winePreferenceTab; ?>"><a data-toggle="tab" id="wineTab" href="#wine" class="nav-anch wine_wt">Wine List</a></li>
+          <li class="<?php echo $spiritPreferenceTab; ?> chkpersonal"><a data-toggle="tab" href="#spirit" class="nav-anch BS-wt mobwt-95">Beer & Spirit</a></li>
+          <li class="<?php echo $winePreferenceTab; ?> chkpersonal"><a data-toggle="tab" id="wineTab" href="#wine" class="nav-anch wine_wt">Wine List</a></li>
           <?php } //} else{ ?>
            <!-- <li class="<?php echo $spiritPreferenceTab; ?>"><a data-toggle="tab" href="#spirit" class="nav-anch">Beer & Spirit</a></li>
            <li class="<?php echo $winePreferenceTab; ?>"><a data-toggle="tab" id="wineTab" href="#wine" class="nav-anch">Wine List</a></li> -->
         
           <?php //} ?>
           
-          <li class="<?php echo $itineraryPreferenceTab; ?>"><a data-toggle="tab" href="#itinerary" class="nav-anch itinerary_wt">Itinerary</a></li>
+          <li class="<?php echo $itineraryPreferenceTab; ?> chkpersonal"><a data-toggle="tab" href="#itinerary" class="nav-anch itinerary_wt">Itinerary</a></li>
           
           </ul>
     </nav>
@@ -1507,6 +1507,28 @@ $(document).ready(function()
         }
     });
 }); 
+
+
+$(document).on("click", ".chkpersonal", function(e) { //alert('test');
+    //e.preventDefault();
+    // var chform = $("#personalDetailsForm").valid();
+    // if(!chform){
+    //     $(this).removeClass('active');
+    //     $(this).find('a').attr("aria-expanded","false");
+    //     var dfade = $(this).find('a').attr("href");
+    //     //console.log(dfade);
+    //     var id_str = dfade.replace(/[^a-zA-Z ]/g, "");
+    //     //console.log(id_str);
+    //     $("#"+id_str).removeClass('active');
+    //     $("#"+id_str).removeClass('active in');
+    //     $(".chkpersonalvflag").addClass('active');
+    //     $(".chkpersonalvflag").find('a').attr("aria-expanded","true");
+    //     $("#personal_det").addClass('active');
+    //     $("#personal_det").addClass('in');
+    // }
+    //console.log(chform);
+});
+
 
 $(document).ready(function (e) {
     <?php if (isset($showPopup) && $showPopup == 1) { 
