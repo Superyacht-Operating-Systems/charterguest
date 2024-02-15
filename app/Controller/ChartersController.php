@@ -532,8 +532,8 @@ class ChartersController extends AppController {
                     }
                     $file_folder_path = str_replace("$SITE_URL","$site_full_path","$targetFullPath");
                     //echo $targetFullPath; echo $site_full_path; echo "<pre>"; 
-                    //echo $file_folder_path; //exit;
-                    if(file_exists($targetFullPath)){
+                    echo $file_folder_path."<br>"; //exit;
+                    if(file_exists($file_folder_path)){
                         $AssigntargetFullPath = $targetFullPath;
                         $targetFullPath = $AssigntargetFullPath;
                     }else{
@@ -543,7 +543,7 @@ class ChartersController extends AppController {
                 }else{
                     $charterGuestData[$key]['program_image'] = "#";
                 }
-                echo $targetFullPath."<br>"; //exit;
+                //echo $targetFullPath."<br>"; //exit;
                 $pid = $value['CharterGuest']['charter_program_id'];
                 $charterGuestData[$key]['ydb_name'] = $ydb_name;
                 $scheduleData = $this->CharterProgramFile->query("SELECT * FROM $ydb_name.charter_program_schedules CharterProgramSchedule WHERE charter_program_id = '$pid' AND is_deleted = 0");
