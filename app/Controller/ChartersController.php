@@ -504,7 +504,7 @@ class ChartersController extends AppController {
                     $site_full_path = "/var/www/cg-vhosts/";
                 }
                 $fleetname = "";
-                if(isset($charter_company_id) && !empty($charter_company_id)){
+                if(isset($charter_company_id) && !empty($charter_company_id) &&  $charter_company_id != 0){
                     $companyData = $this->Fleetcompany->find('first', array('fields' => array('management_company_name','logo','fleetname'), 'conditions' => array('id' => $charter_company_id)));
                     $fleetname = $companyData['Fleetcompany']['fleetname'];
                 }
