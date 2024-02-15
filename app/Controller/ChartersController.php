@@ -531,8 +531,7 @@ class ChartersController extends AppController {
                         $targetFullPath = $SITE_URL.$yname."/app/webroot/img/charter_program_files/charter_program_photo/".$value['CharterGuest']['program_image'];
                     }
                     $file_folder_path = str_replace("$SITE_URL","$site_full_path","$targetFullPath");
-                    //echo $targetFullPath; echo $site_full_path; echo "<pre>"; 
-                    echo $file_folder_path."<br>"; //exit;
+                    //echo $targetFullPath; echo $site_full_path; echo "<pre>"; echo $file_folder_path; exit;
                     if(file_exists($file_folder_path)){
                         $AssigntargetFullPath = $targetFullPath;
                         $targetFullPath = $AssigntargetFullPath;
@@ -587,7 +586,7 @@ class ChartersController extends AppController {
                                 $charterGuestData[$key]['charter_logo'] = $fleetLogoUrl;
                             }
                 
-            }exit;
+            }//exit;
             //echo "<pre>";print_r($commentcounttotal); exit;
 
             $this->Session->write("commentcounttotal", $commentcounttotal);
