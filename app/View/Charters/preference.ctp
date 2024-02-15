@@ -117,6 +117,9 @@
 ?>
 
 <style>
+    .error{
+        display:none !important;
+    }
     @media only screen and (min-width:1024px){
     body .mydemolabel {
   font-size: 36px !important;
@@ -636,24 +639,44 @@ margin-top: 50px;
 </div>
 
 <div class="container-row-all-innerpages">
+<?php //echo "<pre>";print_r($this->request->data['CharterGuestPersonalDetail']); 
+    $datatoggle="tab";
+    if(empty($this->request->data['CharterGuestPersonalDetail']['dob'])){
+        $datatoggle="";
+    }else if(empty($this->request->data['CharterGuestPersonalDetail']['pob'])){
+        $datatoggle="";
+    }else if(empty($this->request->data['CharterGuestPersonalDetail']['nationality'])){
+        $datatoggle="";
+    }else if(empty($this->request->data['CharterGuestPersonalDetail']['passport_num'])){
+        $datatoggle="";
+    }else if(empty($this->request->data['CharterGuestPersonalDetail']['issued_date'])){
+        $datatoggle="";
+    }else if(empty($this->request->data['CharterGuestPersonalDetail']['expiry_date'])){
+        $datatoggle="";
+    }else if(empty($this->request->data['CharterGuestPersonalDetail']['next_of_kin'])){
+        $datatoggle="";
+    }else if(empty($this->request->data['CharterGuestPersonalDetail']['next_of_kin_phone'])){
+        $datatoggle="";
+    }
 
+?>
     <nav class="menu"> 
         <ul id="prefmenu" class="menu menu-level1 no-style nav nav-pills nav-justified2">
           <li class="<?php echo $personalDetailsTab; ?> chkpersonalvflag"><a data-toggle="tab" href="#personal_det" class="nav-anch pl-wt">Personal</a></li>
-          <li class="<?php echo $mealPreferenceTab; ?> chkpersonal"><a data-toggle="tab" href="#meals" class="nav-anch meal-wt">Meal Service</a></li>
-          <li class="<?php echo $foodPreferenceTab; ?> chkpersonal"><a data-toggle="tab" href="#food" class="nav-anch food_wt">Food</a></li>
-          <li class="<?php echo $beveragePreferenceTab; ?> chkpersonal"><a data-toggle="tab" href="#beverage" class="nav-anch beverage-wt">Beverage</a></li>
+          <li class="<?php echo $mealPreferenceTab; ?> chkpersonal"><a data-toggle="<?php echo $datatoggle; ?>" href="#meals" class="nav-anch meal-wt">Meal Service</a></li>
+          <li class="<?php echo $foodPreferenceTab; ?> chkpersonal"><a data-toggle="<?php echo $datatoggle; ?>" href="#food" class="nav-anch food_wt">Food</a></li>
+          <li class="<?php echo $beveragePreferenceTab; ?> chkpersonal"><a data-toggle="<?php echo $datatoggle; ?>" href="#beverage" class="nav-anch beverage-wt">Beverage</a></li>
           <?php if(isset($ownerprefenceID)){
               //if($sessionCH == 2){ ?>
-          <li class="<?php echo $spiritPreferenceTab; ?> chkpersonal"><a data-toggle="tab" href="#spirit" class="nav-anch BS-wt mobwt-95">Beer & Spirit</a></li>
-          <li class="<?php echo $winePreferenceTab; ?> chkpersonal"><a data-toggle="tab" id="wineTab" href="#wine" class="nav-anch wine_wt">Wine List</a></li>
+          <li class="<?php echo $spiritPreferenceTab; ?> chkpersonal"><a data-toggle="<?php echo $datatoggle; ?>" href="#spirit" class="nav-anch BS-wt mobwt-95">Beer & Spirit</a></li>
+          <li class="<?php echo $winePreferenceTab; ?> chkpersonal"><a data-toggle="<?php echo $datatoggle; ?>" id="wineTab" href="#wine" class="nav-anch wine_wt">Wine List</a></li>
           <?php } //} else{ ?>
            <!-- <li class="<?php echo $spiritPreferenceTab; ?>"><a data-toggle="tab" href="#spirit" class="nav-anch">Beer & Spirit</a></li>
            <li class="<?php echo $winePreferenceTab; ?>"><a data-toggle="tab" id="wineTab" href="#wine" class="nav-anch">Wine List</a></li> -->
         
           <?php //} ?>
           
-          <li class="<?php echo $itineraryPreferenceTab; ?> chkpersonal"><a data-toggle="tab" href="#itinerary" class="nav-anch itinerary_wt">Itinerary</a></li>
+          <li class="<?php echo $itineraryPreferenceTab; ?> chkpersonal"><a data-toggle="<?php echo $datatoggle; ?>" href="#itinerary" class="nav-anch itinerary_wt">Itinerary</a></li>
           
           </ul>
     </nav>
@@ -1505,27 +1528,29 @@ $(document).ready(function()
                 // required: "Please enter NoK Phone."
             }
         }
+        
     });
 }); 
 
 
 $(document).on("click", ".chkpersonal", function(e) { //alert('test');
     //e.preventDefault();
-    // var chform = $("#personalDetailsForm").valid();
-    // if(!chform){
-    //     $(this).removeClass('active');
-    //     $(this).find('a').attr("aria-expanded","false");
-    //     var dfade = $(this).find('a').attr("href");
-    //     //console.log(dfade);
-    //     var id_str = dfade.replace(/[^a-zA-Z ]/g, "");
-    //     //console.log(id_str);
-    //     $("#"+id_str).removeClass('active');
-    //     $("#"+id_str).removeClass('active in');
-    //     $(".chkpersonalvflag").addClass('active');
-    //     $(".chkpersonalvflag").find('a').attr("aria-expanded","true");
-    //     $("#personal_det").addClass('active');
-    //     $("#personal_det").addClass('in');
-    // }
+    var chform = $("#personalDetailsForm").valid();
+    //return false;
+    //if(!chform){
+        // $(this).removeClass('active');
+        // $(this).find('a').attr("aria-expanded","false");
+        // var dfade = $(this).find('a').attr("href");
+        // //console.log(dfade);
+        // var id_str = dfade.replace(/[^a-zA-Z ]/g, "");
+        // //console.log(id_str);
+        // $("#"+id_str).removeClass('active');
+        // $("#"+id_str).removeClass('active in');
+        // $(".chkpersonalvflag").addClass('active');
+        // $(".chkpersonalvflag").find('a').attr("aria-expanded","true");
+        // $("#personal_det").addClass('active');
+        // $("#personal_det").addClass('in');
+    //}
     //console.log(chform);
 });
 
