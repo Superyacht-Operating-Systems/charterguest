@@ -513,7 +513,7 @@ class ChartersController extends AppController {
                     $programFiles[$charter_from_date]['siteurl'] = $SITE_URL;
                 }
                 if(isset($value['CharterGuest']['program_image']) && !empty($value['CharterGuest']['program_image'])){
-                    if (!empty($fleetname)) {
+                    if (!empty($fleetname)) { echo "fleet"."<br>";
                         
                         if($fleetname == "fleetbeta" || $fleetname == "SOS"){
                             if($fleetname == "fleetbeta" && $yname == "betayacht"){
@@ -526,7 +526,7 @@ class ChartersController extends AppController {
                         }else{
                             $targetFullPath = $SITE_URL.$fleetname."/app/webroot/".$yname."/app/webroot/img/charter_program_files/charter_program_photo/".$value['CharterGuest']['program_image'];
                         }
-                    } else {  
+                    } else {  echo "nofleet"."<br>";
                         //exit('ll');
                         $targetFullPath = $SITE_URL.$yname."/app/webroot/img/charter_program_files/charter_program_photo/".$value['CharterGuest']['program_image'];
                     }
