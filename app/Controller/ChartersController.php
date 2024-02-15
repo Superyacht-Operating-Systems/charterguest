@@ -536,7 +536,7 @@ class ChartersController extends AppController {
                     if(file_exists($file_folder_path)){
                         $AssigntargetFullPath = $targetFullPath;
                         $targetFullPath = $AssigntargetFullPath;
-                        
+                        echo $targetFullPath."<br>";
                     }else{
                         $targetFullPath = $this->request->base."/app/webroot/img/noimage_cp.png";
                     }
