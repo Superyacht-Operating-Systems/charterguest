@@ -118,8 +118,8 @@ line-height: 1.1;
 color:#000;
 }
 #slides {
-  width: calc(70vh * (16/9));
-  height: 70vh;
+  width: calc(85vh * (16/9));
+  height: 85vh;
   /* width: 95vw!important; 
   height: calc((95vw * 9) / 16); */
   margin: 0rem auto;
@@ -290,7 +290,9 @@ left: 0;
 
   @media only screen and (max-width: 900px) {
     #slides{
-      width:100%;
+      height: 470px;
+    padding: 0px 0px;
+    width: 100%;
     }
     .slides-row{
       padding:0px 20px;
@@ -312,11 +314,6 @@ left: 0;
 .slides-row {
 }
 }
-@media only screen and (max-width: 500px) {
-#slides {
-    height: 300px;
-}
-}
 
 @media only screen and (max-width: 600px) {
   .img_section_slide {
@@ -324,7 +321,9 @@ left: 0;
     height: 290px!important;
     overflow:hidden;
 }
-
+#slides {
+    height: 400px;
+}
 }
 @media only screen and (max-width: 500px) {
   .img_section_slide {
@@ -340,9 +339,21 @@ left: 0;
 }
 
 }
-
-
-
+@media only screen and (max-width: 500px) {
+#slides {
+    height: 320px;
+}
+}
+@media only screen and (max-width: 900px) {
+  .img_section_slide{
+    width: 100%!important;
+  }
+}
+@media only screen and (max-width: 500px) {
+  .yachtHeaderName{
+    font-size:12px!important;
+  }
+}
 /* @media only screen and (max-width: 480px) {
   #slides{
     height: 50vh;
@@ -521,8 +532,8 @@ function setBGType(){
           'margin-bottom':'1.5vh'
           });
         $('.slide_divwrap .img_section_slide').css({
-            'height': 'calc((92vh * 9) / 16)',
-            'width': '91vh',
+            'height': 'calc((116vh * 9) / 16)',
+            'width': '100%',
             'margin':'0 auto 2.6vh',
             'padding-left':'0px'
         });
