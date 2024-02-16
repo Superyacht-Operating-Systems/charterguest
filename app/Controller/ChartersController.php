@@ -501,10 +501,10 @@ class ChartersController extends AppController {
                 $site_full_path = "/var/www/vhosts/wamp/www/";
                 if(isset($domain_name) && $domain_name == "charterguest"){
                     $SITE_URL = "https://charterguest.net/";
-                    $site_full_path = "/var/www/cg-vhosts/";
+                    $site_full_path = "/var/www/cg-vhost/";
                 }
                 $fleetname = "";
-                if(isset($charter_company_id) && !empty($charter_company_id)){
+                if(isset($charter_company_id) && !empty($charter_company_id) &&  $charter_company_id != 0){
                     $companyData = $this->Fleetcompany->find('first', array('fields' => array('management_company_name','logo','fleetname'), 'conditions' => array('id' => $charter_company_id)));
                     $fleetname = $companyData['Fleetcompany']['fleetname'];
                 }
@@ -513,7 +513,7 @@ class ChartersController extends AppController {
                     $programFiles[$charter_from_date]['siteurl'] = $SITE_URL;
                 }
                 if(isset($value['CharterGuest']['program_image']) && !empty($value['CharterGuest']['program_image'])){
-                    if (!empty($fleetname)) {
+                    if (!empty($fleetname)) { //echo "fleet"."<br>";
                         
                         if($fleetname == "fleetbeta" || $fleetname == "SOS"){
                             if($fleetname == "fleetbeta" && $yname == "betayacht"){
@@ -526,15 +526,17 @@ class ChartersController extends AppController {
                         }else{
                             $targetFullPath = $SITE_URL.$fleetname."/app/webroot/".$yname."/app/webroot/img/charter_program_files/charter_program_photo/".$value['CharterGuest']['program_image'];
                         }
-                    } else {  
+                    } else {  //echo "nofleet"."<br>";
                         //exit('ll');
                         $targetFullPath = $SITE_URL.$yname."/app/webroot/img/charter_program_files/charter_program_photo/".$value['CharterGuest']['program_image'];
                     }
                     $file_folder_path = str_replace("$SITE_URL","$site_full_path","$targetFullPath");
                     //echo $targetFullPath; echo $site_full_path; echo "<pre>"; echo $file_folder_path; exit;
+                    //echo $file_folder_path."<br>";
                     if(file_exists($file_folder_path)){
                         $AssigntargetFullPath = $targetFullPath;
                         $targetFullPath = $AssigntargetFullPath;
+                        //echo $targetFullPath."<br>";
                     }else{
                         $targetFullPath = $this->request->base."/app/webroot/img/noimage_cp.png";
                     }
@@ -657,7 +659,7 @@ class ChartersController extends AppController {
                         $site_full_path = "/var/www/vhosts/wamp/www/";
                         if(isset($domain_name) && $domain_name == "charterguest"){
                             $SITE_URL = "https://charterguest.net/";
-                            $site_full_path = "/var/www/cg-vhosts/";
+                            $site_full_path = "/var/www/cg-vhost/";
                         }
                         $yname = $Ydata['Yacht']['yname'];
                         $fleetname = "";
@@ -962,7 +964,7 @@ class ChartersController extends AppController {
                 $site_full_path = "/var/www/vhosts/wamp/www/";
                 if(isset($domain_name) && $domain_name == "charterguest"){
                     $SITE_URL = "https://charterguest.net/";
-                    $site_full_path = "/var/www/cg-vhosts/";
+                    $site_full_path = "/var/www/cg-vhost/";
                 }
                 $fleetname = "";
                 if(isset($charter_company_id) && !empty($charter_company_id)){
@@ -1115,7 +1117,7 @@ class ChartersController extends AppController {
                         $site_full_path = "/var/www/vhosts/wamp/www/";
                         if(isset($domain_name) && $domain_name == "charterguest"){
                             $SITE_URL = "https://charterguest.net/";
-                            $site_full_path = "/var/www/cg-vhosts/";
+                            $site_full_path = "/var/www/cg-vhost/";
                         }
                         $yname = $Ydata['Yacht']['yname'];
                         $fleetname = "";
