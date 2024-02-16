@@ -1684,6 +1684,7 @@ $(document).on('change','#passportImage',function(){
         if(jQuery.inArray(image_extension,['gif','jpg','jpeg','png','pdf']) == -1){
           alert("Invalid image file");
           $("#passportImage").val('');
+          return false;
         }
 
         var form_data = new FormData();
@@ -1744,4 +1745,32 @@ setTimeout(function() {
 <?php } ?>
 
 /************************************ */
+
+/***************validation not allowed to move on other tab without enter mandatory field */
+$(document).on('change','.validateMandate',function(){
+            var mflag = 0;
+            $(".validateMandate").each(function(i,e){
+                //console.log(e)
+                //console.log($(this).attr('id'));
+                //console.log($(this).val());
+                    if(!$(this).val()){
+                        mflag = 1;
+                    }
+                
+            });
+            if(!$("#CharterGuestPersonalDetailNationality").val()){
+                        mflag = 1;
+            }
+            
+            //console.log(mflag);
+            if(mflag == 1){
+                $(".chkpersonal").each(function(e){
+                    $(this).find('a').attr('data-toggle','');
+                });
+            }else if(mflag == 0){
+                $(".chkpersonal").each(function(e){
+                    $(this).find('a').attr('data-toggle','tab');
+                });
+            }
+});
 </script> 
