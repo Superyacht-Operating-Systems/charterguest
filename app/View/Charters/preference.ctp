@@ -141,6 +141,47 @@ body .mydemolabel {
 
 }
 
+@media only screen and (max-width: 771px){
+.navbar-absalute-top {
+position: relative; 
+height:auto;
+}
+.container-row-all-innerpages {
+    top: 95px;
+}
+body .mydemolabel {
+    top: 42px!important;
+    font-size: 14px!important;
+}
+.position-mobile-head {
+    text-transform: inherit;
+    margin-top: 10px;
+    top: -41px;
+    left: 80px;
+    font-size: 16px;
+}
+body .mydemolabel .user-subnamep {
+    font-size: 14px!important;
+    padding-top: 2px!important;
+    display:none;
+}
+.yachtHeaderName {
+    margin-top: 9px!important;
+}
+}
+@media only screen and (max-width: 991px){
+.nav-pills > li + li {
+    margin-left: 0;
+    margin-right: 5px;
+}
+.nav-pills>li>a.nav-anch {
+    margin-right: 0;
+    font-size: 12px;
+    padding: 10px 2px;
+}
+}
+
+
     @media (max-width: 768px){
 .modal-dialog {
     max-width: 315px;
@@ -491,6 +532,8 @@ margin-top: 50px;
     background-color: #f0ad4e !important;
     border-color: #eea236 !important;
 }
+
+
 </style>
 
 <?php

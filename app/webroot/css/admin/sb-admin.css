@@ -5743,3 +5743,7 @@ padding-top: 84px;
   display: none;
 }
 }
+
+#successPreferenceAlert .modal-footer{
+  display: flex;
+}
