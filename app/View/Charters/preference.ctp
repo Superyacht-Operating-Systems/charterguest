@@ -146,9 +146,23 @@ body .mydemolabel {
 position: relative; 
 height:auto;
 }
+.nav-side-menu-full-container .nav-side-menu .sidebar-btn {
+    top: -44px!important;
+}
+.menu{
+    position: relative;
+    top: 5px;
+}
 .container-row-all-innerpages {
     top: 95px;
 }
+.fixed-row-container {
+  margin-top: 0px;
+}
+.container-row-all-innerpages {
+    top: 26px!important;
+}
+
 body .mydemolabel {
     top: 42px!important;
     font-size: 14px!important;
@@ -421,7 +435,7 @@ justify-content: center;
   top: 95px;
 }
 .fixed-row-container {
-  margin-top: 0px;
+  margin-top: 20px!important;
 }
 .personal-row-container{
     margin-top: 0px;
