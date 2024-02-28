@@ -2095,35 +2095,42 @@ border-radius: 4px; */
                              
                             if(isset($domain_name) && $domain_name == "charterguest"){
                                 $update_BASE_URL = "https://charterguest.net/";
+                                $File_dir_path = "/var/www/cg-vhost/";
                             }else{
                                 $update_BASE_URL = "https://totalsuperyacht.com:8080/";
+                                $File_dir_path = "/var/www/vhosts/wamp/www/";
                             }
                             // if($yname == "yacht"){
                             //     $targetFullPath = BASE_URL.'/SOS/app/webroot/betayacht/app/webroot/img/charter_program_files/itinerary_photos/'.$attachment;
                             // }else{
-                                $targetFullPath = $update_BASE_URL.'/'.$yachtname.'/app/webroot/img/location_contents/'.$attachment;
-                                $targetFullGalleryPath = $update_BASE_URL.'/'.$yachtname.'/app/webroot/img/location_contents/';
+                                $targetFullPath = $update_BASE_URL.$yachtname.'/app/webroot/img/location_contents/'.$attachment;
+                                $targetFullGalleryPath = $update_BASE_URL.$yachtname.'/app/webroot/img/location_contents/';
+                                $targetFile_dir_path = $File_dir_path.$yachtname.'/app/webroot/img/location_contents/';
                                 
                                 if (!empty($fleetname)) { // IF yacht is under any Fleet
-                                    $targetFullPath = $update_BASE_URL.'/'.$fleetname."/app/webroot/".$yachtname.'/app/webroot/img/location_contents/'.$attachment;
-                                    $targetFullGalleryPath = $update_BASE_URL.'/'.$fleetname."/app/webroot/".$yachtname.'/app/webroot/img/location_contents/';
+                                    $targetFullPath = $update_BASE_URL.$fleetname."/app/webroot/".$yachtname.'/app/webroot/img/location_contents/'.$attachment;
+                                    $targetFullGalleryPath = $update_BASE_URL.$fleetname."/app/webroot/".$yachtname.'/app/webroot/img/location_contents/';
+                                    $targetFile_dir_path = $File_dir_path.$fleetname."/app/webroot/".$yachtname.'/app/webroot/img/location_contents/';
                                 }
                             //}
                             if(BASE_URL == "http://localhost"){
                                 $targetFullPath = BASE_URL."/superyacht/app/webroot/img/location_contents/".$attachment;
                                 $targetFullGalleryPath = BASE_URL."/superyacht/app/webroot/img/location_contents/";
+                                $targetFile_dir_path = "/opt/lampp/htdocs/superyacht/app/webroot/img/location_contents/";
                                 }
 
                             $titleimage = $targetFullPath;
                             $titleimagehref = $targetFullPath;
                             $fancybox = "fancybox";
                             $targetFullGalleryPathhref = $targetFullGalleryPath;
+                            $targetFile_dir_path_href = $targetFile_dir_path;
                         }else{
                             $noteimg = "style='display:none;'";
                             $titleimage = BASE_URL.'/charterguest/app/webroot/img/noimage.png';
                             $titleimagehref = "#";
                             $fancybox = "";
                             $targetFullGalleryPathhref = "";
+                            $targetFile_dir_path_href = "";
                         }
                         
                         $crusemaparray[$crusemap] =  "crusingschedulemap".$crusemap;
@@ -2178,7 +2185,7 @@ border-radius: 4px; */
                                     $fleetlocationimages =  array_unique($fleetlocationimages);
                                     foreach($fleetlocationimages as $name){
                                         if(!empty($name)){ 
-                                            $fname = $targetFullGalleryPathhref.$name;
+                                            $fname = $targetFile_dir_path_href.$name;
                                             if(file_exists($fname)) {
                                             ?>
                                             <a href="<?php echo $targetFullGalleryPathhref; ?><?php echo $name; ?>" data-thumbnail="<?php echo $targetFullGalleryPathhref; ?><?php echo $name; ?>" rel="galleryloc<?php echo $crusemap ?>" class="<?php echo $fancybox; ?>"><img src="<?php echo $name; ?>" style="object-fit: cover;width: 100%; height: 150px;display:none;" alt="" ></a>
