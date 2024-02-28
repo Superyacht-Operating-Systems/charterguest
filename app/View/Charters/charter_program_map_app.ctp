@@ -2054,12 +2054,12 @@ body.modal-open {
                             // if($yname == "yacht"){
                             //     $targetFullPath = BASE_URL.'/SOS/app/webroot/betayacht/app/webroot/img/charter_program_files/itinerary_photos/'.$attachment;
                             // }else{
-                                $targetFullPath = $update_BASE_URL.'/'.$yachtname.'/app/webroot/img/location_contents/'.$attachment;
-                                $targetFullGalleryPath = $update_BASE_URL.'/'.$yachtname.'/app/webroot/img/location_contents/';
+                                $targetFullPath = $update_BASE_URL.$yachtname.'/app/webroot/img/location_contents/'.$attachment;
+                                $targetFullGalleryPath = $update_BASE_URL.$yachtname.'/app/webroot/img/location_contents/';
                                 
                                 if (!empty($fleetname)) { // IF yacht is under any Fleet
-                                    $targetFullPath = $update_BASE_URL.'/'.$fleetname."/app/webroot/".$yachtname.'/app/webroot/img/location_contents/'.$attachment;
-                                    $targetFullGalleryPath = $update_BASE_URL.'/'.$fleetname."/app/webroot/".$yachtname.'/app/webroot/img/location_contents/';
+                                    $targetFullPath = $update_BASE_URL.$fleetname."/app/webroot/".$yachtname.'/app/webroot/img/location_contents/'.$attachment;
+                                    $targetFullGalleryPath = $update_BASE_URL.$fleetname."/app/webroot/".$yachtname.'/app/webroot/img/location_contents/';
                                 }
                             //}
                             if(BASE_URL == "http://localhost"){
