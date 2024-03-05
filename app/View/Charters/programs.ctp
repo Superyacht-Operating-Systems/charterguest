@@ -37,6 +37,10 @@
     );
 ?>
 <style>
+.ch-card{
+    border-radius: 10px;
+}
+
     .action_links ul li a {
   color: #d9d9d9 ;
 }

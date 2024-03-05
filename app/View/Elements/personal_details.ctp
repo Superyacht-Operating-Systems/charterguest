@@ -657,7 +657,7 @@ and (max-device-width : 667px) {
             <label class="pdd-none txt-right">First Name <span class="required"> * </span></label>
           </div>
           <div class="col-xs-7 col-md-5 col-sm-7 form-group mob-w-70">
-              <?php echo $this->Form->input("first_name",array("label"=>false,'class'=>'form-control  checkInputChange','type' => 'text', 'default' => $defaultFirstName)); ?>
+              <?php echo $this->Form->input("first_name",array("label"=>false,'class'=>'form-control validateMandate checkInputChange','type' => 'text', 'default' => $defaultFirstName)); ?>
           </div>
       
       </div></div>
@@ -668,7 +668,7 @@ and (max-device-width : 667px) {
           <label class="pdd-none txt-right">Family Name <span class="required"> * </span></label>
         </div>
         <div class="col-xs-7 col-md-5 col-sm-7 form-group mob-w-70">
-          <?php echo $this->Form->input("family_name",array("label"=>false,'class'=>'form-control checkInputChange','type' => 'text', 'default' => $defaultLastName)); ?>
+          <?php echo $this->Form->input("family_name",array("label"=>false,'class'=>'form-control validateMandate checkInputChange','type' => 'text', 'default' => $defaultLastName)); ?>
         </div>
       </div>
     </div>
@@ -679,7 +679,7 @@ and (max-device-width : 667px) {
           <label class="pdd-none txt-right">Date of Birth <span class="required"> * </span></label>
         </div>
         <div class="col-xs-7 col-md-5 form-group col-sm-7 mob-w-70">
-          <?php echo $this->Form->input("dob",array("label"=>false,'class'=>'form-control checkInputChange dobDatePicker nonEditable','type' => 'text','default'=>$deleteddob)); ?>
+          <?php echo $this->Form->input("dob",array("label"=>false,'class'=>'form-control validateMandate checkInputChange dobDatePicker nonEditable','type' => 'text','default'=>$deleteddob)); ?>
         </div>
       </div></div>
       <div class="clearfix"></div>
@@ -689,7 +689,7 @@ and (max-device-width : 667px) {
           <label class="pdd-none txt-right">Place of Birth <span class="required"> * </span></label>
         </div>
         <div class="col-xs-7 col-md-5 form-group col-sm-7 mob-w-70">
-           <?php echo $this->Form->input("pob",array("label"=>false,'class'=>'form-control checkInputChange','type' => 'text','default'=>$deletedpob)); ?>
+           <?php echo $this->Form->input("pob",array("label"=>false,'class'=>'form-control validateMandate checkInputChange','type' => 'text','default'=>$deletedpob)); ?>
         </div>
       </div></div>
       <div class="clearfix"></div>
@@ -711,7 +711,7 @@ and (max-device-width : 667px) {
           <label class="pdd-none txt-right">Passport # <span class="required"> * </span></label>
         </div>
         <div class="col-xs-7 col-md-5 col-sm-7 form-group mob-w-70">
-             <?php echo $this->Form->input("passport_num",array("label"=>false,'class'=>'form-control checkInputChange','type' => 'text')); ?>
+             <?php echo $this->Form->input("passport_num",array("label"=>false,'class'=>'form-control validateMandate checkInputChange','type' => 'text')); ?>
         </div>
       </div></div>
       <div class="clearfix"></div>
@@ -721,7 +721,7 @@ and (max-device-width : 667px) {
           <label class="pdd-none txt-right">Issue Date <span class="required"> * </span></label>
         </div>
         <div class="col-xs-7 col-md-5 col-sm-7 form-group mob-w-70">
-           <?php echo $this->Form->input("issued_date",array("label"=>false,'class'=>'form-control checkInputChange issuedatePicker nonEditable','type' => 'text')); ?>
+           <?php echo $this->Form->input("issued_date",array("label"=>false,'class'=>'form-control validateMandate checkInputChange issuedatePicker nonEditable','type' => 'text')); ?>
            <span class="error" id="IssuedDateErrorMessage" style="display: none;">Enter valid date</span>
         </div>
       </div></div>
@@ -732,7 +732,7 @@ and (max-device-width : 667px) {
           <label class="pdd-none txt-right">Expiry Date <span class="required"> * </span></label>
         </div>
         <div class="col-xs-7 col-md-5 col-sm-7 form-group mob-w-70">
-          <?php echo $this->Form->input("expiry_date",array("label"=>false,'class'=>'form-control checkInputChange expirydatePicker nonEditable','type' => 'text')); ?>
+          <?php echo $this->Form->input("expiry_date",array("label"=>false,'class'=>'form-control validateMandate checkInputChange expirydatePicker nonEditable','type' => 'text')); ?>
            <span class="error" id="ExpiryDateErrorMessage" style="display: none;">Enter valid date</span>
         </div>
       </div></div>
@@ -783,7 +783,7 @@ and (max-device-width : 667px) {
           <label class="txt-right p-t-02">Next of Kin <span class="required"> * </span></label>
         </div>
         <div class="col-xs-7 col-md-5 col-sm-7 form-group mob-w-70">
-         <?php echo $this->Form->input("next_of_kin",array("label"=>false,'class'=>'form-control checkInputChange','type' => 'text')); ?>
+         <?php echo $this->Form->input("next_of_kin",array("label"=>false,'class'=>'form-control validateMandate checkInputChange','type' => 'text')); ?>
         </div>
       </div>
       <div class="col-md-12 d-inlineblockelements">
@@ -791,7 +791,7 @@ and (max-device-width : 667px) {
           <label class="txt-right p-t-02">NoK Phone <span class="required"> * </span></label>
         </div>
         <div class="col-xs-7 col-md-5 col-sm-7 form-group mob-w-70">
-         <?php echo $this->Form->input("next_of_kin_phone",array("label"=>false,'class'=>'form-control checkInputChange','type' => 'text')); ?>
+         <?php echo $this->Form->input("next_of_kin_phone",array("label"=>false,'class'=>'form-control validateMandate checkInputChange','type' => 'text')); ?>
         </div>
       </div>
       <div class="clearfix"></div>

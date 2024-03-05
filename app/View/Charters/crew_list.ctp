@@ -62,7 +62,7 @@
     }
     @media only screen and (min-width:1024px){
     body .mydemolabel {
-  font-size: 36px !important;
+  /* font-size: 36px !important; */
 }
     }
 /* @media only screen and (min-width:771px) and (max-width:1024px){
@@ -592,6 +592,13 @@ font-weight: bold;
 
 }
 
+.owl-dots {
+    margin-top: 10px!important;
+    position: relative;
+    top: 10px;
+}
+
+
 }
 .nav-justified > li > a{
     color: #000!important;
@@ -712,13 +719,15 @@ font-weight: bold;
 .mobviewheight{
     background-color:#2a2a2a;
     height:575px;
-    margin-top: 10px;
+    margin-top: 30px;
 }
 
 .notmobleftpad{
     margin-left: 0px !important;
 }
-
+.flexrow .two.view-mainrow .md-row-space {
+    padding-top: 15px;
+}
 }
 
 .bgnotmob{
@@ -740,7 +749,7 @@ overflow: auto;
 }
 .titlenotmob{
     font-size:24px !important;
-    margin-bottom: 15px;
+    /* margin-bottom: 15px; */
 }
 
 .notmobleftpad{
@@ -757,10 +766,14 @@ overflow: auto;
 .footer-mob-row {
     width: 100%;
 }
+
 }
 
-
-
+@media screen and (max-width: 771px){
+    .owl-dots {
+    top: 0px;
+}
+}
 
 .btn-warning-bg:hover,
 .btn-warning-bg:active:hover
@@ -818,6 +831,18 @@ color: #000;
     padding-top: 0px!important;
     margin-bottom: 100px;
 }
+
+@media only screen and (max-width: 771px){
+.flexrow .two.view-mainrow span.sp-leftalign {
+    margin-top: 10px;
+}}
+@media only screen and (min-width: 772px) and (max-width: 990px){
+.yacht-centerlabel{
+    display:none;
+}
+}
+
+
 </style>
   <div class="modal fade info-modal-pop" id="info-modal" role="dialog">
     <div class="modal-dialog">

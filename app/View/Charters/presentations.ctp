@@ -118,16 +118,26 @@ line-height: 1.1;
 color:#000;
 }
 #slides {
-  width: calc(70vh * (16/9));
-  height: 70vh;
+  width: calc(85vh * (16/9));
+  height: 85vh;
   /* width: 95vw!important; 
   height: calc((95vw * 9) / 16); */
   margin: 0rem auto;
+
+}
+.StartImage{
   border: ridge 15px;
-    border-radius: 15px;
+    border-radius: 6px;
+}
+.LocationImage,
+.img_section_slide img {
+  border: ridge 15px;
+    border-radius: 6px;
 
 
 }
+
+
 
 .slide {
   position: relative;
@@ -180,7 +190,7 @@ pointer-events: auto!important;
 	}
 
   .slide_divwrap{
-  margin-top: 6.5rem;
+  margin-top: 4.5rem;
   width: 100%;
 }
 .caption{
@@ -197,17 +207,6 @@ margin: auto;
   text-align: center;
 font-weight: 500;
 line-height: 1.1;
-}
-.img_section_slide{
- 
-/* height: calc((68.7vw * 9) / 16);
-width: 68.7vw;
-margin: 2.2rem auto 2.6vw; */
-height: calc((90.2vh * 9) / 16);
-width: 90.2vh;
-  margin: 1.2rem auto 3.3vh;
-  z-index: 0;
-position: relative;
 }
 .img_section_slide img{
 width: 100%;
@@ -291,7 +290,9 @@ left: 0;
 
   @media only screen and (max-width: 900px) {
     #slides{
-      width:100%;
+      height: 470px;
+    padding: 0px 0px;
+    width: 100%;
     }
     .slides-row{
       padding:0px 20px;
@@ -313,13 +314,46 @@ left: 0;
 .slides-row {
 }
 }
+
+@media only screen and (max-width: 600px) {
+  .img_section_slide {
+    width: 100%!important;
+    height: 290px!important;
+    overflow:hidden;
+}
+#slides {
+    height: 400px;
+}
+}
+@media only screen and (max-width: 500px) {
+  .img_section_slide {
+    width: 100%!important;
+    height: 250px!important;
+    overflow: hidden;
+    position: relative;
+
+}
+.caption_slide {
+    font-size: 16px!important;
+    margin-top: -30px;
+}
+
+}
 @media only screen and (max-width: 500px) {
 #slides {
-    height: 300px;
+    height: 320px;
 }
 }
-
-
+@media only screen and (max-width: 900px) {
+  .img_section_slide{
+    width: 100%!important;
+  }
+}
+@media only screen and (max-width: 500px) {
+  .yachtHeaderName{
+    font-size:12px!important;
+  }
+}
 /* @media only screen and (max-width: 480px) {
   #slides{
     height: 50vh;
@@ -330,7 +364,7 @@ left: 0;
 <div class="slides-row">
 <div id="slides">
     
-    <div class="slide active" style="background-image: url(<?php echo $requrl; ?>/app/webroot/img/memories/<?php echo $yachtData['Yacht']['cg_memories_image']; ?>);">
+    <div class="slide active StartImage" style="background-image: url(<?php echo $requrl; ?>/app/webroot/img/memories/<?php echo $yachtData['Yacht']['cg_memories_image']; ?>);">
       <div class="slide_divwrap_default">
         <div class="caption" ><?php echo $charterProgData['CharterProgram']['charter_name']; ?></div>                
       </div>
@@ -341,12 +375,12 @@ left: 0;
     </div>
 
     <?php foreach($schduledata as $key=>$value){ //echo "<pre>"; echo $key; print_r($value);  exit; 
-      $fname = $requrl.$value['CharterProgramSchedule']['attachment'];
-       if(file_exists($fname)) { ?>
-      <div class="slide" style="background-image: url(<?php echo $requrl; ?>/app/webroot/img/charter_program_files/itinerary_photos/<?php echo $value['CharterProgramSchedule']['attachment']; ?>);">
-      <?php   }else{ ?>
+      /*$fname = $requrl.'/app/webroot/img/charter_program_files/itinerary_photos/'.$value['CharterProgramSchedule']['attachment'];
+       if(file_exists($fname)) { */?>
+      <div class="slide LocationImage" style="background-image: url('<?php echo $requrl; ?>/app/webroot/img/charter_program_files/itinerary_photos/<?php echo $value['CharterProgramSchedule']['attachment']; ?>');">
+      <?php  /* }else{ ?>
         <div class="slide" style="background-image:none;">
-        <?php } ?>
+        <?php } */?>
         <div class="day_slide" >
 			    <div class="H_title" style="margin: 0px;">Day <?php echo $value['CharterProgramSchedule']['day_num']; ?></div>
 			    <div class="H_title" style="margin: 0px;padding-top: 2px;"><?php echo $value['CharterProgramSchedule']['title']; ?></div> 
@@ -372,7 +406,7 @@ left: 0;
          
          ?>
          <?php if(isset($attachment) && $attachment!=''){ ?>
-          <div class="slide slideDiv">
+          <div class="slide slideDiv ActivityImage">
             <div class="row sliderrow">
                 <div class="col-lg-9 col-md-9 col-xs-9 col-sm-9 slide_divwrap">
                     <div class="caption_slide" ><?php echo $caption; ?></div>
@@ -391,12 +425,12 @@ left: 0;
     <?php } ?>
 
     <?php foreach($deb as $key=>$value){ //echo "<pre>"; echo $key; print_r($value);  exit; 
-       $fname = $requrl.$value['CharterProgramSchedule']['attachment'];
-       if(file_exists($fname)) { ?>
-        <div class="slide" style="background-image: url(<?php echo $requrl; ?>/app/webroot/img/charter_program_files/itinerary_photos/<?php echo $value['CharterProgramSchedule']['attachment']; ?>);">
-    <?php   }else{ ?>
+      /* $fname = $requrl.'/app/webroot/img/charter_program_files/itinerary_photos/'.$value['CharterProgramSchedule']['attachment'];
+       if(file_exists($fname)) { */?>
+        <div class="slide LocationImage" style="background-image: url('<?php echo $requrl; ?>/app/webroot/img/charter_program_files/itinerary_photos/<?php echo $value['CharterProgramSchedule']['attachment']; ?>');">
+    <?php /*  }else{ ?>
       <div class="slide" style="background-image:none;">
-     <?php  }
+     <?php  }*/
       ?>
 
 
@@ -425,7 +459,7 @@ left: 0;
    
    ?>
    <?php if(isset($attachment) && $attachment!=''){ ?>
-    <div class="slide slideDiv">
+    <div class="slide slideDiv ActivityImage">
       <div class="row sliderrow">
           <div class="col-lg-9 col-md-9 col-xs-9 col-sm-9 slide_divwrap">
               <div class="caption_slide" ><?php echo $caption; ?></div>
@@ -490,7 +524,7 @@ $( document ).ready(function() {
   setBGType();
 });
 
-function setBGType(){
+function setBGType(){ 
  var selectedType = document.getElementById("bg_type").value;
       if(selectedType == 'Party' ){
         $('.slide_divwrap .caption_slide').css({
@@ -498,14 +532,14 @@ function setBGType(){
           'margin-bottom':'1.5vh'
           });
         $('.slide_divwrap .img_section_slide').css({
-            'height': 'calc((92vh * 9) / 16)',
-            'width': '91vh',
+            'height': 'calc((116vh * 9) / 16)',
+            'width': '100%',
             'margin':'0 auto 2.6vh',
             'padding-left':'0px'
         });
 		slidesDiv.forEach(function(slide, index) {
 			var backgroundImageIndex = index % 5; 
-			slide.style.backgroundImage = 'url('+basefolder+'/app/webroot/img/presentations/slide_bg' + (backgroundImageIndex + 1) + '.png)';
+			slide.style.backgroundImage = 'url('+basefolder+'/app/webroot/img/presentations/slide_new' + (backgroundImageIndex + 1) + '.png)';
 		});
 	  }else if(selectedType=='Kids'){
       $('.slide_divwrap .caption_slide').css({
@@ -520,7 +554,7 @@ function setBGType(){
         });
 	    slidesDiv.forEach(function(slide, index) {
 			var backgroundImageIndex = index % 5; 
-			slide.style.backgroundImage = 'url('+basefolder+'/app/webroot/img/presentations/kids_slide_bg' + (backgroundImageIndex + 1) + '.png)';
+			slide.style.backgroundImage = 'url('+basefolder+'/app/webroot/img/presentations/Kids_Slide' + (backgroundImageIndex + 1) + '.png)';
 		});
 	  }else if(selectedType=='Romantic'){
       $('.slide_divwrap .caption_slide').css({
@@ -534,7 +568,7 @@ function setBGType(){
             'padding-left':'0px'
         });
 	     slidesDiv.forEach(function(slide, index) {
-			slide.style.backgroundImage = 'url('+basefolder+'/app/webroot/img/presentations/romantic_slide_bg.png)';
+			slide.style.backgroundImage = 'url('+basefolder+'/app/webroot/img/presentations/Romantic.png)';
 		});
 	  }else if(selectedType=='Elegant'){
       $('.slide_divwrap .caption_slide').css({
@@ -548,7 +582,7 @@ function setBGType(){
             'padding-left':'3px'
         });
 	     slidesDiv.forEach(function(slide, index) {
-			slide.style.backgroundImage = 'url('+basefolder+'/app/webroot/img/presentations/elegant_slide_bg.png)';
+			slide.style.backgroundImage = 'url('+basefolder+'/app/webroot/img/presentations/Elegant.png)';
 		});
 	  }else{
       $('.slide_divwrap .caption_slide').css({

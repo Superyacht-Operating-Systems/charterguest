@@ -501,10 +501,10 @@ class ChartersController extends AppController {
                 $site_full_path = "/var/www/vhosts/wamp/www/";
                 if(isset($domain_name) && $domain_name == "charterguest"){
                     $SITE_URL = "https://charterguest.net/";
-                    $site_full_path = "/var/www/cg-vhosts/";
+                    $site_full_path = "/var/www/cg-vhost/";
                 }
                 $fleetname = "";
-                if(isset($charter_company_id) && !empty($charter_company_id)){
+                if(isset($charter_company_id) && !empty($charter_company_id) &&  $charter_company_id != 0){
                     $companyData = $this->Fleetcompany->find('first', array('fields' => array('management_company_name','logo','fleetname'), 'conditions' => array('id' => $charter_company_id)));
                     $fleetname = $companyData['Fleetcompany']['fleetname'];
                 }
@@ -513,7 +513,7 @@ class ChartersController extends AppController {
                     $programFiles[$charter_from_date]['siteurl'] = $SITE_URL;
                 }
                 if(isset($value['CharterGuest']['program_image']) && !empty($value['CharterGuest']['program_image'])){
-                    if (!empty($fleetname)) {
+                    if (!empty($fleetname)) { //echo "fleet"."<br>";
                         
                         if($fleetname == "fleetbeta" || $fleetname == "SOS"){
                             if($fleetname == "fleetbeta" && $yname == "betayacht"){
@@ -526,15 +526,17 @@ class ChartersController extends AppController {
                         }else{
                             $targetFullPath = $SITE_URL.$fleetname."/app/webroot/".$yname."/app/webroot/img/charter_program_files/charter_program_photo/".$value['CharterGuest']['program_image'];
                         }
-                    } else {  
+                    } else {  //echo "nofleet"."<br>";
                         //exit('ll');
                         $targetFullPath = $SITE_URL.$yname."/app/webroot/img/charter_program_files/charter_program_photo/".$value['CharterGuest']['program_image'];
                     }
                     $file_folder_path = str_replace("$SITE_URL","$site_full_path","$targetFullPath");
                     //echo $targetFullPath; echo $site_full_path; echo "<pre>"; echo $file_folder_path; exit;
+                    //echo $file_folder_path."<br>";
                     if(file_exists($file_folder_path)){
                         $AssigntargetFullPath = $targetFullPath;
                         $targetFullPath = $AssigntargetFullPath;
+                        //echo $targetFullPath."<br>";
                     }else{
                         $targetFullPath = $this->request->base."/app/webroot/img/noimage_cp.png";
                     }
@@ -657,7 +659,7 @@ class ChartersController extends AppController {
                         $site_full_path = "/var/www/vhosts/wamp/www/";
                         if(isset($domain_name) && $domain_name == "charterguest"){
                             $SITE_URL = "https://charterguest.net/";
-                            $site_full_path = "/var/www/cg-vhosts/";
+                            $site_full_path = "/var/www/cg-vhost/";
                         }
                         $yname = $Ydata['Yacht']['yname'];
                         $fleetname = "";
@@ -772,9 +774,18 @@ class ChartersController extends AppController {
         if (!empty($charterProgramId)) {
             
             $session = $this->Session->read('charter_info.CharterGuest');
+                    $this->loadModel('CharterGuest');
+                    $chConditions = array('charter_program_id' => $charterProgramId);
+                    $chData = $this->CharterGuest->find('first', array('conditions' => $chConditions));
+                    $y_id = $chData['CharterGuest']['yacht_id'];
+
+                    $this->Session->delete("yachFullName");
                         $this->loadModel('Yacht');
-                        $yachtData = $this->Yacht->find('first', array('conditions' => array('id' => $session['yacht_id'])));
+                        $yachtData = $this->Yacht->find('first', array('conditions' => array('id' => $y_id)));
                         //echo "<pre>"; print_r($yachtData); exit;
+
+                        $this->Session->write("yachFullName", $yachtData['Yacht']['yfullName']);
+
                         $ydb_name = $yachtData['Yacht']['ydb_name'];
                         $yid = $yachtData['Yacht']['id'];
                         $yachtData = $this->Yacht->query("SELECT * FROM $ydb_name.yachts Yacht WHERE id = '$yid'");
@@ -800,7 +811,18 @@ class ChartersController extends AppController {
                         }else{
                             $requrl = $SITE_URL.$yachtname;
                         }
+                        //$requrl = "https://192.10.10.45/superyacht";
                         $this->set('requrl', $requrl);
+                        $this->Session->delete("fleetLogoUrl");
+                        $this->loadModel('Fleetcompany');
+                $companyData = $this->Fleetcompany->find('first', array('fields' => array('management_company_name','logo','fleetname'), 'conditions' => array('id' => $chData['CharterGuest']['charter_company_id'])));
+                if (isset($companyData['Fleetcompany']['logo']) && !empty($companyData['Fleetcompany']['logo'])) {
+                    $fleetLogoUrl = $SITE_URL.'/'.$companyData['Fleetcompany']['fleetname']."/img/logo/thumb/".$companyData['Fleetcompany']['logo'];
+                    //$fleetLogoUrl = $SITE_URL.'/'."charterguest/img/logo/thumb/".$companyData['Fleetcompany']['logo'];
+                } else{
+                    $fleetLogoUrl = $SITE_URL.'/'."charterguest/img/logo/thumb/charter_guest_logo.png";
+                }
+                $this->Session->write("fleetLogoUrl", $fleetLogoUrl);
                         
             if (!empty($charterProgData)) {
             $this->set('charterProgData', $charterProgData[0]);
@@ -942,7 +964,7 @@ class ChartersController extends AppController {
                 $site_full_path = "/var/www/vhosts/wamp/www/";
                 if(isset($domain_name) && $domain_name == "charterguest"){
                     $SITE_URL = "https://charterguest.net/";
-                    $site_full_path = "/var/www/cg-vhosts/";
+                    $site_full_path = "/var/www/cg-vhost/";
                 }
                 $fleetname = "";
                 if(isset($charter_company_id) && !empty($charter_company_id)){
@@ -1095,7 +1117,7 @@ class ChartersController extends AppController {
                         $site_full_path = "/var/www/vhosts/wamp/www/";
                         if(isset($domain_name) && $domain_name == "charterguest"){
                             $SITE_URL = "https://charterguest.net/";
-                            $site_full_path = "/var/www/cg-vhosts/";
+                            $site_full_path = "/var/www/cg-vhost/";
                         }
                         $yname = $Ydata['Yacht']['yname'];
                         $fleetname = "";
@@ -2829,12 +2851,14 @@ class ChartersController extends AppController {
                 // Personal details
                 $created = date("Y-m-d H:i:s");
                 $guestPersonalData = $this->CharterGuestPersonalDetail->find('first', array('conditions' => array('guest_lists_UUID' => $guest_uuid,'is_deleted'=>0)));
+                $G_group_id = 0;
                 if (!empty($guestPersonalData)) {
                     $this->loadModel('GuestList');
                     $this->loadModel('GuestGroup');
                     $guestListData = $this->GuestList->find('first', array('conditions' => array('UUID' => $guest_uuid,'is_deleted'=>0)));
                     //echo "<pre>";print_r($guestListData); exit;
                     $targetFileName = "";
+                    
                     if(isset($guestListData)){
                         $guest_type = $guestListData['GuestList']['guest_type'];
                         $guest_group_id = $guestListData['GuestList']['group_id'];
@@ -2908,7 +2932,7 @@ class ChartersController extends AppController {
                                 // //echo "<pre>";print_r($guest_targetFileName);
                                 //  exit;
                         }
-                        $G_group_id = "";
+                        
                         if(isset($guest_group_id) && $guest_group_id != 0){
                                 $G_group_id = $guest_fleetcompany_id."_".$guest_group_id;
 
@@ -3103,6 +3127,7 @@ class ChartersController extends AppController {
 
                         }
                     }
+                    
                     // Checks the yacht.passenger_lists table whether charter id is already exists
                     $selectQuery = "SELECT id FROM $yDBName.passenger_lists WHERE UUID='$guest_uuid' AND is_deleted=0";
                     $checkCharterExists = $this->CharterGuest->query($selectQuery);
@@ -3113,7 +3138,7 @@ class ChartersController extends AppController {
                         $this->CharterGuest->query($insertQuery);
                     } else {
                         // Updation
-                        $updateQuery = "UPDATE $yDBName.passenger_lists SET family_name='".$familyName."',salutation='".$salutation."',first_name='".$firstName."',modified='".$created."',type='".$typetext."',group_id='".$G_group_id."',file_name='".$guest_targetFileName."',file_path='".$guest_targetImagePath."',is_psheets_done='".$is_psheets_done."',email='".$guest_email."',token='".$Gtoken."',password='".$Gpassword."' WHERE UUID='$guest_uuid'";
+                         $updateQuery = "UPDATE $yDBName.passenger_lists SET family_name='".$familyName."',salutation='".$salutation."',first_name='".$firstName."',modified='".$created."',type='".$typetext."',group_id='".$G_group_id."',file_name='".$guest_targetFileName."',file_path='".$guest_targetImagePath."',is_psheets_done='".$is_psheets_done."',email='".$guest_email."',token='".$Gtoken."',password='".$Gpassword."' WHERE UUID='$guest_uuid'"; //exit;
                         $this->CharterGuest->query($updateQuery);
                     }
                 }
@@ -9986,6 +10011,6 @@ public function getmsgcountonclosecruisingschedulemodal() {
                     
             }
 
-    
+     
     
 }

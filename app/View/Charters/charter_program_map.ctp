@@ -1,10 +1,10 @@
 <?php 
 
-// echo $this->Html->css('admin/font/fontawesomePro/css/fontawesome.css');
-// echo $this->Html->css('admin/font/fontawesomePro/css/brands.css');
-// echo $this->Html->css('admin/font/fontawesomePro/css/solid.css');
- echo $this->Html->css('admin/font/fontawesomePro/css/light.css');
-// echo $this->Html->css('admin/font/fontawesomePro/css/v5-font-face.css');	
+echo $this->Html->css('admin/font/fontawesomePro/css/fontawesome.css');
+echo $this->Html->css('admin/font/fontawesomePro/css/brands.css');
+echo $this->Html->css('admin/font/fontawesomePro/css/solid.css');
+echo $this->Html->css('admin/font/fontawesomePro/css/light.css');
+echo $this->Html->css('admin/font/fontawesomePro/css/v5-font-face.css');	
 
 $isFleetUser = $this->Session->read('loggedUserInfo.is_fleet');
 $userType = $this->Session->read('loggedUserInfo.user_type');
@@ -63,18 +63,6 @@ $topyname = $yfullName[$charterGuestDatayacht_id];
 <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"></script>
 <?php //echo $this->Html->script('libBoot.js'); ?>
 <script src="https://api.windy.com/assets/map-forecast/libBoot.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/fontawesome.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/brands.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/solid.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/v5-font-face.min.css">
-
-
-
-
-
-
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css">
 <style>
 .sm-cruisingmsgmyModal .mx-box {
@@ -132,7 +120,7 @@ cursor: pointer;
 
 @media only screen and (min-width:1024px){
     body .mydemolabel {
-  font-size: 36px !important;
+  /* font-size: 36px !important; */
   top: 56px !important;
 }
 .yachtHeaderName {
@@ -140,13 +128,13 @@ cursor: pointer;
 }
     }
 @media only screen and (min-width:771px) and (max-width:1024px){
-
+/* 
 .yachtHeaderName {
     margin-top: 4px!important;
-}
+} */
 body .mydemolabel {
     top: 70px!important;
-  font-size: 30px !important;
+  /* font-size: 30px !important; */
 }
 
 
@@ -1413,7 +1401,7 @@ margin: 0px;padding: 0px;
 }
 @media only screen and (max-width:1024px){
 .common-form-row {
-    margin-top: 35px;
+    margin-top: 38px;
 }
 
 
@@ -2107,35 +2095,42 @@ border-radius: 4px; */
                              
                             if(isset($domain_name) && $domain_name == "charterguest"){
                                 $update_BASE_URL = "https://charterguest.net/";
+                                $File_dir_path = "/var/www/cg-vhost/";
                             }else{
                                 $update_BASE_URL = "https://totalsuperyacht.com:8080/";
+                                $File_dir_path = "/var/www/vhosts/wamp/www/";
                             }
                             // if($yname == "yacht"){
                             //     $targetFullPath = BASE_URL.'/SOS/app/webroot/betayacht/app/webroot/img/charter_program_files/itinerary_photos/'.$attachment;
                             // }else{
                                 $targetFullPath = $update_BASE_URL.'/'.$yachtname.'/app/webroot/img/location_contents/'.$attachment;
                                 $targetFullGalleryPath = $update_BASE_URL.'/'.$yachtname.'/app/webroot/img/location_contents/';
+                                $targetFile_dir_path = $File_dir_path.$yachtname.'/app/webroot/img/location_contents/';
                                 
                                 if (!empty($fleetname)) { // IF yacht is under any Fleet
                                     $targetFullPath = $update_BASE_URL.'/'.$fleetname."/app/webroot/".$yachtname.'/app/webroot/img/location_contents/'.$attachment;
                                     $targetFullGalleryPath = $update_BASE_URL.'/'.$fleetname."/app/webroot/".$yachtname.'/app/webroot/img/location_contents/';
+                                    $targetFile_dir_path = $File_dir_path.$fleetname."/app/webroot/".$yachtname.'/app/webroot/img/location_contents/';
                                 }
                             //}
                             if(BASE_URL == "http://localhost"){
                                 $targetFullPath = BASE_URL."/superyacht/app/webroot/img/location_contents/".$attachment;
                                 $targetFullGalleryPath = BASE_URL."/superyacht/app/webroot/img/location_contents/";
+                                $targetFile_dir_path = "/opt/lampp/htdocs/superyacht/app/webroot/img/location_contents/";
                                 }
 
                             $titleimage = $targetFullPath;
                             $titleimagehref = $targetFullPath;
                             $fancybox = "fancybox";
                             $targetFullGalleryPathhref = $targetFullGalleryPath;
+                            $targetFile_dir_path_href = $targetFile_dir_path;
                         }else{
                             $noteimg = "style='display:none;'";
                             $titleimage = BASE_URL.'/charterguest/app/webroot/img/noimage.png';
                             $titleimagehref = "#";
                             $fancybox = "";
                             $targetFullGalleryPathhref = "";
+                            $targetFile_dir_path_href = "";
                         }
                         
                         $crusemaparray[$crusemap] =  "crusingschedulemap".$crusemap;
@@ -2190,7 +2185,7 @@ border-radius: 4px; */
                                     $fleetlocationimages =  array_unique($fleetlocationimages);
                                     foreach($fleetlocationimages as $name){
                                         if(!empty($name)){ 
-                                            $fname = $targetFullGalleryPathhref.$name;
+                                            $fname = $targetFile_dir_path_href.$name;
                                             if(file_exists($fname)) {
                                             ?>
                                             <a href="<?php echo $targetFullGalleryPathhref; ?><?php echo $name; ?>" data-thumbnail="<?php echo $targetFullGalleryPathhref; ?><?php echo $name; ?>" rel="galleryloc<?php echo $crusemap ?>" class="<?php echo $fancybox; ?>"><img src="<?php echo $name; ?>" style="object-fit: cover;width: 100%; height: 150px;display:none;" alt="" ></a>
