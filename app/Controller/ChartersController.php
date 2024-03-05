@@ -6003,7 +6003,7 @@ class ChartersController extends AppController {
                 $yachtname = $YachtData[0]['Yacht']['yname'];
                 //echo $YachtData['Yacht']['cruising_unit'];
                 $data=array();
-                $menuId= "65d88324-5270-4781-a0f2-03482b7276f0";// $_REQUEST['UUID'];//"65b26cb1-b730-4db5-b58d-3df22b7276f0";//$_REQUEST['UUID'];
+                $menuId= "65e1487b-b704-4c8b-8e92-4928ac182009";// $_REQUEST['UUID'];//"65b26cb1-b730-4db5-b58d-3df22b7276f0";//$_REQUEST['UUID'];
                 $sql="SELECT * FROM $yachtDbName.cga_published_menus WHERE UUID='$menuId'";
                 $menuData =  $this->CharterGuest->query($sql);
                 //echo "<pre>";print_r($menuData); exit;
