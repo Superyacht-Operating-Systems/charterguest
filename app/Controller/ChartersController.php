@@ -5981,7 +5981,50 @@ class ChartersController extends AppController {
         exit;
     }     
     
-    
+            /*
+     * Charter Program Map ipad app view
+     * Functionality -  Loading the Charter program ipad app view
+     * Developer - Nagarajan
+     * Created date - 28-May-2018
+     * Modified date - 
+     */
+    public function charter_program_menus_app($menu_date = null,$yachtdb = null) {
+        //echo "<pre>";print_r($this->Session->read());exit;
+        Configure::write('debug',0);
+        $session = $this->Session->read('charter_info');
+        $yachtDbName = $yachtdb;
+        $menuDate = $menu_date;
+        if (!empty($yachtDbName)) {
+            $this->loadModel('CharterGuest');
+            $YachtData =  $this->CharterGuest->query("SELECT * FROM $yachtDbName.yachts Yacht");
+                //echo "<pre>";print_r($YachtData); exit;
+                $yacht_id_fromyachtDB = $YachtData[0]['Yacht']['id'];
+                $fleetname = $YachtData[0]['Yacht']['fleetname'];
+                $yachtname = $YachtData[0]['Yacht']['yname'];
+                //echo $YachtData['Yacht']['cruising_unit'];
+                $data=array();
+                $menuId= "65d88324-5270-4781-a0f2-03482b7276f0";// $_REQUEST['UUID'];//"65b26cb1-b730-4db5-b58d-3df22b7276f0";//$_REQUEST['UUID'];
+                $sql="SELECT * FROM $yachtDbName.cga_published_menus WHERE UUID='$menuId'";
+                $menuData =  $this->CharterGuest->query($sql);
+                //echo "<pre>";print_r($menuData); exit;
+
+                if(isset($YachtData[0]['Yacht']['domain_name'])){
+                    $domain_name = $YachtData[0]['Yacht']['domain_name'];
+                    }
+                    if(isset($domain_name) && $domain_name == "charterguest"){
+                        $SITE_URL = "https://charterguest.net/";
+                    }else{
+                        $SITE_URL = "https://totalsuperyacht.com:8080/";
+                    }
+           
+                    $this->set('menudata',$menuData);
+            
+        } else {
+            $no_cruising_select  = "NO CRUISING SCHEDULE IS SELECTED";
+            $this->set('no_cruising_select', $no_cruising_select);
+        }
+        
+    }
         /*
      * Charter Program Map ipad app view
      * Functionality -  Loading the Charter program ipad app view
@@ -5990,7 +6033,7 @@ class ChartersController extends AppController {
      * Modified date - 
      */
     public function charter_program_map_app($prgUUID = null,$yachtdb = null) {
-        //        echo "<pre>";print_r($this->Session->read());exit;
+                //echo "<pre>";print_r($this->Session->read());exit;
                 Configure::write('debug',0);
                 $session = $this->Session->read('charter_info');
                 $yachtDbName = $yachtdb;
