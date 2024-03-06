@@ -42,8 +42,8 @@ class AppController extends Controller {
 	// }
     
     public function beforeFilter() {
-       
-		 if($this->params['action'] != 'charter_program_map_app' || $this->params['action'] != 'charter_weather_map_app'){
+       echo "<pre>";print_r($this->params['action']); exit;
+		 if($this->params['action'] != 'charter_program_map'){
 			
 			$this->CheckAdminSession();
 		}
