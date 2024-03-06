@@ -6003,11 +6003,77 @@ class ChartersController extends AppController {
                 $yachtname = $YachtData[0]['Yacht']['yname'];
                 //echo $YachtData['Yacht']['cruising_unit'];
                 $data=array();
-                $menuId= "65e1487b-b704-4c8b-8e92-4928ac182009";// $_REQUEST['UUID'];//"65b26cb1-b730-4db5-b58d-3df22b7276f0";//$_REQUEST['UUID'];
-                $sql="SELECT * FROM $yachtDbName.cga_published_menus WHERE UUID='$menuId'";
-                $menuData =  $this->CharterGuest->query($sql);
-                //echo "<pre>";print_r($menuData); exit;
+                //$menuId= "65d871d4-af34-47bc-8702-16b52b7276f0";//"65e1487b-b704-4c8b-8e92-4928ac182009";// $_REQUEST['UUID'];//"65d871d4-af34-47bc-8702-16b52b7276f0";//$_REQUEST['UUID'];
+                $sql="SELECT * FROM $yachtDbName.cga_published_menus WHERE Menu_date='$menuDate'";
+                $current_date_menu =  $this->CharterGuest->query($sql);
+                //echo "<pre>";print_r($current_date_menu); exit;
+                foreach ($current_date_menu as $index => $menu) {
+                    // Initialize an array to hold the details for all menu_item_ids of this menu
+                    $allMenuDetails = [];
+                
+                    // Assuming 'menu_item_ids' contains the UUIDs as a comma-separated string
+                    $menu_item_ids = explode(',', $menu['cga_published_menus']['menu_item_ids']);
+                
+                    foreach ($menu_item_ids as $uuid) {
+                        $uuid = trim($uuid); // Clean up any whitespace
+                        // Construct the query to fetch menu item details
+                        $sqlDetails = "SELECT * FROM $yachtDbName.cga_menus WHERE UUID = '$uuid'";
+                        $menuDetails = $this->CharterGuest->query($sqlDetails);
+                
+                        // Append the fetched details to the allMenuDetails array
+                        if (!empty($menuDetails)) {
+                            // Note: Depending on your exact data structure, you might need to adjust how menuDetails are appended
+                            $allMenuDetails[] = $menuDetails[0]; // Assuming you want the first (or only) result per UUID
+                        }
+                    }
+                
+                    // Once all menuDetails are collected for this menu, append them to the current menu item in the original array
+                    $current_date_menu[$index]['details'] = $allMenuDetails;
+                }
+                $sql1="SELECT * FROM $yachtDbName.cga_published_menus WHERE Menu_date<'$menuDate' and every_day_menu =1";
+                $everyday_menu =  $this->CharterGuest->query($sql1);
+                foreach ($everyday_menu as $index => $menu) {
+                    // Initialize an array to hold the details for all menu_item_ids of this menu
+                    $allMenuDetails = [];
+                
+                    // Assuming 'menu_item_ids' contains the UUIDs as a comma-separated string in your everyday menu structure
+                    $menu_item_ids = explode(',', $menu['cga_published_menus']['menu_item_ids']);
+                
+                    foreach ($menu_item_ids as $uuid) {
+                        $uuid = trim($uuid); // Clean up any whitespace
+                        // Construct the query to fetch menu item details
+                        $sqlDetails = "SELECT * FROM $yachtDbName.cga_menus WHERE UUID = '$uuid'";
+                        $menuDetails = $this->CharterGuest->query($sqlDetails);
+                
+                        // Append the fetched details to the allMenuDetails array
+                        if (!empty($menuDetails)) {
+                            // Adjust this line based on your actual data structure
+                            $allMenuDetails[] = $menuDetails[0]; // Assuming you want the first (or only) result per UUID
+                        }
+                    }
+                
+                    // Once all menuDetails are collected for this menu, append them to the current menu item in the original array
+                    $everyday_menu[$index]['details'] = $allMenuDetails;
+                }
+              
+                //echo "<pre>";print_r($everyday_menu); exit;
+                // Combine and prioritize menus
+                $menuTypesIncluded = []; // To track included menu types from current date
+                foreach ($current_date_menu as $menu) {
+                    $menuType = $menu['cga_published_menus']['menu_type'];
+                    $data[$menuType] = $menu;
+                    $menuTypesIncluded[$menuType] = true; // Mark this menu type as included
+                }
 
+                // Include everyday menus if not already included from the current date
+                foreach ($everyday_menu as $menu) {
+                    $menuType = $menu['cga_published_menus']['menu_type'];
+                    if (!isset($menuTypesIncluded[$menuType])) {
+                        $data[$menuType] = $menu;
+                    }
+                }
+                
+                //echo "<pre>";print_r($data); exit;
                 if(isset($YachtData[0]['Yacht']['domain_name'])){
                     $domain_name = $YachtData[0]['Yacht']['domain_name'];
                     }
@@ -6017,7 +6083,7 @@ class ChartersController extends AppController {
                         $SITE_URL = "https://totalsuperyacht.com:8080/";
                     }
            
-                    $this->set('menudata',$menuData);
+                    $this->set('menudata',$data);
             
         } else {
             $no_cruising_select  = "NO CRUISING SCHEDULE IS SELECTED";
