@@ -43,10 +43,10 @@ class AppController extends Controller {
     
     public function beforeFilter() {
        //echo "<pre>";print_r($this->params['action']); //exit;
-		 if(($this->params['action'] != 'charter_program_map_app') || ($this->params['action'] != 'charter_weather_map_app') ){
-			//echo "<pre>";print_r('ggggg');  exit;
-			$this->CheckAdminSession();
-		}
+		//  if(($this->params['action'] !== 'charter_program_map_app') || ($this->params['action'] !== 'charter_weather_map_app') ){
+		// 	echo "<pre>";print_r('ggggg');  exit;
+		// 	$this->CheckAdminSession();
+		// }
 
         if ($this->RequestHandler->isMobile()) {
             $this->is_mobile = true;
