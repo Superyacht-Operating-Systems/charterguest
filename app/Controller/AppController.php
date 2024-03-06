@@ -43,7 +43,7 @@ class AppController extends Controller {
     
     public function beforeFilter() {
        
-		 if($this->params['action'] != 'charter_program_map'){
+		 if($this->params['action'] != 'charter_program_map_app' && $this->params['action'] != 'charter_weather_map_app'){
 			
 			$this->CheckAdminSession();
 		}
