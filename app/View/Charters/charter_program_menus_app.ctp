@@ -1,4 +1,14 @@
-<?php //echo "Test Ipad Menus"; ?>
+<?php //echo $fleetname.''.$yachtname; print_r($menudata); exit; ?>
+<?php 
+//$fleetname = '';
+  if(isset($fleetname) && $fleetname!=''){
+    $bg_img_path = $SITE_URL.'/'.$fleetname.'/app/webroot/'.$yachtname.'/app/webroot/img/cga_files/menu_bg_orginals/menu_bg_converted';
+  }else{
+    $bg_img_path = $SITE_URL.'/'.$yachtname.'/app/webroot/img/cga_files/menu_bg_orginals/menu_bg_converted';
+  }
+  //$bg_img_path = 'https://localhost/superyacht/app/webroot/img/cga_files/menu_bg_orginals/menu_bg_converted';
+  //echo $bg_img_path; exit;
+  ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -69,52 +79,62 @@
 </style>
 </head>
 <body>
+  
 <div class="container_menuscontainer">
 
 <div class="owl-carousel owl-theme">
 
+<?php foreach($menudata as $item){ 
+  $bg_image_name = $item['cmb']['file_name'];
+  ?>
+  <div class="item">
+<div class="container_menus" style="background-image: url(<?php echo $bg_img_path.'/'.$bg_image_name; ?>);">
+<div class="menlistcontain">
 
+</div>
+</div>
+<!-- Content goes here -->
+</div>
 
+<?php } ?>
+<!--
 <div class="item">
 <div class="container_menus" style="background-image: url(&quot;/superyacht/img/cga_files/menu_bg_orginals/menu_bg_converted/240130101227_leftapples.jpg&quot;);">
 <div class="menlistcontain">
-<!-- <?php echo $menudata[0]['cga_published_menus']['basic_menu_text']; ?> -->
 
 </div>
 </div>
-<!-- Content goes here -->
-</div>
-
-<div class="item">
-<div class="container_menus">
-<div class="menlistcontain">
-<!-- <?php echo $menudata[0]['cga_published_menus']['basic_menu_text']; ?> -->
-</div>
-</div>
-<!-- Content goes here -->
+<!-- Content goes here 
 </div>
 
 <div class="item">
 <div class="container_menus">
 <div class="menlistcontain">
-<!-- <?php echo $menudata[0]['cga_published_menus']['basic_menu_text']; ?> -->
 
 </div>
 </div>
-<!-- Content goes here -->
+<!-- Content goes here 
 </div>
 
 <div class="item">
 <div class="container_menus">
 <div class="menlistcontain">
-<!-- <?php echo $menudata[0]['cga_published_menus']['basic_menu_text']; ?> -->
 
 </div>
 </div>
-<!-- Content goes here -->
+<!-- Content goes here 
 </div>
 
+<div class="item">
+<div class="container_menus">
+<div class="menlistcontain">
 
+</div>
+</div>
+<!-- Content goes here 
+</div>
+
+-->
 
 
 </div>
