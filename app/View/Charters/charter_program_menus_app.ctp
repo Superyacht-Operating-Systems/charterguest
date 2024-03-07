@@ -94,6 +94,7 @@
 </div>
 </div>
 <!-- Content goes here -->
+<?php echo $bg_image_name; ?>
 </div>
 
 <?php } ?>
