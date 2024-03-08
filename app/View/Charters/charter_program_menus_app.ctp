@@ -43,6 +43,7 @@
 .owl-carousel .owl-item {
     float: left;
     -webkit-touch-callout: none;
+    color:#000;
 }
 .owl-dots{
   border-bottom:none!important;
@@ -97,6 +98,10 @@
 .menualretpop  .desctitle{
   padding-bottom: 0px;
 }
+.menlistrow{
+  display: inline-block;
+    width: 100%;
+}
 </style>
 </head>
 <body>
@@ -107,27 +112,63 @@
 <div class="owl-carousel owl-theme">
 <?php foreach($menudata as $item){ 
   $bg_image_name = $item['cmb']['file_name'];
+  $is_basic = $item['cpm']['is_basic_menu'];
   ?>
   <div class="item">
 <div class="container_menus" style="background-image: url(<?php echo $bg_img_path.'/'.$bg_image_name; ?>);">
 <div class="menlistcontain">
-
-</div>
-</div>
 <!-- Content goes here -->
-<?php echo $bg_image_name; ?>
+<?php //echo $bg_image_name; ?>
+<?php if($is_basic == 1){ 
+echo $item['cpm']['basic_menu_text'];
+?>
+<?php }else{ 
+  //echo "<pre>"; print_r($item); exit;
+  $menuType = $item['cpm']['menu_title'];
+  $menu_data = $item['details'];
+  ?>
+
+<div class="menlistrow">
+<h1 class="menlisthd"><?php echo $menuType; ?></h1>
+</div>
+<?php foreach($menu_data as $key=>$value){ //echo "<pre>"; print_r($value); exit; ?>
+    <div class="menlistrow">
+        <h3 class="menlisth3"><?php echo $value['cga_menu_courses']['course_name']; ?></h3>
+        <?php //$i=1; foreach($value as $menu_item){ $muuid = $menu_item['CgaMenu']['UUID']; ?>
+            <h4 class="menlisth4"><?php echo $value['cga_menus']['title']; ?></h4>
+            <div class="addpremop">
+            <h5 class="menlisth5 ext_<?php echo $value['cga_menus']['UUID']; ?>" id="<?php echo $value['cga_menus']['UUID']; ?>"><?php echo $value['cga_menus']['description']; ?></h5>
+  </div>
+        <?php //$i++; } ?>
+       
+    </div>
+<?php } ?>
+
+
+
+
+<?php } ?>
+</div>
+</div>
+
 </div>
 
 <?php } }else{ ?>
  
-  <div class="menualretpop">
-      <p id="show_menu_date"></p>
+
+    <div class="item">
+<div class="container_menus">
+<div class="menlistcontain">
+<p id="show_menu_date"></p>
       <p id="show_message_heading_text"></p>
       <p>The final touches are being added to the menu now.</p>
       <p>The Chef will publish it shortly.</p>
       <p>We apologize for any inconvenience caused by the delay.</p>
-      <button class="btn vcenter" id="menualretpop_popup">Close</button>
-    </div>
+
+</div>
+</div>
+<!-- Content goes here 
+</div>
   <?php } ?>
 
 <!--

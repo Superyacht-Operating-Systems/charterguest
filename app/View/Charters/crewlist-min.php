@@ -2,6 +2,16 @@
     $BASE_FOLDER = $this->request->base; 
 ?>
 <style>
+.crew-flag{
+    width: 40px;
+    /* height: 25px; */
+    display: inline-block;
+    margin-right: 10px;
+}
+.crew-flag img{
+    width: 100%;
+}
+
 @media (min-width: 991px){
 .col-md-3 {
     width: 25%;
@@ -9,8 +19,18 @@
 .col-md-9 {
     width: 75%;
 }
-
 }
+@media only screen and (max-width:991px){
+
+    .crew-flag {
+        position: absolute;
+    /* right: 0; */
+    margin: 0;
+    margin-left: 165px;
+}
+}
+
+
 </style>
 
 
@@ -26,7 +46,7 @@
 <div class="charterRow mobviewheight notmobleftpad">
     <div class="">
         <div class="row col-md-12">
-            <div class="col-md-9 notmob"><h2 class="titlenotmob"><?php echo $val['User']['first_name'].' '.$val['User']['last_name']; ?> - <?php echo $val['Position']['position_name']; ?></h2></div>
+            <div class="col-md-9 notmob"><h2 class="titlenotmob"><span class="crew-flag"><img src="../../../../img/uk-f.jpg"></span><?php echo $val['User']['first_name'].' '.$val['User']['last_name']; ?> - <?php echo $val['Position']['position_name']; ?></h2></div>
             
         </div>
         <div class="row col-md-12 ">
@@ -42,7 +62,7 @@
                         }
                     ?>
                     <img class="crewimg" src="<?php echo $img; ?>" alt="" style="border-radius: 15px;" width="200px" height="200px">
-                    <div class="mobdisplay"><p><h3 class="mobh3"><?php echo $val['Position']['position_name']; ?></h3></p><p><h3 class="mobh3"><?php echo $val['User']['first_name'].' '.$val['User']['last_name']; ?></h3></p></div>
+                    <div class="mobdisplay"><span class="crew-flag"><img src="../../../../img/uk-f.jpg"></span><p><h3 class="mobh3"><?php echo $val['Position']['position_name']; ?></h3></p><p><h3 class="mobh3"><?php echo $val['User']['first_name'].' '.$val['User']['last_name']; ?></h3></p></div>
             </div>
             <div class="col-md-9 w-md03 pull-left notmobcontainer bgmobdisp" >
             <?php echo $val['CrewInfo']['crew_bios']; ?>
