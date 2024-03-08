@@ -76,14 +76,35 @@
   .navbar-inverse {
     display: none;
 }
+.menualretpop{
+  background: #eee4e40d;
+  padding: 20px;
+  position: absolute;
+  top:10%;
+  right: 0;
+  left: 35%;
+  min-height: 200px;
+  width: 400px;
+  margin: 0 auto;
+  /* display: flex; */
+  border: solid 2px #eee;
+  border-radius: 8px;
+  z-index: 9999;
+}
+.menualretpop p{
+  padding-bottom: 10px;
+}
+.menualretpop  .desctitle{
+  padding-bottom: 0px;
+}
 </style>
 </head>
 <body>
   
 <div class="container_menuscontainer">
 
+<?php if(count($menudata) > 0){ ?>
 <div class="owl-carousel owl-theme">
-
 <?php foreach($menudata as $item){ 
   $bg_image_name = $item['cmb']['file_name'];
   ?>
@@ -97,7 +118,18 @@
 <?php echo $bg_image_name; ?>
 </div>
 
-<?php } ?>
+<?php } }else{ ?>
+ 
+  <div class="menualretpop">
+      <p id="show_menu_date"></p>
+      <p id="show_message_heading_text"></p>
+      <p>The final touches are being added to the menu now.</p>
+      <p>The Chef will publish it shortly.</p>
+      <p>We apologize for any inconvenience caused by the delay.</p>
+      <button class="btn vcenter" id="menualretpop_popup">Close</button>
+    </div>
+  <?php } ?>
+
 <!--
 <div class="item">
 <div class="container_menus" style="background-image: url(&quot;/superyacht/img/cga_files/menu_bg_orginals/menu_bg_converted/240130101227_leftapples.jpg&quot;);">
@@ -152,5 +184,8 @@
     nav: true,
   });
 });
-
+$(document).on("click", "#menualretpop_popup", function (e) {
+        //alert();
+        $(".menualretpop").hide();
+    });
 </script>
