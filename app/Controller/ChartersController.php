@@ -6020,7 +6020,9 @@ class ChartersController extends AppController {
                     foreach ($menu_item_ids as $uuid) {
                         $uuid = trim($uuid); // Clean up any whitespace
                         // Construct the query to fetch menu item details
-                        $sqlDetails = "SELECT * FROM $yachtDbName.cga_menus WHERE UUID = '$uuid'";
+                        $sqlDetails = "SELECT cga_menus.*, cga_menu_courses.* FROM $yachtDbName.cga_menus 
+                        LEFT JOIN $yachtDbName.cga_menu_courses ON cga_menus.course_id = cga_menu_courses.UUID 
+WHERE cga_menus.UUID = '$uuid'";
                         $menuDetails = $this->CharterGuest->query($sqlDetails);
                 
                         // Append the fetched details to the allMenuDetails array
