@@ -3,7 +3,7 @@
 ?>
 <style>
 .crew-flag{
-    width: 48px;
+    width: 40px;
     /* height: 25px; */
     display: inline-block;
     margin-right: 10px;
@@ -26,7 +26,7 @@
         position: absolute;
     /* right: 0; */
     margin: 0;
-    margin-left: 187px;
+    margin-left: 165px;
 }
 }
 
