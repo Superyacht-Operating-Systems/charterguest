@@ -2002,10 +2002,24 @@ body.modal-open {
                 $markerimage = BASE_URL.'/charterguest/app/webroot/css/leaflet/dist/images/marker-icon-itinerary.png';
                 $crusemap = 1;
                 $crusemaparray = array();
+                $end_location_last = array_pop($scheduleData);
+                $newschedule = array();
+                if(isset($scheduleData) && !empty($scheduleData)){
+                    foreach($scheduleData as $key => $value){
+                        if($key == 1){
+                        $newschedule[] = $end_location_last;
+                        }
+                        $newschedule[] = $value;
+                    }
+                    $scheduleData = $newschedule;
+                }
             foreach ($scheduleData as $key => $schedule) { 
                 $schedule['CharterProgramSchedule']['title'] = trim($schedule['CharterProgramSchedule']['title']);
                 $schedule['CharterProgramSchedule']['title'] = str_replace('"', "", $schedule['CharterProgramSchedule']['title']);
                 $schedule['CharterProgramSchedule']['title'] = str_replace("'", "", $schedule['CharterProgramSchedule']['title']);
+                $schedule['CharterProgramSchedule']['to_location'] = trim($schedule['CharterProgramSchedule']['to_location']);
+                $schedule['CharterProgramSchedule']['to_location'] = str_replace('"', "", $schedule['CharterProgramSchedule']['to_location']);
+                $schedule['CharterProgramSchedule']['to_location'] = str_replace("'", "", $schedule['CharterProgramSchedule']['to_location']);
             //if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !empty($samelocations[$schedule['CharterProgramSchedule']['lattitude']])){
                 $counttitle = count($samelocations[$schedule['CharterProgramSchedule']['lattitude']]);
                     $SumDaytitle = "";
@@ -2030,16 +2044,20 @@ body.modal-open {
                     }
                     
                 }
-            
+                if($key < 2){
+                    $schedule['CharterProgramSchedule']['title'] = $schedule['CharterProgramSchedule']['title'];
+                }else{
+                    $schedule['CharterProgramSchedule']['title'] = $schedule['CharterProgramSchedule']['to_location'];
+                }
                 $daynumber = $schedule['CharterProgramSchedule']['day_num']; 
                 
                 $to_location = $schedule['CharterProgramSchedule']['title'];
                 $attachment = "";
 
-                if($to_location == $debarkation_chprg){ //echo $to_location."=========".$debarkation_chprg;
+                if($to_location == $embarkation_chprg){ //echo $to_location."=========".$debarkation_chprg;
                     $attachment = $schedule['CharterProgramSchedule']['debarkation_attachment'];
                     $last = 1;
-                }else if($to_location != $debarkation_chprg){ //echo $to_location."0000000".$debarkation_chprg;
+                }else if($to_location != $embarkation_chprg){ //echo $to_location."0000000".$debarkation_chprg;
                     $attachment = $schedule['CharterProgramSchedule']['attachment'];
                     $last = 0;
                 }
@@ -2113,8 +2131,8 @@ body.modal-open {
                                 </div>
                             <div class="icons_fields">
                                 <i style="color: #00a8f3;" class="fa fa-solid fa-calendar"><span class="icon_label" ><?php echo $schedule['CharterProgramSchedule']['week_days']; ?></span></i>
-                                <i style="color: #00a8f3;" class="fa fa-solid fa-clock-o "><span class="icon_label"><?php echo $markertotal[$schedule['CharterProgramSchedule']['title'].' - Day '.$schedule['CharterProgramSchedule']['day_num']]['duration'];  ?></span></i>
-                                <i style="color: #00a8f3;" class="fa fa-solid fa-ship" aria-hidden="true"><span class="icon_label" style="padding: 0px 0px 0px 5px;"><?php echo $markertotal[$schedule['CharterProgramSchedule']['title'].' - Day '.$schedule['CharterProgramSchedule']['day_num']]['distance']; ?></span></i>
+                                <i style="color: #00a8f3;" class="fa fa-solid fa-clock-o "><span class="icon_label"><?php echo $markertotal[$schedule['CharterProgramSchedule']['to_location'].' - Day '.$schedule['CharterProgramSchedule']['day_num']]['duration'];  ?></span></i>
+                                <i style="color: #00a8f3;" class="fa fa-solid fa-ship" aria-hidden="true"><span class="icon_label" style="padding: 0px 0px 0px 5px;"><?php echo $markertotal[$schedule['CharterProgramSchedule']['to_location'].' - Day '.$schedule['CharterProgramSchedule']['day_num']]['distance']; ?></span></i>
                                 </div>
                                 <div>
                                     <textarea class="form-control auto_resize loc_desc_field" name="messagestitle" rows="1" cols="50" readonly><?php echo $schedule['CharterProgramSchedule']['notes']; ?></textarea>
@@ -2387,6 +2405,9 @@ foreach($scheduleData as $key => $schedule){
     $schedule['CharterProgramSchedule']['title'] = trim($schedule['CharterProgramSchedule']['title']);
     $schedule['CharterProgramSchedule']['title'] = str_replace('"', "", $schedule['CharterProgramSchedule']['title']);
     $schedule['CharterProgramSchedule']['title'] = str_replace("'", "", $schedule['CharterProgramSchedule']['title']);
+    $schedule['CharterProgramSchedule']['to_location'] = trim($schedule['CharterProgramSchedule']['to_location']);
+    $schedule['CharterProgramSchedule']['to_location'] = str_replace('"', "", $schedule['CharterProgramSchedule']['to_location']);
+    $schedule['CharterProgramSchedule']['to_location'] = str_replace("'", "", $schedule['CharterProgramSchedule']['to_location']);
     ?>
 
 var locsatellite = "schloc"+"<?php echo $key; ?>";
@@ -2457,12 +2478,13 @@ markerschloc.scheduleId = "<?php echo $schedule['CharterProgramSchedule']['chart
         markerschloc.tablepId = "<?php echo $schedule['CharterProgramSchedule']['id']; ?>";
         markerschloc.scheduleUUId = "<?php echo $schedule['CharterProgramSchedule']['UUID']; ?>";
         markerschloc.daytitle = "<?php echo $schedule['CharterProgramSchedule']['title']; ?>";
+        markerschloc.day_to_location = "<?php echo $schedule['CharterProgramSchedule']['to_location']; ?>";
         markerschloc.day_dates = "<?php echo $schedule['CharterProgramSchedule']['day_dates']; ?>";
         markerschloc.week_days = "<?php echo $schedule['CharterProgramSchedule']['week_days']; ?>";
         markerschloc.marker_msg_count = "<?php echo $schedule['CharterProgramSchedule']['marker_msg_count']; ?>";
-        markerschloc.distancetotal = "<?php echo $markertotal[$schedule['CharterProgramSchedule']['title'].' - Day '.$schedule['CharterProgramSchedule']['day_num']]['distance']; ?>";
-        markerschloc.durationtotal = "<?php echo $markertotal[$schedule['CharterProgramSchedule']['title'].' - Day '.$schedule['CharterProgramSchedule']['day_num']]['duration'];  ?>";
-        markerschloc.consumptiontotal = "<?php echo $markertotal[$schedule['CharterProgramSchedule']['title'].' - Day '.$schedule['CharterProgramSchedule']['day_num']]['consumption']; ?>";
+        markerschloc.distancetotal = "<?php echo $markertotal[$schedule['CharterProgramSchedule']['to_location'].' - Day '.$schedule['CharterProgramSchedule']['day_num']]['distance']; ?>";
+        markerschloc.durationtotal = "<?php echo $markertotal[$schedule['CharterProgramSchedule']['to_location'].' - Day '.$schedule['CharterProgramSchedule']['day_num']]['duration'];  ?>";
+        markerschloc.consumptiontotal = "<?php echo $markertotal[$schedule['CharterProgramSchedule']['to_location'].' - Day '.$schedule['CharterProgramSchedule']['day_num']]['consumption']; ?>";
         markerschloc.endplace = "<?php echo $markertotal[$schedule['CharterProgramSchedule']['title'].' - Day '.$schedule['CharterProgramSchedule']['day_num']]['endplace']; ?>";
         markerschloc.counttitle = "<?php echo $counttitle; ?>";
         markerschloc.scheduleSameLocationUUID = "<?php echo implode(',',$samelocationsScheduleUUID[$schedule['CharterProgramSchedule']['title']]); ?>";
@@ -2597,34 +2619,38 @@ if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !e
     $title_loc_temp = str_replace('"', "", $schedule['CharterProgramSchedule']['title']);
     $title_loc_temp2 = str_replace("'", "", $title_loc_temp);
     $schedule['CharterProgramSchedule']['title'] = $title_loc_temp2;
+    $schedule['CharterProgramSchedule']['to_location'] = trim($schedule['CharterProgramSchedule']['to_location']);
+    $title_loc_tempto_location = str_replace('"', "", $schedule['CharterProgramSchedule']['to_location']);
+    $title_loc_temp2to_location = str_replace("'", "", $title_loc_tempto_location);
+    $schedule['CharterProgramSchedule']['to_location'] = $title_loc_temp2to_location;
     if($schedule['CharterProgramSchedule']['marker_msg_count'] == 0){
         $marker_msg_count = "style='display:none;'";
     }else if($schedule['CharterProgramSchedule']['marker_msg_count'] != 0){
         $marker_msg_count = "";
     }
-    if(isset($markertotal[$schedule['CharterProgramSchedule']['title'].' - Day '.$schedule['CharterProgramSchedule']['day_num']]['endplace']) && !empty($markertotal[$schedule['CharterProgramSchedule']['title'].' - Day '.$schedule['CharterProgramSchedule']['day_num']]['endplace'])){
-            $endplace = $markertotal[$schedule['CharterProgramSchedule']['title'].' - Day '.$schedule['CharterProgramSchedule']['day_num']]['endplace'];
+    if(isset($markertotal[$schedule['CharterProgramSchedule']['to_location'].' - Day '.$schedule['CharterProgramSchedule']['day_num']]['endplace']) && !empty($markertotal[$schedule['CharterProgramSchedule']['to_location'].' - Day '.$schedule['CharterProgramSchedule']['day_num']]['endplace'])){
+            $endplace = $markertotal[$schedule['CharterProgramSchedule']['to_location'].' - Day '.$schedule['CharterProgramSchedule']['day_num']]['endplace'];
             $bar = " / ";
     }else{
         $endplace = "";
         $bar = "";
     }
-    if(isset($markertotal[$schedule['CharterProgramSchedule']['title'].' - Day '.$schedule['CharterProgramSchedule']['day_num']]['distance']) && !empty($markertotal[$schedule['CharterProgramSchedule']['title'].' - Day '.$schedule['CharterProgramSchedule']['day_num']]['distance'])){
-        $distance = $markertotal[$schedule['CharterProgramSchedule']['title'].' - Day '.$schedule['CharterProgramSchedule']['day_num']]['distance'];
+    if(isset($markertotal[$schedule['CharterProgramSchedule']['to_location'].' - Day '.$schedule['CharterProgramSchedule']['day_num']]['distance']) && !empty($markertotal[$schedule['CharterProgramSchedule']['to_location'].' - Day '.$schedule['CharterProgramSchedule']['day_num']]['distance'])){
+        $distance = $markertotal[$schedule['CharterProgramSchedule']['to_location'].' - Day '.$schedule['CharterProgramSchedule']['day_num']]['distance'];
         
     }else{
         $distance = "";
     
     }
-    if(isset($markertotal[$schedule['CharterProgramSchedule']['title'].' - Day '.$schedule['CharterProgramSchedule']['day_num']]['duration']) && !empty($markertotal[$schedule['CharterProgramSchedule']['title'].' - Day '.$schedule['CharterProgramSchedule']['day_num']]['duration'])){
-        $duration = $markertotal[$schedule['CharterProgramSchedule']['title'].' - Day '.$schedule['CharterProgramSchedule']['day_num']]['duration'];
+    if(isset($markertotal[$schedule['CharterProgramSchedule']['to_location'].' - Day '.$schedule['CharterProgramSchedule']['day_num']]['duration']) && !empty($markertotal[$schedule['CharterProgramSchedule']['to_location'].' - Day '.$schedule['CharterProgramSchedule']['day_num']]['duration'])){
+        $duration = $markertotal[$schedule['CharterProgramSchedule']['to_location'].' - Day '.$schedule['CharterProgramSchedule']['day_num']]['duration'];
         
     }else{
     $duration = "";
     
     }
-    if(isset($markertotal[$schedule['CharterProgramSchedule']['title'].' - Day '.$schedule['CharterProgramSchedule']['day_num']]['consumption']) && !empty($markertotal[$schedule['CharterProgramSchedule']['title'].' - Day '.$schedule['CharterProgramSchedule']['day_num']]['consumption'])){
-        $consumption = $markertotal[$schedule['CharterProgramSchedule']['title'].' - Day '.$schedule['CharterProgramSchedule']['day_num']]['consumption'];
+    if(isset($markertotal[$schedule['CharterProgramSchedule']['to_location'].' - Day '.$schedule['CharterProgramSchedule']['day_num']]['consumption']) && !empty($markertotal[$schedule['CharterProgramSchedule']['to_location'].' - Day '.$schedule['CharterProgramSchedule']['day_num']]['consumption'])){
+        $consumption = $markertotal[$schedule['CharterProgramSchedule']['to_location'].' - Day '.$schedule['CharterProgramSchedule']['day_num']]['consumption'];
         
     }else{
     $consumption = "";
@@ -2670,6 +2696,7 @@ if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !e
         marker.tablepId = "<?php echo $schedule['CharterProgramSchedule']['id']; ?>";
         marker.scheduleUUId = "<?php echo $schedule['CharterProgramSchedule']['UUID']; ?>";
         marker.daytitle = "<?php echo $schedule['CharterProgramSchedule']['title']; ?>";
+        marker.day_to_location = "<?php echo htmlspecialchars($schedule['CharterProgramSchedule']['to_location']); ?>";
         marker.day_dates = "<?php echo $schedule['CharterProgramSchedule']['day_dates']; ?>";
         marker.week_days = "<?php echo $schedule['CharterProgramSchedule']['week_days']; ?>";
         marker.marker_msg_count = "<?php echo $schedule['CharterProgramSchedule']['marker_msg_count']; ?>";
@@ -2697,13 +2724,26 @@ if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !e
 
 <?php
 /********************************end place last marker ************ */
-if(!empty($myLastElement)){
-            $SumDaytitle =$myLastElement['CharterProgramSchedule']['to_location']; 
-            $counttitle_endmarker = count($samelocations[$myLastElement['CharterProgramSchedule']['lattitude']]);
+if(!empty($startingloc)){
+            $SumDaytitle =$startingloc['CharterProgramSchedule']['to_location']; 
+            $counttitle_endmarker = count($samelocations[$startingloc['CharterProgramSchedule']['lattitude']]);
+
+            $SumDaytitle = "";
+            foreach($samelocations[$startingloc['CharterProgramSchedule']['lattitude']] as $val){
+                $SumDaytitle.= $val.'<br>';
+            }
+                
+                if(isset($markertotal[$startingloc['CharterProgramSchedule']['title'].' - Day '.$startingloc['CharterProgramSchedule']['day_num']]['endplace']) && !empty($markertotal[$startingloc['CharterProgramSchedule']['title'].' - Day '.$startingloc['CharterProgramSchedule']['day_num']]['endplace'])){
+                    $bar = " / ";
+                   
+            }else{
+                $bar = "";
+            }
+
             ?>
             
-    var end = L.marker(["<?php echo $myLastElement['CharterProgramSchedule']['lattitude']; ?>", "<?php echo $myLastElement['CharterProgramSchedule']['longitude']; ?>"], {draggable: false,pmIgnore: true})
-                .bindTooltip("<?php echo "<span class='owntooltip daytooltip_".$myLastElement['CharterProgramSchedule']['UUID']."' id=".$key.">".$myLastElement['CharterProgramSchedule']['to_location']."</span>"?>", 
+    var end = L.marker(["<?php echo $embark_lat; ?>", "<?php echo $embark_long; ?>"], {draggable: false,pmIgnore: true})
+    .bindTooltip("<?php echo "<span class='owntooltip daytooltip_".$startingloc['CharterProgramSchedule']['UUID']."' >".$SumDaytitle."<b style='font-size: 10px;'>".htmlspecialchars($startingloc['CharterProgramSchedule']['title'])."<hr>".$markertotal[$startingloc['CharterProgramSchedule']['title'].' - Day '.$startingloc['CharterProgramSchedule']['day_num']]['endplace']."</b><br><b style='font-size: 10px;'>".$markertotal[$startingloc['CharterProgramSchedule']['title'].' - Day '.$startingloc['CharterProgramSchedule']['day_num']]['distance'].$bar.$markertotal[$startingloc['CharterProgramSchedule']['title'].' - Day '.$startingloc['CharterProgramSchedule']['day_num']]['duration'].$bar.$markertotal[$startingloc['CharterProgramSchedule']['title'].' - Day '.$startingloc['CharterProgramSchedule']['day_num']]['consumption']."</b></span>"?>",
                     {
                         permanent: true, 
                         offset: [0,0],
@@ -2712,17 +2752,18 @@ if(!empty($myLastElement)){
                         noWrap: false,
                     }).on("click", markerOnClick);
 
-                    latlngs.push(new L.LatLng(<?php echo $myLastElement['CharterProgramSchedule']['lattitude']; ?>, <?php echo $myLastElement['CharterProgramSchedule']['longitude']; ?>));
+                    latlngs.push(new L.LatLng(<?php echo $embark_lat; ?>, <?php echo $embark_long; ?>));
 
-                    end.scheduleId = "<?php echo $myLastElement['CharterProgramSchedule']['charter_program_id']; ?>";
-                    end.tablepId = "<?php echo $myLastElement['CharterProgramSchedule']['id']; ?>";
-                    end.scheduleUUId = "<?php echo $myLastElement['CharterProgramSchedule']['UUID']; ?>";
-                    end.daytitle = "<?php echo $myLastElement['CharterProgramSchedule']['title']; ?>";
-                    end.day_num = "<?php echo $myLastElement['CharterProgramSchedule']['day_num']; ?>";
-                    end.markerNum = "<?php echo $myLastElement['CharterProgramSchedule']['day_num']; ?>";
-                    end.day_dates = "<?php echo $myLastElement['CharterProgramSchedule']['day_dates']; ?>";
-                    // end._latlng.lat = "<?php echo $myLastElement['CharterProgramSchedule']['lattitude']; ?>";
-                    // end._latlng.lng = "<?php echo $myLastElement['CharterProgramSchedule']['longitude']; ?>";
+                    end.scheduleId = "<?php echo $startingloc['CharterProgramSchedule']['charter_program_id']; ?>";
+                    end.tablepId = "<?php echo $startingloc['CharterProgramSchedule']['id']; ?>";
+                    end.scheduleUUId = "<?php echo $startingloc['CharterProgramSchedule']['UUID']; ?>";
+                    end.daytitle = "<?php echo $startingloc['CharterProgramSchedule']['title']; ?>";
+                    end.day_to_location = "<?php echo htmlspecialchars($startingloc['CharterProgramSchedule']['to_location']); ?>";
+                    end.day_num = "<?php echo $startingloc['CharterProgramSchedule']['day_num']; ?>";
+                    end.markerNum = "<?php echo $startingloc['CharterProgramSchedule']['day_num']; ?>";
+                    end.day_dates = "<?php echo $startingloc['CharterProgramSchedule']['day_dates']; ?>";
+                    // end._latlng.lat = "<?php echo $startingloc['CharterProgramSchedule']['lattitude']; ?>";
+                    // end._latlng.lng = "<?php echo $startingloc['CharterProgramSchedule']['longitude']; ?>";
                     end.endmarker = "yes";
                     markerArray.push(end);
                     end.addTo(map);
@@ -2756,16 +2797,16 @@ if(!empty($myLastElement)){
 
 /********************************Assigning day number to last marker ************ */
 <?php 
-if(isset($myLastElement['CharterProgramSchedule']['lattitude'])){
+if(isset($startingloc['CharterProgramSchedule']['lattitude'])){
 
-$schuuid = $myLastElement['CharterProgramSchedule']['UUID'];
-$primary_id = $myLastElement['CharterProgramSchedule']['id'];
-if($samemarkercommentcount[$myLastElement['CharterProgramSchedule']['UUID']] == 0){
+$schuuid = $startingloc['CharterProgramSchedule']['UUID'];
+$primary_id = $startingloc['CharterProgramSchedule']['id'];
+if($samemarkercommentcount[$startingloc['CharterProgramSchedule']['UUID']] == 0){
 $marker_msg_count = "style='display:none;'";
 $samemkrcount = "";
-}else if($samemarkercommentcount[$myLastElement['CharterProgramSchedule']['UUID']] != 0){
+}else if($samemarkercommentcount[$startingloc['CharterProgramSchedule']['UUID']] != 0){
 $marker_msg_count = "";
-$samemkrcount = $samemarkercommentcount[$myLastElement['CharterProgramSchedule']['UUID']];
+$samemkrcount = $samemarkercommentcount[$startingloc['CharterProgramSchedule']['UUID']];
 if(isset($guesttype) && !empty($guesttype)){ //echo $guesttype; exit;
     if($guesttype == "guest"){
             $marker_msg_count = "style='display:none;'";
@@ -2775,11 +2816,11 @@ if(isset($guesttype) && !empty($guesttype)){ //echo $guesttype; exit;
 }
 
 }
-if(isset($samelocations_daynumdisplay[$myLastElement['CharterProgramSchedule']['lattitude']][0])){
-$markernumberDisplay = $samelocations_daynumdisplay[$myLastElement['CharterProgramSchedule']['lattitude']][0];
+if(isset($samelocations_daynumdisplay[$startingloc['CharterProgramSchedule']['lattitude']][0])){
+$markernumberDisplay = $samelocations_daynumdisplay[$startingloc['CharterProgramSchedule']['lattitude']][0];
 
 }else{
-$markernumberDisplay = $myLastElement['CharterProgramSchedule']['day_num'];
+$markernumberDisplay = $startingloc['CharterProgramSchedule']['day_num'];
 }
 
 
@@ -2792,7 +2833,7 @@ $markernumberDisplay = $myLastElement['CharterProgramSchedule']['day_num'];
 ?>
         
 
-var textMarker = L.marker(["<?php echo $myLastElement['CharterProgramSchedule']['lattitude']; ?>", "<?php echo $myLastElement['CharterProgramSchedule']['longitude']; ?>"], {
+var textMarker = L.marker(["<?php echo $embark_lat; ?>", "<?php echo $embark_long; ?>"], {
 icon: L.divIcon({
 html: "<?php if($markernumberDisplay < 10 ){ ?><span>&nbsp;<?php echo $markernumberDisplay; ?></span> <?php } else { ?><span><?php echo $markernumberDisplay; ?></span><?php } ?>",
 className: 'text-below-marker',
@@ -3347,7 +3388,7 @@ function markerOnClick(e) {
     var tablepId = e.target.tablepId;
 
     var counttitle = e.target.counttitle;
-    var daytitle = e.target.daytitle;
+    var daytitle = e.target.day_to_location;
     var scheduleSameLocationUUID = e.target.scheduleSameLocationUUID;
     var samelocationsDates = e.target.samelocationsDates;
     var stationary = e.target.stationary;
@@ -3497,7 +3538,7 @@ setTimeout(function () {
                     ReloadModalMaplayer();
                                 //var popLocation = e.latlng;
                                 var tooltipcontent = e.target._tooltip._content;
-                                var selectedmarkertitle = e.target.daytitle;
+                                var selectedmarkertitle = e.target.day_to_location;
                                 var selectedmarkerday_num = e.target.day_num;
                                 //console.log(popLocation);
                                 fitzoommap.push(popLocation);
@@ -3521,8 +3562,8 @@ setTimeout(function () {
                                                                         .attr("data-long", value._latlng.lng)
                                                                         .attr("data-schid", value.scheduleId)
                                                                         .attr("data-daynum", value.day_num)
-                                                                        .attr("value", value.daytitle +' - Day '+value.day_num)
-                                                                        .text(value.daytitle +' - Day '+value.day_num)
+                                                                        .attr("value", value.day_to_location +' - Day '+value.day_num)
+                                                                        .text(value.day_to_location +' - Day '+value.day_num)
                                                                     );
                                                                     //temptitle.push(value.daytitle);
                                                         //}
@@ -4702,7 +4743,7 @@ function markerOnClickCSMP(e) {
     var popLocation= e.latlng;
     ReloadModalMaplayerCSMP();
     //var popLocation = e.latlng;
-    var selectedmarkertitle = e.target.daytitle;
+    var selectedmarkertitle = e.target.day_to_location;
     var selectedmarkerday_num = e.target.day_num;
     //console.log(selectedmarkertitle);
 
@@ -4728,8 +4769,8 @@ function markerOnClickCSMP(e) {
                         .attr("data-long", value._latlng.lng)
                         .attr("data-schid", value.scheduleId)
                         .attr("data-daynum", value.day_num)
-                        .attr("value", value.daytitle +' - Day '+value.day_num)
-                        .text(value.daytitle +' - Day '+value.day_num)
+                        .attr("value", value.day_to_location +' - Day '+value.day_num)
+                        .text(value.day_to_location +' - Day '+value.day_num)
                     );
         });
     }
