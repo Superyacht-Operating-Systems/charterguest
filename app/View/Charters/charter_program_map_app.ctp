@@ -2002,7 +2002,7 @@ body.modal-open {
                 $markerimage = BASE_URL.'/charterguest/app/webroot/css/leaflet/dist/images/marker-icon-itinerary.png';
                 $crusemap = 1;
                 $crusemaparray = array();
-                $end_location_last = array_pop($scheduleData);
+                $end_location_last = end($scheduleData);
                 $newschedule = array();
                 if(isset($scheduleData) && !empty($scheduleData)){
                     foreach($scheduleData as $key => $value){

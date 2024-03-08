@@ -7123,6 +7123,13 @@ WHERE cga_menus.UUID = '$uuid'";
                     $embark_long = $LocationContent[0]['LocationContent']['longitude'];
                 }
 
+                $val_pass = '"'.$debarkation_chprg.'"';
+                $LocationContent = $this->CharterGuest->query("SELECT * FROM $yachtDbName.location_contents LocationContent WHERE LocationContent.location = $val_pass AND LocationContent.type = 'Location'");
+                if(!empty($LocationContent)){
+                    $debark_lat = $LocationContent[0]['LocationContent']['lattitude'];
+                    $debark_long = $LocationContent[0]['LocationContent']['longitude'];
+                }
+
                 $scheduleConditions = "charter_program_id = '$charterProgramId' AND is_deleted = 0 order by day_num ASC, serial_no ASC";
                 $scheduleData = $this->CharterGuest->getCharterProgramScheduleData($yachtDbName, $scheduleConditions);
                 //echo "<pre>";print_r($scheduleData); exit;
@@ -7534,6 +7541,10 @@ WHERE cga_menus.UUID = '$uuid'";
                 $this->set('locationComment', $locationComment);
                 $this->set('embark_lat', $embark_lat);
                 $this->set('embark_long', $embark_long);
+
+                $this->set('debark_lat', $debark_lat);
+                $this->set('debark_long', $debark_long);
+
                 $usersUUID = $this->Session->read("guestListUUID");
                 $CharterGuestConditions = array('users_UUID' => $usersUUID);
                 $charterGuestData = $this->CharterGuest->find('all', array('conditions' => $CharterGuestConditions, 'order' => 'CharterGuest.charter_from_date desc'));
@@ -7667,9 +7678,13 @@ WHERE cga_menus.UUID = '$uuid'";
                                 }
                                 $myLastElement_locationimages['last'] = $trimmed_array;
                     }
-                    $this->set('scheduleData', $scheduleData);
+                    
                     $this->set('myLastElement_locationimages', $myLastElement_locationimages);
-                    //echo "<pre>";print_r($scheduleData); exit;
+                   //
+                    $this->set('scheduleData', $scheduleData);
+                   
+                
+                //echo "<pre>";print_r($scheduleData); exit;
                     if(isset($attachment) && !empty($attachment)){
                         $this->set('programFiles', $attachment);
                     }

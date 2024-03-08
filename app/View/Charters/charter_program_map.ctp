@@ -2049,7 +2049,7 @@ border-radius: 4px; */
                 // }
                 //echo "<pre>";print_r(($RD));
                 //echo "<pre>";print_r($scheduleData);exit;
-                $end_location_last = array_pop($scheduleData);
+                $end_location_last = end($scheduleData);
                 $newschedule = array();
                 if(isset($scheduleData) && !empty($scheduleData)){
                     foreach($scheduleData as $key => $value){
