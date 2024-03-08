@@ -6,7 +6,7 @@
   }else{
     $bg_img_path = $SITE_URL.'/'.$yachtname.'/app/webroot/img/cga_files/menu_bg_orginals/menu_bg_converted';
   }
-  //$bg_img_path = 'https://localhost/superyacht/app/webroot/img/cga_files/menu_bg_orginals/menu_bg_converted';
+  $bg_img_path = 'https://localhost/superyacht/app/webroot/img/cga_files/menu_bg_orginals/menu_bg_converted';
   //echo $bg_img_path; exit;
   ?>
 <!DOCTYPE html>
@@ -124,20 +124,28 @@ echo $item['cpm']['basic_menu_text'];
 ?>
 <?php }else{ 
   //echo "<pre>"; print_r($item); exit;
+  $text_align = array('ac'=>'center','al'=>'left','aj'=>'justify','ar'=>'right');
+  $font_weight = array(''=>'normal','B'=>'bold','aj'=>'justify','ar'=>'right');
   $menuType = $item['cpm']['menu_title'];
   $menu_data = $item['details'];
+  $menutitle_style = "color:".$item['cpm']['menu_title_color'].";text-align:".$text_align[$item['cpm']['menu_title_alignment']].";font-family: ".$item['cpm']['menu_title_font'].";font-size:".$item['cpm']['menu_title_size']."px;font-weight:".$font_weight[$item['cpm']['menu_title_weight']].";";
+  $course_style = "color:".$item['cpm']['course_color'].";text-align:".$text_align[$item['cpm']['course_alignment']].";font-family: ".$item['cpm']['course_font'].";font-size:".$item['cpm']['course_size']."px;font-weight:".$font_weight[$item['cpm']['course_weight']].";";
+
+  $title_style = "color:".$item['cpm']['title_color'].";text-align:".$text_align[$item['cpm']['title_alignment']].";font-family: ".$item['cpm']['title_font'].";font-size:".$item['cpm']['title_size']."px;font-weight:".$font_weight[$item['cpm']['title_weight']].";";
+
+  $description_style = "color:".$item['cpm']['Description_color'].";text-align:".$text_align[$item['cpm']['Description_allignment']].";font-family: ".$item['cpm']['Description_font'].";font-size:".$item['cpm']['Description_size']."px;font-weight:".$font_weight[$item['cpm']['Description_weight']].";";
   ?>
 
 <div class="menlistrow">
-<h1 class="menlisthd"><?php echo $menuType; ?></h1>
+<h1 class="menlisthd" style="<?php echo $menutitle_style; ?>"><?php echo $menuType; ?></h1>
 </div>
 <?php foreach($menu_data as $key=>$value){ //echo "<pre>"; print_r($value); exit; ?>
     <div class="menlistrow">
-        <h3 class="menlisth3"><?php echo $value['cga_menu_courses']['course_name']; ?></h3>
+        <h3 class="menlisth3" style="<?php echo $course_style; ?>"><?php echo $value['cga_menu_courses']['course_name']; ?></h3>
         <?php //$i=1; foreach($value as $menu_item){ $muuid = $menu_item['CgaMenu']['UUID']; ?>
-            <h4 class="menlisth4"><?php echo $value['cga_menus']['title']; ?></h4>
+            <h4 class="menlisth4" style="<?php echo $title_style; ?>"><?php echo $value['cga_menus']['title']; ?></h4>
             <div class="addpremop">
-            <h5 class="menlisth5 ext_<?php echo $value['cga_menus']['UUID']; ?>" id="<?php echo $value['cga_menus']['UUID']; ?>"><?php echo $value['cga_menus']['description']; ?></h5>
+            <h5 class="menlisth5 ext_<?php echo $value['cga_menus']['UUID']; ?>" id="<?php echo $value['cga_menus']['UUID']; ?>" style="<?php echo $description_style; ?>"><?php echo $value['cga_menus']['description']; ?></h5>
   </div>
         <?php //$i++; } ?>
        
