@@ -3987,8 +3987,8 @@ $(document).on("click", ".stationarydays", function(e) {
                                                                         .attr("data-long", value._latlng.lng)
                                                                         .attr("data-schid", value.scheduleId)
                                                                         .attr("data-daynum", value.day_num)
-                                                                        .attr("value", value.daytitle +' - Day '+value.day_num)
-                                                                        .text(value.daytitle +' - Day '+value.day_num)
+                                                                        .attr("value", value.day_to_location +' - Day '+value.day_num)
+                                                                        .text(value.day_to_location +' - Day '+value.day_num)
                                                                     );
                                                                     //temptitle.push(value.daytitle);
                                                         //}
