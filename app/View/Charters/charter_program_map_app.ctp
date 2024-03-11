@@ -3971,7 +3971,7 @@ $(document).on("click", ".stationarydays", function(e) {
                                                     $.each(markerArray, function(key, value) {   
                                                         
                                                         if(datastationaryOrnot == 1 && selecteddaynumstationary == value.day_num){
-                                                                selectedmarkertitle = value.daytitle;
+                                                                selectedmarkertitle = value.day_to_location;
                                                                 selectedmarkerday_num = value.day_num;
                                                                 lattitude = value._latlng.lat;
                                                                 longitude = value._latlng.lng;
