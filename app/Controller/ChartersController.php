@@ -6307,7 +6307,7 @@ WHERE cga_menus.UUID = '$uuid'";
                             }
 
                             foreach($samedayrouteorder as $title => $value){
-                                $fetchData = $this->CharterGuest->query("SELECT * FROM $yachtDbName.charter_program_schedule_routes CharterProgramScheduleRoute WHERE charter_program_uuid = '$charterProgramId' AND is_deleted = 0  AND start_location= '$title'");
+                                $fetchData = $this->CharterGuest->query("SELECT * FROM $yachtDbName.charter_program_schedule_routes CharterProgramScheduleRoute WHERE charter_program_uuid = '$charterProgramId' AND is_deleted = 0  AND end_location= '$title'");
                                 //echo "<pre>";print_r($fetchData); exit;
                                 //$fetchData = $this->CharterProgramScheduleRoute->find('all', array('conditions' => array('charter_program_uuid' => $charterProgramId, 'is_deleted' => 0,'start_location'=>$value)));
                                 $Routeorderdatatemp[$title][] = $fetchData;
@@ -6415,7 +6415,7 @@ WHERE cga_menus.UUID = '$uuid'";
                             //     }
                             // }
                             //total
-                            //echo "<pre>";print_r($markertotal); exit;
+                           
                              $totaldistancevalue = array_sum($totaldistance);
                             $RouteDatadisplaydistancevalue = number_format($totaldistancevalue, 1).'nm';
                             if(isset($totaldistancevalue) && !empty($totaldistancevalue) && isset($cruising_speed) && !empty($cruising_speed) ){
@@ -6440,7 +6440,8 @@ WHERE cga_menus.UUID = '$uuid'";
                             //exit;
                         }
                         //echo "<pre>";print_r($scheduleData);
-                        //echo "<pre>";print_r($markertitle); exit;
+                        //echo "<pre>";print_r($markertitle); 
+                        //exit;
                         $fromtoConditions = "charter_program_id = '$charterProgramId' AND is_deleted = 0";
                         $fromtoquery = "SELECT * FROM $yachtDbName.charter_program_schedules CharterProgramSchedule WHERE $fromtoConditions order by day_num";
                         $fromtoresult = $this->CharterGuest->query($fromtoquery);
@@ -6452,13 +6453,13 @@ WHERE cga_menus.UUID = '$uuid'";
                         $first = reset($crusingModaltitle);
                         $last = end($crusingModaltitle);
 
-                        if(!empty($markertotal)){
-                            $myLastmarkertotal = end($markertotal);
-                             $endname = $myLastmarkertotal['endplace']; //exit;
-                             $markertotal[$endname] = $myLastmarkertotal;
+                        // if(!empty($markertotal)){
+                        //     $myLastmarkertotal = end($markertotal);
+                        //      $endname = $myLastmarkertotal['endplace']; //exit;
+                        //      $markertotal[$endname] = $myLastmarkertotal;
         
-                        }
-
+                        // }
+                        //echo "<pre>";print_r($markertotal); exit;
                         $this->set('embarkation_chprg', $embarkation_chprg);
                         $this->set('debarkation_chprg', $debarkation_chprg);
                         $this->set('embark_lat', $embark_lat);
@@ -6513,7 +6514,7 @@ WHERE cga_menus.UUID = '$uuid'";
                             $myLastElement['CharterProgramSchedule']['longitude'] = $location_names[0]['LocationContent']['longitude'];
                             $myLastElement['CharterProgramSchedule']['title'] = $myLastElement['CharterProgramSchedule']['to_location'];
                             $myLastElement['CharterProgramSchedule']['notes'] = $myLastElement['CharterProgramSchedule']['debarkation_desc'];
-                            
+                            //$myLastElement['CharterProgramSchedule']['day_num'] = $myLastElement['CharterProgramSchedule']['day_num']+1;
                             // //
                             // //echo "<pre>";print_r($scheduleData);
                              $scheduleData[count($scheduleData)] = $myLastElement;
@@ -6555,9 +6556,21 @@ WHERE cga_menus.UUID = '$uuid'";
                                 }
                                 $myLastElement_locationimages['last'] = $trimmed_array;
 
-                             //echo "<pre>";print_r($scheduleData); //exit;
+                             //echo "<pre>";print_r($scheduleData); exit;
                         }
-
+                        if(isset($scheduleData) && !empty($scheduleData)){
+                             $end_location_last = end($scheduleData);
+                            $newschedule = array();
+                            foreach($scheduleData as $key => $value){
+                                if($key == 1){
+                                $newschedule[] = $end_location_last;
+                                }
+                                $newschedule[] = $value;
+                            }
+                            //$nv = array_pop($newschedule);
+                            $scheduleData = $newschedule;
+                            //$totsch = count($scheduleData)-1;   
+                        }
                         $this->set('scheduleData', $scheduleData);
 
                         $this->set('locationimages', $locationimages);

@@ -2002,18 +2002,14 @@ body.modal-open {
                 $markerimage = BASE_URL.'/charterguest/app/webroot/css/leaflet/dist/images/marker-icon-itinerary.png';
                 $crusemap = 1;
                 $crusemaparray = array();
-                $end_location_last = end($scheduleData);
-                $newschedule = array();
-                if(isset($scheduleData) && !empty($scheduleData)){
-                    foreach($scheduleData as $key => $value){
-                        if($key == 1){
-                        $newschedule[] = $end_location_last;
-                        }
-                        $newschedule[] = $value;
-                    }
-                    $scheduleData = $newschedule;
+               
+                if(!empty($scheduleData)) {
+                    $newscheduleData = $scheduleData;
+                    unset($newscheduleData[count($newscheduleData)-1]);
                 }
-            foreach ($scheduleData as $key => $schedule) { 
+            foreach ($newscheduleData as $key => $schedule) { 
+                
+                //if($key < $totsch){
                 $schedule['CharterProgramSchedule']['title'] = trim($schedule['CharterProgramSchedule']['title']);
                 $schedule['CharterProgramSchedule']['title'] = str_replace('"', "", $schedule['CharterProgramSchedule']['title']);
                 $schedule['CharterProgramSchedule']['title'] = str_replace("'", "", $schedule['CharterProgramSchedule']['title']);
@@ -2044,11 +2040,24 @@ body.modal-open {
                     }
                     
                 }
-                if($key < 2){
-                    $schedule['CharterProgramSchedule']['title'] = $schedule['CharterProgramSchedule']['title'];
+                if($key > 1){
+                    $df = $schedule['CharterProgramSchedule']['to_location'];
                 }else{
-                    $schedule['CharterProgramSchedule']['title'] = $schedule['CharterProgramSchedule']['to_location'];
+                    $df = $schedule['CharterProgramSchedule']['title'];
                 }
+
+                if (!empty($markertotal[$df . ' - Day ' . $schedule['CharterProgramSchedule']['day_num']]['duration'])) {
+                    $scheduleData[$key]['CharterProgramSchedule']['duration'] = $markertotal[$df. ' - Day ' . $schedule['CharterProgramSchedule']['day_num']]['duration'];
+                } else {
+                    $scheduleData[$key]['CharterProgramSchedule']['duration'] = "";
+                }
+
+                if (!empty($markertotal[$df. ' - Day ' . $schedule['CharterProgramSchedule']['day_num']]['distance'])) {
+                    $scheduleData[$key]['CharterProgramSchedule']['distance'] = $markertotal[$df. ' - Day ' . $schedule['CharterProgramSchedule']['day_num']]['distance'];
+                } else { 
+                    $scheduleData[$key]['CharterProgramSchedule']['distance'] = "";
+                }
+
                 $daynumber = $schedule['CharterProgramSchedule']['day_num']; 
                 
                 $to_location = $schedule['CharterProgramSchedule']['title'];
@@ -2120,19 +2129,25 @@ body.modal-open {
                             }
                         }
 
+                        if($key == 0){
+                            $heading =   $schedule['CharterProgramSchedule']['title']; 
+                          }else{
+                              $heading =   $schedule['CharterProgramSchedule']['to_location'];  
+                          }
+
                         ?>
                        
                        <div class="inputContainer_div">
                             <div class="loc_desc_div">
                                 <div>
                                 <span style="display: inline-block;position: relative;"><img src="<?php echo $markerimage; ?>" style="object-fit: cover; height: 35px;" alt="" ><span style="position: absolute;color:#000;top: 6px;right: 0px;left: 0px;text-align: center;font-size: 12px;"><?php echo $daynumber; ?></span></span>
-                                <input type="text" name="title" value="<?php echo htmlspecialchars($schedule['CharterProgramSchedule']['title']); ?>" placeholder="Enter the Title" class="loc_name" readonly/>
+                                <input type="text" name="title" value="<?php echo htmlspecialchars($heading); ?>" placeholder="Enter the Title" class="loc_name" readonly/>
                                    
                                 </div>
                             <div class="icons_fields">
                                 <i style="color: #00a8f3;" class="fa fa-solid fa-calendar"><span class="icon_label" ><?php echo $schedule['CharterProgramSchedule']['week_days']; ?></span></i>
-                                <i style="color: #00a8f3;" class="fa fa-solid fa-clock-o "><span class="icon_label"><?php echo $markertotal[$schedule['CharterProgramSchedule']['to_location'].' - Day '.$schedule['CharterProgramSchedule']['day_num']]['duration'];  ?></span></i>
-                                <i style="color: #00a8f3;" class="fa fa-solid fa-ship" aria-hidden="true"><span class="icon_label" style="padding: 0px 0px 0px 5px;"><?php echo $markertotal[$schedule['CharterProgramSchedule']['to_location'].' - Day '.$schedule['CharterProgramSchedule']['day_num']]['distance']; ?></span></i>
+                                <i style="color: #00a8f3;" class="fa fa-solid fa-clock-o "><span class="icon_label"><?php echo $markertotal[$df.' - Day '.$schedule['CharterProgramSchedule']['day_num']]['duration'];  ?></span></i>
+                                <i style="color: #00a8f3;" class="fa fa-solid fa-ship" aria-hidden="true"><span class="icon_label" style="padding: 0px 0px 0px 5px;"><?php echo $markertotal[$df.' - Day '.$schedule['CharterProgramSchedule']['day_num']]['distance']; ?></span></i>
                                 </div>
                                 <div>
                                     <textarea class="form-control auto_resize loc_desc_field" name="messagestitle" rows="1" cols="50" readonly><?php echo $schedule['CharterProgramSchedule']['notes']; ?></textarea>
@@ -2174,7 +2189,8 @@ body.modal-open {
                     <?php // } 
                    
                 $crusemap++;
-                } ?>
+                }
+             //} ?>
                 </div>
                     </div>
             </div>
@@ -2362,6 +2378,11 @@ var basefolder = '<?php echo $basefolder;?>';
 var vessel = new L.LayerGroup();
 var markerArray = [];
 var markerCount = 0;
+
+var embark_lat = "<?php echo $embark_lat; ?>";
+var embark_long =  "<?php echo $embark_long; ?>";
+
+var startloc =  "<?php echo $startloc; ?>";
      
 var mbAttr = '<table width=100%><thead><tr style="font-size:12px;font-weight:bold;text-align:center;"><td style="width:33%;border-radius: 12px;overflow: hidden;background: #fff;"><i class="fa fa-solid fa-ship map_bottom_attr" aria-hidden="true"></i>Distance<span style="color:#00a8f3;"><br><?php echo $RouteDatadisplaydistancevalue; ?></span></td><td style="width:33%;border-radius: 12px;overflow: hidden;background: #fff;"><i class="fa fa-solid fa-clock-o map_bottom_attr" aria-hidden="true"></i>Duration<span style="color:#00a8f3;"><br><?php echo $RouteDatadisplayduration; ?></span></td><td style="width:34%;border-radius: 12px;overflow: hidden;background: #fff;"><i class="fas fa-gas-pump fa-solid map_bottom_attr" aria-hidden="true"></i>Fuel<span style="color:#00a8f3;"><br><?php echo $RouteDatatotalconsumption; ?></span></td></tr></thead><tbody><tr style="font-size:12px;color:#00a8f3;font-weight:bold;text-align:center;"><td></td><td></td><td></td></tr></tbody></table>';
 mbUrl = 'https://api.mapbox.com/styles/v1/superyachtos/{id}/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1Ijoic3VwZXJ5YWNodG9zIiwiYSI6ImNpdW54eHV5bjAxNmMzMG1sMGpkamVma2cifQ.Y9kj-j0RGCFSE6khFVPyOw';
@@ -2401,13 +2422,20 @@ var CSMPmarkerCount = 0;
 if(isset($crusemaparray) && !empty($crusemaparray)){
     $loop= 1;
     
-foreach($scheduleData as $key => $schedule){ 
+foreach($newscheduleData as $key => $schedule){ 
     $schedule['CharterProgramSchedule']['title'] = trim($schedule['CharterProgramSchedule']['title']);
     $schedule['CharterProgramSchedule']['title'] = str_replace('"', "", $schedule['CharterProgramSchedule']['title']);
     $schedule['CharterProgramSchedule']['title'] = str_replace("'", "", $schedule['CharterProgramSchedule']['title']);
     $schedule['CharterProgramSchedule']['to_location'] = trim($schedule['CharterProgramSchedule']['to_location']);
     $schedule['CharterProgramSchedule']['to_location'] = str_replace('"', "", $schedule['CharterProgramSchedule']['to_location']);
     $schedule['CharterProgramSchedule']['to_location'] = str_replace("'", "", $schedule['CharterProgramSchedule']['to_location']);
+
+    if($key > 1){
+        $schedule['CharterProgramSchedule']['to_location'] = $schedule['CharterProgramSchedule']['to_location'];
+    }else{
+        $schedule['CharterProgramSchedule']['to_location'] = $schedule['CharterProgramSchedule']['title'];
+    }
+
     ?>
 
 var locsatellite = "schloc"+"<?php echo $key; ?>";
@@ -2596,6 +2624,7 @@ var clickedstationary;
 if(!empty($scheduleData)){
     $myLastElement = array_pop($scheduleData);  
     //echo "<pre>";print_r($myLastElement);exit;
+    $startingloc = $scheduleData[0];
 }
 
 foreach ($scheduleData as $key => $schedule) { 
@@ -2840,7 +2869,7 @@ className: 'text-below-marker',
 tooltipAnchor: [ 0, 0 ]
 })
 }).addTo(map);
-
+//console.log(textMarker);
         
         //marker._icon.classList.add('lidebarkMarker'+newString+dm_num);
         
@@ -4747,6 +4776,11 @@ function markerOnClickCSMP(e) {
     var selectedmarkerday_num = e.target.day_num;
     //console.log(selectedmarkertitle);
 
+    // if(startloc == daytitle){
+    //     lattitude = embark_lat;
+    //     longitude = embark_long;
+    // }
+
     setTimeout(function () {
                             window.dispatchEvent(new Event("resize"));
                             
@@ -4792,7 +4826,8 @@ function markerOnClickCSMP(e) {
                                 iconSize: [25, 41],
                                 className:'myIconClass',
                             });
-
+//console.log(lattitude);
+//console.log(longitude);
         //$("#modalmap").find('.leaflet-control-attribution').hide();
         var routemodalmarkerCSMP = L.marker([lattitude, longitude], {
             draggable: false,
@@ -4884,8 +4919,8 @@ $(document).on("change", ".markersnamesmodalmapcruisingsch", function(e) {
 });
 
 function drawrouteinmodalCSMP(frommarker) { //alert();
-    // console.log(modalrouteline);
-    // console.log(frommarker);
+     console.log(modalrouteline);
+     console.log(frommarker);
     modalmapcruisingsch.setView(new L.LatLng(csmpsinglemarkerlat, csmpsinglemarkerlong));
     
     $("#debarkation_sch").text('');
@@ -4903,6 +4938,7 @@ function drawrouteinmodalCSMP(frommarker) { //alert();
                 
             } 
     });
+    console.log(nextmarkername);
     if (nextmarkername != "undefined" && nextmarkername != "" && nextmarkername != null) { //alert();
         $(".markersnamesmodalmapcruisingsch").val(nextmarkername).trigger('change');
       // var returnvalue =  markersnamesmodalmap(nextmarkername);
