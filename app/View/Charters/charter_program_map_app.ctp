@@ -4013,7 +4013,7 @@ $(document).on("click", ".stationarydays", function(e) {
 
                                 var vvs = selectedmarkertitle.trim();
                                 var valTitle = vvs.replaceAll('"', '').replaceAll("'", '');
-                                var frommarker = valTitle +' - Day '+selectedmarkerday_num; //alert('llll')
+                                var frommarker = valTitle +' - Day '+selecteddaynumstationary; //alert('llll')
                                 console.log(frommarker);
                                 $("#embarkation").text(valTitle); 
                                 routeexists = 1;
