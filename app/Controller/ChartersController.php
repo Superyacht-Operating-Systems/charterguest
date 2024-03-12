@@ -5980,7 +5980,18 @@ class ChartersController extends AppController {
         echo json_encode($result);
         exit;
     }     
-    
+    public function getMealTypeFromTime($time) {
+        // Assuming $time is in the format 'HH:MM:SS'
+        if ($time >= '00:00:00' && $time <= '10:59:59') {
+            return '0';//'Breakfast';
+        } elseif ($time >= '11:00:00' && $time <= '17:59:59') {
+            return '1';//'Lunch';
+        } elseif ($time >= '18:00:00' && $time <= '23:59:59') {
+            return '2';//'Dinner';
+        } else {
+            return 'Invalid Time'; // Handle invalid times if necessary
+        }
+    }
             /*
      * Charter Program Map ipad app view
      * Functionality -  Loading the Charter program ipad app view
@@ -5988,12 +5999,21 @@ class ChartersController extends AppController {
      * Created date - 28-May-2018
      * Modified date - 
      */
-    public function charter_program_menus_app($menu_date = null,$yachtdb = null) {
-        //echo "<pre>";print_r($this->Session->read());exit;
+    public function charter_program_menus_app($menu_date = null, $menu_time = null ,$yachtdb = null) {
+        //echo "<pre>";print_r($_REQUEST);exit;
         Configure::write('debug',0);
         $session = $this->Session->read('charter_info');
         $yachtDbName = $yachtdb;
         $menuDate = $menu_date;
+        
+        if ($menu_time !== null) {
+            $menu_time = str_replace('-', ':', $menu_time);
+        }
+        //echo $menu_time; 
+        $mealType = $this->getMealTypeFromTime($menu_time);
+
+    // Output or use the meal type as needed
+       //echo $mealType; exit;
         if (!empty($yachtDbName)) {
             $this->loadModel('CharterGuest');
             $YachtData =  $this->CharterGuest->query("SELECT * FROM $yachtDbName.yachts Yacht");
@@ -6007,7 +6027,7 @@ class ChartersController extends AppController {
                 //$sql="SELECT * FROM $yachtDbName.cga_published_menus WHERE Menu_date='$menuDate'";
                 $sql = "SELECT cpm.*, cmb.* FROM $yachtDbName.cga_published_menus cpm
         LEFT JOIN $yachtDbName.cga_menu_backgrounds cmb ON cpm.template_id = cmb.UUID
-        WHERE cpm.Menu_date='$menuDate'";
+        WHERE cpm.Menu_date='$menuDate' and menu_type=$mealType";
                 $current_date_menu =  $this->CharterGuest->query($sql);
                
               
@@ -6063,7 +6083,7 @@ WHERE cga_menus.UUID = '$uuid'";
                 //$sql1="SELECT * FROM $yachtDbName.cga_published_menus WHERE Menu_date<'$menuDate' and every_day_menu =1";
                 $sql1 = "SELECT cpm.*, cmb.* FROM $yachtDbName.cga_published_menus cpm
         LEFT JOIN $yachtDbName.cga_menu_backgrounds cmb ON cpm.template_id = cmb.UUID
-        WHERE Menu_date<'$menuDate' and every_day_menu =1";
+        WHERE Menu_date<'$menuDate' and every_day_menu =1 and menu_type=$mealType";
                 $everyday_menu =  $this->CharterGuest->query($sql1);
                 //echo "<pre>";print_r($everyday_menu); exit;
                 foreach ($everyday_menu as $index => $menu) {
