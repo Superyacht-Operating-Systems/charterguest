@@ -2429,11 +2429,15 @@ foreach($newscheduleData as $key => $schedule){
     $schedule['CharterProgramSchedule']['to_location'] = trim($schedule['CharterProgramSchedule']['to_location']);
     $schedule['CharterProgramSchedule']['to_location'] = str_replace('"', "", $schedule['CharterProgramSchedule']['to_location']);
     $schedule['CharterProgramSchedule']['to_location'] = str_replace("'", "", $schedule['CharterProgramSchedule']['to_location']);
-
+    if($key == 0){
+        $schedule['CharterProgramSchedule']['lattitude'] = $embark_lat;
+        $schedule['CharterProgramSchedule']['longitude'] = $embark_long;
+    }
     if($key > 1){
         $schedule['CharterProgramSchedule']['to_location'] = $schedule['CharterProgramSchedule']['to_location'];
     }else{
         $schedule['CharterProgramSchedule']['to_location'] = $schedule['CharterProgramSchedule']['title'];
+       
     }
 
     ?>
@@ -4009,7 +4013,7 @@ $(document).on("click", ".stationarydays", function(e) {
 
                                 var vvs = selectedmarkertitle.trim();
                                 var valTitle = vvs.replaceAll('"', '').replaceAll("'", '');
-                                var frommarker = valTitle +' - Day '+selectedmarkerday_num; //alert('llll')
+                                var frommarker = valTitle +' - Day '+selecteddaynumstationary; //alert('llll')
                                 console.log(frommarker);
                                 $("#embarkation").text(valTitle); 
                                 routeexists = 1;
@@ -4762,8 +4766,8 @@ function markerOnClickCSMP(e) {
     var consumptiontotal = e.target.consumptiontotal;
     var distancetotal = e.target.distancetotal;
     var durationtotal = e.target.durationtotal;
-    // console.log(lattitude);
-    // console.log(longitude);
+     //console.log(lattitude);
+     //console.log(longitude);
     var day_dates = e.target.day_dates;
     var week_days = e.target.week_days;
     var tablepId = e.target.tablepId;

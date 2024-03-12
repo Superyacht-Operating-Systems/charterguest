@@ -69,6 +69,7 @@ $actual_link_defaultctp = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on
                 echo $this->Html->css('fastselect.min.css');
                 echo $this->Html->css('jquery.dataTables');
                 echo $this->Html->css('typeahead');
+                echo $this->Html->css('myfonts');
 //                echo $this->Html->script('jquery-1.7.2.min');
                 echo $this->Html->script('jquery-3.2.1.min');
                 echo $this->Html->script('jquery.validate');

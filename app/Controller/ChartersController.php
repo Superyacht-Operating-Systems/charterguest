@@ -6009,8 +6009,29 @@ class ChartersController extends AppController {
         LEFT JOIN $yachtDbName.cga_menu_backgrounds cmb ON cpm.template_id = cmb.UUID
         WHERE cpm.Menu_date='$menuDate'";
                 $current_date_menu =  $this->CharterGuest->query($sql);
-                //echo "<pre>";print_r($current_date_menu); exit;
+               
+              
                 foreach ($current_date_menu as $index => $menu) {
+                    //echo "<pre>";print_r($menu); exit;
+                      // Your input string.
+                      $inputString = $menu['cpm']['extra_description'];
+
+                      // Split the string into an array based on the comma separator.
+                      $items = explode(',', $inputString);
+  
+                      $uuidTextArray = [];
+  
+                      foreach ($items as $item) {
+                          // For each item, split it into two parts based on the underscore.
+                          // The first part [0] is the UUID, and the second part [1] is the text.
+                          list($uuid, $text) = explode('_', $item, 2);
+  
+                          // Add to the associative array: UUID as key, text as value.
+                          $uuidTextArray[$uuid] = $text;
+                      }
+  
+                      // Print the resulting associative array.
+                    //echo"<pre>";  print_r($uuidTextArray);//exit;
                     // Initialize an array to hold the details for all menu_item_ids of this menu
                     $allMenuDetails = [];
                 
@@ -6024,17 +6045,21 @@ class ChartersController extends AppController {
                         LEFT JOIN $yachtDbName.cga_menu_courses ON cga_menus.course_id = cga_menu_courses.UUID 
 WHERE cga_menus.UUID = '$uuid'";
                         $menuDetails = $this->CharterGuest->query($sqlDetails);
-                
+                        //echo"<pre>";  print_r($menuDetails[0]);exit;
                         // Append the fetched details to the allMenuDetails array
                         if (!empty($menuDetails)) {
+                            // add extra description
+                            $menuDetails[0]['cga_menus']['extradescription']= $uuidTextArray[$uuid];
                             // Note: Depending on your exact data structure, you might need to adjust how menuDetails are appended
                             $allMenuDetails[] = $menuDetails[0]; // Assuming you want the first (or only) result per UUID
                         }
                     }
-                
+                    //echo"<pre>";  print_r($allMenuDetails);exit;
                     // Once all menuDetails are collected for this menu, append them to the current menu item in the original array
                     $current_date_menu[$index]['details'] = $allMenuDetails;
+
                 }
+
                 //$sql1="SELECT * FROM $yachtDbName.cga_published_menus WHERE Menu_date<'$menuDate' and every_day_menu =1";
                 $sql1 = "SELECT cpm.*, cmb.* FROM $yachtDbName.cga_published_menus cpm
         LEFT JOIN $yachtDbName.cga_menu_backgrounds cmb ON cpm.template_id = cmb.UUID
@@ -6042,6 +6067,22 @@ WHERE cga_menus.UUID = '$uuid'";
                 $everyday_menu =  $this->CharterGuest->query($sql1);
                 //echo "<pre>";print_r($everyday_menu); exit;
                 foreach ($everyday_menu as $index => $menu) {
+
+                      $inputString = $menu['cpm']['extra_description'];
+
+                      // Split the string into an array based on the comma separator.
+                      $items = explode(',', $inputString);
+  
+                      $uuidTextArray = [];
+  
+                      foreach ($items as $item) {
+                          // For each item, split it into two parts based on the underscore.
+                          // The first part [0] is the UUID, and the second part [1] is the text.
+                          list($uuid, $text) = explode('_', $item, 2);
+  
+                          // Add to the associative array: UUID as key, text as value.
+                          $uuidTextArray[$uuid] = $text;
+                      }
                     // Initialize an array to hold the details for all menu_item_ids of this menu
                     $allMenuDetails = [];
                 
@@ -6060,6 +6101,7 @@ WHERE cga_menus.UUID = '$uuid'";
                 //echo "<pre>";print_r($menuDetails); exit;
                         // Append the fetched details to the allMenuDetails array
                         if (!empty($menuDetails)) {
+                            $menuDetails[0]['cga_menus']['extradescription']= $uuidTextArray[$uuid];
                             // Adjust this line based on your actual data structure
                             $allMenuDetails[] = $menuDetails[0]; // Assuming you want the first (or only) result per UUID
                         }
@@ -6085,8 +6127,8 @@ WHERE cga_menus.UUID = '$uuid'";
                         $data[$menuType] = $menu;
                     }
                 }
-                
-                //echo "<pre>";print_r($data); exit;
+                ksort($data);
+               // echo "<pre>";print_r($data); exit;
                 if(isset($YachtData[0]['Yacht']['domain_name'])){
                     $domain_name = $YachtData[0]['Yacht']['domain_name'];
                     }

@@ -7,6 +7,7 @@
     $bg_img_path = $SITE_URL.'/'.$yachtname.'/app/webroot/img/cga_files/menu_bg_orginals/menu_bg_converted';
   }
   //$bg_img_path = 'https://localhost/superyacht/app/webroot/img/cga_files/menu_bg_orginals/menu_bg_converted';
+  $bg_img_path = 'https://192.10.10.45/superyacht/app/webroot/img/cga_files/menu_bg_orginals/menu_bg_converted';
   //echo $bg_img_path; exit;
   ?>
 <!DOCTYPE html>
@@ -106,6 +107,21 @@
   display: inline-block;
     width: 100%;
 }
+.menlisth6{
+  min-height: 24px;
+  border-top: solid 1px rgb(221 221 221 / 0%);
+  border-bottom: solid 1px rgb(221 221 221 / 0%);
+  text-align: center;
+  margin-bottom: 5px;
+  background: #f9f8f800;
+  margin-top: 0;
+  /*display: flex;*/
+  align-items: center;
+  justify-content: center;
+  padding: 5px 5px;
+  font-size: 12px;
+  font-family:Times;
+}
 </style>
 </head>
 <body>
@@ -138,6 +154,8 @@ echo $item['cpm']['basic_menu_text'];
   $title_style = "color:".$item['cpm']['title_color'].";text-align:".$text_align[$item['cpm']['title_alignment']].";font-family: ".$item['cpm']['title_font'].";font-size:".$item['cpm']['title_size']."px;font-weight:".$font_weight[$item['cpm']['title_weight']].";";
 
   $description_style = "color:".$item['cpm']['Description_color'].";text-align:".$text_align[$item['cpm']['Description_allignment']].";font-family: ".$item['cpm']['Description_font'].";font-size:".$item['cpm']['Description_size']."px;font-weight:".$font_weight[$item['cpm']['Description_weight']].";";
+
+  $wine_description_style = "color:".$item['cpm']['Wine_Description_color'].";text-align:".$text_align[$item['cpm']['Wine_Description_allignment']].";font-family: ".$item['cpm']['Wine_Description_font'].";font-size:".$item['cpm']['Wine_Description_size']."px;font-weight:".$font_weight[$item['cpm']['Wine_Description_weight']].";";
   ?>
 
 <div class="menlistrow">
@@ -150,6 +168,11 @@ echo $item['cpm']['basic_menu_text'];
             <h4 class="menlisth4" style="<?php echo $title_style; ?>"><?php echo $value['cga_menus']['title']; ?></h4>
             <div class="addpremop">
             <h5 class="menlisth5 ext_<?php echo $value['cga_menus']['UUID']; ?>" id="<?php echo $value['cga_menus']['UUID']; ?>" style="<?php echo $description_style; ?>"><?php echo $value['cga_menus']['description']; ?></h5>
+            <?php if(isset($value['cga_menus']['extradescription']) && $value['cga_menus']['extradescription']!=''){  ?>             
+
+              <h5 class="addhidetag menlisth6 show_in_h5_6594dc22-5418-4a33-b33e-4f81ac182009" style="<?php echo $wine_description_style; ?>"><?php echo $value['cga_menus']['extradescription']; ?></h5>
+
+            <?php } ?>
   </div>
         <?php //$i++; } ?>
        
