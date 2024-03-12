@@ -144,6 +144,7 @@
 <div class="container_menuscontainer">
 
 <?php if(count($menudata) > 0){ ?>
+<!--<div class="owl-carousel owl-theme">-->
 <div class="owl-carousel owl-theme">
 <?php foreach($menudata as $item){ 
   $bg_image_name = $item['cmb']['file_name'];
@@ -282,11 +283,14 @@ $formattedDate = $menuDate->format('l, j F Y'); // Formats the date as "Friday, 
   $(function() {
   // Owl Carousel
   var owl = $(".owl-carousel");
+  var itemCount = owl.children().length; // Get the number of items in the carousel
   owl.owlCarousel({
     items: 1,
     margin:10,
-    loop: true,
+    loop: itemCount > 1, // Only enable looping if more than one item
     nav: true,
+    mouseDrag: itemCount > 1, // Only enable mouse dragging if more than one item
+    touchDrag: itemCount > 1, // Only enable touch dragging if more than one item
   });
 });
 $(document).on("click", "#menualretpop_popup", function (e) {
