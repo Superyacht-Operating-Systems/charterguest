@@ -6,8 +6,8 @@
   }else{
     $bg_img_path = $SITE_URL.'/'.$yachtname.'/app/webroot/img/cga_files/menu_bg_orginals/menu_bg_converted';
   }
-  //$bg_img_path = 'https://localhost/superyacht/app/webroot/img/cga_files/menu_bg_orginals/menu_bg_converted';
-  $bg_img_path = 'https://192.10.10.45/superyacht/app/webroot/img/cga_files/menu_bg_orginals/menu_bg_converted';
+  $bg_img_path = 'https://localhost/superyacht/app/webroot/img/cga_files/menu_bg_orginals/menu_bg_converted';
+ // $bg_img_path = 'https://192.10.10.45/superyacht/app/webroot/img/cga_files/menu_bg_orginals/menu_bg_converted';
   //echo $bg_img_path; exit;
   ?>
 <!DOCTYPE html>
@@ -122,6 +122,21 @@
   font-size: 12px;
   font-family:Times;
 }
+.brackoverlaymenu {
+  background: #f7f7f7;
+  padding: 20px;
+  /*position: absolute;*/
+  top: 10%;
+  right: 0;
+  left: 35%;
+  min-height: 200px;
+  width: 400px;
+  margin: 0 auto;
+  display: flex;
+  border: solid 2px #eee;
+  border-radius: 8px;
+  z-index: 9999;
+}
 </style>
 </head>
 <body>
@@ -161,6 +176,20 @@ echo $item['cpm']['basic_menu_text'];
 <div class="menlistrow">
 <h1 class="menlisthd" style="<?php echo $menutitle_style; ?>"><?php echo $menuType; ?></h1>
 </div>
+<div class="brackoverlaymenu" style="display:block;">
+<?php
+// Assuming $item['cpm']['Menu_date'] is in 'Y-m-d' format, e.g., "2024-03-08"
+$menuDate = DateTime::createFromFormat('Y-m-d', $item['cpm']['Menu_date']);
+$formattedDate = $menuDate->format('l, j F Y'); // Formats the date as "Friday, 8 March 2024"
+
+//echo $formattedDate;
+?>
+      <p id="show_menu_date"><?php echo $formattedDate; ?></p>
+      <p id="show_message_heading_text"><?php echo $item['cpm']['Message_heading']; ?></p>
+      <p>Massage from: The <span id="show_message_from"><?php echo $item['cpm']['message_from']; ?>  </span></p>
+      <p class="desctitle" id="show_message"><?php echo nl2br($item['cpm']['Message']); ?></p>
+      <button class="btn vcenter" id="close_step3_popup">Close</button>
+    </div>
 <?php foreach($menu_data as $key=>$value){ //echo "<pre>"; print_r($value); exit; ?>
     <div class="menlistrow">
         <h3 class="menlisth3" style="<?php echo $course_style; ?>"><?php echo $value['cga_menu_courses']['course_name']; ?></h3>
@@ -263,5 +292,9 @@ echo $item['cpm']['basic_menu_text'];
 $(document).on("click", "#menualretpop_popup", function (e) {
         //alert();
         $(".menualretpop").hide();
+    });
+    $(document).on("click", "#close_step3_popup", function (e) {
+        //alert();
+        $(".brackoverlaymenu").hide();
     });
 </script>
