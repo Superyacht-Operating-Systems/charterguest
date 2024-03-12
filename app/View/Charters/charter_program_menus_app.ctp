@@ -58,13 +58,17 @@
     overflow: auto;
     height: 650px;
     margin-top: 80px;
-    border-width: 0;
+    scrollbar-width: none;
     position: relative;
     overflow:auto;
     }
     .container_menuscontainer{
       padding:50px 0px;
     }
+  .menlistcontain p {
+    margin: 0px !important;
+}
+
   /* CSS goes here */
   .container_menus {
     width: 500px; /* Set the width */
