@@ -2011,6 +2011,7 @@ body.modal-open {
                     }
                 }
                 $firststat = 0;
+                $chkF = 0; 
             foreach ($newscheduleData as $key => $schedule) { 
                 
                 //if($key < $totsch){
@@ -2142,10 +2143,11 @@ body.modal-open {
                             }
                         }
 
-                        if($key > 1){
-                            $heading =   $schedule['CharterProgramSchedule']['to_location']; 
+                        if($key == 0 && $chkF == 0){
+                            $heading =   $schedule['CharterProgramSchedule']['title']; 
+                            $chkF = 1;
                           }else{
-                              $heading =   $schedule['CharterProgramSchedule']['title'];  
+                              $heading =   $schedule['CharterProgramSchedule']['to_location'];  
                           }
 
                         ?>
