@@ -2153,7 +2153,7 @@ body.modal-open {
                        <div class="inputContainer_div">
                             <div class="loc_desc_div">
                                 <div>
-                                <span style="display: inline-block;position: relative;"><img src="<?php echo $markerimage; ?>" style="object-fit: cover; height: 35px;" alt="" ><span style="position: absolute;color:#000;top: 6px;right: 0px;left: 0px;text-align: center;font-size: 12px;"><?php echo $daynumber; ?></span></span><?php echo $schedule['CharterProgramSchedule']['title']; ?><?php echo $schedule['CharterProgramSchedule']['to_location']; ?>
+                                <span style="display: inline-block;position: relative;"><img src="<?php echo $markerimage; ?>" style="object-fit: cover; height: 35px;" alt="" ><span style="position: absolute;color:#000;top: 6px;right: 0px;left: 0px;text-align: center;font-size: 12px;"><?php echo $daynumber; ?></span></span><?php echo $key.'---'.$schedule['CharterProgramSchedule']['title']; ?><?php echo $schedule['CharterProgramSchedule']['to_location']; ?>
                                 <input type="text" name="title" value="<?php echo htmlspecialchars($heading); ?>" placeholder="Enter the Title" class="loc_name" readonly/>
                                    
                                 </div>
