@@ -6027,9 +6027,10 @@ class ChartersController extends AppController {
                 //$sql="SELECT * FROM $yachtDbName.cga_published_menus WHERE Menu_date='$menuDate'";
                 $sql = "SELECT cpm.*, cmb.* FROM $yachtDbName.cga_published_menus cpm
         LEFT JOIN $yachtDbName.cga_menu_backgrounds cmb ON cpm.template_id = cmb.UUID
-        WHERE cpm.Menu_date='$menuDate' and menu_type=$mealType";
+        WHERE cpm.Menu_date='$menuDate' and menu_type=$mealType ORDER BY cpm.modified ASC";
+        //echo $sql; exit;
                 $current_date_menu =  $this->CharterGuest->query($sql);
-               
+               //echo "<pre>"; print_r($current_date_menu); exit;
               
                 foreach ($current_date_menu as $index => $menu) {
                     //echo "<pre>";print_r($menu); exit;
