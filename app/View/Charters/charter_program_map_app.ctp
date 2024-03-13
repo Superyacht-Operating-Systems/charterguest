@@ -2142,10 +2142,10 @@ body.modal-open {
                             }
                         }
 
-                        if($key <1){
-                            $heading =   $schedule['CharterProgramSchedule']['title']; 
+                        if($key > 1){
+                            $heading =   $schedule['CharterProgramSchedule']['to_location']; 
                           }else{
-                              $heading =   $schedule['CharterProgramSchedule']['to_location'];  
+                              $heading =   $schedule['CharterProgramSchedule']['title'];  
                           }
 
                         ?>
