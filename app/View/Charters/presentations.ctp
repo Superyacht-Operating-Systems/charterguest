@@ -126,12 +126,12 @@ color:#000;
 
 }
 .StartImage{
-  border: ridge 15px;
+  border: solid #e3e3e3 15px;
     border-radius: 6px;
 }
 .LocationImage,
 .img_section_slide img {
-  border: ridge 15px;
+  border: solid #e3e3e3 15px;
     border-radius: 6px;
 
 

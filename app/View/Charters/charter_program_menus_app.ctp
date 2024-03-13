@@ -7,7 +7,7 @@
     $bg_img_path = $SITE_URL.'/'.$yachtname.'/app/webroot/img/cga_files/menu_bg_orginals/menu_bg_converted';
   }
   //$bg_img_path = 'https://localhost/superyacht/app/webroot/img/cga_files/menu_bg_orginals/menu_bg_converted';
-  $bg_img_path = 'https://192.10.10.45/superyacht/app/webroot/img/cga_files/menu_bg_orginals/menu_bg_converted';
+ // $bg_img_path = 'https://192.10.10.45/superyacht/app/webroot/img/cga_files/menu_bg_orginals/menu_bg_converted';
   //echo $bg_img_path; exit;
   ?>
 <!DOCTYPE html>
@@ -27,7 +27,7 @@
   position: relative;
 }
 .container_menuscontainer {
-  padding: 50px 0px;
+  padding: 10px 0px;
     overflow: hidden;
 
     width: 550px;
@@ -61,9 +61,10 @@
     scrollbar-width: none;
     position: relative;
     overflow:auto;
+    padding-bottom:100px;
     }
     .container_menuscontainer{
-      padding:50px 0px;
+      padding:10px 0px;
     }
   .menlistcontain p {
     margin: 0px !important;
