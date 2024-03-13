@@ -2006,7 +2006,11 @@ body.modal-open {
                 if(!empty($scheduleData)) {
                     $newscheduleData = $scheduleData;
                     unset($newscheduleData[count($newscheduleData)-1]);
+                    if($newscheduleData[0]['CharterProgramSchedule']['stationary'] == 1){
+                        unset($newscheduleData[1]);
+                    }
                 }
+                $firststat = 0;
             foreach ($newscheduleData as $key => $schedule) { 
                 
                 //if($key < $totsch){
@@ -2043,7 +2047,16 @@ body.modal-open {
                 if($key > 1){
                     $df = $schedule['CharterProgramSchedule']['to_location'];
                 }else{
-                    $df = $schedule['CharterProgramSchedule']['title'];
+                    if($key == 0 && $schedule['CharterProgramSchedule']['stationary'] == 1){
+                        $firststat = 1;
+                       
+                    }
+                   
+                    if($key == 1 && $firststat == 0){
+                        $df =  $embarkation_chprg;
+                    }else if($key == 1 && $firststat == 1){
+                        $df =  $schedule['CharterProgramSchedule']['to_location'];
+                    }
                 }
 
                 if (!empty($markertotal[$df . ' - Day ' . $schedule['CharterProgramSchedule']['day_num']]['duration'])) {
@@ -2421,7 +2434,7 @@ var CSMPmarkerCount = 0;
 <?php 
 if(isset($crusemaparray) && !empty($crusemaparray)){
     $loop= 1;
-    
+    $firststat = 0;
 foreach($newscheduleData as $key => $schedule){ 
     $schedule['CharterProgramSchedule']['title'] = trim($schedule['CharterProgramSchedule']['title']);
     $schedule['CharterProgramSchedule']['title'] = str_replace('"', "", $schedule['CharterProgramSchedule']['title']);
@@ -2436,7 +2449,18 @@ foreach($newscheduleData as $key => $schedule){
     if($key > 1){
         $schedule['CharterProgramSchedule']['to_location'] = $schedule['CharterProgramSchedule']['to_location'];
     }else{
-        $schedule['CharterProgramSchedule']['to_location'] = $schedule['CharterProgramSchedule']['title'];
+        if($key == 0 && $schedule['CharterProgramSchedule']['stationary'] == 1){
+            $firststat = 1;
+           
+        }
+       
+        if($key == 1 && $firststat == 0){
+            $schedule['CharterProgramSchedule']['to_location'] =  $schedule['CharterProgramSchedule']['org_title'];
+        }else if($key == 1 && $firststat == 1){
+            $schedule['CharterProgramSchedule']['to_location'] =  $schedule['CharterProgramSchedule']['to_location'];
+        }
+        
+       // $schedule['CharterProgramSchedule']['to_location'] = $schedule['CharterProgramSchedule']['title'];
        
     }
 
@@ -2523,6 +2547,28 @@ markerschloc.scheduleId = "<?php echo $schedule['CharterProgramSchedule']['chart
         markerschloc.samelocationsDates = "<?php echo implode(',',$samelocationsDates[$schedule['CharterProgramSchedule']['title']]); ?>";
         markerschloc.day_num = "<?php echo $schedule['CharterProgramSchedule']['day_num']; ?>";
         markerschloc.markerNum = CSMPmarkerCount; 
+        <?php 
+            if($key == 0){  
+            ?>
+            markerschloc.from_flag = "from"; 
+        <?php } ?>
+        <?php 
+            if($key == 0 && $schedule['CharterProgramSchedule']['stationary'] == 1){
+            $firststat = 1;
+            ?>
+            markerschloc.from_flag = "from"; 
+        <?php } ?>
+
+        <?php if($key == 1 && $firststat == 0){ ?>
+            markerschloc.to_flag = "to"; 
+            markerschloc.start_loc =startloc;
+            markerschloc.embark_lat =embark_lat;
+            markerschloc.embark_long =embark_long;
+            markerschloc.distancetotal = "<?php echo $markertotal[$embarkation_chprg.' - Day '.$schedule['CharterProgramSchedule']['day_num']]['distance']; ?>";
+            markerschloc.durationtotal = "<?php echo $markertotal[$embarkation_chprg.' - Day '.$schedule['CharterProgramSchedule']['day_num']]['duration'];  ?>";
+        <?php }else if($key == 1 && $firststat == 1){ ?>   
+            markerschloc.daytitle = "<?php echo $schedule['CharterProgramSchedule']['to_location']; ?>";
+        <?php } ?>
         CSMPmarkerArray.push(markerschloc);
         CSMPmarkerCount++;
 
@@ -2630,7 +2676,7 @@ if(!empty($scheduleData)){
     //echo "<pre>";print_r($myLastElement);exit;
     $startingloc = $scheduleData[0];
 }
-
+$fromLocFlag = 0;
 foreach ($scheduleData as $key => $schedule) { 
 
 if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !empty($samelocations[$schedule['CharterProgramSchedule']['lattitude']])){
@@ -2690,6 +2736,10 @@ if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !e
     
     }
 
+    if($key == 0 && $schedule['CharterProgramSchedule']['stationary'] == 1){
+        $fromLocFlag = 1;
+    }
+
     if($schedule['CharterProgramSchedule']['stationary'] == 1){
         $stclass = "style='position:absolute;top:40px !important;'";
         //$scheduleData[$key+1]['CharterProgramSchedule']['stationary'] = 1;
@@ -2746,6 +2796,13 @@ if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !e
             marker.stationary = 1;
         <?php }else{?>
             marker.stationary = "<?php echo $schedule['CharterProgramSchedule']['stationary']; ?>";
+        <?php } ?>
+        <?php if($key == 1 && $fromLocFlag == 0){ ?>
+            marker.firstdaytoloc = "to";
+            marker.distancetotal = "<?php echo $markertotal[$embarkation_chprg.' - Day '.$schedule['CharterProgramSchedule']['day_num']]['distance']; ?>";
+            marker.durationtotal = "<?php echo $markertotal[$embarkation_chprg.' - Day '.$schedule['CharterProgramSchedule']['day_num']]['duration'];  ?>";
+            marker.consumptiontotal = "<?php echo $markertotal[$embarkation_chprg.' - Day '.$schedule['CharterProgramSchedule']['day_num']]['consumption']; ?>";
+            marker.fromstartloc = "<?php echo $embarkation_chprg; ?>";
         <?php } ?>
         marker.stationarytooltipnum = "<?php echo $kn; ?>";
         marker.endmarker = "no";
@@ -3431,6 +3488,11 @@ function markerOnClick(e) {
     var stationarytooltipnum = e.target.stationarytooltipnum;
 
     var endmarkerOrnot = e.target.endmarker;
+if(e.target.firstdaytoloc){
+    var firstdaytoloc = e.target.firstdaytoloc;
+    var fromstartloc = e.target.fromstartloc;
+}
+
 
    
    // $(".Tooltip").hide();
@@ -3610,7 +3672,15 @@ setTimeout(function () {
                                 // $("#frommarker").val(selectedmarkertitle +' - Day '+selectedmarkerday_num);
                                 // $("#frommarkerlat").val(lattitude);
                                 // $("#frommarkerlong").val(longitude);
-
+                                if(endmarkerOrnot == "yes"){
+                                    distancetotal = "";
+                                    durationtotal = "";
+                                }
+                                if(firstdaytoloc){
+                                    selectedmarkertitle = fromstartloc;
+                                    lattitude = embark_lat;
+                                    longitude = embark_long;
+                                }
                                 $(".markerdistance").text(distancetotal);
                                 $(".markerduration").text(durationtotal);
                                 
@@ -3623,6 +3693,9 @@ setTimeout(function () {
                                 var frommarker = valTitle +' - Day '+selectedmarkerday_num; //alert('llll')
                                 $("#embarkation").text(valTitle); 
                                 routeexists = 1;
+                                if(endmarkerOrnot == "yes"){
+                                    frommarker = "";
+                                }
                                 drawrouteinmodal(frommarker);
                               
                                 // console.log(selectedmarkertitle);
@@ -4781,8 +4854,24 @@ function markerOnClickCSMP(e) {
     //var popLocation = e.latlng;
     var selectedmarkertitle = e.target.day_to_location;
     var selectedmarkerday_num = e.target.day_num;
-    //console.log(selectedmarkertitle);
 
+    var from_flag = e.target.from_flag;
+    var to_flag = e.target.to_flag;
+    //console.log(to_flag);
+    if(from_flag){
+        selectedmarkertitle = daytitle;
+        distancetotal = "";
+        durationtotal = "";
+    }
+
+    if(to_flag){
+        var start_loc = e.target.start_loc;
+        //console.log(start_loc);
+        selectedmarkertitle = start_loc;
+             lattitude = embark_lat;
+         longitude = embark_long;
+       
+    }
     // if(startloc == daytitle){
     //     lattitude = embark_lat;
     //     longitude = embark_long;
@@ -4822,6 +4911,9 @@ function markerOnClickCSMP(e) {
         var selectedmarkertitleV = vvs.replaceAll('"', '').replaceAll("'", '');
         var frommarker = selectedmarkertitleV +' - Day '+selectedmarkerday_num; //alert('llll')
         $("#embarkation_sch").text(selectedmarkertitleV); 
+        if(from_flag){
+            frommarker = "";
+        }
         drawrouteinmodalCSMP(frommarker);
 
         setTimeout(() => {
