@@ -7932,6 +7932,25 @@ WHERE cga_menus.UUID = '$uuid'";
                     //echo "<pre>";print_r($modaldisplayDate); exit;
                 $scheduleData = $this->CharterGuest->query("SELECT * FROM $yachtDbName.charter_program_schedules CharterProgramSchedule WHERE UUID = '$scheduleId' AND is_deleted = 0 LIMIT 1");
                 //echo "<pre>";print_r($scheduleData); exit;
+
+                $row_from_title = $scheduleData[0]['CharterProgramSchedule']['title'];
+                $row_from_to_location = $scheduleData[0]['CharterProgramSchedule']['to_location'];
+                $row_from_stationary = $scheduleData[0]['CharterProgramSchedule']['stationary'];
+                $row_from_serial_no = $scheduleData[0]['CharterProgramSchedule']['serial_no'];
+
+                $LocationContent = $this->CharterGuest->query("SELECT * FROM $yachtDbName.location_contents LocationContent WHERE LocationContent.location = '$row_from_title' AND LocationContent.type = 'Location' AND LocationContent.is_deleted = 0");
+                    if(!empty($LocationContent[0]['LocationContent']['lattitude'])){
+                        $row_from_lattitude = $LocationContent[0]['LocationContent']['lattitude'];
+                        $row_from_longitude = $LocationContent[0]['LocationContent']['longitude'];
+                    }
+                    $row_from_dis = "";
+                    $row_from_dur = "";
+                    $fetchRoutev = $this->CharterGuest->query("SELECT * FROM $yachtDbName.charter_program_schedule_routes CharterProgramScheduleRoute WHERE charter_program_uuid = '$programId' AND is_deleted = 0  AND charter_program_schedules_id= '$scheduleId'");
+                                if(!empty($fetchRoutev)){
+                                    $row_from_dis = $fetchRoutev[0]['CharterProgramScheduleRoute']['distance'];
+                                    $row_from_dur =  $fetchRoutev[0]['CharterProgramScheduleRoute']['duration'];
+                                }
+
                 $basefolder = $this->request->base;
                 if (count($scheduleData) != 0) {
                     if($last_marker_display_iti_modal == 0){
@@ -8353,6 +8372,14 @@ WHERE cga_menus.UUID = '$uuid'";
 
                     $result['scheduleData'] = $scheduleData;
                     $result['activityData'] = $activityData;
+                    $result['row_from_title'] = $row_from_title;
+                    $result['row_from_to_location'] = $row_from_to_location;
+                    $result['row_from_stationary'] = $row_from_stationary;
+                    $result['row_from_serial_no'] = $row_from_serial_no;
+                    $result['row_from_lattitude'] = $row_from_lattitude;
+                    $result['row_from_longitude'] = $row_from_longitude;
+                    $result['row_from_dis'] = $row_from_dis;
+                    $result['row_from_dur'] = $row_from_dur;
                     //echo "<pre>";print_r($result); exit;
                 }
                 

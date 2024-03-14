@@ -2826,6 +2826,11 @@ if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !e
             marker.fromstartloc = "<?php echo $embarkation_chprg; ?>";
         <?php } ?>
         marker.stationarytooltipnum = "<?php echo $kn; ?>";
+        marker.serial_no = "<?php echo $schedule['CharterProgramSchedule']['serial_no']; ?>";
+        marker.row_from_lat = "<?php echo $schedule['CharterProgramSchedule']['row_from_lat']; ?>";
+        marker.row_from_long = "<?php echo $schedule['CharterProgramSchedule']['row_from_long']; ?>";
+        marker.row_from_distance = "<?php echo $schedule['CharterProgramSchedule']['row_from_distance']; ?>";
+        marker.row_from_duration = "<?php echo $schedule['CharterProgramSchedule']['row_from_duration']; ?>";
         marker.endmarker = "no";
         markerArray.push(marker);
         marker.addTo(map);
@@ -3488,6 +3493,7 @@ var ActivityData = '';
 var ScheduleDataResult = '';
 <?php if(isset($scheduleData)){ ?>
 function markerOnClick(e) {
+    console.log(e);
     mapmarkerglobalObj = e;
     var scheduleUUId = e.target.scheduleUUId;
     var scheduleId = e.target.scheduleId;
@@ -3514,7 +3520,17 @@ if(e.target.firstdaytoloc){
     var fromstartloc = e.target.fromstartloc;
 }
 
+    var serial_no = e.target.serial_no;
+    var stationary_val = e.target.stationary;
 
+    var row_from_distance = e.target.row_from_distance;
+    var row_from_duration = e.target.row_from_duration;
+    var row_from_lat = e.target.row_from_lat;
+    var row_from_long = e.target.row_from_long;
+    lattitude = row_from_lat;
+    longitude = row_from_long;
+    distancetotal = row_from_distance;
+    durationtotal = row_from_duration;
    
    // $(".Tooltip").hide();
     $('.Tooltip').css('top','');
@@ -3642,6 +3658,9 @@ setTimeout(function () {
                         var dateformarker = result.modaldisplayDate;
                         $(".charter_from_date_conv").text(dateformarker);
                     }
+
+                    lattitude = result.row_from_lattitude;
+                    longitude = result.row_from_longitude;
                     //alert(width);
                     //for screenview <990 on opening the itinerary modal blacked out the map region
                     // on close modal removed the blacked out css
@@ -3657,7 +3676,7 @@ setTimeout(function () {
                     ReloadModalMaplayer();
                                 //var popLocation = e.latlng;
                                 var tooltipcontent = e.target._tooltip._content;
-                                var selectedmarkertitle = e.target.day_to_location;
+                                var selectedmarkertitle = e.target.daytitle;
                                 var selectedmarkerday_num = e.target.day_num;
                                 //console.log(popLocation);
                                 fitzoommap.push(popLocation);
@@ -3702,17 +3721,25 @@ setTimeout(function () {
                                     lattitude = embark_lat;
                                     longitude = embark_long;
                                 }
+
                                 $(".markerdistance").text(distancetotal);
                                 $(".markerduration").text(durationtotal);
                                 
                                 //$(".markerconsumption").text(consumptiontotal);
-
+                                if(serial_no < 2 && stationary_val == 0 && selectedmarkerday_num != 1){
+                                    selectedmarkerday_num = selectedmarkerday_num - 1;
+                                }
+                                var selectedmarkertitleV = selectedmarkertitle;
+                              console.log(lattitude);
                                 ModalMapsinglemarkerlat = lattitude;
                                 ModalMapsinglemarkerlong = longitude;
-                                var vvs = selectedmarkertitle.trim();
-                                var valTitle = vvs.replaceAll('"', '').replaceAll("'", '');
-                                var frommarker = valTitle +' - Day '+selectedmarkerday_num; //alert('llll')
-                                $("#embarkation").text(valTitle); 
+                                var vvs = selectedmarkertitleV.trim();
+                                var selectedmarkertitleV = vvs.replaceAll('"', '').replaceAll("'", '');
+                                if(stationary_val == 1){
+                                    selectedmarkertitleV = '';
+                                }
+                                var frommarker = selectedmarkertitleV +' - Day '+selectedmarkerday_num; //alert('llll')
+                                $("#embarkation").text(selectedmarkertitle); 
                                 routeexists = 1;
                                 if(endmarkerOrnot == "yes"){
                                     frommarker = "";
@@ -3917,7 +3944,8 @@ function markerModalclose(scheduleSameLocationUUID){
                             $("body").removeClass("modal-open");
 }
 
-$(document).on("click", ".stationarydays", function(e) {
+$(document).on("click", ".stationarydays", function(e) { //alert();
+    //console.log(mapmarkerglobalObj);
     var scheduleUUId = mapmarkerglobalObj.target.scheduleUUId;
     var scheduleId = mapmarkerglobalObj.target.scheduleId;
     var tablepId = mapmarkerglobalObj.target.tablepId;
@@ -3936,10 +3964,28 @@ $(document).on("click", ".stationarydays", function(e) {
    var selectedschuuid = $(this).attr('id');
    var selecteddaynumstationary = $(this).attr('data-num');
    var datastationaryOrnot = $(this).attr('data-stat');
+   var datastatdate = $(this).text();
+
+   var splitdaydate = datastatdate.split('Day '+selecteddaynumstationary)
+   var daydisplayno = splitdaydate[1];
+   var serial_no = mapmarkerglobalObj.target.serial_no;
+    var stationary_val = mapmarkerglobalObj.target.stationary;
+
+    var row_from_distance = mapmarkerglobalObj.target.row_from_distance;
+    var row_from_duration = mapmarkerglobalObj.target.row_from_duration;
+    var row_from_lat = mapmarkerglobalObj.target.row_from_lat;
+    var row_from_long = mapmarkerglobalObj.target.row_from_long;
+    //console.log(row_from_lat);
+    lattitude = row_from_lat;
+    longitude = row_from_long;
+    distancetotal = row_from_distance;
+    durationtotal = row_from_duration;
+
    //var selecteddatetext = $(".noofdayscard option:selected").text();
    var yachtId = $("#yachtId").val();
   //alert('gg')
-
+//   console.log(lattitude);
+// console.log(longitude);
   var endmarkerOrnot = mapmarkerglobalObj.target.endmarker;
   
    $("#hideloader").show();
@@ -4038,6 +4084,8 @@ $(document).on("click", ".stationarydays", function(e) {
                     if(result.modaldisplayDate){
                             var dateformarker = result.modaldisplayDate;
                             $(".charter_from_date_conv").text(dateformarker);
+                        }else{
+                            $(".charter_from_date_conv").text(daydisplayno);
                         }
 
                         //alert(width);
@@ -4098,9 +4146,30 @@ $(document).on("click", ".stationarydays", function(e) {
                                 // $("#frommarkerlat").val(lattitude);
                                 // $("#frommarkerlong").val(longitude);
 
+                                selectedmarkertitle = result.row_from_title;
+                                //var row_from_to_location = result.row_from_to_location;
+                                stationary_val = result.row_from_stationary;
+                                serial_no = result.row_from_serial_no;
+                                //stationary_val = result.row_from_stationary;
+                                lattitude = result.row_from_lattitude;
+                                longitude = result.row_from_longitude;
+
+                                //console.log(lattitude);
+                                //console.log(longitude);
+
+                                distancetotal = result.row_from_dis;
+                                durationtotal = result.row_from_dur;
+                                if(stationary_val == 1){
+                                    distancetotal = "";
+                                    durationtotal = "";
+                                }
                                 $(".markerdistance").text(distancetotal);
                                 $(".markerduration").text(durationtotal);
-                                
+                                //selectedmarkerday_num = selecteddaynumstationary;
+                                if(serial_no < 2 && stationary_val == 0 && selecteddaynumstationary != 1){
+                                    selecteddaynumstationary = selecteddaynumstationary - 1;
+                                }
+
                                 //$(".markerconsumption").text(consumptiontotal);
                                 ModalMapsinglemarkerlat = lattitude;
                                 ModalMapsinglemarkerlong = longitude;
@@ -4111,6 +4180,9 @@ $(document).on("click", ".stationarydays", function(e) {
                                 console.log(frommarker);
                                 $("#embarkation").text(valTitle); 
                                 routeexists = 1;
+                                if(stationary_val == 1){
+                                    frommarker = "";
+                                }
                                 drawrouteinmodal(frommarker);
                               
                                 // console.log(selectedmarkertitle);
@@ -4139,11 +4211,11 @@ $(document).on("click", ".stationarydays", function(e) {
                                     noWrap: false,
                                 });
                                 routemodalmarker.addTo(modalmap);
-                                if(selectedmarkerday_num < 10 ){
-                        newdaycount="<span>&nbsp;"+selectedmarkerday_num+"</span>";
+                                if(selecteddaynumstationary < 10 ){
+                        newdaycount="<span>&nbsp;"+selecteddaynumstationary+"</span>";
                     }
                     else{
-                        newdaycount="<span>"+selectedmarkerday_num+"</span>";
+                        newdaycount="<span>"+selecteddaynumstationary+"</span>";
                     }
                                 var textMarkermodalmap = L.marker([lattitude,longitude], {
                                 icon: L.divIcon({
@@ -4170,7 +4242,7 @@ $(document).on("click", ".stationarydays", function(e) {
 function drawrouteinmodal(frommarker) { //alert();
 
 modalmap.setView(new L.LatLng(ModalMapsinglemarkerlat, ModalMapsinglemarkerlong));
-console.log(nextmarkername);
+console.log(frommarker);
 $("#debarkation").text('');
 
 //console.log(modalrouteline);
