@@ -17,6 +17,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Container Example</title>
 <style>
+
     body{
       background: #000;
     }
@@ -51,7 +52,7 @@
   display: none!important;
 }
 .owl-nav{
-  display: none;
+  display: none!important;
 }
     .menlistcontain{
       padding: 0px 60px;
@@ -138,6 +139,13 @@
   border-radius: 8px;
   z-index: 9999;
 }
+@media screen and (max-width: 800px) {
+  .container-row-all {
+    zoom: 1.3666666666666;
+}
+}
+
+
 </style>
 </head>
 <body>
