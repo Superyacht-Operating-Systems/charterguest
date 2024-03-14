@@ -27,8 +27,11 @@
   width: 80%;
   position: relative;
 }
+.container-row-all{
+  margin:0px!important;
+}
 .container_menuscontainer {
-  padding: 10px 0px;
+  padding: 0px 0px;
     overflow: hidden;
 
     width: 550px;
