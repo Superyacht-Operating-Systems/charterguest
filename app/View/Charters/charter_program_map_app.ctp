@@ -2046,28 +2046,34 @@ body.modal-open {
                     
                 }
                 if($key > 1){
-                    $df = $schedule['CharterProgramSchedule']['to_location'];
+                    $df = $schedule['CharterProgramSchedule']['title'];
+                    if($schedule['CharterProgramSchedule']['stationary'] == 0 && ($schedule['CharterProgramSchedule']['serial_no'] < 2)){
+                        $dnum = $schedule['CharterProgramSchedule']['day_num'] - 1;
+                    }else{
+                        $dnum = $schedule['CharterProgramSchedule']['day_num'];
+                    }
                 }else{
                     if($key == 0 && $schedule['CharterProgramSchedule']['stationary'] == 1){
                         $firststat = 1;
                        
                     }
-                   
+                    $dnum = $schedule['CharterProgramSchedule']['day_num'];
                     if($key == 1 && $firststat == 0){
                         $df =  $embarkation_chprg;
                     }else if($key == 1 && $firststat == 1){
-                        $df =  $schedule['CharterProgramSchedule']['to_location'];
+                        $df =  $embarkation_chprg;
+                        $dnum = $schedule['CharterProgramSchedule']['day_num'] - 1;
                     }
                 }
 
-                if (!empty($markertotal[$df . ' - Day ' . $schedule['CharterProgramSchedule']['day_num']]['duration'])) {
-                    $scheduleData[$key]['CharterProgramSchedule']['duration'] = $markertotal[$df. ' - Day ' . $schedule['CharterProgramSchedule']['day_num']]['duration'];
+                if (!empty($markertotal[$df . ' - Day ' . $dnum]['duration'])) {
+                    $scheduleData[$key]['CharterProgramSchedule']['duration'] = $markertotal[$df. ' - Day ' . $dnum]['duration'];
                 } else {
                     $scheduleData[$key]['CharterProgramSchedule']['duration'] = "";
                 }
 
-                if (!empty($markertotal[$df. ' - Day ' . $schedule['CharterProgramSchedule']['day_num']]['distance'])) {
-                    $scheduleData[$key]['CharterProgramSchedule']['distance'] = $markertotal[$df. ' - Day ' . $schedule['CharterProgramSchedule']['day_num']]['distance'];
+                if (!empty($markertotal[$df. ' - Day ' . $dnum]['distance'])) {
+                    $scheduleData[$key]['CharterProgramSchedule']['distance'] = $markertotal[$df. ' - Day ' . $dnum]['distance'];
                 } else { 
                     $scheduleData[$key]['CharterProgramSchedule']['distance'] = "";
                 }
@@ -2161,8 +2167,13 @@ body.modal-open {
                                 </div>
                             <div class="icons_fields">
                                 <i style="color: #00a8f3;" class="fa fa-solid fa-calendar"><span class="icon_label" ><?php echo $schedule['CharterProgramSchedule']['week_days']; ?></span></i>
-                                <i style="color: #00a8f3;" class="fa fa-solid fa-clock-o "><span class="icon_label"><?php echo $markertotal[$df.' - Day '.$schedule['CharterProgramSchedule']['day_num']]['duration'];  ?></span></i>
-                                <i style="color: #00a8f3;" class="fa fa-solid fa-ship" aria-hidden="true"><span class="icon_label" style="padding: 0px 0px 0px 5px;"><?php echo $markertotal[$df.' - Day '.$schedule['CharterProgramSchedule']['day_num']]['distance']; ?></span></i>
+                                <?php if($schedule['CharterProgramSchedule']['stationary'] == 0){?>
+                                <i style="color: #00a8f3;" class="fa fa-solid fa-clock-o "><span class="icon_label"><?php echo $markertotal[$df.' - Day '.$dnum]['duration'];  ?></span></i>
+                                <i style="color: #00a8f3;" class="fa fa-solid fa-ship" aria-hidden="true"><span class="icon_label" style="padding: 0px 0px 0px 5px;"><?php echo $markertotal[$df.' - Day '.$dnum]['distance']; ?></span></i>
+                                <?php }else if($schedule['CharterProgramSchedule']['stationary'] == 1){ ?>
+                                    <i style="color: #00a8f3;" class="fa fa-solid fa-clock-o "><span class="icon_label"></span></i>
+                                <i style="color: #00a8f3;" class="fa fa-solid fa-ship" aria-hidden="true"><span class="icon_label" style="padding: 0px 0px 0px 5px;"></span></i>
+                                    <?php } ?>
                                 </div>
                                 <div>
                                     <textarea class="form-control auto_resize loc_desc_field" name="messagestitle" rows="1" cols="50" readonly><?php echo $schedule['CharterProgramSchedule']['notes']; ?></textarea>
@@ -2548,6 +2559,14 @@ markerschloc.scheduleId = "<?php echo $schedule['CharterProgramSchedule']['chart
         markerschloc.scheduleSameLocationUUID = "<?php echo implode(',',$samelocationsScheduleUUID[$schedule['CharterProgramSchedule']['title']]); ?>";
         markerschloc.samelocationsDates = "<?php echo implode(',',$samelocationsDates[$schedule['CharterProgramSchedule']['title']]); ?>";
         markerschloc.day_num = "<?php echo $schedule['CharterProgramSchedule']['day_num']; ?>";
+        markerschloc.serial_no = "<?php echo $schedule['CharterProgramSchedule']['serial_no']; ?>";
+        markerschloc.stationary = "<?php echo $schedule['CharterProgramSchedule']['stationary']; ?>";
+
+        markerschloc.row_from_lat = "<?php echo $schedule['CharterProgramSchedule']['row_from_lat']; ?>";
+        markerschloc.row_from_long = "<?php echo $schedule['CharterProgramSchedule']['row_from_long']; ?>";
+        markerschloc.row_from_distance = "<?php echo $schedule['CharterProgramSchedule']['row_from_distance']; ?>";
+        markerschloc.row_from_duration = "<?php echo $schedule['CharterProgramSchedule']['row_from_duration']; ?>";
+
         markerschloc.markerNum = CSMPmarkerCount; 
         <?php 
             if($key == 0){  
@@ -4833,6 +4852,7 @@ function customMediaQueryAdd(){
 var csmpsinglemarkerlat;
 var csmpsinglemarkerlong;
 function markerOnClickCSMP(e) {
+    console.log(e);
     var scheduleUUId = e.target.scheduleUUId;
     var scheduleId = e.target.scheduleId;
     var markerNum = e.target.markerNum;
@@ -4854,11 +4874,23 @@ function markerOnClickCSMP(e) {
     var popLocation= e.latlng;
     ReloadModalMaplayerCSMP();
     //var popLocation = e.latlng;
-    var selectedmarkertitle = e.target.day_to_location;
+    var selectedmarkertitle = e.target.daytitle;
     var selectedmarkerday_num = e.target.day_num;
 
     var from_flag = e.target.from_flag;
     var to_flag = e.target.to_flag;
+    var serial_no = e.target.serial_no;
+    var stationary_val = e.target.stationary;
+
+    var row_from_distance = e.target.row_from_distance;
+    var row_from_duration = e.target.row_from_duration;
+    var row_from_lat = e.target.row_from_lat;
+    var row_from_long = e.target.row_from_long;
+
+    lattitude = row_from_lat;
+    longitude = row_from_long;
+    distancetotal = row_from_distance;
+    durationtotal = row_from_duration;
     //console.log(to_flag);
     if(from_flag){
         selectedmarkertitle = daytitle;
@@ -4909,10 +4941,18 @@ function markerOnClickCSMP(e) {
 
     csmpsinglemarkerlat = lattitude;
         csmpsinglemarkerlong = longitude;
+
+        if(serial_no < 2 && stationary_val == 0 && selectedmarkerday_num != 1){
+                                    selectedmarkerday_num = selectedmarkerday_num - 1;
+                                }
+//console.log(selectedmarkertitle);
         var vvs = selectedmarkertitle.trim();
         var selectedmarkertitleV = vvs.replaceAll('"', '').replaceAll("'", '');
+        if(stationary_val == 1){
+            selectedmarkertitleV = '';
+        }
         var frommarker = selectedmarkertitleV +' - Day '+selectedmarkerday_num; //alert('llll')
-        $("#embarkation_sch").text(selectedmarkertitleV); 
+        $("#embarkation_sch").text(selectedmarkertitle); 
         if(from_flag){
             frommarker = "";
         }
@@ -5020,7 +5060,7 @@ $(document).on("change", ".markersnamesmodalmapcruisingsch", function(e) {
 });
 
 function drawrouteinmodalCSMP(frommarker) { //alert();
-     console.log(modalrouteline);
+     //console.log(modalrouteline);
      console.log(frommarker);
     modalmapcruisingsch.setView(new L.LatLng(csmpsinglemarkerlat, csmpsinglemarkerlong));
     
