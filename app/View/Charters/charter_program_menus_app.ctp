@@ -144,7 +144,7 @@
 }
 @media screen and (max-width: 800px) {
   .container-row-all {
-    zoom: 1.3666666666666;
+    zoom: 100%;
 }
 }
 
