@@ -135,7 +135,7 @@
     right: 0;
     left: 0;
     min-height: 200px;
-    width: 550px;
+    width: 400px;
     margin: 0 auto;
     text-align: left;
     /* display: flex; */
@@ -152,7 +152,7 @@
 }
 .basicmsg {
     padding-bottom: 15px !important;
-    border-bottom: solid 2px #000;
+    border-bottom: solid 1px #000;
 }
 .desctitle{
   padding-top: 15px;
