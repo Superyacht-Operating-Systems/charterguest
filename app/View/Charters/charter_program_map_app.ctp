@@ -844,7 +844,7 @@ and (orientation : portrait) {
     height: 98vh!important;
 }
 .leaflet-bottom {
-    bottom: 40px;
+    bottom: 20px;
 }
 }
 @media only screen 
