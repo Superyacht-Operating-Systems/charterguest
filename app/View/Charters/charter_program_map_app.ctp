@@ -1480,14 +1480,30 @@ padding-left: 15px!important;
     width: 100%;
 }
 }
-
+#showmenu {
+    position: absolute !important;
+    top: 16px;
+    right: 13px!important;
+    min-width: 121px;
+    /* padding: 10px; */
+    border: 1px solid transparent;
+    border-radius: 10px;
+    color: #000;
+    z-index: 400;
+    /* font-weight: bold; */
+    font-size: 12px;
+    font-weight: bold;
+    z-index: 999;
+    background: #fff !important;
+    display:none;
+}
 #CruisingButton:hover , #HideDetails:hover, #HelpfulTips:hover{
 background: #fff !important;
 }
 #CruisingButton {
     background: #fff !important;
     position: absolute!important;
-    top: 18px!important;
+    top: 56px!important;
     right: 13px!important;
   padding: 6px;
   color:#000;
@@ -1517,7 +1533,7 @@ background: #fff !important;
 #HideDetails {
     background: #fff !important;
     position: absolute!important;
-    top: 56px!important;
+    top: 94px!important;
     right: 13px!important;
   padding: 6px;
   color:#000;
@@ -1531,7 +1547,7 @@ background: #fff !important;
 #HelpfulTips {
     background: #fff !important;
     position: absolute!important;
-    top: 94px!important;
+    top: 131.5px!important;
     right: 13px!important;
   padding: 6px;
   color:#000;
@@ -1543,7 +1559,7 @@ background: #fff !important;
 #WeatherMap {
     background: #fff !important;
     position: absolute!important;
-    top: 131.5px!important;
+    top: 170px!important;
     right: 13px!important;
   padding: 5px;
   /* height: 32px; */
@@ -1557,7 +1573,7 @@ background: #fff !important;
 #GuestNews {
     background: #fff !important;
     position: absolute!important;
-    top: 170px!important;
+    top: 207px!important;
     right: 13px!important;
   padding: 5px;
   /* height: 32px; */
@@ -2328,11 +2344,19 @@ body.modal-open {
 </div> 
 
 <div class="custom-popup" id="map" style="height: 600px;position:relative;outline:none;">
+<div class="panel panel-default">
+            <div class="panel-heading"  data-toggle="collapse" href="#mapbuttons">
+            <button id="showmenu" class="btn">Open Menu</button>
+            </div>
+            <div id="mapbuttons" class="panel-collapse collapse">
     <button id="CruisingButton">Cruising Schedule</button>
     <button id="HideDetails">Show Details</button>
     <button id="HelpfulTips">Helpful Tips</button>
     <button id="WeatherMap">Weather Map</button>
     <button id="GuestNews">Guest News</button>
+    </div>
+            
+        </div>
 </div>
 <div class="custom-popup" id="windy" style="height: 600px;position:relative;outline:none;">
 </div>
@@ -2379,6 +2403,17 @@ var sidebar = (function() {
         }
     }
 })();
+
+$(document).on("click","#showmenu", function(e){
+    var btntext1 = $("#showmenu").text();
+    if(btntext1 == "Open Menu"){
+        $("#showmenu").text("Close Menu");
+      
+    }else{
+        $("#showmenu").text("Open Menu");
+      
+    }
+});
 
 </script>
 
@@ -4581,6 +4616,7 @@ $(document).ready(function() { //alert();
 
     $("#windy").css("visibility","hidden");
     $("#closeWeatherMap").css("display","none");
+    $("#showmenu").css("display","block");
    
     });
 
