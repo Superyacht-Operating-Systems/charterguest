@@ -128,19 +128,42 @@
   font-family:Times;
 }
 .brackoverlaymenu {
-  background: #f7f7f7;
-  padding: 20px;
-  /*position: absolute;*/
-  top: 10%;
-  right: 0;
-  left: 35%;
-  min-height: 200px;
-  width: 400px;
-  margin: 0 auto;
-  display: flex;
-  border: solid 2px #eee;
-  border-radius: 8px;
-  z-index: 9999;
+  background: #eee;
+    padding: 20px;
+    position: absolute;
+    top: 10%;
+    right: 0;
+    left: 0;
+    min-height: 200px;
+    width: 400px;
+    margin: 0 auto;
+    text-align: left;
+    /* display: flex; */
+    border: solid 2px #786868;
+    border-radius: 8px;
+    z-index: 9999;
+}
+#show_message_heading_text{
+  padding-bottom: 15px;
+}
+#show_menu_date{
+  padding-top: 20px;
+  padding-bottom: 15px;
+}
+.basicmsg {
+    padding-bottom: 15px !important;
+    border-bottom: solid 1px #000;
+}
+.desctitle{
+  padding-top: 15px;
+}
+.vcenter {
+    margin: 0 auto;
+    width: 80px;
+    text-align: center;
+    display: block;
+    margin-top: 16px;
+    border: solid 1px #ddd;
 }
 @media screen and (max-width: 800px) {
   .container-row-all {
@@ -164,12 +187,29 @@
   ?>
   <div class="item">
 <div class="container_menus" style="background-image: url(<?php echo $bg_img_path.'/'.$bg_image_name; ?>);">
+<?php //echo $bg_image_name; ?>
+<div class="brackoverlaymenu" style="display:block;">
+<?php
+// Assuming $item['cpm']['Menu_date'] is in 'Y-m-d' format, e.g., "2024-03-08"
+$menuDate = DateTime::createFromFormat('Y-m-d', $item['cpm']['Menu_date']);
+$formattedDate = $menuDate->format('l, j F Y'); // Formats the date as "Friday, 8 March 2024"
+
+//echo $formattedDate;
+?>
+      <p id="show_menu_date"><?php echo $formattedDate; ?></p>
+      <p id="show_message_heading_text"><?php echo $item['cpm']['Message_heading']; ?></p>
+      <p class="basicmsg">Massage from: The <span id="show_message_from"><?php echo $item['cpm']['message_from']; ?>  </span></p>
+      <p class="desctitle" id="show_message"><?php echo nl2br($item['cpm']['Message']); ?></p>
+      <button class="btn vcenter" id="close_step3_popup">Close</button>
+    </div>
+
 <div class="menlistcontain">
 <!-- Content goes here -->
-<?php //echo $bg_image_name; ?>
+
 <?php if($is_basic == 1){ 
 echo $item['cpm']['basic_menu_text'];
 ?>
+
 <?php }else{ 
   //echo "<pre>"; print_r($item); exit;
   $text_align = array('ac'=>'center','al'=>'left','aj'=>'justify','ar'=>'right');
