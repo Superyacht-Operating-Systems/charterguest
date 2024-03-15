@@ -1484,7 +1484,7 @@ padding-left: 15px!important;
     position: absolute !important;
     top: 16px;
     right: 13px!important;
-    min-width: 121px;
+    width: 130px;
     /* padding: 10px; */
     border: 1px solid transparent;
     border-radius: 10px;
