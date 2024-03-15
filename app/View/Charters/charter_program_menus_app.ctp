@@ -7,7 +7,7 @@
     $bg_img_path = $SITE_URL.'/'.$yachtname.'/app/webroot/img/cga_files/menu_bg_orginals/menu_bg_converted';
   }
   //$bg_img_path = 'https://localhost/superyacht/app/webroot/img/cga_files/menu_bg_orginals/menu_bg_converted';
- // $bg_img_path = 'https://192.10.10.45/superyacht/app/webroot/img/cga_files/menu_bg_orginals/menu_bg_converted';
+  $bg_img_path = 'https://192.10.10.45/superyacht/app/webroot/img/cga_files/menu_bg_orginals/menu_bg_converted';
   //echo $bg_img_path; exit;
   ?>
 <!DOCTYPE html>
@@ -167,9 +167,24 @@
 <div class="menlistcontain">
 <!-- Content goes here -->
 <?php //echo $bg_image_name; ?>
+<div class="brackoverlaymenu" style="display:block;">
+<?php
+// Assuming $item['cpm']['Menu_date'] is in 'Y-m-d' format, e.g., "2024-03-08"
+$menuDate = DateTime::createFromFormat('Y-m-d', $item['cpm']['Menu_date']);
+$formattedDate = $menuDate->format('l, j F Y'); // Formats the date as "Friday, 8 March 2024"
+
+//echo $formattedDate;
+?>
+      <p id="show_menu_date"><?php echo $formattedDate; ?></p>
+      <p id="show_message_heading_text"><?php echo $item['cpm']['Message_heading']; ?></p>
+      <p>Massage from: The <span id="show_message_from"><?php echo $item['cpm']['message_from']; ?>  </span></p>
+      <p class="desctitle" id="show_message"><?php echo nl2br($item['cpm']['Message']); ?></p>
+      <button class="btn vcenter" id="close_step3_popup">Close</button>
+    </div>
 <?php if($is_basic == 1){ 
 echo $item['cpm']['basic_menu_text'];
 ?>
+
 <?php }else{ 
   //echo "<pre>"; print_r($item); exit;
   $text_align = array('ac'=>'center','al'=>'left','aj'=>'justify','ar'=>'right');
