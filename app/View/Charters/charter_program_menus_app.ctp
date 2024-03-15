@@ -144,18 +144,18 @@
     z-index: 9999;
 }
 #show_message_heading_text{
-  padding-bottom: 25px;
+  padding-bottom: 15px;
 }
 #show_menu_date{
   padding-top: 20px;
-  padding-bottom: 25px;
+  padding-bottom: 15px;
 }
 .basicmsg {
     padding-bottom: 15px !important;
     border-bottom: solid 2px #000;
 }
 .desctitle{
-  padding-top: 20px;
+  padding-top: 15px;
 }
 .vcenter {
     margin: 0 auto;
