@@ -1457,14 +1457,30 @@ padding-left: 15px!important;
     width: 100%;
 }
 }
-
+#showmenu {
+    position: absolute !important;
+    top: 16px;
+    right: 15px!important;
+    width: 144px;
+    /* padding: 10px; */
+    border: 1px solid transparent;
+    border-radius: 10px;
+    color: #000;
+    z-index: 400;
+    /* font-weight: bold; */
+    font-size: 12px;
+    font-weight: bold;
+    z-index: 999;
+    background: #fff !important;
+    display:none;
+}
 #CruisingButton:hover , #HideDetails:hover, #HelpfulTips:hover{
 background: #fff !important;
 }
 #CruisingButton {
     background: #fff !important;
     position: absolute!important;
-    top: 18px!important;
+    top: 56px!important;
     right: 13px!important;
   padding: 5px;
   height: 32px;
@@ -1479,7 +1495,7 @@ background: #fff !important;
 #closeWeatherMap {
     background: #fff !important;
     position: absolute!important;
-    top: 5px!important;
+    top: 40px!important;
     right: 13px!important;
     padding: 5px;
     height: 32px;
@@ -1496,7 +1512,7 @@ background: #fff !important;
 #HideDetails {
     background: #fff !important;
     position: absolute!important;
-    top: 56px!important;
+    top: 94px!important;
     right: 13px!important;
   padding: 5px;
   height: 32px;
@@ -1511,7 +1527,7 @@ background: #fff !important;
 #HelpfulTips {
     background: #fff !important;
     position: absolute!important;
-    top: 93.5px!important;
+    top: 131.5px!important;
     right: 13px!important;
   padding: 5px;
   height: 32px;
@@ -1525,7 +1541,7 @@ background: #fff !important;
 #WeatherMap {
     background: #fff !important;
     position: absolute!important;
-    top: 131.5px!important;
+    top: 170px!important;
     right: 13px!important;
   padding: 5px;
   height: 32px;
@@ -1539,7 +1555,7 @@ background: #fff !important;
 #GuestNews {
     background: #fff !important;
     position: absolute!important;
-    top: 170px!important;
+    top: 207px!important;
     right: 13px!important;
   padding: 5px;
   height: 32px;
@@ -1550,7 +1566,30 @@ background: #fff !important;
   border-radius: 10px;
   font-size: 12px;
 }
+
+@media screen and (max-width: 768px){
+    #showmenu{
+        width: 113px;
+    height: 24px;
+    padding: 0px!important;
+    font-size: 11px!important;
+    min-width: inherit;
+    }
+.collapse {
+    display: block !important;
+    position: absolute;
+    left: 0px;
+    top: 38px;
+    width: 100%;
+    float: left;
+}
+}
+
 @media only screen and (min-width: 771px) and (max-width: 1092px){
+
+    #showmenu{
+        width:135px;
+    }
     #CruisingButton {
   width: 138px !important;
   font-size: 12px;
@@ -1558,7 +1597,7 @@ background: #fff !important;
   padding: 5px !important;
   top: 18px !important;
   padding: 5px !important;
-    top: 18px !important;
+    top: 56px !important;
 }
 #HideDetails,
  #HelpfulTips,
@@ -2382,12 +2421,18 @@ border-radius: 4px; */
  <div class="form-group base-margin">
 <div class="custom-popup map_heightC" id="map"></div>
 <div class="custom-popup map_heightC" id="windy"></div>
+<div class="panel panel-default">
+            <div class="panel-heading"  data-toggle="collapse" href="#mapbuttons">
+            <button id="showmenu" class="btn">Open Menu</button>
+            </div>
+            <div id="mapbuttons" class="panel-collapse collapse">
 <button id="CruisingButton">Cruising Schedule</button>
 <button id="HideDetails">Show Details</button>
 <button id="HelpfulTips">Helpful Tips</button>
 <button id="WeatherMap">Weather Map</button>
 <button id="GuestNews">Guest News</button>
 <button id="closeWeatherMap">Close</button>
+            </div></div>
 </div></div>
 </div>
 <input type="hidden" id="topyname" value="<?php echo $topyname; ?>">
@@ -2456,6 +2501,18 @@ $('.menu > .menu__item').hover(function(){
   $(this).children('.submenu').hide();
   
 });
+
+$(document).on("click","#showmenu", function(e){
+    var btntext1 = $("#showmenu").text();
+    if(btntext1 == "Open Menu"){
+        $("#showmenu").text("Close Menu");
+      
+    }else{
+        $("#showmenu").text("Open Menu");
+      
+    }
+});
+
 </script>
 
 
@@ -4441,6 +4498,7 @@ $(document).ready(function() { //alert();
      
     $("#windy").css("visibility","hidden");
     $("#closeWeatherMap").css("display","none");
+    $("#showmenu").css("display","block");
    
     });
 
