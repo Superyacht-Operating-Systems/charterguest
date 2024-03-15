@@ -1483,8 +1483,8 @@ padding-left: 15px!important;
 #showmenu {
     position: absolute !important;
     top: 16px;
-    right: 9px!important;
-    width: 150px;
+    right: 15px!important;
+    width: 135px;
     /* padding: 10px; */
     border: 1px solid transparent;
     border-radius: 10px;
