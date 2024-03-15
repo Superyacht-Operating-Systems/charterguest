@@ -844,7 +844,7 @@ and (orientation : portrait) {
     height: 98vh!important;
 }
 .leaflet-bottom {
-    bottom: 20px;
+    bottom: 10px;
 }
 }
 @media only screen 
@@ -1483,8 +1483,8 @@ padding-left: 15px!important;
 #showmenu {
     position: absolute !important;
     top: 16px;
-    right: 13px!important;
-    width: 130px;
+    right: 9px!important;
+    width: 150px;
     /* padding: 10px; */
     border: 1px solid transparent;
     border-radius: 10px;
