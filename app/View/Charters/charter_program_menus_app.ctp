@@ -17,6 +17,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Container Example</title>
 <style>
+
     body{
       background: #000;
     }
@@ -26,8 +27,11 @@
   width: 80%;
   position: relative;
 }
+.container-row-all{
+  margin:0px!important;
+}
 .container_menuscontainer {
-  padding: 10px 0px;
+  padding: 0px 0px;
     overflow: hidden;
 
     width: 550px;
@@ -51,7 +55,7 @@
   display: none!important;
 }
 .owl-nav{
-  display: none;
+  display: none!important;
 }
     .menlistcontain{
       padding: 0px 60px;
@@ -64,7 +68,7 @@
     padding-bottom:100px;
     }
     .container_menuscontainer{
-      padding:10px 0px;
+      padding:0px 0px;
     }
   .menlistcontain p {
     margin: 0px !important;
@@ -138,6 +142,13 @@
   border-radius: 8px;
   z-index: 9999;
 }
+@media screen and (max-width: 800px) {
+  .container-row-all {
+    zoom: 130%;
+}
+}
+
+
 </style>
 </head>
 <body>
