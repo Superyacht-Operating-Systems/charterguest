@@ -1512,7 +1512,9 @@ background: #fff !important;
   border-radius: 10px;
   font-size: 12px;
 }
-
+#mapbuttons button{
+    width: 145px;
+}
 #closeWeatherMap {
     background: #fff !important;
     position: absolute!important;
@@ -1893,6 +1895,15 @@ body.modal-open {
     overflow: hidden;
     overflow-y: hidden;
 }
+@media only screen and (min-width: 771px) and (max-width: 1092px){
+#mapbuttons button {
+    min-width: 138px;
+    font-size: 12px;
+    height: 32px;
+    padding: 5px !important;
+}
+}
+
 
 </style>  
 
