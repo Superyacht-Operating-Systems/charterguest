@@ -1,4 +1,4 @@
-<?php //echo $fleetname.''.$yachtname; print_r($menudata); exit; ?>
+<?php //echo $fleetname.''.$yachtname; echo"<pre>"; print_r($menudata); exit; ?>
 <?php 
 //$fleetname = '';
   if(isset($fleetname) && $fleetname!=''){
@@ -184,11 +184,17 @@
 <?php foreach($menudata as $item){ 
   $bg_image_name = $item['cmb']['file_name'];
   $is_basic = $item['cpm']['is_basic_menu'];
+  $is_add_message = $item['cpm']['add_message'];
+  if($is_add_message == 0){
+    $show_message = "display:none;";
+  }else{
+    $show_message = "display:block;";
+  }
   ?>
   <div class="item">
 <div class="container_menus" style="background-image: url(<?php echo $bg_img_path.'/'.$bg_image_name; ?>);">
 <?php //echo $bg_image_name; ?>
-<div class="brackoverlaymenu" style="display:block;">
+<div class="brackoverlaymenu" style="<?php echo $show_message; ?>">
 <?php
 // Assuming $item['cpm']['Menu_date'] is in 'Y-m-d' format, e.g., "2024-03-08"
 $menuDate = DateTime::createFromFormat('Y-m-d', $item['cpm']['Menu_date']);
@@ -211,7 +217,7 @@ echo $item['cpm']['basic_menu_text'];
 ?>
 
 <?php }else{ 
-  //echo "<pre>"; print_r($item); exit;
+  //echo "<pre>"; print_r($is_add_message); exit;
   $text_align = array('ac'=>'center','al'=>'left','aj'=>'justify','ar'=>'right');
   $font_weight = array(''=>'normal','B'=>'bold','aj'=>'justify','ar'=>'right');
   $menuType = $item['cpm']['menu_title'];
@@ -229,20 +235,8 @@ echo $item['cpm']['basic_menu_text'];
 <div class="menlistrow">
 <h1 class="menlisthd" style="<?php echo $menutitle_style; ?>"><?php echo $menuType; ?></h1>
 </div>
-<div class="brackoverlaymenu" style="display:block;">
-<?php
-// Assuming $item['cpm']['Menu_date'] is in 'Y-m-d' format, e.g., "2024-03-08"
-$menuDate = DateTime::createFromFormat('Y-m-d', $item['cpm']['Menu_date']);
-$formattedDate = $menuDate->format('l, j F Y'); // Formats the date as "Friday, 8 March 2024"
 
-//echo $formattedDate;
-?>
-      <p id="show_menu_date"><?php echo $formattedDate; ?></p>
-      <p id="show_message_heading_text"><?php echo $item['cpm']['Message_heading']; ?></p>
-      <p>Massage from: The <span id="show_message_from"><?php echo $item['cpm']['message_from']; ?>  </span></p>
-      <p class="desctitle" id="show_message"><?php echo nl2br($item['cpm']['Message']); ?></p>
-      <button class="btn vcenter" id="close_step3_popup">Close</button>
-    </div>
+
 <?php foreach($menu_data as $key=>$value){ //echo "<pre>"; print_r($value); exit; ?>
     <div class="menlistrow">
         <h3 class="menlisth3" style="<?php echo $course_style; ?>"><?php echo $value['cga_menu_courses']['course_name']; ?></h3>
