@@ -6038,10 +6038,10 @@ class ChartersController extends AppController {
                 $fleetname = $YachtData[0]['Yacht']['fleetname'];
                 $yachtname = $YachtData[0]['Yacht']['yname'];
                 //echo $YachtData['Yacht']['cruising_unit'];
-                $sql1 = "SELECT * FROM $yachtDbName.cga_menu_settings WHERE $yachtDbName.cga_menu_settings.id= 1";
-        //echo $sql; exit;
+                $sql1 = "SELECT * FROM $yachtDbName.cga_menu_settings ORDER BY id ASC LIMIT 1";
+        //echo $sql1; exit;
                 $menu_type_settings =  $this->CharterGuest->query($sql1);
-                //echo "<pre>"; print_r($menu_type_settings); exit;
+               // echo "<pre>"; print_r($menu_type_settings); exit;
                 $mealType = $this->getMealTypeFromTime($menu_time,$menu_type_settings);
                 //echo "<pre>"; print_r($mealType); exit;
                 $data=array();
