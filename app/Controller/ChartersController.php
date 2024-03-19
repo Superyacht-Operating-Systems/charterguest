@@ -7157,7 +7157,7 @@ WHERE cga_menus.UUID = '$uuid'";
      * Modified date - 
      */
     public function charter_program_map($prgUUID,$yachtdb,$guesttype) {
-//        echo "<pre>";print_r($this->Session->read());exit;
+//        echo "<pre>";print_r($this->Session->read());exit; 
         Configure::write('debug',0);
         $session = $this->Session->read('charter_info');
         

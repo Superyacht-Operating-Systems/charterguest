@@ -3811,7 +3811,7 @@ if(e.target.firstdaytoloc){
                     //         customMediaQueryRemove();
                             
                             
-                    //     });
+                    //     }); 
                         $("#markerModal_load").html(result.popupHtml);
                         
                         $("#markerModalclose").attr("data-schuuid",scheduleSameLocationUUID);
