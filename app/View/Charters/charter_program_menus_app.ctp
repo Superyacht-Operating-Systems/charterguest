@@ -33,7 +33,6 @@
 .container_menuscontainer {
   padding: 0px 0px;
     overflow: hidden;
-
     width: 550px;
     margin: 0 auto;
     text-align: center;
@@ -76,7 +75,7 @@
 
   /* CSS goes here */
   .container_menus {
-    width: 500px; /* Set the width */
+    width: 510px; /* Set the width */
     height: 750px; /* Set the height */
     /*background-color: #f0f0f0; /* Just to make the container visible */
     border: 5px solid #333333; /* Optional: adds a border around the container */
@@ -131,7 +130,7 @@
   background: #eee;
     padding: 20px;
     position: absolute;
-    top: 10%;
+    top: 20%;
     right: 0;
     left: 0;
     min-height: 200px;
