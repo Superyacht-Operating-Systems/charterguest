@@ -5980,18 +5980,34 @@ class ChartersController extends AppController {
         echo json_encode($result);
         exit;
     }     
-    public function getMealTypeFromTime($time) {
-        // Assuming $time is in the format 'HH:MM:SS'
-        if ($time >= '00:00:00' && $time <= '10:59:59') {
-            return '0';//'Breakfast';
-        } elseif ($time >= '11:00:00' && $time <= '17:59:59') {
-            return '1';//'Lunch';
-        } elseif ($time >= '18:00:00' && $time <= '23:59:59') {
-            return '2';//'Dinner';
+    public function getMealTypeFromTime($time, $menu_type_settings) {
+
+        if (empty($menu_type_settings) || !isset($menu_type_settings[0]['cga_menu_settings'])) {
+            return 'Invalid Configuration'; // Handle cases where menu settings are not properly configured
+        }
+        
+        // Extracting meal times from the first element of the array
+        $settings = $menu_type_settings[0]['cga_menu_settings'];
+        //echo "<pre>"; print_r($settings); exit('123');
+        $breakfastStartTime = $settings['breadfast_start_time']; // Note: Assumed typo in 'breadfast' should be 'breakfast'
+        $breakfastEndTime = $settings['breadfast_end_time'];
+        $lunchStartTime = $settings['lunch_start_time'];
+        $lunchEndTime = $settings['lunch_end_time'];
+        $dinnerStartTime = $settings['dinner_start_time'];
+        $dinnerEndTime = $settings['dinner_end_time'];
+    
+        // Comparing the input time to the meal times
+        if ($time >= $breakfastStartTime && $time <= $breakfastEndTime) {
+            return '0'; // Breakfast
+        } elseif ($time >= $lunchStartTime && $time <= $lunchEndTime) {
+            return '1'; // Lunch
+        } elseif ($time >= $dinnerStartTime && $time <= $dinnerEndTime) {
+            return '2'; // Dinner
         } else {
-            return 'Invalid Time'; // Handle invalid times if necessary
+            return 'Invalid Time'; // Handle times that do not fall within any meal period
         }
     }
+    
             /*
      * Charter Program Map ipad app view
      * Functionality -  Loading the Charter program ipad app view
@@ -6010,7 +6026,7 @@ class ChartersController extends AppController {
             $menu_time = str_replace('-', ':', $menu_time);
         }
         //echo $menu_time; 
-        $mealType = $this->getMealTypeFromTime($menu_time);
+        //$mealType = $this->getMealTypeFromTime($menu_time);
 
     // Output or use the meal type as needed
        //echo $mealType; exit;
@@ -6022,6 +6038,12 @@ class ChartersController extends AppController {
                 $fleetname = $YachtData[0]['Yacht']['fleetname'];
                 $yachtname = $YachtData[0]['Yacht']['yname'];
                 //echo $YachtData['Yacht']['cruising_unit'];
+                $sql1 = "SELECT * FROM $yachtDbName.cga_menu_settings WHERE $yachtDbName.cga_menu_settings.id= 1";
+        //echo $sql; exit;
+                $menu_type_settings =  $this->CharterGuest->query($sql1);
+                //echo "<pre>"; print_r($menu_type_settings); exit;
+                $mealType = $this->getMealTypeFromTime($menu_time,$menu_type_settings);
+                //echo "<pre>"; print_r($mealType); exit;
                 $data=array();
                 //$menuId= "65d871d4-af34-47bc-8702-16b52b7276f0";//"65e1487b-b704-4c8b-8e92-4928ac182009";// $_REQUEST['UUID'];//"65d871d4-af34-47bc-8702-16b52b7276f0";//$_REQUEST['UUID'];
                 //$sql="SELECT * FROM $yachtDbName.cga_published_menus WHERE Menu_date='$menuDate'";
