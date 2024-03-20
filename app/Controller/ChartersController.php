@@ -7981,6 +7981,10 @@ WHERE cga_menus.UUID = '$uuid'";
                 $row_from_stationary = $scheduleData[0]['CharterProgramSchedule']['stationary'];
                 $row_from_serial_no = $scheduleData[0]['CharterProgramSchedule']['serial_no'];
 
+                $row_from_title = trim($row_from_title);
+                $row_from_title = str_replace('"', "", $row_from_title);
+                $row_from_title = str_replace("'", "", $row_from_title);
+
                 $LocationContent = $this->CharterGuest->query("SELECT * FROM $yachtDbName.location_contents LocationContent WHERE LocationContent.location = '$row_from_title' AND LocationContent.type = 'Location' AND LocationContent.is_deleted = 0");
                     if(!empty($LocationContent[0]['LocationContent']['lattitude'])){
                         $row_from_lattitude = $LocationContent[0]['LocationContent']['lattitude'];
