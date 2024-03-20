@@ -6044,6 +6044,7 @@ class ChartersController extends AppController {
                // echo "<pre>"; print_r($menu_type_settings); exit;
                 $mealType = $this->getMealTypeFromTime($menu_time,$menu_type_settings);
                 //echo "<pre>"; print_r($mealType); exit;
+                
                 $data=array();
                 //$menuId= "65d871d4-af34-47bc-8702-16b52b7276f0";//"65e1487b-b704-4c8b-8e92-4928ac182009";// $_REQUEST['UUID'];//"65d871d4-af34-47bc-8702-16b52b7276f0";//$_REQUEST['UUID'];
                 //$sql="SELECT * FROM $yachtDbName.cga_published_menus WHERE Menu_date='$menuDate'";
