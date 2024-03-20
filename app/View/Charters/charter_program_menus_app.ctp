@@ -203,7 +203,11 @@ $formattedDate = $menuDate->format('l, j F Y'); // Formats the date as "Friday, 
 ?>
       <p id="show_menu_date"><?php echo $formattedDate; ?></p>
       <p id="show_message_heading_text"><?php echo $item['cpm']['Message_heading']; ?></p>
+      <?php if(isset($item['cpm']['message_from']) && $item['cpm']['message_from']!=''){ ?>
+
+      
       <p class="basicmsg">Massage from: The <span id="show_message_from"><?php echo $item['cpm']['message_from']; ?>  </span></p>
+      <?php } ?>
       <p class="desctitle" id="show_message"><?php echo nl2br($item['cpm']['Message']); ?></p>
       <button class="btn vcenter" id="close_step3_popup">Close</button>
     </div>
