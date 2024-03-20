@@ -7985,7 +7985,7 @@ WHERE cga_menus.UUID = '$uuid'";
                 $row_from_title = str_replace('"', "", $row_from_title);
                 $row_from_title = str_replace("'", "''", $row_from_title);
 
-                $LocationContent = $this->CharterGuest->query('SELECT * FROM $yachtDbName.location_contents LocationContent WHERE LocationContent.location = '."$row_from_title".' AND LocationContent.type = "Location" AND LocationContent.is_deleted = 0');
+                $LocationContent = $this->CharterGuest->query("SELECT * FROM $yachtDbName.location_contents LocationContent WHERE LocationContent.location = $row_from_title AND LocationContent.type = 'Location' AND LocationContent.is_deleted = 0");
                     if(!empty($LocationContent[0]['LocationContent']['lattitude'])){
                         $row_from_lattitude = $LocationContent[0]['LocationContent']['lattitude'];
                         $row_from_longitude = $LocationContent[0]['LocationContent']['longitude'];
