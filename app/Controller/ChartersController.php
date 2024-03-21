@@ -5980,7 +5980,7 @@ class ChartersController extends AppController {
         echo json_encode($result);
         exit;
     }     
-    public function getMealTypeFromTime($time, $menu_type_settings) {
+   /* public function getMealTypeFromTime($time, $menu_type_settings) {
 
         if (empty($menu_type_settings) || !isset($menu_type_settings[0]['cga_menu_settings'])) {
             return 'Invalid Configuration'; // Handle cases where menu settings are not properly configured
@@ -5994,18 +5994,57 @@ class ChartersController extends AppController {
         $lunchStartTime = $settings['lunch_start_time'];
         $lunchEndTime = $settings['lunch_end_time'];
         $dinnerStartTime = $settings['dinner_start_time'];
-        $dinnerEndTime = $settings['dinner_end_time'];
-    
+       echo $dinnerEndTime = $settings['dinner_end_time']; exit;
+    echo $time; exit;
         // Comparing the input time to the meal times
-        if ($time >= $breakfastStartTime && $time <= $breakfastEndTime) {
+        if ($time >= $breakfastStartTime && $time < $breakfastEndTime) {
             return '0'; // Breakfast
-        } elseif ($time >= $lunchStartTime && $time <= $lunchEndTime) {
+        } elseif ($time >= $lunchStartTime && $time < $lunchEndTime) {
             return '1'; // Lunch
-        } elseif ($time >= $dinnerStartTime && $time <= $dinnerEndTime) {
+        } elseif ($time >= $dinnerStartTime && $time < $dinnerEndTime) {
             return '2'; // Dinner
         } else {
             return 'Invalid Time'; // Handle times that do not fall within any meal period
         }
+    } */
+    public function getMealTypeFromTime($time, $menu_type_settings) {
+        if (empty($menu_type_settings) || !isset($menu_type_settings[0]['cga_menu_settings'])) {
+            return 'Invalid Configuration'; // Handle cases where menu settings are not properly configured
+        }
+    
+        // Extracting meal times from the first element of the array
+        $settings = $menu_type_settings[0]['cga_menu_settings'];
+    
+        $breakfastStartTime = $settings['breadfast_start_time']; // Adjusted for potential typo in source
+        $breakfastEndTime = $settings['breadfast_end_time'];
+        $lunchStartTime = $settings['lunch_start_time'];
+        $lunchEndTime = $settings['lunch_end_time'];
+        $dinnerStartTime = $settings['dinner_start_time'];
+        $dinnerEndTime = $settings['dinner_end_time'];
+    
+        // Direct comparison of time strings assuming $time, and all setting times are in 'H:i' or 'H:i:s' format
+        if ($this->isTimeWithinPeriod($time, $breakfastStartTime, $breakfastEndTime)) {
+            return '0'; // Breakfast
+        } elseif ($this->isTimeWithinPeriod($time, $lunchStartTime, $lunchEndTime)) {
+            return '1'; // Lunch
+        } elseif ($this->isTimeWithinPeriod($time, $dinnerStartTime, $dinnerEndTime)) {
+            return '2'; // Dinner
+        } else {
+            return 'Invalid Time'; // Handle times that do not fall within any meal period
+        }
+    }
+    
+    private function isTimeWithinPeriod($time, $startTime, $endTime) {
+        // Normalize and compare times directly if endTime is not past midnight
+        if ($endTime !== '00:00' && $startTime <= $endTime) {
+            return $time >= $startTime && $time < $endTime;
+        }
+        // Handle periods that end at or after midnight
+        if ($endTime === '00:00' || $startTime > $endTime) {
+            // If time is after start time or before end time (which has crossed midnight)
+            return $time >= $startTime || $time < $endTime;
+        }
+        return false;
     }
     
             /*
@@ -6044,10 +6083,11 @@ class ChartersController extends AppController {
                // echo "<pre>"; print_r($menu_type_settings); exit;
                 $mealType = $this->getMealTypeFromTime($menu_time,$menu_type_settings);
                 //echo "<pre>"; print_r($mealType); exit;
-                
+                //$mealType = 'Invalid Time';
                 $data=array();
                 //$menuId= "65d871d4-af34-47bc-8702-16b52b7276f0";//"65e1487b-b704-4c8b-8e92-4928ac182009";// $_REQUEST['UUID'];//"65d871d4-af34-47bc-8702-16b52b7276f0";//$_REQUEST['UUID'];
                 //$sql="SELECT * FROM $yachtDbName.cga_published_menus WHERE Menu_date='$menuDate'";
+                if($mealType != 'Invalid Time'){
                 $sql = "SELECT cpm.*, cmb.* FROM $yachtDbName.cga_published_menus cpm
         LEFT JOIN $yachtDbName.cga_menu_backgrounds cmb ON cpm.template_id = cmb.UUID
         WHERE cpm.Menu_date='$menuDate' and menu_type=$mealType ORDER BY cpm.modified ASC";
@@ -6172,6 +6212,7 @@ WHERE cga_menus.UUID = '$uuid'";
                     }
                 }
                 ksort($data);
+            }
                // echo "<pre>";print_r($data); exit;
                 if(isset($YachtData[0]['Yacht']['domain_name'])){
                     $domain_name = $YachtData[0]['Yacht']['domain_name'];
