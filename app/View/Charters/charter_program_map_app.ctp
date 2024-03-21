@@ -5006,7 +5006,7 @@ function markerOnClickCSMP(e) {
     var row_from_duration = e.target.row_from_duration;
     var row_from_lat = e.target.row_from_lat;
     var row_from_long = e.target.row_from_long;
-
+    console.log(selectedmarkertitle);
     lattitude = row_from_lat;
     longitude = row_from_long;
     distancetotal = row_from_distance;
@@ -5017,7 +5017,7 @@ function markerOnClickCSMP(e) {
         distancetotal = "";
         durationtotal = "";
     }
-
+    console.log(selectedmarkertitle);
     if(to_flag){
         var start_loc = e.target.start_loc;
         //console.log(start_loc);
@@ -5026,6 +5026,7 @@ function markerOnClickCSMP(e) {
          longitude = embark_long;
        
     }
+    console.log(selectedmarkertitle);
     // if(startloc == daytitle){
     //     lattitude = embark_lat;
     //     longitude = embark_long;
