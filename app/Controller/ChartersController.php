@@ -6307,7 +6307,19 @@ WHERE cga_menus.UUID = '$uuid'";
                             $stationarylocations[$publishmap['CharterProgramSchedule']['lattitude']][] = "<span class='stationarydays' data-num=".$publishmap['CharterProgramSchedule']['day_num']." data-statdate=".$scheduleData[$key]['CharterProgramSchedule']['day_dates']." data-stat=".$publishmap['CharterProgramSchedule']['stationary']." id=".$publishmap['CharterProgramSchedule']['UUID']."><img src=".$markerimg." width='15px height='15px' > Day ".$scheduleData[$key]['CharterProgramSchedule']['day_num']."&nbsp;&nbsp;".$scheduleData[$key]['CharterProgramSchedule']['week_days']."</span>"; //same stationarylocations
 
                                     ////////////////////////////////
+                                    if($key == 0){
                                 $loctitle = $publishmap['CharterProgramSchedule']['title'];
+                                    }else{
+                                        $loctitle = $publishmap['CharterProgramSchedule']['to_location'];      
+                                    }
+
+                                    $rowfromloc = $publishmap['CharterProgramSchedule']['title'];
+                                    $val_pass_locr = '"'.$rowfromloc.'"';
+                                    $LocationContent = $this->CharterGuest->query("SELECT * FROM $yachtDbName.location_contents LocationContent WHERE LocationContent.location = $val_pass_locr AND LocationContent.type = 'Location'");
+                                    if(!empty($LocationContent)){
+                                        $scheduleData[$key]['CharterProgramSchedule']['row_from_lat'] = $LocationContent[0]['LocationContent']['lattitude'];
+                                        $scheduleData[$key]['CharterProgramSchedule']['row_from_long'] =  $LocationContent[0]['LocationContent']['longitude'];
+                                    }
                                 $s_uuid_v = $publishmap['CharterProgramSchedule']['UUID'];
                                 $fetchRoutev = $this->CharterGuest->query("SELECT * FROM $yachtDbName.charter_program_schedule_routes CharterProgramScheduleRoute WHERE charter_program_uuid = '$charterProgramId' AND is_deleted = 0  AND charter_program_schedules_id= '$s_uuid_v'");
                                 if(!empty($fetchRoutev)){
@@ -6323,8 +6335,7 @@ WHERE cga_menus.UUID = '$uuid'";
                                 $fleetlocationimages = array();
                                 //echo "<pre>";print_r($LocationContent); //exit;
                                 if(!empty($LocationContent)){
-                                    $scheduleData[$key]['CharterProgramSchedule']['row_from_lat'] = $LocationContent[0]['LocationContent']['lattitude'];
-                                    $scheduleData[$key]['CharterProgramSchedule']['row_from_long'] =  $LocationContent[0]['LocationContent']['longitude'];
+                                  
                                     $LocationContentFleetyour_image = $LocationContent[0]['LocationContent']['your_image'];
                                     //$fleetlocationimages = array();
                                     $fleetlocationyour_images = array();
@@ -6357,7 +6368,7 @@ WHERE cga_menus.UUID = '$uuid'";
                         }
         
                         $YachtData =  $this->CharterGuest->query("SELECT * FROM $yachtDbName.yachts Yacht");
-                        //echo "<pre>";print_r($YachtData); exit;
+                        //echo "<pre>";print_r($locationimages); exit;
                         $cruising_speed = $YachtData[0]['Yacht']['cruising_speed'];
                         $cruising_fuel = $YachtData[0]['Yacht']['cruising_fuel'];
                         $yacht_id_fromyachtDB = $YachtData[0]['Yacht']['id'];
@@ -6652,6 +6663,7 @@ WHERE cga_menus.UUID = '$uuid'";
 
                              //echo "<pre>";print_r($scheduleData); exit;
                         }
+                        //echo "<pre>";print_r($scheduleData); 
                         if(isset($scheduleData) && !empty($scheduleData)){
                              $end_location_last = end($scheduleData);
                             $newschedule = array();
@@ -6665,6 +6677,7 @@ WHERE cga_menus.UUID = '$uuid'";
                             $scheduleData = $newschedule;
                             //$totsch = count($scheduleData)-1;   
                         }
+                        //echo "<pre>";print_r($scheduleData); exit;
                         $this->set('scheduleData', $scheduleData);
 
                         $this->set('locationimages', $locationimages);
