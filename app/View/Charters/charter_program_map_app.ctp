@@ -5192,6 +5192,7 @@ function drawrouteinmodalCSMP(frommarker) { //alert();
     var toloc =  $(".markersnamesmodalmapcruisingsch").val();
    
     $.each(modalrouteline, function(name, value) {
+    console.log(value.name)
             if (value.name == frommarker) {
                 drawrouteline.push(value.index);
                 //tempendloc.push(value.end_loc);
