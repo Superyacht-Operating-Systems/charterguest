@@ -76,7 +76,9 @@ echo $this->Html->script('leaflet/route');
 ?>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css">
 <style>
-
+#mapbuttons button{
+    height: 34px;
+}
 #windy #embed-zoom {
         position: fixed;
     }
@@ -1513,7 +1515,7 @@ background: #fff !important;
   font-size: 12px;
 }
 #mapbuttons button{
-    width: 145px;
+    width: 139px;
 }
 #closeWeatherMap {
     background: #fff !important;
@@ -1561,7 +1563,7 @@ background: #fff !important;
 #WeatherMap {
     background: #fff !important;
     position: absolute!important;
-    top: 170px!important;
+    top: 167px!important;
     right: 13px!important;
   padding: 5px;
   /* height: 32px; */
@@ -1598,6 +1600,23 @@ background: #fff !important;
     margin-left: 5px;
 }
 }
+@media (max-width: 768px){
+    .collapse {
+    position: inherit!important;
+}
+#CruisingButton{
+    top: 52px !important;
+    height: 34px;
+}
+#HelpfulTips{
+    height: 34px;
+    top: 90px !important;
+}
+#HideDetails{
+    height: 34px;
+    top: 136px !important;
+}
+}
 @media (max-width: 767px){
 #HideDetails, #HelpfulTips,#WeatherMap,#GuestNews {
 
@@ -1608,10 +1627,10 @@ background: #fff !important;
     min-width: inherit!important;
 }
 #HideDetails {
-    top: 46px!important;
+    top: 90px!important;
 }
 #HelpfulTips {
-    top: 74px!important;
+    top:128px!important;
 }
 #closeWeatherMap {
     margin-left: 5px;
