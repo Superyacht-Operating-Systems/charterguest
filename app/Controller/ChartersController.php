@@ -5980,7 +5980,7 @@ class ChartersController extends AppController {
         echo json_encode($result);
         exit;
     }     
-    public function getMealTypeFromTime($time, $menu_type_settings) {
+   /* public function getMealTypeFromTime($time, $menu_type_settings) {
 
         if (empty($menu_type_settings) || !isset($menu_type_settings[0]['cga_menu_settings'])) {
             return 'Invalid Configuration'; // Handle cases where menu settings are not properly configured
@@ -5994,18 +5994,57 @@ class ChartersController extends AppController {
         $lunchStartTime = $settings['lunch_start_time'];
         $lunchEndTime = $settings['lunch_end_time'];
         $dinnerStartTime = $settings['dinner_start_time'];
-        $dinnerEndTime = $settings['dinner_end_time'];
-    
+       echo $dinnerEndTime = $settings['dinner_end_time']; exit;
+    echo $time; exit;
         // Comparing the input time to the meal times
-        if ($time >= $breakfastStartTime && $time <= $breakfastEndTime) {
+        if ($time >= $breakfastStartTime && $time < $breakfastEndTime) {
             return '0'; // Breakfast
-        } elseif ($time >= $lunchStartTime && $time <= $lunchEndTime) {
+        } elseif ($time >= $lunchStartTime && $time < $lunchEndTime) {
             return '1'; // Lunch
-        } elseif ($time >= $dinnerStartTime && $time <= $dinnerEndTime) {
+        } elseif ($time >= $dinnerStartTime && $time < $dinnerEndTime) {
             return '2'; // Dinner
         } else {
             return 'Invalid Time'; // Handle times that do not fall within any meal period
         }
+    } */
+    public function getMealTypeFromTime($time, $menu_type_settings) {
+        if (empty($menu_type_settings) || !isset($menu_type_settings[0]['cga_menu_settings'])) {
+            return 'Invalid Configuration'; // Handle cases where menu settings are not properly configured
+        }
+    
+        // Extracting meal times from the first element of the array
+        $settings = $menu_type_settings[0]['cga_menu_settings'];
+    
+        $breakfastStartTime = $settings['breadfast_start_time']; // Adjusted for potential typo in source
+        $breakfastEndTime = $settings['breadfast_end_time'];
+        $lunchStartTime = $settings['lunch_start_time'];
+        $lunchEndTime = $settings['lunch_end_time'];
+        $dinnerStartTime = $settings['dinner_start_time'];
+        $dinnerEndTime = $settings['dinner_end_time'];
+    
+        // Direct comparison of time strings assuming $time, and all setting times are in 'H:i' or 'H:i:s' format
+        if ($this->isTimeWithinPeriod($time, $breakfastStartTime, $breakfastEndTime)) {
+            return '0'; // Breakfast
+        } elseif ($this->isTimeWithinPeriod($time, $lunchStartTime, $lunchEndTime)) {
+            return '1'; // Lunch
+        } elseif ($this->isTimeWithinPeriod($time, $dinnerStartTime, $dinnerEndTime)) {
+            return '2'; // Dinner
+        } else {
+            return 'Invalid Time'; // Handle times that do not fall within any meal period
+        }
+    }
+    
+    private function isTimeWithinPeriod($time, $startTime, $endTime) {
+        // Normalize and compare times directly if endTime is not past midnight
+        if ($endTime !== '00:00' && $startTime <= $endTime) {
+            return $time >= $startTime && $time < $endTime;
+        }
+        // Handle periods that end at or after midnight
+        if ($endTime === '00:00' || $startTime > $endTime) {
+            // If time is after start time or before end time (which has crossed midnight)
+            return $time >= $startTime || $time < $endTime;
+        }
+        return false;
     }
     
             /*
@@ -6044,9 +6083,11 @@ class ChartersController extends AppController {
                // echo "<pre>"; print_r($menu_type_settings); exit;
                 $mealType = $this->getMealTypeFromTime($menu_time,$menu_type_settings);
                 //echo "<pre>"; print_r($mealType); exit;
+                //$mealType = 'Invalid Time';
                 $data=array();
                 //$menuId= "65d871d4-af34-47bc-8702-16b52b7276f0";//"65e1487b-b704-4c8b-8e92-4928ac182009";// $_REQUEST['UUID'];//"65d871d4-af34-47bc-8702-16b52b7276f0";//$_REQUEST['UUID'];
                 //$sql="SELECT * FROM $yachtDbName.cga_published_menus WHERE Menu_date='$menuDate'";
+                if($mealType != 'Invalid Time'){
                 $sql = "SELECT cpm.*, cmb.* FROM $yachtDbName.cga_published_menus cpm
         LEFT JOIN $yachtDbName.cga_menu_backgrounds cmb ON cpm.template_id = cmb.UUID
         WHERE cpm.Menu_date='$menuDate' and menu_type=$mealType ORDER BY cpm.modified ASC";
@@ -6171,6 +6212,7 @@ WHERE cga_menus.UUID = '$uuid'";
                     }
                 }
                 ksort($data);
+            }
                // echo "<pre>";print_r($data); exit;
                 if(isset($YachtData[0]['Yacht']['domain_name'])){
                     $domain_name = $YachtData[0]['Yacht']['domain_name'];
@@ -6273,6 +6315,8 @@ WHERE cga_menus.UUID = '$uuid'";
 
                         if(isset($scheduleData)){
                             foreach($scheduleData as $key => $publishmap){
+                                    $withifanysinglequotefrom = $publishmap['CharterProgramSchedule']['title'];
+
                                 $publishmap['CharterProgramSchedule']['title'] = trim($publishmap['CharterProgramSchedule']['title']);
                                 $publishmap['CharterProgramSchedule']['title'] = str_replace('"', "", $publishmap['CharterProgramSchedule']['title']);
                                 $publishmap['CharterProgramSchedule']['title'] = str_replace("'", "", $publishmap['CharterProgramSchedule']['title']);
@@ -6307,7 +6351,19 @@ WHERE cga_menus.UUID = '$uuid'";
                             $stationarylocations[$publishmap['CharterProgramSchedule']['lattitude']][] = "<span class='stationarydays' data-num=".$publishmap['CharterProgramSchedule']['day_num']." data-statdate=".$scheduleData[$key]['CharterProgramSchedule']['day_dates']." data-stat=".$publishmap['CharterProgramSchedule']['stationary']." id=".$publishmap['CharterProgramSchedule']['UUID']."><img src=".$markerimg." width='15px height='15px' > Day ".$scheduleData[$key]['CharterProgramSchedule']['day_num']."&nbsp;&nbsp;".$scheduleData[$key]['CharterProgramSchedule']['week_days']."</span>"; //same stationarylocations
 
                                     ////////////////////////////////
+                                    if($key == 0){
                                 $loctitle = $publishmap['CharterProgramSchedule']['title'];
+                                    }else{
+                                        $loctitle = $publishmap['CharterProgramSchedule']['to_location'];      
+                                    }
+
+                                    $rowfromloc = $withifanysinglequotefrom;
+                                    $val_pass_locr = '"'.$rowfromloc.'"';
+                                    $LocationContent = $this->CharterGuest->query("SELECT * FROM $yachtDbName.location_contents LocationContent WHERE LocationContent.location = $val_pass_locr AND LocationContent.type = 'Location'");
+                                    if(!empty($LocationContent)){
+                                        $scheduleData[$key]['CharterProgramSchedule']['row_from_lat'] = $LocationContent[0]['LocationContent']['lattitude'];
+                                        $scheduleData[$key]['CharterProgramSchedule']['row_from_long'] =  $LocationContent[0]['LocationContent']['longitude'];
+                                    }
                                 $s_uuid_v = $publishmap['CharterProgramSchedule']['UUID'];
                                 $fetchRoutev = $this->CharterGuest->query("SELECT * FROM $yachtDbName.charter_program_schedule_routes CharterProgramScheduleRoute WHERE charter_program_uuid = '$charterProgramId' AND is_deleted = 0  AND charter_program_schedules_id= '$s_uuid_v'");
                                 if(!empty($fetchRoutev)){
@@ -6323,8 +6379,7 @@ WHERE cga_menus.UUID = '$uuid'";
                                 $fleetlocationimages = array();
                                 //echo "<pre>";print_r($LocationContent); //exit;
                                 if(!empty($LocationContent)){
-                                    $scheduleData[$key]['CharterProgramSchedule']['row_from_lat'] = $LocationContent[0]['LocationContent']['lattitude'];
-                                    $scheduleData[$key]['CharterProgramSchedule']['row_from_long'] =  $LocationContent[0]['LocationContent']['longitude'];
+                                  
                                     $LocationContentFleetyour_image = $LocationContent[0]['LocationContent']['your_image'];
                                     //$fleetlocationimages = array();
                                     $fleetlocationyour_images = array();
@@ -6357,7 +6412,7 @@ WHERE cga_menus.UUID = '$uuid'";
                         }
         
                         $YachtData =  $this->CharterGuest->query("SELECT * FROM $yachtDbName.yachts Yacht");
-                        //echo "<pre>";print_r($YachtData); exit;
+                        //echo "<pre>";print_r($locationimages); exit;
                         $cruising_speed = $YachtData[0]['Yacht']['cruising_speed'];
                         $cruising_fuel = $YachtData[0]['Yacht']['cruising_fuel'];
                         $yacht_id_fromyachtDB = $YachtData[0]['Yacht']['id'];
@@ -6652,6 +6707,7 @@ WHERE cga_menus.UUID = '$uuid'";
 
                              //echo "<pre>";print_r($scheduleData); exit;
                         }
+                        //echo "<pre>";print_r($scheduleData); 
                         if(isset($scheduleData) && !empty($scheduleData)){
                              $end_location_last = end($scheduleData);
                             $newschedule = array();
@@ -6665,6 +6721,7 @@ WHERE cga_menus.UUID = '$uuid'";
                             $scheduleData = $newschedule;
                             //$totsch = count($scheduleData)-1;   
                         }
+                        //echo "<pre>";print_r($scheduleData); exit;
                         $this->set('scheduleData', $scheduleData);
 
                         $this->set('locationimages', $locationimages);
@@ -8032,7 +8089,8 @@ WHERE cga_menus.UUID = '$uuid'";
                         //echo $yacht_domain; echo $fleetSiteName; echo $yname;
                         /////////////////////
                         //echo "SELECT * FROM $yachtDbName.location_contents LocationContent WHERE LocationContent.location = '$title' AND LocationContent.type = 'Location'";
-                        $LocationContent = $this->CharterGuest->query("SELECT * FROM $yachtDbName.location_contents LocationContent WHERE LocationContent.location = '$title' AND LocationContent.type = 'Location'");
+                        $val_pass_vv = '"'.$title.'"';
+                        $LocationContent = $this->CharterGuest->query("SELECT * FROM $yachtDbName.location_contents LocationContent WHERE LocationContent.location = $val_pass_vv AND LocationContent.type = 'Location'");
                         //$LocationContentFleet = $this->LocationContentFleet->find('first',array('conditions'=>array('location'=>$title,'type'=>'Location')));
                         $fleetlocationimages = "";
                         //echo "<pre>";print_r($LocationContent); exit;
