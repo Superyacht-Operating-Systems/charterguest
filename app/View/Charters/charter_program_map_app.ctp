@@ -1906,7 +1906,7 @@ body.modal-open {
 
 
 </style>  
-
+<meta charset="UTF-8">
 <?php    echo $this->Html->script('jquery-1.7.2.min');
         echo $this->Html->script('fancybox/jquery.fancybox');
         echo $this->Html->css('fancybox/jquery.fancybox');

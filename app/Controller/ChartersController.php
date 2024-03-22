@@ -8214,7 +8214,7 @@ WHERE cga_menus.UUID = '$uuid'";
                     }else{
                             $displaynone = "display:block;";
                     }
-                    $popupHtml .= '<div class="mapPopup sp-mp-detailsrow " data-schuuid="'.$scheduleId.'">
+                    $popupHtml .= '<meta charset="UTF-8"><div class="mapPopup sp-mp-detailsrow " data-schuuid="'.$scheduleId.'">
                     <form id="scheduleFormEdit"><div class="inputContainerdiv">
                     <div class="Marker_container_div">
                     <div class="marker_desc_div">
