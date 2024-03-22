@@ -6315,6 +6315,8 @@ WHERE cga_menus.UUID = '$uuid'";
 
                         if(isset($scheduleData)){
                             foreach($scheduleData as $key => $publishmap){
+                                    $withifanysinglequotefrom = $publishmap['CharterProgramSchedule']['title'];
+
                                 $publishmap['CharterProgramSchedule']['title'] = trim($publishmap['CharterProgramSchedule']['title']);
                                 $publishmap['CharterProgramSchedule']['title'] = str_replace('"', "", $publishmap['CharterProgramSchedule']['title']);
                                 $publishmap['CharterProgramSchedule']['title'] = str_replace("'", "", $publishmap['CharterProgramSchedule']['title']);
@@ -6355,7 +6357,7 @@ WHERE cga_menus.UUID = '$uuid'";
                                         $loctitle = $publishmap['CharterProgramSchedule']['to_location'];      
                                     }
 
-                                    $rowfromloc = $publishmap['CharterProgramSchedule']['title'];
+                                    $rowfromloc = $withifanysinglequotefrom;
                                     $val_pass_locr = '"'.$rowfromloc.'"';
                                     $LocationContent = $this->CharterGuest->query("SELECT * FROM $yachtDbName.location_contents LocationContent WHERE LocationContent.location = $val_pass_locr AND LocationContent.type = 'Location'");
                                     if(!empty($LocationContent)){
@@ -8087,7 +8089,8 @@ WHERE cga_menus.UUID = '$uuid'";
                         //echo $yacht_domain; echo $fleetSiteName; echo $yname;
                         /////////////////////
                         //echo "SELECT * FROM $yachtDbName.location_contents LocationContent WHERE LocationContent.location = '$title' AND LocationContent.type = 'Location'";
-                        $LocationContent = $this->CharterGuest->query("SELECT * FROM $yachtDbName.location_contents LocationContent WHERE LocationContent.location = '$title' AND LocationContent.type = 'Location'");
+                        $val_pass_vv = '"'.$title.'"';
+                        $LocationContent = $this->CharterGuest->query("SELECT * FROM $yachtDbName.location_contents LocationContent WHERE LocationContent.location = $val_pass_vv AND LocationContent.type = 'Location'");
                         //$LocationContentFleet = $this->LocationContentFleet->find('first',array('conditions'=>array('location'=>$title,'type'=>'Location')));
                         $fleetlocationimages = "";
                         //echo "<pre>";print_r($LocationContent); exit;
