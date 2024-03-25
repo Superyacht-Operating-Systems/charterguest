@@ -1610,11 +1610,11 @@ background: #fff !important;
 }
 #HelpfulTips{
     height: 34px;
-    top: 90px !important;
+    top: 129px !important;
 }
 #HideDetails{
     height: 34px;
-    top: 136px !important;
+    top: 92px !important;
 }
 }
 @media (max-width: 767px){
