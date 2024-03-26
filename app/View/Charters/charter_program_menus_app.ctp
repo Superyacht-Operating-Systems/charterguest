@@ -168,8 +168,9 @@
   .container-row-all {
    zoom: 130%;
 }
-.container_menus{
-  zoom: 1.2;
+.menlistcontain p {
+    margin: 0px !important;
+    zoom: 110%;
 }
 }
 
