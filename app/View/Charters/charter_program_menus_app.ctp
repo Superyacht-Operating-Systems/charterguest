@@ -170,7 +170,7 @@
 }
 .menlistcontain p {
     margin: 0px !important;
-    zoom: 110%;
+    zoom: 130%;
 }
 }
 
