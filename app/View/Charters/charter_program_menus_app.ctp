@@ -164,7 +164,7 @@
     margin-top: 16px;
     border: solid 1px #ddd;
 }
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 800px) {
   body{
    zoom: 130%;
 }
