@@ -165,8 +165,11 @@
     border: solid 1px #ddd;
 }
 @media screen and (max-width: 800px) {
-  body{
+  .container-row-all {
    zoom: 130%;
+}
+.container_menus{
+  zoom: 1.2;
 }
 }
 
