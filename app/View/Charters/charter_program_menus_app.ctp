@@ -166,10 +166,10 @@
 }
 @media screen and (max-width: 800px) {
   .container-row-all {
-   zoom: 135%;
+   zoom: 130%;
 }
 .menlistcontain p {
-  font-size: 1.3214220em; 
+  font-size: 1.3214222em; 
  line-height: 1em;
 }
 }
