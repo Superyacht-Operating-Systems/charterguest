@@ -169,7 +169,7 @@
    zoom: 130%;
 }
 .menlistcontain p {
-  font-size: 1.3155555em; 
+  font-size: 1.312222222em; 
  line-height: 1em;
 }
 }
