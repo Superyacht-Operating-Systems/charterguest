@@ -3637,7 +3637,7 @@ if(e.target.firstdaytoloc){
             type: "POST",
             url: basefolder+"/"+"charters/editCharterProgramSchedules",
             dataType: 'json',
-            data: { "programId": scheduleId,"scheduleId":scheduleUUId,"tablepId":tablepId ,"diffDays": <?php echo $diffDays; ?>, "markerNum": markerNum, "lattitude": lattitude, "longitude": longitude,"guesttype":guesttype,"counttitle":counttitle, "daytitle":daytitle,"endmarkerOrnot":endmarkerOrnot, "scheduleSameLocationUUID":scheduleSameLocationUUID, "samelocationsDates":samelocationsDates, "from":'locationcard','ipaddb':'<?php echo $ipadappdb; ?>'},
+            data: { "programId": scheduleId,"scheduleId":scheduleUUId,"tablepId":tablepId ,"diffDays": <?php echo $diffDays; ?>, "markerNum": markerNum, "lattitude": lattitude, "longitude": longitude,"guesttype":guesttype,"counttitle":counttitle, "daytitle":daytitle,"endmarkerOrnot":endmarkerOrnot, "scheduleSameLocationUUID":scheduleSameLocationUUID, "samelocationsDates":samelocationsDates,"firstdaytoloc":firstdaytoloc, "from":'locationcard','ipaddb':'<?php echo $ipadappdb; ?>'},
             success:function(result) {
                 
                 if (result.status == 'success') {

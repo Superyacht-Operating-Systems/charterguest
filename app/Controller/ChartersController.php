@@ -7928,7 +7928,9 @@ WHERE cga_menus.UUID = '$uuid'";
                 }
 
                 $tablepId = $this->request->data['tablepId'];
-
+                if(isset($this->request->data['firstdaytoloc'])){
+                $firstdaytoloc = $this->request->data['firstdaytoloc'];
+                }
                 $daytitle = $this->request->data['daytitle'];
                 $counttitle = isset($this->request->data['counttitle']) ? $this->request->data['counttitle'] : '';
                 $scheduleSameLocationUUID = isset($this->request->data['scheduleSameLocationUUID']) ? $this->request->data['scheduleSameLocationUUID'] : '';
@@ -7981,7 +7983,7 @@ WHERE cga_menus.UUID = '$uuid'";
                         $chk_deb_stationary_flag = ($chk_endscheduleData[0]['CharterProgramSchedule']['stationary']);
                         $last_marker_display_iti_modal = 0;
                         //echo $chk_deb_debarkation_flag.'--'.$daytitle.'--'.$chk_deb_endlocation; //exit;
-                        if($daytitle == $embarkation){
+                        if(isset($firstdaytoloc) && !empty($firstdaytoloc)){
                             $last_marker_display_iti_modal = 1;
                         }
                         //echo $last_marker_display_iti_modal; exit;
@@ -8056,9 +8058,9 @@ WHERE cga_menus.UUID = '$uuid'";
                 $basefolder = $this->request->base;
                 if (count($scheduleData) != 0) {
                     if($last_marker_display_iti_modal == 0){
-                        $title = htmlspecialchars($scheduleData[0]['CharterProgramSchedule']['to_location']);
-                    }else if($last_marker_display_iti_modal == 1){
                         $title = htmlspecialchars($scheduleData[0]['CharterProgramSchedule']['title']);
+                    }else if($last_marker_display_iti_modal == 1){
+                        $title = htmlspecialchars($scheduleData[0]['CharterProgramSchedule']['to_location']);
                     } 
                     $sch_endlocation = htmlspecialchars($scheduleData[0]['CharterProgramSchedule']['to_location']);
                     $debarkation_flag = ($scheduleData[0]['CharterProgramSchedule']['debarkation_flag']);
@@ -8082,7 +8084,7 @@ WHERE cga_menus.UUID = '$uuid'";
                         $noteexist = "style='display:none;'";
                     }
                     $act_deb_flag = 0;
-                    if($debarkation_flag == 1 && $daytitle == $chdata_debarkation){
+                    if($last_marker_display_iti_modal == 1){
                         $act_deb_flag = 1;
                     }
                     if(isset($attachment) && !empty($attachment)){
