@@ -75,13 +75,14 @@
 
   /* CSS goes here */
   .container_menus {
-    width: 510px; /* Set the width */
-    height: 750px; /* Set the height */
-    /*background-color: #f0f0f0; /* Just to make the container visible */
-    border: 5px solid #333333; /* Optional: adds a border around the container */
+    width: 500px;
+    height: 750px;
+    /* border: 5px solid #333333; */
     background: #222;
     border-radius: 5px;
-    margin:0 auto;
+    margin: 0 auto;
+    padding-top: 1px;
+    margin-top: 5px;
   }
   .navbar-inverse {
     display: none;
