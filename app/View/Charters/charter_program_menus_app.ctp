@@ -169,6 +169,7 @@
   body {
     background: #000;
     transform: scale(1.5);
+    /* transform: scale3d(1.1, 1.1, 1.1); */
     position: relative;
     top: 200px;
 }
