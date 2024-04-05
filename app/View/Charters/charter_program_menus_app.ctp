@@ -166,10 +166,10 @@
     border: solid 1px #ddd;
 }
 @media screen and (max-width: 800px) {
-  .container-row-all {
-   zoom: 130%;
+.container-row-all {
+   zoom: 129%;
 }
-.menlistcontain p {
+.menlistcontain p span {
   font-size: 1.3214285033089772em; 
  line-height: 1em;
 }
