@@ -2164,15 +2164,15 @@ border-radius: 4px; */
             
                 $daynumber = $schedule['CharterProgramSchedule']['day_num']; 
                 
-                $to_location = $schedule['CharterProgramSchedule']['title'];
-                $attachment = "";
+                //$to_location = $schedule['CharterProgramSchedule']['title'];
+                $attachment = $schedule['CharterProgramSchedule']['attachment'];
 
-                if($to_location == $embarkation_chprg){ //echo $to_location."=========".$debarkation_chprg;
-                    $attachment = $schedule['CharterProgramSchedule']['debarkation_attachment'];
-                    $last = 1;
-                }else if($to_location != $embarkation_chprg){ //echo $to_location."0000000".$debarkation_chprg;
+                if($key == 0){ //echo $to_location."=========".$debarkation_chprg;
                     $attachment = $schedule['CharterProgramSchedule']['attachment'];
                     $last = 0;
+                }else if($key == 1){ //echo $to_location."0000000".$debarkation_chprg;
+                    $attachment = $schedule['CharterProgramSchedule']['debarkation_attachment'];
+                    $last = 1;
                 }
 
                         if(isset($attachment) && !empty($attachment)){
@@ -2226,9 +2226,9 @@ border-radius: 4px; */
                         }
 
                         if(!empty($attachment) && !empty($attachment)){
-                            foreach ($fleetlocationimages as $key => $name) {
+                            foreach ($fleetlocationimages as $key1 => $name) {
                                 if($name == $attachment){
-                                    unset($fleetlocationimages[$key]);
+                                    unset($fleetlocationimages[$key1]);
                                 }
                             }
                         }
@@ -2242,9 +2242,9 @@ border-radius: 4px; */
                                 $displaynone = "display:block;";
                         }
 
-                        if($key == 0 && $chkF == 0){
+                        if($key == 0){
                             $heading =   $schedule['CharterProgramSchedule']['title']; 
-                            $chkF = 1;
+                            //$chkF = 1;
                           }else{
                               $heading =   $schedule['CharterProgramSchedule']['to_location'];  
                           }
@@ -3770,7 +3770,7 @@ if(e.target.firstdaytoloc){
             type: "POST",
             url: basefolder+"/"+"charters/editCharterProgramSchedules",
             dataType: 'json',
-            data: { "programId": scheduleId,"scheduleId":scheduleUUId,"tablepId":tablepId ,"diffDays": <?php echo $diffDays; ?>, "markerNum": markerNum, "lattitude": lattitude, "longitude": longitude,"guesttype":guesttype,"counttitle":counttitle, "daytitle":daytitle, "scheduleSameLocationUUID":scheduleSameLocationUUID, "samelocationsDates":samelocationsDates, "from":'locationcard' },
+            data: { "programId": scheduleId,"scheduleId":scheduleUUId,"tablepId":tablepId ,"diffDays": <?php echo $diffDays; ?>, "markerNum": markerNum, "lattitude": lattitude, "longitude": longitude,"guesttype":guesttype,"counttitle":counttitle, "daytitle":daytitle, "scheduleSameLocationUUID":scheduleSameLocationUUID, "samelocationsDates":samelocationsDates, "from":'locationcard',"firstdaytoloc":firstdaytoloc },
             success:function(result) {
                 $("#hideloader").hide();
                 if (result.status == 'success') {
