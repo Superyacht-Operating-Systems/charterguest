@@ -169,7 +169,7 @@
 .container-row-all {
    zoom: 129%;
 }
-.menlistcontain p span {
+.menlistcontain p {
   font-size: 1.3214285033089772em; 
  line-height: 1em;
 }
