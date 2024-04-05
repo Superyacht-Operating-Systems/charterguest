@@ -166,13 +166,19 @@
     border: solid 1px #ddd;
 }
 @media screen and (max-width: 800px) {
-.container-row-all {
+  body {
+    background: #000;
+    transform: scale(1.5);
+    position: relative;
+    top: 200px;
+}
+/* .container-row-all {
    zoom: 130%;
 }
 .menlistcontain p  {
   font-size: 1.3214285033089772em; 
  line-height: 1em;
-}
+} */
 }
 
 
