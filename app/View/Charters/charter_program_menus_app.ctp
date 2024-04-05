@@ -175,7 +175,7 @@
 /* .container-row-all {
    zoom: 130%;
 }
-.menlistcontain p  {
+.menlistcontain p {
   font-size: 1.3214285033089772em; 
  line-height: 1em;
 } */
