@@ -180,6 +180,12 @@
   font-size: 1.3214285033089772em; 
  line-height: 1em;
 } */
+
+.container_menus {
+    width: 499px;
+  }
+
+
 }
 
 
