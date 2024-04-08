@@ -168,10 +168,10 @@
 @media screen and (max-width: 800px) {
   body {
     background: #000;
-    transform: scale(1.3); 
-    /* transform: scale3d(1.1, 1.1, 1.1); */
+    /* transform: scale(1.3);  */
+  transform: scale3d(1.1, 1.1, 1.1);
     position: relative;
-    top: 200px;
+    top: 150px;
 }
 /* .container-row-all {
    zoom: 130%;
