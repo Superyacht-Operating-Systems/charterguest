@@ -165,7 +165,7 @@
     margin-top: 16px;
     border: solid 1px #ddd;
 }
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 890px) {
   body {
     background: #000;
    transform: scale(1.3);
