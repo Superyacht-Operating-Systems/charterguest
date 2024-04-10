@@ -142,6 +142,7 @@
     border: solid 2px #786868;
     border-radius: 8px;
     z-index: 9999;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
 }
 #show_message_heading_text{
   padding-bottom: 15px;
@@ -165,7 +166,7 @@
     margin-top: 16px;
     border: solid 1px #ddd;
 }
-@media screen and (max-width: 1025px) {
+@media screen and (max-width: 800px) {
   body {
     background: #000;
    transform: scale(1.3);
@@ -182,7 +183,7 @@
 } */
 
 .container_menus {
-    width: 498px;
+    width:500px;
   }
 
 
