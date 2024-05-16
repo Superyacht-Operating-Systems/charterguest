@@ -1480,7 +1480,7 @@ background: #fff !important;
 #CruisingButton {
     background: #fff !important;
     position: absolute!important;
-    top: 56px!important;
+    top: 55px!important;
     right: 13px!important;
   padding: 5px;
   height: 32px;
@@ -1512,7 +1512,7 @@ background: #fff !important;
 #HideDetails {
     background: #fff !important;
     position: absolute!important;
-    top: 94px!important;
+    top: 93px!important;
     right: 13px!important;
   padding: 5px;
   height: 32px;
@@ -1527,7 +1527,7 @@ background: #fff !important;
 #HelpfulTips {
     background: #fff !important;
     position: absolute!important;
-    top: 131.5px!important;
+    top: 131px!important;
     right: 13px!important;
   padding: 5px;
   height: 32px;
@@ -1555,7 +1555,7 @@ background: #fff !important;
 #GuestNews {
     background: #fff !important;
     position: absolute!important;
-    top: 207px!important;
+    top: 210px!important;
     right: 13px!important;
   padding: 5px;
   height: 32px;
@@ -5833,7 +5833,10 @@ const optionsWind = {
     // lon: centerLng,
     // zoom: 7,
 };
+var windyflag = 0;
+function initializewindy(){
 
+if(windyflag == 0){    
 // Initialize Windy API
 windyInit(optionsWind, windyAPI => {
     const { map } = windyAPI;
@@ -5848,8 +5851,12 @@ windyInit(optionsWind, windyAPI => {
 
 			WindboatMarker.setHeading(DBHeading);
             WindboatMarker.setSpeed(DBTrueHeading);
-});
 
+            windyflag = 1;
+});
+}
+
+}
 
 
 $(document).on("click", "#WeatherMap", function(e) {
@@ -5864,7 +5871,7 @@ $(document).on("click", "#WeatherMap", function(e) {
     $("#GuestNews").hide();
     $("#closeWeatherMap").css("display","block");
     //windy.invalidateSize();
-    
+    initializewindy();
 });
 
 $(document).on("click", "#closeWeatherMap", function(e) {
