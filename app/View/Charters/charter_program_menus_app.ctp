@@ -14,7 +14,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>Container Example</title>
 <style>
 
@@ -75,13 +75,14 @@
 
   /* CSS goes here */
   .container_menus {
-    width: 510px; /* Set the width */
-    height: 750px; /* Set the height */
-    /*background-color: #f0f0f0; /* Just to make the container visible */
-    border: 5px solid #333333; /* Optional: adds a border around the container */
+    width: 500px;
+    height: 750px;
+    /* border: 5px solid #333333; */
     background: #222;
     border-radius: 5px;
-    margin:0 auto;
+    margin: 0 auto;
+    padding-top: 1px;
+    margin-top: 5px;
   }
   .navbar-inverse {
     display: none;
@@ -141,6 +142,7 @@
     border: solid 2px #786868;
     border-radius: 8px;
     z-index: 9999;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
 }
 #show_message_heading_text{
   padding-bottom: 15px;
@@ -164,14 +166,27 @@
     margin-top: 16px;
     border: solid 1px #ddd;
 }
-@media screen and (max-width: 800px) {
-  .container-row-all {
+@media screen and (max-width: 1024px) {
+  body {
+    background: #000;
+   transform: scale(1.3);
+  /* transform: scale3d(1.1, 1.1, 1.1); */
+    position: relative;
+    top: 150px;
+}
+/* .container-row-all {
    zoom: 130%;
 }
 .menlistcontain p {
   font-size: 1.3214285033089772em; 
  line-height: 1em;
-}
+} */
+
+.container_menus {
+    width:500px;
+  }
+
+
 }
 
 
