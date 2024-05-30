@@ -8057,6 +8057,7 @@ WHERE cga_menus.UUID = '$uuid'";
 
                 $basefolder = $this->request->base;
                 if (count($scheduleData) != 0) {
+                    $title = htmlspecialchars($scheduleData[0]['CharterProgramSchedule']['to_location']);
                     if($last_marker_display_iti_modal == 0){
                         $title = htmlspecialchars($scheduleData[0]['CharterProgramSchedule']['title']);
                     }else if($last_marker_display_iti_modal == 1){
