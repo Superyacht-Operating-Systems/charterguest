@@ -8057,7 +8057,7 @@ WHERE cga_menus.UUID = '$uuid'";
 
                 $basefolder = $this->request->base;
                 if (count($scheduleData) != 0) {
-                    $title = htmlspecialchars($scheduleData[0]['CharterProgramSchedule']['to_location']);
+                    
                     if($last_marker_display_iti_modal == 0){
                         $title = htmlspecialchars($scheduleData[0]['CharterProgramSchedule']['title']);
                     }else if($last_marker_display_iti_modal == 1){
@@ -8225,7 +8225,7 @@ WHERE cga_menus.UUID = '$uuid'";
                     <div class="Marker_container_div">
                     <div class="marker_desc_div">
                     <div><span style="display: inline-block;position: relative;"><img src="'.$markerimage.'" style="object-fit: cover; height: 35px;" alt="" ><span style="position: absolute;color:#000;top: 6px;right: 0px;left: 0px;text-align: center;font-size: 12px;">'.$dayNum.'</span></span>
-                    <input id="title_'.$scheduleData[0]['CharterProgramSchedule']['id'].'" type="text" name="title" value="'.htmlspecialchars($title).'" placeholder="Enter the Title" class="loc_name" '.$readonly.' >
+                    <input id="title_'.$scheduleData[0]['CharterProgramSchedule']['id'].'" type="text" name="title" value="'.htmlspecialchars($daytitle).'" placeholder="Enter the Title" class="loc_name" '.$readonly.' >
                     <ul class="action-icon"><li><i class="'.$facomment.' fa-comments crew_comment_cruisingmaptitle"  style="'.$colorcodetitle.$displaynone.'" data-rel="'.$scheduleData[0]['CharterProgramSchedule']['UUID'].'" data-yachtid="'.$yacht_id.'" data-tempname="'.htmlspecialchars($scheduleData[0]['CharterProgramSchedule']['title']).'"><input type="hidden" name=commentstitle value="" class="messagecommentstitle" /></i></li></ul>
                     </div>
                     <div>
