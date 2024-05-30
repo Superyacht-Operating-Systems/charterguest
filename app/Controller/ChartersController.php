@@ -6298,7 +6298,7 @@ WHERE cga_menus.UUID = '$uuid'";
         
                         $scheduleConditions = "charter_program_id = '$charterProgramId' AND is_deleted = 0 order by day_num ASC, serial_no ASC";
                         $scheduleData = $this->CharterGuest->getCharterProgramScheduleData($yachtDbName, $scheduleConditions);
-                        echo "<pre>";print_r($scheduleData); exit;
+                        //echo "<pre>";print_r($scheduleData); exit;
                         $markertitle = array();
                         $markername = array();
                         $samelocations = array();
@@ -6412,7 +6412,7 @@ WHERE cga_menus.UUID = '$uuid'";
                         }
         
                         $YachtData =  $this->CharterGuest->query("SELECT * FROM $yachtDbName.yachts Yacht");
-                        //echo "<pre>";print_r($locationimages); exit;
+                        echo "<pre>";print_r($locationimages); exit;
                         $cruising_speed = $YachtData[0]['Yacht']['cruising_speed'];
                         $cruising_fuel = $YachtData[0]['Yacht']['cruising_fuel'];
                         $yacht_id_fromyachtDB = $YachtData[0]['Yacht']['id'];
