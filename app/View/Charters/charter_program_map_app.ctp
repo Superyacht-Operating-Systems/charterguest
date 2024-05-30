@@ -2129,7 +2129,7 @@ body.modal-open {
                 
                 //$to_location = $schedule['CharterProgramSchedule']['title'];
                 $attachment = $schedule['CharterProgramSchedule']['attachment'];
-
+                $last = 0;
                 if($key == 0){ //echo $to_location."=========".$debarkation_chprg;
                     $attachment = $schedule['CharterProgramSchedule']['attachment'];
                     $last = 0;
