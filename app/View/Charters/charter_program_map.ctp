@@ -2539,15 +2539,14 @@ $('.menu > .menu__item').hover(function(){
   
 });
 
-$(document).on("click","#showmenu", function(e){
-    var btntext1 = $("#showmenu").text();
-    if(btntext1 == "Open Menu"){
-        $("#showmenu").text("Close Menu");
-      
-    }else{
-        $("#showmenu").text("Open Menu");
-      
-    }
+$(document).on("click", "#showmenu" ,function() { 
+  var text= $('#mapbuttons').attr('aria-expanded');
+  //console.log(text);
+  if(text == "false"){
+    $(this).html('Open Menu');
+  } else{
+    $(this).text('Close Menu');
+ }
 });
 
 </script>

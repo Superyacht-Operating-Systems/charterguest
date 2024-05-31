@@ -2376,7 +2376,7 @@ body.modal-open {
 
 <div class="custom-popup" id="map" style="height: 600px;position:relative;outline:none;">
 <div class="panel panel-default">
-            <div class="panel-heading"  data-toggle="collapse" href="#mapbuttons">
+            <div class="panel-heading"  data-toggle="collapse"  href="#mapbuttons">
             <button id="showmenu" class="btn">Open Menu</button>
             </div>
             <div id="mapbuttons" class="panel-collapse collapse">
@@ -2435,17 +2435,16 @@ var sidebar = (function() {
     }
 })();
 
-$(document).on("click","#showmenu", function(e){
-    var btntext1 = $("#showmenu").text();
-    if(btntext1 == "Open Menu"){
-        $("#showmenu").text("Close Menu");
-      
-    }else{
-        $("#showmenu").text("Open Menu");
-      
-    }
-});
 
+$(document).on("click", "#showmenu" ,function() { 
+  var text= $('#mapbuttons').attr('aria-expanded');
+  //console.log(text);
+  if(text == "false"){
+    $(this).html('Open Menu');
+  } else{
+    $(this).text('Close Menu');
+ }
+});
 </script>
 
 
@@ -4648,6 +4647,9 @@ $(document).ready(function() { //alert();
     $("#windy").css("visibility","hidden");
     $("#closeWeatherMap").css("display","none");
     $("#showmenu").css("display","block");
+
+   
+
    
     });
 
