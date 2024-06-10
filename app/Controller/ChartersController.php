@@ -7131,7 +7131,8 @@ WHERE cga_menus.UUID = '$uuid'";
                             $myLastElement = end($scheduleData);
                             $to_location = $myLastElement['CharterProgramSchedule']['to_location'];
                             $myLastElement['CharterProgramSchedule']['title'] = $myLastElement['CharterProgramSchedule']['to_location'];
-                            $location_names = $this->CharterGuest->query("SELECT * FROM $yachtDbName.location_contents LocationContent WHERE LocationContent.location = '$to_location' AND LocationContent.type = 'Location'");
+                            $val_pass = '"'.$to_location.'"';
+                            $location_names = $this->CharterGuest->query("SELECT * FROM $yachtDbName.location_contents LocationContent WHERE LocationContent.location = $val_pass AND LocationContent.type = 'Location'");
     
                            // $location_names = $this->LocationContentFleet->find('first', array('conditions' => array('type' => 'Location', 'is_deleted' => 0,'location'=>$to_location)));
                             $myLastElement['CharterProgramSchedule']['lattitude'] = $location_names[0]['LocationContent']['lattitude'];
@@ -7144,10 +7145,11 @@ WHERE cga_menus.UUID = '$uuid'";
                              $scheduleData[count($scheduleData)] = $myLastElement;
 
                                 $myLastElement_loctitle = $myLastElement['CharterProgramSchedule']['to_location'];
-                                $myLastElement_loctitlev = str_replace("'", "", $myLastElement_loctitle);    
-                                $myLastElement_loctitle = str_replace('"', "", $myLastElement_loctitlev);   
+                                // $myLastElement_loctitlev = str_replace("'", "", $myLastElement_loctitle);    
+                                // $myLastElement_loctitle = str_replace('"', "", $myLastElement_loctitlev);   
+                                $val_pass = '"'.$myLastElement_loctitle.'"';
                                 //$loctitle = mysql_real_escape_string($publishmap['CharterProgramSchedule']['title']);
-                                $LocationContent = $this->CharterGuest->query("SELECT * FROM $yachtDbName.location_contents LocationContent WHERE LocationContent.location = '$myLastElement_loctitle' AND LocationContent.type = 'Location'");
+                                $LocationContent = $this->CharterGuest->query("SELECT * FROM $yachtDbName.location_contents LocationContent WHERE LocationContent.location = $val_pass AND LocationContent.type = 'Location'");
                             
                                 $myLastElement_fleetlocationimages = array();
                                 //echo "<pre>";print_r($LocationContent); //exit;
