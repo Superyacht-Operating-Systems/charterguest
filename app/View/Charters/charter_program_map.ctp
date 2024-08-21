@@ -3073,12 +3073,14 @@ foreach($samelocations[$startingloc['CharterProgramSchedule']['lattitude']] as $
         
     }
 
-    if(isset($samelocations_daynumdisplay[$schedule['CharterProgramSchedule']['lattitude']][0])){
-        $markernumberDisplay = $samelocations_daynumdisplay[$schedule['CharterProgramSchedule']['lattitude']][0];
+    // if(isset($samelocations_daynumdisplay[$schedule['CharterProgramSchedule']['lattitude']][0])){
+    //     $markernumberDisplay = $samelocations_daynumdisplay[$schedule['CharterProgramSchedule']['lattitude']][0];
         
-    }else{
+    // }else{
+        if($schedule['CharterProgramSchedule']['stationary'] == 0){
         $markernumberDisplay = $schedule['CharterProgramSchedule']['day_num'];
-    }
+        }
+    //}
     ?>
 
     var textMarker = L.marker(["<?php echo $schedule['CharterProgramSchedule']['lattitude']; ?>", "<?php echo $schedule['CharterProgramSchedule']['longitude']; ?>"], {
@@ -3112,12 +3114,12 @@ if(isset($guesttype) && !empty($guesttype)){ //echo $guesttype; exit;
 }
 
 }
-if(isset($samelocations_daynumdisplay[$startingloc['CharterProgramSchedule']['lattitude']][0])){
-$markernumberDisplay = $samelocations_daynumdisplay[$startingloc['CharterProgramSchedule']['lattitude']][0];
+//if(isset($samelocations_daynumdisplay[$startingloc['CharterProgramSchedule']['lattitude']][0])){
+//$markernumberDisplay = $samelocations_daynumdisplay[$startingloc['CharterProgramSchedule']['lattitude']][0];
 
-}else{
+//}else{
 $markernumberDisplay = $startingloc['CharterProgramSchedule']['day_num'];
-}
+//}
 
 
     // if($schedule['CharterProgramSchedule']['lattitude'] == $scheduleData[$key+1]['CharterProgramSchedule']['lattitude'] ){ 
