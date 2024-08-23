@@ -72,7 +72,7 @@ echo $this->Html->script('leaflet/route');
  echo $this->Html->script('leaflet/leaflet.boatmarker.min.js'); 
  
  echo $this->Html->script('leaflet/turf.min.js'); 
-
+ echo $this->Html->script('leaflet/rotatedMarker');
 ?>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css">
 <style>
@@ -1876,7 +1876,33 @@ border-radius: 4px;
    
     
 }
-
+.text-below-marker-90deg {
+    font-size: 11px;
+    font-weight: 1px solid;
+    margin-top: -7px !important;
+    margin-left: 21px !important;
+    color: #000;
+    background-color: #fff;
+border-radius: 4px;
+}
+.text-below-marker-180deg{
+    font-size: 11px;
+    font-weight: 1px solid;
+    margin-top: 20px !important;
+    margin-left: -7px !important;
+    color: #000;
+    background-color: #fff;
+border-radius: 4px;
+}
+.text-below-marker-270deg{
+    font-size: 11px;
+    font-weight: 1px solid;
+    margin-top: -8px !important;
+    margin-left: -34px !important;
+    color: #000;
+    background-color: #fff;
+border-radius: 4px;
+}
 .text-below-marker-modalmap {
     font-size: 11px;
     font-weight: 1px solid;
@@ -2763,6 +2789,7 @@ if(!empty($scheduleData)){
     $startingloc = $scheduleData[0];
 }
 $fromLocFlag = 0;
+$degcount = 0;
 foreach ($scheduleData as $key => $schedule) { 
 
 if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !empty($samelocations[$schedule['CharterProgramSchedule']['lattitude']])){
@@ -2827,10 +2854,19 @@ if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !e
     }
 
     if($schedule['CharterProgramSchedule']['stationary'] == 1){
+        $degcount = $degcount+1;
         $stclass = "style='position:absolute;top:40px !important;'";
         //$scheduleData[$key+1]['CharterProgramSchedule']['stationary'] = 1;
+        if($degcount == 1){
+            $rotationAngle = 90;
+        }else if($degcount == 2){
+            $rotationAngle = 180;
+        }else if($degcount == 3){
+            $rotationAngle = 270;
+        }
      }else{
          $stclass = "";
+         $rotationAngle = 0;
      }
 
     $daynumber = $schedule['CharterProgramSchedule']['day_num'];
@@ -2848,7 +2884,7 @@ if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !e
         centerLng = <?php echo $schedule['CharterProgramSchedule']['longitude']; ?>;
         zoom = 7;
         
-        var marker = L.marker(["<?php echo $schedule['CharterProgramSchedule']['lattitude']; ?>", "<?php echo $schedule['CharterProgramSchedule']['longitude']; ?>"],{pmIgnore: true})
+        var marker = L.marker(["<?php echo $schedule['CharterProgramSchedule']['lattitude']; ?>", "<?php echo $schedule['CharterProgramSchedule']['longitude']; ?>"],{pmIgnore: true,rotationAngle:"<?php echo $rotationAngle; ?>"})
         .bindTooltip("<?php echo "<span class='owntooltip' id=".$key."><b style='font-size: 12px;'>".$SumDaytitle."</b><b style='font-size: 12px;'>".$schedule['CharterProgramSchedule']['to_location']."<hr>".$endplace."</b><br><b style='font-size: 12px;'>".$distance.$bar.$duration."</b></span><span class='stationary' ".$stclass." >".$WeekDaytitle."</span>"?>", 
                     {
                         permanent: true, 
@@ -2956,7 +2992,9 @@ if(!empty($startingloc)){
  <?php  } /********************************end place last marker ************ */
  ?>
 
-<?php foreach ($scheduleData as $key => $schedule) { 
+<?php 
+$degMarkerCount = 0;
+foreach ($scheduleData as $key => $schedule) { 
     if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !empty($samelocations[$schedule['CharterProgramSchedule']['lattitude']])){
 
         // if(isset($samelocations_daynumdisplay[$schedule['CharterProgramSchedule']['lattitude']][0])){
@@ -2965,16 +3003,43 @@ if(!empty($startingloc)){
         // }else{
             if($schedule['CharterProgramSchedule']['stationary'] == 0){
             $markernumberDisplay = $schedule['CharterProgramSchedule']['day_num'];
+            $rotationAngle = 0;
             }
+            if($schedule['CharterProgramSchedule']['stationary'] == 1){
+                $degMarkerCount = $degMarkerCount+1;
+                $markernumberDisplay = $schedule['CharterProgramSchedule']['day_num'];
+                if($degMarkerCount == 1){
+                    $rotationAngle = 0;
+                    $textbelowmarkerdeg = "text-below-marker-90deg";
+                }else if($degMarkerCount == 2){
+                    $rotationAngle = 0;
+                    $textbelowmarkerdeg = "text-below-marker-180deg";
+                }else if($degMarkerCount == 3){
+                    $rotationAngle = 0;
+                    $textbelowmarkerdeg = "text-below-marker-270deg";
+                }
+                
+             }
         //}
     ?>
-
+var textbelowmarkerdeg = "<?php echo $textbelowmarkerdeg; ?>"
     var textMarker = L.marker(["<?php echo $schedule['CharterProgramSchedule']['lattitude']; ?>", "<?php echo $schedule['CharterProgramSchedule']['longitude']; ?>"], {
+        <?php if($schedule['CharterProgramSchedule']['stationary'] == 0){ ?>
   icon: L.divIcon({
     html:"<?php if($markernumberDisplay < 10 ){ ?>    <span>&nbsp;<?php echo $markernumberDisplay; ?></span> <?php } else { ?><span><?php echo $markernumberDisplay; ?></span><?php } ?>",
     // html: "<?php // echo $markernumberDisplay; ?>",
       className: 'text-below-marker',
-    })
+    }),
+    rotationAngle: 0
+    <?php } ?>
+    <?php if($schedule['CharterProgramSchedule']['stationary'] == 1){ ?>
+        icon: L.divIcon({
+    html:"<?php if($markernumberDisplay < 10 ){ ?>    <span>&nbsp;<?php echo $markernumberDisplay; ?></span> <?php } else { ?><span><?php echo $markernumberDisplay; ?></span><?php } ?>",
+    // html: "<?php // echo $markernumberDisplay; ?>",
+      className: textbelowmarkerdeg,
+    }),
+    rotationAngle: "<?php echo $rotationAngle; ?>"
+    <?php } ?>
 }).addTo(map);
 
  <?php } 
