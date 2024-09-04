@@ -76,6 +76,9 @@ echo $this->Html->script('leaflet/route');
 ?>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css">
 <style>
+    .day1numbermarkernodisplay{
+        display:none !important;
+    }
 #mapbuttons button{
     height: 34px;
 }
@@ -2853,10 +2856,11 @@ if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !e
         $fromLocFlag = 1;
     }
 
-    if($schedule['CharterProgramSchedule']['stationary'] == 1){
+    if($schedule['CharterProgramSchedule']['stationary'] == 1 && $schedule['CharterProgramSchedule']['day_num'] != 1){
         $degcount = $degcount+1;
         $stclass = "style='position:absolute;top:40px !important;'";
         //$scheduleData[$key+1]['CharterProgramSchedule']['stationary'] = 1;
+        $rotationAngle = 0;
         if($degcount == 1){
             $rotationAngle = 90;
         }else if($degcount == 2){
@@ -2867,6 +2871,7 @@ if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !e
      }else{
          $stclass = "";
          $rotationAngle = 0;
+         $degcount = 0;
      }
 
     $daynumber = $schedule['CharterProgramSchedule']['day_num'];
@@ -3004,19 +3009,21 @@ foreach ($scheduleData as $key => $schedule) {
             if($schedule['CharterProgramSchedule']['stationary'] == 0){
             $markernumberDisplay = $schedule['CharterProgramSchedule']['day_num'];
             $rotationAngle = 0;
+            $degMarkerCount = 0;
             }
-            if($schedule['CharterProgramSchedule']['stationary'] == 1){
+            $textbelowmarkerdeg = "text-below-marker day1numbermarkernodisplay";
+            if($schedule['CharterProgramSchedule']['stationary'] == 1 && $schedule['CharterProgramSchedule']['day_num'] != 1){
                 $degMarkerCount = $degMarkerCount+1;
                 $markernumberDisplay = $schedule['CharterProgramSchedule']['day_num'];
                 if($degMarkerCount == 1){
                     $rotationAngle = 0;
-                    $textbelowmarkerdeg = "text-below-marker-90deg";
+                    $textbelowmarkerdeg = "text-below-marker text-below-marker-90deg";
                 }else if($degMarkerCount == 2){
                     $rotationAngle = 0;
-                    $textbelowmarkerdeg = "text-below-marker-180deg";
+                    $textbelowmarkerdeg = "text-below-marker text-below-marker-180deg";
                 }else if($degMarkerCount == 3){
                     $rotationAngle = 0;
-                    $textbelowmarkerdeg = "text-below-marker-270deg";
+                    $textbelowmarkerdeg = "text-below-marker text-below-marker-270deg";
                 }
                 
              }

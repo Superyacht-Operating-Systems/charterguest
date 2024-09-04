@@ -65,6 +65,9 @@ $topyname = $yfullName[$charterGuestDatayacht_id];
 <script src="https://api.windy.com/assets/map-forecast/libBoot.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css">
 <style>
+    .day1numbermarkernodisplay{
+        display:none !important;
+    }
 .sm-cruisingmsgmyModal .mx-box {
     max-height: 400px;
     min-height: 400px;
@@ -2953,7 +2956,7 @@ if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !e
     }
 
 
-    if($schedule['CharterProgramSchedule']['stationary'] == 1){
+    if($schedule['CharterProgramSchedule']['stationary'] == 1 && $schedule['CharterProgramSchedule']['day_num'] != 1){
         $degcount = $degcount+1;
         $stclass = "style='position:absolute;top:-40px !important;'";
         //$scheduleData[$key+1]['CharterProgramSchedule']['stationary'] = 1;
@@ -2967,6 +2970,7 @@ if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !e
      }else{
          $stclass = "";
          $rotationAngle = 0;
+         $degcount = 0;
      }
 
     $daynumber = $schedule['CharterProgramSchedule']['day_num'];
@@ -3122,19 +3126,22 @@ foreach ($scheduleData as $key => $schedule) {
         if($schedule['CharterProgramSchedule']['stationary'] == 0){
         $markernumberDisplay = $schedule['CharterProgramSchedule']['day_num'];
         $rotationAngle = 0;
+        $degMarkerCount = 0;
         }
-        if($schedule['CharterProgramSchedule']['stationary'] == 1){
+        $textbelowmarkerdeg = "text-below-marker day1numbermarkernodisplay";
+       
+        if($schedule['CharterProgramSchedule']['stationary'] == 1 && $schedule['CharterProgramSchedule']['day_num'] != 1){
             $degMarkerCount = $degMarkerCount+1;
             $markernumberDisplay = $schedule['CharterProgramSchedule']['day_num'];
             if($degMarkerCount == 1){
                 $rotationAngle = 0;
-                $textbelowmarkerdeg = "text-below-marker-90deg";
+                $textbelowmarkerdeg = "text-below-marker text-below-marker-90deg";
             }else if($degMarkerCount == 2){
                 $rotationAngle = 0;
-                $textbelowmarkerdeg = "text-below-marker-180deg";
+                $textbelowmarkerdeg = "text-below-marker text-below-marker-180deg";
             }else if($degMarkerCount == 3){
                 $rotationAngle = 0;
-                $textbelowmarkerdeg = "text-below-marker-270deg";
+                $textbelowmarkerdeg = "text-below-marker text-below-marker-270deg";
             }
             
          }
@@ -3794,7 +3801,7 @@ if(e.target.firstdaytoloc){
     longitude = row_from_long;
     distancetotal = row_from_distance;
     durationtotal = row_from_duration;
-     //console.log(stationary);
+     console.log(stationary);
     
      //console.log(day_dates);
 
