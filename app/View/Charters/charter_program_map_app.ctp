@@ -2058,6 +2058,7 @@ body.modal-open {
                 }
                 $firststat = 0;
                 $chkF = 0; 
+                $fleetlocationimages = array();
                 //echo "<pre>";print_r($newscheduleData); exit;
             foreach ($newscheduleData as $key => $schedule) { 
                 
@@ -2181,11 +2182,13 @@ body.modal-open {
                         }
                         
                         $crusemaparray[$crusemap] =  "crusingschedulemap".$crusemap;
-
+                        //echo $last;
+                        $fleetlocationimages= array();
                         if($last == 0){
                             $fleetlocationimages = $locationimages[$schedule['CharterProgramSchedule']['id']];
                         }else if($last == 1){
                             $fleetlocationimages = $myLastElement_locationimages['last'];
+                            $last=0;
                         }
 
                         if(!empty($attachment) && !empty($attachment)){
@@ -2195,7 +2198,7 @@ body.modal-open {
                                 }
                             }
                         }
-
+                        //echo "<pre>"; print_r($fleetlocationimages); 
                         if($key == 0){
                             $heading =   $schedule['CharterProgramSchedule']['title']; 
                             //$chkF = 1;
@@ -2236,6 +2239,7 @@ body.modal-open {
                                     $fleetlocationimages =  array_unique($fleetlocationimages);
                                     foreach($fleetlocationimages as $name){
                                         if(!empty($name)){ 
+                                            $name = ltrim($name);
                                             $fname = $targetFile_dir_path_href.$name;
                                             if(file_exists($fname)) {
                                             ?>
@@ -2263,6 +2267,7 @@ body.modal-open {
                    
                 $crusemap++;
                 }
+               //exit;
              //} ?>
                 </div>
                     </div>

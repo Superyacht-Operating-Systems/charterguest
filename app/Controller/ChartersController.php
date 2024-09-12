@@ -6287,7 +6287,7 @@ WHERE cga_menus.UUID = '$uuid'";
                         }
                         
                         $val_pass = '"'.$embarkation_chprg.'"';
-                        $LocationContent = $this->CharterGuest->query("SELECT * FROM $yachtDbName.location_contents LocationContent WHERE LocationContent.location = $val_pass AND LocationContent.type = 'Location'");
+                        $LocationContent = $this->CharterGuest->query("SELECT * FROM $yachtDbName.location_contents LocationContent WHERE LocationContent.location = $val_pass AND LocationContent.type = 'Location' AND LocationContent.is_deleted=0");
                         if(!empty($LocationContent)){
                             $embark_lat = $LocationContent[0]['LocationContent']['lattitude'];
                             $embark_long = $LocationContent[0]['LocationContent']['longitude'];
@@ -6352,14 +6352,18 @@ WHERE cga_menus.UUID = '$uuid'";
 
                                     ////////////////////////////////
                                     if($key == 0){
-                                $loctitle = $publishmap['CharterProgramSchedule']['title'];
+                                        $loctitle = $publishmap['CharterProgramSchedule']['title'];
                                     }else{
                                         $loctitle = $publishmap['CharterProgramSchedule']['to_location'];      
                                     }
 
                                     $rowfromloc = $withifanysinglequotefrom;
                                     $val_pass_locr = '"'.$rowfromloc.'"';
-                                    $LocationContent = $this->CharterGuest->query("SELECT * FROM $yachtDbName.location_contents LocationContent WHERE LocationContent.location = $val_pass_locr AND LocationContent.type = 'Location'");
+                                    $loctitle_new = '"'.$loctitle.'"';
+                                    $LocationContent = $this->CharterGuest->query("SELECT * FROM $yachtDbName.location_contents LocationContent WHERE LocationContent.location = $loctitle_new AND LocationContent.type = 'Location' AND LocationContent.is_deleted=0");
+                                    //echo "<pre>";
+                                   // echo "SELECT * FROM $yachtDbName.location_contents LocationContent WHERE LocationContent.location = $loctitle_new AND LocationContent.type = 'Location' AND LocationContent.is_deleted=0";
+
                                     if(!empty($LocationContent)){
                                         $scheduleData[$key]['CharterProgramSchedule']['row_from_lat'] = $LocationContent[0]['LocationContent']['lattitude'];
                                         $scheduleData[$key]['CharterProgramSchedule']['row_from_long'] =  $LocationContent[0]['LocationContent']['longitude'];
@@ -6374,29 +6378,31 @@ WHERE cga_menus.UUID = '$uuid'";
                                 // $loctitle = str_replace('"', "", $loctitlev);   
                                 $val_pass = '"'.$loctitle.'"';
                                 //$loctitle = mysql_real_escape_string($publishmap['CharterProgramSchedule']['title']);
-                                $LocationContent = $this->CharterGuest->query("SELECT * FROM $yachtDbName.location_contents LocationContent WHERE LocationContent.location = $val_pass AND LocationContent.type = 'Location'");
+                                $LocationContent = $this->CharterGuest->query("SELECT * FROM $yachtDbName.location_contents LocationContent WHERE LocationContent.location = $val_pass AND LocationContent.type = 'Location' AND LocationContent.is_deleted=0");
                             
-                                $fleetlocationimages = array();
+                                $fleetlocationimages = "";
+                            $fleetlocationyour_images = array();
+                            $fleetlocationimagesarr = array();
                                 //echo "<pre>";print_r($LocationContent); //exit;
                                 if(!empty($LocationContent)){
                                   
                                     $LocationContentFleetyour_image = $LocationContent[0]['LocationContent']['your_image'];
                                     //$fleetlocationimages = array();
-                                    $fleetlocationyour_images = array();
+                                   
                                     if(!empty($LocationContentFleetyour_image)){
                                         
                                         $fleetlocationyour_images =  explode(',',$LocationContentFleetyour_image);
                                     }
                                     $LocationContentFleetimage = $LocationContent[0]['LocationContent']['image'];
-                                    $fleetlocationimagesarr = array();
+                                   
                                     if(!empty($LocationContentFleetimage)){
                                         $fleetlocationimagesarr =  explode(',',$LocationContentFleetimage);
                                     }
                                     // echo "<pre>";print_r($fleetlocationyour_images);
                                     // echo "<pre>";print_r($fleetlocationimagesarr);
-                                    //if(!empty($LocationContentFleetyour_image) && !empty($LocationContentFleetimage)){
+                                    if (!empty($LocationContentFleetyour_image) || !empty($LocationContentFleetimage)) {
                                     $fleetlocationimages = array_merge($fleetlocationyour_images,$fleetlocationimagesarr);
-                                    //}
+                                    }
                                     //echo "<pre>";print_r($fleetlocationimages); exit;
 
                                     
@@ -6409,6 +6415,7 @@ WHERE cga_menus.UUID = '$uuid'";
                         /////////////////////////////////
                             
                                 }
+                                //exit;
                         }
         
                         $YachtData =  $this->CharterGuest->query("SELECT * FROM $yachtDbName.yachts Yacht");
@@ -6655,7 +6662,7 @@ WHERE cga_menus.UUID = '$uuid'";
                             $to_location = $myLastElement['CharterProgramSchedule']['to_location'];
                             $myLastElement['CharterProgramSchedule']['title'] = $myLastElement['CharterProgramSchedule']['to_location'];
                             $val_pass = '"'.$to_location.'"';
-                            $location_names = $this->CharterGuest->query("SELECT * FROM $yachtDbName.location_contents LocationContent WHERE LocationContent.location = $val_pass AND LocationContent.type = 'Location'");
+                            $location_names = $this->CharterGuest->query("SELECT * FROM $yachtDbName.location_contents LocationContent WHERE LocationContent.location = $val_pass AND LocationContent.type = 'Location' AND LocationContent.is_deleted=0");
     
                            // $location_names = $this->LocationContentFleet->find('first', array('conditions' => array('type' => 'Location', 'is_deleted' => 0,'location'=>$to_location)));
                            $myLastElement['CharterProgramSchedule']['org_title'] = $myLastElement['CharterProgramSchedule']['title'];
@@ -6673,7 +6680,7 @@ WHERE cga_menus.UUID = '$uuid'";
                                 // $myLastElement_loctitle = str_replace('"', "", $myLastElement_loctitlev);   
                                 $val_pass = '"'.$myLastElement_loctitle.'"';
                                 //$loctitle = mysql_real_escape_string($publishmap['CharterProgramSchedule']['title']);
-                                $LocationContent = $this->CharterGuest->query("SELECT * FROM $yachtDbName.location_contents LocationContent WHERE LocationContent.location = $val_pass AND LocationContent.type = 'Location'");
+                                $LocationContent = $this->CharterGuest->query("SELECT * FROM $yachtDbName.location_contents LocationContent WHERE LocationContent.location = $val_pass AND LocationContent.type = 'Location' AND LocationContent.is_deleted=0");
                             
                                 $myLastElement_fleetlocationimages = array();
                                 //echo "<pre>";print_r($LocationContent); //exit;
@@ -6721,7 +6728,8 @@ WHERE cga_menus.UUID = '$uuid'";
                             $scheduleData = $newschedule;
                             //$totsch = count($scheduleData)-1;   
                         }
-                        //echo "<pre>";print_r($scheduleData); exit;
+                        //exit;
+                        //echo "<pre>";print_r($locationimages); exit;//print_r($myLastElement_locationimages); exit;
                         $this->set('scheduleData', $scheduleData);
 
                         $this->set('locationimages', $locationimages);
@@ -7283,7 +7291,7 @@ WHERE cga_menus.UUID = '$uuid'";
                 //echo "<pre>";print_r($Datesarray); //exit;
 
                 $val_pass = '"'.$embarkation_chprg.'"';
-                $LocationContent = $this->CharterGuest->query("SELECT * FROM $yachtDbName.location_contents LocationContent WHERE LocationContent.location = $val_pass AND LocationContent.type = 'Location'");
+                $LocationContent = $this->CharterGuest->query("SELECT * FROM $yachtDbName.location_contents LocationContent WHERE LocationContent.location = $val_pass AND LocationContent.type = 'Location' AND LocationContent.is_deleted=0");
                 if(!empty($LocationContent)){
                     $embark_lat = $LocationContent[0]['LocationContent']['lattitude'];
                     $embark_long = $LocationContent[0]['LocationContent']['longitude'];
@@ -7312,7 +7320,7 @@ WHERE cga_menus.UUID = '$uuid'";
                 $stationarylocations = array();
                 $samlatlong = array();
                 $basefolder = $this->request->base;
-
+//echo "<pre>"; print_r($scheduleData); exit;
                 if(isset($scheduleData)){
                     foreach($scheduleData as $key => $publishmap){
                         $publishmap['CharterProgramSchedule']['title'] = trim($publishmap['CharterProgramSchedule']['title']);
@@ -7349,7 +7357,13 @@ WHERE cga_menus.UUID = '$uuid'";
                             $stationarylocations[$publishmap['CharterProgramSchedule']['lattitude']][] = "<span class='stationarydays' data-num=".$publishmap['CharterProgramSchedule']['day_num']." data-stat=".$publishmap['CharterProgramSchedule']['stationary']." id=".$publishmap['CharterProgramSchedule']['UUID']."><img src=".$markerimg." width='15px height='15px' > Day ".$scheduleData[$key]['CharterProgramSchedule']['day_num']."&nbsp;&nbsp;".$scheduleData[$key]['CharterProgramSchedule']['week_days']."</span>"; //same stationarylocations
 
                         ////////////////////////////////
-                                $loctitle = $publishmap['CharterProgramSchedule']['title'];
+                               // $loctitle = $publishmap['CharterProgramSchedule']['title'];
+
+                                if($key == 0){
+                                    $loctitle = $publishmap['CharterProgramSchedule']['title'];
+                                }else{
+                                    $loctitle = $publishmap['CharterProgramSchedule']['to_location'];      
+                                }
                                 $s_uuid_v = $publishmap['CharterProgramSchedule']['UUID'];
                                 $fetchRoutev = $this->CharterGuest->query("SELECT * FROM $yachtDbName.charter_program_schedule_routes CharterProgramScheduleRoute WHERE charter_program_uuid = '$charterProgramId' AND is_deleted = 0  AND charter_program_schedules_id= '$s_uuid_v'");
                                 if(!empty($fetchRoutev)){
@@ -7360,7 +7374,7 @@ WHERE cga_menus.UUID = '$uuid'";
                                 //$loctitlev = str_replace("'", "", $loctitle);    
                                 //$loctitle = str_replace('"', "", $loctitlev);   
                                 $val_pass = '"'.$loctitle.'"';
-                                $LocationContent = $this->CharterGuest->query("SELECT * FROM $yachtDbName.location_contents LocationContent WHERE LocationContent.location = $val_pass AND LocationContent.type = 'Location'");
+                                $LocationContent = $this->CharterGuest->query("SELECT * FROM $yachtDbName.location_contents LocationContent WHERE LocationContent.location = $val_pass AND LocationContent.type = 'Location' AND LocationContent.is_deleted=0");
                             
                                 $fleetlocationimages = array();
                                 //echo "<pre>";print_r($LocationContent); exit;
@@ -7386,7 +7400,7 @@ WHERE cga_menus.UUID = '$uuid'";
 
                                     
                                 }
-                                //echo "<pre>";print_r($fleetlocationimages); exit;
+                                //echo "<pre>";print_r($fleetlocationimages); //exit;
                                 if(!empty($fleetlocationimages)){
                                 $trimmed_array = array_map('trim', $fleetlocationimages);
                                 }
@@ -7438,7 +7452,7 @@ WHERE cga_menus.UUID = '$uuid'";
                         /****************comments*/
 
                     
-                        }
+                        } //exit;
                 }
 
                 $this->Session->delete("yachFullName");
@@ -7800,7 +7814,7 @@ WHERE cga_menus.UUID = '$uuid'";
                         $to_location = $myLastElement['CharterProgramSchedule']['to_location'];
                         $myLastElement['CharterProgramSchedule']['title'] = $myLastElement['CharterProgramSchedule']['to_location'];
                         $val_pass = '"'.$to_location.'"';
-                        $location_names = $this->CharterGuest->query("SELECT * FROM $yachtDbName.location_contents LocationContent WHERE LocationContent.location = $val_pass AND LocationContent.type = 'Location'");
+                        $location_names = $this->CharterGuest->query("SELECT * FROM $yachtDbName.location_contents LocationContent WHERE LocationContent.location = $val_pass AND LocationContent.type = 'Location' AND LocationContent.is_deleted=0");
 
                        // $location_names = $this->LocationContentFleet->find('first', array('conditions' => array('type' => 'Location', 'is_deleted' => 0,'location'=>$to_location)));
                         $myLastElement['CharterProgramSchedule']['lattitude'] = $location_names[0]['LocationContent']['lattitude'];
@@ -7852,7 +7866,7 @@ WHERE cga_menus.UUID = '$uuid'";
                                 }
                                 $myLastElement_locationimages['last'] = $trimmed_array;
                     }
-                    
+                   // echo "<pre>"; print_r($locationimages); print_r($myLastElement_locationimages); exit;
                     $this->set('myLastElement_locationimages', $myLastElement_locationimages);
                    //
                    if(isset($scheduleData) && !empty($scheduleData)){

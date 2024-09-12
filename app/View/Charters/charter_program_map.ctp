@@ -2097,7 +2097,7 @@ border-radius: 4px; */
                 }
                 $firststat = 0;
                 $chkF = 0; 
-                
+                $fleetlocationimages= array();
             foreach ($newscheduleData as $key => $schedule) { 
                 $schedule['CharterProgramSchedule']['title'] = trim($schedule['CharterProgramSchedule']['title']);
                 $schedule['CharterProgramSchedule']['title'] = str_replace('"', "", $schedule['CharterProgramSchedule']['title']);
@@ -2218,11 +2218,12 @@ border-radius: 4px; */
                         }
                         
                         $crusemaparray[$crusemap] =  "crusingschedulemap".$crusemap;
-
+                        //$fleetlocationimages= array();
                         if($last == 0){
                             $fleetlocationimages = $locationimages[$schedule['CharterProgramSchedule']['id']];
                         }else if($last == 1){
                             $fleetlocationimages = $myLastElement_locationimages['last'];
+                            $last = 0;
                         }
 
                         if(!empty($attachment) && !empty($attachment)){
@@ -2232,7 +2233,7 @@ border-radius: 4px; */
                                 }
                             }
                         }
-
+                        //echo "<pre>"; print_r($fleetlocationimages);
                         $locationCommentsdata = $locationComment[$schedule['CharterProgramSchedule']['id']];
 
                         //echo $locationCommentsdata['programScheduleUUID'];
@@ -2277,10 +2278,12 @@ border-radius: 4px; */
                                 </div>
                                 <div class="loc_img_prev">
                                 <a href="<?php echo $titleimagehref; ?>" rel="galleryloc<?php echo $crusemap; ?>" data-thumbnail="<?php echo $titleimagehref; ?>" class="<?php echo $fancybox; ?>"><img src="<?php echo $titleimage; ?>" style="object-fit: cover; width: 100%;height: 150px;" alt="" ></a>
-                               <?php if(isset($fleetlocationimages) && !empty($fleetlocationimages)){ 
+                               <?php 
+                               if(isset($fleetlocationimages) && !empty($fleetlocationimages)){ 
                                     $fleetlocationimages =  array_unique($fleetlocationimages);
                                     foreach($fleetlocationimages as $name){
                                         if(!empty($name)){ 
+                                            $name = ltrim($name);
                                             $fname = $targetFile_dir_path_href.$name;
                                             if(file_exists($fname)) {
                                             ?>
@@ -2317,7 +2320,7 @@ border-radius: 4px; */
                     <?php  //} 
                    
                 $crusemap++;
-                } ?>
+                } //exit; ?>
                 </div>
                     </div>
             </div>
