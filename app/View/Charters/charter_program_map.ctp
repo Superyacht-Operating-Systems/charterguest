@@ -65,6 +65,9 @@ $topyname = $yfullName[$charterGuestDatayacht_id];
 <script src="https://api.windy.com/assets/map-forecast/libBoot.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css">
 <style>
+    .day1numbermarkernodisplay{
+        display:none !important;
+    }
 .sm-cruisingmsgmyModal .mx-box {
     max-height: 400px;
     min-height: 400px;
@@ -838,6 +841,7 @@ echo $this->Html->script('leaflet/route');
  echo $this->Html->script('leaflet/leaflet.boatmarker.min.js'); 
  
  echo $this->Html->script('leaflet/turf.min.js'); 
+ echo $this->Html->script('leaflet/rotatedMarker');
 
 ?>
 <!-- <script src="https://api.tiles.mapbox.com/mapbox.js/plugins/turf/v2.0.0/turf.min.js"></script> -->
@@ -1480,7 +1484,7 @@ background: #fff !important;
 #CruisingButton {
     background: #fff !important;
     position: absolute!important;
-    top: 56px!important;
+    top: 55px!important;
     right: 13px!important;
   padding: 5px;
   height: 32px;
@@ -1512,7 +1516,7 @@ background: #fff !important;
 #HideDetails {
     background: #fff !important;
     position: absolute!important;
-    top: 94px!important;
+    top: 93px!important;
     right: 13px!important;
   padding: 5px;
   height: 32px;
@@ -1527,7 +1531,7 @@ background: #fff !important;
 #HelpfulTips {
     background: #fff !important;
     position: absolute!important;
-    top: 131.5px!important;
+    top: 131px!important;
     right: 13px!important;
   padding: 5px;
   height: 32px;
@@ -1555,7 +1559,7 @@ background: #fff !important;
 #GuestNews {
     background: #fff !important;
     position: absolute!important;
-    top: 207px!important;
+    top: 210px!important;
     right: 13px!important;
   padding: 5px;
   height: 32px;
@@ -1883,7 +1887,36 @@ color: #000;
 background-color: #fff;
 border-radius: 4px;
 }
-
+.text-below-marker-90deg {
+    font-size: 11px;
+    font-weight: 1px solid;
+    margin-top: -7px !important;
+    margin-left: 21px !important;
+    color: #000;
+    background-color: #fff;
+border-radius: 4px;
+z-index:999 !important;
+}
+.text-below-marker-180deg{
+    font-size: 11px;
+    font-weight: 1px solid;
+    margin-top: 20px !important;
+    margin-left: -7px !important;
+    color: #000;
+    background-color: #fff;
+border-radius: 4px;
+z-index:999 !important;
+}
+.text-below-marker-270deg{
+    font-size: 11px;
+    font-weight: 1px solid;
+    margin-top: -8px !important;
+    margin-left: -34px !important;
+    color: #000;
+    background-color: #fff;
+border-radius: 4px;
+z-index:999 !important;
+}
 .text-below-marker-modalmap {
     font-size: 11px;
     font-weight: 1px solid;
@@ -2166,7 +2199,7 @@ border-radius: 4px; */
                 
                 //$to_location = $schedule['CharterProgramSchedule']['title'];
                 $attachment = $schedule['CharterProgramSchedule']['attachment'];
-
+                $last = 0;
                 if($key == 0){ //echo $to_location."=========".$debarkation_chprg;
                     $attachment = $schedule['CharterProgramSchedule']['attachment'];
                     $last = 0;
@@ -2542,15 +2575,14 @@ $('.menu > .menu__item').hover(function(){
   
 });
 
-$(document).on("click","#showmenu", function(e){
-    var btntext1 = $("#showmenu").text();
-    if(btntext1 == "Open Menu"){
-        $("#showmenu").text("Close Menu");
-      
-    }else{
-        $("#showmenu").text("Open Menu");
-      
-    }
+$(document).on("click", "#showmenu" ,function() { 
+  var text= $('#mapbuttons').attr('aria-expanded');
+  //console.log(text);
+  if(text == "false"){
+    $(this).html('Open Menu');
+  } else{
+    $(this).text('Close Menu');
+ }
 });
 
 </script>
@@ -2851,6 +2883,7 @@ if(!empty($scheduleData)){
     $startingloc = $scheduleData[0];
 }
 $fromLocFlag = 0;
+$degcount = 0;
 foreach ($scheduleData as $key => $schedule) { 
 
 if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !empty($samelocations[$schedule['CharterProgramSchedule']['lattitude']])){
@@ -2926,11 +2959,21 @@ if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !e
     }
 
 
-    if($schedule['CharterProgramSchedule']['stationary'] == 1){
+    if($schedule['CharterProgramSchedule']['stationary'] == 1 && $schedule['CharterProgramSchedule']['day_num'] != 1){
+        $degcount = $degcount+1;
         $stclass = "style='position:absolute;top:-40px !important;'";
         //$scheduleData[$key+1]['CharterProgramSchedule']['stationary'] = 1;
+        if($degcount == 1){
+            $rotationAngle = 90;
+        }else if($degcount == 2){
+            $rotationAngle = 180;
+        }else if($degcount == 3){
+            $rotationAngle = 270;
+        }
      }else{
          $stclass = "";
+         $rotationAngle = 0;
+         $degcount = 0;
      }
 
     $daynumber = $schedule['CharterProgramSchedule']['day_num'];
@@ -2948,7 +2991,7 @@ if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !e
         centerLng = <?php echo $schedule['CharterProgramSchedule']['longitude']; ?>;
         zoom = 7;
         
-        var marker = L.marker(["<?php echo $schedule['CharterProgramSchedule']['lattitude']; ?>", "<?php echo $schedule['CharterProgramSchedule']['longitude']; ?>"],{pmIgnore: true,riseOnHover:true})
+        var marker = L.marker(["<?php echo $schedule['CharterProgramSchedule']['lattitude']; ?>", "<?php echo $schedule['CharterProgramSchedule']['longitude']; ?>"],{pmIgnore: true,riseOnHover:true,rotationAngle:"<?php echo $rotationAngle; ?>"})
         .bindTooltip("<?php echo "<span class='owntooltip' id=".$key.">".$SumDaytitle."<span id='".$schuuid."'   class='acti-count' ".$marker_msg_count." >".$samemkrcount."</span><b style='font-size: 10px;'>".$schedule['CharterProgramSchedule']['to_location']."<hr>".$endplace."</b><br><b style='font-size: 10px;'>".$distance.$bar.$duration."</b></span><span class='stationary' ".$stclass." >".$WeekDaytitle."</span>"?>", 
                     {
                         permanent: true, 
@@ -3057,7 +3100,9 @@ foreach($samelocations[$startingloc['CharterProgramSchedule']['lattitude']] as $
  <?php  } /********************************end place last marker ************ */
  ?>
 
-<?php foreach ($scheduleData as $key => $schedule) { 
+<?php
+$degMarkerCount = 0;
+foreach ($scheduleData as $key => $schedule) { 
     if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !empty($samelocations[$schedule['CharterProgramSchedule']['lattitude']])){
 
         $schuuid = $schedule['CharterProgramSchedule']['UUID'];
@@ -3077,19 +3122,50 @@ foreach($samelocations[$startingloc['CharterProgramSchedule']['lattitude']] as $
         
     }
 
-    if(isset($samelocations_daynumdisplay[$schedule['CharterProgramSchedule']['lattitude']][0])){
-        $markernumberDisplay = $samelocations_daynumdisplay[$schedule['CharterProgramSchedule']['lattitude']][0];
+    // if(isset($samelocations_daynumdisplay[$schedule['CharterProgramSchedule']['lattitude']][0])){
+    //     $markernumberDisplay = $samelocations_daynumdisplay[$schedule['CharterProgramSchedule']['lattitude']][0];
         
-    }else{
+    // }else{
+        if($schedule['CharterProgramSchedule']['stationary'] == 0){
         $markernumberDisplay = $schedule['CharterProgramSchedule']['day_num'];
-    }
+        $rotationAngle = 0;
+        $degMarkerCount = 0;
+        }
+        $textbelowmarkerdeg = "text-below-marker day1numbermarkernodisplay";
+       
+        if($schedule['CharterProgramSchedule']['stationary'] == 1 && $schedule['CharterProgramSchedule']['day_num'] != 1){
+            $degMarkerCount = $degMarkerCount+1;
+            $markernumberDisplay = $schedule['CharterProgramSchedule']['day_num'];
+            if($degMarkerCount == 1){
+                $rotationAngle = 0;
+                $textbelowmarkerdeg = "text-below-marker text-below-marker-90deg";
+            }else if($degMarkerCount == 2){
+                $rotationAngle = 0;
+                $textbelowmarkerdeg = "text-below-marker text-below-marker-180deg";
+            }else if($degMarkerCount == 3){
+                $rotationAngle = 0;
+                $textbelowmarkerdeg = "text-below-marker text-below-marker-270deg";
+            }
+            
+         }
+    //}
     ?>
-
+ var textbelowmarkerdeg = "<?php echo $textbelowmarkerdeg; ?>"
     var textMarker = L.marker(["<?php echo $schedule['CharterProgramSchedule']['lattitude']; ?>", "<?php echo $schedule['CharterProgramSchedule']['longitude']; ?>"], {
+        <?php if($schedule['CharterProgramSchedule']['stationary'] == 0){ ?>
   icon: L.divIcon({
     html: "<?php if($markernumberDisplay < 10 ){ ?>    <span>&nbsp;<?php echo $markernumberDisplay; ?></span> <?php } else { ?><span><?php echo $markernumberDisplay; ?></span><?php } ?><span id='<?php echo $schuuid ?>'   class='acti-count-onmarker' <?php echo $marker_msg_count ?> ><?php echo $samemkrcount ?></span>",
     className: 'text-below-marker',
-    })
+    }),
+    rotationAngle: 0
+    <?php } ?>
+    <?php if($schedule['CharterProgramSchedule']['stationary'] == 1){ ?>
+        icon: L.divIcon({
+    html: "<?php if($markernumberDisplay < 10 ){ ?>    <span>&nbsp;<?php echo $markernumberDisplay; ?></span> <?php } else { ?><span><?php echo $markernumberDisplay; ?></span><?php } ?><span id='<?php echo $schuuid ?>'   class='acti-count-onmarker' <?php echo $marker_msg_count ?> ><?php echo $samemkrcount ?></span>",
+    className: textbelowmarkerdeg,
+    }),
+    rotationAngle: "<?php echo $rotationAngle; ?>"
+    <?php } ?>
 }).addTo(map);
  <?php } 
 }?>
@@ -3116,12 +3192,12 @@ if(isset($guesttype) && !empty($guesttype)){ //echo $guesttype; exit;
 }
 
 }
-if(isset($samelocations_daynumdisplay[$startingloc['CharterProgramSchedule']['lattitude']][0])){
-$markernumberDisplay = $samelocations_daynumdisplay[$startingloc['CharterProgramSchedule']['lattitude']][0];
+//if(isset($samelocations_daynumdisplay[$startingloc['CharterProgramSchedule']['lattitude']][0])){
+//$markernumberDisplay = $samelocations_daynumdisplay[$startingloc['CharterProgramSchedule']['lattitude']][0];
 
-}else{
+//}else{
 $markernumberDisplay = $startingloc['CharterProgramSchedule']['day_num'];
-}
+//}
 
 
     // if($schedule['CharterProgramSchedule']['lattitude'] == $scheduleData[$key+1]['CharterProgramSchedule']['lattitude'] ){ 
@@ -3728,7 +3804,7 @@ if(e.target.firstdaytoloc){
     longitude = row_from_long;
     distancetotal = row_from_distance;
     durationtotal = row_from_duration;
-     //console.log(stationary);
+     console.log(stationary);
     
      //console.log(day_dates);
 
@@ -5836,7 +5912,10 @@ const optionsWind = {
     // lon: centerLng,
     // zoom: 7,
 };
+var windyflag = 0;
+function initializewindy(){
 
+if(windyflag == 0){    
 // Initialize Windy API
 windyInit(optionsWind, windyAPI => {
     const { map } = windyAPI;
@@ -5851,8 +5930,12 @@ windyInit(optionsWind, windyAPI => {
 
 			WindboatMarker.setHeading(DBHeading);
             WindboatMarker.setSpeed(DBTrueHeading);
-});
 
+            windyflag = 1;
+});
+}
+
+}
 
 
 $(document).on("click", "#WeatherMap", function(e) {
@@ -5867,7 +5950,7 @@ $(document).on("click", "#WeatherMap", function(e) {
     $("#GuestNews").hide();
     $("#closeWeatherMap").css("display","block");
     //windy.invalidateSize();
-    
+    initializewindy();
 });
 
 $(document).on("click", "#closeWeatherMap", function(e) {

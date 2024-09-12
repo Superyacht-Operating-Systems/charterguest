@@ -1935,6 +1935,8 @@ body.modal-open {
 
 <input type="hidden" id="yachtId" value="<?php echo $yacht_id_fromyachtDB; ?>">
 <input type="hidden" id="charterProgramId" value="<?php echo $charterProgramId; ?>">
+
+
 <script>
 var sidebar = (function() {
     "use strict";
@@ -1975,7 +1977,16 @@ var sidebar = (function() {
 
 </script>
 
+<script>
+    var latlngs = [];
+<?php 
+if(!empty($scheduleData)){
+   foreach ($scheduleData as $key => $schedule) {  ?>
 
+    latlngs.push(new L.LatLng(<?php echo $schedule['CharterProgramSchedule']['lattitude']; ?>, <?php echo $schedule['CharterProgramSchedule']['longitude']; ?>));
+
+    <?php } }?>
+</script>
 <script>
 /* orientationchange start */
 document.addEventListener('orientationchange', () => {
@@ -2026,7 +2037,7 @@ var map = L.map('map', {
 });
 
     
-        
+
 $(document).ready(function() { //alert();
 
     $("#map").css("visibility","hidden");
@@ -2060,9 +2071,9 @@ const optionsWind = {
     verbose: true,
 
     // Optional: Initial state of the map
-     lat: DBLatitude,
-     lon: DBLongitude,
-     zoom: 6,
+    //  lat: DBLatitude,
+    //  lon: DBLongitude,
+    //  zoom: 6,
 };
 
 // Initialize Windy API
@@ -2070,9 +2081,9 @@ windyInit(optionsWind, windyAPI => {
     const { map } = windyAPI;
     // .map is instance of Leaflet map
 
-    // if(latlngs.length > 0){
-    //     map.fitBounds(latlngs);
-    // }
+    if(latlngs.length > 0){
+        map.fitBounds(latlngs);
+    }
 
         var WindboatMarker = L.boatMarker([DBLatitude,DBLongitude], {
 			    color: "#00a7f2"

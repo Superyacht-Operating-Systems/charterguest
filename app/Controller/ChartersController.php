@@ -7139,7 +7139,8 @@ WHERE cga_menus.UUID = '$uuid'";
                             $myLastElement = end($scheduleData);
                             $to_location = $myLastElement['CharterProgramSchedule']['to_location'];
                             $myLastElement['CharterProgramSchedule']['title'] = $myLastElement['CharterProgramSchedule']['to_location'];
-                            $location_names = $this->CharterGuest->query("SELECT * FROM $yachtDbName.location_contents LocationContent WHERE LocationContent.location = '$to_location' AND LocationContent.type = 'Location'");
+                            $val_pass = '"'.$to_location.'"';
+                            $location_names = $this->CharterGuest->query("SELECT * FROM $yachtDbName.location_contents LocationContent WHERE LocationContent.location = $val_pass AND LocationContent.type = 'Location'");
     
                            // $location_names = $this->LocationContentFleet->find('first', array('conditions' => array('type' => 'Location', 'is_deleted' => 0,'location'=>$to_location)));
                             $myLastElement['CharterProgramSchedule']['lattitude'] = $location_names[0]['LocationContent']['lattitude'];
@@ -7152,10 +7153,11 @@ WHERE cga_menus.UUID = '$uuid'";
                              $scheduleData[count($scheduleData)] = $myLastElement;
 
                                 $myLastElement_loctitle = $myLastElement['CharterProgramSchedule']['to_location'];
-                                $myLastElement_loctitlev = str_replace("'", "", $myLastElement_loctitle);    
-                                $myLastElement_loctitle = str_replace('"', "", $myLastElement_loctitlev);   
+                                // $myLastElement_loctitlev = str_replace("'", "", $myLastElement_loctitle);    
+                                // $myLastElement_loctitle = str_replace('"', "", $myLastElement_loctitlev);   
+                                $val_pass = '"'.$myLastElement_loctitle.'"';
                                 //$loctitle = mysql_real_escape_string($publishmap['CharterProgramSchedule']['title']);
-                                $LocationContent = $this->CharterGuest->query("SELECT * FROM $yachtDbName.location_contents LocationContent WHERE LocationContent.location = '$myLastElement_loctitle' AND LocationContent.type = 'Location'");
+                                $LocationContent = $this->CharterGuest->query("SELECT * FROM $yachtDbName.location_contents LocationContent WHERE LocationContent.location = $val_pass AND LocationContent.type = 'Location'");
                             
                                 $myLastElement_fleetlocationimages = array();
                                 //echo "<pre>";print_r($LocationContent); //exit;
@@ -8071,6 +8073,7 @@ WHERE cga_menus.UUID = '$uuid'";
 
                 $basefolder = $this->request->base;
                 if (count($scheduleData) != 0) {
+                    
                     if($last_marker_display_iti_modal == 0){
                         $title = htmlspecialchars($scheduleData[0]['CharterProgramSchedule']['title']);
                     }else if($last_marker_display_iti_modal == 1){
@@ -8105,7 +8108,7 @@ WHERE cga_menus.UUID = '$uuid'";
                         //echo $yacht_domain; echo $fleetSiteName; echo $yname;
                         /////////////////////
                         //echo "SELECT * FROM $yachtDbName.location_contents LocationContent WHERE LocationContent.location = '$title' AND LocationContent.type = 'Location'";
-                        $val_pass_vv = '"'.$title.'"';
+                        $val_pass_vv = '"'.$daytitle.'"';
                         $LocationContent = $this->CharterGuest->query("SELECT * FROM $yachtDbName.location_contents LocationContent WHERE LocationContent.location = $val_pass_vv AND LocationContent.type = 'Location'");
                         //$LocationContentFleet = $this->LocationContentFleet->find('first',array('conditions'=>array('location'=>$title,'type'=>'Location')));
                         $fleetlocationimages = "";
@@ -8238,7 +8241,7 @@ WHERE cga_menus.UUID = '$uuid'";
                     <div class="Marker_container_div">
                     <div class="marker_desc_div">
                     <div><span style="display: inline-block;position: relative;"><img src="'.$markerimage.'" style="object-fit: cover; height: 35px;" alt="" ><span style="position: absolute;color:#000;top: 6px;right: 0px;left: 0px;text-align: center;font-size: 12px;">'.$dayNum.'</span></span>
-                    <input id="title_'.$scheduleData[0]['CharterProgramSchedule']['id'].'" type="text" name="title" value="'.htmlspecialchars($title).'" placeholder="Enter the Title" class="loc_name" '.$readonly.' >
+                    <input id="title_'.$scheduleData[0]['CharterProgramSchedule']['id'].'" type="text" name="title" value="'.htmlspecialchars($daytitle).'" placeholder="Enter the Title" class="loc_name" '.$readonly.' >
                     <ul class="action-icon"><li><i class="'.$facomment.' fa-comments crew_comment_cruisingmaptitle"  style="'.$colorcodetitle.$displaynone.'" data-rel="'.$scheduleData[0]['CharterProgramSchedule']['UUID'].'" data-yachtid="'.$yacht_id.'" data-tempname="'.htmlspecialchars($scheduleData[0]['CharterProgramSchedule']['title']).'"><input type="hidden" name=commentstitle value="" class="messagecommentstitle" /></i></li></ul>
                     </div>
                     <div>
