@@ -8109,18 +8109,20 @@ WHERE cga_menus.UUID = '$uuid'";
                         /////////////////////
                         //echo "SELECT * FROM $yachtDbName.location_contents LocationContent WHERE LocationContent.location = '$title' AND LocationContent.type = 'Location'";
                         $val_pass_vv = '"'.$daytitle.'"';
-                        $LocationContent = $this->CharterGuest->query("SELECT * FROM $yachtDbName.location_contents LocationContent WHERE LocationContent.location = $val_pass_vv AND LocationContent.type = 'Location'");
+                        $LocationContent = $this->CharterGuest->query("SELECT * FROM $yachtDbName.location_contents LocationContent WHERE LocationContent.location = $val_pass_vv AND LocationContent.type = 'Location' AND LocationContent.is_deleted=0");
                         //$LocationContentFleet = $this->LocationContentFleet->find('first',array('conditions'=>array('location'=>$title,'type'=>'Location')));
                         $fleetlocationimages = "";
+                        $fleetlocationyour_images = array();
+                        $fleetlocationimagesarr = array();
                         //echo "<pre>";print_r($LocationContent); exit;
                         if(!empty($LocationContent)){
                             $LocationContentFleetyour_image = $LocationContent[0]['LocationContent']['your_image'];
-                            $fleetlocationyour_images = array();
+                           // $fleetlocationyour_images = array();
                             if(isset($LocationContentFleetyour_image) && !empty($LocationContentFleetyour_image)){
                                 $fleetlocationyour_images =  explode(',',$LocationContentFleetyour_image);
                             }
                             $LocationContentFleetimage = $LocationContent[0]['LocationContent']['image'];
-                            $fleetlocationimagesarr = array();
+                           // $fleetlocationimagesarr = array();
                             if(isset($LocationContentFleetimage) && !empty($LocationContentFleetimage)){
                                 $fleetlocationimagesarr =  explode(',',$LocationContentFleetimage);
                             }
@@ -8176,8 +8178,8 @@ WHERE cga_menus.UUID = '$uuid'";
                                 $targetFullGalleryPath = $update_BASE_URL.'/'.$fleetSiteName."/app/webroot/".$yname."/app/webroot/img/location_contents/";
                             }
                             if(BASE_URL == "http://localhost"){
-                                $targetFullPath = BASE_URL."/superyacht/app/webroot/img/charter_program_files/itinerary_photos/".$attachment;
-                                $targetFullGalleryPath = BASE_URL."/superyacht/app/webroot/img/charter_program_files/itinerary_photos/";
+                                $targetFullPath = BASE_URL."/superyacht/app/webroot/img/location_contents/".$attachment;
+                                $targetFullGalleryPath = BASE_URL."/superyacht/app/webroot/img/location_contents/";
                                 }
                         }
 
@@ -8254,6 +8256,7 @@ WHERE cga_menus.UUID = '$uuid'";
                     if(isset($fleetlocationimages) && !empty($fleetlocationimages)){ 
                         $fleetlocationimages =  array_unique($fleetlocationimages);
                         foreach($fleetlocationimages as $name){ //echo $name;
+                            $name = ltrim($name);
                             if(!empty($name)){
                             $popupHtml .= '<a href="'.$targetFullGalleryPathhref.$name.'" data-thumbnail="'.$targetFullGalleryPathhref.$name.'" rel="gallery1" class="'.$fancybox.'"><img src="'.$name.'" style="object-fit: cover;width: 100%; height: 150px;display:none;" alt="" ></a>';
                             }
