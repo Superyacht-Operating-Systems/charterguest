@@ -6360,7 +6360,7 @@ WHERE cga_menus.UUID = '$uuid'";
                                     $rowfromloc = $withifanysinglequotefrom;
                                     $val_pass_locr = '"'.$rowfromloc.'"';
                                     $loctitle_new = '"'.$loctitle.'"';
-                                    $LocationContent = $this->CharterGuest->query("SELECT * FROM $yachtDbName.location_contents LocationContent WHERE LocationContent.location = $val_pass_locr AND LocationContent.type = 'Location' AND LocationContent.is_deleted=0");
+                                    $LocationContent = $this->CharterGuest->query("SELECT * FROM $yachtDbName.location_contents LocationContent WHERE LocationContent.location = $loctitle_new AND LocationContent.type = 'Location' AND LocationContent.is_deleted=0");
                                     
                                     //echo "<pre>";
                                    // echo "SELECT * FROM $yachtDbName.location_contents LocationContent WHERE LocationContent.location = $loctitle_new AND LocationContent.type = 'Location' AND LocationContent.is_deleted=0";
@@ -7380,7 +7380,7 @@ WHERE cga_menus.UUID = '$uuid'";
                                 $rowfromloc = $withifanysinglequotefrom; 
                                 $val_pass_locr = '"'.$rowfromloc.'"';
                                 $val_pass = '"'.$loctitle.'"';
-                                $LocationContent = $this->CharterGuest->query("SELECT * FROM $yachtDbName.location_contents LocationContent WHERE LocationContent.location = $val_pass_locr AND LocationContent.type = 'Location' AND LocationContent.is_deleted=0");
+                                $LocationContent = $this->CharterGuest->query("SELECT * FROM $yachtDbName.location_contents LocationContent WHERE LocationContent.location = $val_pass AND LocationContent.type = 'Location' AND LocationContent.is_deleted=0");
                             
                                 $fleetlocationimages = array();
                                 //echo "<pre>";print_r($LocationContent); exit;
