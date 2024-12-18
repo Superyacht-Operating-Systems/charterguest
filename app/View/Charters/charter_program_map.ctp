@@ -2884,6 +2884,7 @@ if(!empty($scheduleData)){
 }
 $fromLocFlag = 0;
 $degcount = 0;
+$donotOpenitinearymodalmorethanoneday = 0;
 foreach ($scheduleData as $key => $schedule) { 
 
 if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !empty($samelocations[$schedule['CharterProgramSchedule']['lattitude']])){
@@ -2898,6 +2899,12 @@ if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !e
             foreach($stationarylocations[$schedule['CharterProgramSchedule']['lattitude']] as $val){
                 $WeekDaytitle.= $val.'<br><br>';
             }
+        }
+
+        if((count($stationarylocations[$schedule['CharterProgramSchedule']['lattitude']])>1) && $schedule['CharterProgramSchedule']['day_num'] != 1){
+            $donotOpenitinearymodalmorethanoneday = 1;
+        }else{
+            $donotOpenitinearymodalmorethanoneday = 0;
         }
 
 
@@ -3036,6 +3043,7 @@ if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !e
         <?php } ?>
         marker.stationarytooltipnum = "<?php echo $kn; ?>";
         marker.serial_no = "<?php echo $schedule['CharterProgramSchedule']['serial_no']; ?>";
+        marker.donotOpenitinearymodalmorethanoneday = "<?php echo $donotOpenitinearymodalmorethanoneday; ?>";
         marker.row_from_lat = "<?php echo $schedule['CharterProgramSchedule']['row_from_lat']; ?>";
         marker.row_from_long = "<?php echo $schedule['CharterProgramSchedule']['row_from_long']; ?>";
         marker.row_from_distance = "<?php echo $schedule['CharterProgramSchedule']['row_from_distance']; ?>";
@@ -3804,7 +3812,7 @@ if(e.target.firstdaytoloc){
     longitude = row_from_long;
     distancetotal = row_from_distance;
     durationtotal = row_from_duration;
-     console.log(stationary);
+    var donotOpenitinearymodalFlag = e.target.donotOpenitinearymodalmorethanoneday;
     
      //console.log(day_dates);
 
@@ -3812,6 +3820,11 @@ if(e.target.firstdaytoloc){
 
     //$(".Tooltip").hide();
     $('.Tooltip').css('top','');
+    if(stationary == 0 && donotOpenitinearymodalFlag == 1){
+        stationary = 1;
+        stationarytooltipnum = parseFloat(stationarytooltipnum) + 1;
+        //console.log(stationarytooltipnum);
+    }
     if(stationary == 1){
         $('.Tooltip').css('top','');
         // var szoom = map.getZoom();
