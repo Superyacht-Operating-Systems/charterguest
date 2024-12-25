@@ -343,7 +343,7 @@ font-weight: bold;
 }
 @media only screen and (max-width: 766px){
     .img_count_div{
-        width: 49%;
+        width: 100%;
 display: flex;
 position: relative;
 top: -90px;

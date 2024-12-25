@@ -361,7 +361,7 @@ font-weight: bold;
 }
 @media only screen and (max-width: 766px){
     .img_count_div{
-        width: 49%;
+        width: 100%;
 display: flex;
 position: relative;
 top: -90px;
@@ -1580,7 +1580,7 @@ background: #fff !important;
     min-width: inherit;
     }
 .collapse {
-    display: block !important;
+    /* display: block !important; */
     position: absolute;
     left: 0px;
     top: 38px;
