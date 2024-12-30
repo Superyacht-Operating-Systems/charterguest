@@ -690,10 +690,11 @@ input:focus {
 <section id="sidebar" class="sidebar">
     <nav> 
         <ul class="menu menu-level1 no-style nav nav-pills nav-justified">
-            <?php if(isset($sessionCharterGuest) && !empty($sessionCharterGuest)){?>
-        <li> <a href="<?php echo $baseFolder."/charters/programs/".$sessionCharterGuest['users_UUID']; ?>">Charter Programs</a>
-        <!-- only show guest type not email recipient -->
+            <?php if(isset($sessionCharterGuest) && !empty($sessionCharterGuest)){ ?>
+                <!-- only show guest type not email recipient -->
         <?php if($guestListData['GuestList']['guest_type'] != 'email_recipient'){ ?>
+        <li> <a href="<?php echo $baseFolder."/charters/programs/".$sessionCharterGuest['users_UUID']; ?>">Charter Programs</a>
+        
         <li class="menu__item"> <a href="#">Charter Contracts</a>
             <?php if(isset($programFiles) && !empty($programFiles)){ ?>
                 <ul class="submenu">
@@ -843,7 +844,7 @@ if(isset($charterGuestData) && !empty($charterGuestData)){
         <ul>
             <li><a href="<?php echo $website; ?>" target="_blank" style="text-decoration:none;">Yachts Website</a></li>
                    <!-- only show guest type not email recipient -->
-        <?php if($guestListData['GuestList']['guest_type'] != 'email_recipient'){ ?>
+            <?php if($guestListData['GuestList']['guest_type'] != 'email_recipient'){ ?>
             <li><a href="<?php echo $basefolder."/charters/view/".$id."/".$charter_program_id."/".$charter_company_id; ?>">Guest List</a></li>
        
       
@@ -886,6 +887,7 @@ if(isset($charterGuestData) && !empty($charterGuestData)){
 // Guest
 if(isset($charterAssocData) && !empty($charterAssocData)){
         foreach($charterAssocData as $data){
+            //echo "<pre>"; print_r($data); exit;
             $charterName = $data['charterDetails']['CharterGuest']['charter_name'];
             $embarkation = $data['charterDetails']['CharterGuest']['embarkation'];
             $debarkation = $data['charterDetails']['CharterGuest']['debarkation'];
@@ -943,16 +945,15 @@ if(isset($charterAssocData) && !empty($charterAssocData)){
        <div class="col-11 action_links">
         <ul>
             <li><a href="<?php echo $website; ?>" target="_blank" style="text-decoration:none;">Yachts Website</a></li>
+            <!-- only show guest type not email recipient -->
+            <?php if($guestListData['GuestList']['guest_type'] != 'email_recipient'){ ?>
             <li><a href="<?php echo $basefolder."/charters/view_guest/".$charter_program_id."/".$fleetcompany_id; ?>">Guest List</a></li>
-              <!-- only show guest type not email recipient -->
-        <?php if($guestListData['GuestList']['guest_type'] != 'email_recipient'){ ?>
-      
-            <?php if ($dateTimestamp1 >= $dateTimestamp2){ ?>
+             <?php if ($dateTimestamp1 >= $dateTimestamp2){ ?>
             <li><a href="#"><span class="existingCheckFunction" data-guestype="guest" data-associd ="<?php echo $associd; ?>">Preference Sheets</span></a></li>
             <?php }else{ ?>
                 <li><a href="<?php echo $basefolder."/charters/presentations/".$charter_program_id; ?>" target="_blank"><span class="" >Memories</span></a></li> 
-            <?php } ?> 
-            <?php } ?>   
+            <?php } ?>             
+            <?php } ?>
             <?php if($data['charterDetails']['map_url'] == "link"){ ?>
               <li><a href="<?php echo $baseFolder."/charters/charter_program_map/".$charter_program_id.'/'.$data['charterDetails']['ydb_name'].'/guest'; ?>" title="Map is Published">Cruising Map</a> </li>
             <?php }else if($data['charterDetails']['map_url'] == "nolink"){  ?>
