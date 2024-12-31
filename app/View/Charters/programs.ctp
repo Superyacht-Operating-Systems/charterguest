@@ -691,10 +691,10 @@ input:focus {
     <nav> 
         <ul class="menu menu-level1 no-style nav nav-pills nav-justified">
             <?php if(isset($sessionCharterGuest) && !empty($sessionCharterGuest)){ ?>
-                <!-- only show guest type not email recipient -->
-        <?php if($guestListData['GuestList']['guest_type'] != 'email_recipient'){ ?>
-        <li> <a href="<?php echo $baseFolder."/charters/programs/".$sessionCharterGuest['users_UUID']; ?>">Charter Programs</a>
-        
+         <li> <a href="<?php echo $baseFolder."/charters/programs/".$sessionCharterGuest['users_UUID']; ?>">Charter Programs</a>
+                 <!-- only show guest type not email recipient -->
+                 <?php if($guestListData['GuestList']['guest_type'] != 'email_recipient'){ ?>
+      
         <li class="menu__item"> <a href="#">Charter Contracts</a>
             <?php if(isset($programFiles) && !empty($programFiles)){ ?>
                 <ul class="submenu">
@@ -734,7 +734,12 @@ input:focus {
                    <li class="menu__item" id="MenuHowToVideoCharterHead"><a href="#">Head Charterer</a></li>
                 </ul>
             </li>
-            <?php } ?>
+            <?php }else{ ?>
+
+                <li class="menu__item" ><a>How To Video</a>
+          
+            </li>
+          <?php  } ?>
         <!-- <li> <a href="<?php //echo $baseFolder."/charters/memories/".$guestListUUID; ?>" target="blank">Memories</a></li>     -->
         <li> <a href="<?php echo $baseFolder."/charters/privacytermsofuse/1" ?>" target="blank">Terms of Use</a></li>
         <li> <a href="<?php echo $baseFolder."/charters/privacytermsofuse/2" ?>" target="blank">Privacy Policy</a></li>
@@ -955,13 +960,14 @@ if(isset($charterAssocData) && !empty($charterAssocData)){
             <?php } ?>             
             <?php } ?>
             <?php if($data['charterDetails']['map_url'] == "link"){ ?>
-              <li><a href="<?php echo $baseFolder."/charters/charter_program_map/".$charter_program_id.'/'.$data['charterDetails']['ydb_name'].'/guest'; ?>" title="Map is Published">Cruising Map</a> </li>
+              <li><a href="<?php echo $baseFolder."/charters/charter_program_map/".$charter_program_id.'/'.$data['charterDetails']['ydb_name'].'/guest'.'/'.$guestListData['GuestList']['guest_type']; ?>" title="Map is Published">Cruising Map</a> </li>
             <?php }else if($data['charterDetails']['map_url'] == "nolink"){  ?>
             <!-- <li><span datahover="Map is Not Published" title="Map is Not Published"><a href="#" role="button" title="Map is Not Published" aria-current="mapnolink">Cruising Map</a></span> </li> -->
             <li class="btnNoLink" data-value="<?php echo $id; ?>"><span datahover="Map is Not Published" title="Map is Not Published"><a   role="button" title="Map is Not Published" aria-current="mapnolink">Cruising Map</a></span></li>
             <?php } ?>
             <!-- <li><a href="#"><span class="" >Memories</span></a></li> -->
-            <li><a href="#"><span class="" >Crew List</span></a></li>
+            <!--<li><a href="#"><span class="" >Crew List11111</span></a></li>-->
+            <li><a href="<?php echo $basefolder."/charters/crew_list/".$id."/".$charter_program_id."/".$fleetcompany_id; ?>"><span class="" >Crew List</span></a></li>
         </ul>   
 
 
