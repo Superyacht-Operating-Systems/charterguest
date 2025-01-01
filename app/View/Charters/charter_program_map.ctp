@@ -2007,14 +2007,20 @@ border-radius: 4px; */
         
         <li class="menu__item"> <a href="<?php echo $basefolder.$guestlink; ?>">Guest List</a></li>
         <?php } ?>
-        <li class="menu__item" ><a>How To Video</a>
+        
         <?php if($cp_guesttype != 'email_recipient'){ ?>
+            <li class="menu__item" ><a>How To Video</a>
            <ul class="submenu">
                    <li class="menu__item" id="MenuHowToVideo"><a href="#">Preference Sheets</a></li>
                    <li class="menu__item" id="MenuHowToVideoCharterHead"><a href="#">Head Charterer</a></li>
                 </ul>
-                <?php } ?>
-            </li>
+                </li>
+                <?php }else{ ?>
+                    <li class="menu__item" ><a target="_blank" href="https://youtu.be/T1AgcfSNr0A">How To Video</a></li>
+            <?php   } ?>
+            
+
+            
             <li> <a href="<?php echo $basefolder."/charters/privacytermsofuse/1" ?>" target="blank">Terms of Use</a></li>
         <li> <a href="<?php echo $basefolder."/charters/privacytermsofuse/2" ?>" target="blank">Privacy Policy</a></li>
          <li class="list-logout-row row-hide-btn"><?php echo $this->Html->link('Logout','/',array('escape' =>false,'title' => 'Logout'));?></li>
@@ -2279,7 +2285,15 @@ border-radius: 4px; */
 
                         //echo $locationCommentsdata['programScheduleUUID'];
                         if(isset($guesttype) && $guesttype == "guest"){
+                            //echo $cp_guesttype;echo $allow_comments;
+                            if(isset($cp_guesttype) && $cp_guesttype == 'email_recipient'){
+                                if(isset($allow_comments) && $allow_comments == 1){
+                                    $displaynone = "display:block;";
+                                }
+                            }else{
                                 $displaynone = "display:none;";
+                            }
+                                
                         }else{
                                 $displaynone = "display:block;";
                         }

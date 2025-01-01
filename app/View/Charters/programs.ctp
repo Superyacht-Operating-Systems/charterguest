@@ -736,7 +736,7 @@ input:focus {
             </li>
             <?php }else{ ?>
 
-                <li class="menu__item" ><a>How To Video</a>
+                <li class="menu__item" ><a target="_blank" href="https://youtu.be/T1AgcfSNr0A">How To Video</a>
           
             </li>
           <?php  } ?>
@@ -960,7 +960,7 @@ if(isset($charterAssocData) && !empty($charterAssocData)){
             <?php } ?>             
             <?php } ?>
             <?php if($data['charterDetails']['map_url'] == "link"){ ?>
-              <li><a href="<?php echo $baseFolder."/charters/charter_program_map/".$charter_program_id.'/'.$data['charterDetails']['ydb_name'].'/guest'.'/'.$guestListData['GuestList']['guest_type']; ?>" title="Map is Published">Cruising Map</a> </li>
+              <li><a href="<?php echo $baseFolder."/charters/charter_program_map/".$charter_program_id.'/'.$data['charterDetails']['ydb_name'].'/guest'.'/'.$guestListData['GuestList']['guest_type'].'/'.$data['CharterGuestAssociate']['allow_comments']; ?>" title="Map is Published">Cruising Map</a> </li>
             <?php }else if($data['charterDetails']['map_url'] == "nolink"){  ?>
             <!-- <li><span datahover="Map is Not Published" title="Map is Not Published"><a href="#" role="button" title="Map is Not Published" aria-current="mapnolink">Cruising Map</a></span> </li> -->
             <li class="btnNoLink" data-value="<?php echo $id; ?>"><span datahover="Map is Not Published" title="Map is Not Published"><a   role="button" title="Map is Not Published" aria-current="mapnolink">Cruising Map</a></span></li>
