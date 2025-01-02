@@ -7960,6 +7960,12 @@ WHERE cga_menus.UUID = '$uuid'";
                     $guesttype = $this->request->data['guesttype'];
                 }
 
+                if(isset($this->request->data['allow_comments'])){
+                    $allow_comments = $this->request->data['allow_comments'];
+                }else{
+                    $allow_comments = 0;
+                }
+
                 if(isset($this->request->data['ipaddb'])){
                     $ipaddb = $this->request->data['ipaddb'];
                 }
@@ -8255,7 +8261,12 @@ WHERE cga_menus.UUID = '$uuid'";
                     $popupHtml = '';
                     $readonly = "readonly";
                     if(isset($guesttype) && $guesttype == "guest"){
+                        if(isset($allow_comments) && $allow_comments == 1){
+                            $displaynone = "display:block;";
+                        }else{
                             $displaynone = "display:none;";
+                        }
+                            
                     }else{
                             $displaynone = "display:block;";
                     }

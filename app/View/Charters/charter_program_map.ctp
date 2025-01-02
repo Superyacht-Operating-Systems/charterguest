@@ -2612,6 +2612,7 @@ $(document).on("click", "#showmenu" ,function() {
 
 <script>
     var guesttype = '<?php echo $guesttype;?>';
+    var allow_comments = '<?php echo $allow_comments;?>';
     var Wmarker= '<?php echo BASE_URL.'/charterguest/app/webroot/css/leaflet/dist/images/marker-icon.png'; ?>';
 var basefolder = '<?php echo $basefolder;?>';
 var vessel = new L.LayerGroup();
@@ -3884,7 +3885,7 @@ if(e.target.firstdaytoloc){
             type: "POST",
             url: basefolder+"/"+"charters/editCharterProgramSchedules",
             dataType: 'json',
-            data: { "programId": scheduleId,"scheduleId":scheduleUUId,"tablepId":tablepId ,"diffDays": <?php echo $diffDays; ?>, "markerNum": markerNum, "lattitude": lattitude, "longitude": longitude,"guesttype":guesttype,"counttitle":counttitle, "daytitle":daytitle, "scheduleSameLocationUUID":scheduleSameLocationUUID, "samelocationsDates":samelocationsDates, "from":'locationcard',"firstdaytoloc":firstdaytoloc },
+            data: { "programId": scheduleId,"scheduleId":scheduleUUId,"tablepId":tablepId ,"diffDays": <?php echo $diffDays; ?>, "markerNum": markerNum, "lattitude": lattitude, "longitude": longitude,"guesttype":guesttype,"counttitle":counttitle, "daytitle":daytitle, "scheduleSameLocationUUID":scheduleSameLocationUUID, "samelocationsDates":samelocationsDates, "from":'locationcard',"firstdaytoloc":firstdaytoloc,"allow_comments":allow_comments },
             success:function(result) {
                 $("#hideloader").hide();
                 if (result.status == 'success') {
