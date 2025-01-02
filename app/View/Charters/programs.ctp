@@ -736,7 +736,7 @@ input:focus {
             </li>
             <?php }else{ ?>
 
-                <li class="menu__item" ><a target="_blank" href="https://youtu.be/T1AgcfSNr0A">How To Video</a>
+                <li class="menu__item" ><a target="_blank" href="https://youtu.be/iDa3RiR2m5w">How To Video</a>
           
             </li>
           <?php  } ?>
