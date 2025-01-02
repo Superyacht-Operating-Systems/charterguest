@@ -573,8 +573,8 @@ class ChartersController extends AppController {
                             $this->loadModel('Fleetcompany');
                             $companyData = $this->Fleetcompany->find('first', array('fields' => array('management_company_name','logo','fleetname'), 'conditions' => array('id' => $value['CharterGuest']['charter_company_id'])));
                             if (isset($companyData['Fleetcompany']['logo']) && !empty($companyData['Fleetcompany']['logo'])) {
-                                // $fleetLogoUrl = $cloudUrl.$companyData['Fleetcompany']['fleetname']."/img/logo/thumb/".$companyData['Fleetcompany']['logo'];
-                                $fleetLogoUrl = $SITE_URL.'/'."charterguest/img/logo/thumb/".$companyData['Fleetcompany']['logo'];
+                                 $fleetLogoUrl = $SITE_URL.$companyData['Fleetcompany']['fleetname']."/img/logo/thumb/".$companyData['Fleetcompany']['logo'];
+                                //$fleetLogoUrl = $SITE_URL.'/'."charterguest/img/logo/thumb/".$companyData['Fleetcompany']['logo'];
                                 //$file_folder_path1 = str_replace("$SITE_URL","$site_full_path","$fleetLogoUrl");
                                 //echo $targetFullPath; echo $site_full_path; echo "<pre>"; echo $file_folder_path; exit;
                                 //if(file_exists($file_folder_path1)){
@@ -589,7 +589,7 @@ class ChartersController extends AppController {
                             }
                 
             }//exit;
-            //echo "<pre>";print_r($commentcounttotal); exit;
+            //echo "<pre>";print_r($charterGuestData); exit('jjjj');
 
             $this->Session->write("commentcounttotal", $commentcounttotal);
 
@@ -709,9 +709,10 @@ class ChartersController extends AppController {
 
                     $this->loadModel('Fleetcompany');
                             $companyData = $this->Fleetcompany->find('first', array('fields' => array('management_company_name','logo','fleetname'), 'conditions' => array('id' => $value['CharterGuestAssociate']['fleetcompany_id'])));
+                            //echo "<pre>"; print_r($companyData); //exit;
                             if (isset($companyData['Fleetcompany']['logo']) && !empty($companyData['Fleetcompany']['logo'])) {
-                                // $fleetLogoUrl = $cloudUrl.$companyData['Fleetcompany']['fleetname']."/img/logo/thumb/".$companyData['Fleetcompany']['logo'];
-                                $fleetLogoUrl = $SITE_URL.'/'."charterguest/img/logo/thumb/".$companyData['Fleetcompany']['logo'];
+                                $fleetLogoUrl = $SITE_URL.$companyData['Fleetcompany']['fleetname']."/img/logo/thumb/".$companyData['Fleetcompany']['logo'];
+                                //echo $fleetLogoUrl = $SITE_URL.'/'."charterguest/img/logo/thumb/".$companyData['Fleetcompany']['logo'];
                                 //$file_folder_path2 = str_replace("$SITE_URL","$site_full_path","$fleetLogoUrl");
                                 //echo $targetFullPath; echo $site_full_path; echo "<pre>"; echo $file_folder_path; exit;
                                 //if(file_exists($file_folder_path2)){
@@ -745,8 +746,8 @@ class ChartersController extends AppController {
 
              }
      //echo "<pre>";print_r($charterGuestData); exit;
-    //     echo "<pre>";print_r($charterAssocData); exit;
-        //echo "<pre>";print_r($mapdetails); exit;
+         //echo "<pre>";print_r($charterAssocData); exit;
+        //echo "<pre>";print_r($guestListData); exit;
         
         $this->set('charterGuestData', $charterGuestData);
         $this->set('charterAssocData', $charterAssocData);
@@ -1230,11 +1231,26 @@ class ChartersController extends AppController {
     public function crew_list() {
         $session = $this->Session->read('charter_info');
         $sessionAssoc = $this->Session->read('charter_assoc_info');
-        // echo "<pre>";print_r($sessionAssoc);exit;
+         //echo "<pre>";print_r($sessionAssoc);exit;
         if (empty($session)) {
             $this->redirect(array('action' => 'index'));
         } else if (!empty($sessionAssoc)) {
-            $this->redirect(array('action' => 'preference'));
+            $user_uuid = $sessionAssoc['CharterGuestAssociate']['UUID'];
+            $sessionCharterGuest = $this->Session->read('charter_info.CharterGuest');
+           // echo "<pre>";print_r($sessionCharterGuest);exit;
+            $this->loadModel('GuestList');
+            $charterAssocData = $this->GuestList->find('first', array('conditions' => array('UUID' => $user_uuid)));
+            //echo "<pre>"; print_r($charterAssocData); exit;
+            if(isset($charterAssocData)&&$charterAssocData!=''){
+                $guestType = $charterAssocData['GuestList']['guest_type'];
+            }
+            $this->set('guestType',$guestType);
+            $this->set('user_uuid',$user_uuid);
+            // only if guest is not email recipient need to open
+            if($guestType != 'email_recipient'){
+                $this->redirect(array('action' => 'preference'));
+            }
+        
         }
         $actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
        
@@ -7224,12 +7240,12 @@ WHERE cga_menus.UUID = '$uuid'";
      * Created date - 28-May-2018
      * Modified date - 
      */
-    public function charter_program_map($prgUUID,$yachtdb,$guesttype) {
+    public function charter_program_map($prgUUID,$yachtdb,$guesttype,$cp_guesttype='',$allow_comments='') {
 //        echo "<pre>";print_r($this->Session->read());exit; 
         Configure::write('debug',0);
         $session = $this->Session->read('charter_info');
         
-        // echo "<pre>";print_r($sessionAssoc);exit;
+        // echo "<pre>";print_r($session);exit;
         if (empty($session)) {
              $this->redirect(array('controller' => 'Charters', 'action' => 'index'));
         }
@@ -7246,13 +7262,14 @@ WHERE cga_menus.UUID = '$uuid'";
             $charterGuestDatayacht_id = $charterGuestDataToMenu['CharterGuest']['yacht_id'];
 
             $this->set('charterGuestDatayacht_id', $charterGuestDatayacht_id);
-
+            //echo $guesttype; exit;
             if(isset($guesttype) && ($guesttype == "owner")){ 
                     $guestlink = "/charters/view/".$charterGuestDataToMenu['CharterGuest']['id']."/".$charterGuestDataToMenu['CharterGuest']['charter_program_id']."/".$charterGuestDataToMenu['CharterGuest']['charter_company_id'];
             }else if(isset($guesttype) && ($guesttype == "guest")){ 
                     $guestlink = "/charters/view_guest/".$charterGuestDataToMenu['CharterGuest']['charter_program_id']."/".$charterGuestDataToMenu['CharterGuest']['charter_company_id'];
             }
-
+            $this->set('allow_comments',$allow_comments);
+            $this->set('cp_guesttype',$cp_guesttype);
             $this->set('guestlink', $guestlink);
 
             if (count($charterProgData) != 0) {
@@ -7943,6 +7960,12 @@ WHERE cga_menus.UUID = '$uuid'";
                     $guesttype = $this->request->data['guesttype'];
                 }
 
+                if(isset($this->request->data['allow_comments'])){
+                    $allow_comments = $this->request->data['allow_comments'];
+                }else{
+                    $allow_comments = 0;
+                }
+
                 if(isset($this->request->data['ipaddb'])){
                     $ipaddb = $this->request->data['ipaddb'];
                 }
@@ -8238,7 +8261,12 @@ WHERE cga_menus.UUID = '$uuid'";
                     $popupHtml = '';
                     $readonly = "readonly";
                     if(isset($guesttype) && $guesttype == "guest"){
+                        if(isset($allow_comments) && $allow_comments == 1){
+                            $displaynone = "display:block;";
+                        }else{
                             $displaynone = "display:none;";
+                        }
+                            
                     }else{
                             $displaynone = "display:block;";
                     }

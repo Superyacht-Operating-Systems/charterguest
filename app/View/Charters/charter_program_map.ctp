@@ -1988,6 +1988,10 @@ border-radius: 4px; */
         <ul class="menu menu-level1 no-style nav nav-pills nav-justified">
         
         <li> <a href="<?php echo $basefolder."/charters/programs/".$this->Session->read('guestListUUID');?>">Charter Programs</a> 
+        <?php //echo "<pre>"; print_r($guestListData); exit; ?>
+            <!-- only show guest type not email recipient -->
+            <?php if($cp_guesttype != 'email_recipient'){ ?>
+      
         <li class="menu__item"> <a href="#">Charter Contracts</a>
             <?php if(isset($guesttype) && $guesttype == "owner"){ if(isset($programFiles)){ ?>
                 <ul class="submenu">
@@ -2000,13 +2004,23 @@ border-radius: 4px; */
             <?php } } ?>
     
         </li>    
+        
         <li class="menu__item"> <a href="<?php echo $basefolder.$guestlink; ?>">Guest List</a></li>
-        <li class="menu__item" ><a>How To Video</a>
+        <?php } ?>
+        
+        <?php if($cp_guesttype != 'email_recipient'){ ?>
+            <li class="menu__item" ><a>How To Video</a>
            <ul class="submenu">
                    <li class="menu__item" id="MenuHowToVideo"><a href="#">Preference Sheets</a></li>
                    <li class="menu__item" id="MenuHowToVideoCharterHead"><a href="#">Head Charterer</a></li>
                 </ul>
-            </li>
+                </li>
+                <?php }else{ ?>
+            <li class="menu__item" ><a target="_blank" href="https://youtu.be/iDa3RiR2m5w">How To Video</a></li>
+            <?php   } ?>
+            
+
+            
             <li> <a href="<?php echo $basefolder."/charters/privacytermsofuse/1" ?>" target="blank">Terms of Use</a></li>
         <li> <a href="<?php echo $basefolder."/charters/privacytermsofuse/2" ?>" target="blank">Privacy Policy</a></li>
          <li class="list-logout-row row-hide-btn"><?php echo $this->Html->link('Logout','/',array('escape' =>false,'title' => 'Logout'));?></li>
@@ -2271,7 +2285,15 @@ border-radius: 4px; */
 
                         //echo $locationCommentsdata['programScheduleUUID'];
                         if(isset($guesttype) && $guesttype == "guest"){
+                            //echo $cp_guesttype;echo $allow_comments;
+                            if(isset($cp_guesttype) && $cp_guesttype == 'email_recipient'){
+                                if(isset($allow_comments) && $allow_comments == 1){
+                                    $displaynone = "display:block;";
+                                }
+                            }else{
                                 $displaynone = "display:none;";
+                            }
+                                
                         }else{
                                 $displaynone = "display:block;";
                         }
@@ -2591,6 +2613,7 @@ $(document).on("click", "#showmenu" ,function() {
 
 <script>
     var guesttype = '<?php echo $guesttype;?>';
+    var allow_comments = '<?php echo $allow_comments;?>';
     var Wmarker= '<?php echo BASE_URL.'/charterguest/app/webroot/css/leaflet/dist/images/marker-icon.png'; ?>';
 var basefolder = '<?php echo $basefolder;?>';
 var vessel = new L.LayerGroup();
@@ -3863,7 +3886,7 @@ if(e.target.firstdaytoloc){
             type: "POST",
             url: basefolder+"/"+"charters/editCharterProgramSchedules",
             dataType: 'json',
-            data: { "programId": scheduleId,"scheduleId":scheduleUUId,"tablepId":tablepId ,"diffDays": <?php echo $diffDays; ?>, "markerNum": markerNum, "lattitude": lattitude, "longitude": longitude,"guesttype":guesttype,"counttitle":counttitle, "daytitle":daytitle, "scheduleSameLocationUUID":scheduleSameLocationUUID, "samelocationsDates":samelocationsDates, "from":'locationcard',"firstdaytoloc":firstdaytoloc },
+            data: { "programId": scheduleId,"scheduleId":scheduleUUId,"tablepId":tablepId ,"diffDays": <?php echo $diffDays; ?>, "markerNum": markerNum, "lattitude": lattitude, "longitude": longitude,"guesttype":guesttype,"counttitle":counttitle, "daytitle":daytitle, "scheduleSameLocationUUID":scheduleSameLocationUUID, "samelocationsDates":samelocationsDates, "from":'locationcard',"firstdaytoloc":firstdaytoloc,"allow_comments":allow_comments },
             success:function(result) {
                 $("#hideloader").hide();
                 if (result.status == 'success') {

@@ -881,8 +881,10 @@ color: #000;
 <nav> 
         <ul class="menu menu-level1 no-style nav nav-pills nav-justified">
             <?php if(isset($sessionCharterGuest) && !empty($sessionCharterGuest)){?>
-        <li> <a href="<?php echo $baseFolder."/charters/programs/".$sessionCharterGuest['users_UUID']; ?>">Charter Programs</a>
-        <li class="menu__item"> <a href="#">Charter Contracts</a>
+        
+        <?php if($guestType != 'email_recipient'){ ?>
+            <li> <a href="<?php echo $baseFolder."/charters/programs/".$sessionCharterGuest['users_UUID']; ?>">Charter Programs</a>
+            <li class="menu__item"> <a href="#">Charter Contracts</a>
             <?php if(isset($programFiles)){ ?>
                 <ul class="submenu">
                     <?php foreach($programFiles as $startdate => $filepath){ ?>
@@ -893,12 +895,19 @@ color: #000;
                 </ul>
             <?php } ?>
     
-        </li>    
+        </li>         
+        
+        <?php }else{ ?> 
+            
+            <li> <a href="<?php echo $baseFolder."/charters/programs/".$user_uuid; ?>">Charter Programs</a>    
+        <?php  } ?>
+          
         <?php if(empty($mapdetails)){ 
                 $title  = "Not published";
         }else if(!empty($mapdetails)){
                 $title  = "";
         } ?>
+        <?php if($guestType != 'email_recipient'){ ?>
         <li class="menu__item"> <a href="#" title="<?php echo $title; ?>">Cruising Map</a>
             <?php if(isset($mapdetails)){ ?>
                 <ul class="submenu">
@@ -912,12 +921,22 @@ color: #000;
             <?php } ?>
     
         </li>    
-        <li class="menu__item" ><a href="#">How To Video</a>
+        <?php } ?>
+        <?php if($guestType != 'email_recipient'){ ?>
+            <li class="menu__item" ><a href="#">How To Video</a>
            <ul class="submenu">
                    <li class="menu__item" id="MenuHowToVideo"><a href="#">Preference Sheets</a></li>
                    <li class="menu__item" id="MenuHowToVideoCharterHead"><a href="#">Head Charterer</a></li>
                 </ul>
             </li>
+
+        <?php }else{ ?>
+            <li class="menu__item" ><a target="_blank" href="https://youtu.be/iDa3RiR2m5w">How To Video</a>
+          
+            </li>
+
+        <?php } ?>
+        
         <li> <a href="<?php echo $baseFolder."/charters/privacytermsofuse/1" ?>" target="blank">Terms of Use</a></li>
         <li> <a href="<?php echo $baseFolder."/charters/privacytermsofuse/2" ?>" target="blank">Privacy Policy</a></li>
         <?php } ?>
