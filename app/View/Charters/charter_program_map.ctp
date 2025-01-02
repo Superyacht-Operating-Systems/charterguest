@@ -2325,28 +2325,29 @@ border-radius: 4px; */
                                         }
                                     }
                                 } ?>
-                                </div>
-                                <span class="img_count_div">
+                                  <span class="img_count_div">
                                 
-                               <?php  if(isset($fleetlocationimages) && !empty($fleetlocationimages)){ 
-                                    $fleetimagecount = count($fleetlocationimages)+1;
-                                    if($fleetimagecount > 1){
-                                        ?>
-                                        <span class="img_count">                    
-                                        + <?php echo $fleetimagecount; ?>
-                                        </span>
-                                           
-                                        <?php
-                                    }
-                                //     if($fleetimagecount > 1){
-                                //          for($k=0; $k<$fleetimagecount; $k++){ ?>
-                                                    <!-- <i class="fa fa-dot-circle-o" aria-hidden="true" style="
-                                            font-size: 8px;
-                                             color: darkslategray;"></i>&nbsp; -->
-                                 <?php   //    }
-                                //     }
-                                    }?>
-                                    </span>
+                                <?php  if(isset($fleetlocationimages) && !empty($fleetlocationimages)){ 
+                                     $fleetimagecount = count($fleetlocationimages)+1;
+                                     if($fleetimagecount > 1){
+                                         ?>
+                                         <span class="img_count">                    
+                                         + <?php echo $fleetimagecount; ?>
+                                         </span>
+                                            
+                                         <?php
+                                     }
+                                 //     if($fleetimagecount > 1){
+                                 //          for($k=0; $k<$fleetimagecount; $k++){ ?>
+                                                     <!-- <i class="fa fa-dot-circle-o" aria-hidden="true" style="
+                                             font-size: 8px;
+                                              color: darkslategray;"></i>&nbsp; -->
+                                  <?php   //    }
+                                 //     }
+                                     }?>
+                                     </span>
+                                </div>
+                              
                             </div>
                        </div>
                        <input type="hidden" id="charterprogramuuid" value="<?php echo $schedule['CharterProgramSchedule']['charter_program_id']; ?>">
