@@ -733,7 +733,7 @@ class ChartersController extends AppController {
                             }else if(isset($yacht_cg_log_data) && !empty($yacht_cg_log_data['cg_yachts_logo'])){
                                 
                                 $cg_yacht_logo = $SITE_URL.'/'."SOS/app/webroot/img/logo/".$yacht_cg_log_data['cg_yachts_logo'];
-                                $charterAssocData[$key]['charter_logo'] = $cg_yacht_logo;
+                                $charterAssocData[$key]['charterDetails']['charter_logo'] = $cg_yacht_logo;
 
                             } else{
                                 $fleetLogoUrl = $SITE_URL.'/'."charterguest/img/logo/thumb/charter_guest_logo.png";
@@ -759,7 +759,7 @@ class ChartersController extends AppController {
 
              }
      //echo "<pre>";print_r($charterGuestData); exit;
-         //echo "<pre>";print_r($charterAssocData); exit;
+        // echo "<pre>";print_r($charterAssocData); exit;
         //echo "<pre>";print_r($guestListData); exit;
         
         $this->set('charterGuestData', $charterGuestData);
