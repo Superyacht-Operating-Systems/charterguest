@@ -3145,7 +3145,17 @@ foreach ($scheduleData as $key => $schedule) {
         $samemkrcount = $samemarkercommentcount[$schedule['CharterProgramSchedule']['lattitude']];
         if(isset($guesttype) && !empty($guesttype)){ //echo $guesttype; exit;
             if($guesttype == "guest"){
+                if($cp_guesttype == 'email_recipient'){
+                    if($allow_comments == '1'){
+                        $marker_msg_count = "";
+                    }else{
+                        $marker_msg_count = "style='display:none;'";
+                    }
+
+                }else{                    
                     $marker_msg_count = "style='display:none;'";
+                }
+                    
             }else{
                     $marker_msg_count = "";
             }
@@ -3626,7 +3636,7 @@ $(document).on("click", "#HideDetails", function(e) {
         //     var t = $(this).find('.acti-count-onmarker').text();
         //     //console.log(t);
         //     if(t != "" && t > 0){
-                $(".acti-count-onmarker").hide();
+           //     $(".acti-count-onmarker").hide();
         //     }
         
         // });
