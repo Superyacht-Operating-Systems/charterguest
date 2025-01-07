@@ -5245,7 +5245,15 @@ $.ajax({
                     $(".sch_comment_"+key).css("color",value.colorcodetitle);
 
             });
-                
+            //alert(guesttype); alert(allow_comments);
+            if(guesttype == "guest"){
+                if(allow_comments != '' && allow_comments == 1){
+                    $(".crew_comment_cruisingmaptitle").show();
+                }else{
+                    $(".crew_comment_cruisingmaptitle").hide();
+                }
+            }
+           
         }
     }
 });
