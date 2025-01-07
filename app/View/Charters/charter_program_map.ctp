@@ -2167,9 +2167,26 @@ border-radius: 4px; */
                 }else if($samemarkercommentcount[$schedule['CharterProgramSchedule']['lattitude']] != 0){
                     $marker_msg_count = "";
                     $samemkrcount = $samemarkercommentcount[$schedule['CharterProgramSchedule']['lattitude']];
-                    if(isset($guesttype) && !empty($guesttype)){ //echo $guesttype; exit;
+                   /* if(isset($guesttype) && !empty($guesttype)){ //echo $guesttype; exit;
                         if($guesttype == "guest"){
                                 $marker_msg_count = "style='display:none;'";
+                        }else{
+                                $marker_msg_count = "";
+                        }
+                    }*/
+                    if(isset($guesttype) && !empty($guesttype)){ //echo $guesttype; exit;
+                        if($guesttype == "guest"){
+                            if($cp_guesttype == 'email_recipient'){
+                                if($allow_comments == '1'){
+                                    $marker_msg_count = "";
+                                }else{
+                                    $marker_msg_count = "style='display:none;'";
+                                }
+            
+                            }else{                    
+                                $marker_msg_count = "style='display:none;'";
+                            }
+                                
                         }else{
                                 $marker_msg_count = "";
                         }
@@ -2946,9 +2963,26 @@ if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !e
     }else if($samemarkercommentcount[$schedule['CharterProgramSchedule']['lattitude']] != 0){
         $marker_msg_count = "";
         $samemkrcount = $samemarkercommentcount[$schedule['CharterProgramSchedule']['lattitude']];
-        if(isset($guesttype) && !empty($guesttype)){ //echo $guesttype; exit;
+        /*if(isset($guesttype) && !empty($guesttype)){ //echo $guesttype; exit;
             if($guesttype == "guest"){
                     $marker_msg_count = "style='display:none;'";
+            }else{
+                    $marker_msg_count = "";
+            }
+        }*/
+        if(isset($guesttype) && !empty($guesttype)){ //echo $guesttype; exit;
+            if($guesttype == "guest"){
+                if($cp_guesttype == 'email_recipient'){
+                    if($allow_comments == '1'){
+                        $marker_msg_count = "";
+                    }else{
+                        $marker_msg_count = "style='display:none;'";
+                    }
+
+                }else{                    
+                    $marker_msg_count = "style='display:none;'";
+                }
+                    
             }else{
                     $marker_msg_count = "";
             }
@@ -3225,10 +3259,22 @@ $samemkrcount = "";
 $marker_msg_count = "";
 $samemkrcount = $samemarkercommentcount[$startingloc['CharterProgramSchedule']['UUID']];
 if(isset($guesttype) && !empty($guesttype)){ //echo $guesttype; exit;
-    if($guesttype == "guest"){
-            $marker_msg_count = "style='display:none;'";
-    }else{
-            $marker_msg_count = "";
+    if(isset($guesttype) && !empty($guesttype)){ //echo $guesttype; exit;
+        if($guesttype == "guest"){
+            if($cp_guesttype == 'email_recipient'){
+                if($allow_comments == '1'){
+                    $marker_msg_count = "";
+                }else{
+                    $marker_msg_count = "style='display:none;'";
+                }
+
+            }else{                    
+                $marker_msg_count = "style='display:none;'";
+            }
+                
+        }else{
+                $marker_msg_count = "";
+        }
     }
 }
 
