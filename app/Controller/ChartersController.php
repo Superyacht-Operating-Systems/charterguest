@@ -718,7 +718,7 @@ class ChartersController extends AppController {
                     $yacht_cg_log_data = $yachtCGdata[0]['yachts'];
                     $this->loadModel('Fleetcompany');
                             //$companyData = $this->Fleetcompany->find('first', array('fields' => array('management_company_name','logo','fleetname'), 'conditions' => array('id' => $value['CharterGuestAssociate']['fleetcompany_id'])));
-                            $companyData = $this->Fleetcompany->find('first', array('fields' => array('management_company_name','logo','fleetname'), 'conditions' => array('id' => $$chData['CharterGuest']['charter_company_id'])));
+                            $companyData = $this->Fleetcompany->find('first', array('fields' => array('management_company_name','logo','fleetname'), 'conditions' => array('id' => $chData['CharterGuest']['charter_company_id'])));
                             //echo "<pre>"; print_r($companyData); //exit;
                             if (isset($companyData['Fleetcompany']['logo']) && !empty($companyData['Fleetcompany']['logo'])) {
                                 $fleetLogoUrl = $SITE_URL.$companyData['Fleetcompany']['fleetname']."/img/logo/thumb/".$companyData['Fleetcompany']['logo'];
