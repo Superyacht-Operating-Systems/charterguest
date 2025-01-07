@@ -5245,12 +5245,20 @@ $.ajax({
                     $(".sch_comment_"+key).css("color",value.colorcodetitle);
 
             });
-            alert(guesttype); alert(allow_comments);
+            //alert(guesttype); alert(allow_comments);
             if(guesttype == "guest"){
                 if(allow_comments != '' && allow_comments == 1){
-                    $(".crew_comment_cruisingmaptitle").show();
+                    
+                    setTimeout(function () {
+                        $(".crew_comment_cruisingmaptitle").show();
+                        //resizeflag=false;  
+                    }, 100);
                 }else{
-                    $(".crew_comment_cruisingmaptitle").hide();
+                    
+                    setTimeout(function () {
+                        $(".crew_comment_cruisingmaptitle").hide();
+                        //resizeflag=false;  
+                    }, 100);
                 }
             }
            
