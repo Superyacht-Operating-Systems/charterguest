@@ -650,6 +650,7 @@ class ChartersController extends AppController {
                 foreach($charterAssocData as $key => $value){
                     $chConditions = array('charter_program_id' => $value['CharterGuestAssociate']['charter_program_id']);
                     $chData = $this->CharterGuest->find('first', array('conditions' => $chConditions));
+                   // echo "<pre>";print_r($chData); exit('dddddd');
                     $charterAssocData[$key]['charterDetails'] = $chData;
                     
                         $yachtCond = array('Yacht.id' => $value['CharterGuestAssociate']['yacht_id']);
@@ -716,7 +717,8 @@ class ChartersController extends AppController {
                     $yachtCGdata = $this->Yacht->getYachtDataFromDbcp($ydb_name);
                     $yacht_cg_log_data = $yachtCGdata[0]['yachts'];
                     $this->loadModel('Fleetcompany');
-                            $companyData = $this->Fleetcompany->find('first', array('fields' => array('management_company_name','logo','fleetname'), 'conditions' => array('id' => $value['CharterGuestAssociate']['fleetcompany_id'])));
+                            //$companyData = $this->Fleetcompany->find('first', array('fields' => array('management_company_name','logo','fleetname'), 'conditions' => array('id' => $value['CharterGuestAssociate']['fleetcompany_id'])));
+                            $companyData = $this->Fleetcompany->find('first', array('fields' => array('management_company_name','logo','fleetname'), 'conditions' => array('id' => $$chData['CharterGuest']['charter_company_id'])));
                             //echo "<pre>"; print_r($companyData); //exit;
                             if (isset($companyData['Fleetcompany']['logo']) && !empty($companyData['Fleetcompany']['logo'])) {
                                 $fleetLogoUrl = $SITE_URL.$companyData['Fleetcompany']['fleetname']."/img/logo/thumb/".$companyData['Fleetcompany']['logo'];
