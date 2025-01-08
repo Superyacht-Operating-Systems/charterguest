@@ -459,6 +459,7 @@ class ChartersController extends AppController {
         //$SITE_URL = "https://totalsuperyacht.com:8080/";
        // echo "<pre>";print_r($guestListData); //exit;
          //echo "<pre>";print_r($charterGuestData); exit;
+         $commentcounttotal = 0;
         if(isset($charterGuestData) && !empty($charterGuestData)){
             $commentcounttotal = 0;
             foreach($charterGuestData as $key => $value){
@@ -598,7 +599,7 @@ class ChartersController extends AppController {
             }//exit;
             //echo "<pre>";print_r($charterGuestData); exit('jjjj');
 
-            $this->Session->write("commentcounttotal", $commentcounttotal);
+            
 
             $fleetname = $this->Session->read('fleetname');
             if(isset($programFiles) && !empty($programFiles) ){
@@ -744,7 +745,7 @@ class ChartersController extends AppController {
 
                             $commentindividualtotal = $this->charter_program_map_total_msg_count($value['CharterGuestAssociate']['charter_program_id'],$ydb_name);
                         $charterAssocData[$key]['charterDetails']['msg_count'] = $commentindividualtotal;
-
+                        $commentcounttotal += $commentindividualtotal;
                         $pid = $value['CharterGuestAssociate']['charter_program_id'];
                         $scheduleData = $this->CharterProgramFile->query("SELECT * FROM $ydb_name.charter_program_schedules CharterProgramSchedule WHERE charter_program_id = '$pid' AND is_deleted = 0");
                         if(isset($scheduleData) && !empty($scheduleData)){
@@ -760,6 +761,7 @@ class ChartersController extends AppController {
                 }
 
              }
+             $this->Session->write("commentcounttotal", $commentcounttotal);
      //echo "<pre>";print_r($charterGuestData); exit;
         // echo "<pre>";print_r($charterAssocData); exit;
         //echo "<pre>";print_r($guestListData); exit;
