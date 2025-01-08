@@ -619,8 +619,8 @@ font-weight: bold;
     display: none!important;
 }
 .position-mobile-head{
-top:75px!important;
-}
+top:50px!important;
+} 
 .sp-leftalign{
 margin-top: 26px!important;
 }

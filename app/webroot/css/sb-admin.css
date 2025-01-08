@@ -1888,7 +1888,7 @@ label.txt-right {
 }
 
 .collapse {
-        display: block!important;
+        /* display: block!important; */
     position: relative;
     left: 87px;
     top: -8px;

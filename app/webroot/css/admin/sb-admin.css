@@ -264,24 +264,24 @@ transition: 0.5s;
 .avacard-cunt {
     position: absolute;
     background: #f00;
-    width: 13px;
-    height: 13px;
-    font-size: 7px;
+    width: 17px;
+    height: 17px;
+    font-size: 9px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     color: #fff;
-    font-weight: 800;
-    left: 9px;
-    top: 8px;
+    font-weight: 700;
+    left: 12px;
+    top:3px;
 }
 .cardbell-icon {
     position: absolute;
     top: -2px;
     font-size: 21px;
     right: -11px;
-    color: #000;
+    color: #c1c1c1;
     /* border: solid; */
 
 }
@@ -5348,6 +5348,14 @@ body .sp-60-w {
     width: 100%!important;
 }
 }
+@media screen and (max-width: 990px) {
+  .flexrow {
+      position: relative;
+  }
+}
+
+
+
 @media only screen and (min-width: 768px) and (max-width: 1020px){
 
 
