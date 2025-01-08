@@ -458,7 +458,7 @@ class ChartersController extends AppController {
         //$SITE_URL = Configure::read('BASE_URL');
         //$SITE_URL = "https://totalsuperyacht.com:8080/";
        // echo "<pre>";print_r($guestListData); //exit;
-        // echo "<pre>";print_r($charterGuestData); exit;
+         //echo "<pre>";print_r($charterGuestData); exit;
         if(isset($charterGuestData) && !empty($charterGuestData)){
             $commentcounttotal = 0;
             foreach($charterGuestData as $key => $value){
@@ -569,9 +569,11 @@ class ChartersController extends AppController {
                 // $yachtDBData = $this->Yacht->getYachtData($ydb_name);
                 // $image = $yachtDBData[0]['yachts']['cg_background_image'];
                 // $pSheetsColor = $yachtDBData[0]['yachts']['psheets_color'];
-
+                $yachtCGdata = $this->Yacht->getYachtDataFromDbcp($ydb_name);
                             $this->loadModel('Fleetcompany');
                             $companyData = $this->Fleetcompany->find('first', array('fields' => array('management_company_name','logo','fleetname'), 'conditions' => array('id' => $value['CharterGuest']['charter_company_id'])));
+                            //echo "<pre>"; print_r($yachtCGdata); exit;
+                $yacht_cg_log_data = $yachtCGdata[0]['yachts'];
                             if (isset($companyData['Fleetcompany']['logo']) && !empty($companyData['Fleetcompany']['logo'])) {
                                  $fleetLogoUrl = $SITE_URL.$companyData['Fleetcompany']['fleetname']."/img/logo/thumb/".$companyData['Fleetcompany']['logo'];
                                 //$fleetLogoUrl = $SITE_URL.'/'."charterguest/img/logo/thumb/".$companyData['Fleetcompany']['logo'];
@@ -583,6 +585,11 @@ class ChartersController extends AppController {
                                //     $charterGuestData[$key]['charter_logo'] = "#";
                                 //}
                                 
+                            }else if(isset($yacht_cg_log_data) && !empty($yacht_cg_log_data['cg_yachts_logo'])){
+                                
+                                $cg_yacht_logo = $SITE_URL.'/'."SOS/app/webroot/img/logo/".$yacht_cg_log_data['cg_yachts_logo'];
+                                $charterGuestData[$key]['charter_logo'] = $cg_yacht_logo;
+
                             } else{
                                 $fleetLogoUrl = $SITE_URL.'/'."charterguest/img/logo/thumb/charter_guest_logo.png";
                                 $charterGuestData[$key]['charter_logo'] = $fleetLogoUrl;
@@ -643,6 +650,7 @@ class ChartersController extends AppController {
                 foreach($charterAssocData as $key => $value){
                     $chConditions = array('charter_program_id' => $value['CharterGuestAssociate']['charter_program_id']);
                     $chData = $this->CharterGuest->find('first', array('conditions' => $chConditions));
+                   // echo "<pre>";print_r($chData); exit('dddddd');
                     $charterAssocData[$key]['charterDetails'] = $chData;
                     
                         $yachtCond = array('Yacht.id' => $value['CharterGuestAssociate']['yacht_id']);
@@ -706,9 +714,11 @@ class ChartersController extends AppController {
                         }
                         $charterAssocData[$key]['websitedetails'] = $YachtWeblink;
                     }
-
+                    $yachtCGdata = $this->Yacht->getYachtDataFromDbcp($ydb_name);
+                    $yacht_cg_log_data = $yachtCGdata[0]['yachts'];
                     $this->loadModel('Fleetcompany');
-                            $companyData = $this->Fleetcompany->find('first', array('fields' => array('management_company_name','logo','fleetname'), 'conditions' => array('id' => $value['CharterGuestAssociate']['fleetcompany_id'])));
+                            //$companyData = $this->Fleetcompany->find('first', array('fields' => array('management_company_name','logo','fleetname'), 'conditions' => array('id' => $value['CharterGuestAssociate']['fleetcompany_id'])));
+                            $companyData = $this->Fleetcompany->find('first', array('fields' => array('management_company_name','logo','fleetname'), 'conditions' => array('id' => $chData['CharterGuest']['charter_company_id'])));
                             //echo "<pre>"; print_r($companyData); //exit;
                             if (isset($companyData['Fleetcompany']['logo']) && !empty($companyData['Fleetcompany']['logo'])) {
                                 $fleetLogoUrl = $SITE_URL.$companyData['Fleetcompany']['fleetname']."/img/logo/thumb/".$companyData['Fleetcompany']['logo'];
@@ -722,6 +732,11 @@ class ChartersController extends AppController {
                                // }
                                 
                                 
+                            }else if(isset($yacht_cg_log_data) && !empty($yacht_cg_log_data['cg_yachts_logo'])){
+                                
+                                $cg_yacht_logo = $SITE_URL.'/'."SOS/app/webroot/img/logo/".$yacht_cg_log_data['cg_yachts_logo'];
+                                $charterAssocData[$key]['charterDetails']['charter_logo'] = $cg_yacht_logo;
+
                             } else{
                                 $fleetLogoUrl = $SITE_URL.'/'."charterguest/img/logo/thumb/charter_guest_logo.png";
                                 $charterAssocData[$key]['charterDetails']['charter_logo'] = $fleetLogoUrl;
@@ -746,7 +761,7 @@ class ChartersController extends AppController {
 
              }
      //echo "<pre>";print_r($charterGuestData); exit;
-         //echo "<pre>";print_r($charterAssocData); exit;
+        // echo "<pre>";print_r($charterAssocData); exit;
         //echo "<pre>";print_r($guestListData); exit;
         
         $this->set('charterGuestData', $charterGuestData);
@@ -8276,7 +8291,7 @@ WHERE cga_menus.UUID = '$uuid'";
                     <div class="marker_desc_div">
                     <div><span style="display: inline-block;position: relative;"><img src="'.$markerimage.'" style="object-fit: cover; height: 35px;" alt="" ><span style="position: absolute;color:#000;top: 6px;right: 0px;left: 0px;text-align: center;font-size: 12px;">'.$dayNum.'</span></span>
                     <input id="title_'.$scheduleData[0]['CharterProgramSchedule']['id'].'" type="text" name="title" value="'.htmlspecialchars($daytitle).'" placeholder="Enter the Title" class="loc_name" '.$readonly.' >
-                    <ul class="action-icon"><li><i class="'.$facomment.' fa-comments crew_comment_cruisingmaptitle"  style="'.$colorcodetitle.$displaynone.'" data-rel="'.$scheduleData[0]['CharterProgramSchedule']['UUID'].'" data-yachtid="'.$yacht_id.'" data-tempname="'.htmlspecialchars($scheduleData[0]['CharterProgramSchedule']['title']).'"><input type="hidden" name=commentstitle value="" class="messagecommentstitle" /></i></li></ul>
+                    <ul class="action-icon"><li><i class="'.$facomment.' fa-comments crew_comment_cruisingmaptitle"  style="'.$colorcodetitle.$displaynone.'" data-rel="'.$scheduleData[0]['CharterProgramSchedule']['UUID'].'" data-yachtid="'.$yacht_id.'" data-tempname="'.htmlspecialchars($daytitle).'"><input type="hidden" name=commentstitle value="" class="messagecommentstitle" /></i></li></ul>
                     </div>
                     <div>
                     <textarea id="notes_'.$scheduleData[0]['CharterProgramSchedule']['id'].'" class="form-control auto_resize loc_desc_field" name="messagestitle" '.$readonly.' rows="4" cols="50" readonly>'.htmlspecialchars($notes).'</textarea>

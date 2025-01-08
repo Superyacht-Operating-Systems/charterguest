@@ -2167,9 +2167,26 @@ border-radius: 4px; */
                 }else if($samemarkercommentcount[$schedule['CharterProgramSchedule']['lattitude']] != 0){
                     $marker_msg_count = "";
                     $samemkrcount = $samemarkercommentcount[$schedule['CharterProgramSchedule']['lattitude']];
-                    if(isset($guesttype) && !empty($guesttype)){ //echo $guesttype; exit;
+                   /* if(isset($guesttype) && !empty($guesttype)){ //echo $guesttype; exit;
                         if($guesttype == "guest"){
                                 $marker_msg_count = "style='display:none;'";
+                        }else{
+                                $marker_msg_count = "";
+                        }
+                    }*/
+                    if(isset($guesttype) && !empty($guesttype)){ //echo $guesttype; exit;
+                        if($guesttype == "guest"){
+                            if($cp_guesttype == 'email_recipient'){
+                                if($allow_comments == '1'){
+                                    $marker_msg_count = "";
+                                }else{
+                                    $marker_msg_count = "style='display:none;'";
+                                }
+            
+                            }else{                    
+                                $marker_msg_count = "style='display:none;'";
+                            }
+                                
                         }else{
                                 $marker_msg_count = "";
                         }
@@ -2947,9 +2964,26 @@ if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !e
     }else if($samemarkercommentcount[$schedule['CharterProgramSchedule']['lattitude']] != 0){
         $marker_msg_count = "";
         $samemkrcount = $samemarkercommentcount[$schedule['CharterProgramSchedule']['lattitude']];
-        if(isset($guesttype) && !empty($guesttype)){ //echo $guesttype; exit;
+        /*if(isset($guesttype) && !empty($guesttype)){ //echo $guesttype; exit;
             if($guesttype == "guest"){
                     $marker_msg_count = "style='display:none;'";
+            }else{
+                    $marker_msg_count = "";
+            }
+        }*/
+        if(isset($guesttype) && !empty($guesttype)){ //echo $guesttype; exit;
+            if($guesttype == "guest"){
+                if($cp_guesttype == 'email_recipient'){
+                    if($allow_comments == '1'){
+                        $marker_msg_count = "";
+                    }else{
+                        $marker_msg_count = "style='display:none;'";
+                    }
+
+                }else{                    
+                    $marker_msg_count = "style='display:none;'";
+                }
+                    
             }else{
                     $marker_msg_count = "";
             }
@@ -3146,7 +3180,17 @@ foreach ($scheduleData as $key => $schedule) {
         $samemkrcount = $samemarkercommentcount[$schedule['CharterProgramSchedule']['lattitude']];
         if(isset($guesttype) && !empty($guesttype)){ //echo $guesttype; exit;
             if($guesttype == "guest"){
+                if($cp_guesttype == 'email_recipient'){
+                    if($allow_comments == '1'){
+                        $marker_msg_count = "";
+                    }else{
+                        $marker_msg_count = "style='display:none;'";
+                    }
+
+                }else{                    
                     $marker_msg_count = "style='display:none;'";
+                }
+                    
             }else{
                     $marker_msg_count = "";
             }
@@ -3216,10 +3260,22 @@ $samemkrcount = "";
 $marker_msg_count = "";
 $samemkrcount = $samemarkercommentcount[$startingloc['CharterProgramSchedule']['UUID']];
 if(isset($guesttype) && !empty($guesttype)){ //echo $guesttype; exit;
-    if($guesttype == "guest"){
-            $marker_msg_count = "style='display:none;'";
-    }else{
-            $marker_msg_count = "";
+    if(isset($guesttype) && !empty($guesttype)){ //echo $guesttype; exit;
+        if($guesttype == "guest"){
+            if($cp_guesttype == 'email_recipient'){
+                if($allow_comments == '1'){
+                    $marker_msg_count = "";
+                }else{
+                    $marker_msg_count = "style='display:none;'";
+                }
+
+            }else{                    
+                $marker_msg_count = "style='display:none;'";
+            }
+                
+        }else{
+                $marker_msg_count = "";
+        }
     }
 }
 
@@ -3627,7 +3683,7 @@ $(document).on("click", "#HideDetails", function(e) {
         //     var t = $(this).find('.acti-count-onmarker').text();
         //     //console.log(t);
         //     if(t != "" && t > 0){
-                $(".acti-count-onmarker").hide();
+           //     $(".acti-count-onmarker").hide();
         //     }
         
         // });
@@ -5085,7 +5141,15 @@ function hexc(colorval) {
                         var schuuidtoupdateintooltip = result.schuuidtoupdateintooltip;
                         //console.log($("#"+schuuidtoupdateintooltip));
                         $("#"+schuuidtoupdateintooltip).text(mcount);
-                        $("#"+schuuidtoupdateintooltip).css('display','inline-flex');
+                        //$("#"+schuuidtoupdateintooltip).css('display','inline-flex');
+                        if(guesttype == "guest"){
+                                    if(allow_comments != '' && allow_comments == 1){
+                                        $("#"+schuuidtoupdateintooltip).css('display','inline-flex');
+                                    }else{
+                                        $("#msgcountnotify").css('display','none');
+                                        $("#"+schuuidtoupdateintooltip).css('display','none');
+                                    }
+                                }
                         //$("#msgcountnotify").text(mcount);
                         if(mcount == 0){
                             $("#msgcountnotify").css('display','none');
@@ -5236,7 +5300,23 @@ $.ajax({
                     $(".sch_comment_"+key).css("color",value.colorcodetitle);
 
             });
-                
+            //alert(guesttype); alert(allow_comments);
+            if(guesttype == "guest"){
+                if(allow_comments != '' && allow_comments == 1){
+                    
+                    setTimeout(function () {
+                        $(".crew_comment_cruisingmaptitle").show();
+                        //resizeflag=false;  
+                    }, 100);
+                }else{
+                    
+                    setTimeout(function () {
+                        $(".crew_comment_cruisingmaptitle").hide();
+                        //resizeflag=false;  
+                    }, 100);
+                }
+            }
+           
         }
     }
 });
@@ -5278,7 +5358,14 @@ $(document).on("click", "#cruisinglocationModalclose" ,function() {
                             if (value == 0) {
                                 $("#"+key).css('display', 'none');
                             }else{
-                                $("#"+key).css('display', 'inline-flex');
+                                //$("#"+key).css('display', 'inline-flex');
+                                if(guesttype == "guest"){
+                                    if(allow_comments != '' && allow_comments == 1){
+                                        $("#"+key).css('display', 'inline-flex');
+                                    }else{
+                                        $("#"+key).css('display', 'none');
+                                    }
+                                }
                             }
 
                             });
