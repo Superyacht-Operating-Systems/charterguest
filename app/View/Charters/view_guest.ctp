@@ -620,7 +620,7 @@ font-weight: bold;
 }
 .position-mobile-head{
 top:50px!important;
-}
+} 
 .sp-leftalign{
 margin-top: 26px!important;
 }
