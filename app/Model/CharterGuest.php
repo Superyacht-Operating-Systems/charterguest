@@ -148,7 +148,7 @@
         return $result;
     }
 
-    public function getCharterMarkerCommentCount($yachtDbName,$puuid){
+    public function getCharterMarkerCommentCount($yachtDbName,$puuid,$daytitle=''){
     	
     	// For fleet users
     	
@@ -175,7 +175,7 @@
                 
                 
                 if(isset($uuidprog)){
-                    $schedule_activitiesQuery	= "SELECT id,is_crew_commented,UUID from $dbname.charter_program_schedule_activities where (is_crew_commented = 1 and is_deleted = 0 and charter_program_schedule_id IN ($uuidprog)) OR (is_fleet_commented = 1 and is_deleted = 0 and charter_program_schedule_id IN ($uuidprog))";
+                    $schedule_activitiesQuery	= "SELECT id,is_crew_commented,UUID from $dbname.charter_program_schedule_activities where (is_crew_commented = 1 and is_deleted = 0 and charter_program_schedule_id IN ($uuidprog)) OR (is_fleet_commented = 1 and is_deleted = 0 and charter_program_schedule_id IN ($uuidprog) and activity_name ='$daytitle')";
                     $schedule_activitiesQueryvalues = $this->query($schedule_activitiesQuery);
                     
                     foreach($schedule_activitiesQueryvalues as $value){
@@ -193,7 +193,7 @@
 				      }else{
 				      	$aids = ' ';
 				      }
-				      $schedulecommentQuery	= "SELECT * from $dbname.cruising_map_comments where (activity_id IN ($aids) and crew_newlyaddedcomment = 1 and is_deleted = 0 and type='schedule' and publish_map = 1 and guest_read = 'unread') OR (activity_id IN ($aids) and fleet_newlyaddedcomment = 1 and is_deleted = 0 and type='schedule' and publish_map = 1 and guest_read = 'unread') ORDER BY created Desc";
+				      $schedulecommentQuery	= "SELECT * from $dbname.cruising_map_comments where (activity_id IN ($aids) and crew_newlyaddedcomment = 1 and is_deleted = 0 and type='schedule' and publish_map = 1 and guest_read = 'unread' and activity_name ='$daytitle') OR (activity_id IN ($aids) and fleet_newlyaddedcomment = 1 and is_deleted = 0 and type='schedule' and publish_map = 1 and guest_read = 'unread' and activity_name ='$daytitle') ORDER BY created Desc";
 				      $schedulecomments = $this->query($schedulecommentQuery);
 				     
                 	 foreach($schedulecomments as $value){

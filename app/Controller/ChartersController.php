@@ -7359,6 +7359,8 @@ WHERE cga_menus.UUID = '$uuid'";
                 $basefolder = $this->request->base;
 //echo "<pre>"; print_r($scheduleData); exit;
                 if(isset($scheduleData)){
+                   
+               // echo "<pre>"; print_r($scheduleData); exit;
                     foreach($scheduleData as $key => $publishmap){
                         $withifanysinglequotefrom = $publishmap['CharterProgramSchedule']['title'];
                         $publishmap['CharterProgramSchedule']['title'] = trim($publishmap['CharterProgramSchedule']['title']);
@@ -7378,7 +7380,7 @@ WHERE cga_menus.UUID = '$uuid'";
                             }
                             $samedayrouteorder[$publishmap['CharterProgramSchedule']['to_location'].' - Day '.$publishmap['CharterProgramSchedule']['day_num']] = $publishmap['CharterProgramSchedule']['day_num'];
                            //$mcount = $this->getmsgnotifycountForMarker($publishmap['CharterProgramSchedule']['UUID']);
-                           $scheduleData[$key]['CharterProgramSchedule']['marker_msg_count'] = $this->CharterGuest->getCharterMarkerCommentCount($yachtDbName,$publishmap['CharterProgramSchedule']['UUID']);
+                           //$scheduleData[$key]['CharterProgramSchedule']['marker_msg_count'] = $this->CharterGuest->getCharterMarkerCommentCount($yachtDbName,$publishmap['CharterProgramSchedule']['UUID'],$publishmap['CharterProgramSchedule']['title']);
 
                            $markertitle[$publishmap['CharterProgramSchedule']['id']] = $publishmap['CharterProgramSchedule']['title'].' - Day '.$publishmap['CharterProgramSchedule']['day_num'];
                            $markername[$publishmap['CharterProgramSchedule']['title']] = $publishmap['CharterProgramSchedule']['title'];
@@ -7386,7 +7388,7 @@ WHERE cga_menus.UUID = '$uuid'";
                             $samelocations[$publishmap['CharterProgramSchedule']['lattitude']][] = "Day ".$scheduleData[$key]['CharterProgramSchedule']['day_num']."&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;".$scheduleData[$key]['CharterProgramSchedule']['day_dates']; //same location
                             $samelocationsScheduleUUID[$publishmap['CharterProgramSchedule']['title']][] = $publishmap['CharterProgramSchedule']['UUID']; //same location
                             $samelocationsDates[$publishmap['CharterProgramSchedule']['title']][] = $scheduleData[$key]['CharterProgramSchedule']['day_dates']; //same location
-                            $samemarkercommentcount[$publishmap['CharterProgramSchedule']['lattitude']] += $scheduleData[$key]['CharterProgramSchedule']['marker_msg_count']; //same location
+                            //$samemarkercommentcount[$publishmap['CharterProgramSchedule']['lattitude']] += $scheduleData[$key]['CharterProgramSchedule']['marker_msg_count']; //same location
                             if($publishmap['CharterProgramSchedule']['stationary'] == 1){
                                 $samelocations_daynumdisplay[$publishmap['CharterProgramSchedule']['lattitude']][] =$publishmap['CharterProgramSchedule']['day_num'];
                                 $samlatlong[$publishmap['CharterProgramSchedule']['title']][] = $publishmap['CharterProgramSchedule']['lattitude'];
@@ -7493,8 +7495,9 @@ WHERE cga_menus.UUID = '$uuid'";
 
                     
                         } //exit;
+                        
                 }
-
+                //echo "<pre>";print_r($scheduleData); exit;
                 $this->Session->delete("yachFullName");
                 
                 //echo "<pre>";print_r($YachtData); exit;
@@ -7530,7 +7533,7 @@ WHERE cga_menus.UUID = '$uuid'";
                     $cruising_unit = "L";
                  }
                 }
-                //echo "<pre>";print_r($samedayrouteorder); exit;
+                //echo "<pre>";print_r($scheduleData); exit;
                 $Routeorderdata = array();
                 // if(isset($samedayrouteorder) && !empty($samedayrouteorder)){
                 //     asort($samedayrouteorder);
@@ -7592,7 +7595,7 @@ WHERE cga_menus.UUID = '$uuid'";
                         }
                      }
                 }
-                //echo "<pre>";print_r($RouteData); exit;
+               
                 if(isset($RouteData) && !empty($RouteData)){
                     $routecount = count($RouteData);
                     $totaldistance = array();
@@ -7734,7 +7737,7 @@ WHERE cga_menus.UUID = '$uuid'";
                 $this->set('samelocations', $samelocations);
                 $this->set('samelocationsScheduleUUID', $samelocationsScheduleUUID);
                 $this->set('samelocationsDates', $samelocationsDates);
-                $this->set('samemarkercommentcount', $samemarkercommentcount);
+                
 
                 $this->set('stationarylocations', $stationarylocations);
                 $this->set('samelocations_daynumdisplay', $samelocations_daynumdisplay);
@@ -7906,16 +7909,27 @@ WHERE cga_menus.UUID = '$uuid'";
                                 }
                                 $myLastElement_locationimages['last'] = $trimmed_array;
                     }
-                   // echo "<pre>"; print_r($locationimages); print_r($myLastElement_locationimages); exit;
+                    //echo "<pre>"; print_r($scheduleData); exit;
+                    //print_r($myLastElement_locationimages); exit;
                     $this->set('myLastElement_locationimages', $myLastElement_locationimages);
                    //
                    if(isset($scheduleData) && !empty($scheduleData)){
                              $end_location_last = end($scheduleData);
                             $newschedule = array();
                             foreach($scheduleData as $key => $value){
-                                if($key == 1){
+                                //echo "<pre>"; print_r($value); exit;
+                                $value['CharterProgramSchedule']['marker_msg_count'] = $this->CharterGuest->getCharterMarkerCommentCount($yachtDbName,$value['CharterProgramSchedule']['UUID'],$value['CharterProgramSchedule']['title']);
+                       
+                                if($key == 1){                                   
                                 $newschedule[] = $end_location_last;
                                 }
+
+                                if($key == 0){
+                                    $samemarkercommentcount[$value['CharterProgramSchedule']['row_from_lat']] += $value['CharterProgramSchedule']['marker_msg_count'];
+                                }else{
+                                    $samemarkercommentcount[$value['CharterProgramSchedule']['lattitude']] += $value['CharterProgramSchedule']['marker_msg_count'];
+                                }
+                                
                                 $newschedule[] = $value;
                             }
                             //$nv = array_pop($newschedule);
@@ -7923,9 +7937,9 @@ WHERE cga_menus.UUID = '$uuid'";
                             //$totsch = count($scheduleData)-1;   
                         }
                     $this->set('scheduleData', $scheduleData);
-                   
+                    $this->set('samemarkercommentcount', $samemarkercommentcount);
                 
-                //echo "<pre>";print_r($scheduleData); exit;
+                //echo "<pre>";print_r($scheduleData); print_r($samemarkercommentcount); exit;
                     if(isset($attachment) && !empty($attachment)){
                         $this->set('programFiles', $attachment);
                     }

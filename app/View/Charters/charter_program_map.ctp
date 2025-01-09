@@ -3086,6 +3086,7 @@ if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !e
         marker.samelocationsDates = "<?php echo implode(',',$samelocationsDates[$schedule['CharterProgramSchedule']['title']]); ?>";
         marker.labeldayanddate = "<?php echo $SumDaytitle; ?>";
         marker.day_num = "<?php echo $schedule['CharterProgramSchedule']['day_num']; ?>";
+        marker.debarkation_flag = "<?php echo $schedule['CharterProgramSchedule']['debarkation_flag']; ?>";
         marker.markerNum = markerCount; 
         <?php if (!empty($samlatlong[$schedule['CharterProgramSchedule']['title']]) && in_array($schedule['CharterProgramSchedule']['lattitude'], $samlatlong[$schedule['CharterProgramSchedule']['title']])) { ?>
             marker.stationary = 1;
@@ -3159,6 +3160,7 @@ foreach($samelocations[$startingloc['CharterProgramSchedule']['lattitude']] as $
                     end.durationtotal = "<?php echo $markertotal[$startingloc['CharterProgramSchedule']['title'].' - Day '.$startingloc['CharterProgramSchedule']['day_num']]['duration'];  ?>";
                     end.consumptiontotal = "<?php echo $markertotal[$startingloc['CharterProgramSchedule']['title'].' - Day '.$startingloc['CharterProgramSchedule']['day_num']]['consumption']; ?>";
                     end.endmarker = "yes";
+                    end.debarkation_flag = "<?php echo $startingloc['CharterProgramSchedule']['debarkation_flag']; ?>";
                     markerArray.push(end);
                     end.addTo(map);
 
@@ -3253,13 +3255,12 @@ if(isset($startingloc['CharterProgramSchedule']['lattitude'])){
 
 $schuuid = $startingloc['CharterProgramSchedule']['UUID'];
 $primary_id = $startingloc['CharterProgramSchedule']['id'];
-if($samemarkercommentcount[$startingloc['CharterProgramSchedule']['UUID']] == 0){
-$marker_msg_count = "style='display:none;'";
-$samemkrcount = "";
-}else if($samemarkercommentcount[$startingloc['CharterProgramSchedule']['UUID']] != 0){
-$marker_msg_count = "";
-$samemkrcount = $samemarkercommentcount[$startingloc['CharterProgramSchedule']['UUID']];
-if(isset($guesttype) && !empty($guesttype)){ //echo $guesttype; exit;
+if($samemarkercommentcount[$startingloc['CharterProgramSchedule']['row_from_lat']] == 0){
+    $marker_msg_count = "style='display:none;'";
+    $samemkrcount = "";
+}else if($samemarkercommentcount[$startingloc['CharterProgramSchedule']['row_from_lat']] != 0){
+    $marker_msg_count = "";
+    $samemkrcount = $samemarkercommentcount[$startingloc['CharterProgramSchedule']['row_from_lat']];
     if(isset($guesttype) && !empty($guesttype)){ //echo $guesttype; exit;
         if($guesttype == "guest"){
             if($cp_guesttype == 'email_recipient'){
@@ -3277,8 +3278,7 @@ if(isset($guesttype) && !empty($guesttype)){ //echo $guesttype; exit;
                 $marker_msg_count = "";
         }
     }
-}
-
+    
 }
 //if(isset($samelocations_daynumdisplay[$startingloc['CharterProgramSchedule']['lattitude']][0])){
 //$markernumberDisplay = $samelocations_daynumdisplay[$startingloc['CharterProgramSchedule']['lattitude']][0];
@@ -3293,13 +3293,13 @@ $markernumberDisplay = $startingloc['CharterProgramSchedule']['day_num'];
     //     $markernumberDisplay = "";
     // }
     
-     
+    //$samemkrcount="5";
 ?>
         
 
 var textMarker = L.marker(["<?php echo $embark_lat; ?>", "<?php echo $embark_long; ?>"], {
 icon: L.divIcon({
-html: "<?php if($markernumberDisplay < 10 ){ ?><span>&nbsp;<?php echo $markernumberDisplay; ?></span> <?php } else { ?><span><?php echo $markernumberDisplay; ?></span><?php } ?>",
+html: "<?php if($markernumberDisplay < 10 ){ ?><span>&nbsp;<?php echo $markernumberDisplay; ?></span> <?php } else { ?><span><?php echo $markernumberDisplay; ?></span><?php } ?><span id='<?php echo $schuuid ?>'   class='acti-count-onmarker' <?php echo $marker_msg_count; ?> ><?php echo $samemkrcount ?></span>",
 className: 'text-below-marker',
 tooltipAnchor: [ 0, 0 ]
 })
@@ -3853,6 +3853,7 @@ var ActivityData = '';
 var ScheduleDataResult = '';
 var resizeflagiti = true;
 function markerOnClick(e) {
+    //alert();
     mapmarkerglobalObj = e;
     console.log(e);
     var scheduleUUId = e.target.scheduleUUId;
@@ -3869,7 +3870,13 @@ function markerOnClick(e) {
     var tablepId = e.target.tablepId;
 
     var counttitle = e.target.counttitle;
-    var daytitle = e.target.day_to_location;
+    // to take the day title for day1 having two locations
+    if(e.target.debarkation_flag == 1 && e.target.day_num == 1){
+        var daytitle = e.target.daytitle;
+    }else{
+        var daytitle = e.target.day_to_location;
+    }
+    
     var scheduleSameLocationUUID = e.target.scheduleSameLocationUUID;
     var samelocationsDates = e.target.samelocationsDates;
     var stationary = e.target.stationary;
