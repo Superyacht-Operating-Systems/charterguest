@@ -9223,7 +9223,7 @@ WHERE cga_menus.UUID = '$uuid'";
          if(isset($activity_id_chk) && !empty($activity_id_chk)){
             $getactivityname =  str_replace("'", "", $activity_name);
             $getactivityname = str_replace('"', "", $getactivityname);
-             $CruisingMapCommentConditons = "activity_id = '$activity_id_chk' AND activity_name = '$getactivityname' AND type = '$type' AND publish_map = 1";
+             $CruisingMapCommentConditons = "activity_id = '$activity_id_chk' AND activity_name = '$getactivityname' AND type = '$type' AND publish_map = 1 AND is_deleted=0";
              $comments = $this->CharterGuest->getCruisingMapComment($yachtDbName, $CruisingMapCommentConditons);
          }
  
@@ -10379,8 +10379,10 @@ public function getmsgcountonclosecruisingschedulemodal() {
                             $stationarylocations = array();
                             $samlatlong = array();
                             $basefolder = $this->request->base;
-            
+            //echo "<pre>"; print_r($scheduleData); exit;
                             if(isset($scheduleData)){
+                                $unreadguest = 0;
+                                $commentdatatitle = array();
                                 foreach($scheduleData as $key => $publishmap){
                                     $publishmap['CharterProgramSchedule']['title'] = str_replace('"', "", $publishmap['CharterProgramSchedule']['title']);
                                     $publishmap['CharterProgramSchedule']['title'] = str_replace("'", "", $publishmap['CharterProgramSchedule']['title']);
@@ -10402,7 +10404,7 @@ public function getmsgcountonclosecruisingschedulemodal() {
             
                                        
                                         
-                                       $loctitle = $publishmap['CharterProgramSchedule']['title'];
+                                       $loctitle = $publishmap['CharterProgramSchedule']['to_location'];
                                        
                                        $loctitlev = str_replace("'", "", $loctitle);    
                                        $loctitle = str_replace('"', "", $loctitlev);   
@@ -10410,9 +10412,13 @@ public function getmsgcountonclosecruisingschedulemodal() {
                                    
                                     /*******************comments*/
                                     $programScheduleUUID = $publishmap['CharterProgramSchedule']['UUID'];
+                                    $programScheduletitle = $publishmap['CharterProgramSchedule']['title'];
+                                    $daynumber = $publishmap['CharterProgramSchedule']['day_num'];
+                                    $stationary = $publishmap['CharterProgramSchedule']['stationary'];
                                     $CruisingMapCommentConditons = "activity_id = '$programScheduleUUID' AND activity_name = '$loctitle' AND type = 'schedule' AND publish_map = '1'";
+                                    //echo "<pre>";
                                     $commentdatatitle = $this->CharterGuest->getCruisingMapComment($yachtDbName, $CruisingMapCommentConditons);
-                                    $unreadguest = 0;
+                                    
                                     if(isset($commentdatatitle[0]) && !empty($commentdatatitle[0])){
                                         foreach($commentdatatitle as $val){
                                             if(!empty($val['CruisingMapComment']['guest_read']) && $val['CruisingMapComment']['guest_read'] == "unread"){
@@ -10426,10 +10432,10 @@ public function getmsgcountonclosecruisingschedulemodal() {
                                     }
                                     $colorcodetitle = "#000";  
                                      $facomment="fa";
+                                    // echo $commentcounttitle;
                                     if($commentcounttitle > 0){ 
                                         $colorcodetitle = "#000";
-                                         $facomment="fa";
-                                        
+                                         $facomment="fa";                                   
                                         
                                                 
                                                 if($unreadguest == 1){    
@@ -10447,8 +10453,9 @@ public function getmsgcountonclosecruisingschedulemodal() {
                                      $locationComment[$publishmap['CharterProgramSchedule']['UUID']]['facomment'] = $facomment;
                                     $locationComment[$publishmap['CharterProgramSchedule']['UUID']]['programScheduleUUID'] = $programScheduleUUID;
                                     $locationComment[$publishmap['CharterProgramSchedule']['UUID']]['yacht_id'] = $yacht_id_for_comments;
-                                    
-                                  
+                                    $locationComment[$publishmap['CharterProgramSchedule']['UUID']]['act_title'] = $programScheduletitle;
+                                    $locationComment[$publishmap['CharterProgramSchedule']['UUID']]['day_num'] = $daynumber;
+                                    $locationComment[$publishmap['CharterProgramSchedule']['UUID']]['stationary'] = $stationary;
             
                                 
                                     }
@@ -10465,6 +10472,8 @@ public function getmsgcountonclosecruisingschedulemodal() {
                         } 
                         
                     } 
+
+                    //echo "<pre>"; print_r($locationComment); exit;
                     $result['status'] = 'success';
                     $result['commentbadge'] = $locationComment;
                     
