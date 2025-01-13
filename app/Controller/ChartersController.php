@@ -744,6 +744,9 @@ class ChartersController extends AppController {
                             }
 
                             $commentindividualtotal = $this->charter_program_map_total_msg_count($value['CharterGuestAssociate']['charter_program_id'],$ydb_name);
+                           /* if($value['CharterGuestAssociate']['charter_program_id'] == '677e488b-4a48-4d0f-91bb-4815ac182009'){
+                                echo "<pre>";print_r($commentindividualtotal); exit;
+                            }*/
                         $charterAssocData[$key]['charterDetails']['msg_count'] = $commentindividualtotal;
                         $commentcounttotal += $commentindividualtotal;
                         $pid = $value['CharterGuestAssociate']['charter_program_id'];
@@ -764,7 +767,7 @@ class ChartersController extends AppController {
              $this->Session->write("commentcounttotal", $commentcounttotal);
      //echo "<pre>";print_r($charterGuestData); exit;
         // echo "<pre>";print_r($charterAssocData); exit;
-        //echo "<pre>";print_r($guestListData); exit;
+        //echo "<pre>";print_r($charterAssocData); exit;
         
         $this->set('charterGuestData', $charterGuestData);
         $this->set('charterAssocData', $charterAssocData);
@@ -7360,7 +7363,7 @@ WHERE cga_menus.UUID = '$uuid'";
 //echo "<pre>"; print_r($scheduleData); exit;
                 if(isset($scheduleData)){
                    
-               // echo "<pre>"; print_r($scheduleData); exit;
+                //echo "<pre>"; print_r($scheduleData); exit;
                     foreach($scheduleData as $key => $publishmap){
                         $withifanysinglequotefrom = $publishmap['CharterProgramSchedule']['title'];
                         $publishmap['CharterProgramSchedule']['title'] = trim($publishmap['CharterProgramSchedule']['title']);
@@ -7450,7 +7453,7 @@ WHERE cga_menus.UUID = '$uuid'";
                         /////////////////////////////////
                        
                         /*******************comments*/
-                        $programScheduleUUID = $publishmap['CharterProgramSchedule']['UUID'];
+                      /*  $programScheduleUUID = $publishmap['CharterProgramSchedule']['UUID'];
                         $val_pass = '"'.$loctitle.'"';
                             $CruisingMapCommentConditons = "activity_id = '$programScheduleUUID' AND activity_name = $val_pass AND type = 'schedule' AND publish_map = '1'";
                             $commentdatatitle = $this->CharterGuest->getCruisingMapComment($yachtDbName, $CruisingMapCommentConditons);
@@ -7468,13 +7471,10 @@ WHERE cga_menus.UUID = '$uuid'";
                         }
                         $colorcodetitle = "color:#000;";  
                          $facomment="fa";
-                        if($commentcounttitle > 0){ //echo "kkkk";
+                        if($commentcounttitle > 0){ 
                             $colorcodetitle = "color:#000;";
                              $facomment="fa";
-                            //echo $is_fleet;
-                            
-                                    //if(trim($publishmap['CharterProgramSchedule']['is_crew_commented']) == 1 || trim($publishmap['CharterProgramSchedule']['is_fleet_commented']) == 1){  //echo "lll";
-                                    if($unreadguest == 1){    
+                                        if($unreadguest == 1){    
                                         $facomment="fa";
                                         $colorcodetitle = "color:red;";
                                     }
@@ -7489,7 +7489,7 @@ WHERE cga_menus.UUID = '$uuid'";
                          $locationComment[$publishmap['CharterProgramSchedule']['id']]['facomment'] = $facomment;
                         $locationComment[$publishmap['CharterProgramSchedule']['id']]['programScheduleUUID'] = $programScheduleUUID;
                         $locationComment[$publishmap['CharterProgramSchedule']['id']]['yacht_id'] = $yacht_id_for_comments;
-                        $locationComment[$publishmap['CharterProgramSchedule']['id']]['title'] = $loctitle;
+                        $locationComment[$publishmap['CharterProgramSchedule']['id']]['title'] = $loctitle; */
                         // <i class="fa fa-comments crew_comment_cruisingmaptitle"  style="'.$colorcodetitle.$displaynone.'" data-rel="'.$scheduleData[0]['CharterProgramSchedule']['UUID'].'" data-yachtid="'.$yacht_id.'" data-tempname="'.htmlspecialchars($scheduleData[0]['CharterProgramSchedule']['title']).'">
                         /****************comments*/
 
@@ -7769,7 +7769,7 @@ WHERE cga_menus.UUID = '$uuid'";
                 $this->set('cruising_unit', $cruising_unit);
                 }
                 $this->set('locationimages', $locationimages);
-                $this->set('locationComment', $locationComment);
+               // $this->set('locationComment', $locationComment);
                 $this->set('embark_lat', $embark_lat);
                 $this->set('embark_long', $embark_long);
 
@@ -7918,24 +7918,79 @@ WHERE cga_menus.UUID = '$uuid'";
                             $newschedule = array();
                             foreach($scheduleData as $key => $value){
                                 //echo "<pre>"; print_r($value); exit;
-                                $value['CharterProgramSchedule']['marker_msg_count'] = $this->CharterGuest->getCharterMarkerCommentCount($yachtDbName,$value['CharterProgramSchedule']['UUID'],$value['CharterProgramSchedule']['title']);
+                                
                        
                                 if($key == 1){                                   
                                 $newschedule[] = $end_location_last;
                                 }
 
                                 if($key == 0){
+                                    $value['CharterProgramSchedule']['marker_msg_count'] = $this->CharterGuest->getCharterMarkerCommentCount($yachtDbName,$value['CharterProgramSchedule']['UUID'],$value['CharterProgramSchedule']['title']);
                                     $samemarkercommentcount[$value['CharterProgramSchedule']['row_from_lat']] += $value['CharterProgramSchedule']['marker_msg_count'];
                                 }else{
+                                    $value['CharterProgramSchedule']['marker_msg_count'] = $this->CharterGuest->getCharterMarkerCommentCount($yachtDbName,$value['CharterProgramSchedule']['UUID'],$value['CharterProgramSchedule']['to_location']);
+                                    //echo $value['CharterProgramSchedule']['title']; exit;
                                     $samemarkercommentcount[$value['CharterProgramSchedule']['lattitude']] += $value['CharterProgramSchedule']['marker_msg_count'];
                                 }
+                                                          /** commesnts new */
+                            if($key == 0){
+                                $loctitle = $value['CharterProgramSchedule']['title'];
+                            }else{
+                                $loctitle = $value['CharterProgramSchedule']['to_location'];      
+                            }
+                            $programScheduleUUID = $value['CharterProgramSchedule']['UUID'];
+                        $val_pass = '"'.$loctitle.'"';
+                            $CruisingMapCommentConditons = "activity_name = $val_pass AND type = 'schedule' AND publish_map = '1'";
+                            $commentdatatitle = $this->CharterGuest->getCruisingMapComment_new($yachtDbName, $CruisingMapCommentConditons);
+                        $unreadguest = 0;
+                        if(isset($commentdatatitle[0]) && !empty($commentdatatitle[0])){
+                            foreach($commentdatatitle as $val){
+                                if(!empty($val['CruisingMapComment']['guest_read']) && $val['CruisingMapComment']['guest_read'] == "unread"){
+                                    $unreadguest = 1;
+                                }
+                            }
+                            $commentcounttitle = count($commentdatatitle);
+                        }
+                        else{
+                            $commentcounttitle = 0;
+                        }
+                        $colorcodetitle = "color:#000;";  
+                         $facomment="fa";
+                        if($commentcounttitle > 0){ //echo "kkkk";
+                            $colorcodetitle = "color:#000;";
+                             $facomment="fa";
+                            //echo $is_fleet;
+                            
+                                    //if(trim($publishmap['CharterProgramSchedule']['is_crew_commented']) == 1 || trim($publishmap['CharterProgramSchedule']['is_fleet_commented']) == 1){  //echo "lll";
+                                    if($unreadguest == 1){    
+                                        $facomment="fa";
+                                        $colorcodetitle = "color:red;";
+                                    }
+                            
+                        }else{
+                                $facomment="fa-light";
+                                $colorcodetitle = "color:#000;";   
+                        }
+
+                        
+                        $locationComment[$loctitle]['colorcodetitle'] = $colorcodetitle;
+                         $locationComment[$loctitle]['facomment'] = $facomment;
+                        $locationComment[$loctitle]['programScheduleUUID'] = $programScheduleUUID;
+                        $locationComment[$loctitle]['yacht_id'] = $yacht_id_for_comments;
+                        $locationComment[$loctitle]['title'] = $loctitle;
+                        // <i class="fa fa-comments crew_comment_cruisingmaptitle"  style="'.$colorcodetitle.$displaynone.'" data-rel="'.$scheduleData[0]['CharterProgramSchedule']['UUID'].'" data-yachtid="'.$yacht_id.'" data-tempname="'.htmlspecialchars($scheduleData[0]['CharterProgramSchedule']['title']).'">
+                        /****************comments*/
                                 
                                 $newschedule[] = $value;
                             }
+  
+                            //echo "<pre>"; print_r($newschedule); exit('12345');
                             //$nv = array_pop($newschedule);
                             $scheduleData = $newschedule;
                             //$totsch = count($scheduleData)-1;   
                         }
+                        //echo "<pre>"; print_r($scheduleData); exit('12345');
+                        $this->set('locationComment', $locationComment);
                     $this->set('scheduleData', $scheduleData);
                     $this->set('samemarkercommentcount', $samemarkercommentcount);
                 
@@ -8131,9 +8186,14 @@ WHERE cga_menus.UUID = '$uuid'";
 
                 $basefolder = $this->request->base;
                 if (count($scheduleData) != 0) {
-                    
+                    //echo "<pre>"; print_r($scheduleData); exit;
                     if($last_marker_display_iti_modal == 0){
-                        $title = htmlspecialchars($scheduleData[0]['CharterProgramSchedule']['title']);
+                        if($scheduleData[0]['CharterProgramSchedule']['day_num'] >1){
+                            $title = htmlspecialchars($scheduleData[0]['CharterProgramSchedule']['to_location']);
+                        }else{
+                            $title = htmlspecialchars($scheduleData[0]['CharterProgramSchedule']['title']);
+                        }
+                        
                     }else if($last_marker_display_iti_modal == 1){
                         $title = htmlspecialchars($scheduleData[0]['CharterProgramSchedule']['to_location']);
                     } 
@@ -8255,8 +8315,10 @@ WHERE cga_menus.UUID = '$uuid'";
                     $markerimage = BASE_URL.'/charterguest/app/webroot/css/leaflet/dist/images/marker-icon-itinerary.png';
                     //echo "<pre>"; print_r($titleimage); exit;
                     $val_pass = '"'.$title.'"';
-                    $CruisingMapCommentConditons = "activity_id = '$programScheduleUUID' AND activity_name = $val_pass AND type = 'schedule' AND publish_map = '1'";
-                         $commentdatatitle = $this->CharterGuest->getCruisingMapComment($yachtDbName, $CruisingMapCommentConditons);
+                    //$CruisingMapCommentConditons = "activity_id = '$programScheduleUUID' AND activity_name = $val_pass AND type = 'schedule' AND publish_map = '1'";
+                    $CruisingMapCommentConditons = "activity_name = $val_pass AND type = 'schedule' AND publish_map = '1'";
+                    //$commentdatatitle = $this->CharterGuest->getCruisingMapComment($yachtDbName, $CruisingMapCommentConditons);
+                    $commentdatatitle = $this->CharterGuest->getCruisingMapComment_new($yachtDbName, $CruisingMapCommentConditons);
                     //}
                     //echo "<pre>"; print_r($commentdatatitle); exit;
                     $guestread = 0;
@@ -10404,7 +10466,12 @@ public function getmsgcountonclosecruisingschedulemodal() {
             
                                        
                                         
-                                       $loctitle = $publishmap['CharterProgramSchedule']['to_location'];
+                                      // $loctitle = $publishmap['CharterProgramSchedule']['title'];
+                                    if($key == 0){
+                                        $loctitle = $publishmap['CharterProgramSchedule']['title'];
+                                    }else{
+                                        $loctitle = $publishmap['CharterProgramSchedule']['to_location'];      
+                                    }
                                        
                                        $loctitlev = str_replace("'", "", $loctitle);    
                                        $loctitle = str_replace('"', "", $loctitlev);   
@@ -10448,14 +10515,19 @@ public function getmsgcountonclosecruisingschedulemodal() {
                                             $colorcodetitle = "#000";   
                                     }
             
-                                    
-                                    $locationComment[$publishmap['CharterProgramSchedule']['UUID']]['colorcodetitle'] = $colorcodetitle;
-                                     $locationComment[$publishmap['CharterProgramSchedule']['UUID']]['facomment'] = $facomment;
-                                    $locationComment[$publishmap['CharterProgramSchedule']['UUID']]['programScheduleUUID'] = $programScheduleUUID;
-                                    $locationComment[$publishmap['CharterProgramSchedule']['UUID']]['yacht_id'] = $yacht_id_for_comments;
-                                    $locationComment[$publishmap['CharterProgramSchedule']['UUID']]['act_title'] = $programScheduletitle;
-                                    $locationComment[$publishmap['CharterProgramSchedule']['UUID']]['day_num'] = $daynumber;
-                                    $locationComment[$publishmap['CharterProgramSchedule']['UUID']]['stationary'] = $stationary;
+                                    //to get the to location uuit added condition
+                                    if($key == 0){
+                                        $loctitle = $publishmap['CharterProgramSchedule']['title'];
+                                    }else{
+                                        $loctitle = $publishmap['CharterProgramSchedule']['to_location'];      
+                                    }
+                                    $locationComment[$publishmap['CharterProgramSchedule']['title']]['colorcodetitle'] = $colorcodetitle;
+                                     $locationComment[$publishmap['CharterProgramSchedule']['title']]['facomment'] = $facomment;
+                                    $locationComment[$publishmap['CharterProgramSchedule']['title']]['programScheduleUUID'] = $programScheduleUUID;
+                                    $locationComment[$publishmap['CharterProgramSchedule']['title']]['yacht_id'] = $yacht_id_for_comments;
+                                    $locationComment[$publishmap['CharterProgramSchedule']['title']]['act_title'] = $programScheduletitle;
+                                    $locationComment[$publishmap['CharterProgramSchedule']['title']]['day_num'] = $daynumber;
+                                    $locationComment[$publishmap['CharterProgramSchedule']['title']]['stationary'] = $stationary;
             
                                 
                                     }

@@ -2298,8 +2298,15 @@ border-radius: 4px; */
                             }
                         }
                         //echo "<pre>"; print_r($fleetlocationimages);
-                        $locationCommentsdata = $locationComment[$schedule['CharterProgramSchedule']['id']];
+                        //$locationCommentsdata = $locationComment[$schedule['CharterProgramSchedule']['id']];
+                        if($key == 0){
+                            $locationCommentsdata = $locationComment[$schedule['CharterProgramSchedule']['title']];
 
+                        }else{
+                            $locationCommentsdata = $locationComment[$schedule['CharterProgramSchedule']['to_location']];
+
+                        }
+                        
                         //echo $locationCommentsdata['programScheduleUUID'];
                         if(isset($guesttype) && $guesttype == "guest"){
                             //echo $cp_guesttype;echo $allow_comments;
@@ -5301,7 +5308,7 @@ $.ajax({
             var res = result.commentbadge;
             $.each(res, function(key, value) {
                     //console.log($(".sch_comment_"+key));
-                    if(value.stationary == 1){
+                  /*  if(value.stationary == 1){
                         $(".sch_comment_"+key).removeClass('fa');
                         $(".sch_comment_"+key).removeClass('fa-light');
                         $(".sch_comment_"+key).addClass(value.facomment);
@@ -5311,7 +5318,7 @@ $.ajax({
                         $(".sch_"+value.act_title).removeClass('fa-light');
                         $(".sch_"+value.act_title).addClass(value.facomment);
                         $(".sch_"+value.act_title).css("color",value.colorcodetitle);
-                    }
+                    }*/
                    
                     
 

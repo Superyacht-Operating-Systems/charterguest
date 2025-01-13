@@ -157,6 +157,10 @@ class AppController extends Controller {
 		
 						$scheduleConditions = "charter_program_id = '$charterProgramId' AND is_deleted = 0";
 						$scheduleData = $this->CharterGuest->getCharterProgramScheduleData($yachtDbName, $scheduleConditions);
+
+						if($charterProgramId == '677e488b-4a48-4d0f-91bb-4815ac182009'){
+							//echo "<pre>";print_r($scheduleData); exit;
+						}
 						
 						$markertitle = array();
 						$markername = array();
@@ -166,7 +170,7 @@ class AppController extends Controller {
 									
 		
 
-								   $msgcount += $this->CharterGuest->getCharterMarkerCommentCount($yachtDbName,$publishmap['CharterProgramSchedule']['UUID']);
+								   $msgcount += $this->CharterGuest->getCharterMarkerCommentCount_new($yachtDbName,$publishmap['CharterProgramSchedule']['UUID']);
 		
 								   
 							
