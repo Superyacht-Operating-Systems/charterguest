@@ -5177,7 +5177,7 @@ function hexc(colorval) {
                                     if(allow_comments != '' && allow_comments == 1){
                                         $("#"+schuuidtoupdateintooltip).css('display','inline-flex');
                                     }else{
-                                        //$("#msgcountnotify").css('display','none');
+                                        $("#msgcountnotify").css('display','none');
                                         $("#"+schuuidtoupdateintooltip).css('display','none');
                                     }
                                 }
