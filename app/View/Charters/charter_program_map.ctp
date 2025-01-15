@@ -5189,7 +5189,7 @@ function hexc(colorval) {
                         $(".leaflet-popup-close-button").removeClass('updateCommentscount');
                         
                         }, 1000);
-                        //$("#"+schuuidtoupdateintooltip).css('display','inline-flex');
+                        $("#"+schuuidtoupdateintooltip).css('display','inline-flex');
                         
                     },
                     error: function(jqxhr) { 
