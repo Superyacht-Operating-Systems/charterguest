@@ -4073,7 +4073,7 @@ if(e.target.firstdaytoloc){
                                 var tooltipcontent = e.target._tooltip._content;
                                 var selectedmarkertitle = e.target.daytitle;
                                 var selectedmarkerday_num = e.target.day_num;
-                                console.log(markerArray);
+                                //console.log(popLocation);
                                 fitzoommap.push(popLocation);
                                 if (markerArray.length > 0) {
                                         $('.markersnamesmodalmap').find('option').remove();
@@ -4095,15 +4095,15 @@ if(e.target.firstdaytoloc){
                                                                 var valTitle = "";
                                                             }
 
-                    $('.markersnamesmodalmap')
-                                                .append($("<option></option>")
-                                                .attr("id", "marker_" + value.scheduleId)
-                                                .attr("data-lat", value._latlng.lat)
-                                                .attr("data-long", value._latlng.lng)
-                                                .attr("data-schid", value.scheduleId)
-                                           .attr("data-daynum", value.day_num)
-                                             .attr("value", valTitle +' - Day '+value.day_num)
-                                             .text(valTitle +' - Day '+value.day_num)
+                                                                $('.markersnamesmodalmap')
+                                                                    .append($("<option></option>")
+                                                                        .attr("id", "marker_" + value.scheduleId)
+                                                                        .attr("data-lat", value._latlng.lat)
+                                                                        .attr("data-long", value._latlng.lng)
+                                                                        .attr("data-schid", value.scheduleId)
+                                                                        .attr("data-daynum", value.day_num)
+                                                                        .attr("value", valTitle +' - Day '+value.day_num)
+                                                                        .text(valTitle +' - Day '+value.day_num)
                                                                     );
                                                                     //temptitle.push(value.daytitle);
                                                         //}
@@ -4151,8 +4151,8 @@ if(e.target.firstdaytoloc){
                                 //modalmap.fitBounds(fitzoommap);
                                 //modalmap.setView(new L.LatLng(lattitude,longitude), 7);
                                 //modalmap.panBy([0,0]);
-                                 console.log(lattitude+'from');  
-                                console.log(longitude+'from');  
+                                // console.log(lattitude);  
+                                // console.log(longitude);  
                                 setTimeout(() => {
                                     modalmap.invalidateSize();
                                 }, 0);
@@ -4248,8 +4248,8 @@ $(document).on("change", ".markersnamesmodalmap", function(e) {
         });
 
         // console.log(routemodalmarkerselected); 
-          console.log(selectedlat+'to');  
-          console.log(selectedlong+'to');  
+        //  console.log(selectedlat);  
+        //  console.log(selectedlong);  
         if (routemodalmarkerselected != "") { //alert();
             modalmap.removeLayer(routemodalmarkerselected);
         }
@@ -5183,7 +5183,7 @@ function hexc(colorval) {
                                 }
                         //$("#msgcountnotify").text(mcount);
                         if(mcount_result == 0){
-                            //$("#msgcountnotify").css('display','none');
+                            $("#msgcountnotify").css('display','none');
                             $("#"+schuuidtoupdateintooltip).css('display','none');
                         }
                         $(".leaflet-popup-close-button").removeClass('updateCommentscount');
