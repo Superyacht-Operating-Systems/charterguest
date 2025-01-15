@@ -3179,7 +3179,7 @@ foreach($samelocations[$startingloc['CharterProgramSchedule']['lattitude']] as $
 $degMarkerCount = 0;
 foreach ($scheduleData as $key => $schedule) { 
     if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !empty($samelocations[$schedule['CharterProgramSchedule']['lattitude']])){
-
+$mar_loc_latitude = $schedule['CharterProgramSchedule']['lattitude'];
         $schuuid = $schedule['CharterProgramSchedule']['UUID'];
     if($samemarkercommentcount[$schedule['CharterProgramSchedule']['lattitude']] == 0){
         $marker_msg_count = "style='display:none;'";
@@ -3883,7 +3883,7 @@ function markerOnClick(e) {
     }else{
         var daytitle = e.target.day_to_location;
     }
-    
+    //alert(daytitle);
     var scheduleSameLocationUUID = e.target.scheduleSameLocationUUID;
     var samelocationsDates = e.target.samelocationsDates;
     var stationary = e.target.stationary;
@@ -4000,7 +4000,7 @@ if(e.target.firstdaytoloc){
                     //     }); 
                         $("#markerModal_load").html(result.popupHtml);
                         
-                        $("#markerModalclose").attr("data-schuuid",scheduleSameLocationUUID);
+                        $("#markerModalclose").attr("data-schuuid",scheduleUUId);
                         $("#markerModal").show();
                         $(".markmodalbody").scrollTop(0);
                        // update_mapContainer();
@@ -4073,7 +4073,7 @@ if(e.target.firstdaytoloc){
                                 var tooltipcontent = e.target._tooltip._content;
                                 var selectedmarkertitle = e.target.daytitle;
                                 var selectedmarkerday_num = e.target.day_num;
-                                //console.log(popLocation);
+                                console.log(popLocation);
                                 fitzoommap.push(popLocation);
                                 if (markerArray.length > 0) {
                                         $('.markersnamesmodalmap').find('option').remove();
@@ -4095,15 +4095,15 @@ if(e.target.firstdaytoloc){
                                                                 var valTitle = "";
                                                             }
 
-                                                                $('.markersnamesmodalmap')
-                                                                    .append($("<option></option>")
-                                                                        .attr("id", "marker_" + value.scheduleId)
-                                                                        .attr("data-lat", value._latlng.lat)
-                                                                        .attr("data-long", value._latlng.lng)
-                                                                        .attr("data-schid", value.scheduleId)
-                                                                        .attr("data-daynum", value.day_num)
-                                                                        .attr("value", valTitle +' - Day '+value.day_num)
-                                                                        .text(valTitle +' - Day '+value.day_num)
+                    $('.markersnamesmodalmap')
+                                                .append($("<option></option>")
+                                                .attr("id", "marker_" + value.scheduleId)
+                                                .attr("data-lat", value._latlng.lat)
+                                                .attr("data-long", value._latlng.lng)
+                                                .attr("data-schid", value.scheduleId)
+                                           .attr("data-daynum", value.day_num)
+                                             .attr("value", valTitle +' - Day '+value.day_num)
+                                             .text(valTitle +' - Day '+value.day_num)
                                                                     );
                                                                     //temptitle.push(value.daytitle);
                                                         //}
@@ -4151,8 +4151,8 @@ if(e.target.firstdaytoloc){
                                 //modalmap.fitBounds(fitzoommap);
                                 //modalmap.setView(new L.LatLng(lattitude,longitude), 7);
                                 //modalmap.panBy([0,0]);
-                                // console.log(lattitude);  
-                                // console.log(longitude);  
+                                 console.log(lattitude+'from');  
+                                console.log(longitude+'from');  
                                 setTimeout(() => {
                                     modalmap.invalidateSize();
                                 }, 0);
@@ -4213,7 +4213,7 @@ $(document).on("change", ".markersnamesmodalmap", function(e) {
         var selectedmarkertooltipcontent = "";
         
     selectedTitle = $(this).val();
-    //alert(selectedTitle);
+    alert(selectedTitle);
     //console.log(selectedTitle);
     if (selectedTitle != "") {
         selectedlat = $(".markersnamesmodalmap option:selected").attr("data-lat");
@@ -4248,8 +4248,8 @@ $(document).on("change", ".markersnamesmodalmap", function(e) {
         });
 
         // console.log(routemodalmarkerselected); 
-        //  console.log(selectedlat);  
-        //  console.log(selectedlong);  
+          console.log(selectedlat+'to');  
+          console.log(selectedlong+'to');  
         if (routemodalmarkerselected != "") { //alert();
             modalmap.removeLayer(routemodalmarkerselected);
         }
@@ -4352,7 +4352,14 @@ $(document).on("click", ".stationarydays", function(e) {
     var scheduleId = mapmarkerglobalObj.target.scheduleId;
     var tablepId = mapmarkerglobalObj.target.tablepId;
     var counttitle = mapmarkerglobalObj.target.counttitle;
-    var daytitle = mapmarkerglobalObj.target.daytitle;
+    
+    // to take the day title for day1 having two locations
+    if(e.target.debarkation_flag == 1 && e.target.day_num == 1){
+        var daytitle = mapmarkerglobalObj.target.daytitle;
+    }else{
+        var daytitle = mapmarkerglobalObj.target.day_to_location;
+    }
+    console.log(mapmarkerglobalObj);
     var scheduleSameLocationUUID = mapmarkerglobalObj.target.scheduleSameLocationUUID;
     var samelocationsDates = mapmarkerglobalObj.target.samelocationsDates;
 
@@ -4426,7 +4433,8 @@ $(document).on("click", ".stationarydays", function(e) {
 
                         $("#markerModal_load").html(result.popupHtml);
                         
-                        $("#markerModalclose").attr("data-schuuid",scheduleSameLocationUUID);
+                        //$("#markerModalclose").attr("data-schuuid",scheduleSameLocationUUID);
+                        $("#markerModalclose").attr("data-schuuid",selectedschuuid);
                         $("#markerModal").show();
                         $(".markmodalbody").scrollTop(0);
 
@@ -5150,26 +5158,39 @@ function hexc(colorval) {
                     data: data,
                     success:function(result) {
                         $("#hideloader").hide();
-                        var mcount = result.status;
-                        console.log(mcount);
+                        var mcount_result = result.status;
+                        console.log(mcount_result);
                         var schuuidtoupdateintooltip = result.schuuidtoupdateintooltip;
                         //console.log($("#"+schuuidtoupdateintooltip));
-                        $("#"+schuuidtoupdateintooltip).text(mcount);
-                        //$("#"+schuuidtoupdateintooltip).css('display','inline-flex');
-                        if(guesttype == "guest"){
+                        
+                        setTimeout(function () {
+                           /* if ($("#" + schuuidtoupdateintooltip).length > 0) {
+                                $("#" + schuuidtoupdateintooltip).text(mcount_result);
+                            } else {
+                                console.log("Tooltip element not found:", schuuidtoupdateintooltip);
+                            }*/
+//alert();
+
+                            $(".leaflet-tooltip").css("display","none");
+                            $("#"+schuuidtoupdateintooltip).text(mcount_result);
+                            if(guesttype == "guest"){
                                     if(allow_comments != '' && allow_comments == 1){
                                         $("#"+schuuidtoupdateintooltip).css('display','inline-flex');
                                     }else{
-                                        $("#msgcountnotify").css('display','none');
+                                        //$("#msgcountnotify").css('display','none');
                                         $("#"+schuuidtoupdateintooltip).css('display','none');
                                     }
                                 }
                         //$("#msgcountnotify").text(mcount);
-                        if(mcount == 0){
-                            $("#msgcountnotify").css('display','none');
+                        if(mcount_result == 0){
+                            //$("#msgcountnotify").css('display','none');
                             $("#"+schuuidtoupdateintooltip).css('display','none');
                         }
                         $(".leaflet-popup-close-button").removeClass('updateCommentscount');
+                        
+                        }, 1000);
+                        //$("#"+schuuidtoupdateintooltip).css('display','inline-flex');
+                        
                     },
                     error: function(jqxhr) { 
                         $("#hideloader").hide();

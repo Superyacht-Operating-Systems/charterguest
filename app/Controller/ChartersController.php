@@ -1251,13 +1251,14 @@ class ChartersController extends AppController {
     public function crew_list() {
         $session = $this->Session->read('charter_info');
         $sessionAssoc = $this->Session->read('charter_assoc_info');
-         //echo "<pre>";print_r($sessionAssoc);exit;
+        // echo "<pre>";print_r($session);exit;
         if (empty($session)) {
+            $this->set('guestType','');
             $this->redirect(array('action' => 'index'));
         } else if (!empty($sessionAssoc)) {
             $user_uuid = $sessionAssoc['CharterGuestAssociate']['UUID'];
             $sessionCharterGuest = $this->Session->read('charter_info.CharterGuest');
-           // echo "<pre>";print_r($sessionCharterGuest);exit;
+            //echo "<pre>";print_r($sessionCharterGuest);exit;
             $this->loadModel('GuestList');
             $charterAssocData = $this->GuestList->find('first', array('conditions' => array('UUID' => $user_uuid)));
             //echo "<pre>"; print_r($charterAssocData); exit;
@@ -1271,6 +1272,12 @@ class ChartersController extends AppController {
                 $this->redirect(array('action' => 'preference'));
             }
         
+        }else{
+           // echo "<pre>";print_r($session);exit;
+            $user_uuid = $session['CharterGuest']['users_UUID'];
+            $this->set('user_uuid',$user_uuid);
+
+            $this->set('guestType','');
         }
         $actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
        
@@ -10228,10 +10235,10 @@ public function getIndividualmsgcountMarer() {
             $lastschuuid = reset($scheduleSameLocationUUID);
             $mcount = "";
             foreach($scheduleSameLocationUUID as $schuuid){
-                $mcount += $this->CharterGuest->getCharterMarkerCommentCount($yachtDbName,$schuuid);
+                $mcount += $this->CharterGuest->getCharterMarkerCommentCount_new($yachtDbName,$schuuid);
             }
         }else{
-                $mcount = $this->CharterGuest->getCharterMarkerCommentCount($yachtDbName,$schuuid);
+                $mcount = $this->CharterGuest->getCharterMarkerCommentCount_new($yachtDbName,$schuuid);
                 $lastschuuid = $schuuid;
         }
         
@@ -10240,7 +10247,7 @@ public function getIndividualmsgcountMarer() {
 
     $result['status'] = $mcount;
     $result['schuuidtoupdateintooltip'] = $lastschuuid;
-
+//echo "<pre>"; print_r($result); exit;
     echo json_encode($result);
     exit;
     
