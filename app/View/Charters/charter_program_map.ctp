@@ -4073,7 +4073,7 @@ if(e.target.firstdaytoloc){
                                 var tooltipcontent = e.target._tooltip._content;
                                 var selectedmarkertitle = e.target.daytitle;
                                 var selectedmarkerday_num = e.target.day_num;
-                                //console.log(popLocation);
+                                console.log(markerArray);
                                 fitzoommap.push(popLocation);
                                 if (markerArray.length > 0) {
                                         $('.markersnamesmodalmap').find('option').remove();
@@ -4095,15 +4095,15 @@ if(e.target.firstdaytoloc){
                                                                 var valTitle = "";
                                                             }
 
-                                                                $('.markersnamesmodalmap')
-                                                                    .append($("<option></option>")
-                                                                        .attr("id", "marker_" + value.scheduleId)
-                                                                        .attr("data-lat", value._latlng.lat)
-                                                                        .attr("data-long", value._latlng.lng)
-                                                                        .attr("data-schid", value.scheduleId)
-                                                                        .attr("data-daynum", value.day_num)
-                                                                        .attr("value", valTitle +' - Day '+value.day_num)
-                                                                        .text(valTitle +' - Day '+value.day_num)
+                    $('.markersnamesmodalmap')
+                                                .append($("<option></option>")
+                                                .attr("id", "marker_" + value.scheduleId)
+                                                .attr("data-lat", value._latlng.lat)
+                                                .attr("data-long", value._latlng.lng)
+                                                .attr("data-schid", value.scheduleId)
+                                           .attr("data-daynum", value.day_num)
+                                             .attr("value", valTitle +' - Day '+value.day_num)
+                                             .text(valTitle +' - Day '+value.day_num)
                                                                     );
                                                                     //temptitle.push(value.daytitle);
                                                         //}
@@ -4151,8 +4151,8 @@ if(e.target.firstdaytoloc){
                                 //modalmap.fitBounds(fitzoommap);
                                 //modalmap.setView(new L.LatLng(lattitude,longitude), 7);
                                 //modalmap.panBy([0,0]);
-                                 console.log(lattitude);  
-                                console.log(longitude);  
+                                 console.log(lattitude+'from');  
+                                console.log(longitude+'from');  
                                 setTimeout(() => {
                                     modalmap.invalidateSize();
                                 }, 0);
