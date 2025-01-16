@@ -378,7 +378,7 @@
                 if(isset($charter_program_schedules_UUID_array) && !empty($charter_program_schedules_UUID_array)){
                     $result = array();
                     foreach($charter_program_schedules_UUID_array as $uuid){
-                        $result[$uuid] = $this->getCharterMarkerCommentCount($yachtDbName,$uuid);
+                        $result[$uuid] = $this->getCharterMarkerCommentCount_new($yachtDbName,$uuid);
                     }
 
                    

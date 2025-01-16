@@ -2428,7 +2428,7 @@ border-radius: 4px; */
             <option value="Spanish">Spanish</option>
             </select>
             -->
-                <button type="button" class="close" data-schuuid="" id="markerModalclose" aria-hidden="true" style="margin-right: 5px;">×</button>
+                <button type="button" class="close" data-schuuid="" data-title="" data-day="" id="markerModalclose" aria-hidden="true" style="margin-right: 5px;">×</button>
                 <h4 class="modal-title" id="markerModalLabel" style="text-align: center;font-weight: bold;"></h4>
             </div>
             <div class="modal-body location_Modal_body markmodalbody">
@@ -3161,8 +3161,8 @@ foreach($samelocations[$startingloc['CharterProgramSchedule']['lattitude']] as $
                     end.day_num = "<?php echo $startingloc['CharterProgramSchedule']['day_num']; ?>";
                     end.markerNum = "<?php echo $startingloc['CharterProgramSchedule']['day_num']; ?>";
                     end.day_dates = "<?php echo $startingloc['CharterProgramSchedule']['day_dates']; ?>";
-                    end._latlng.lat = "<?php echo $embark_lat; ?>";
-                     end._latlng.lng = "<?php echo $embark_long; ?>";
+                    end._latlng.lat = "<?php echo $startingloc['CharterProgramSchedule']['lattitude']; ?>";
+                     end._latlng.lng = "<?php echo $startingloc['CharterProgramSchedule']['longitude']; ?>";
                      end.distancetotal = "<?php echo $markertotal[$startingloc['CharterProgramSchedule']['title'].' - Day '.$startingloc['CharterProgramSchedule']['day_num']]['distance']; ?>";
                     end.durationtotal = "<?php echo $markertotal[$startingloc['CharterProgramSchedule']['title'].' - Day '.$startingloc['CharterProgramSchedule']['day_num']]['duration'];  ?>";
                     end.consumptiontotal = "<?php echo $markertotal[$startingloc['CharterProgramSchedule']['title'].' - Day '.$startingloc['CharterProgramSchedule']['day_num']]['consumption']; ?>";
@@ -3171,6 +3171,16 @@ foreach($samelocations[$startingloc['CharterProgramSchedule']['lattitude']] as $
                     markerArray.push(end);
                     end.addTo(map);
 
+                    var beginmarker = L.marker(["<?php echo $embark_lat; ?>", "<?php echo $embark_long; ?>"], {draggable: false,pmIgnore: true})
+    .bindTooltip("<?php echo "<span class='owntooltip daytooltip_".$startingloc['CharterProgramSchedule']['UUID']."' >".$SumDaytitle."<b style='font-size: 10px;'>".htmlspecialchars($startingloc['CharterProgramSchedule']['title'])."<hr>".$markertotal[$startingloc['CharterProgramSchedule']['title'].' - Day '.$startingloc['CharterProgramSchedule']['day_num']]['endplace']."</b><br><b style='font-size: 10px;'>".$markertotal[$startingloc['CharterProgramSchedule']['title'].' - Day '.$startingloc['CharterProgramSchedule']['day_num']]['distance'].$bar.$markertotal[$startingloc['CharterProgramSchedule']['title'].' - Day '.$startingloc['CharterProgramSchedule']['day_num']]['duration'].$bar.$markertotal[$startingloc['CharterProgramSchedule']['title'].' - Day '.$startingloc['CharterProgramSchedule']['day_num']]['consumption']."</b></span>"?>",
+                    {
+                        permanent: true, 
+                        offset: [0,0],
+                        direction: 'right',
+                        className: "Tooltip",
+                        noWrap: false,
+                    }).on("click", markerOnClick);
+                    beginmarker.addTo(map);
 
  <?php  } /********************************end place last marker ************ */
  ?>
@@ -3181,12 +3191,19 @@ foreach ($scheduleData as $key => $schedule) {
     if(isset($samelocations[$schedule['CharterProgramSchedule']['lattitude']]) && !empty($samelocations[$schedule['CharterProgramSchedule']['lattitude']])){
 $mar_loc_latitude = $schedule['CharterProgramSchedule']['lattitude'];
         $schuuid = $schedule['CharterProgramSchedule']['UUID'];
-    if($samemarkercommentcount[$schedule['CharterProgramSchedule']['lattitude']] == 0){
+        $mar_title = $schedule['CharterProgramSchedule']['to_location'];
+        if($schedule['CharterProgramSchedule']['day_num'] == 1){
+            $count_marker_string = $schedule['CharterProgramSchedule']['lattitude'].'_'.$schuuid.'_'.$schedule['CharterProgramSchedule']['title'];
+        }else{
+            $count_marker_string = $schedule['CharterProgramSchedule']['lattitude'].'_'.$schuuid.'_'.$schedule['CharterProgramSchedule']['to_location'];
+        }
+        
+    if($samemarkercommentcount[$count_marker_string] == 0){
         $marker_msg_count = "style='display:none;'";
         $samemkrcount = "";
-    }else if($samemarkercommentcount[$schedule['CharterProgramSchedule']['lattitude']] != 0){
+    }else if($samemarkercommentcount[$count_marker_string] != 0){
         $marker_msg_count = "";
-        $samemkrcount = $samemarkercommentcount[$schedule['CharterProgramSchedule']['lattitude']];
+        $samemkrcount = $samemarkercommentcount[$count_marker_string];
         if(isset($guesttype) && !empty($guesttype)){ //echo $guesttype; exit;
             if($guesttype == "guest"){
                 if($cp_guesttype == 'email_recipient'){
@@ -3239,14 +3256,14 @@ $mar_loc_latitude = $schedule['CharterProgramSchedule']['lattitude'];
     var textMarker = L.marker(["<?php echo $schedule['CharterProgramSchedule']['lattitude']; ?>", "<?php echo $schedule['CharterProgramSchedule']['longitude']; ?>"], {
         <?php if($schedule['CharterProgramSchedule']['stationary'] == 0){ ?>
   icon: L.divIcon({
-    html: "<?php if($markernumberDisplay < 10 ){ ?>    <span>&nbsp;<?php echo $markernumberDisplay; ?></span> <?php } else { ?><span><?php echo $markernumberDisplay; ?></span><?php } ?><span id='<?php echo $schuuid ?>'   class='acti-count-onmarker' <?php echo $marker_msg_count ?> ><?php echo $samemkrcount ?></span>",
+    html: "<?php if($markernumberDisplay < 10 ){ ?>    <span>&nbsp;<?php echo $markernumberDisplay; ?></span> <?php } else { ?><span><?php echo $markernumberDisplay; ?></span><?php } ?><span id='<?php echo $schuuid.'_'.$mar_title; ?>'   class='acti-count-onmarker' <?php echo $marker_msg_count ?> ><?php echo $samemkrcount ?></span>",
     className: 'text-below-marker',
     }),
     rotationAngle: 0
     <?php } ?>
     <?php if($schedule['CharterProgramSchedule']['stationary'] == 1){ ?>
         icon: L.divIcon({
-    html: "<?php if($markernumberDisplay < 10 ){ ?>    <span>&nbsp;<?php echo $markernumberDisplay; ?></span> <?php } else { ?><span><?php echo $markernumberDisplay; ?></span><?php } ?><span id='<?php echo $schuuid ?>'   class='acti-count-onmarker' <?php echo $marker_msg_count ?> ><?php echo $samemkrcount ?></span>",
+    html: "<?php if($markernumberDisplay < 10 ){ ?>    <span>&nbsp;<?php echo $markernumberDisplay; ?></span> <?php } else { ?><span><?php echo $markernumberDisplay; ?></span><?php } ?><span id='<?php echo $schuuid.'_'.$mar_title; ?>'   class='acti-count-onmarker' <?php echo $marker_msg_count ?> ><?php echo $samemkrcount ?></span>",
     className: textbelowmarkerdeg,
     }),
     rotationAngle: "<?php echo $rotationAngle; ?>"
@@ -3262,12 +3279,14 @@ if(isset($startingloc['CharterProgramSchedule']['lattitude'])){
 
 $schuuid = $startingloc['CharterProgramSchedule']['UUID'];
 $primary_id = $startingloc['CharterProgramSchedule']['id'];
-if($samemarkercommentcount[$startingloc['CharterProgramSchedule']['row_from_lat']] == 0){
+$start_title = $startingloc['CharterProgramSchedule']['title'];
+$count_marker_string_start = $startingloc['CharterProgramSchedule']['row_from_lat'].'_'.$schuuid.'_'.$startingloc['CharterProgramSchedule']['title'];
+if($samemarkercommentcount[$count_marker_string_start] == 0){
     $marker_msg_count = "style='display:none;'";
     $samemkrcount = "";
-}else if($samemarkercommentcount[$startingloc['CharterProgramSchedule']['row_from_lat']] != 0){
+}else if($samemarkercommentcount[$count_marker_string_start] != 0){
     $marker_msg_count = "";
-    $samemkrcount = $samemarkercommentcount[$startingloc['CharterProgramSchedule']['row_from_lat']];
+    $samemkrcount = $samemarkercommentcount[$count_marker_string_start];
     if(isset($guesttype) && !empty($guesttype)){ //echo $guesttype; exit;
         if($guesttype == "guest"){
             if($cp_guesttype == 'email_recipient'){
@@ -3306,7 +3325,7 @@ $markernumberDisplay = $startingloc['CharterProgramSchedule']['day_num'];
 
 var textMarker = L.marker(["<?php echo $embark_lat; ?>", "<?php echo $embark_long; ?>"], {
 icon: L.divIcon({
-html: "<?php if($markernumberDisplay < 10 ){ ?><span>&nbsp;<?php echo $markernumberDisplay; ?></span> <?php } else { ?><span><?php echo $markernumberDisplay; ?></span><?php } ?><span id='<?php echo $schuuid ?>'   class='acti-count-onmarker' <?php echo $marker_msg_count; ?> ><?php echo $samemkrcount ?></span>",
+html: "<?php if($markernumberDisplay < 10 ){ ?><span>&nbsp;<?php echo $markernumberDisplay; ?></span> <?php } else { ?><span><?php echo $markernumberDisplay; ?></span><?php } ?><span id='<?php echo $schuuid.'_'.$start_title; ?>'   class='acti-count-onmarker' <?php echo $marker_msg_count; ?> ><?php echo $samemkrcount ?></span>",
 className: 'text-below-marker',
 tooltipAnchor: [ 0, 0 ]
 })
@@ -3877,6 +3896,7 @@ function markerOnClick(e) {
     var tablepId = e.target.tablepId;
 
     var counttitle = e.target.counttitle;
+    var dayNum = e.target.day_num;
     // to take the day title for day1 having two locations
     if(e.target.debarkation_flag == 1 && e.target.day_num == 1){
         var daytitle = e.target.daytitle;
@@ -4001,6 +4021,8 @@ if(e.target.firstdaytoloc){
                         $("#markerModal_load").html(result.popupHtml);
                         
                         $("#markerModalclose").attr("data-schuuid",scheduleUUId);
+                        $("#markerModalclose").attr("data-title",daytitle);
+                        $("#markerModalclose").attr("data-day",dayNum);
                         $("#markerModal").show();
                         $(".markmodalbody").scrollTop(0);
                        // update_mapContainer();
@@ -4073,7 +4095,8 @@ if(e.target.firstdaytoloc){
                                 var tooltipcontent = e.target._tooltip._content;
                                 var selectedmarkertitle = e.target.daytitle;
                                 var selectedmarkerday_num = e.target.day_num;
-                                //console.log(popLocation);
+                               // console.log('-----------------')
+                                //console.log(markerArray);
                                 fitzoommap.push(popLocation);
                                 if (markerArray.length > 0) {
                                         $('.markersnamesmodalmap').find('option').remove();
@@ -4094,7 +4117,9 @@ if(e.target.firstdaytoloc){
                                                             }else{
                                                                 var valTitle = "";
                                                             }
-
+console.log(valTitle);
+console.log(value._latlng.lat);
+console.log(value._latlng.lng);
                                                                 $('.markersnamesmodalmap')
                                                                     .append($("<option></option>")
                                                                         .attr("id", "marker_" + value.scheduleId)
@@ -4145,6 +4170,8 @@ if(e.target.firstdaytoloc){
                                 if(endmarkerOrnot == "yes"){
                                     frommarker = "";
                                 }
+                                //console.log(lattitude);
+                                //console.log(longitude);
                                 drawrouteinmodal(frommarker);
                               
                                 // console.log(selectedmarkertitle);
@@ -4214,14 +4241,14 @@ $(document).on("change", ".markersnamesmodalmap", function(e) {
         
     selectedTitle = $(this).val();
     //alert(selectedTitle);
-    //console.log(selectedTitle);
+    console.log(selectedTitle);
     if (selectedTitle != "") {
         selectedlat = $(".markersnamesmodalmap option:selected").attr("data-lat");
         selectedlong = $(".markersnamesmodalmap option:selected").attr("data-long");
         var schid = $(".markersnamesmodalmap option:selected").attr("data-schid");
         var modalmapdaynumber = $(".markersnamesmodalmap option:selected").attr("data-daynum");
         
-        //console.log(markerArray);  //return false;
+        //console.log(markerArray);  return false;
         
         const selectedTitleFrom = selectedTitle.split("-");
         //console.log(selectedTitleFrom);
@@ -4248,8 +4275,8 @@ $(document).on("change", ".markersnamesmodalmap", function(e) {
         });
 
         // console.log(routemodalmarkerselected); 
-        //  console.log(selectedlat);  
-        //  console.log(selectedlong);  
+          console.log(selectedlat+'to');  
+          console.log(selectedlong+'to');  
         if (routemodalmarkerselected != "") { //alert();
             modalmap.removeLayer(routemodalmarkerselected);
         }
@@ -4323,11 +4350,13 @@ $(document).on("change", ".markersnamesmodalmap", function(e) {
 $(document).on("click", "#markerModalclose", function(e) {
    
    var schuuid =  $(this).attr("data-schuuid");
-   markerModalclose(schuuid);
+   var title =  $(this).attr("data-title");
+   var daynum =  $(this).attr("data-day");
+   markerModalclose(schuuid,title,daynum);
 });
 
-function markerModalclose(scheduleSameLocationUUID){
-    msgcount(scheduleSameLocationUUID);
+function markerModalclose(scheduleSameLocationUUID,title,daynum){
+    msgcount(scheduleSameLocationUUID,title,daynum);
                             $("#markerModal").hide();
                             $("#map .leaflet-control-attribution").show();
                             $("#CruisingButton").show();
@@ -4631,7 +4660,7 @@ $(document).on("click", ".stationarydays", function(e) {
 });
 
 function drawrouteinmodal(frommarker) { //alert();
-    console.log(frommarker);
+    //console.log(frommarker);
 modalmap.setView(new L.LatLng(ModalMapsinglemarkerlat, ModalMapsinglemarkerlong));
 
 $("#debarkation").text('');
@@ -5142,7 +5171,7 @@ function hexc(colorval) {
     return color;
 }
 
-    function msgcount(scheduleSameLocationUUID){
+    function msgcount(scheduleSameLocationUUID,title='',daynum=''){
     //console.log(e);
     //var charterpgid = $(".mapPopup").attr('data-schuuid'); 
     var charterpgid = scheduleSameLocationUUID; 
@@ -5150,7 +5179,7 @@ function hexc(colorval) {
     var yachtId = $("#yachtId").val();
     if(charterpgid){ //alert();
                     $("#hideloader").show();
-                    var data = { "charterpgid": charterpgid,'yachtId':yachtId,'scheduleSameLocationUUID':scheduleSameLocationUUID};
+                    var data = { "charterpgid": charterpgid,'yachtId':yachtId,'scheduleSameLocationUUID':scheduleSameLocationUUID,'title':title,'daynum':daynum};
                     $.ajax({
                     type: "POST",
                     url: basefolder+"/"+"charters/getIndividualmsgcountMarer",
@@ -5172,7 +5201,7 @@ function hexc(colorval) {
 //alert();
 
                             $(".leaflet-tooltip").css("display","none");
-                            $("#"+schuuidtoupdateintooltip).text(mcount_result);
+                            $("#"+schuuidtoupdateintooltip+"_"+title).text(mcount_result);
                             if(guesttype == "guest"){
                                     if(allow_comments != '' && allow_comments == 1){
                                         $("#"+schuuidtoupdateintooltip).css('display','inline-flex');

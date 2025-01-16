@@ -7504,7 +7504,7 @@ WHERE cga_menus.UUID = '$uuid'";
                         } //exit;
                         
                 }
-                //echo "<pre>";print_r($scheduleData); exit;
+               // echo "<pre>";print_r($scheduleData); exit;
                 $this->Session->delete("yachFullName");
                 
                 //echo "<pre>";print_r($YachtData); exit;
@@ -7860,8 +7860,9 @@ WHERE cga_menus.UUID = '$uuid'";
 
                     if(!empty($scheduleData)){
                         $myLastElement = reset($scheduleData);
-                        $org_title = $myLastElement['CharterProgramSchedule']['title'];
-                        $to_location = $myLastElement['CharterProgramSchedule']['to_location'];
+                       // echo "<pre>";print_r($myLastElement);
+                         $org_title = $myLastElement['CharterProgramSchedule']['title'];
+                         $to_location = $myLastElement['CharterProgramSchedule']['to_location'];
                         $myLastElement['CharterProgramSchedule']['title'] = $myLastElement['CharterProgramSchedule']['to_location'];
                         $val_pass = '"'.$to_location.'"';
                         $location_names = $this->CharterGuest->query("SELECT * FROM $yachtDbName.location_contents LocationContent WHERE LocationContent.location = $val_pass AND LocationContent.type = 'Location' AND LocationContent.is_deleted=0");
@@ -7871,6 +7872,8 @@ WHERE cga_menus.UUID = '$uuid'";
                         $myLastElement['CharterProgramSchedule']['longitude'] = $location_names[0]['LocationContent']['longitude'];
                         $myLastElement['CharterProgramSchedule']['title'] = $myLastElement['CharterProgramSchedule']['to_location'];
                         $myLastElement['CharterProgramSchedule']['notes'] = $myLastElement['CharterProgramSchedule']['debarkation_desc'];
+                        $myLastElement['CharterProgramSchedule']['row_from_lat'] = $location_names[0]['LocationContent']['lattitude'];
+                        $myLastElement['CharterProgramSchedule']['row_from_long'] =  $location_names[0]['LocationContent']['longitude'];
                         $myLastElement['CharterProgramSchedule']['lastarr_title'] = $org_title;
                         $this->set('testlat', $location_names[0]['LocationContent']['lattitude']);
                         $this->set('testlong', $location_names[0]['LocationContent']['longitude']);
@@ -7916,7 +7919,7 @@ WHERE cga_menus.UUID = '$uuid'";
                                 }
                                 $myLastElement_locationimages['last'] = $trimmed_array;
                     }
-                    //echo "<pre>"; print_r($scheduleData); exit;
+                   // echo "<pre>"; print_r($scheduleData); exit;
                     //print_r($myLastElement_locationimages); exit;
                     $this->set('myLastElement_locationimages', $myLastElement_locationimages);
                    //
@@ -7925,19 +7928,29 @@ WHERE cga_menus.UUID = '$uuid'";
                             $newschedule = array();
                             foreach($scheduleData as $key => $value){
                                 //echo "<pre>"; print_r($value); exit;
+                                ////16jan
+                                $rowfromloc_temp = $value['CharterProgramSchedule']['title'];
+                                $val_pass_locr_temp = '"'.$rowfromloc_temp.'"';
                                 
+                                $LocationContent = $this->CharterGuest->query("SELECT * FROM $yachtDbName.location_contents LocationContent WHERE LocationContent.location = $val_pass_locr_temp AND LocationContent.type = 'Location' AND LocationContent.is_deleted=0");
+                            
+                               
+                              
+                                $value['CharterProgramSchedule']['row_from_lat'] = $LocationContent[0]['LocationContent']['lattitude'];
+                                $value['CharterProgramSchedule']['row_from_long'] =  $LocationContent[0]['LocationContent']['longitude'];
                        
+                                ////////////////////////////
                                 if($key == 1){                                   
                                 $newschedule[] = $end_location_last;
                                 }
 
                                 if($key == 0){
                                     $value['CharterProgramSchedule']['marker_msg_count'] = $this->CharterGuest->getCharterMarkerCommentCount($yachtDbName,$value['CharterProgramSchedule']['UUID'],$value['CharterProgramSchedule']['title']);
-                                    $samemarkercommentcount[$value['CharterProgramSchedule']['row_from_lat']] += $value['CharterProgramSchedule']['marker_msg_count'];
+                                    $samemarkercommentcount[$value['CharterProgramSchedule']['row_from_lat'].'_'.$value['CharterProgramSchedule']['UUID'].'_'.$value['CharterProgramSchedule']['title']] += $value['CharterProgramSchedule']['marker_msg_count'];
                                 }else{
                                     $value['CharterProgramSchedule']['marker_msg_count'] = $this->CharterGuest->getCharterMarkerCommentCount($yachtDbName,$value['CharterProgramSchedule']['UUID'],$value['CharterProgramSchedule']['to_location']);
                                     //echo $value['CharterProgramSchedule']['title']; exit;
-                                    $samemarkercommentcount[$value['CharterProgramSchedule']['lattitude']] += $value['CharterProgramSchedule']['marker_msg_count'];
+                                    $samemarkercommentcount[$value['CharterProgramSchedule']['lattitude'].'_'.$value['CharterProgramSchedule']['UUID'].'_'.$value['CharterProgramSchedule']['to_location']] += $value['CharterProgramSchedule']['marker_msg_count'];
                                 }
                                                           /** commesnts new */
                             if($key == 0){
@@ -7996,12 +8009,14 @@ WHERE cga_menus.UUID = '$uuid'";
                             $scheduleData = $newschedule;
                             //$totsch = count($scheduleData)-1;   
                         }
-                        //echo "<pre>"; print_r($scheduleData); exit('12345');
+                        //echo "<pre>"; print_r($scheduleData); exit;
+                        //echo "<pre>"; print_r($scheduleData); print_r($samemarkercommentcount); exit('12345');
                         $this->set('locationComment', $locationComment);
                     $this->set('scheduleData', $scheduleData);
                     $this->set('samemarkercommentcount', $samemarkercommentcount);
                 
-                //echo "<pre>";print_r($scheduleData); print_r($samemarkercommentcount); exit;
+                //echo "<pre>";print_r($scheduleData); //print_r($samemarkercommentcount); 
+                //exit;
                     if(isset($attachment) && !empty($attachment)){
                         $this->set('programFiles', $attachment);
                     }
@@ -10223,8 +10238,11 @@ public function getIndividualmsgcountMarer() {
         $result = array();
         $session = $this->Session->read();
         $postData = $this->request->data;
+        //echo "<pre>"; print_r($postData); exit;
         $schuuid = $postData['charterpgid'];
         $yachtId = $postData['yachtId'];
+        $title = $postData['title'];
+        $daynum = $postData['daynum'];
         $this->loadModel('Yacht');
         $yachtData = $this->Yacht->find("first", array('fields' => array('yfullName','ydb_name'), 'conditions' => array('id' => $yachtId))); 
         $yachtDbName = $yachtData['Yacht']['ydb_name'];
@@ -10235,10 +10253,10 @@ public function getIndividualmsgcountMarer() {
             $lastschuuid = reset($scheduleSameLocationUUID);
             $mcount = "";
             foreach($scheduleSameLocationUUID as $schuuid){
-                $mcount += $this->CharterGuest->getCharterMarkerCommentCount_new($yachtDbName,$schuuid);
+                $mcount += $this->CharterGuest->getCharterMarkerCommentCount($yachtDbName,$schuuid,$title);
             }
         }else{
-                $mcount = $this->CharterGuest->getCharterMarkerCommentCount_new($yachtDbName,$schuuid);
+                $mcount = $this->CharterGuest->getCharterMarkerCommentCount($yachtDbName,$schuuid,$title);
                 $lastschuuid = $schuuid;
         }
         
@@ -10247,6 +10265,8 @@ public function getIndividualmsgcountMarer() {
 
     $result['status'] = $mcount;
     $result['schuuidtoupdateintooltip'] = $lastschuuid;
+    $result['daynum'] = $daynum;
+    $result['title'] = $title;
 //echo "<pre>"; print_r($result); exit;
     echo json_encode($result);
     exit;
