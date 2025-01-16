@@ -3966,6 +3966,9 @@ if(e.target.firstdaytoloc){
         $(".owntooltip").hide();
         $(".smalltooltip").hide();
         $(".Tooltip").hide();
+        console.log(daytitle);
+        console.log(scheduleUUId+'_'+daytitle);
+        
         $(".stationarytooltip"+stationarytooltipnum).show();
         $(".stationarytooltip"+stationarytooltipnum).find(".stationary").show();
         return false;
@@ -4403,6 +4406,7 @@ $(document).on("click", ".stationarydays", function(e) {
    var selecteddaynumstationary = $(this).attr('data-num');
    var datastationaryOrnot = $(this).attr('data-stat');
    var datastatdate = $(this).text();
+   var sd_title = $(this).attr('data-title');
 
    var splitdaydate = datastatdate.split('Day '+selecteddaynumstationary)
    var daydisplayno = splitdaydate[1];
@@ -4464,6 +4468,8 @@ $(document).on("click", ".stationarydays", function(e) {
                         
                         //$("#markerModalclose").attr("data-schuuid",scheduleSameLocationUUID);
                         $("#markerModalclose").attr("data-schuuid",selectedschuuid);
+                        $("#markerModalclose").attr("data-title",sd_title);
+                        $("#markerModalclose").attr("data-day",selecteddaynumstationary);
                         $("#markerModal").show();
                         $(".markmodalbody").scrollTop(0);
 
@@ -5206,19 +5212,21 @@ function hexc(colorval) {
                                     if(allow_comments != '' && allow_comments == 1){
                                         $("#"+schuuidtoupdateintooltip).css('display','inline-flex');
                                     }else{
-                                        $("#msgcountnotify").css('display','none');
-                                        $("#"+schuuidtoupdateintooltip).css('display','none');
+                                        //$("#msgcountnotify").css('display','none');
+                                        $("#"+schuuidtoupdateintooltip+"_"+title).css('display','none');
                                     }
                                 }
                         //$("#msgcountnotify").text(mcount);
                         if(mcount_result == 0){
-                            $("#msgcountnotify").css('display','none');
-                            $("#"+schuuidtoupdateintooltip).css('display','none');
+                            //$("#msgcountnotify").css('display','none');
+                            $("#"+schuuidtoupdateintooltip+"_"+title).css('display','none');
+                        }else{
+                            $("#"+schuuidtoupdateintooltip+"_"+title).css('display','inline-flex');
                         }
                         $(".leaflet-popup-close-button").removeClass('updateCommentscount');
                         
                         }, 1000);
-                        $("#"+schuuidtoupdateintooltip).css('display','inline-flex');
+                        $("#"+schuuidtoupdateintooltip+"_"+title).css('display','inline-flex');
                         
                     },
                     error: function(jqxhr) { 
