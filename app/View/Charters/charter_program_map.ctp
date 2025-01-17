@@ -3256,14 +3256,14 @@ $mar_loc_latitude = $schedule['CharterProgramSchedule']['lattitude'];
     var textMarker = L.marker(["<?php echo $schedule['CharterProgramSchedule']['lattitude']; ?>", "<?php echo $schedule['CharterProgramSchedule']['longitude']; ?>"], {
         <?php if($schedule['CharterProgramSchedule']['stationary'] == 0){ ?>
   icon: L.divIcon({
-    html: "<?php if($markernumberDisplay < 10 ){ ?>    <span>&nbsp;<?php echo $markernumberDisplay; ?></span> <?php } else { ?><span><?php echo $markernumberDisplay; ?></span><?php } ?><span id='<?php echo $schuuid.'_'.$mar_title; ?>'   class='acti-count-onmarker' <?php echo $marker_msg_count ?> ><?php echo $samemkrcount ?></span>",
+    html: "<?php if($markernumberDisplay < 10 ){ ?>    <span>&nbsp;<?php echo $markernumberDisplay; ?></span> <?php } else { ?><span><?php echo $markernumberDisplay; ?></span><?php } ?><span id='<?php echo $schuuid.'_'.preg_replace('/\s+/', '', $mar_title); ?>'   class='acti-count-onmarker <?php echo $schuuid.'_'.preg_replace('/\s+/', '', $mar_title); ?>' <?php echo $marker_msg_count ?> ><?php echo $samemkrcount ?></span>",
     className: 'text-below-marker',
     }),
     rotationAngle: 0
     <?php } ?>
     <?php if($schedule['CharterProgramSchedule']['stationary'] == 1){ ?>
         icon: L.divIcon({
-    html: "<?php if($markernumberDisplay < 10 ){ ?>    <span>&nbsp;<?php echo $markernumberDisplay; ?></span> <?php } else { ?><span><?php echo $markernumberDisplay; ?></span><?php } ?><span id='<?php echo $schuuid.'_'.$mar_title; ?>'   class='acti-count-onmarker' <?php echo $marker_msg_count ?> ><?php echo $samemkrcount ?></span>",
+    html: "<?php if($markernumberDisplay < 10 ){ ?>    <span>&nbsp;<?php echo $markernumberDisplay; ?></span> <?php } else { ?><span><?php echo $markernumberDisplay; ?></span><?php } ?><span id='<?php echo $schuuid.'_'.preg_replace('/\s+/', '', $mar_title); ?>'   class='acti-count-onmarker <?php echo $schuuid.'_'.preg_replace('/\s+/', '', $mar_title); ?>' <?php echo $marker_msg_count ?> ><?php echo $samemkrcount ?></span>",
     className: textbelowmarkerdeg,
     }),
     rotationAngle: "<?php echo $rotationAngle; ?>"
@@ -3325,7 +3325,7 @@ $markernumberDisplay = $startingloc['CharterProgramSchedule']['day_num'];
 
 var textMarker = L.marker(["<?php echo $embark_lat; ?>", "<?php echo $embark_long; ?>"], {
 icon: L.divIcon({
-html: "<?php if($markernumberDisplay < 10 ){ ?><span>&nbsp;<?php echo $markernumberDisplay; ?></span> <?php } else { ?><span><?php echo $markernumberDisplay; ?></span><?php } ?><span id='<?php echo $schuuid.'_'.$start_title; ?>'   class='acti-count-onmarker' <?php echo $marker_msg_count; ?> ><?php echo $samemkrcount ?></span>",
+html: "<?php if($markernumberDisplay < 10 ){ ?><span>&nbsp;<?php echo $markernumberDisplay; ?></span> <?php } else { ?><span><?php echo $markernumberDisplay; ?></span><?php } ?><span id='<?php echo $schuuid.'_'.preg_replace('/\s+/', '', $start_title); ?>'   class='acti-count-onmarker <?php echo $schuuid.'_'.preg_replace('/\s+/', '', $start_title); ?>' <?php echo $marker_msg_count; ?> ><?php echo $samemkrcount ?></span>",
 className: 'text-below-marker',
 tooltipAnchor: [ 0, 0 ]
 })
@@ -5197,7 +5197,7 @@ function hexc(colorval) {
                         console.log(mcount_result);
                         var schuuidtoupdateintooltip = result.schuuidtoupdateintooltip;
                         //console.log($("#"+schuuidtoupdateintooltip));
-                        
+                        var trimmed_title = title.trim().replace(/\s+/g, '');
                         setTimeout(function () {
                            /* if ($("#" + schuuidtoupdateintooltip).length > 0) {
                                 $("#" + schuuidtoupdateintooltip).text(mcount_result);
@@ -5205,28 +5205,30 @@ function hexc(colorval) {
                                 console.log("Tooltip element not found:", schuuidtoupdateintooltip);
                             }*/
 //alert();
-
+                        
+                        console.log("."+schuuidtoupdateintooltip+"_"+trimmed_title);
                             $(".leaflet-tooltip").css("display","none");
-                            $("#"+schuuidtoupdateintooltip+"_"+title).text(mcount_result);
+                            
+                            $("."+schuuidtoupdateintooltip+"_"+trimmed_title).text(mcount_result);
                             if(guesttype == "guest"){
                                     if(allow_comments != '' && allow_comments == 1){
-                                        $("#"+schuuidtoupdateintooltip).css('display','inline-flex');
+                                        $("."+schuuidtoupdateintooltip).css('display','inline-flex');
                                     }else{
                                         //$("#msgcountnotify").css('display','none');
-                                        $("#"+schuuidtoupdateintooltip+"_"+title).css('display','none');
+                                        $("."+schuuidtoupdateintooltip+"_"+trimmed_title).css('display','none');
                                     }
                                 }
                         //$("#msgcountnotify").text(mcount);
                         if(mcount_result == 0){
                             //$("#msgcountnotify").css('display','none');
-                            $("#"+schuuidtoupdateintooltip+"_"+title).css('display','none');
+                            $("."+schuuidtoupdateintooltip+"_"+trimmed_title).css('display','none');
                         }else{
-                            $("#"+schuuidtoupdateintooltip+"_"+title).css('display','inline-flex');
+                            $("."+schuuidtoupdateintooltip+"_"+trimmed_title).css('display','inline-flex');
                         }
                         $(".leaflet-popup-close-button").removeClass('updateCommentscount');
                         
                         }, 1000);
-                        $("#"+schuuidtoupdateintooltip+"_"+title).css('display','inline-flex');
+                        $("."+schuuidtoupdateintooltip+"_"+trimmed_title).css('display','inline-flex');
                         
                     },
                     error: function(jqxhr) { 
