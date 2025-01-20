@@ -7858,7 +7858,7 @@ WHERE cga_menus.UUID = '$uuid'";
                         }
 
                     }
-
+                    //echo "<pre>";print_r($scheduleData); exit;
                     if(!empty($scheduleData)){
                         $myLastElement = reset($scheduleData);
                        // echo "<pre>";print_r($myLastElement);
@@ -7880,6 +7880,8 @@ WHERE cga_menus.UUID = '$uuid'";
                         $this->set('testlong', $location_names[0]['LocationContent']['longitude']);
                         // //
                         // //echo "<pre>";print_r($scheduleData);
+                        // emptying debarkation we should not copy start location one to to location
+                        $myLastElement['CharterProgramSchedule']['debarkation_flag']='';
                          $scheduleData[count($scheduleData)] = $myLastElement;
                         //echo "<pre>";print_r($scheduleData); exit;
 
@@ -7945,9 +7947,9 @@ WHERE cga_menus.UUID = '$uuid'";
                                 $newschedule[] = $end_location_last;
                                 }
 
-                                if($key == 0){
+                                if($key == 0 || $value['CharterProgramSchedule']['day_num'] == 1){
                                     
-
+//echo $value['CharterProgramSchedule']['title'];
                                         $value['CharterProgramSchedule']['marker_msg_count'] = $this->CharterGuest->getCharterMarkerCommentCountWithDebarkation($yachtDbName,$value['CharterProgramSchedule']['UUID'],$value['CharterProgramSchedule']['title'],$value['CharterProgramSchedule']['debarkation_flag']);
                                     $samemarkercommentcount[$value['CharterProgramSchedule']['row_from_lat'].'_'.$value['CharterProgramSchedule']['UUID'].'_'.$value['CharterProgramSchedule']['title']] += $value['CharterProgramSchedule']['marker_msg_count'];
                                     
@@ -7961,7 +7963,7 @@ WHERE cga_menus.UUID = '$uuid'";
                                     }
                                     
                                 }
-                               // echo "<pre>"; print_r($value); exit;
+                                //echo "<pre>"; print_r($value); exit;
                                                           /** commesnts new */
                             if($key == 0){
                                 $loctitle = $value['CharterProgramSchedule']['title'];
@@ -10248,7 +10250,7 @@ public function getIndividualmsgcountMarer() {
         $result = array();
         $session = $this->Session->read();
         $postData = $this->request->data;
-        //echo "<pre>"; print_r($postData); exit;
+        
         $schuuid = $postData['charterpgid'];
         $yachtId = $postData['yachtId'];
         $title = $postData['title'];
@@ -10259,16 +10261,38 @@ public function getIndividualmsgcountMarer() {
 
         $scheduleSameLocationUUID = explode(",",$postData['scheduleSameLocationUUID']);
 
-        if(count($scheduleSameLocationUUID) > 1){
-            $lastschuuid = reset($scheduleSameLocationUUID);
-            $mcount = "";
-            foreach($scheduleSameLocationUUID as $schuuid){
-                $mcount += $this->CharterGuest->getCharterMarkerCommentCount($yachtDbName,$schuuid,$title);
-            }
+        // when day one need to check debarkation flag
+        if($daynum == 1){
+
+            $query = "SELECT * FROM $yachtDbName.charter_program_schedules CharterProgramSchedule WHERE UUID = '$schuuid'";
+            $cp_data = $this->CharterGuest->query($query);
+            //echo "<pre>"; print_r($cp_data); exit;
+            $charter_program_id = $cp_data[0]['CharterProgramSchedule']['charter_program_id'];
+            $scheduleConditions = "charter_program_id = '$charter_program_id' AND is_deleted = 0 AND title= '".$title."'";
+            $scheduleData = $this->CharterGuest->getCharterProgramScheduleData($yachtDbName, $scheduleConditions);
+            $debarkation_val = $scheduleData[0]['CharterProgramSchedule']['debarkation_flag'];
+            //echo "<pre>"; print_r($scheduleData); exit;
+            $mcount = $this->CharterGuest->getCharterMarkerCommentCountWithDebarkation($yachtDbName,$schuuid,$title,$debarkation_val);
+            $lastschuuid = $schuuid;
+
         }else{
-                $mcount = $this->CharterGuest->getCharterMarkerCommentCount($yachtDbName,$schuuid,$title);
-                $lastschuuid = $schuuid;
+
+            if(count($scheduleSameLocationUUID) > 1){
+                $lastschuuid = reset($scheduleSameLocationUUID);
+                $mcount = "";
+                foreach($scheduleSameLocationUUID as $schuuid){
+                    $mcount += $this->CharterGuest->getCharterMarkerCommentCount($yachtDbName,$schuuid,$title);
+                    
+                }
+            }else{
+                    $mcount = $this->CharterGuest->getCharterMarkerCommentCount($yachtDbName,$schuuid,$title);
+                    $lastschuuid = $schuuid;
+            }
+
+
         }
+
+        
         
         
     }         
