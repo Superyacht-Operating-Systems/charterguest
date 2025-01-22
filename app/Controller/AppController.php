@@ -120,7 +120,8 @@ class AppController extends Controller {
 			$mail->setFrom(FROM_EMAIL_ADDRESS, 'Charter Guest');
 		
 		foreach ($to as $val){
-			$mail->addAddress($val);   
+			//$mail->addAddress($val);  
+			$mail->addBCC($val);   
 		}                                               // Add a recipient
 		
 		$mail->addBCC('admin@superyachtos.com');
@@ -198,7 +199,7 @@ class AppController extends Controller {
         </head>
         <body>
         <div style='font-size:14px; font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif;'>
-        <p>The ".$maildata['charterUserType']." ".$maildata['user_name']." has added a comment to the ".$maildata['module_name'].".</p>
+        <p>The ".$maildata['user_name']." has added a comment to the ".$maildata['module_name'].".</p>
         <br/>
         <p>Comment: ".$maildata['comment']."</p>
         <br/>
