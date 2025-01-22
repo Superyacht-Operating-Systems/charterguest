@@ -463,17 +463,25 @@ class ChartersController extends AppController {
         if(isset($charterGuestData) && !empty($charterGuestData)){
             $commentcounttotal = 0;
             foreach($charterGuestData as $key => $value){
-                $YachtWeblinkConditionsGuest = array('YachtWeblink.charter_company_id' => $value['CharterGuest']['charter_company_id'],'YachtWeblink.yacht_id' => $value['CharterGuest']['yacht_id'],'YachtWeblink.is_deleted'=>0);
-                $YachtWeblinkdata = $this->YachtWeblink->find('first', array('conditions' => $YachtWeblinkConditionsGuest));
-
+                
+                //$YachtWeblinkConditionsGuest = array('YachtWeblink.charter_company_id' => $value['CharterGuest']['charter_company_id'],'YachtWeblink.yacht_id' => $value['CharterGuest']['yacht_id'],'YachtWeblink.is_deleted'=>0);
+                //$YachtWeblinkdata = $this->YachtWeblink->find('first', array('conditions' => $YachtWeblinkConditionsGuest));
+                $YachtWeblinkConditionsGuest = array('Yacht.id' => $value['CharterGuest']['yacht_id'],'Yacht.is_deleted'=>0);
+                $YachtWeblinkdata = $this->Yacht->find('first', array('conditions' => $YachtWeblinkConditionsGuest));
+                //echo "<pre>";print_r($YachtWeblinkdata); exit;
                 $programFilesCond = array('CharterProgramFile.charter_program_id' => $value['CharterGuest']['charter_program_id'],'CharterProgramFile.yacht_id' => $value['CharterGuest']['yacht_id'],'CharterProgramFile.is_deleted'=>0);
                 $programFiledata = $this->CharterProgramFile->find('all', array('conditions' => $programFilesCond));
                 if(isset($YachtWeblinkdata) && !empty($YachtWeblinkdata)){
-                    $isValid = preg_match("@^https?://@", $YachtWeblinkdata['YachtWeblink']['weblink']);
+                    //$isValid = preg_match("@^https?://@", $YachtWeblinkdata['YachtWeblink']['weblink']);
+                    //echo "<pre>";print_r($YachtWeblinkdata); exit;
+                    $isValid = preg_match("@^https?://@", $YachtWeblinkdata['Yacht']['cg_yachts_website']);
                     if($isValid == 0){
-                        $YachtWeblinkdata['YachtWeblink']['weblink'] = 'https://'.$YachtWeblinkdata['YachtWeblink']['weblink'];
+                        //$YachtWeblinkdata['YachtWeblink']['weblink'] = 'https://'.$YachtWeblinkdata['YachtWeblink']['weblink'];
+                        $YachtWeblinkdata['YachtWeblink']['weblink'] = $YachtWeblinkdata['Yacht']['cg_yachts_website'];
+                        //echo "<pre>";print_r($YachtWeblinkdata); exit;
                     }
-                    $charterGuestData[$key]['websitedetails'] = $YachtWeblinkdata;
+                    //$charterGuestData[$key]['websitedetails'] = $YachtWeblinkdata;
+                    $charterGuestData[$key]['websitedetails'] = $YachtWeblinkdata['Yacht']['cg_yachts_website'];
                 }
                 $charter_from_date = date("d M Y", strtotime($value['CharterGuest']['charter_from_date']));
                 if(isset($programFiledata)){

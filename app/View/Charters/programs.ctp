@@ -781,10 +781,10 @@ input:focus {
 <?php 
    // Owner & head charterer
 if(isset($charterGuestData) && !empty($charterGuestData)){
-    
+    //echo "<pre>"; print_r($charterGuestData); exit;
     //foreach (range(1, 20) as $i) {
         foreach($charterGuestData as $data){
-        
+            //echo "<pre>"; print_r($data); exit;
             $charterName = $data['CharterGuest']['charter_name'];
             $embarkation = $data['CharterGuest']['embarkation'];
             $debarkation = $data['CharterGuest']['debarkation'];
@@ -803,8 +803,16 @@ if(isset($charterGuestData) && !empty($charterGuestData)){
             $yacht_id = $data['CharterGuest']['yacht_id'];
             $yname = $yfullName[$data['CharterGuest']['yacht_id']];
             $website = "#";
-            if(isset($data['websitedetails']['YachtWeblink']['weblink'])){
+            /*if(isset($data['websitedetails']['YachtWeblink']['weblink'])){
                 $weblink = $data['websitedetails']['YachtWeblink']['weblink'];
+                if(isset($weblink)){
+                    $website = $weblink;
+                }else{
+                    $website = "#";
+                }
+            }*/
+            if(isset($data['websitedetails'])){
+                $weblink = $data['websitedetails'];
                 if(isset($weblink)){
                     $website = $weblink;
                 }else{
@@ -949,7 +957,7 @@ if(isset($charterAssocData) && !empty($charterAssocData)){
        </div> 
        <div class="col-11 action_links">
         <ul>
-            <li><a href="<?php echo $website; ?>" target="_blank" style="text-decoration:none;">Yachts Website</a></li>
+            <li><a href="<?php echo $website; ?>" target="_blank" style="text-decoration:none;">Yachts Websitewww</a></li>
             <!-- only show guest type not email recipient -->
             <?php if($guestListData['GuestList']['guest_type'] != 'email_recipient'){ ?>
             <li><a href="<?php echo $basefolder."/charters/view_guest/".$charter_program_id."/".$fleetcompany_id; ?>">Guest List</a></li>

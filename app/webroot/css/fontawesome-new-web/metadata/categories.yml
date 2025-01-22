@@ -1,0 +1,261 @@
+---
+hands:
+  icons:
+    - thumbs-up
+  label: Hands
+communication:
+  icons:
+    - comments
+    - envelope
+  label: Communication
+transportation:
+  icons:
+    - ship
+  label: Transportation
+punctuation-symbols:
+  icons:
+    - check
+    - minus
+    - plus
+  label: Punctuation + Symbols
+alphabet:
+  icons:
+    - g
+    - square-o
+  label: Alphabet
+time:
+  icons:
+    - bell
+    - calendar
+    - calendar-days
+    - clock
+  label: Time
+arrows:
+  icons:
+    - angle-down
+    - angle-up
+    - arrow-rotate-left
+    - chevron-down
+    - chevron-up
+    - download
+    - rotate-left
+    - square-caret-right
+    - upload
+  label: Arrows
+maritime:
+  icons:
+    - anchor
+    - ship
+  label: Maritime
+editing:
+  icons:
+    - check
+    - minus
+    - pen-to-square
+    - plus
+    - square-check
+    - trash-can
+    - xmark
+  label: Editing
+logistics:
+  icons:
+    - anchor
+    - gas-pump
+  label: Logistics
+medical-health:
+  icons:
+    - plus
+  label: Medical + Health
+money:
+  icons:
+    - credit-card
+    - credit-card-front
+    - dollar-sign
+  label: Money
+spinners:
+  icons:
+    - arrow-rotate-left
+    - rotate-left
+  label: Spinners
+moving:
+  icons:
+    - route
+  label: Moving
+security:
+  icons:
+    - lock-open
+    - unlock
+  label: Security
+accessibility:
+  icons:
+    - circle-info
+  label: Accessibility
+business:
+  icons:
+    - calendar
+    - calendar-days
+    - copy
+    - envelope
+    - file
+    - file-lines
+    - floppy-disk
+    - list-timeline
+    - pen-to-square
+  label: Business
+mathematics:
+  icons:
+    - circle-plus
+    - circle-xmark
+    - minus
+    - plus
+    - xmark
+  label: Mathematics
+clothing-fashion:
+  icons:
+    - user-tie
+  label: Clothing + Fashion
+text-formatting:
+  icons:
+    - check
+    - square-check
+  label: Text Formatting
+shopping:
+  icons:
+    - bell
+    - camera
+    - credit-card
+    - credit-card-front
+    - thumbs-up
+  label: Shopping
+media-playback:
+  icons:
+    - arrow-rotate-left
+    - circle-play
+    - rotate-left
+  label: Media Playback
+photos-images:
+  icons:
+    - camera
+  label: Photos + Images
+design:
+  icons:
+    - copy
+    - floppy-disk
+    - pen-to-square
+  label: Design
+social:
+  icons:
+    - bell
+    - camera
+    - envelope
+    - thumbs-up
+    - user
+  label: Social
+education:
+  icons:
+    - bell
+  label: Education
+devices-hardware:
+  icons:
+    - camera
+    - download
+    - floppy-disk
+    - microchip-ai
+    - upload
+  label: Devices + Hardware
+files:
+  icons:
+    - copy
+    - file
+    - file-lines
+    - files
+    - floppy-disk
+  label: Files
+food-beverage:
+  icons:
+    - martini-glass-citrus
+  label: Food + Beverage
+users-people:
+  icons:
+    - people-group
+    - user
+    - user-tie
+  label: Users + People
+coding:
+  icons:
+    - file
+    - file-lines
+  label: Coding
+marketing:
+  icons:
+    - people-group
+  label: Marketing
+maps:
+  icons:
+    - anchor
+    - bell
+    - circle-info
+    - dollar-sign
+    - magnifying-glass
+    - plus
+    - route
+    - ship
+    - utensils
+  label: Maps
+charity:
+  icons:
+    - dollar-sign
+  label: Charity
+shapes:
+  icons:
+    - calendar
+    - file
+    - square
+  label: Shapes
+travel-hotel:
+  icons:
+    - earth-europe
+    - map-location-dot
+    - martini-glass-citrus
+    - utensils
+  label: Travel + Hotel
+alert:
+  icons:
+    - bell
+    - triangle-exclamation
+  label: Alert
+writing:
+  icons:
+    - envelope
+    - file
+    - file-lines
+    - pen-to-square
+  label: Writing
+energy:
+  icons:
+    - gas-pump
+  label: Energy
+household:
+  icons:
+    - bell
+    - utensils
+  label: Household
+camping:
+  icons:
+    - map-location-dot
+    - route
+  label: Camping
+automotive:
+  icons:
+    - gas-pump
+  label: Automotive
+humanitarian:
+  icons:
+    - anchor
+    - envelope
+    - file
+    - gas-pump
+    - people-group
+    - ship
+    - trash-can
+  label: Humanitarian

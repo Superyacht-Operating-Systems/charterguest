@@ -54,12 +54,19 @@ $actual_link_defaultctp = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on
 		//echo $this->Html->css('cake.generic');
                 echo $this->Html->css('admin/bootstrap'); 
                 echo $this->Html->css('admin/sb-admin');
-                echo $this->Html->css('admin/login');     
-                echo $this->Html->css('admin/font/css/font-awesome.min');
-                echo $this->Html->css('admin/font/fontawesomePro/css/fontawesome.css');
-                echo $this->Html->css('admin/font/fontawesomePro/css/brands.css');
-                echo $this->Html->css('admin/font/fontawesomePro/css/solid.css');
-                echo $this->Html->css('admin/font/fontawesome-new-web/css/all.css');
+                echo $this->Html->css('admin/login');    
+                //echo $this->Html->css('admin/font/css/font-awesome.min');
+                //echo $this->Html->css('admin/font/fontawesomePro/css/fontawesome.css');
+                //echo $this->Html->css('admin/font/fontawesomePro/css/brands.css');
+                //echo $this->Html->css('admin/font/fontawesomePro/css/solid.css');
+                // echo $this->Html->css('admin/font/fontawesome-new-web/css/all.css');
+                // commented fontawesomePro and added fontawesome-new-web and loding the files from there                 
+                echo $this->Html->css('fontawesome-new-web/css/fontawesome.css');           
+                echo $this->Html->css('fontawesome-new-web/css/all.css');
+                echo $this->Html->css('fontawesome-new-web/css/solid.css');
+                echo $this->Html->css('fontawesome-new-web/css/regular.css');
+                echo $this->Html->css('fontawesome-new-web/css/light.css');
+
                 echo $this->Html->css('admin/custom_admin');
                 echo $this->Html->css('jquery-ui');
                 echo $this->Html->css('jquery-ui.theme');
@@ -1193,6 +1200,7 @@ $(document).on("click", ".previousWineSelectionCartclose", function(e) {
 // "Uncaught RangeError: Maximum call stack size exceeded"
 // But then when the nested modal is hidden we reset modal.enforceFocus
 //(function ( $ ) { 
+/* vignesh added to fix some modal issue but not working @start
 var enforceModalFocusFn = $.fn.modal.Constructor.prototype.enforceFocus;
 $.fn.modal.Constructor.prototype.enforceFocus = function() {};
 try{
@@ -1205,6 +1213,8 @@ catch (error) {
     if(error.name != 'ReferenceError')
         throw error;
 }
+@edn vig code
+*/
 //}( jQuery ));
 /// existing preference
 
