@@ -5177,6 +5177,7 @@ $(document).on("click", ".clickcommentdiv", function() {
                         thisObj.css("color", data.colorcode);
                     }
                 }
+                msgcount(activityId,activity_name,daynum='');
             }
         }
     });
