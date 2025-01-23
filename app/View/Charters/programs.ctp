@@ -957,16 +957,8 @@ if(isset($charterAssocData) && !empty($charterAssocData)){
        </div> 
        <div class="col-11 action_links">
         <ul>
-            <li><a href="<?php echo $website; ?>" target="_blank" style="text-decoration:none;">Yachts Websitewww</a></li>
-            <!-- only show guest type not email recipient -->
-            <?php if($guestListData['GuestList']['guest_type'] != 'email_recipient'){ ?>
-            <li><a href="<?php echo $basefolder."/charters/view_guest/".$charter_program_id."/".$fleetcompany_id; ?>">Guest List</a></li>
-             <?php if ($dateTimestamp1 >= $dateTimestamp2){ ?>
-            <li><a href="#"><span class="existingCheckFunction" data-guestype="guest" data-associd ="<?php echo $associd; ?>">Preference Sheets</span></a></li>
-            <?php }else{ ?>
-                <li><a href="<?php echo $basefolder."/charters/presentations/".$charter_program_id; ?>" target="_blank"><span class="" >Memories</span></a></li> 
-            <?php } ?>             
-            <?php } ?>
+            <li><a href="<?php echo $website; ?>" target="_blank" style="text-decoration:none;">Yachts Website</a></li>
+           
             <?php if($data['charterDetails']['map_url'] == "link"){ ?>
               <li><a href="<?php echo $baseFolder."/charters/charter_program_map/".$charter_program_id.'/'.$data['charterDetails']['ydb_name'].'/guest'.'/'.$guestListData['GuestList']['guest_type'].'/'.$data['CharterGuestAssociate']['allow_comments']; ?>" title="Map is Published">Cruising Map</a><?php if(isset($msg_count_assc) && $msg_count_assc > 0){ ?><span class="cardbell-icon"><span class="avacard-cunt"><?php echo $msg_count_assc; ?></span><i class="fa fa-bell"></i></span><?php } ?> </li>
             <?php }else if($data['charterDetails']['map_url'] == "nolink"){  ?>
@@ -976,6 +968,28 @@ if(isset($charterAssocData) && !empty($charterAssocData)){
             <!-- <li><a href="#"><span class="" >Memories</span></a></li> -->
             <!--<li><a href="#"><span class="" >Crew List11111</span></a></li>-->
             <li><a href="<?php echo $basefolder."/charters/crew_list/".$id."/".$charter_program_id."/".$fleetcompany_id; ?>"><span class="" >Crew List</span></a></li>
+             <!-- only show guest type not email recipient -->
+             
+            <li>
+            <?php if($guestListData['GuestList']['guest_type'] != 'email_recipient'){ ?>
+                <a href="<?php echo $basefolder."/charters/view_guest/".$charter_program_id."/".$fleetcompany_id; ?>">Guest List</a>
+                <?php } ?>
+            </li>
+            
+             <?php if ($dateTimestamp1 >= $dateTimestamp2){ ?>
+            <li>
+            <?php if($guestListData['GuestList']['guest_type'] != 'email_recipient'){ ?>
+                <a href="#"><span class="existingCheckFunction" data-guestype="guest" data-associd ="<?php echo $associd; ?>">Preference Sheets</span></a>
+                <?php } ?>
+            </li>
+            <?php }else{ ?>
+                <li>
+                <?php if($guestListData['GuestList']['guest_type'] != 'email_recipient'){ ?>
+                    <a href="<?php echo $basefolder."/charters/presentations/".$charter_program_id; ?>" target="_blank"><span class="" >Memories</span></a>
+                    <?php } ?>
+                </li> 
+            <?php } ?>             
+            
         </ul>   
 
 

@@ -2657,7 +2657,7 @@ var embark_long =  "<?php echo $embark_long; ?>";
 
 var startloc =  "<?php echo $startloc; ?>";
      
-var mbAttr = '<table width=100%><thead><tr style="font-size:12px;font-weight:bold;text-align:center;"><td style="width:33%;border-radius: 12px;overflow: hidden;background: #fff;"><i class="fa fa-solid fa-ship map_bottom_attr" aria-hidden="true"></i>Distance<span style="color:#00a8f3;"><br><?php echo $RouteDatadisplaydistancevalue; ?></span></td><td style="width:33%;border-radius: 12px;overflow: hidden;background: #fff;"><i class="fa fa-solid fa-clock-o map_bottom_attr" aria-hidden="true"></i>Duration<span style="color:#00a8f3;"><br><?php echo $RouteDatadisplayduration; ?></span></td><td style="width:34%;border-radius: 12px;overflow: hidden;background: #fff;"><i class="fas fa-gas-pump fa-solid map_bottom_attr" aria-hidden="true"></i>Fuel<span style="color:#00a8f3;"><br><?php echo $RouteDatatotalconsumption; ?></span></td></tr></thead><tbody><tr style="font-size:12px;color:#00a8f3;font-weight:bold;text-align:center;"><td></td><td></td><td></td></tr></tbody></table>';
+var mbAttr = '<table width=100%><thead><tr style="font-size:12px;font-weight:bold;text-align:center;"><td style="width:33%;border-radius: 12px;overflow: hidden;background: #fff;"><i class="fa fa-solid fa-ship map_bottom_attr" aria-hidden="true"></i>Distance<span style="color:#00a8f3;"><br><?php echo $RouteDatadisplaydistancevalue; ?></span></td><td style="width:33%;border-radius: 12px;overflow: hidden;background: #fff;"><i class="fa fa-solid fa-clock map_bottom_attr" aria-hidden="true"></i>Duration<span style="color:#00a8f3;"><br><?php echo $RouteDatadisplayduration; ?></span></td><td style="width:34%;border-radius: 12px;overflow: hidden;background: #fff;"><i class="fas fa-gas-pump fa-solid map_bottom_attr" aria-hidden="true"></i>Fuel<span style="color:#00a8f3;"><br><?php echo $RouteDatatotalconsumption; ?></span></td></tr></thead><tbody><tr style="font-size:12px;color:#00a8f3;font-weight:bold;text-align:center;"><td></td><td></td><td></td></tr></tbody></table>';
 mbUrl = 'https://api.mapbox.com/styles/v1/superyachtos/{id}/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1Ijoic3VwZXJ5YWNodG9zIiwiYSI6ImNpdW54eHV5bjAxNmMzMG1sMGpkamVma2cifQ.Y9kj-j0RGCFSE6khFVPyOw';
 var satellite   =   L.tileLayer(mbUrl, {
     id: 'ciurvui5100uz2iqqe929nrlr', 
@@ -3188,6 +3188,20 @@ foreach($samelocations[$startingloc['CharterProgramSchedule']['lattitude']] as $
                         className: "Tooltip",
                         noWrap: false,
                     }).on("click", markerOnClick);
+                    beginmarker.scheduleId = "<?php echo $startingloc['CharterProgramSchedule']['charter_program_id']; ?>";
+                    beginmarker.tablepId = "<?php echo $startingloc['CharterProgramSchedule']['id']; ?>";
+                    beginmarker.scheduleUUId = "<?php echo $startingloc['CharterProgramSchedule']['UUID']; ?>";
+                    beginmarker.daytitle = "<?php echo $startingloc['CharterProgramSchedule']['title']; ?>";
+                    beginmarker.day_to_location = "<?php echo htmlspecialchars($startingloc['CharterProgramSchedule']['to_location']); ?>";
+                    beginmarker.day_num = "<?php echo $startingloc['CharterProgramSchedule']['day_num']; ?>";
+                    beginmarker.markerNum = "<?php echo $startingloc['CharterProgramSchedule']['day_num']; ?>";
+                    beginmarker.day_dates = "<?php echo $startingloc['CharterProgramSchedule']['day_dates']; ?>";
+                
+                    beginmarker.distancetotal = "<?php echo $markertotal[$startingloc['CharterProgramSchedule']['title'].' - Day '.$startingloc['CharterProgramSchedule']['day_num']]['distance']; ?>";
+                    beginmarker.durationtotal = "<?php echo $markertotal[$startingloc['CharterProgramSchedule']['title'].' - Day '.$startingloc['CharterProgramSchedule']['day_num']]['duration'];  ?>";
+                    beginmarker.consumptiontotal = "<?php echo $markertotal[$startingloc['CharterProgramSchedule']['title'].' - Day '.$startingloc['CharterProgramSchedule']['day_num']]['consumption']; ?>";
+                    beginmarker.endmarker = "yes";
+                    beginmarker.debarkation_flag = "<?php echo $startingloc['CharterProgramSchedule']['debarkation_flag']; ?>";
                     beginmarker.addTo(map);
 
  <?php  } /********************************end place last marker ************ */
@@ -3947,7 +3961,7 @@ if(e.target.firstdaytoloc){
         stationarytooltipnum = parseFloat(stationarytooltipnum) + 1;
         //console.log(stationarytooltipnum);
     }
-    if(stationary == 1){
+    if(stationary == 1 && dayNum !=1){
         $('.Tooltip').css('top','');
         // var szoom = map.getZoom();
         // //alert(szoom+1);
