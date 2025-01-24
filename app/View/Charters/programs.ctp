@@ -922,8 +922,16 @@ if(isset($charterAssocData) && !empty($charterAssocData)){
             $yname = $yfullName[$data['charterDetails']['CharterGuest']['yacht_id']];
 
             $website = "#";
-            if(isset($data['websitedetails']['YachtWeblink']['weblink'])){
+            /*if(isset($data['websitedetails']['YachtWeblink']['weblink'])){
                 $weblink = $data['websitedetails']['YachtWeblink']['weblink'];
+                if(isset($weblink)){
+                    $website = $weblink;
+                }else{
+                    $website = "#";
+                }
+            }*/
+            if(isset($data['websitedetails'])){
+                $weblink = $data['websitedetails'];
                 if(isset($weblink)){
                     $website = $weblink;
                 }else{

@@ -468,6 +468,7 @@ class ChartersController extends AppController {
                 //$YachtWeblinkdata = $this->YachtWeblink->find('first', array('conditions' => $YachtWeblinkConditionsGuest));
                 $YachtWeblinkConditionsGuest = array('Yacht.id' => $value['CharterGuest']['yacht_id'],'Yacht.is_deleted'=>0);
                 $YachtWeblinkdata = $this->Yacht->find('first', array('conditions' => $YachtWeblinkConditionsGuest));
+                
                 //echo "<pre>";print_r($YachtWeblinkdata); exit;
                 $programFilesCond = array('CharterProgramFile.charter_program_id' => $value['CharterGuest']['charter_program_id'],'CharterProgramFile.yacht_id' => $value['CharterGuest']['yacht_id'],'CharterProgramFile.is_deleted'=>0);
                 $programFiledata = $this->CharterProgramFile->find('all', array('conditions' => $programFilesCond));
@@ -714,14 +715,19 @@ class ChartersController extends AppController {
                         $charterAssocData[$key]['charterDetails']['ch_image'] = "#";
                     }
                     $charterAssocData[$key]['charterDetails']['ydb_name'] = $ydb_name;
-                    $YachtWeblinkConditions = array('YachtWeblink.charter_company_id' => $value['CharterGuestAssociate']['fleetcompany_id'],'YachtWeblink.yacht_id' => $value['CharterGuestAssociate']['yacht_id'],'YachtWeblink.is_deleted'=>0);
-                    $YachtWeblink = $this->YachtWeblink->find('first', array('conditions' => $YachtWeblinkConditions));
-                    if(isset($YachtWeblink) && !empty($YachtWeblink['YachtWeblink']['weblink'])){
-                        $isValid = preg_match("@^https?://@", $YachtWeblink['YachtWeblink']['weblink']);
+                    //$YachtWeblinkConditions = array('YachtWeblink.charter_company_id' => $value['CharterGuestAssociate']['fleetcompany_id'],'YachtWeblink.yacht_id' => $value['CharterGuestAssociate']['yacht_id'],'YachtWeblink.is_deleted'=>0);
+                   // $YachtWeblink = $this->YachtWeblink->find('first', array('conditions' => $YachtWeblinkConditions));
+                    $YachtWeblinkConditions = array('Yacht.id' => $value['CharterGuestAssociate']['yacht_id'],'Yacht.is_deleted'=>0);
+                    $YachtWeblink = $this->Yacht->find('first', array('conditions' => $YachtWeblinkConditions));
+                    //echo "<pre>"; print_r($YachtWeblink); exit;
+                    if(isset($YachtWeblink) && !empty($YachtWeblink['Yacht']['cg_yachts_website'])){
+                        $isValid = preg_match("@^https?://@", $YachtWeblink['Yacht']['cg_yachts_website']);
                         if($isValid == 0){
-                            $YachtWeblink['YachtWeblink']['weblink'] = 'https://'.$YachtWeblink['YachtWeblink']['weblink'];
+                            //$YachtWeblink['YachtWeblink']['weblink'] = 'https://'.$YachtWeblink['YachtWeblink']['weblink'];
+                            $YachtWeblink['YachtWeblink']['weblink'] = $YachtWeblink['Yacht']['cg_yachts_website'];
                         }
                         $charterAssocData[$key]['websitedetails'] = $YachtWeblink;
+                        $charterAssocData[$key]['websitedetails'] = $YachtWeblink['Yacht']['cg_yachts_website'];
                     }
                     $yachtCGdata = $this->Yacht->getYachtDataFromDbcp($ydb_name);
                     $yacht_cg_log_data = $yachtCGdata[0]['yachts'];
@@ -774,7 +780,7 @@ class ChartersController extends AppController {
              }
              $this->Session->write("commentcounttotal", $commentcounttotal);
      //echo "<pre>";print_r($charterGuestData); exit;
-        // echo "<pre>";print_r($charterAssocData); exit;
+         //echo "<pre>";print_r($charterAssocData); exit;
         //echo "<pre>";print_r($charterAssocData); exit;
         
         $this->set('charterGuestData', $charterGuestData);
