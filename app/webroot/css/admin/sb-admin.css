@@ -180,6 +180,8 @@ width: 130px;
 .col-11 ul{
   margin:0px;
   padding: 0px;
+  width: 100%;
+  display: inline-block;
 
 }
 
@@ -194,16 +196,12 @@ list-style: none;
     width: 100%;
     position: relative;
     background: #eee;
-    display: inline-block;
     color: #000;
     margin-bottom: 3px;
     height: 27px;
     font-weight: 600;
     text-align: center;
     font-size: 12px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
 }
 .ch-mrgbellow-0{
   margin-bottom: 0px!important;
