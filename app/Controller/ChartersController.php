@@ -10366,7 +10366,8 @@ public function getmsgcountonclosecruisingschedulemodal() {
                 $cgBackgroundImage = $SITE_URL."/".$fleetname."/app/webroot/".$yachtname."/app/webroot/img/charter_program_files/".$image;
             }
         }else{
-            $cgBackgroundImage = $SITE_URL."/charterguest/css/admin/images/full-charter.png";
+            //$cgBackgroundImage = $SITE_URL."/charterguest/css/admin/images/full-charter.png";
+            $cgBackgroundImage = $SITE_URL."/charterguest/css/admin/images/full-charter.webp";
         }
         return $cgBackgroundImage;
     }

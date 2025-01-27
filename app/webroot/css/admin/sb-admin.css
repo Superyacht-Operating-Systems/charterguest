@@ -31,7 +31,8 @@ body {
   overflow-x: hidden;
   
 }
-body {background: url(images/full-charter.png) no-repeat center center fixed; 
+/*body {background: url(images/full-charter.png) no-repeat center center fixed; */
+body {background: url(images/full-charter.webp) no-repeat center center fixed; 
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
