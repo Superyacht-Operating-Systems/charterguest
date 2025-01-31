@@ -662,7 +662,7 @@ input:focus {
 
 .col-11 ul li {
     margin-bottom: 0px;
-}
+} 
 .action_links {
     margin: 10px 0px -2px 0px;
 }
@@ -678,6 +678,9 @@ input:focus {
     align-items: center;
     justify-content: center;
     height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 </style>
 <?php 
