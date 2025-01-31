@@ -7968,7 +7968,7 @@ WHERE cga_menus.UUID = '$uuid'";
                      // Load Element view
             $view = new View();
             $element = "schedule_popup_data";
-            $productListView  = $view->element($element, array('scheduleData' => $scheduleData/*,'samemarkercommentcount' => $samemarkercommentcount,'guesttype' => $guesttype,'markertotal'=>$markertotal,'locationComment'=>$locationComment,'myLastElement_locationimages'=>$myLastElement_locationimages*/));
+            $productListView  = $view->element($element, array('scheduleData' => $scheduleData,'samemarkercommentcount' => $samemarkercommentcount,'guesttype' => $guesttype,'markertotal'=>$markertotal,'locationComment'=>$locationComment,'myLastElement_locationimages'=>$myLastElement_locationimages,'embark_lat'=>$embark_lat,'embark_long'=>$embark_long,'locationimages'=>$locationimages));
             $result['status'] = "success";
             $result['popupHtml'] = $productListView;
 //echo "<pre>"; print_r($result); exit;
