@@ -58,7 +58,7 @@
 
 <script>
     //document.body.style.backgroundImage = "url('https://totalsuperyacht.com:8080/charterguest/css/admin/images/full-charter.png')";
-    document.body.style.backgroundImage = "url('https://charterguest.net/charterguest/css/admin/images/full-charter.png')";
+    document.body.style.backgroundImage = "url('https://charterguest.net/charterguest/css/admin/images/full-charter.webp')";
     function close_window() {
       window.close();
     }
