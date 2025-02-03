@@ -195,14 +195,17 @@ width: 130px;
 .col-11 ul li{
 list-style: none;
     width: 100%;
-    position: relative;
+    position: relative;     
     background: #eee;
     color: #000;
-    margin-bottom: 3px;
+    margin-bottom: 3px;    
     height: 27px;
-    font-weight: 600;
+    font-weight: 600;    
     text-align: center;
     font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 .ch-mrgbellow-0{
   margin-bottom: 0px!important;
