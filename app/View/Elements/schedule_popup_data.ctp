@@ -826,7 +826,7 @@ $(document).on("click", "#markerModalclosecruisingsch", function(e) {
 $(document).on("click", ".CSMPTooltip", function(e) {
     //alert();
     var myowntooltip = $(this).find('.CSMPown').attr('id');
-    //$(".mylocsh"+myowntooltip).click();
+    $(".mylocsh"+myowntooltip).click();
     
 });
 /***********************************On clicking marker tooltip open modal of that specific marker */

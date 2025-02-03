@@ -856,6 +856,14 @@ if(isset($charterGuestData) && !empty($charterGuestData)){
        <div class="col-11 action_links">
         <ul>
             <li><a href="<?php echo $website; ?>" target="_blank" style="text-decoration:none;">Yachts Website</a></li>
+            <?php if($data['map_url'] == "link"){ ?>
+                <li><a href="<?php echo $baseFolder."/charters/charter_program_map/".$charter_program_id.'/'.$data['ydb_name'].'/owner'; ?>" title="Map is Published">Cruising Map</a>  <?php if(isset($msg_count) && $msg_count > 0){ ?><span class="cardbell-icon"><span class="avacard-cunt"><?php echo $msg_count; ?></span><i class="fa fa-bell"></i></span><?php } ?></li>
+                <!-- target="_blank" -->
+                <?php }else if($data['map_url'] == "nolink"){ ?>
+                <!-- <li><span datahover="Map is Not Published" title="Map is Not Published"><a href="#" role="button" title="Map is Not Published" aria-current="mapnolink">Cruising Map</a></span></li> -->
+                <li class="btnNoLink"  data-value="<?php echo $id; ?>"><span datahover="Map is Not Published" title="Map is Not Published" ><a   role="button" title="Map is Not Published" aria-current="mapnolink">Cruising Map</a></span></li>
+            <?php } ?>
+            <li><a href="<?php echo $basefolder."/charters/crew_list/".$id."/".$charter_program_id."/".$charter_company_id; ?>"><span class="" >Crew List</span></a></li>
                    <!-- only show guest type not email recipient -->
             <?php if($guestListData['GuestList']['guest_type'] != 'email_recipient'){ ?>
             <li><a href="<?php echo $basefolder."/charters/view/".$id."/".$charter_program_id."/".$charter_company_id; ?>">Guest List</a></li>
@@ -867,15 +875,9 @@ if(isset($charterGuestData) && !empty($charterGuestData)){
                 <li><a href="<?php echo $basefolder."/charters/presentations/".$charter_program_id; ?>" target="_blank"><span class="" >Memories</span></a></li> 
             <?php } ?>     
             <?php } ?>
-            <?php if($data['map_url'] == "link"){ ?>
-                <li><a href="<?php echo $baseFolder."/charters/charter_program_map/".$charter_program_id.'/'.$data['ydb_name'].'/owner'; ?>" title="Map is Published">Cruising Map</a>  <?php if(isset($msg_count) && $msg_count > 0){ ?><span class="cardbell-icon"><span class="avacard-cunt"><?php echo $msg_count; ?></span><i class="fa fa-bell"></i></span><?php } ?></li>
-                <!-- target="_blank" -->
-                <?php }else if($data['map_url'] == "nolink"){ ?>
-                <!-- <li><span datahover="Map is Not Published" title="Map is Not Published"><a href="#" role="button" title="Map is Not Published" aria-current="mapnolink">Cruising Map</a></span></li> -->
-                <li class="btnNoLink"  data-value="<?php echo $id; ?>"><span datahover="Map is Not Published" title="Map is Not Published" ><a   role="button" title="Map is Not Published" aria-current="mapnolink">Cruising Map</a></span></li>
-            <?php } ?>
+            
             <!-- <li><a href="#"><span class="" >Memories</span></a></li> -->
-            <li><a href="<?php echo $basefolder."/charters/crew_list/".$id."/".$charter_program_id."/".$charter_company_id; ?>"><span class="" >Crew List</span></a></li>
+           
             
         </ul>   
 
