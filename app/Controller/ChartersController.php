@@ -7966,9 +7966,11 @@ WHERE cga_menus.UUID = '$uuid'";
                     $this->set('news', $news);
 
                      // Load Element view
+                    //echo "<pre>"; print_r($locationimages); exit;
+                    
             $view = new View();
             $element = "schedule_popup_data";
-            $productListView  = $view->element($element, array('scheduleData' => $scheduleData,'samemarkercommentcount' => $samemarkercommentcount,'guesttype' => $guesttype,'markertotal'=>$markertotal,'locationComment'=>$locationComment,'myLastElement_locationimages'=>$myLastElement_locationimages,'embark_lat'=>$embark_lat,'embark_long'=>$embark_long,'locationimages'=>$locationimages));
+            $productListView  = $view->element($element, array('scheduleData' => $scheduleData,'samemarkercommentcount' => $samemarkercommentcount,'guesttype' => $guesttype,'markertotal'=>$markertotal,'locationComment'=>$locationComment,'myLastElement_locationimages'=>$myLastElement_locationimages,'embark_lat'=>$embark_lat,'embark_long'=>$embark_long,'locationimages'=>$locationimages,'domain_name'=>$domain_name,'yachtname'=>$yachtname,'fleetname'=>$fleetname));
             $result['status'] = "success";
             $result['popupHtml'] = $productListView;
 //echo "<pre>"; print_r($result); exit;
