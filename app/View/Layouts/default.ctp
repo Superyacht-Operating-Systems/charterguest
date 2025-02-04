@@ -825,12 +825,25 @@ width: max-content;
 var dateToday = new Date();
 var dobYearRange = "1900:" + dateToday.getFullYear();
 // DOB
-$(".dobDatePickerexisting").datepicker({
+// date picker is not opening month and year drop down in fire fox so changed to bellow @feb04 2025
+/*$(".dobDatePickerexisting").datepicker({
     dateFormat: 'd M yy',
     changeYear: true,
     changeMonth:true,
     yearRange: dobYearRange
-}).attr('readonly','readonly');
+}).attr('readonly','readonly');*/
+$(".dobDatePickerexisting").datepicker({
+            defaultDate: new Date(),
+            dateFormat: 'd M yy',
+            beforeShow: function(input, inst) {
+                $(document).off('focusin.bs.modal');
+            },
+            onClose:function(){
+                $(document).on('focusin.bs.modal');
+            },
+            changeYear: true,
+            changeMonth:true,
+        });
 </script>
 <?php } ?>
 
