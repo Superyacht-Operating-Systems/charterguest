@@ -174,7 +174,7 @@ width: 130px;
 .col-11 {
     display: flex;
     align-items: center;
-    margin: 10px 0px;
+    margin: 7px 9px;
     width: 156px;
     float: left;
 }
@@ -183,7 +183,6 @@ width: 130px;
   padding: 0px;
   width: 100%;
   display: inline-block;
-
 }
 
 .p-last-name{
@@ -215,7 +214,7 @@ list-style: none;
 }
 
 .col-11 img{
-width: 117px;
+  width: 130px;
 }
 .menu .submenu .menu__item:hover, body ..menu .submenu .menu__item:focus{
   background-color: #149be9!important;
