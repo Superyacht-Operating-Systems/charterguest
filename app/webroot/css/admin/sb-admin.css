@@ -169,12 +169,12 @@ body .menu .menu__item{
 width: 130px;
     justify-content: center;
         overflow: hidden;
-    margin-right: 6px;
+    margin-right: 10px;
 } 
 .col-11 {
     display: flex;
     align-items: center;
-    margin: 7px 9px;
+    margin:10px 7px 5px;
     width: 156px;
     float: left;
 }
@@ -182,7 +182,7 @@ width: 130px;
   margin:0px;
   padding: 0px;
   width: 100%;
-  display: inline-block;
+  display: inline-block; 
 }
 
 .p-last-name{
@@ -214,7 +214,7 @@ list-style: none;
 }
 
 .col-11 img{
-  width: 130px;
+  width: 130px;   
 }
 .menu .submenu .menu__item:hover, body ..menu .submenu .menu__item:focus{
   background-color: #149be9!important;
