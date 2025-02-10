@@ -7967,10 +7967,10 @@ WHERE cga_menus.UUID = '$uuid'";
 
                      // Load Element view
                     //echo "<pre>"; print_r($locationimages); exit;
-                    
+             
             $view = new View();
             $element = "schedule_popup_data";
-            $productListView  = $view->element($element, array('scheduleData' => $scheduleData,'samemarkercommentcount' => $samemarkercommentcount,'guesttype' => $guesttype,'markertotal'=>$markertotal,'locationComment'=>$locationComment,'myLastElement_locationimages'=>$myLastElement_locationimages,'embark_lat'=>$embark_lat,'embark_long'=>$embark_long,'locationimages'=>$locationimages,'domain_name'=>$domain_name,'yachtname'=>$yachtname,'fleetname'=>$fleetname));
+            $productListView  = $view->element($element, array('scheduleData' => $scheduleData,'samemarkercommentcount' => $samemarkercommentcount,'guesttype' => $guesttype,'markertotal'=>$markertotal,'locationComment'=>$locationComment,'myLastElement_locationimages'=>$myLastElement_locationimages,'embark_lat'=>$embark_lat,'embark_long'=>$embark_long,'locationimages'=>$locationimages,'domain_name'=>$domain_name,'yachtname'=>$yachtname,'fleetname'=>$fleetname,'embarkation_chprg'=>$embarkation_chprg,'debarkation_chprg'=>$debarkation_chprg));
             $result['status'] = "success";
             $result['popupHtml'] = $productListView;
 //echo "<pre>"; print_r($result); exit;
@@ -9076,7 +9076,7 @@ WHERE cga_menus.UUID = '$uuid'";
                     //echo "<pre>"; print_r($titleimage); exit;
                     $val_pass = '"'.$title.'"';
                     //$CruisingMapCommentConditons = "activity_id = '$programScheduleUUID' AND activity_name = $val_pass AND type = 'schedule' AND publish_map = '1'";
-                    $CruisingMapCommentConditons = "activity_name = $val_pass AND type = 'schedule' AND publish_map = '1'";
+                    $CruisingMapCommentConditons = "activity_id = '$programScheduleUUID' AND activity_name = $val_pass AND type = 'schedule' AND publish_map = '1'";
                     //$commentdatatitle = $this->CharterGuest->getCruisingMapComment($yachtDbName, $CruisingMapCommentConditons);
                     $commentdatatitle = $this->CharterGuest->getCruisingMapComment_new($yachtDbName, $CruisingMapCommentConditons);
                     //}
@@ -9093,6 +9093,7 @@ WHERE cga_menus.UUID = '$uuid'";
                       else{
                           $commentcounttitle = 0;
                       }
+                      //echo $commentcounttitle; exit('herer');
                       $colorcodetitle = "color:#000;";  
                       $facomment="fa";
                       if($commentcounttitle > 0){ //echo "kkkk";
