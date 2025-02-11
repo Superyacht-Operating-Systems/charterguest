@@ -166,15 +166,15 @@ body .menu .menu__item{
   display: inline-block;
 }
 .body-divid .col-11:first-child{
-width: 130px;
+  width: 140px;
+  margin-right: 12px;
     justify-content: center;
         overflow: hidden;
-    margin-right: 10px;
 } 
 .col-11 {
     display: flex;
     align-items: center;
-    margin:10px 7px 5px;
+    margin: 10px 10px;
     width: 156px;
     float: left;
 }
@@ -184,7 +184,9 @@ width: 130px;
   width: 100%;
   display: inline-block; 
 }
-
+.col-11 ul li {
+  width: 90%;
+}
 .p-last-name{
   margin-left: 5px!important;
 }
@@ -205,6 +207,14 @@ list-style: none;
     display: flex;
     align-items: center;
     justify-content: center;
+    border-radius: 20px;
+}
+.card-img img {
+  padding-right: 10px;
+padding-left: 10px;
+padding-bottom: 5px;
+padding-top: 0px;
+border-radius: 30px;
 }
 .ch-mrgbellow-0{
   margin-bottom: 0px!important;
@@ -242,7 +252,7 @@ transition: 0.5s;
 .ch-card{
     width: 320px;
     background: #111112;
-    border: solid 1px #3e3e3e;
+    border: solid 1px #757575;
     float: left;
     margin-bottom: 15px;
     margin-right: 8px;
