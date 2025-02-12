@@ -45,12 +45,16 @@
   color: #d9d9d9 ;
 }
 .action_links ul li {
-    background: #1f1f1f;
-    color: #d9d9d9 ;
+    background: #313131;
+    color: #d9d9d9 ; 
 }
     .col-11 ul li {
   margin-bottom: 1px;
   }
+  .col-11 ul li {
+    width: 90%;
+    margin-bottom: 3px;
+}
   .action_links{
     margin: 2px 0px -2px 0px;
   }
