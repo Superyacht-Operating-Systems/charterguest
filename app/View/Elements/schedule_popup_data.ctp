@@ -184,14 +184,17 @@ $charter_assoc_info = $this->Session->read('charter_assoc_info');
                                 }
                             }
                         }
-                        //echo "<pre>"; print_r($fleetlocationimages);
+                        //echo "<pre>"; print_r($locationComment); exit('vvvv');
                         //$locationCommentsdata = $locationComment[$schedule['CharterProgramSchedule']['id']];
                         if($key == 0){
+                           // echo $locationComment[$schedule['CharterProgramSchedule']['title'].'-'.$daynumber]['colorcodetitle'];
                             $locationCommentsdata = $locationComment[$schedule['CharterProgramSchedule']['title']];
+                            $sch_color_code = $locationComment[$schedule['CharterProgramSchedule']['title'].'-'.$daynumber]['colorcodetitle'];
 
                         }else{
+                            //echo $schedule['CharterProgramSchedule']['to_location'].'-'.$daynumber;
                             $locationCommentsdata = $locationComment[$schedule['CharterProgramSchedule']['to_location']];
-
+                            $sch_color_code = $locationComment[$schedule['CharterProgramSchedule']['to_location'].'-'.$daynumber]['colorcodetitle'];
                         }
                         
                         //echo $locationCommentsdata['programScheduleUUID'];
@@ -222,7 +225,7 @@ $charter_assoc_info = $this->Session->read('charter_assoc_info');
                                 <div>
                                 <span style="display: inline-block;position: relative;"><img src="<?php echo $markerimage; ?>" style="object-fit: cover; height: 35px;" alt="" ><span style="position: absolute;color:#000;top: 6px;right: 0px;left: -1px;text-align: center;font-size: 12px;"><?php echo $daynumber; ?></span></span>
                                 <input type="text" name="title" value="<?php echo htmlspecialchars($heading); ?>" placeholder="Enter the Title" class="loc_name" readonly/>
-                                    <ul class="action-icon"><li><i class="<?php echo $locationCommentsdata['facomment']; ?> fa-comments sch_comment_<?php echo $schedule['CharterProgramSchedule']['UUID']  ?> crew_comment_cruisingmaptitle sch_<?php echo htmlspecialchars($heading); ?>" data-rel="<?php echo $locationCommentsdata['programScheduleUUID']; ?>" data-yachtid="<?php echo $locationCommentsdata['yacht_id']; ?>" data-tempname="<?php echo htmlspecialchars($heading); ?>" style="<?php echo $locationCommentsdata['colorcodetitle']; ?><?php echo $displaynone; ?>float: right;"><input type="hidden" name=commentstitle value="" class="messagecommentstitle" /></i></li></ul>
+                                    <ul class="action-icon"><li><i class="<?php echo $locationCommentsdata['facomment']; ?> fa-comments sch_comment_<?php echo $schedule['CharterProgramSchedule']['UUID'];  ?> crew_comment_cruisingmaptitle sch_<?php echo htmlspecialchars($heading); ?>" data-rel="<?php echo $schuuid;//echo $locationCommentsdata['programScheduleUUID']; ?>" data-yachtid="<?php echo $locationCommentsdata['yacht_id']; ?>" data-tempname="<?php echo htmlspecialchars($heading); ?>" style="<?php echo $sch_color_code;//echo $locationCommentsdata['colorcodetitle']; ?><?php echo $displaynone; ?>float: right;"><input type="hidden" name=commentstitle value="" class="messagecommentstitle" /></i></li></ul>
                                 </div>
                             <div class="icons_fields">
                             <i style="color: #00a8f3;" class="fa fa-solid fa-calendar"><span class="icon_label" ><?php echo $schedule['CharterProgramSchedule']['week_days']; ?></span></i>

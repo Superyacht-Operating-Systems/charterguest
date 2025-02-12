@@ -902,7 +902,7 @@ if(isset($charterGuestData) && !empty($charterGuestData)){
 // Guest
 if(isset($charterAssocData) && !empty($charterAssocData)){
         foreach($charterAssocData as $data){
-            //echo "<pre>"; print_r($data); exit;
+           // echo "<pre>"; print_r($data); exit;
             $charterName = $data['charterDetails']['CharterGuest']['charter_name'];
             $embarkation = $data['charterDetails']['CharterGuest']['embarkation'];
             $debarkation = $data['charterDetails']['CharterGuest']['debarkation'];
@@ -919,6 +919,11 @@ if(isset($charterAssocData) && !empty($charterAssocData)){
             $dateTimestamp2 = strtotime($date2); 
             
             $openButtonLink = "/charters/existingCheckFunction";
+
+            // for email recipents is_head_charter will become the 0 by defalut.
+            $is_head_charter = $data['CharterGuestAssociate']['is_head_charterer'];
+
+            
 
             $associd = $data['CharterGuestAssociate']['id'];
             $yname = $yfullName[$data['charterDetails']['CharterGuest']['yacht_id']];
@@ -981,20 +986,22 @@ if(isset($charterAssocData) && !empty($charterAssocData)){
              <!-- only show guest type not email recipient -->
              
             <li>
-            <?php if($guestListData['GuestList']['guest_type'] != 'email_recipient'){ ?>
+            <?php //echo "===>".$is_head_charter;
+            // $is_head_charter based on the value we can find the email recipents or other if 0 
+            if($is_head_charter == 1 ){ ?>
                 <a href="<?php echo $basefolder."/charters/view_guest/".$charter_program_id."/".$fleetcompany_id; ?>">Guest List</a>
                 <?php } ?>
             </li>
             
              <?php if ($dateTimestamp1 >= $dateTimestamp2){ ?>
             <li>
-            <?php if($guestListData['GuestList']['guest_type'] != 'email_recipient'){ ?>
+            <?php if($is_head_charter == 1){ ?>
                 <a href="#"><span class="existingCheckFunction" data-guestype="guest" data-associd ="<?php echo $associd; ?>">Preference Sheets</span></a>
                 <?php } ?>
             </li>
             <?php }else{ ?>
                 <li>
-                <?php if($guestListData['GuestList']['guest_type'] != 'email_recipient'){ ?>
+                <?php if($is_head_charter == 1){ ?>
                     <a href="<?php echo $basefolder."/charters/presentations/".$charter_program_id; ?>" target="_blank"><span class="" >Memories</span></a>
                     <?php } ?>
                 </li> 

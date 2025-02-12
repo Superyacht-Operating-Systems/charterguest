@@ -7852,7 +7852,7 @@ WHERE cga_menus.UUID = '$uuid'";
                                 ////16jan
                                 $rowfromloc_temp = $value['CharterProgramSchedule']['title'];
                                 $val_pass_locr_temp = '"'.$rowfromloc_temp.'"';
-                                
+                                $day_number = $value['CharterProgramSchedule']['day_num'];
                                 $LocationContent = $this->CharterGuest->query("SELECT * FROM $yachtDbName.location_contents LocationContent WHERE LocationContent.location = $val_pass_locr_temp AND LocationContent.type = 'Location' AND LocationContent.is_deleted=0");
                             
                                
@@ -7890,7 +7890,9 @@ WHERE cga_menus.UUID = '$uuid'";
                             }
                             $programScheduleUUID = $value['CharterProgramSchedule']['UUID'];
                         $val_pass = '"'.$loctitle.'"';
-                            $CruisingMapCommentConditons = "activity_name = $val_pass AND type = 'schedule' AND publish_map = '1'";
+                        //$CruisingMapCommentConditons = "activity_id = '$programScheduleUUID' AND activity_name = $val_pass AND type = 'schedule' AND publish_map = '1'";
+                   
+                            $CruisingMapCommentConditons = "activity_id = '$programScheduleUUID' AND activity_name = $val_pass AND type = 'schedule' AND publish_map = '1'";
                             $commentdatatitle = $this->CharterGuest->getCruisingMapComment_new($yachtDbName, $CruisingMapCommentConditons);
                         $unreadguest = 0;
                         if(isset($commentdatatitle[0]) && !empty($commentdatatitle[0])){
@@ -7923,8 +7925,8 @@ WHERE cga_menus.UUID = '$uuid'";
                         }
 
                         
-                        $locationComment[$loctitle]['colorcodetitle'] = $colorcodetitle;
-                         $locationComment[$loctitle]['facomment'] = $facomment;
+                        $locationComment[$loctitle.'-'.$day_number]['colorcodetitle'] = $colorcodetitle;
+                        $locationComment[$loctitle]['facomment'] = $facomment;
                         $locationComment[$loctitle]['programScheduleUUID'] = $programScheduleUUID;
                         $locationComment[$loctitle]['yacht_id'] = $yacht_id_for_comments;
                         $locationComment[$loctitle]['title'] = $loctitle;
@@ -7939,7 +7941,7 @@ WHERE cga_menus.UUID = '$uuid'";
                             $scheduleData = $newschedule;
                             //$totsch = count($scheduleData)-1;   
                         }
-                        //echo "<pre>"; print_r($scheduleData); exit;
+                       // echo "<pre>"; print_r($locationComment); exit;
                         //echo "<pre>"; print_r($scheduleData); print_r($samemarkercommentcount); exit('12345');
                         $this->set('locationComment', $locationComment);
                     $this->set('scheduleData', $scheduleData);
