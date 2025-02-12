@@ -51,6 +51,10 @@
     .col-11 ul li {
   margin-bottom: 1px;
   }
+  .col-11 ul li {
+    width: 90%;
+    margin-bottom: 3px;
+}
   .action_links{
     margin: 2px 0px -2px 0px;
   }
