@@ -213,8 +213,8 @@ list-style: none;
   padding-right: 10px;
 padding-left: 10px;
 padding-bottom: 5px;
-padding-top: 0px;
-border-radius: 30px;
+padding-top: 5px;
+border-radius: 20px;
 }
 .ch-mrgbellow-0{
   margin-bottom: 0px!important;
@@ -265,7 +265,7 @@ transition: 0.5s;
 }
 .card-img{
   overflow: hidden;
-  margin-top: 10px;
+  margin-top: 5px;
 }
 .card-img img{
     overflow: hidden;
