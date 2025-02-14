@@ -743,9 +743,12 @@ font-weight: bold;
     float:right;
 }
 .notmobcontainer{
-border: 2px solid grey;border-radius: 15px;
-background-color: grey;padding: 10px 10px 10px 10px;height: 200px;
+border-radius: 15px;
+padding: 10px 10px 10px 10px;  
+height: 200px;
 overflow: auto;
+border: 2px solid #606060;
+background-color: #404040;
 }
 .titlenotmob{
     font-size:24px !important;
