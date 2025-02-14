@@ -744,7 +744,7 @@ font-weight: bold;
 }
 .notmobcontainer{
 border-radius: 15px;
-padding: 10px 10px 10px 10px;
+padding: 10px 10px 10px 10px;  
 height: 200px;
 overflow: auto;
 border: 2px solid #606060;

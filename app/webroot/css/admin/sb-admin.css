@@ -211,10 +211,10 @@ list-style: none;
 }
 .card-img img {
   padding-right: 10px;
-padding-left: 10px;
-padding-bottom: 5px;
-padding-top: 5px;
-border-radius: 20px;
+  padding-left: 10px;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  border-radius: 25px;
 }
 .ch-mrgbellow-0{
   margin-bottom: 0px!important;
@@ -222,7 +222,9 @@ border-radius: 20px;
 .specail-label{
     margin-bottom: 20px;
 }
-
+.alert-success{
+	z-index: 5555;
+}
 .col-11 img{
   width: 130px;   
 }
@@ -265,7 +267,7 @@ transition: 0.5s;
 }
 .card-img{
   overflow: hidden;
-  margin-top: 5px;
+  margin-top: 0px;
 }
 .card-img img{
     overflow: hidden;
