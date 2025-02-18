@@ -249,8 +249,8 @@ $charter_assoc_info = $this->Session->read('charter_assoc_info');
                                 <!-- Client asked to not to load the all images when popup load only thumbnail display @feb18 2025
                                 <a href="<?php //echo $titleimagehref; ?>" rel="galleryloc<?php //echo $crusemap; ?>" data-thumbnail="<?php //echo $titleimagehref; ?>" class="<?php //echo $fancybox; ?>"><img src="<?php //echo $titleimage; ?>" style="object-fit: cover; width: 100%;height: 150px;" alt="" ></a>
                                 -->
-                                <img src="<?php echo $titleimage; ?>" style="object-fit: cover; width: 100%;height: 150px;" alt="" >
-                               <?php 
+                                
+                               <?php //echo "<pre>"; print_r($fleetlocationimages); echo $targetFullGalleryPathhref; exit;
                                /* Client asked not to load the images when schedule pop up load @feb18 2025
                                if(isset($fleetlocationimages) && !empty($fleetlocationimages)){ 
                                     $fleetlocationimages =  array_unique($fleetlocationimages);
@@ -264,7 +264,11 @@ $charter_assoc_info = $this->Session->read('charter_assoc_info');
                                             <?php } 
                                         }
                                     }
-                                }*/ ?>
+                                }*/ 
+                                // Remove empty values
+                                $fleetlocationimages = array_filter($fleetlocationimages);
+                                ?>
+                                <img class="thumbnail" src="<?php echo $titleimage; ?>" data-basepath="<?php echo $targetFullGalleryPathhref; ?>" data-images='<?php echo json_encode(array_values($fleetlocationimages)); ?>' style="object-fit: cover; width: 100%;height: 150px;" alt="" >
                                   <span class="img_count_div">
                                 
                                 <?php  if(isset($fleetlocationimages) && !empty($fleetlocationimages)){ 
@@ -893,4 +897,34 @@ $(document).on("click", "#map .text-below-marker", function(e) {
 
 
 /***********************************On clicking marker tooltip open modal of that specific marker */
+</script>
+<div id="gallery-container" style="display: none;"></div>
+<script>
+$(document).ready(function() {
+    $(".thumbnail").click(function() {
+        var galleryContainer = $("#gallery-container");
+        galleryContainer.html(""); // Clear previous images
+
+        var imagesJson = $(this).attr("data-images"); // Get images as a string
+        var images = eval(imagesJson); // Convert string to array (for jQuery 1.7.2)
+        var basePath = $(this).attr("data-basepath");
+        var relAttr = "gallery";
+
+        if (images.length > 0) {
+            $.each(images, function(index, name) {
+                var fullImagePath = basePath + name;
+                var imageElement = '<a href="' + fullImagePath + '" rel="' + relAttr + '" class="fancybox">' +
+                                    '<img src="' + fullImagePath + '" style="display: none;">' +
+                                    '</a>';
+                galleryContainer.append(imageElement);
+            });
+
+            // Trigger Fancybox
+            $("a[rel=" + relAttr + "]").fancybox({
+                openEffect: "elastic",
+                closeEffect: "elastic"
+            }).eq(0).trigger("click"); // Open the gallery
+        }
+    });
+});
 </script>
