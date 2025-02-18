@@ -266,7 +266,7 @@ $charter_assoc_info = $this->Session->read('charter_assoc_info');
                                     }
                                 }*/ 
                                 // Remove empty values
-                                $fleetlocationimages = array_filter($fleetlocationimages);
+                               // $fleetlocationimages = array_filter($fleetlocationimages);
                                 $existe_images = array();
                                 if(isset($fleetlocationimages) && !empty($fleetlocationimages)){ 
                                     $fleetlocationimages =  array_unique($fleetlocationimages);
@@ -281,6 +281,7 @@ $charter_assoc_info = $this->Session->read('charter_assoc_info');
                                             <?php } 
                                         }
                                     }
+                                    $existe_images[] = $attachment;
                                 }
                                 ?>
                                 <img class="thumbnail" src="<?php echo $titleimage; ?>" data-basepath="<?php echo $targetFullGalleryPathhref; ?>" data-images='<?php echo json_encode(array_values($existe_images)); ?>' style="object-fit: cover; width: 100%;height: 150px;" alt="" >
