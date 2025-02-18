@@ -246,8 +246,12 @@ $charter_assoc_info = $this->Session->read('charter_assoc_info');
                                 
                                 </div>
                                 <div class="loc_img_prev">
-                                <a href="<?php echo $titleimagehref; ?>" rel="galleryloc<?php echo $crusemap; ?>" data-thumbnail="<?php echo $titleimagehref; ?>" class="<?php echo $fancybox; ?>"><img src="<?php echo $titleimage; ?>" style="object-fit: cover; width: 100%;height: 150px;" alt="" ></a>
+                                <!-- Client asked to not to load the all images when popup load only thumbnail display @feb18 2025
+                                <a href="<?php //echo $titleimagehref; ?>" rel="galleryloc<?php //echo $crusemap; ?>" data-thumbnail="<?php //echo $titleimagehref; ?>" class="<?php //echo $fancybox; ?>"><img src="<?php //echo $titleimage; ?>" style="object-fit: cover; width: 100%;height: 150px;" alt="" ></a>
+                                -->
+                                <img src="<?php echo $titleimage; ?>" style="object-fit: cover; width: 100%;height: 150px;" alt="" >
                                <?php 
+                               /* Client asked not to load the images when schedule pop up load @feb18 2025
                                if(isset($fleetlocationimages) && !empty($fleetlocationimages)){ 
                                     $fleetlocationimages =  array_unique($fleetlocationimages);
                                     foreach($fleetlocationimages as $name){
@@ -260,7 +264,7 @@ $charter_assoc_info = $this->Session->read('charter_assoc_info');
                                             <?php } 
                                         }
                                     }
-                                } ?>
+                                }*/ ?>
                                   <span class="img_count_div">
                                 
                                 <?php  if(isset($fleetlocationimages) && !empty($fleetlocationimages)){ 
