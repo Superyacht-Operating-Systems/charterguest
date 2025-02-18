@@ -1992,48 +1992,7 @@ border-radius: 4px; */
     <div class="menu-stripes"></div>
 </button>
 <section id="sidebar" class="sidebar">
-    <nav class="menu"> 
-        <ul class="menu menu-level1 no-style nav nav-pills nav-justified">
-        
-        <li> <a href="<?php echo $basefolder."/charters/programs/".$this->Session->read('guestListUUID');?>">Charter Programs</a> 
-        <?php //echo "<pre>"; print_r($guestListData); exit; ?>
-            <!-- only show guest type not email recipient -->
-            <?php if($cp_guesttype != 'email_recipient'){ ?>
-      
-        <li class="menu__item"> <a href="#">Charter Contracts</a>
-            <?php if(isset($guesttype) && $guesttype == "owner"){ if(isset($programFiles)){ ?>
-                <ul class="submenu">
-                    <?php  foreach($programFiles as $startdate => $filepath){ ?>
-                    <li class="menu__item"><a href="#" data-href="<?php echo $filepath; ?>" class="downloadmappagefile"><?php echo $startdate; ?></a></li>
-                    <?php
-                            
-                        } ?>
-                </ul>
-            <?php } } ?>
-    
-        </li>    
-        
-        <li class="menu__item"> <a href="<?php echo $basefolder.$guestlink; ?>">Guest List</a></li>
-        <?php } ?>
-        
-        <?php if($cp_guesttype != 'email_recipient'){ ?>
-            <li class="menu__item" ><a>How To Video</a>
-           <ul class="submenu">
-                   <li class="menu__item" id="MenuHowToVideo"><a href="#">Preference Sheets</a></li>
-                   <li class="menu__item" id="MenuHowToVideoCharterHead"><a href="#">Head Charterer</a></li>
-                </ul>
-                </li>
-                <?php }else{ ?>
-            <li class="menu__item" ><a target="_blank" href="https://youtu.be/iDa3RiR2m5w">How To Video</a></li>
-            <?php   } ?>
-            
-
-            
-            <li> <a href="<?php echo $basefolder."/charters/privacytermsofuse/1" ?>" target="blank">Terms of Use</a></li>
-        <li> <a href="<?php echo $basefolder."/charters/privacytermsofuse/2" ?>" target="blank">Privacy Policy</a></li>
-         <li class="list-logout-row row-hide-btn"><?php echo $this->Html->link('Logout','/',array('escape' =>false,'title' => 'Logout'));?></li>
-        </ul>
-    </nav>
+<?php echo $this->element('navigation_cp'); ?>
 </section>
 </div>
 </div>
