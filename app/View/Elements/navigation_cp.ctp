@@ -8,7 +8,7 @@ $basefolder = $this->request->base;
         <li> <a href="<?php echo $basefolder."/charters/programs/".$this->Session->read('guestListUUID');?>">Charter Programs</a> 
         <?php //echo "<pre>"; print_r($guestListData); exit; ?>
             <!-- only show guest type not email recipient -->
-            <?php //if($cp_guesttype != 'email_recipient'){ ?>
+            <?php if($cp_guesttype != 'email_recipient'){ ?>
       
         <li class="menu__item"> <a href="#">Charter Contracts</a>
             <?php if(isset($guesttype) && $guesttype == "owner"){ if(isset($programFiles)){ ?>
@@ -19,7 +19,7 @@ $basefolder = $this->request->base;
                             
                         } ?>
                 </ul>
-            <?php } } ?>
+            <?php } } } ?>
     
         </li>    
         <li><a href="<?php echo $website; ?>" target="_blank" style="text-decoration:none;">Yachts Website</a></li>

@@ -708,47 +708,7 @@ color: #000;
     <div class="menu-stripes"></div>
 </button>
 <section id="sidebar" class="sidebar">
-<nav> 
-        <ul class="menu menu-level1 no-style nav nav-pills nav-justified">
-            <?php //if(isset($charter_assoc_info) && !empty($charter_assoc_info)){?>
-        <li> <a href="<?php echo $baseFolder."/charters/programs/".$sessionData['guestListUUID'];  ?>">Charter Programs</a>
-        <li class="menu__item"> <a href="#">Charter Contracts</a>
-            <?php /*if(isset($programFiles)){ ?>
-                <ul class="submenu">
-                    <?php foreach($programFiles as $startdate => $filepath){ ?>
-                    <li class="menu__item"><a href="<?php echo $filepath; ?>" target="_blank"><?php echo $startdate; ?></a></li>
-                    <?php
-                            
-                        } ?>
-                </ul>
-            <?php } */?>
-    
-        </li>    
-        <?php if(empty($mapdetails)){ 
-                $title  = "Not published";
-                $maplink = "#";
-        }else if(!empty($mapdetails)){
-                $title  = "";
-                $maplink = $baseFolder."/charters/charter_program_map/".$charter_program_id.'/'.$ydb_name.'/guest';
-
-        } ?>
-        <!-- <li class="menu__item"> <a href="<?php echo $maplink; ?>" title="<?php echo $title; ?>">Cruising Map</a>
-        </li>     -->
-        <li class="menu__item" ><a>How To Video</a>
-           <ul class="submenu">
-                   <li class="menu__item" id="MenuHowToVideo"><a href="#">Preference Sheets</a></li>
-                   <li class="menu__item" id="MenuHowToVideoCharterHead"><a href="#">Head Charterer</a></li>
-                </ul>
-            </li>
-        <li> <a href="<?php echo $baseFolder."/charters/privacytermsofuse/1" ?>" target="blank">Terms of Use</a></li>
-        <li> <a href="<?php echo $baseFolder."/charters/privacytermsofuse/2" ?>" target="blank">Privacy Policy</a></li>
-        <?php //} ?>
-         <!-- <li class="guest-list"> <a href="#">Guest List</a></li>
-           <li><a href="charter_program_map">Cruising Map</a></li>
-           <li><a>How To Video</a></li> -->
-         <li class="list-logout-row row-hide-btn"><?php echo $this->Html->link('Logout','/',array('escape' =>false,'title' => 'Logout'));?></li>
-        </ul>
-    </nav>
+<?php echo $this->element('navigation_cp'); ?>
 </section>
 </div>
 </div>

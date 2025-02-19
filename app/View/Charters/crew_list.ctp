@@ -881,74 +881,7 @@ color: #000;
     <div class="menu-stripes"></div>
 </button>
 <section id="sidebar" class="sidebar">
-<nav> 
-        <ul class="menu menu-level1 no-style nav nav-pills nav-justified">
-            <?php if(isset($sessionCharterGuest) && !empty($sessionCharterGuest)){?>
-        
-        <?php if($guestType != 'email_recipient'){ ?>
-            <li> <a href="<?php echo $baseFolder."/charters/programs/".$sessionCharterGuest['users_UUID']; ?>">Charter Programs</a>
-            <li class="menu__item"> <a href="#">Charter Contracts</a>
-            <?php if(isset($programFiles)){ ?>
-                <ul class="submenu">
-                    <?php foreach($programFiles as $startdate => $filepath){ ?>
-                    <li class="menu__item"><a href="#" data-href="<?php echo $filepath; ?>" class="download"><?php echo $startdate; ?></a></li>
-                    <?php
-                            
-                        } ?>
-                </ul>
-            <?php } ?>
-    
-        </li>         
-        
-        <?php }else{ ?> 
-            
-            <li> <a href="<?php echo $baseFolder."/charters/programs/".$user_uuid; ?>">Charter Programs</a>    
-        <?php  } ?>
-          
-        <?php if(empty($mapdetails)){ 
-                $title  = "Not published";
-        }else if(!empty($mapdetails)){
-                $title  = "";
-        } ?>
-        <?php if($guestType != 'email_recipient'){ ?>
-        <li class="menu__item"> <a href="#" title="<?php echo $title; ?>">Cruising Map</a>
-            <?php if(isset($mapdetails)){ ?>
-                <ul class="submenu">
-                    <?php foreach($mapdetails as $startdate => $data){ ?>
-                        <!-- <li class="menu__item"><a href="<?php echo $baseFolder."/charters/charter_program_map/".$data['programid'].'/'.$data['dbname'].'/owner'; ?>" target="_blank"><?php echo $startdate; ?></a></li> -->
-                        <li class="menu__item"><a href="<?php echo $baseFolder."/charters/charter_program_map/".$data['programid'].'/'.$data['dbname'].'/owner'; ?>"><?php echo $startdate; ?></a></li>
-                    <?php
-                            
-                        } ?>
-                </ul>
-            <?php } ?>
-    
-        </li>    
-        <?php } ?>
-        <?php if($guestType != 'email_recipient'){ ?>
-            <li class="menu__item" ><a href="#">How To Video</a>
-           <ul class="submenu">
-                   <li class="menu__item" id="MenuHowToVideo"><a href="#">Preference Sheets</a></li>
-                   <li class="menu__item" id="MenuHowToVideoCharterHead"><a href="#">Head Charterer</a></li>
-                </ul>
-            </li>
-
-        <?php }else{ ?>
-            <li class="menu__item" ><a target="_blank" href="https://youtu.be/iDa3RiR2m5w">How To Video</a>
-          
-            </li>
-
-        <?php } ?>
-        
-        <li> <a href="<?php echo $baseFolder."/charters/privacytermsofuse/1" ?>" target="blank">Terms of Use</a></li>
-        <li> <a href="<?php echo $baseFolder."/charters/privacytermsofuse/2" ?>" target="blank">Privacy Policy</a></li>
-        <?php } ?>
-         <!-- <li class="guest-list"> <a href="#">Guest List</a></li>
-           <li><a href="charter_program_map">Cruising Map</a></li>
-           <li><a>How To Video</a></li> -->
-         <li class="list-logout-row row-hide-btn"><?php echo $this->Html->link('Logout','/',array('escape' =>false,'title' => 'Logout'));?></li>
-        </ul>
-    </nav>
+<?php echo $this->element('navigation_cp'); ?>
 </section>
 </div>
 </div>

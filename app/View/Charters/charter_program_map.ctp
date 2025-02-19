@@ -31,6 +31,7 @@ $schedulePeriod = "";
 $charterName = "";
 $scheduleLocation = "";
 if (isset($charterProgData) && !empty($charterProgData)) {
+    //echo $id;
     $schedulePeriod = date_format(date_create($charterProgData['CharterProgram']['charter_from_date']), "d M Y")." - ".date_format(date_create($charterProgData['CharterProgram']['charter_to_date']), "d M Y");
     $charterName = $charterProgData['CharterProgram']['charter_name'];
     $scheduleLocation = $charterProgData['CharterProgram']['embarkation']." to ".$charterProgData['CharterProgram']['debarkation'];
@@ -1992,7 +1993,7 @@ border-radius: 4px; */
     <div class="menu-stripes"></div>
 </button>
 <section id="sidebar" class="sidebar">
-<?php echo $this->element('navigation_cp'); ?>
+<?php echo $this->element('navigation_cp',array('cp_guesttype'=>$cp_guesttype,'id'=>$id,'charter_program_id'=>$prgUUID,'fleetcompany_id'=>$fleetcompany_id)); ?>
 </section>
 </div>
 </div>

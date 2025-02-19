@@ -8015,7 +8015,8 @@ WHERE cga_menus.UUID = '$uuid'";
             $charterGuestDataToMenu = $this->CharterGuest->find("first",array('conditions'=>array('charter_program_id'=>$charterProgramId)));
 
             $charterGuestDatayacht_id = $charterGuestDataToMenu['CharterGuest']['yacht_id'];
-
+            $this->set('id',$charterGuestDataToMenu['CharterGuest']['id']);
+            $this->set('fleetcompany_id',$charterGuestDataToMenu['CharterGuest']['charter_company_id']);
             $this->set('charterGuestDatayacht_id', $charterGuestDatayacht_id);
             //echo $guesttype; exit;
             if(isset($guesttype) && ($guesttype == "owner")){ 
@@ -8095,7 +8096,7 @@ WHERE cga_menus.UUID = '$uuid'";
                 $stationarylocations = array();
                 $samlatlong = array();
                 $basefolder = $this->request->base;
-//echo "<pre>"; print_r($scheduleData); exit;
+        //echo "<pre>"; print_r($scheduleData); exit;
                 if(isset($scheduleData)){
                    
                 //echo "<pre>"; print_r($scheduleData); exit;
@@ -8677,7 +8678,7 @@ WHERE cga_menus.UUID = '$uuid'";
 
                                 if($key == 0 || $value['CharterProgramSchedule']['day_num'] == 1){
                                     
-//echo $value['CharterProgramSchedule']['title'];
+                                //echo $value['CharterProgramSchedule']['title'];
                                         $value['CharterProgramSchedule']['marker_msg_count'] = $this->CharterGuest->getCharterMarkerCommentCountWithDebarkation($yachtDbName,$value['CharterProgramSchedule']['UUID'],$value['CharterProgramSchedule']['title'],$value['CharterProgramSchedule']['debarkation_flag']);
                                     $samemarkercommentcount[$value['CharterProgramSchedule']['row_from_lat'].'_'.$value['CharterProgramSchedule']['UUID'].'_'.$value['CharterProgramSchedule']['title']] += $value['CharterProgramSchedule']['marker_msg_count'];
                                     
