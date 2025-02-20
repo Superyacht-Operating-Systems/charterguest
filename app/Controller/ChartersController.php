@@ -440,6 +440,7 @@ class ChartersController extends AppController {
         $CharterGuestConditions = array('users_UUID' => $usersUUID);
         $GuestListConditions = array('UUID' => $usersUUID);
         $charterAssocConditions = array('UUID' => $usersUUID);
+        $this->Session->write("user_login_for_menu", $usersUUID);
         //echo $usersUUID;
         $this->loadModel('CharterGuest');
         $this->loadModel('GuestList');
@@ -1262,10 +1263,10 @@ class ChartersController extends AppController {
         * Created date - 24-May-2018
         * Modified date - 
     */
-    public function crew_list() {
+    public function crew_list($id='',$charter_program_id='',$fleetcompany_id='',$guesttype='',$cp_guesttype='',$allow_comments='') {
         $session = $this->Session->read('charter_info');
         $sessionAssoc = $this->Session->read('charter_assoc_info');
-        // echo "<pre>";print_r($session);exit;
+         //echo "<pre>";print_r($cp_guesttype);exit;
         if (empty($session)) {
             $this->set('guestType','');
             $this->redirect(array('action' => 'index'));
@@ -1451,7 +1452,51 @@ class ChartersController extends AppController {
 
         $this->set('CrewInfo', $CrewInfo);
 
-        //echo "<pre>";print_r($CrewInfo);exit;
+        //echo "<pre>";print_r($guestType);exit;
+         // collecting nav panel details for common
+        $this->set('prgUUID',$charter_program_id);
+        $this->set('yachtdb',$ydb_name);
+        $this->set('guesttype',$guesttype);
+        $this->set('cp_guesttype',$cp_guesttype);
+        $this->set('allow_comments',$allow_comments);
+     //echo "<pre>"; print_r($charterProgData); exit;
+     $scheduleData = $this->CharterProgramFile->query("SELECT * FROM $ydb_name.charter_program_schedules CharterProgramSchedule WHERE charter_program_id = '$puuid' AND is_deleted = 0");
+     if(isset($scheduleData) && !empty($scheduleData)){
+             if(($scheduleData[0]['CharterProgramSchedule']['publish_map'] == 1)){
+                 $map_url = "link";
+             }else{
+                 $map_url = "nolink";
+             }
+     }else{
+             $map_url = "nolink";
+     }
+     //echo $map_url; echo $guesttype; exit;
+     $this->set('map_url',$map_url);
+     $this->set('id',$charterData['CharterGuest']['id']);
+     $this->set('fleetcompany_id',$charterData['CharterGuest']['charter_company_id']);
+     $this->set('cp_to_date',$charterData['CharterGuest']['charter_to_date']);
+     $usersUUID = $this->Session->read('user_login_for_menu');
+     
+
+     $this->loadModel('CharterGuestAssociate');
+     $charterAssocConditions = array('UUID' => $usersUUID,'charter_program_id'=>$puuid);
+     $charterAssocData = $this->CharterGuestAssociate->find('first', array(
+         'conditions' => $charterAssocConditions
+     ));
+     if(isset($charterAssocData) && $charterAssocData!=''){
+         $associd = $charterAssocData['CharterGuestAssociate']['id'];
+         $is_head_charter = $charterAssocData['CharterGuestAssociate']['is_head_charterer'];
+         $this->set('is_head_charter',$is_head_charter);
+         $this->set('associd',$associd);
+         $allow_comments = $charterAssocData['CharterGuestAssociate']['allow_comments'];
+         $this->set('allow_comments',$allow_comments);
+     }else{
+         $is_head_charter = 0;
+         $this->set('is_head_charter',$is_head_charter);
+     }
+     // echo "<pre>"; print_r($charterAssocData); exit; 
+
+     // collectiong nav panel details for common
     }
     
     /*
@@ -8015,10 +8060,47 @@ WHERE cga_menus.UUID = '$uuid'";
             $charterGuestDataToMenu = $this->CharterGuest->find("first",array('conditions'=>array('charter_program_id'=>$charterProgramId)));
 
             $charterGuestDatayacht_id = $charterGuestDataToMenu['CharterGuest']['yacht_id'];
+            // collecting nav panel details for common
+
+            //echo "<pre>"; print_r($charterProgData); exit;
+            $scheduleData = $this->CharterProgramFile->query("SELECT * FROM $yachtDbName.charter_program_schedules CharterProgramSchedule WHERE charter_program_id = '$charterProgramId' AND is_deleted = 0");
+            if(isset($scheduleData) && !empty($scheduleData)){
+                    if(($scheduleData[0]['CharterProgramSchedule']['publish_map'] == 1)){
+                        $map_url = "link";
+                    }else{
+                        $map_url = "nolink";
+                    }
+            }else{
+                    $map_url = "nolink";
+            }
+            //echo $map_url; echo $guesttype; exit;
+            $this->set('map_url',$map_url);
             $this->set('id',$charterGuestDataToMenu['CharterGuest']['id']);
             $this->set('fleetcompany_id',$charterGuestDataToMenu['CharterGuest']['charter_company_id']);
             $this->set('cp_to_date',$charterGuestDataToMenu['CharterGuest']['charter_to_date']);
+            $usersUUID = $this->Session->read('user_login_for_menu');
+            
+
+            $this->loadModel('CharterGuestAssociate');
+            $charterAssocConditions = array('UUID' => $usersUUID,'charter_program_id'=>$charterProgramId);
+            $charterAssocData = $this->CharterGuestAssociate->find('first', array(
+                'conditions' => $charterAssocConditions
+            ));
+            if(isset($charterAssocData) && $charterAssocData!=''){
+                $associd = $charterAssocData['CharterGuestAssociate']['id'];
+                $is_head_charter = $charterAssocData['CharterGuestAssociate']['is_head_charterer'];
+                $this->set('is_head_charter',$is_head_charter);
+                $this->set('associd',$associd);
+                $allow_comments = $charterAssocData['CharterGuestAssociate']['allow_comments'];
+                $this->set('allow_comments',$allow_comments);
+            }else{
+                $is_head_charter = 0;
+                $this->set('is_head_charter',$is_head_charter);
+            }
+            // echo "<pre>"; print_r($charterAssocData); exit;   
             $this->set('charterGuestDatayacht_id', $charterGuestDatayacht_id);
+
+            // collectiong nav panel details for common
             //echo $guesttype; exit;
             if(isset($guesttype) && ($guesttype == "owner")){ 
                     $guestlink = "/charters/view/".$charterGuestDataToMenu['CharterGuest']['id']."/".$charterGuestDataToMenu['CharterGuest']['charter_program_id']."/".$charterGuestDataToMenu['CharterGuest']['charter_company_id'];

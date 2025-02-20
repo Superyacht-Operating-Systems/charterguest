@@ -1965,7 +1965,7 @@ border-radius: 4px; */
 }
 </style>  
 
-<?php    echo $this->Html->script('jquery-1.7.2.min');
+<?php   // echo $this->Html->script('jquery-1.7.2.min');
         echo $this->Html->script('fancybox/jquery.fancybox');
         echo $this->Html->css('fancybox/jquery.fancybox');
         echo $this->Html->script('fancybox/jquery.fancybox-thumbs');
@@ -1993,7 +1993,8 @@ border-radius: 4px; */
     <div class="menu-stripes"></div>
 </button>
 <section id="sidebar" class="sidebar">
-<?php echo $this->element('navigation_cp',array('cp_guesttype'=>$cp_guesttype,'id'=>$id,'charter_program_id'=>$prgUUID,'fleetcompany_id'=>$fleetcompany_id,'cp_to_date'=>$cp_to_date)); ?>
+    
+<?php echo $this->element('navigation_cp',array('cp_guesttype'=>$cp_guesttype,'id'=>$id,'charter_program_id'=>$prgUUID,'fleetcompany_id'=>$fleetcompany_id,'cp_to_date'=>$cp_to_date,'is_head_charter'=>$is_head_charter,'guestlink'=>$guestlink,'map_url'=>$map_url,'allow_comments'=>$allow_comments,'yachtdb'=>$yachtdb,'guesttype'=>$guesttype)); ?>
 </section>
 </div>
 </div>

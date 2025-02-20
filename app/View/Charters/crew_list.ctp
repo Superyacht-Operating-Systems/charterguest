@@ -881,7 +881,7 @@ color: #000;
     <div class="menu-stripes"></div>
 </button>
 <section id="sidebar" class="sidebar">
-<?php echo $this->element('navigation_cp'); ?>
+<?php echo $this->element('navigation_cp',array('cp_guesttype'=>$cp_guesttype,'id'=>$id,'charter_program_id'=>$prgUUID,'fleetcompany_id'=>$fleetcompany_id,'cp_to_date'=>$cp_to_date,'is_head_charter'=>$is_head_charter,'guestlink'=>$guestlink,'map_url'=>$map_url,'allow_comments'=>$allow_comments,'yachtdb'=>$yachtdb,'guesttype'=>$guesttype)); ?>
 </section>
 </div>
 </div>

@@ -819,7 +819,7 @@ width: max-content;
     var BASE_FOLDER = "<?php echo $baseFolder; ?>";
 </script> 
 <?php //echo '<pre>'; print_r($this->params); exit;
- if($this->params['action'] != "charter_program_map"){ ?>
+ //if($this->params['action'] != "charter_program_map"){ ?>
 <script type="text/javascript">
 /// existing preference
 var dateToday = new Date();
@@ -845,7 +845,7 @@ $(".dobDatePickerexisting").datepicker({
             changeMonth:true,
         });
 </script>
-<?php } ?>
+<?php //} ?>
 
 <script type="text/javascript">
 // Make Non-editable fields

@@ -986,7 +986,7 @@ if(isset($charterAssocData) && !empty($charterAssocData)){
             <?php } ?>
             <!-- <li><a href="#"><span class="" >Memories</span></a></li> -->
             <!--<li><a href="#"><span class="" >Crew List11111</span></a></li>-->
-            <li><a href="<?php echo $basefolder."/charters/crew_list/".$id."/".$charter_program_id."/".$fleetcompany_id; ?>"><span class="" >Crew List</span></a></li>
+            <li><a href="<?php echo $basefolder."/charters/crew_list/".$id."/".$charter_program_id."/".$fleetcompany_id."/".$guestListData['GuestList']['guest_type']."/".$data['CharterGuestAssociate']['allow_comments']; ?>"><span class="" >Crew List</span></a></li>
              <!-- only show guest type not email recipient -->
              
             <li>
