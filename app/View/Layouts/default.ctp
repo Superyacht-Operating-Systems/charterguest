@@ -878,7 +878,10 @@ $(document).on("click",".existingCheckFunction",function(e){
                     $("#use_existing").attr('data-preferenceExistGuestID',result.preferenceExistGuestID);
                     $("#use_existing").attr('data-gtype',result.guestType);
                     $("#hideloader").hide();
-                    $("#PreferenceAlreadyExist").modal("show");
+                   // alert();
+                   // $("#PreferenceAlreadyExist").modal("show");
+                    $("#PreferenceAlreadyExist").show();
+
                 }else if(result.status == 'fail'){
                     $("#hideloader").hide();
                     window.location.href = BASE_FOLDER+result.redirectUrl;
@@ -905,8 +908,10 @@ $(document).on("click",".existingCheckFunction",function(e){
     $("#confirmPreference").attr("data-chkuuid",chkuuid);
     $("#confirmPreference").attr("data-assid",assid);
     $("#confirmPreference").attr("data-gtype",gtype);
-    $("#PreferenceAlreadyExist").modal("hide");
-    $("#PreferenceBirthday").modal("show");
+    //$("#PreferenceAlreadyExist").modal("hide");
+    $("#PreferenceAlreadyExist").hide();
+    //$("#PreferenceBirthday").modal("show");
+    $("#PreferenceBirthday").show();
     
 });
 

@@ -8017,6 +8017,7 @@ WHERE cga_menus.UUID = '$uuid'";
             $charterGuestDatayacht_id = $charterGuestDataToMenu['CharterGuest']['yacht_id'];
             $this->set('id',$charterGuestDataToMenu['CharterGuest']['id']);
             $this->set('fleetcompany_id',$charterGuestDataToMenu['CharterGuest']['charter_company_id']);
+            $this->set('cp_to_date',$charterGuestDataToMenu['CharterGuest']['charter_to_date']);
             $this->set('charterGuestDatayacht_id', $charterGuestDatayacht_id);
             //echo $guesttype; exit;
             if(isset($guesttype) && ($guesttype == "owner")){ 

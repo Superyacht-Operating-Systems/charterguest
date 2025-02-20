@@ -1,4 +1,3 @@
-
 <?php 
 $isFleetUser = $this->Session->read('loggedUserInfo.is_fleet');
 $userType = $this->Session->read('loggedUserInfo.user_type');

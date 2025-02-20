@@ -1993,7 +1993,7 @@ border-radius: 4px; */
     <div class="menu-stripes"></div>
 </button>
 <section id="sidebar" class="sidebar">
-<?php echo $this->element('navigation_cp',array('cp_guesttype'=>$cp_guesttype,'id'=>$id,'charter_program_id'=>$prgUUID,'fleetcompany_id'=>$fleetcompany_id)); ?>
+<?php echo $this->element('navigation_cp',array('cp_guesttype'=>$cp_guesttype,'id'=>$id,'charter_program_id'=>$prgUUID,'fleetcompany_id'=>$fleetcompany_id,'cp_to_date'=>$cp_to_date)); ?>
 </section>
 </div>
 </div>
