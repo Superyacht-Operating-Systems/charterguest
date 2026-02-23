@@ -3775,21 +3775,6 @@ class ChartersController extends AppController {
                 // Updating all the tabs records into corresponding yacht tables
                 $charterHeadProgramId = $selectedCharterProgramUUID;
                 $this->sendRecordsToYacht($yDBName,$charterHeadProgramId,$charterHeadId,$charterAssocId,$guest_uuid);
-            } else if (!empty($frompageleave) && $frompageleave == "autosave") {
-                // Background auto-save on tab switch: only sync to yacht if is_psheets_done is already 1
-                $currentPsheetsDone = 0;
-                if (!empty($associatePrimaryid) || $associatePrimaryid != 0) {
-                    $currentPsheetsDone = isset($guestAssc['CharterGuestAssociate']['is_psheets_done']) ? $guestAssc['CharterGuestAssociate']['is_psheets_done'] : 0;
-                } else {
-                    $currentPsheetsDone = isset($CharterGuestData['CharterGuest']['is_psheets_done']) ? $CharterGuestData['CharterGuest']['is_psheets_done'] : 0;
-                }
-                if ($currentPsheetsDone == 1) {
-                    $yDBName = $session['CharterGuest']['ydb_name'];
-                    $charterHeadProgramId = $selectedCharterProgramUUID;
-                    $this->sendRecordsToYacht($yDBName,$charterHeadProgramId,$charterHeadId,$charterAssocId,$guest_uuid);
-                }
-                echo json_encode(array('status' => 'success'));
-                exit;
             }
             }
             $personalDetailsTab = '';
