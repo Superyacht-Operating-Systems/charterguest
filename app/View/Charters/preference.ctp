@@ -1625,17 +1625,34 @@ function autoSaveCurrentTab() {
     var $form = $(formId);
     if (!$form.length) return;
 
-    // For itinerary ensure frompageleave is 'save', not 'submit' (avoids popup)
-    if (currentActivePaneId === 'itinerary') {
-        $form.find('.frompageleave').val('save');
+    // Personal Details has a file input (passport_image) — must use FormData
+    // All other tabs have no file inputs so serialize() is sufficient
+    if (currentActivePaneId === 'personal_det') {
+        $.ajax({
+            type        : 'POST',
+            url         : $form.attr('action'),
+            data        : new FormData($form[0]),
+            processData : false,
+            contentType : false
+        });
+    } else if (currentActivePaneId === 'itinerary') {
+        // Set 'autosave', serialize immediately, then reset to 'submit' so the Submit button still works
+        var $fpField = $form.find('.frompageleave');
+        $fpField.val('autosave');
+        var serializedData = $form.serialize();
+        $fpField.val('submit');
+        $.ajax({
+            type : 'POST',
+            url  : $form.attr('action'),
+            data : serializedData
+        });
+    } else {
+        $.ajax({
+            type : 'POST',
+            url  : $form.attr('action'),
+            data : $form.serialize()
+        });
     }
-
-    // Use serialize() — same method as the working pageleave_save handler
-    $.ajax({
-        type : 'POST',
-        url  : $form.attr('action'),
-        data : $form.serialize()
-    });
 }
 
 $(document).on('click', '#prefmenu li a.nav-anch', function() {
