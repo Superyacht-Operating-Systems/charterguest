@@ -1,0 +1,68 @@
+---
+calendar:
+  name: calendar-days
+caret-square-o-right:
+  name: square-caret-right
+  prefix: far
+check-square-o:
+  name: square-check
+  prefix: far
+close:
+  name: xmark
+credit-card-alt:
+  name: credit-card
+cutlery:
+  name: utensils
+dollar:
+  name: dollar-sign
+edit:
+  name: pen-to-square
+  prefix: far
+file-text:
+  name: file-lines
+file-text-o:
+  name: file-lines
+  prefix: far
+files-o:
+  name: copy
+  prefix: far
+floppy-o:
+  name: floppy-disk
+  prefix: far
+pencil-square-o:
+  name: pen-to-square
+  prefix: far
+play-circle-o:
+  name: circle-play
+  prefix: far
+remove:
+  name: xmark
+repeat:
+  name: arrow-rotate-right
+rotate-left:
+  name: arrow-rotate-left
+rotate-right:
+  name: arrow-rotate-right
+save:
+  name: floppy-disk
+  prefix: far
+thumbs-o-up:
+  name: thumbs-up
+  prefix: far
+times-circle-o:
+  name: circle-xmark
+  prefix: far
+toggle-right:
+  name: square-caret-right
+  prefix: far
+trash:
+  name: trash-can
+trash-o:
+  name: trash-can
+  prefix: far
+unlock-alt:
+  name: unlock
+usd:
+  name: dollar-sign
+warning:
+  name: triangle-exclamation

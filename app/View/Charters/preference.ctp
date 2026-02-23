@@ -1,0 +1,1888 @@
+<script>
+    $("#hideloader").show();
+</script>
+<?php
+    $baseFolder = $this->request->base;
+    $session = $this->Session->read('charter_info.CharterGuest'); 
+    $sessionData = $this->Session->read();
+    $sessionAssoc = $this->Session->read('charter_assoc_info');
+    $adminLogin = $this->Session->read('charter_info.CharterGuest.Adminlogin');
+     $selectedCHID = $this->Session->read('selectedCHID');
+     $selectedCHPRGID = $this->Session->read('selectedCHPRGID');
+     $selectedCHPRGCOMID = $this->Session->read('selectedCHPRGCOMID');
+
+     $Fromownerguestlist = $this->Session->read('Fromownerguestlist');
+    
+        //$sessionModal = $this->Session->read('charter_info');
+       
+        
+        //echo "<pre>"; print_r($sessionModal); exit;
+    if(isset($charterAssocIdisHeadChecked) && $charterAssocIdisHeadChecked!=''){
+    $sessionCH = $charterAssocIdisHeadChecked;//$sessionAssoc['CharterGuestAssociate']['is_head_charterer'];
+    }
+    if(isset($sessionAssoc['CharterGuestAssociate']['is_head_charterer']) && $sessionAssoc['CharterGuestAssociate']['is_head_charterer']!=''){
+    $sessionCH = $sessionAssoc['CharterGuestAssociate']['is_head_charterer'];
+    }
+    //echo $use_submitted_date.'llllll';exit('ddd');
+
+    $sessionCharterGuest = $this->Session->read('charter_info.CharterGuest');
+
+    $sessionCharterGuestAssociate = $this->Session->read('charter_info.CharterGuestAssociate');
+
+            $ownerprefenceID = $this->Session->read('ownerprefenceID');
+            $ownerprefenceUUID = $this->Session->read('ownerprefenceUUID');
+
+            $selectedCharterProgramUUID = $this->Session->read('selectedCharterProgramUUID');
+
+            $assocprefenceID = $this->Session->read('assocprefenceID');
+            $assocprefenceUUID = $this->Session->read('assocprefenceUUID');
+
+            $base = $this->request->base;
+
+             //echo "<pre>"; print_r($this->Session->read()); 
+    //exit;
+
+    $iti_guestListUUID_beforeleave = $this->Session->read('guestListUUID');
+ $iti_selectedCharterProgramUUID_beforeleave = $this->Session->read('selectedCharterProgramUUID'); 
+
+ $iti_guestListUUID = $this->Session->read('guestListUUID');
+ $iti_selectedCharterProgramUUID = $this->Session->read('selectedCharterProgramUUID'); 
+// @23nov22 - Display used submitted preferences modal if the submitted date empty or less than today date.
+ $use_submitted_date_data  = $this -> requestAction(array('controller' => 'charters','action' => 'use_submitted_date',$iti_guestListUUID));
+ //echo "<pre>"; print_r($use_submitted_date_data); exit;
+ $use_submitted_date = $use_submitted_date_data['GuestList']['use_submitted_date'];
+ if(isset($use_submitted_date) && !empty($use_submitted_date)){ 
+     $modifieddate = date('Y-m-d',strtotime($use_submitted_date));
+     $modifieddatestrtotime = strtotime($modifieddate);
+     $todaydatestrtotime = strtotime(date('Y-m-d'));
+ }
+
+ if(isset($iti_selectedCharterProgramUUID)){
+    $companyData  = $this -> requestAction(array('controller' => 'charters','action' => 'fleet_company_button_color',$iti_selectedCharterProgramUUID));
+    if(isset($companyData['Fleetcompany']['cga_glow_color']) && !empty($companyData['Fleetcompany']['cga_glow_color'])){ 
+        $cga_glow_color = $companyData['Fleetcompany']['cga_glow_color'];
+    }
+    if(isset($companyData['Fleetcompany']['cga_button_color']) && !empty($companyData['Fleetcompany']['cga_button_color'])){ 
+        $cga_button_color = $companyData['Fleetcompany']['cga_button_color'];
+    }
+    if(isset($companyData['Fleetcompany']['cga_button_text']) && !empty($companyData['Fleetcompany']['cga_button_text'])){ 
+        $cga_button_text = $companyData['Fleetcompany']['cga_button_text'];
+    }
+ }
+
+ $showPopup = $this->Session->read('showPopup'); 
+
+ $isgenerateWineOrderPdf = $this->Session->read('isgenerateWineOrderPdf'); 
+ if($isgenerateWineOrderPdf==true){
+    ?>
+    <script>
+        console.log("filepath jhghjg")
+        var filepath = "<?php echo $baseFolder; ?>/charters/generateWineOrderPdf";
+        console.log("filepath=",filepath)
+        console.log("isgenerateWineOrderPdf=",<?php echo $isgenerateWineOrderPdf; ?>)
+        downloadFile(filepath);
+
+        function downloadFile(filePath){
+            var link=document.createElement('a');
+            link.href = filePath;
+            link.download = filePath.substr(filePath.lastIndexOf('/') + 1);
+            link.click();
+        }
+    </script>
+    <?php
+ }
+
+ $isgenerateProductOrderPdf = $this->Session->read('isgenerateProductOrderPdf'); 
+ if($isgenerateProductOrderPdf==true){
+    ?>
+    <script>
+        //console.log("filepath jhghjg")
+        var filepath = "<?php echo $baseFolder; ?>/charters/generateProductOrderPdf";
+        //console.log("filepath=",filepath)
+        downloadFile(filepath);
+
+        function downloadFile(filePath){
+            var link=document.createElement('a');
+            link.href = filePath;
+            link.download = filePath.substr(filePath.lastIndexOf('/') + 1);
+            link.click();
+        }
+</script>
+    <?php
+ }
+?>
+
+<?php 
+    echo $this->Html->css('preference/style');
+?>
+
+<style>
+.lfetlabel
+ {
+    float: left;
+        padding-left: 10px;
+}
+
+
+    .error{
+        display:none !important;
+    }
+    @media only screen and (min-width:1024px){
+    body .mydemolabel {
+  font-size: 36px !important;
+}
+.yachtHeaderName {
+  font-size: 36px;
+}
+    }
+@media only screen and (min-width:771px) and (max-width:1024px){
+
+.yachtHeaderName {
+    margin-top: 4px!important;
+}
+body .mydemolabel {
+    top: 65px!important;
+  font-size: 30px !important;
+}
+
+
+}
+
+@media only screen and (max-width: 771px){
+.navbar-absalute-top {
+position: relative; 
+height:auto;
+}
+.nav-side-menu-full-container .nav-side-menu .sidebar-btn {
+    top: -44px!important;
+}
+.menu{
+    position: relative;
+    top: 5px;
+}
+.container-row-all-innerpages {
+    top: 95px;
+}
+.fixed-row-container {
+  margin-top: 0px;
+}
+.container-row-all-innerpages {
+    top: 26px!important;
+}
+
+body .mydemolabel {
+    top: 42px!important;
+    font-size: 14px!important;
+}
+.position-mobile-head {
+    text-transform: inherit;
+    margin-top: 10px;
+    top: -41px;
+    left: 80px;
+    font-size: 16px;
+}
+body .mydemolabel .user-subnamep {
+    font-size: 14px!important;
+    padding-top: 2px!important;
+    display:none;
+}
+.yachtHeaderName {
+    margin-top: 9px!important;
+}
+}
+@media only screen and (max-width: 991px){
+.nav-pills > li + li {
+    margin-left: 0;
+    margin-right: 5px;
+}
+.nav-pills>li>a.nav-anch {
+    margin-right: 0;
+    font-size: 12px;
+    padding: 10px 2px;
+}
+}
+
+
+    @media (max-width: 768px){
+.modal-dialog {
+    max-width: 315px;
+    margin: 10px auto;
+    font-size: 12px;
+}
+    .modal-body {
+  padding: 5px;
+}
+ 
+}
+
+      @media only screen and (min-width: 300px) and (max-width: 1024px){
+label {
+  font-size: 14px !important;
+}
+}
+    .occDate .form-control {
+    padding: 6px 8px;
+}
+    .modalmsg {
+    text-align: center;
+    padding: 20px 0px!important;
+}
+.nav-side-menu{display: block!important;}
+.yachtHeaderName{font-weight: bold;}
+.form-control{
+    border-radius: 0px;
+    border: none;
+    border-top: solid 1.5px rgba(2, 2, 2, 0.40);
+    border-left: solid 1.5px rgba(2, 2, 2, 0.40);
+    background: rgba(241, 235, 235, 0.76);
+    border-bottom: solid 1.5px #fff;
+    border-right: solid 1.5px #fff;
+}
+.tab-md-row-container label {
+    font-weight: 600;
+}
+
+.tab-md-row-container .checkbox label, .radio label{
+  font-weight: 600;
+}
+.checkbox-label-row .checkbox label, .radio label{margin: 0px;
+    padding: 0px;}
+
+
+.ui-datepicker-title select {
+        color: black;
+    }
+    input[type="file"].passportImageClass {
+    max-width: 249px;
+}
+    .passportImageClass {
+        /*margin: 10px 0 0;
+            margin-top: 10px;*/
+            margin-right: 0px;
+            margin-bottom: 0px;
+            margin-left: 0px;
+        padding: 6px 9px !important;
+        border-radius: 3px;
+        overflow: hidden;
+        white-space: nowrap;
+        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+    }
+    .space-50-h{
+        height: 50px;
+    }
+    .mar-t-10{
+        margin-top:10px;
+    }
+
+    /*End Ramesh 10/08/2018 */
+/*.back-btn{position: relative;width:100%;margin-top:50px;    display: inline-block;}*/
+.back-btn button{float: right;    margin-right: 20px;}
+.base-margin {margin: 5px 0px 20px 0px}
+
+/* sub menu */
+.menu__item{
+    cursor: pointer;
+}
+.menu > li{
+  /* display: inline-block; */
+  margin-right: 10px;
+  position: relative;
+  cursor: pointer;
+}
+.menu .menu__item a {
+  text-decoration: none;
+  padding: 10px 20px;
+   color: #000;
+  transition: 0.5s;
+}
+.menu .menu__item {
+  list-style: none;}
+.nav-side-menu-full-container .nav-side-menu .sidebar.show{
+    overflow-y: inherit;
+}
+.menu .submenu {
+    position: absolute;
+    margin-left:182px;
+    padding-left: 0;
+    top: 0px;
+  display: none;
+}
+.menu .submenu .menu__item{
+    display: inline-block;
+        width: 100%;
+}
+.menu .submenu .menu__item a{
+    display: inline-block;
+        word-break: break-all;
+}
+.menu .submenu .menu__item a:hover{
+    color:#fff !important;
+    background: #149be9 !important;
+}
+.modal {
+  z-index: 9999;
+}
+@media only screen and (max-width: 767px){
+    body .menu .submenu .menu__item a {
+  background: #a4a0a0!important;
+  color: #000;
+}
+body .menu .menu__item a{
+    /* background: #a4a0a0!important; */
+  color: #000;
+}
+    /* .nav-side-menu .sidebar {
+  width: 190px;
+    } */
+    .nav-side-menu .sidebar {
+  width: 139px;
+    }
+  .nav-side-menu .show {
+  width: 190px;
+    }
+
+.nav-side-menu .sidebar.show {
+  transform: translate(0);
+  overflow-y: inherit;
+}
+body .menu .submenu .menu__item a {
+  padding: 8px 8px;
+  border: none;
+}
+.menu .submenu .menu__item:hover{
+    color:#fff;
+}
+}
+.paginationbeerWine {
+    position: absolute;
+    padding-top: 8px !important;
+    width: 35%;
+}
+
+@media screen and (max-width: 990px) {
+.nav-side-menu {
+    display: block;
+}
+.label-bold {
+        font-size:16px;
+    }
+}
+.menu .submenu{
+    right:-164px !important;
+}
+
+.menu .submenu .menu__item a {
+    width: 160px !important;
+    
+}
+
+@media screen and (max-width:375px)  { /* smartphones, iPhone, portrait 480x320 phones */ 
+    .tt-menu{
+        position:initial !important;
+    }
+}
+
+@media screen and (max-width:411px)  { /* smartphones, iPhone, portrait 480x320 phones */ 
+    .tt-menu{
+        position:initial !important;
+    }
+}
+
+@media screen and (max-width:414px)  { /* smartphones, iPhone, portrait 480x320 phones */ 
+    .tt-menu{
+        position:initial !important;
+    }
+}
+
+@media screen and (max-width:540px)  { /* smartphones, iPhone, portrait 480x320 phones */ 
+    .tt-menu{
+        position:initial !important;
+    }
+}
+
+.nav-justified2 > li > a {
+  margin-bottom: 5px;
+  text-align: center;
+}
+.container-row-all-innerpages{
+    margin-top:30px;
+}
+.container-row-all-innerpages .nav-justified2{
+    margin-bottom: 40px;
+display: flex;
+justify-content: center;
+
+}
+.nav-justified2 {
+  width: 100%;
+}
+@media only screen and (max-width: 767px){
+    .mob_mr_0{
+        margin-right: 0px;
+    }
+    .navbar-absalute-top {
+  z-index: auto;
+    }
+    .nav-side-menu-full-container .nav-side-menu .sidebar-btn{
+        top: 27px;
+    }
+    .container-row-all-innerpages .nav-justified2 {
+        margin-bottom: 0px;
+  justify-content: inherit;
+  overflow: scroll;
+  
+    }
+    .addpreviousselectedprogram{
+        margin-left:150px !important;
+    }
+    .addpreviousselectedWine{
+        margin-left:150px !important;
+    }
+    .container-row-all-innerpages {
+  top: 95px;
+}
+.fixed-row-container {
+  margin-top: 20px!important;
+}
+.personal-row-container{
+    margin-top: 0px;
+}
+.nav-pills > li{
+    margin: 0px 0px 0px 0px!important;
+    
+}
+.nav-pills > li > a.nav-anch {
+    padding: 6px 4px;
+  /* background: #fff;
+   width: 95px;  */
+}
+.nav-side-menu-full-container .nav-side-menu .sidebar {
+    top: 60px;
+}
+.position-mobile-head {
+    text-transform: inherit;
+  margin-top: 10px;
+  top: -41px;
+  left: 80px;
+  font-size: 16px;
+}
+.nav-pills > li {
+    width: auto;
+}
+.mobwt-95{
+    /* width: 95px; */
+    width: 98px;
+}
+.pl-wt{
+    /* width: 72px; */
+    width: 98px;
+}
+.meal-wt{
+    width: 98px;
+}
+.food_wt{
+    /* width: 43px; */
+    width: 98px;
+}
+.beverage-wt{
+    /* width: 72px; */
+    width: 98px;
+}
+.wine_wt{
+    /* width: 93px; */
+    width: 98px;
+}
+.itinerary_wt{
+    /* width: 93px; */
+    width: 98px;
+}
+
+.paginationbeerWine {
+    position: absolute;
+    padding-top: 4px !important;
+    width: 35%;
+    font-size: 13px;
+}
+
+}
+@media only screen and (min-width: 690px) and (max-width: 767px){
+.container-row-all-innerpages .nav-justified2 {
+  justify-content: center;
+}
+}
+@media only screen and (min-width: 767px) and (max-width: 1024px){
+.container-row-all-innerpages{
+margin-top: 50px;
+}
+}
+@media only screen and (min-width: 767px) and (max-width: 991px){
+    /* .nav-pills > li{
+    margin: 0px 10px 10px 10px!important;
+    width: inherit;
+}
+.nav-pills > li > a.nav-anch {
+  background: #fff;
+  width: 95px;
+}
+.container-row-all-innerpages .nav-justified2 {
+  justify-content: inherit;
+  overflow: auto;
+    } */
+}
+@media only screen and (min-width: 767px) and (max-width: 1024px){
+.container-row-all-innerpages{
+margin-top: 50px;
+}
+}
+@media only screen and (min-width: 767px) and (max-width: 991px){
+    /* .nav-pills > li{
+    margin: 0px 10px 10px 10px!important;
+    width: inherit;
+}
+.nav-pills > li > a.nav-anch {
+  background: #fff;
+  width: 95px;
+}
+.container-row-all-innerpages .nav-justified2 {
+  justify-content: inherit;
+  overflow: auto;
+    } */
+}
+
+.wine_addbtn_prev.removeProductRowPrev, .wine_addbtn_prev.removeWineRowPrev {
+    background-color: #f0ad4e !important;
+    border-color: #eea236 !important;
+}
+
+
+</style>
+
+<?php
+// Dynamic color
+    $session = $this->Session->read();
+    //echo "<pre>";print_r($session);
+    if(isset($session['pSheetsColor']) && $session['pSheetsColor'] != ''){
+      $pSheetsColor = $session['pSheetsColor'];
+    ?>
+    <style>
+        .nav > li > a:hover, .nav > li > a:focus {
+            background: <?php echo $pSheetsColor; ?> !important;
+        }
+        .nav-pills>li.active>a.nav-anch {
+            background-color: <?php echo $pSheetsColor; ?> !important;
+        }
+        .checkbox input[type="checkbox"]:checked + label::before{
+            background-color: <?php echo $pSheetsColor; ?> !important;
+        }
+        .radio input[type="radio"]:checked + label::after{
+            background: <?php echo $pSheetsColor; ?> !important;
+        }
+        .lastbutton {
+            background: <?php echo $pSheetsColor; ?> !important;
+        }
+        .selectProductRow {
+            background: <?php echo $pSheetsColor; ?> !important;
+        }
+        .productFilter {
+            background: <?php echo $pSheetsColor; ?> !important;
+        }
+        .select-btn {
+            background: <?php echo $pSheetsColor; ?> !important;
+        }
+        .selectWineRow {
+            background: <?php echo $pSheetsColor; ?> !important;
+        }
+        .wineFilter {
+            background: <?php echo $pSheetsColor; ?> !important;
+        }
+        .ds-category {
+            background: <?php echo $pSheetsColor; ?> !important;
+        }
+        .pagination > .active > span {
+            background: <?php echo $pSheetsColor; ?> !important;
+        }
+
+    </style>
+<?php } ?>
+<!-- Dynamic color -->
+
+<?php if (!empty($this->request->query) || !isset($sessionAssoc['CharterGuestAssociate']['id'])) { ?>
+    <div class="back-btn">
+        <a href="<?php echo $baseFolder."/charters/view"; ?>"><button type="button" class="btn btn-warning" title="Back" data-placement="bottom">
+            <span class="back-btn-go"><< Back</span><span class="go-back-btn"><i class="fa fa-long-arrow-left"></i></span>
+        </button></a>
+    </div>
+<?php } ?>
+<div class="nav-side-menu-full-container">
+ <div class="nav-side-menu">
+<div class="base-margin">
+<div  class="sidebar-btn ">
+    <div class="menu-stripes"></div>
+    <div class="menu-stripes"></div>
+    <div class="menu-stripes"></div>
+</div>
+<section class="sidebar" >
+    <nav class="menu"> 
+        <ul class="menu menu-level1 no-style nav nav-pills nav-justified">
+       
+        <?php //if(isset($adminLogin) && $adminLogin==1){ ?>
+            <li class="menu__item pagleave"> <a href="<?php echo $baseFolder."/charters/programs/".$session['guestListUUID'];  ?>">Charter Programs</a></li>
+            <!-- <li class="guest-list"> <a href="<?php //echo $baseFolder."/charters/view"; ?>">Guest List</a></li> -->
+
+        <?php //}
+     ?>
+          
+       
+          <!-- <li>
+              <?php //if(isset($mapcharterprogramid) && isset($mapydb_name)){ ?>
+              <a href="<?php //echo $baseFolder."/charters/charter_program_map/".$mapcharterprogramid.'/'.$mapydb_name.'/owner'; ?>" target="_blank">Cruising Map</a>
+              <?php //} ?>
+            </li> -->
+            <?php if(empty($mapdetails)){ 
+                $title  = "Not published";
+            }else if(!empty($mapdetails)){
+                    $title  = "";
+            } ?>
+             <?php if(isset($ownerprefenceID) && !empty($ownerprefenceID)){ ?>
+            <li class="menu__item pagleave"><a href="<?php echo $baseFolder."/charters/view/".$ownerprefenceID."/".$selectedCharterProgramUUID."/".$sessionCharterGuest['charter_company_id']; ?>">Guest List</a></li>
+            <?php }else if(isset($assocprefenceID) && !empty($assocprefenceID)){ ?>
+                <?php if(isset($Fromownerguestlist) && $Fromownerguestlist== "yes"){ ?>
+                    <li class="menu__item pagleave"><a href="<?php echo $baseFolder."/charters/view/".$selectedCHID."/".$selectedCharterProgramUUID."/".$sessionCharterGuest['charter_company_id']; ?>">Guest List</a></li>
+                <?php }else{ ?>
+                <li class="menu__item pagleave"><a href="<?php echo $baseFolder."/charters/view_guest/".$selectedCharterProgramUUID."/".$sessionCharterGuest['charter_company_id']; ?>">Guest List</a></li>
+                <?php } }?>   
+                <?php 
+                $usertypeformap = "";
+                if(isset($ownerprefenceID) && !empty($ownerprefenceID)){ 
+                    $usertypeformap = "owner";
+                 }else if(isset($assocprefenceID) && !empty($assocprefenceID)){ 
+                    $usertypeformap = "guest";
+                 }?>    
+                <?php /* ?><li class="menu__item"> <a href="#" title="<?php echo $title; ?>">Cruising Map</a>
+                    <?php  if(isset($mapdetails)){ ?>
+                        <ul class="submenu">
+                            <?php foreach($mapdetails as $startdate => $data){ ?>
+                                <li class="menu__item pagleave"><a href="<?php echo $baseFolder."/charters/charter_program_map/".$data['programid'].'/'.$data['dbname'].'/'.$usertypeformap; ?>"><?php echo $startdate; ?></a></li>
+                            <?php
+                                    
+                                } ?>
+                        </ul>
+                    <?php } ?>
+                </li>  <?php */ ?>
+            <?php /*}else if(isset($assocprefenceID) && !empty($assocprefenceID)){ ?>
+            <li class="menu__item pagleave"><a href="<?php echo $baseFolder."/charters/charter_program_map/".$charterHeadProgramId.'/'.$ydb_name.'/guest'; ?>">Cruising Map</a></li>
+            <?php } */?>
+            <li class="menu__item"> <a href="#">Charter Contracts</a>
+            <?php 
+            if(isset($ownerprefenceID) && !empty($ownerprefenceID)){ 
+            if(isset($programFiles)){ ?>
+                <ul class="submenu">
+                    <?php foreach($programFiles as $startdate => $filepath){ ?>
+                    <li class="menu__item"><a href="#" data-href="<?php echo $filepath; ?>" class="download"><?php echo $startdate; ?></a></li>
+                    <?php
+                            
+                        } ?>
+                </ul>
+            <?php }
+            } ?>
+        </li>   
+        <li class="menu__item" ><a>How To Video</a>
+           <ul class="submenu">
+                   <li class="menu__item" id="MenuHowToVideo"><a href="#">Preference Sheets</a></li>
+                   <li class="menu__item" id="MenuHowToVideoCharterHead"><a href="#">Head Charterer</a></li>
+                </ul>
+            </li>
+           <li class="menu__item"> <a href="<?php echo $baseFolder."/charters/privacytermsofuse/1" ?>" target="blank">Terms of Use</a></li>
+           <li class="menu__item"> <a href="<?php echo $baseFolder."/charters/privacytermsofuse/2" ?>" target="blank">Privacy Policy</a></li>
+            <li class=" menu__item list-logout-row-inner pagleave"><?php echo $this->Html->link('  Logout','/',array('escape' =>false,'title' => 'Logout'));?></li>
+        </ul>
+    </nav>
+</section>
+</div>
+</div>   
+</div>
+
+<div class="container-row-all-innerpages">
+<?php //echo "<pre>";print_r($this->request->data['CharterGuestPersonalDetail']); 
+    $datatoggle="tab";
+    if(empty($this->request->data['CharterGuestPersonalDetail']['dob'])){
+        $datatoggle="";
+    }else if(empty($this->request->data['CharterGuestPersonalDetail']['pob'])){
+        $datatoggle="";
+    }else if(empty($this->request->data['CharterGuestPersonalDetail']['nationality'])){
+        $datatoggle="";
+    }else if(empty($this->request->data['CharterGuestPersonalDetail']['passport_num'])){
+        $datatoggle="";
+    }else if(empty($this->request->data['CharterGuestPersonalDetail']['issued_date'])){
+        $datatoggle="";
+    }else if(empty($this->request->data['CharterGuestPersonalDetail']['expiry_date'])){
+        $datatoggle="";
+    }else if(empty($this->request->data['CharterGuestPersonalDetail']['next_of_kin'])){
+        $datatoggle="";
+    }else if(empty($this->request->data['CharterGuestPersonalDetail']['next_of_kin_phone'])){
+        $datatoggle="";
+    }
+
+?>
+<div class="lfetlabel"><p>Preferences last updated : <span><b><?php echo !empty($psheetModified) ? $psheetModified : 'N/A'; ?></b></span></p></div>
+    <nav class="menu"> 
+        <ul id="prefmenu" class="menu menu-level1 no-style nav nav-pills nav-justified2">
+          <li class="<?php echo $personalDetailsTab; ?> chkpersonalvflag"><a data-toggle="tab" href="#personal_det" class="nav-anch pl-wt">Personal</a></li>
+          <li class="<?php echo $mealPreferenceTab; ?> chkpersonal"><a data-toggle="<?php echo $datatoggle; ?>" href="#meals" class="nav-anch meal-wt">Meal Service</a></li>
+          <li class="<?php echo $foodPreferenceTab; ?> chkpersonal"><a data-toggle="<?php echo $datatoggle; ?>" href="#food" class="nav-anch food_wt">Food</a></li>
+          <li class="<?php echo $beveragePreferenceTab; ?> chkpersonal"><a data-toggle="<?php echo $datatoggle; ?>" href="#beverage" class="nav-anch beverage-wt">Beverage</a></li>
+          <?php if(isset($ownerprefenceID)){
+              //if($sessionCH == 2){ ?>
+          <li class="<?php echo $spiritPreferenceTab; ?> chkpersonal"><a data-toggle="<?php echo $datatoggle; ?>" href="#spirit" class="nav-anch BS-wt mobwt-95">Beer & Spirit</a></li>
+          <li class="<?php echo $winePreferenceTab; ?> chkpersonal"><a data-toggle="<?php echo $datatoggle; ?>" id="wineTab" href="#wine" class="nav-anch wine_wt">Wine List</a></li>
+          <?php } //} else{ ?>
+           <!-- <li class="<?php echo $spiritPreferenceTab; ?>"><a data-toggle="tab" href="#spirit" class="nav-anch">Beer & Spirit</a></li>
+           <li class="<?php echo $winePreferenceTab; ?>"><a data-toggle="tab" id="wineTab" href="#wine" class="nav-anch">Wine List</a></li> -->
+        
+          <?php //} ?>
+          
+          <li class="<?php echo $itineraryPreferenceTab; ?> chkpersonal"><a data-toggle="<?php echo $datatoggle; ?>" href="#itinerary" class="nav-anch itinerary_wt">Itinerary</a></li>
+          
+          </ul>
+    </nav>
+
+
+<div class="row mob_mr_0">
+    <div class="col-lg-4">
+        <?php echo $this->Session->flash();?>
+        <div id="responseAlert" class="alert alert-success top strong-font" style="display:none;">
+        </div>
+    </div>
+</div>
+
+<?php 
+if(isset($defaultFirstName) && !empty($defaultFirstName)){
+$defaultFirstName = $defaultFirstName;
+}else{
+    $defaultFirstName = "";  
+} 
+if(isset($defaultLastName) && !empty($defaultLastName)){
+    $defaultLastName = $defaultLastName;
+    }else{
+        $defaultLastName = "";  
+    }
+
+    if(isset($deleteddob) && !empty($deleteddob)){
+        $deleteddob = $deleteddob;
+    }else{
+        $deleteddob = "";  
+    } 
+    if(isset($deletedpob) && !empty($deletedpob)){
+        $deletedpob = $deletedpob;
+    }else{
+            $deletedpob = "";  
+    }
+?>
+<div id="pageleavemodal" class="modal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" >
+  <div class="modal-dialog" role="document" style="width: 470px;">
+    <div class="modal-content mc-bord">
+      <div class="modal-body">
+      <div class="modalmsg"> 
+        <!--<p>Click Save to complete your preferences later.</p> -->
+        <p>Click Submit to send your preferences to the yacht.</p>
+      </div>
+        <div class="text-center">
+        <!--<input class="btn btn-primary" type="button" name="pageleave_save" id="pageleave_save" value="Save" /> -->
+     <input class="btn btn-success" style="background-color: #5cb85c;
+    border-color: #4cae4c;" type="button" name="pageleave_submit" id="pageleave_submit" value="Submit" />
+          <input class="btn btn-secondary"  type="button" name="pageleave_close" id="pageleave_close" value="Close" />
+        </div>   
+       
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div id="successPreferenceAlertBeforeLeave" class="modal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" >
+  <div class="modal-dialog" role="document">
+
+    <div class="modal-content mc-bord" id="successUsePreferenceBeforeLeave">
+      <div class="modal-body">
+      <div class="modalmsg" style="margin-left: 30px;"> 
+        <p>Would you like to allow your preferences to</p>
+        <p>be provided to future charter programs</p>
+        <p>without you having to submit them again?</p>
+      </div>
+        <div class="text-center">
+          <input class="btn btn-success" style="background-color: #5cb85c;
+    border-color: #4cae4c;" type="button" name="yes_please" id="yes_pleaseBeforeLeave" value="Yes please" />
+          <input class="btn btn-danger" type="button" name="no_thanks" id="no_thanksBeforeLeave" value="No thanks" />
+        </div>   
+        <div class="modalmsg" style="margin-left: 30px;"> 
+        <p>You can login to Charter Guest and make</p>
+        <p>changes to your preferences at any time.</p>
+        </div> 
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div id="successPreferenceAlert" class="modal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" >
+  <div class="modal-dialog" role="document">
+    <!---------------- login or logout-------------------->
+    <div class="modal-content mc-bord" id="successbody">
+      <div class="modal-body" >
+      <div class="modalmsg"> 
+        <p>Thank you for submitting your preference sheets.</p>
+        <p>All information will stay secure and confidential.</p>
+        <p>If you need to update any information you can login again using the same email address and password.</p>
+      </div>
+        <div class="text-center">
+            <?php if (isset($sessionData["fleetLogoUrl"]) && !empty($sessionData["fleetLogoUrl"])) { ?>
+                <img src="<?php echo $sessionData["fleetLogoUrl"]; ?>" alt="">
+            <?php } ?> 
+                <h3><?php echo !empty($sessionData["fleetCompanyName"]) ? $sessionData["fleetCompanyName"] : ""; ?></h3>
+        </div>    
+      </div>
+      <div class="modal-footer" style="text-align: center;">
+          <input class="btn btn-success"type="button" name="stay_log_in" id="stay_log_in" value="Stay Logged in">
+          <a href="<?php echo $base; ?>" class="btn btn-success" style="width: 103px; margin-left: 70px;">Log Out</a>
+      </div>
+    </div>
+              <!------------------login or logout----------------->
+
+    <div class="modal-content mc-bord" id="successUsePreference">
+      <div class="modal-body">
+      <div class="modalmsg" style="margin-left: 30px;"> 
+        <p>Would you like to allow your preferences to</p>
+        <p>be provided to future charter programs</p>
+        <p>without you having to submit them again?</p>
+      </div>
+        <div class="text-center">
+          <input class="btn btn-success" style="background-color: #5cb85c;
+    border-color: #4cae4c;" type="button" name="yes_please" id="yes_please" value="Yes please" />
+          <input class="btn btn-danger" type="button" name="no_thanks" id="no_thanks" value="No thanks" />
+        </div>   
+        <div class="modalmsg" style="margin-left: 30px;"> 
+        <p>You can login to Charter Guest and make</p>
+        <p>changes to your preferences at any time.</p>
+        </div> 
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<?php 
+if(isset($cga_glow_color)){
+?>
+<style>
+.nav-pills>li.active>a.nav-anch {
+    <?php 
+        if(isset($cga_button_text)){
+    ?>
+    color: <?php echo $cga_button_text; ?>;
+    <?php
+        }
+    ?>
+    background-color: <?php echo $cga_glow_color; ?>;
+    transition: 0.3s;
+}
+
+.checkbox input[type="checkbox"]:checked + label::before {
+    background-color: <?php echo $cga_glow_color; ?>;
+}
+
+.radio input[type="radio"]:checked + label::after {
+    background: <?php echo $cga_glow_color; ?>;
+}
+
+.required {
+    color: <?php echo $cga_glow_color; ?>;
+}
+.submit .btn {
+    <?php 
+        if(isset($cga_button_text)){
+    ?>
+    color: <?php echo $cga_button_text; ?>;
+    <?php
+        }
+    ?>
+    background-color: <?php echo $cga_glow_color; ?>;
+    border-color: <?php echo $cga_glow_color; ?>;
+}
+
+.filter-button {
+    background-color: <?php echo $cga_glow_color; ?>;
+    border-color: <?php echo $cga_glow_color; ?>;
+}
+.btn.previous-btn {
+    background-color: <?php echo $cga_glow_color; ?>;
+    transition: 0.3s;
+}
+
+.btn-info, .btn-primary {
+    background-color: <?php echo $cga_glow_color; ?>;
+    <?php 
+        if(isset($cga_button_text)){
+    ?>
+    color: <?php echo $cga_button_text; ?>;
+    <?php
+        }
+    ?>
+}
+
+.btn-success:focus, .btn-primary:focus, .btn-primary.focus{
+    background: <?php echo $cga_glow_color; ?> !important;
+    <?php 
+        if(isset($cga_button_text)){
+    ?>
+    color: <?php echo $cga_button_text; ?>;
+    <?php
+        }
+    ?>
+}
+
+</style>
+
+<?php
+}
+?>
+<?php 
+if(isset($cga_glow_color)){
+?>
+<style>
+.md-row-h-8 button:hover, .btn-success:hover, .btn-open:hover {
+    background: <?php echo $cga_glow_color; ?>!important;
+    <?php 
+        if(isset($cga_button_text)){
+    ?>
+    color: <?php echo $cga_button_text; ?>;
+    <?php
+        }
+    ?>
+}
+
+.nav > li > a:hover, .nav > li > a:focus {
+    background: <?php echo $cga_glow_color; ?>!important;
+    <?php 
+        if(isset($cga_button_text)){
+    ?>
+    color: <?php echo $cga_button_text; ?>!important;
+    <?php
+        }
+    ?>
+}
+.ds-progress{
+    background: <?php echo $cga_glow_color; ?>!important;
+}
+.ds-skate{
+    border: 2px solid <?php echo $cga_glow_color; ?>!important;
+}
+.ds-end-skate{
+    border: 2px solid <?php echo $cga_glow_color; ?>!important;
+}
+</style>
+<?php
+}
+?>
+<!-- Tab content -->
+    <div class="tab-content container tab-md-row-container">    
+        <!-- Personal details -->
+        <?php echo $this->element('personal_details', array('session' => $session, 'sessionAssoc' => $sessionAssoc,'setdefaultFirstName'=>$defaultFirstName,'setdefaultLastName'=>$defaultLastName,'deleteddob'=>$deleteddob,'deletedpob'=>$deletedpob)); ?>
+        
+        <!-- Meal Preferences -->
+        <?php echo $this->element('meal_preferences'); ?>
+        
+        <!-- Food Preferences -->
+        <?php echo $this->element('food_preferences'); ?>
+        
+        <!-- Beverage Preferences -->
+        <?php echo $this->element('beverage_preferences'); ?>
+        <?php //if(isset($session['is_head_charterer']) && $session['is_head_charterer'] == 2){ ?>
+        <!-- Beer & Spirit Preferences -->
+        <?php echo $this->element('spirit_preferences'); ?>
+        
+        <!-- Wine Preferences -->
+        <?php echo $this->element('wine_preferences'); ?>
+        <?php //} ?>
+        <!-- Itinerary Preferences -->
+        <?php echo $this->element('itinerary_preferences'); ?>
+
+         
+    </div>
+
+
+</div>
+<script> 
+var urltogo = "";
+var form = "";
+var url = "";
+
+$(document).on("click", ".nav-justified2 li .pl-wt , .nav-justified2 li .meal-wt, .nav-justified2 li .food_wt", function(e) { 
+             var outerContent =$('.nav-justified2')[0].clientWidth;
+            // var innerContent = $('.nav-justified2 > .active > .nav-anch')[0].clientWidth;
+            // $('.nav-justified2').scrollLeft( (innerContent - outerContent) / 2 + " px");
+            $('.nav-justified2').scrollLeft( - outerContent);
+            });
+
+$(document).on("click", ".nav-justified2 li .BS-wt, .nav-justified2 li .wine_wt, .nav-justified2 li .itinerary_wt", function(e) { 
+             var outerContent =$('.nav-justified2')[0].clientWidth;
+            // var innerContent = $('.nav-justified2 > .active > .nav-anch')[0].clientWidth;
+            // $('.nav-justified2').scrollLeft(  outerContent + " px");
+            $('.nav-justified2').scrollLeft( + outerContent);
+            });
+$(document).on("click", ".nav-justified2 li .beverage-wt", function(e) { 
+     var outerContent =$('.nav-justified2')[0].clientWidth;
+   // var $width = $('.nav-justified2').outerWidth()
+        var $scrollWidth = $('.nav-justified2')[0].scrollWidth; 
+        // var $scrollLeft = $('.nav-justified2').scrollLeft();
+        var $scrollLeft = Math.round($('.nav-justified2').scrollLeft());
+
+        if ($scrollWidth - (outerContent-1) === $scrollLeft || $scrollWidth - (outerContent) === $scrollLeft){
+            $('.nav-justified2').scrollLeft( - outerContent);
+        }
+        else{
+            $('.nav-justified2').scrollLeft( + outerContent);
+        }
+            
+            });    
+            var inputflag = 0;
+$('.checkInputChange').on('input', function() {
+    // do something
+    inputflag = 1;
+});
+
+$(document).on("click", ".pagleave", function(e) { 
+   if(inputflag == 1){ 
+    $("#pageleavemodal").modal("show");
+     urltogo = $(this).find('a').attr('href');
+    return false;
+   }
+});
+
+$(document).on("click","#pageleave_close",function(e) {
+    $("#pageleavemodal").modal("hide");
+    //return false;
+});
+
+$(document).on("click","#pageleave_save",function(e) {
+    
+    var tabname = $("ul.menu-level1").find('li.active').text();
+        //alert(ref_this.data("id"));
+    if(tabname == "Personal"){
+         form = $("#personalDetailsForm");
+            url = form.attr('action');
+             //alert('Personal');
+       // $("#personalDetailsForm").submit(); 
+    }else if(tabname == "Meal Service"){ //alert('Meal');
+        form = $("#mealPreferenceForm");
+            url = form.attr('action');
+        
+    }else if(tabname == "Food"){ //alert('Food');
+        form = $("#foodPreferenceForm");
+            url = form.attr('action');
+        
+    }else if(tabname == "Beverage"){ //alert('Beverage');
+        
+        form = $("#beveragePreferenceForm");
+            url = form.attr('action');
+    }else if(tabname == "Beer & Spirit"){ //alert('Beer');
+        
+        form = $("#spiritPreferenceForm");
+            url = form.attr('action');
+    }else if(tabname == "Wine List"){ //alert('Wine');
+        
+        form = $("#winePreferenceForm");
+            url = form.attr('action');
+        
+    }else if(tabname == "Itinerary"){ //alert('Itinerary');
+        $(".frompageleave").val('save');
+        form = $("#itineraryPreferenceForm");
+            url = form.attr('action');
+        
+        
+    }
+    // console.log(form.serialize());
+    // return false;
+    $("#hideloader").show();
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: form.serialize(),
+                success: function(data) {
+                    $("#hideloader").hide();
+                    // Ajax call completed successfully
+                    window.location.href = urltogo;
+                },
+                error: function(data) {
+                    $("#hideloader").hide();
+                    // Some error in ajax call
+                    alert("some Error");
+                }
+            });
+        //console.log(ref_this);
+});
+
+$(document).on("click","#pageleave_submit",function(e) {
+    $("#pageleavemodal").modal("hide");
+    $(".frompageleave").val('submit');
+    $("#itineraryPreferenceForm").submit();
+});
+
+
+$(document).on("click", "#yes_pleaseBeforeLeave", function(e) {     //alert();
+  
+  var data = {
+      "guestListUUID": "<?php echo $iti_guestListUUID_beforeleave; ?>",
+      "selectedCharterProgramUUID": "<?php echo $iti_selectedCharterProgramUUID_beforeleave; ?>",
+      "use": 1
+  };
+  
+  
+      $("#hideloader").show();
+      $.ajax({
+          type: "POST",
+          url: BASE_FOLDER+'/charters/saveusesubmittedpreferences',
+          dataType: 'json',
+          data: data,
+          success:function(result) {
+              $("#hideloader").hide();
+              if (result.status == 'success') {
+                window.location.href = urltogo;
+                return false;
+              }else if(result.status == 'fail'){
+                window.location.href = urltogo;
+                return false;
+              }   
+          },
+          error: function(jqxhr) { 
+              $("#hideloader").hide();
+          }
+      });
+      return false;
+});
+
+$(document).on("click", "#no_thanksBeforeLeave", function(e) {
+
+    window.location.href = urltogo;
+          return false;
+
+});
+
+
+    
+// Submit Guests with mail sending
+$(".sendMailClass").on("click", function(e) {
+    
+    var classObj = $(this);
+    var rowObj = $(this).closest('tr');
+    var error = 0;
+    $(".inputError").removeClass('inputError');
+    rowObj.find('input:not([name^=is_head_charterer])').each(function(e) {
+        if ($(this).val().trim() == "") {
+            $(this).addClass("inputError").blur();
+            error++;
+        } else {
+            $(this).removeClass("inputError");
+        }
+    });
+    
+    var existCharterHeadId = classObj.data('charterheadid');
+    var charterAssocId = classObj.data('charterassocid');
+    var headChartererId = $("#headChartererId").val();
+    var isHeadCharterer = 0;
+    if (rowObj.find("input[name='is_head_charterer']").is(':checked')) {
+        isHeadCharterer = 1;
+    }
+    var salutation = rowObj.find("input[name='salutation']").val();
+    var firstName = rowObj.find("input[name='first_name']").val();
+    var lastName = rowObj.find("input[name='last_name']").val();
+    var email = rowObj.find("input[name='email']").val();
+    
+    var data = {
+        "existCharterHeadId": existCharterHeadId,
+        "headChartererId": headChartererId,
+        "charterAssocId": charterAssocId,
+        "isHeadCharterer": isHeadCharterer,
+        "salutation": salutation,
+        "firstName": firstName,
+        "lastName": lastName,
+        "email": email
+    };
+    
+    if (!error) {
+        $("#hideloader").show();
+        $.ajax({
+            type: "POST",
+            url: BASE_FOLDER+'/charters/saveAndSendMail',
+            dataType: 'json',
+            data: data,
+            success:function(result) {
+                $("#hideloader").hide();
+                if (result.status == 'success') {
+                    classObj.addClass("displayNone");
+                    classObj.siblings('.emailSentClass').removeClass("displayNone");
+                } else if(result.status == 'invalid_email') {
+                    rowObj.find("input[name='email']").addClass('inputError').blur();
+                } else {
+                    alert(result.message);
+                }   
+            },
+            error: function(jqxhr) { 
+                $("#hideloader").hide();
+            }
+        });
+    } else {
+        return false;
+    }
+    
+});
+
+$("#personalDetailsSubmit").on("click", function(e) {
+    // Validate file
+    var fileName = $('#passportImage').val();
+    if(fileName != ''){
+       var ext = fileName.split('.').pop().toLowerCase();
+        if($.inArray(ext, ['png','jpg','jpeg','pdf']) == -1) {
+            alert('Please upload the valid file!');
+            return false;
+        }
+    }    
+    
+    $("#personalDetailsSubmitOriginal").trigger('click'); 
+});
+
+// Datepicker
+$(".datePicker").datepicker({
+    dateFormat: 'd M yy',
+    changeYear: true,
+    changeMonth:true,
+    yearRange: "-100:+100"
+}).attr('readonly','readonly');
+$(".issuedatePicker").datepicker({
+    dateFormat: 'd M yy',
+    changeYear: true,
+    changeMonth:true,
+    yearRange: "c-12:c+0",
+    // yearRange: "-100:+100"
+}).attr('readonly','readonly');
+$(".expirydatePicker").datepicker({
+    dateFormat: 'd M yy',
+    changeYear: true,
+    changeMonth:true,
+    yearRange: "c-0:c+12",
+    // yearRange: "-100:+100"
+}).attr('readonly','readonly');
+var dateToday = new Date();
+var dobYearRange = "1900:" + dateToday.getFullYear();
+var occationYearRange = dateToday.getFullYear() + ":" + (dateToday.getFullYear() + 5);
+// DOB
+$(".dobDatePicker").datepicker({
+    dateFormat: 'd M yy',
+    changeYear: true,
+    changeMonth:true,
+    yearRange: dobYearRange
+}).attr('readonly','readonly');
+// Special occations
+$(".occationDatePicker").datepicker({
+    dateFormat: 'd M yy',
+    changeYear: true,
+    changeMonth:true,
+    yearRange: occationYearRange
+}).attr('readonly','readonly');
+
+// Timepicker
+$('.timePicker').timepicker({ 
+    timeFormat: 'H:i', 
+    step: 15 
+});
+
+
+$('.breakfast_time_timePicker').timepicker({ 
+    timeFormat: 'H:i', 
+    scrollDefault:"06:00",
+    step: 15 
+});
+
+$('.lunch_time_timePicker').timepicker({ 
+    timeFormat: 'H:i', 
+    scrollDefault:"12:00",
+    step: 15 
+});
+
+$('.dinner_time_timePicker').timepicker({ 
+    timeFormat: 'H:i', 
+    scrollDefault:"18:00",
+    step: 15 
+});
+
+
+
+// Make Non-editable fields
+$(document).on("keypress", ".nonEditable", function(e) {
+    if (e.which != 8) { // Except the Backspace key
+        return false;
+    }
+});
+
+// Restric the paste process
+$(document).on('contextmenu', '.numericInput', function (e) {
+    return false;
+});
+
+// Accepts only digits
+$(document).on('keypress', '.numericInput', function (e) {
+    var value = $(this).val();
+    //if the letter is not digit then display error and don't type anything
+    if (e.which != 8 && e.which != 0 && e.which != 44 && (e.which < 48 || e.which > 57)) {
+
+        return false;
+   }
+});
+
+// Disabling all the fields in case of Header opens the Charter associate's preference sheet
+<?php if (isset($charterAssocIdByHeaderView)) { ?>
+    $("#personal_det input,select,textarea").attr("disabled", true);
+    $("#meals input,select,textarea").attr("disabled", true);
+    $("#food input,select,textarea").attr("disabled", true);
+    $("#beverage input,select,textarea").attr("disabled", true);
+    //$("#wine input,select,textarea").attr("disabled", true);
+    $("#itinerary input,select,textarea").attr("disabled", true);
+<?php } ?> 
+   
+// Initialize the Range rover
+<?php if (!empty($winePreferenceTab)) { ?>
+    $("#range").rangeRover({
+        range:true,
+        data:{
+            start:80,
+            end:100,
+        }
+    });
+<?php } ?>    
+
+</script>
+
+<script>
+
+var sidebar = (function() {
+    "use strict";
+    var $contnet         = $('#content'),
+        $sidebar         = $('.sidebar'),
+        $sidebarBtn      = $('.sidebar-btn'),
+        $toggleCol       = $('body').add($contnet).add($sidebarBtn),
+        sidebarIsVisible = false;
+    $sidebarBtn.on('click', function() {
+        if (!sidebarIsVisible) {
+            bindContent();
+        } else {
+            unbindContent();
+        }
+        toggleMenu();
+    });
+    function bindContent() {
+  
+        $contnet.on('click', function() {
+            toggleMenu();
+            unbindContent();
+        });
+    }
+    function unbindContent() {
+        $contnet.off();
+    }
+    function toggleMenu() {
+        $toggleCol.toggleClass('sidebar-show');
+        $sidebar.toggleClass('show');
+
+        if (!sidebarIsVisible) {
+            sidebarIsVisible = true;
+        } else {
+            sidebarIsVisible = false;
+        }
+    }
+})();
+
+
+$('.menu > .menu__item').hover(function(){
+  $(this).children('.submenu').show();
+  
+}, function() {
+  $(this).children('.submenu').hide();
+  
+});
+
+
+
+$(document).ready(function(){
+  
+                
+                var countries = ["Afghan", "Albanian", "Algerian", "American", "Andorran", "Angolan", "Antiguans", "Argentinean", "Armenian", "Australian", "Austrian", "Azerbaijani", "Bahamian", "Bahraini", "Bangladeshi", "Barbadian", "Barbudans", "Batswana", "Belarusian", "Belgian", "Belizean", "Beninese", "Bhutanese", "Bolivian", "Bosnian", "Brazilian", "British", "Bruneian", "Bulgarian", "Burkinabe", "Burmese", "Burundian", "Cambodian", "Cameroonian", "Canadian", "Cape Verdean", "Central African", "Chadian", "Chilean", "Chinese", "Colombian", "Comoran", "Congolese", "Costa Rican", "Croatian", "Cuban", "Cypriot", "Czech", "Danish", "Djibouti", "Dominican", "Dutch", "East Timorese", "Ecuadorean", "Egyptian", "Emirian", "Equatorial Guinean", "Eritrean", "Estonian", "Ethiopian", "Fijian", "Filipino", "Finnish", "French", "Gabonese", "Gambian", "Georgian", "German", "Ghanaian", "Greek", "Grenadian", "Guatemalan", "Guinea-Bissauan", "Guinean", "Guyanese", "Haitian", "Herzegovinian","Honduran","Hungarian","I-Kiribati","Icelander","Indian","Indonesian","Iranian","Iraqi","Irish","Israeli","Italian","Ivorian","Jamaican","Japanese","Jordanian","Kazakhstani","Kenyan","Kittian and Nevisian","Kuwaiti","Kyrgyz","Laotian","Latvian","Lebanese","Liberian","Libyan","Liechtensteiner","Lithuanian","Luxembourger","Macedonian","Malagasy","Malawian","Malaysian","Maldivan","Malian","Maltese","Marshallese","Mauritanian","Mauritian","Mexican","Micronesian","Moldovan","Monacan","Mongolian","Moroccan","Mosotho","Motswana","Mozambican","Namibian","Nauruan","Nepalese","New Zealander","Ni-Vanuatu","Nicaraguan","Nigerian","North Korean","Northern Irish","Norwegian","Omani","Pakistani","Palauan","Panamanian","Papua New Guinean","Paraguayan","Peruvian","Polish","Portuguese","Qatari","Romanian","Russian","Rwandan","Saint Lucian","Salvadoran","Samoan","San Marinese","Sao Tomean","Saudi","Scottish","Senegalese","Serbian","Seychellois","Sierra Leonean","Singaporean","Slovakian","Slovenian","Solomon Islander","Somali","South African","South Korean","Spanish","Sri Lankan","Sudanese","Surinamer","Swazi","Swedish","Swiss","Syrian","Taiwanese","Tajik","Tanzanian","Thai","Togolese","Tongan","Trinidadian or Tobagonian","Tunisian","Turkish","Tuvaluan","Ugandan","Ukrainian","Uruguayan","Uzbekistani","Venezuelan","Vietnamese","Welsh","Yemenite","Zambian","Zimbabwean"];
+
+        var countries_suggestion = new Bloodhound({
+            datumTokenizer: Bloodhound.tokenizers.whitespace,
+            queryTokenizer: Bloodhound.tokenizers.whitespace,
+            local: countries
+        });
+        
+        $('.typeahead').typeahead(
+            { minLength: 1 },
+            { source: countries_suggestion }
+        );
+
+// This prevents the page from scrolling down to where it was previously.
+if ('scrollRestoration' in history) {
+    history.scrollRestoration = 'manual';
+}
+// This is needed if the user scrolls down during page load and you want to make sure the page is scrolled to the top once it's fully loaded. This has Cross-browser support.
+window.scrollTo(0,0);
+     });  
+
+
+//      var BASE_FOLDER = "<?php echo $baseFolder; ?>";
+// $(document).ready(function (e) {
+//     <?php //if (isset($showPopup)) { ?>
+//             //$("#usesubmittedpreferences").modal('show');
+//             $("#successPreferenceAlert").modal("show");
+//             $("#successUsePreference").show();
+//             $("#successbody").hide();
+//     <?php //} ?> 
+// });    
+
+function validateHhMm(inputField) {
+    var isValid = /^([0-1]?[0-9]|2[0-4]):([0-5][0-9])(:[0-5][0-9])?$/.test(inputField.value);
+
+    if (isValid) {
+        inputField.style.backgroundColor = '#bfa';
+    } else {
+        inputField.style.backgroundColor = '#fba';
+        inputField.value = '';
+    }
+
+    return isValid;
+}
+// Validates that the input string is a valid date
+function isValidDate(inputField)
+{
+    var dateString = inputField.value;
+    var date = new Date(dateString);    
+    var valid = (date.getTime() === date.getTime());
+
+    if(!valid){
+        inputField.value = '';
+    }
+};
+function validateDate(id) {
+    console.log("validateDate id=",id);
+    var date = $('#'+id).val;
+
+    console.log("date=",date);
+    var d = new Date(date);
+    var valid = (d.getTime() === d.getTime());
+    console.log("valid=",valid);
+}
+$(window).on('load', function () {
+    $('#hideloader').hide();
+}) 
+
+$(document).ready(function()
+{
+    jQuery("#personalDetailsForm").validate(
+    {	
+        // errorElement: "div",
+        rules: {	                 
+            "data[CharterGuestPersonalDetail][first_name]": {
+                required: true
+            },
+                "data[CharterGuestPersonalDetail][family_name]": {
+                required: true
+            },
+            "data[CharterGuestPersonalDetail][dob]": {
+                required: true                    
+            },
+            "data[CharterGuestPersonalDetail][pob]": {
+                required: true
+            },
+            "data[CharterGuestPersonalDetail][nationality]": {
+                required: true
+            },
+            "data[CharterGuestPersonalDetail][passport_num]": {
+                required: true
+            },
+            "data[CharterGuestPersonalDetail][issued_date]": {
+                required: true
+            },
+            "data[CharterGuestPersonalDetail][expiry_date]": {
+                required: true
+            },
+            "data[CharterGuestPersonalDetail][next_of_kin]": {
+                required: true
+            },
+            "data[CharterGuestPersonalDetail][next_of_kin_phone]": {
+                required: true
+            }
+            
+        },
+        highlight: function(element) {
+            $(element).addClass('has-error');
+        },
+        unhighlight: function(element) {
+            $(element).removeClass('has-error');
+        },
+        messages: {
+            "data[CharterGuestPersonalDetail][first_name]": {
+                required: ""
+                // required: "Please enter the first name."                    
+            },
+                "data[CharterGuestPersonalDetail][family_name]": {
+                required: ""
+                // required: "Please enter the family name."
+            },
+            "data[CharterGuestPersonalDetail][dob]": {
+                required: ""
+                // required: "Please enter the valid dob."                    
+            },
+            "data[CharterGuestPersonalDetail][pob]": {
+                required: ""
+                // required: "Please enter place of birth."
+            },
+            "data[CharterGuestPersonalDetail][nationality]": {
+                required: ""
+                // required: "Please select a nationality."
+            },
+            "data[CharterGuestPersonalDetail][passport_num]": {
+                required: ""
+                // required: "Please enter passport number."
+            },
+            "data[CharterGuestPersonalDetail][issued_date]": {
+                required: ""
+                // required: "Please enter passport issue date."
+            },
+            "data[CharterGuestPersonalDetail][expiry_date]": {
+                required: ""
+                // required: "Please enter passport expiry date."
+            },
+            "data[CharterGuestPersonalDetail][next_of_kin]": {
+                required: ""
+                // required: "Please enter Next of Kin."
+            },
+            "data[CharterGuestPersonalDetail][next_of_kin_phone]": {
+                required: ""
+                // required: "Please enter NoK Phone."
+            }
+        }
+        
+    });
+}); 
+
+
+$(document).on("click", ".chkpersonal", function(e) { //alert('test');
+    //e.preventDefault();
+    var chform = $("#personalDetailsForm").valid();
+    //return false;
+    //if(!chform){
+        // $(this).removeClass('active');
+        // $(this).find('a').attr("aria-expanded","false");
+        // var dfade = $(this).find('a').attr("href");
+        // //console.log(dfade);
+        // var id_str = dfade.replace(/[^a-zA-Z ]/g, "");
+        // //console.log(id_str);
+        // $("#"+id_str).removeClass('active');
+        // $("#"+id_str).removeClass('active in');
+        // $(".chkpersonalvflag").addClass('active');
+        // $(".chkpersonalvflag").find('a').attr("aria-expanded","true");
+        // $("#personal_det").addClass('active');
+        // $("#personal_det").addClass('in');
+    //}
+    //console.log(chform);
+});
+
+// Auto-save current tab data in background when user switches tabs without clicking Save & Continue
+
+// PHP sets the initial active tab — track it reliably via a variable instead of CSS class
+var currentActivePaneId = '<?php
+    if (!empty($personalDetailsTab))   echo "personal_det";
+    elseif (!empty($mealPreferenceTab))     echo "meals";
+    elseif (!empty($foodPreferenceTab))     echo "food";
+    elseif (!empty($beveragePreferenceTab)) echo "beverage";
+    elseif (!empty($spiritPreferenceTab))   echo "spirit";
+    elseif (!empty($winePreferenceTab))     echo "wine";
+    elseif (!empty($itineraryPreferenceTab))echo "itinerary";
+    else echo "personal_det";
+?>';
+
+var tabFormMap = {
+    'personal_det' : '#personalDetailsForm',
+    'meals'        : '#mealPreferenceForm',
+    'food'         : '#foodPreferenceForm',
+    'beverage'     : '#beveragePreferenceForm',
+    'spirit'       : '#spiritPreferenceForm',
+    'wine'         : '#winePreferenceForm',
+    'itinerary'    : '#itineraryPreferenceForm'
+};
+
+function autoSaveCurrentTab() {
+    var formId = tabFormMap[currentActivePaneId];
+    if (!formId) return;
+
+    var $form = $(formId);
+    if (!$form.length) return;
+
+    // Personal Details has a file input (passport_image) — must use FormData
+    // All other tabs have no file inputs so serialize() is sufficient
+    if (currentActivePaneId === 'personal_det') {
+        $.ajax({
+            type        : 'POST',
+            url         : $form.attr('action'),
+            data        : new FormData($form[0]),
+            processData : false,
+            contentType : false
+        });
+    } else if (currentActivePaneId === 'itinerary') {
+        // Set 'autosave', serialize immediately, then reset to 'submit' so the Submit button still works
+        var $fpField = $form.find('.frompageleave');
+        $fpField.val('autosave');
+        var serializedData = $form.serialize();
+        $fpField.val('submit');
+        $.ajax({
+            type : 'POST',
+            url  : $form.attr('action'),
+            data : serializedData
+        });
+    } else {
+        $.ajax({
+            type : 'POST',
+            url  : $form.attr('action'),
+            data : $form.serialize()
+        });
+    }
+}
+
+$(document).on('click', '#prefmenu li a.nav-anch', function() {
+    var clickedPaneId = ($(this).attr('href') || '').replace('#', '');
+
+    // Ignore if clicking the already-active tab
+    if (!clickedPaneId || clickedPaneId === currentActivePaneId) return;
+
+    autoSaveCurrentTab();
+
+    // Update tracker to the newly clicked tab
+    currentActivePaneId = clickedPaneId;
+});
+
+$(document).ready(function (e) {
+    <?php if (isset($showPopup) && $showPopup == 1) { 
+        
+        ?>
+            //$("#usesubmittedpreferences").modal('show');
+            
+           <?php  if(empty($use_submitted_date)){ ?>
+                        $("#successPreferenceAlert").modal("show");
+                        $("#successUsePreference").show();
+                        $("#successbody").hide();
+            <?php }else if(isset($modifieddatestrtotime) && $modifieddatestrtotime == $todaydatestrtotime){ ?>
+                    $("#successPreferenceAlert").modal("show");
+                    //console.log('kkkkkkkkkkk');
+                           // alert('kkk');
+                            $("#successUsePreference").hide();
+                            $("#successbody").show();
+            <?php }else if(isset($modifieddatestrtotime) && ($modifieddatestrtotime < $todaydatestrtotime)){?>  
+                    //console.log('jjjjjjjjjjjjjjjjjjjjj');
+                     //alert('jjjj');
+                     $("#successPreferenceAlert").modal("show");
+                            $("#successUsePreference").show();
+                            $("#successbody").hide();
+            <?php }  ?>
+            
+    <?php } ?> 
+});    
+<?php if (isset($showPopup) && $showPopup == 1) { //$this->Session->delete("showPopup");?>
+$(document).click('#stay_log_in',function(){
+    //alert();
+    $("#successPreferenceAlert").modal("hide");
+    sessionShowPopupDelete();
+});
+<?php } ?>
+
+
+$(document).on("click", "#yes_please", function(e) {     //alert();
+  
+  var data = {
+      "guestListUUID": "<?php echo $iti_guestListUUID; ?>",
+      "selectedCharterProgramUUID": "<?php echo $iti_selectedCharterProgramUUID; ?>",
+      "use": 1
+  };
+  
+  
+      $("#hideloader").show();
+      $.ajax({
+          type: "POST",
+          url: BASE_FOLDER+'/charters/saveusesubmittedpreferences',
+          dataType: 'json',
+          data: data,
+          success:function(result) {
+              $("#hideloader").hide();
+              if (result.status == 'success') {
+                $("#successUsePreference").hide();
+                $("#successbody").show();
+                return false;
+              }else if(result.status == 'fail'){
+                $("#successUsePreference").hide();
+                $("#successbody").show();
+                return false;
+              }   
+          },
+          error: function(jqxhr) { 
+              $("#hideloader").hide();
+          }
+      });
+      return false;
+});
+$(document).on("click", "#no_thanks", function(e) {
+
+    var data = {
+      "guestListUUID": "<?php echo $iti_guestListUUID; ?>",
+      "selectedCharterProgramUUID": "<?php echo $iti_selectedCharterProgramUUID; ?>",
+      "use": 0
+  };
+  
+  
+      $("#hideloader").show();
+      $.ajax({
+          type: "POST",
+          url: BASE_FOLDER+'/charters/saveusesubmittedpreferences',
+          dataType: 'json',
+          data: data,
+          success:function(result) {
+              $("#hideloader").hide();
+              if (result.status == 'success') {
+                $("#successUsePreference").hide();
+                $("#successbody").show();
+                return false;
+              }else if(result.status == 'fail'){
+                $("#successUsePreference").hide();
+                $("#successbody").show();
+                return false;
+              }   
+          },
+          error: function(jqxhr) { 
+              $("#hideloader").hide();
+          }
+      });
+      return false;
+
+});
+
+function sessionShowPopupDelete(){
+    $("#hideloader").show();
+    $.ajax({
+          type: "POST",
+          url: BASE_FOLDER+'/charters/sessionShowPopupDelete',
+          dataType: 'json',
+          data: '',
+          success:function(result) {
+              $("#hideloader").hide();
+              
+          },
+          error: function(jqxhr) { 
+              $("#hideloader").hide();
+          }
+      });
+    }
+   
+
+$(document).on('change','#passportImage',function(){
+        var property = document.getElementById('passportImage').files[0];
+        var image_name = property.name;
+        var image_extension = image_name.split('.').pop().toLowerCase();
+
+        if(jQuery.inArray(image_extension,['gif','jpg','jpeg','png','pdf']) == -1){
+          alert("Invalid image file");
+          $("#passportImage").val('');
+          return false;
+        }
+
+        var form_data = new FormData();
+        form_data.append("file",property);
+
+       
+    //alert(form_data);   
+    $("#hideloader").show();                          
+    $.ajax({
+        url: BASE_FOLDER+'/charters/uploadpassportimage', // <-- point to server-side PHP script 
+        dataType: 'json',
+        cache: false,
+        contentType: false,
+        processData: false,
+        data: form_data,                         
+        type: 'post',
+        success: function(php_script_response){
+            $("#hideloader").hide();
+            //alert(php_script_response.passport_image); 
+            $("#CharterGuestPersonalDetailExistPassportImage").val(php_script_response.passport_image);
+        }
+     });
+
+   
+});
+
+/*********** On mobile view after save, the active should display ************************* */
+<?php if(!empty($beveragePreferenceTab)){ ?>
+var myDiv = document.getElementById("prefmenu");
+
+setTimeout(function() {
+   myDiv.scrollLeft = myDiv.scrollWidth;
+}, 300);
+<?php } ?>
+
+<?php if(!empty($spiritPreferenceTab)){ ?>
+var myDiv = document.getElementById("prefmenu");
+
+setTimeout(function() {
+   myDiv.scrollLeft = myDiv.scrollWidth;
+}, 300);
+<?php } ?>
+
+<?php if(!empty($winePreferenceTab)){ ?>
+var myDiv = document.getElementById("prefmenu");
+
+setTimeout(function() {
+   myDiv.scrollLeft = myDiv.scrollWidth;
+}, 300);
+<?php } ?>
+
+<?php if(!empty($itineraryPreferenceTab)){ ?>
+var myDiv = document.getElementById("prefmenu");
+
+setTimeout(function() {
+   myDiv.scrollLeft = myDiv.scrollWidth;
+}, 300);
+<?php } ?>
+
+/************************************ */
+
+/***************validation not allowed to move on other tab without enter mandatory field */
+$(document).on('change','.validateMandate',function(){
+            var mflag = 0;
+            $(".validateMandate").each(function(i,e){
+                //console.log(e)
+                //console.log($(this).attr('id'));
+                //console.log($(this).val());
+                    if(!$(this).val()){
+                        mflag = 1;
+                    }
+                
+            });
+            if(!$("#CharterGuestPersonalDetailNationality").val()){
+                        mflag = 1;
+            }
+            
+            //console.log(mflag);
+            if(mflag == 1){
+                $(".chkpersonal").each(function(e){
+                    $(this).find('a').attr('data-toggle','');
+                });
+            }else if(mflag == 0){
+                $(".chkpersonal").each(function(e){
+                    $(this).find('a').attr('data-toggle','tab');
+                });
+            }
+});
+</script> 

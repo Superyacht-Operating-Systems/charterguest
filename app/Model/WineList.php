@@ -1,0 +1,15 @@
+<?php    
+    class WineList extends AppModel {
+       
+        var $name = 'WineList';
+
+        public function getLastQuery() {
+            $dbo = $this->getDatasource();
+            $logs = $dbo->getLog();
+            $lastLog = end($logs['log']);
+            return $lastLog['query'];
+          }
+               
+}
+
+?>

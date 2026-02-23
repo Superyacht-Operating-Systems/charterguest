@@ -1,0 +1,155 @@
+@font-face {
+    font-family: 'Aboreto';
+    src: url('../fonts/Aboreto.ttf') format('truetype');
+    /* You can specify other formats if available, but for TTF, format('truetype') suffices */
+    font-weight: normal;
+    font-style: normal;
+  }
+  @font-face {
+    font-family: 'Anybody';
+    src: url('../fonts/Anybody.ttf') format('truetype');
+    /* You can specify other formats if available, but for TTF, format('truetype') suffices */
+    font-weight: normal;
+    font-style: normal;
+  }
+  @font-face {
+    font-family: 'Bevan';
+    src: url('../fonts/Bevan.ttf') format('truetype');
+    /* You can specify other formats if available, but for TTF, format('truetype') suffices */
+    font-weight: normal;
+    font-style: normal;
+  }
+  @font-face {
+    font-family: 'BioRhyme';
+    src: url('../fonts/BioRhyme.ttf') format('truetype');
+    /* You can specify other formats if available, but for TTF, format('truetype') suffices */
+    font-weight: normal;
+    font-style: normal;
+  }
+ 
+  @font-face {
+    font-family: 'Carattere';
+    src: url('../fonts/Carattere.ttf') format('truetype');
+    /* You can specify other formats if available, but for TTF, format('truetype') suffices */
+    font-weight: normal;
+    font-style: normal;
+  }
+  
+  @font-face {
+    font-family: 'CinzelDecorative';
+    src: url('../fonts/CinzelDecorative.ttf') format('truetype');
+    /* You can specify other formats if available, but for TTF, format('truetype') suffices */
+    font-weight: normal;
+    font-style: normal;
+  }
+ 
+  
+  @font-face {
+    font-family: 'Dancing';
+    src: url('../fonts/Dancing.ttf') format('truetype');
+    /* You can specify other formats if available, but for TTF, format('truetype') suffices */
+    font-weight: normal;
+    font-style: normal;
+  }
+    
+  @font-face {
+    font-family: 'GreatVibes';
+    src: url('../fonts/GreatVibes.ttf') format('truetype');
+    /* You can specify other formats if available, but for TTF, format('truetype') suffices */
+    font-weight: normal;
+    font-style: normal;
+  }
+  
+ 
+  @font-face {
+    font-family: 'HoltwoodOneSC';
+    src: url('../fonts/HoltwoodOneSC.ttf') format('truetype');
+    /* You can specify other formats if available, but for TTF, format('truetype') suffices */
+    font-weight: normal;
+    font-style: normal;
+  }
+  
+  
+  
+  @font-face {
+    font-family: 'Italiana';
+    src: url('../fonts/Italiana.ttf') format('truetype');
+    /* You can specify other formats if available, but for TTF, format('truetype') suffices */
+    font-weight: normal;
+    font-style: normal;
+  }
+  
+  
+  @font-face {
+    font-family: 'LexendMega';
+    src: url('../fonts/LexendMega.ttf') format('truetype');
+    /* You can specify other formats if available, but for TTF, format('truetype') suffices */
+    font-weight: normal;
+    font-style: normal;
+  }
+  
+  @font-face {
+    font-family: 'Limelight';
+    src: url('../fonts/Limelight.ttf') format('truetype');
+    /* You can specify other formats if available, but for TTF, format('truetype') suffices */
+    font-weight: normal;
+    font-style: normal;
+  }
+  
+ 
+  @font-face {
+    font-family: 'Merienda';
+    src: url('../fonts/Merienda.ttf') format('truetype');
+    /* You can specify other formats if available, but for TTF, format('truetype') suffices */
+    font-weight: normal;
+    font-style: normal;
+  }
+  
+  
+  @font-face {
+    font-family: 'MonteCarlo';
+    src: url('../fonts/MonteCarlo.ttf') format('truetype');
+    /* You can specify other formats if available, but for TTF, format('truetype') suffices */
+    font-weight: normal;
+    font-style: normal;
+  }
+  @font-face {
+    font-family: 'MountainsofChristmas';
+    src: url('../fonts/MountainsofChristmas.ttf') format('truetype');
+    /* You can specify other formats if available, but for TTF, format('truetype') suffices */
+    font-weight: normal;
+    font-style: normal;
+  }
+  
+  @font-face {
+    font-family: 'Parisienne';
+    src: url('../fonts/Parisienne.ttf') format('truetype');
+    /* You can specify other formats if available, but for TTF, format('truetype') suffices */
+    font-weight: normal;
+    font-style: normal;
+  }
+  
+  @font-face {
+    font-family: 'PrincessSofia';
+    src: url('../fonts/PrincessSofia.ttf') format('truetype');
+    /* You can specify other formats if available, but for TTF, format('truetype') suffices */
+    font-weight: normal;
+    font-style: normal;
+  }
+ 
+  @font-face {
+    font-family: 'Rochester';
+    src: url('../fonts/Rochester.ttf') format('truetype');
+    /* You can specify other formats if available, but for TTF, format('truetype') suffices */
+    font-weight: normal;
+    font-style: normal;
+  }
+ 
+  @font-face {
+    font-family: 'Splash';
+    src: url('../fonts/Splash.ttf') format('truetype');
+    /* You can specify other formats if available, but for TTF, format('truetype') suffices */
+    font-weight: normal;
+    font-style: normal;
+  }
+ 

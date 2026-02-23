@@ -1,0 +1,106 @@
+.mar-btm{
+	margin: 10px auto;
+}
+.text-center .fa-pos{
+	    color: #03a9f4;
+    position: relative;
+ 
+   bottom:100px;
+}
+.text-center .fa-fnt{
+
+    font-size: 89px;
+}
+ span.map-nm{
+    right: 7%;
+    width: 100%;
+    font-size: 13px !important;
+    top: -11px;
+    position: absolute;
+}
+table thead th.tcont-center{
+	text-align: center;
+}
+table tbody td.td-check{
+	text-align: center;
+}
+table tbody td input.cbox-sz{
+	transform:scale(1.1);
+	-ms-transform: scale(1.1); /* IE */
+  	-moz-transform: scale(1.1); /* FF */
+  	-webkit-transform: scale(1.1); /* Safari and Chrome */
+}
+.table-condensed>tbody>tr>td.td-cnt{
+	    padding: 0px 0px 10px 0px;
+	}
+
+tbody td input.form-control.tinput{
+	border-radius: 0px;
+	height: 30px;
+}
+.table thead>tr>th.tcont-center {
+border-bottom:1px solid #fff;
+}
+.table tbody>tr.tr-bor{
+	margin-bottom: 5px;
+}
+.table tbody>tr.tr-bor td.td-cnt{
+border-top:1px solid #fff;
+
+}
+td.td-cnt .p-none{
+	padding: 0px;
+}
+td.td-cnt .p-none button.btn-eml-send,.btn-open{
+	border-radius:0px;
+	height: 30px;
+	/*line-height: 1px;*/
+}
+td.td-cnt.td-esent{
+	padding-left:10px !important;
+} 
+
+/*flex*/
+.flex-container{
+	display: flex;
+	flex-wrap: wrap;
+
+}
+.bigitem {
+   /* This will be twice as */
+   /* big as the small item. */
+       flex: 100% 0 0;
+    /* align-items: center; */
+    text-align: center;
+   margin: 10px 0;
+}
+.smallitem {
+       flex: 40% 0 0;
+    text-align: left;
+    margin: 10px 0;
+}
+.bigitem1 {
+   /* This will be twice as */
+   /* big as the small item. */
+           flex: 82% 0 0;
+    /* align-items: center; */
+    text-align: center;
+   margin: 10px 0;
+}
+.smallitem1 {
+       flex: 18% 0 0;
+    text-align: left;
+    margin: 10px 0;
+}
+@media (max-width: 768px){
+	 span.map-nm{
+ 	right: -90%;
+	    font-size: 13px !important;
+    top: -35%;
+   
+}
+.text-center .fa-pos{
+right:-90%;
+    bottom: 120px;
+}
+}

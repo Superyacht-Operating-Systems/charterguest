@@ -1,0 +1,271 @@
+---
+hands:
+  icons:
+    - thumbs-up
+  label: Hands
+social:
+  icons:
+    - bell
+    - camera
+    - envelope
+    - thumbs-up
+    - user
+  label: Social
+household:
+  icons:
+    - bell
+    - utensils
+  label: Household
+punctuation-symbols:
+  icons:
+    - check
+    - minus
+    - plus
+  label: Punctuation + Symbols
+logistics:
+  icons:
+    - anchor
+    - gas-pump
+  label: Logistics
+marketing:
+  icons:
+    - people-group
+  label: Marketing
+food-beverage:
+  icons:
+    - martini-glass-citrus
+  label: Food + Beverage
+files:
+  icons:
+    - copy
+    - file
+    - file-lines
+    - files
+    - floppy-disk
+  label: Files
+devices-hardware:
+  icons:
+    - camera
+    - download
+    - floppy-disk
+    - microchip-ai
+    - upload
+  label: Devices + Hardware
+coding:
+  icons:
+    - file
+    - file-lines
+  label: Coding
+writing:
+  icons:
+    - envelope
+    - file
+    - file-lines
+    - pen-to-square
+  label: Writing
+humanitarian:
+  icons:
+    - anchor
+    - envelope
+    - file
+    - gas-pump
+    - people-group
+    - ship
+    - trash-can
+  label: Humanitarian
+shopping:
+  icons:
+    - bell
+    - camera
+    - credit-card
+    - credit-card-front
+    - thumbs-up
+  label: Shopping
+travel-hotel:
+  icons:
+    - earth-europe
+    - map-location-dot
+    - martini-glass-citrus
+    - passport
+    - utensils
+  label: Travel + Hotel
+accessibility:
+  icons:
+    - circle-info
+  label: Accessibility
+alphabet:
+  icons:
+    - g
+    - square-o
+  label: Alphabet
+automotive:
+  icons:
+    - gas-pump
+  label: Automotive
+shapes:
+  icons:
+    - calendar
+    - file
+    - square
+  label: Shapes
+education:
+  icons:
+    - bell
+  label: Education
+media-playback:
+  icons:
+    - arrow-rotate-left
+    - arrow-rotate-right
+    - circle-play
+    - rotate-left
+  label: Media Playback
+text-formatting:
+  icons:
+    - check
+    - square-check
+  label: Text Formatting
+security:
+  icons:
+    - file-contract
+    - lock
+    - lock-open
+    - passport
+    - unlock
+  label: Security
+alert:
+  icons:
+    - bell
+    - triangle-exclamation
+  label: Alert
+time:
+  icons:
+    - bell
+    - calendar
+    - calendar-days
+    - clock
+  label: Time
+photos-images:
+  icons:
+    - camera
+    - image-user
+  label: Photos + Images
+spinners:
+  icons:
+    - arrow-rotate-left
+    - arrow-rotate-right
+    - rotate-left
+  label: Spinners
+editing:
+  icons:
+    - check
+    - ellipsis
+    - minus
+    - pen-to-square
+    - plus
+    - square-check
+    - trash-can
+    - xmark
+  label: Editing
+money:
+  icons:
+    - credit-card
+    - credit-card-front
+    - dollar-sign
+  label: Money
+communication:
+  icons:
+    - comments
+    - envelope
+  label: Communication
+maps:
+  icons:
+    - anchor
+    - bell
+    - circle-info
+    - dollar-sign
+    - magnifying-glass
+    - plus
+    - route
+    - ship
+    - utensils
+  label: Maps
+business:
+  icons:
+    - calendar
+    - calendar-days
+    - copy
+    - envelope
+    - file
+    - file-lines
+    - floppy-disk
+    - list-timeline
+    - pen-to-square
+  label: Business
+medical-health:
+  icons:
+    - plus
+  label: Medical + Health
+moving:
+  icons:
+    - route
+  label: Moving
+arrows:
+  icons:
+    - angle-down
+    - angle-up
+    - arrow-rotate-left
+    - arrow-rotate-right
+    - chevron-down
+    - chevron-up
+    - download
+    - rotate-left
+    - square-caret-right
+    - upload
+  label: Arrows
+camping:
+  icons:
+    - map-location-dot
+    - route
+  label: Camping
+users-people:
+  icons:
+    - image-user
+    - people-group
+    - user
+    - user-tie
+  label: Users + People
+maritime:
+  icons:
+    - anchor
+    - ship
+  label: Maritime
+design:
+  icons:
+    - copy
+    - floppy-disk
+    - pen-to-square
+  label: Design
+charity:
+  icons:
+    - dollar-sign
+  label: Charity
+clothing-fashion:
+  icons:
+    - user-tie
+  label: Clothing + Fashion
+mathematics:
+  icons:
+    - circle-plus
+    - circle-xmark
+    - minus
+    - plus
+    - xmark
+  label: Mathematics
+energy:
+  icons:
+    - gas-pump
+  label: Energy
+transportation:
+  icons:
+    - ship
+  label: Transportation

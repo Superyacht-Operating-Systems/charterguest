@@ -1,0 +1,2165 @@
+---
+square-o:
+  changes:
+    - 6.0.0-beta1
+    - 6.2.0
+    - 6.3.0
+    - 6.4.0
+    - 6.5.0
+    - 6.6.0
+    - 6.7.0
+  label: Square O
+  search:
+    terms:
+      - letter
+  styles:
+    - solid
+    - light
+  unicode: e278
+  voted: false
+circle-info:
+  aliases:
+    names:
+      - info-circle
+    unicodes:
+      secondary:
+        - 10f05a
+  changes:
+    - 1.0.0
+    - 5.0.0
+    - 6.0.0-beta1
+    - 6.2.0
+    - 6.3.0
+    - 6.4.0
+    - 6.5.0
+    - 6.6.0
+    - 6.7.0
+  label: Circle Info
+  search:
+    terms:
+      - details
+      - help
+      - information
+      - more
+      - support
+  styles:
+    - solid
+  unicode: f05a
+  voted: false
+ship:
+  aliases:
+    unicodes:
+      composite:
+        - 1f6a2
+      secondary:
+        - 10f21a
+  changes:
+    - 4.3.0
+    - 5.0.0
+    - 5.10.2
+    - 5.11.0
+    - 5.11.1
+    - 6.0.0-beta1
+    - 6.0.0-beta3
+    - 6.2.0
+    - 6.3.0
+    - 6.4.0
+    - 6.5.0
+    - 6.6.0
+    - 6.7.0
+  label: Ship
+  search:
+    terms:
+      - boat
+      - passenger
+      - sea
+      - ship
+      - water
+  styles:
+    - solid
+  unicode: f21a
+  voted: false
+route:
+  aliases:
+    unicodes:
+      secondary:
+        - 10f4d7
+  changes:
+    - 5.0.9
+    - 5.2.0
+    - 6.0.0-beta1
+    - 6.0.0-beta3
+    - 6.2.0
+    - 6.3.0
+    - 6.4.0
+    - 6.5.0
+    - 6.6.0
+    - 6.7.0
+  label: Route
+  search:
+    terms:
+      - directions
+      - navigation
+      - travel
+  styles:
+    - solid
+  unicode: f4d7
+  voted: false
+angle-up:
+  aliases:
+    unicodes:
+      composite:
+        - '2303'
+      secondary:
+        - 10f106
+  changes:
+    - 3.0.0
+    - 5.0.0
+    - 6.0.0-beta1
+    - 6.2.0
+    - 6.3.0
+    - 6.4.0
+    - 6.5.0
+    - 6.6.0
+    - 6.7.0
+  label: Angle Up
+  search:
+    terms:
+      - Up Arrowhead
+      - arrow
+      - caret
+      - collapse
+      - upgrade
+      - upload
+  styles:
+    - solid
+  unicode: f106
+  voted: false
+file-contract:
+  aliases:
+    unicodes:
+      secondary:
+        - 10f56c
+  changes:
+    - 5.1.0
+    - 5.10.2
+    - 6.0.0-beta1
+    - 6.2.0
+    - 6.3.0
+    - 6.4.0
+    - 6.5.0
+    - 6.6.0
+    - 6.7.0
+  label: File Contract
+  search:
+    terms:
+      - agreement
+      - binding
+      - document
+      - legal
+      - signature
+      - username
+  styles:
+    - regular
+  unicode: f56c
+  voted: false
+square:
+  aliases:
+    unicodes:
+      composite:
+        - 25a0
+        - 25fb
+        - 25fc
+        - f096
+      secondary:
+        - 10f0c8
+  changes:
+    - 2.0.0
+    - 5.0.0
+    - 5.10.1
+    - 5.10.2
+    - 6.0.0-beta1
+    - 6.0.0
+    - 6.2.0
+    - 6.3.0
+    - 6.4.0
+    - 6.5.0
+    - 6.6.0
+    - 6.7.0
+  label: Square
+  search:
+    terms:
+      - Black Square
+      - black medium square
+      - block
+      - box
+      - geometric
+      - shape
+      - square
+      - white medium square
+  styles:
+    - solid
+    - regular
+  unicode: f0c8
+  voted: false
+arrow-rotate-left:
+  aliases:
+    names:
+      - arrow-left-rotate
+      - arrow-rotate-back
+      - arrow-rotate-backward
+      - undo
+    unicodes:
+      composite:
+        - 21ba
+      secondary:
+        - 10f0e2
+  changes:
+    - 2.0.0
+    - 5.0.0
+    - 6.0.0-beta1
+    - 6.2.0
+    - 6.3.0
+    - 6.4.0
+    - 6.5.0
+    - 6.6.0
+    - 6.7.0
+  label: Arrow Rotate Left
+  search:
+    terms:
+      - Anticlockwise Open Circle Arrow
+      - back
+      - control z
+      - exchange
+      - oops
+      - return
+      - rotate
+      - swap
+  styles:
+    - light
+  unicode: f0e2
+  voted: false
+arrow-rotate-right:
+  aliases:
+    names:
+      - arrow-right-rotate
+      - arrow-rotate-forward
+      - redo
+    unicodes:
+      composite:
+        - 21bb
+      secondary:
+        - 10f01e
+  changes:
+    - 1.0.0
+    - 5.0.0
+    - 5.8.0
+    - 6.0.0-beta1
+    - 6.2.0
+    - 6.3.0
+    - 6.4.0
+    - 6.5.0
+    - 6.6.0
+    - 6.7.0
+  label: Arrow Rotate Right
+  search:
+    terms:
+      - Clockwise Open Circle Arrow
+      - forward
+      - refresh
+      - reload
+      - renew
+      - repeat
+      - retry
+  styles:
+    - solid
+  unicode: f01e
+  voted: false
+copy:
+  aliases:
+    unicodes:
+      secondary:
+        - 10f0c5
+  changes:
+    - 2.0.0
+    - 5.0.0
+    - 5.10.2
+    - 6.0.0-beta1
+    - 6.2.0
+    - 6.3.0
+    - 6.4.0
+    - 6.4.1
+    - 6.5.0
+    - 6.6.0
+    - 6.7.0
+  label: Copy
+  search:
+    terms:
+      - clone
+      - duplicate
+      - file
+      - files-o
+      - paper
+      - paste
+  styles:
+    - regular
+  unicode: f0c5
+  voted: false
+plus:
+  aliases:
+    names:
+      - add
+    unicodes:
+      composite:
+        - '2795'
+        - f067
+      primary:
+        - f067
+      secondary:
+        - 102b
+        - 10f067
+  changes:
+    - 1.0.0
+    - 5.0.0
+    - 5.0.13
+    - 6.0.0-beta1
+    - 6.2.0
+    - 6.3.0
+    - 6.4.0
+    - 6.5.0
+    - 6.6.0
+    - 6.7.0
+  label: Plus
+  search:
+    terms:
+      - 0
+      - Plus Sign
+      - add
+      - create
+      - expand
+      - follow
+      - math
+      - modify
+      - new
+      - plus
+      - positive
+      - shape
+      - sign
+  styles:
+    - solid
+    - regular
+    - light
+  unicode: 2b
+  voted: false
+files:
+  changes:
+    - 6.0.0-beta1
+    - 6.2.0
+    - 6.3.0
+    - 6.4.0
+    - 6.5.0
+    - 6.6.0
+    - 6.7.0
+  label: Files
+  search:
+    terms:
+      - history
+      - multiple
+  styles:
+    - solid
+  unicode: e178
+  voted: false
+upload:
+  aliases:
+    unicodes:
+      secondary:
+        - 10f093
+  changes:
+    - 1.0.0
+    - 5.0.0
+    - 6.0.0-beta1
+    - 6.2.0
+    - 6.3.0
+    - 6.4.0
+    - 6.5.0
+    - 6.6.0
+    - 6.7.0
+  label: Upload
+  search:
+    terms:
+      - hard drive
+      - import
+      - publish
+      - upgrade
+  styles:
+    - solid
+    - light
+  unicode: f093
+  voted: false
+download:
+  aliases:
+    unicodes:
+      secondary:
+        - 10f019
+  changes:
+    - 1.0.0
+    - 5.0.0
+    - 6.0.0-beta1
+    - 6.2.0
+    - 6.3.0
+    - 6.4.0
+    - 6.5.0
+    - 6.6.0
+    - 6.7.0
+  label: Download
+  search:
+    terms:
+      - export
+      - hard drive
+      - insert
+      - save
+      - transfer
+  styles:
+    - solid
+    - light
+  unicode: f019
+  voted: false
+microchip-ai:
+  changes:
+    - 6.0.0-beta1
+    - 6.2.0
+    - 6.3.0
+    - 6.4.0
+    - 6.5.0
+    - 6.6.0
+    - 6.7.0
+  label: Microchip Ai
+  search:
+    terms:
+      - artificial intelligence
+      - computer
+      - silicon
+  styles:
+    - solid
+  unicode: e1ec
+  voted: false
+rotate-left:
+  aliases:
+    names:
+      - rotate-back
+      - rotate-backward
+      - undo-alt
+    unicodes:
+      secondary:
+        - 10f2ea
+  changes:
+    - 5.0.0
+    - 6.0.0-beta1
+    - 6.2.0
+    - 6.3.0
+    - 6.4.0
+    - 6.5.0
+    - 6.6.0
+    - 6.7.0
+  label: Rotate Left
+  search:
+    terms:
+      - back
+      - control z
+      - exchange
+      - oops
+      - return
+      - swap
+  styles:
+    - solid
+  unicode: f2ea
+  voted: false
+anchor:
+  aliases:
+    unicodes:
+      composite:
+        - '2693'
+      secondary:
+        - 10f13d
+  changes:
+    - 3.1.0
+    - 5.0.0
+    - 5.11.0
+    - 6.0.0-beta1
+    - 6.0.0-beta3
+    - 6.1.0
+    - 6.2.0
+    - 6.3.0
+    - 6.4.0
+    - 6.5.0
+    - 6.6.0
+    - 6.7.0
+  label: Anchor
+  search:
+    terms:
+      - anchor
+      - berth
+      - boat
+      - dock
+      - embed
+      - link
+      - maritime
+      - moor
+      - port
+      - secure
+      - ship
+      - tool
+  styles:
+    - solid
+    - regular
+    - light
+  unicode: f13d
+  voted: false
+lock:
+  aliases:
+    unicodes:
+      composite:
+        - 1f512
+      secondary:
+        - 10f023
+  changes:
+    - 1.0.0
+    - 5.0.0
+    - 6.0.0-beta1
+    - 6.0.0
+    - 6.2.0
+    - 6.3.0
+    - 6.4.0
+    - 6.5.0
+    - 6.6.0
+    - 6.7.0
+  label: Lock
+  search:
+    terms:
+      - admin
+      - closed
+      - lock
+      - locked
+      - open
+      - padlock
+      - password
+      - privacy
+      - private
+      - protect
+      - security
+  styles:
+    - solid
+    - light
+  unicode: f023
+  voted: false
+triangle-exclamation:
+  aliases:
+    names:
+      - exclamation-triangle
+      - warning
+    unicodes:
+      composite:
+        - 26a0
+      secondary:
+        - 10f071
+  changes:
+    - 1.0.0
+    - 5.0.0
+    - 5.6.1
+    - 6.0.0-beta1
+    - 6.2.0
+    - 6.3.0
+    - 6.4.0
+    - 6.5.0
+    - 6.6.0
+    - 6.7.0
+  label: Triangle Exclamation
+  search:
+    terms:
+      - alert
+      - attention
+      - danger
+      - error
+      - failed
+      - important
+      - notice
+      - notification
+      - notify
+      - problem
+      - required
+      - warnin
+      - warning
+  styles:
+    - light
+  unicode: f071
+  voted: false
+martini-glass-citrus:
+  aliases:
+    names:
+      - cocktail
+    unicodes:
+      secondary:
+        - 10f561
+  changes:
+    - 5.1.0
+    - 5.10.1
+    - 6.0.0-beta1
+    - 6.2.0
+    - 6.3.0
+    - 6.4.0
+    - 6.5.0
+    - 6.6.0
+    - 6.7.0
+  label: Martini Glass Citrus
+  search:
+    terms:
+      - alcohol
+      - beverage
+      - drink
+      - gin
+      - glass
+      - margarita
+      - martini
+      - vodka
+  styles:
+    - solid
+  unicode: f561
+  voted: false
+credit-card:
+  aliases:
+    names:
+      - credit-card-alt
+    unicodes:
+      composite:
+        - 1f4b3
+        - f283
+      secondary:
+        - 10f09d
+  changes:
+    - 2.0.0
+    - 5.0.0
+    - 6.0.0-beta1
+    - 6.0.0-beta3
+    - 6.2.0
+    - 6.3.0
+    - 6.4.0
+    - 6.5.0
+    - 6.6.0
+    - 6.7.0
+  label: Credit Card
+  search:
+    terms:
+      - buy
+      - card
+      - checkout
+      - credit
+      - credit card
+      - credit-card-alt
+      - debit
+      - money
+      - payment
+      - purchase
+  styles:
+    - solid
+  unicode: f09d
+  voted: false
+angle-down:
+  aliases:
+    unicodes:
+      composite:
+        - '2304'
+      secondary:
+        - 10f107
+  changes:
+    - 3.0.0
+    - 5.0.0
+    - 6.0.0-beta1
+    - 6.2.0
+    - 6.3.0
+    - 6.4.0
+    - 6.5.0
+    - 6.5.2
+    - 6.6.0
+    - 6.7.0
+  label: Angle Down
+  search:
+    terms:
+      - Down Arrowhead
+      - arrow
+      - caret
+      - download
+      - expand
+      - insert
+  styles:
+    - solid
+  unicode: f107
+  voted: false
+chevron-down:
+  aliases:
+    unicodes:
+      secondary:
+        - 10f078
+  changes:
+    - 1.0.0
+    - 5.0.0
+    - 6.0.0-beta1
+    - 6.2.0
+    - 6.3.0
+    - 6.4.0
+    - 6.5.0
+    - 6.6.0
+    - 6.7.0
+  label: Chevron Down
+  search:
+    terms:
+      - arrow
+      - download
+      - expand
+      - insert
+  styles:
+    - solid
+  unicode: f078
+  voted: false
+circle-play:
+  aliases:
+    names:
+      - play-circle
+    unicodes:
+      composite:
+        - f01d
+      secondary:
+        - 10f144
+  changes:
+    - 3.1.0
+    - 5.0.0
+    - 5.10.2
+    - 6.0.0-beta1
+    - 6.0.0
+    - 6.2.0
+    - 6.3.0
+    - 6.4.0
+    - 6.5.0
+    - 6.6.0
+    - 6.7.0
+  label: Circle Play
+  search:
+    terms:
+      - audio
+      - music
+      - playing
+      - sound
+      - start
+      - video
+  styles:
+    - regular
+  unicode: f144
+  voted: false
+image-user:
+  changes:
+    - 6.0.0-beta1
+    - 6.2.0
+    - 6.3.0
+    - 6.4.0
+    - 6.5.0
+    - 6.6.0
+    - 6.7.0
+  label: Image User
+  search:
+    terms:
+      - employee
+      - img
+      - portrait
+      - selfie
+      - uer
+  styles:
+    - regular
+    - light
+  unicode: e1b8
+  voted: false
+comments:
+  aliases:
+    unicodes:
+      composite:
+        - 1f5ea
+        - f0e6
+      secondary:
+        - 10f086
+  changes:
+    - 1.0.0
+    - 5.0.0
+    - 5.0.9
+    - 6.0.0-beta1
+    - 6.0.0-beta2
+    - 6.2.0
+    - 6.3.0
+    - 6.4.0
+    - 6.5.0
+    - 6.6.0
+    - 6.7.0
+  label: Comments
+  search:
+    terms:
+      - Two Speech Bubbles
+      - answer
+      - bubble
+      - chat
+      - commenting
+      - conversation
+      - conversation
+      - discussion
+      - feedback
+      - message
+      - note
+      - notification
+      - sms
+      - speech
+      - talk
+      - talking
+      - texting
+  styles:
+    - solid
+    - light
+  unicode: f086
+  voted: false
+file-lines:
+  aliases:
+    names:
+      - file-alt
+      - file-text
+    unicodes:
+      composite:
+        - 1f5b9
+        - 1f5ce
+        - f0f6
+      secondary:
+        - 10f15c
+  changes:
+    - 3.2.0
+    - 5.0.0
+    - 5.10.2
+    - 6.0.0-beta1
+    - 6.2.0
+    - 6.3.0
+    - 6.4.0
+    - 6.5.0
+    - 6.6.0
+    - 6.7.0
+  label: File Lines
+  search:
+    terms:
+      - Document
+      - Document with Text
+      - document
+      - file-text
+      - invoice
+      - new
+      - page
+      - pdf
+  styles:
+    - regular
+  unicode: f15c
+  voted: false
+lock-open:
+  aliases:
+    unicodes:
+      secondary:
+        - 10f3c1
+  changes:
+    - 3.1.0
+    - 5.0.0
+    - 5.0.1
+    - 6.0.0-beta1
+    - 6.0.0
+    - 6.2.0
+    - 6.3.0
+    - 6.4.0
+    - 6.5.0
+    - 6.6.0
+    - 6.7.0
+  label: Lock Open
+  search:
+    terms:
+      - admin
+      - lock
+      - open
+      - padlock
+      - password
+      - privacy
+      - private
+      - protect
+      - security
+      - unlock
+  styles:
+    - solid
+    - light
+  unicode: f3c1
+  voted: false
+xmark:
+  aliases:
+    names:
+      - close
+      - multiply
+      - remove
+      - times
+    unicodes:
+      composite:
+        - 1f5d9
+        - '2715'
+        - '2716'
+        - 274c
+        - d7
+      secondary:
+        - 10f00d
+  changes:
+    - 1.0.0
+    - 5.0.0
+    - 5.0.13
+    - 5.11.0
+    - 5.11.1
+    - 6.0.0-beta1
+    - 6.2.0
+    - 6.3.0
+    - 6.4.0
+    - 6.5.0
+    - 6.6.0
+    - 6.7.0
+  label: Xmark
+  search:
+    terms:
+      - Cancellation X
+      - Multiplication Sign
+      - Multiplication X
+      - cancel
+      - close
+      - cross
+      - cross mark
+      - error
+      - exit
+      - incorrect
+      - mark
+      - multiplication
+      - multiply
+      - notice
+      - notification
+      - notify
+      - problem
+      - sign
+      - uncheck
+      - wrong
+      - x
+      - ×
+  styles:
+    - solid
+  unicode: f00d
+  voted: false
+g:
+  aliases:
+    unicodes:
+      composite:
+        - '67'
+  changes:
+    - 6.0.0-beta1
+    - 6.2.0
+    - 6.3.0
+    - 6.4.0
+    - 6.5.0
+    - 6.6.0
+    - 6.7.0
+  label: G
+  search:
+    terms:
+      - Latin Capital Letter G
+      - Latin Small Letter G
+      - letter
+  styles:
+    - solid
+  unicode: '47'
+  voted: false
+user:
+  aliases:
+    unicodes:
+      composite:
+        - 1f464
+        - f2c0
+      secondary:
+        - 10f007
+  changes:
+    - 1.0.0
+    - 5.0.0
+    - 5.0.3
+    - 5.0.11
+    - 6.0.0-beta1
+    - 6.2.0
+    - 6.3.0
+    - 6.4.0
+    - 6.5.0
+    - 6.6.0
+    - 6.7.0
+  label: User
+  search:
+    terms:
+      - adult
+      - bust
+      - bust in silhouette
+      - default
+      - employee
+      - gender-neutral
+      - person
+      - profile
+      - silhouette
+      - uer
+      - unspecified gender
+      - username
+      - users-people
+  styles:
+    - light
+  unicode: f007
+  voted: false
+credit-card-front:
+  aliases:
+    unicodes:
+      secondary:
+        - 10f38a
+  changes:
+    - 5.0.0
+    - 6.0.0-beta1
+    - 6.0.0-beta3
+    - 6.2.0
+    - 6.3.0
+    - 6.4.0
+    - 6.5.0
+    - 6.6.0
+    - 6.7.0
+  label: Credit Card Front
+  search:
+    terms:
+      - buy
+      - checkout
+      - chip
+      - debit
+      - money
+      - payment
+      - purchase
+  styles:
+    - solid
+  unicode: f38a
+  voted: false
+check:
+  aliases:
+    unicodes:
+      composite:
+        - '2713'
+        - '2714'
+      secondary:
+        - 10f00c
+  changes:
+    - 1.0.0
+    - 5.0.0
+    - 6.0.0-beta1
+    - 6.0.0
+    - 6.2.0
+    - 6.3.0
+    - 6.4.0
+    - 6.5.0
+    - 6.6.0
+    - 6.7.0
+  label: Check
+  search:
+    terms:
+      - Check Mark
+      - accept
+      - agree
+      - check
+      - check mark
+      - checkmark
+      - confirm
+      - correct
+      - coupon
+      - done
+      - enable
+      - mark
+      - notice
+      - notification
+      - notify
+      - ok
+      - select
+      - success
+      - tick
+      - todo
+      - 'true'
+      - validate
+      - working
+      - 'yes'
+      - ✓
+  styles:
+    - solid
+    - regular
+    - light
+  unicode: f00c
+  voted: false
+calendar:
+  aliases:
+    unicodes:
+      composite:
+        - 1f4c5
+        - 1f4c6
+      secondary:
+        - 10f133
+  changes:
+    - 3.1.0
+    - 5.0.0
+    - 5.10.2
+    - 6.0.0-beta1
+    - 6.0.0-beta2
+    - 6.0.0-beta3
+    - 6.2.0
+    - 6.3.0
+    - 6.4.0
+    - 6.5.0
+    - 6.6.0
+    - 6.7.0
+  label: Calendar
+  search:
+    terms:
+      - calendar
+      - calendar-o
+      - date
+      - day
+      - event
+      - month
+      - schedule
+      - tear-off calendar
+      - time
+      - when
+      - year
+  styles:
+    - solid
+  unicode: f133
+  voted: false
+trash-can:
+  aliases:
+    names:
+      - trash-alt
+    unicodes:
+      composite:
+        - f014
+      secondary:
+        - 10f2ed
+  changes:
+    - 5.0.0
+    - 5.7.0
+    - 5.10.2
+    - 6.0.0-beta1
+    - 6.0.0
+    - 6.2.0
+    - 6.3.0
+    - 6.4.0
+    - 6.5.0
+    - 6.6.0
+    - 6.7.0
+  label: Trash Can
+  search:
+    terms:
+      - delete
+      - garbage
+      - hide
+      - remove
+      - trash-o
+  styles:
+    - solid
+    - regular
+    - light
+  unicode: f2ed
+  voted: false
+file:
+  aliases:
+    unicodes:
+      composite:
+        - 1f4c4
+        - 1f5cb
+        - f016
+      secondary:
+        - 10f15b
+  changes:
+    - 3.2.0
+    - 5.0.0
+    - 5.10.1
+    - 5.10.2
+    - 6.0.0-beta1
+    - 6.1.0
+    - 6.2.0
+    - 6.3.0
+    - 6.4.0
+    - 6.5.0
+    - 6.6.0
+    - 6.7.0
+  label: File
+  search:
+    terms:
+      - Empty Document
+      - cv
+      - document
+      - new
+      - page
+      - page facing up
+      - pdf
+      - resume
+  styles:
+    - light
+  unicode: f15b
+  voted: false
+thumbs-up:
+  aliases:
+    unicodes:
+      composite:
+        - 1f44d
+        - f087
+      secondary:
+        - 10f164
+  changes:
+    - 3.2.0
+    - 5.0.0
+    - 5.10.2
+    - 6.0.0-beta1
+    - 6.2.0
+    - 6.3.0
+    - 6.4.0
+    - 6.5.0
+    - 6.6.0
+    - 6.7.0
+  label: Thumbs Up
+  search:
+    terms:
+      - '+1'
+      - agree
+      - approve
+      - favorite
+      - hand
+      - like
+      - ok
+      - okay
+      - social
+      - success
+      - thumb
+      - thumbs up
+      - thumbs-o-up
+      - up
+      - 'yes'
+      - you got it dude
+  styles:
+    - solid
+    - light
+  unicode: f164
+  voted: false
+circle-plus:
+  aliases:
+    names:
+      - plus-circle
+    unicodes:
+      secondary:
+        - 10f055
+  changes:
+    - 1.0.0
+    - 5.0.0
+    - 6.0.0-beta1
+    - 6.0.0
+    - 6.2.0
+    - 6.3.0
+    - 6.4.0
+    - 6.5.0
+    - 6.6.0
+    - 6.7.0
+  label: Circle Plus
+  search:
+    terms:
+      - add
+      - create
+      - expand
+      - new
+      - positive
+      - shape
+  styles:
+    - solid
+    - regular
+    - light
+  unicode: f055
+  voted: false
+gas-pump:
+  aliases:
+    unicodes:
+      composite:
+        - 26fd
+      secondary:
+        - 10f52f
+  changes:
+    - 5.0.13
+    - 5.10.1
+    - 6.0.0-beta1
+    - 6.0.0-beta3
+    - 6.2.0
+    - 6.3.0
+    - 6.4.0
+    - 6.5.0
+    - 6.6.0
+    - 6.7.0
+  label: Gas Pump
+  search:
+    terms:
+      - car
+      - diesel
+      - fuel
+      - fuel pump
+      - fuelpump
+      - gas
+      - gasoline
+      - petrol
+      - pump
+      - station
+  styles:
+    - solid
+  unicode: f52f
+  voted: true
+square-caret-right:
+  aliases:
+    names:
+      - caret-square-right
+    unicodes:
+      secondary:
+        - 10f152
+  changes:
+    - 3.2.0
+    - 5.0.0
+    - 6.0.0-beta1
+    - 6.2.0
+    - 6.3.0
+    - 6.4.0
+    - 6.5.0
+    - 6.6.0
+    - 6.7.0
+  label: Square Caret Right
+  search:
+    terms:
+      - arrow
+      - caret-square-o-right
+      - forward
+      - next
+      - triangle
+  styles:
+    - solid
+  unicode: f152
+  voted: false
+circle-xmark:
+  aliases:
+    names:
+      - times-circle
+      - xmark-circle
+    unicodes:
+      composite:
+        - f05c
+      secondary:
+        - 10f057
+  changes:
+    - 1.0.0
+    - 5.0.0
+    - 6.0.0-beta1
+    - 6.0.0
+    - 6.2.0
+    - 6.3.0
+    - 6.4.0
+    - 6.5.0
+    - 6.6.0
+    - 6.7.0
+  label: Circle Xmark
+  search:
+    terms:
+      - close
+      - cross
+      - destroy
+      - exit
+      - incorrect
+      - notice
+      - notification
+      - notify
+      - problem
+      - uncheck
+      - wrong
+      - x
+  styles:
+    - regular
+  unicode: f057
+  voted: false
+square-check:
+  aliases:
+    names:
+      - check-square
+    unicodes:
+      composite:
+        - '2611'
+        - '2705'
+        - f046
+      secondary:
+        - 10f14a
+  changes:
+    - 3.1.0
+    - 5.0.0
+    - 6.0.0-beta1
+    - 6.0.0
+    - 6.2.0
+    - 6.3.0
+    - 6.4.0
+    - 6.5.0
+    - 6.6.0
+    - 6.7.0
+  label: Square Check
+  search:
+    terms:
+      - accept
+      - agree
+      - box
+      - button
+      - check
+      - check box with check
+      - check mark button
+      - checkmark
+      - confirm
+      - correct
+      - coupon
+      - done
+      - enable
+      - mark
+      - ok
+      - select
+      - success
+      - tick
+      - todo
+      - validate
+      - working
+      - 'yes'
+      - ✓
+  styles:
+    - solid
+    - regular
+  unicode: f14a
+  voted: false
+utensils:
+  aliases:
+    names:
+      - cutlery
+    unicodes:
+      composite:
+        - 1f374
+        - f0f5
+      secondary:
+        - 10f2e7
+  changes:
+    - 5.0.0
+    - 6.0.0-beta1
+    - 6.0.0-beta2
+    - 6.2.0
+    - 6.3.0
+    - 6.4.0
+    - 6.5.0
+    - 6.6.0
+    - 6.7.0
+  label: Utensils
+  search:
+    terms:
+      - cooking
+      - cutlery
+      - dining
+      - dinner
+      - eat
+      - food
+      - fork
+      - fork and knife
+      - knife
+      - restaurant
+  styles:
+    - solid
+  unicode: f2e7
+  voted: false
+passport:
+  aliases:
+    unicodes:
+      secondary:
+        - 10f5ab
+  changes:
+    - 5.1.0
+    - 6.0.0-beta1
+    - 6.2.0
+    - 6.3.0
+    - 6.4.0
+    - 6.5.0
+    - 6.6.0
+    - 6.7.0
+  label: Passport
+  search:
+    terms:
+      - document
+      - id
+      - identification
+      - issued
+      - travel
+  styles:
+    - regular
+    - light
+  unicode: f5ab
+  voted: false
+people-group:
+  changes:
+    - 6.1.0
+    - 6.2.0
+    - 6.3.0
+    - 6.4.0
+    - 6.5.0
+    - 6.6.0
+    - 6.7.0
+  label: People Group
+  search:
+    terms:
+      - crowd
+      - family
+      - group
+      - team
+      - together
+      - uer
+  styles:
+    - solid
+  unicode: e533
+  voted: false
+clock:
+  aliases:
+    names:
+      - clock-four
+    unicodes:
+      composite:
+        - 1f553
+      secondary:
+        - 10f017
+  changes:
+    - 1.0.0
+    - 5.0.0
+    - 5.12.1
+    - 6.0.0-beta1
+    - 6.0.0-beta2
+    - 6.0.0-beta3
+    - 6.2.0
+    - 6.3.0
+    - 6.4.0
+    - 6.5.0
+    - 6.6.0
+    - 6.7.0
+  label: Clock
+  search:
+    terms:
+      - '00'
+      - '4'
+      - 4:00
+      - clock
+      - date
+      - four
+      - four o’clock
+      - hour
+      - late
+      - minute
+      - o'clock
+      - o’clock
+      - pending
+      - schedule
+      - ticking
+      - time
+      - timer
+      - timestamp
+      - watch
+  styles:
+    - solid
+    - regular
+  unicode: f017
+  voted: false
+earth-europe:
+  aliases:
+    names:
+      - globe-europe
+    unicodes:
+      secondary:
+        - 10f7a2
+  changes:
+    - 5.6.0
+    - 5.11.0
+    - 5.11.1
+    - 6.0.0-beta1
+    - 6.0.0-beta3
+    - 6.2.0
+    - 6.3.0
+    - 6.4.0
+    - 6.5.0
+    - 6.6.0
+    - 6.7.0
+  label: Earth Europe
+  search:
+    terms:
+      - all
+      - country
+      - earth
+      - europe
+      - global
+      - globe
+      - gps
+      - language
+      - localize
+      - location
+      - map
+      - online
+      - place
+      - planet
+      - translate
+      - travel
+      - world
+  styles:
+    - solid
+  unicode: f7a2
+  voted: true
+pen-to-square:
+  aliases:
+    names:
+      - edit
+    unicodes:
+      secondary:
+        - 10f044
+  changes:
+    - 1.0.0
+    - 5.0.0
+    - 6.0.0-beta1
+    - 6.0.0
+    - 6.2.0
+    - 6.3.0
+    - 6.4.0
+    - 6.5.0
+    - 6.6.0
+    - 6.7.0
+  label: Pen To Square
+  search:
+    terms:
+      - edit
+      - modify
+      - pen
+      - pencil
+      - update
+      - write
+  styles:
+    - solid
+  unicode: f044
+  voted: false
+chevron-up:
+  aliases:
+    unicodes:
+      secondary:
+        - 10f077
+  changes:
+    - 1.0.0
+    - 5.0.0
+    - 6.0.0-beta1
+    - 6.2.0
+    - 6.3.0
+    - 6.4.0
+    - 6.5.0
+    - 6.6.0
+    - 6.7.0
+  label: Chevron Up
+  search:
+    terms:
+      - arrow
+      - collapse
+      - upgrade
+      - upload
+  styles:
+    - solid
+  unicode: f077
+  voted: false
+camera:
+  aliases:
+    names:
+      - camera-alt
+    unicodes:
+      composite:
+        - f332
+      primary:
+        - f332
+      secondary:
+        - 10f030
+        - 10f332
+  changes:
+    - 1.0.0
+    - 5.0.0
+    - 6.0.0-beta1
+    - 6.0.0-beta2
+    - 6.2.0
+    - 6.3.0
+    - 6.4.0
+    - 6.5.0
+    - 6.6.0
+    - 6.7.0
+  label: Camera
+  search:
+    terms:
+      - image
+      - img
+      - lens
+      - photo
+      - picture
+      - record
+      - shutter
+      - video
+  styles:
+    - solid
+    - light
+  unicode: f030
+  voted: false
+list-timeline:
+  changes:
+    - 6.0.0-beta1
+    - 6.0.0-beta3
+    - 6.2.0
+    - 6.3.0
+    - 6.4.0
+    - 6.5.0
+    - 6.6.0
+    - 6.7.0
+  label: List Timeline
+  search:
+    terms:
+      - cheatsheet
+      - chronological
+      - deadline
+      - history
+      - linear
+      - summary
+  styles:
+    - solid
+  unicode: e1d1
+  voted: false
+unlock:
+  aliases:
+    unicodes:
+      composite:
+        - 1f513
+      secondary:
+        - 10f09c
+  changes:
+    - 2.0.0
+    - 5.0.0
+    - 6.0.0-beta1
+    - 6.0.0
+    - 6.2.0
+    - 6.3.0
+    - 6.4.0
+    - 6.5.0
+    - 6.6.0
+    - 6.7.0
+  label: Unlock
+  search:
+    terms:
+      - admin
+      - lock
+      - open
+      - padlock
+      - password
+      - privacy
+      - private
+      - protect
+      - unlock
+      - unlocked
+  styles:
+    - solid
+    - light
+  unicode: f09c
+  voted: false
+floppy-disk:
+  aliases:
+    names:
+      - save
+    unicodes:
+      composite:
+        - 1f4be
+        - 1f5aa
+      secondary:
+        - 10f0c7
+  changes:
+    - 2.0.0
+    - 5.0.0
+    - 5.10.2
+    - 6.0.0-beta1
+    - 6.2.0
+    - 6.3.0
+    - 6.4.0
+    - 6.5.0
+    - 6.6.0
+    - 6.7.0
+  label: Floppy Disk
+  search:
+    terms:
+      - Black Hard Shell Floppy Disk
+      - computer
+      - disk
+      - download
+      - floppy
+      - floppy disk
+      - floppy-o
+  styles:
+    - solid
+  unicode: f0c7
+  voted: false
+magnifying-glass:
+  aliases:
+    names:
+      - search
+    unicodes:
+      composite:
+        - 1f50d
+      secondary:
+        - 10f002
+  changes:
+    - 1.0.0
+    - 5.0.0
+    - 6.0.0-beta1
+    - 6.2.0
+    - 6.3.0
+    - 6.4.0
+    - 6.5.0
+    - 6.6.0
+    - 6.7.0
+  label: Magnifying Glass
+  search:
+    terms:
+      - bigger
+      - enlarge
+      - equipment
+      - find
+      - glass
+      - inspection
+      - magnifier
+      - magnify
+      - magnifying
+      - magnifying glass tilted left
+      - preview
+      - search
+      - tool
+      - zoom
+  styles:
+    - solid
+  unicode: f002
+  voted: false
+map-location-dot:
+  aliases:
+    names:
+      - map-marked-alt
+    unicodes:
+      secondary:
+        - 10f5a0
+  changes:
+    - 5.1.0
+    - 6.0.0-beta1
+    - 6.0.0-beta3
+    - 6.2.0
+    - 6.3.0
+    - 6.4.0
+    - 6.5.0
+    - 6.6.0
+    - 6.7.0
+  label: Map Location Dot
+  search:
+    terms:
+      - address
+      - coordinates
+      - destination
+      - gps
+      - localize
+      - location
+      - map
+      - navigation
+      - paper
+      - pin
+      - place
+      - point of interest
+      - position
+      - route
+      - travel
+  styles:
+    - solid
+  unicode: f5a0
+  voted: false
+ellipsis:
+  aliases:
+    names:
+      - ellipsis-h
+    unicodes:
+      secondary:
+        - 10f141
+  changes:
+    - 3.1.0
+    - 5.0.0
+    - 6.0.0-beta1
+    - 6.0.0-beta3
+    - 6.2.0
+    - 6.3.0
+    - 6.4.0
+    - 6.5.0
+    - 6.6.0
+    - 6.7.0
+  label: Ellipsis
+  search:
+    terms:
+      - dots
+      - drag
+      - kebab
+      - list
+      - menu
+      - nav
+      - navigation
+      - ol
+      - pacman
+      - reorder
+      - settings
+      - three dots
+      - ul
+  styles:
+    - solid
+    - regular
+  unicode: f141
+  voted: false
+user-tie:
+  aliases:
+    unicodes:
+      secondary:
+        - 10f508
+  changes:
+    - 5.0.11
+    - 6.0.0-beta1
+    - 6.0.0-beta2
+    - 6.2.0
+    - 6.3.0
+    - 6.4.0
+    - 6.5.0
+    - 6.6.0
+    - 6.7.0
+  label: User Tie
+  search:
+    terms:
+      - administrator
+      - avatar
+      - business
+      - clothing
+      - employee
+      - formal
+      - offer
+      - portfolio
+      - professional
+      - suit
+      - uer
+  styles:
+    - solid
+  unicode: f508
+  voted: false
+calendar-days:
+  aliases:
+    names:
+      - calendar-alt
+    unicodes:
+      secondary:
+        - 10f073
+  changes:
+    - 1.0.0
+    - 5.0.0
+    - 5.6.0
+    - 5.7.0
+    - 5.10.2
+    - 6.0.0-beta1
+    - 6.0.0-beta2
+    - 6.0.0-beta3
+    - 6.2.0
+    - 6.3.0
+    - 6.4.0
+    - 6.5.0
+    - 6.6.0
+    - 6.7.0
+  label: Calendar Days
+  search:
+    terms:
+      - calendar
+      - date
+      - day
+      - event
+      - month
+      - schedule
+      - time
+      - when
+      - year
+  styles:
+    - regular
+  unicode: f073
+  voted: false
+bell:
+  aliases:
+    unicodes:
+      composite:
+        - 1f514
+        - f0a2
+      secondary:
+        - 10f0f3
+  changes:
+    - 2.0.0
+    - 5.0.0
+    - 5.2.0
+    - 5.11.0
+    - 6.0.0-beta1
+    - 6.0.0-beta2
+    - 6.0.0-beta3
+    - 6.2.0
+    - 6.3.0
+    - 6.4.0
+    - 6.5.0
+    - 6.6.0
+    - 6.7.0
+  label: Bell
+  search:
+    terms:
+      - alarm
+      - alert
+      - bel
+      - bell
+      - chime
+      - notification
+      - reminder
+      - request
+  styles:
+    - solid
+  unicode: f0f3
+  voted: false
+envelope:
+  aliases:
+    unicodes:
+      composite:
+        - 1f582
+        - '2709'
+        - f003
+      secondary:
+        - 10f0e0
+  changes:
+    - 2.0.0
+    - 5.0.0
+    - 5.10.1
+    - 5.10.2
+    - 6.0.0-beta1
+    - 6.1.0
+    - 6.2.0
+    - 6.2.1
+    - 6.3.0
+    - 6.4.0
+    - 6.5.0
+    - 6.6.0
+    - 6.7.0
+  label: Envelope
+  search:
+    terms:
+      - Back of Envelope
+      - e-mail
+      - email
+      - envelope
+      - letter
+      - mail
+      - message
+      - newsletter
+      - notification
+      - offer
+      - support
+  styles:
+    - solid
+    - light
+  unicode: f0e0
+  voted: false
+minus:
+  aliases:
+    names:
+      - subtract
+    unicodes:
+      composite:
+        - '2013'
+        - '2212'
+        - '2796'
+      secondary:
+        - 10f068
+  changes:
+    - 1.0.0
+    - 5.0.0
+    - 6.0.0-beta1
+    - 6.2.0
+    - 6.3.0
+    - 6.4.0
+    - 6.5.0
+    - 6.6.0
+    - 6.7.0
+  label: Minus
+  search:
+    terms:
+      - En Dash
+      - Minus Sign
+      - collapse
+      - delete
+      - hide
+      - math
+      - minify
+      - minus
+      - negative
+      - remove
+      - sign
+      - trash
+      - −
+  styles:
+    - solid
+  unicode: f068
+  voted: false
+dollar-sign:
+  aliases:
+    names:
+      - dollar
+      - usd
+    unicodes:
+      composite:
+        - 1f4b2
+        - f155
+      primary:
+        - f155
+      secondary:
+        - '1024'
+        - 10f155
+  changes:
+    - 3.2.0
+    - 5.0.0
+    - 5.0.9
+    - 5.11.0
+    - 5.11.1
+    - 6.0.0-beta1
+    - 6.0.0-beta3
+    - 6.2.0
+    - 6.3.0
+    - 6.4.0
+    - 6.5.0
+    - 6.6.0
+    - 6.7.0
+  label: Dollar Sign
+  search:
+    terms:
+      - Dollar Sign
+      - coupon
+      - currency
+      - dollar
+      - heavy dollar sign
+      - investment
+      - money
+      - premium
+      - revenue
+      - salary
+  styles:
+    - solid
+  unicode: '24'
+  voted: false
