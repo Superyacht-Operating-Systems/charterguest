@@ -50,9 +50,9 @@ position: relative;
             <?php echo $this->Form->create('CharterGuest', array('url' => array('controller' => 'charters', 'action' => 'index'),'id'=>'tokenVerifyForm'));?>
     <fieldset style="padding-top:10px;">
                     <?php echo $this->Session->flash();?>
-        Email:
-        <div class="form-group form_margin">                                        
-                    <?php echo $this->Form->input('email',array('label' => false,'div' => false, 'name' => 'email', 'id' => 'email', 'placeholder' => 'Enter the Email address','class' => 'form-control','maxlength' => 55));?>
+        Email / Username:
+        <div class="form-group form_margin">
+                    <?php echo $this->Form->input('email',array('label' => false,'div' => false, 'name' => 'email', 'id' => 'email', 'placeholder' => 'Enter Email or Username','class' => 'form-control','maxlength' => 55));?>
             <span class="text-small red errorMsg" id="emailError" style="color: red"></span>
         </div>
         Token/Password:
@@ -117,7 +117,7 @@ $("#tokenSubmit").on("click", function(e) {
     }
     if (email.trim() == '') {
         flag = 0;
-        $("#emailError").text("Please enter the Email.").slideDown('slow').delay(3000).slideUp();
+        $("#emailError").text("Please enter the Email or Username.").slideDown('slow').delay(3000).slideUp();
     }
     var data = $("#tokenVerifyForm").serialize();
 

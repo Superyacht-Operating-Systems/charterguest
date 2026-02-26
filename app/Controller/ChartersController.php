@@ -156,23 +156,46 @@ class ChartersController extends AppController {
             $result = array();
             if (isset($this->request->data['token']) && !empty($this->request->data['token']) && isset($this->request->data['email']) && !empty($this->request->data['email'])) {
                 $token = $this->request->data['token'];
-                $email = $this->request->data['email'];
+                $loginInput = trim($this->request->data['email']); // can be email or username
                 $this->loadModel('CharterGuest');
                 $this->loadModel('GuestList');
                 $cloudUrl = Configure::read('cloudUrl');
-                
-                
-                $this->CharterGuest->set($this->request->data);
-                if (!$this->CharterGuest->validates(array('fieldList' => array('email')))) {
-                    $result['status'] = "invalid_email";
-                    $result['message'] = "Please enter a valid Email.";
-                } else {
+
+                $isEmail = filter_var($loginInput, FILTER_VALIDATE_EMAIL);
+
+                if ($isEmail) {
+                    // Existing email path - validate format
+                    $this->CharterGuest->set($this->request->data);
+                    if (!$this->CharterGuest->validates(array('fieldList' => array('email')))) {
+                        $result['status'] = "invalid_email";
+                        $result['message'] = "Please enter a valid Email.";
+                        echo json_encode($result);
+                        exit;
+                    }
+                    $email = $loginInput;
                     $guestConditions = array('email' => $email);
                     $guestConditions['OR'] = array('token' => $token, 'password' => md5($token));
-                    // Verifying the email and token - Head Charterer
-                    $charterData = $this->CharterGuest->find('first', array('conditions' => $guestConditions));
-                    
                     $GuestListData = $this->GuestList->find('first', array('conditions' => $guestConditions));
+                } else {
+                    // Username path - look up GuestList by username + token
+                    $usernameConditions = array('username' => $loginInput);
+                    $usernameConditions['OR'] = array('token' => $token, 'password' => md5($token));
+                    $GuestListData = $this->GuestList->find('first', array('conditions' => $usernameConditions));
+                    if (empty($GuestListData)) {
+                        $result['status'] = "fail";
+                        $result['message'] = "Invalid Username/Token/Password.";
+                        echo json_encode($result);
+                        exit;
+                    }
+                    // Derive email from GuestList to reuse existing CharterGuest/Associate lookup
+                    $email = $GuestListData['GuestList']['email'];
+                    $guestConditions = array('email' => $email);
+                    $guestConditions['OR'] = array('token' => $token, 'password' => md5($token));
+                }
+
+                if (true) {
+                    // Verifying the email/username and token - Head Charterer
+                    $charterData = $this->CharterGuest->find('first', array('conditions' => $guestConditions));
                     //echo "<pre>"; print_r($GuestListData); exit;
                     if (count($charterData) != 0) {
                         $this->Session->destroy();
@@ -348,7 +371,7 @@ class ChartersController extends AppController {
                         
                         } else {
                             $result['status'] = "fail";
-                            $result['message'] = "Invalid Email address/Token/Password.";
+                            $result['message'] = "Invalid Email/Username/Token/Password.";
                         }
                         $this->Session->write("charter_info.CharterGuest.Adminlogin",0);
                     }
