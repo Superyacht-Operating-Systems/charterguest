@@ -1,10 +1,11 @@
 <?php
+App::uses('ConnectionManager', 'Model');
 /*
     * Charters Controller class
     * Functionality -  Manage the Charter guests Page
     * Developer - Nagarajan
     * Created date - 23-May-2018
-    * Modified date - 
+    * Modified date -
 */
 class ChartersController extends AppController {
     var $name = 'Charters';    
@@ -194,11 +195,11 @@ class ChartersController extends AppController {
         if ($this->request->is('ajax')) {
             $data = $this->request->data;
 
-            $username  = isset($data['reg_username'])  ? trim($data['reg_username'])  : '';
+            $username  = isset($data['reg_username'])   ? trim($data['reg_username'])   : '';
             $firstName = isset($data['reg_first_name']) ? trim($data['reg_first_name']) : '';
             $lastName  = isset($data['reg_last_name'])  ? trim($data['reg_last_name'])  : '';
-            $password  = isset($data['reg_password'])  ? $data['reg_password']  : '';
-            $uuid      = isset($data['reg_uuid'])      ? trim($data['reg_uuid'])      : '';
+            $password  = isset($data['reg_password'])   ? $data['reg_password']         : '';
+            $uuid      = isset($data['reg_uuid'])       ? trim($data['reg_uuid'])       : '';
 
             if (empty($username) || empty($password) || empty($uuid)) {
                 $result['message'] = 'Missing required fields.';
@@ -206,54 +207,108 @@ class ChartersController extends AppController {
                 exit;
             }
 
-            $this->loadModel('CharterGuest');
-            $this->loadModel('GuestList');
+            $db           = ConnectionManager::getDataSource('default');
+            $created      = date('Y-m-d H:i:s');
+            $usernameSafe = addslashes($username);
+            $firstNameSafe = addslashes($firstName);
+            $lastNameSafe  = addslashes($lastName);
+            $hashedPwd    = md5($password);
 
-            $charterGuest = $this->CharterGuest->find('first', array(
-                'conditions' => array('CharterGuest.charter_program_id' => $uuid)
-            ));
-
-            if (empty($charterGuest)) {
+            // -------------------------------------------------------
+            // 1. Get charter_guests record by charter_program_id (uuid)
+            // -------------------------------------------------------
+            $cgRows = $db->query("SELECT * FROM db_checklistapp.charter_guests WHERE charter_program_id = '$uuid' LIMIT 1");
+            if (empty($cgRows)) {
                 $result['message'] = 'Invalid invitation link.';
                 echo json_encode($result);
                 exit;
             }
+            $cg               = $cgRows[0]['charter_guests'];
+            $charterProgId    = $cg['charter_program_id'];
+            $charterCompanyId = $cg['charter_company_id'];
+            $yachtId          = $cg['yacht_id'];
 
-            $fleetcompanyId = $charterGuest['CharterGuest']['charter_company_id'];
-            $yachtId        = $charterGuest['CharterGuest']['yacht_id'];
-            $guestType      = $fleetcompanyId . '-' . $yachtId . '-email_recipient';
-
-            $saveData = array(
-                'GuestList' => array(
-                    'username'                        => $username,
-                    'first_name'                      => $firstName,
-                    'last_name'                       => $lastName,
-                    'password'                        => md5($password),
-                    //'email'                           => $charterGuest['CharterGuest']['email'],
-                    //'charter_guest_id'                => $charterGuest['CharterGuest']['id'],
-                    'fleetcompany_id'                 => $fleetcompanyId,
-                    'yacht_id'                        => $yachtId,
-                    'guest_type'                      => $guestType,
-                    'username_recovery_hint'          => isset($data['username_recovery_hint']) ? trim($data['username_recovery_hint']) : '',
-                    'username_security_question_id'   => isset($data['username_security_question_id']) ? (int)$data['username_security_question_id'] : null,
-                    'username_security_answer'        => isset($data['username_security_answer']) ? trim($data['username_security_answer']) : '',
-                    'password_security_question_id_1' => isset($data['password_security_question_id_1']) ? (int)$data['password_security_question_id_1'] : null,
-                    'password_security_answer_1'      => isset($data['password_security_answer_1']) ? trim($data['password_security_answer_1']) : '',
-                    'password_security_question_id_2' => isset($data['password_security_question_id_2']) ? (int)$data['password_security_question_id_2'] : null,
-                    'password_security_answer_2'      => isset($data['password_security_answer_2']) ? trim($data['password_security_answer_2']) : '',
-                    'UUID'                            => String::uuid(),
-                    'status'                          => '1',
-                    'is_deleted'                      => 0,
-                )
-            );
-
-            $this->GuestList->create();
-            if ($this->GuestList->save($saveData)) {
-                $result['status']  = 'success';
-                $result['message'] = 'Registration successful.';
-            } else {
-                $result['message'] = 'Could not save. Please try again.';
+            // -------------------------------------------------------
+            // 2. Get yacht DB name from yachts table
+            // -------------------------------------------------------
+            $yachtRows = $db->query("SELECT ydb_name, yfullName FROM db_checklistapp.yachts WHERE id = '$yachtId' LIMIT 1");
+            if (empty($yachtRows)) {
+                $result['message'] = 'Yacht not found.';
+                echo json_encode($result);
+                exit;
             }
+            $ydbname = $yachtRows[0]['yachts']['ydb_name'];
+
+            // -------------------------------------------------------
+            // 3. Generate UUID and token (same pattern as admin_shareschedule)
+            // -------------------------------------------------------
+            $userUUID  = String::uuid();
+            $userToken = $this->uniqueToken(8);
+
+            // guest_type follows addshareDetailsOnServer pattern
+            if (!empty($charterCompanyId)) {
+                $guestType = $charterCompanyId . '-' . $yachtId . '-email_recipient';
+            } else {
+                $guestType = $yachtId . '-email_recipient';
+            }
+
+            // Security question fields
+            $recoveryHint = isset($data['username_recovery_hint'])          ? addslashes(trim($data['username_recovery_hint']))       : '';
+            $uQuestionId  = isset($data['username_security_question_id'])   ? (int)$data['username_security_question_id']             : 0;
+            $uAnswer      = isset($data['username_security_answer'])        ? addslashes(trim($data['username_security_answer']))      : '';
+            $pQId1        = isset($data['password_security_question_id_1']) ? (int)$data['password_security_question_id_1']           : 0;
+            $pAnswer1     = isset($data['password_security_answer_1'])      ? addslashes(trim($data['password_security_answer_1']))    : '';
+            $pQId2        = isset($data['password_security_question_id_2']) ? (int)$data['password_security_question_id_2']           : 0;
+            $pAnswer2     = isset($data['password_security_answer_2'])      ? addslashes(trim($data['password_security_answer_2']))    : '';
+
+            // -------------------------------------------------------
+            // 4. YACHT DB: passenger_lists — always INSERT as new user
+            //    username is their unique identity (not charter_guest email)
+            // -------------------------------------------------------
+            $db->query("INSERT INTO {$ydbname}.passenger_lists
+                (UUID, email, first_name, family_name, token)
+                VALUES
+                ('{$userUUID}', '{$usernameSafe}', '{$firstNameSafe}', '{$lastNameSafe}', '{$userToken}')");
+
+            // -------------------------------------------------------
+            // 5. YACHT DB: charter_guest_associates — always INSERT as new
+            // -------------------------------------------------------
+            $db->query("INSERT INTO {$ydbname}.charter_guest_associates
+                (UUID, charter_program_id, allow_comments, first_name, last_name, is_email_recipient, token)
+                VALUES
+                ('{$userUUID}', '{$charterProgId}', '1', '{$firstNameSafe}', '{$lastNameSafe}', '1', '{$userToken}')");
+
+            // -------------------------------------------------------
+            // 6. db_checklistapp: guest_lists — INSERT new user record
+            //    (username uniqueness already validated via checkUsername)
+            // -------------------------------------------------------
+            $db->query("INSERT INTO db_checklistapp.guest_lists
+                (UUID, username, first_name, last_name, password, email,
+                 fleetcompany_id, yacht_id, guest_type, token, charter_guest_id,
+                 username_recovery_hint, username_security_question_id, username_security_answer,
+                 password_security_question_id_1, password_security_answer_1,
+                 password_security_question_id_2, password_security_answer_2,
+                 status, is_deleted)
+                VALUES
+                ('{$userUUID}', '{$usernameSafe}', '{$firstNameSafe}', '{$lastNameSafe}', '{$hashedPwd}', '{$usernameSafe}',
+                 '{$charterCompanyId}', '{$yachtId}', '{$guestType}', '{$userToken}', '{$charterProgId}',
+                 '{$recoveryHint}', '{$uQuestionId}', '{$uAnswer}',
+                 '{$pQId1}', '{$pAnswer1}', '{$pQId2}', '{$pAnswer2}',
+                 '1', '0')");
+
+            // -------------------------------------------------------
+            // 7. db_checklistapp: charter_guest_associates — INSERT new record
+            // -------------------------------------------------------
+            $db->query("INSERT INTO db_checklistapp.charter_guest_associates
+                (charter_guest_id, UUID, email, token, password, charter_program_id, yacht_id, created,
+                 fleetcompany_id, is_head_charterer, allow_comments, first_name, last_name, is_email_recipient)
+                VALUES
+                ('{$charterProgId}', '{$userUUID}', '{$usernameSafe}', '{$userToken}', '{$hashedPwd}', '{$charterProgId}',
+                 {$yachtId}, '{$created}', '{$charterCompanyId}', '0', '0',
+                 '{$firstNameSafe}', '{$lastNameSafe}', '1')");
+
+            $result['status']  = 'success';
+            $result['message'] = 'Registration successful.';
         }
 
         echo json_encode($result);
@@ -310,6 +365,7 @@ class ChartersController extends AppController {
                     $usernameConditions = array('username' => $loginInput);
                     $usernameConditions['OR'] = array('token' => $token, 'password' => md5($token));
                     $GuestListData = $this->GuestList->find('first', array('conditions' => $usernameConditions));
+                    //echo "<pre>"; print_r($GuestListData); exit;
                     if (empty($GuestListData)) {
                         $result['status'] = "fail";
                         $result['message'] = "Invalid Username/Token/Password.";
