@@ -1,5 +1,11 @@
 <?php ?>
 <style> 
+
+.labelhdpadd{
+    padding-top: 25px;
+}
+
+
 ::placeholder {
   color: gray!important;
   font-size: 12px !important;
@@ -23,18 +29,44 @@ margin: 0px 5px;
 position: relative;
     top: 2px;
 }
+.but-mb-5{
+    margin-bottom: 40px !important;
+}
 .forgot-link{
     font-size: 13px;
     margin-top: -10px;
     display: block;
 }
-
+.mtopqu{
+    margin-top:10px;
+}
+.joinnow-btn{
+margin-top: 30px !important;
+    float: none !important;
+    margin: 0 auto;
+    align-items: center;
+    display: block;
+    min-width:100px;
+}
 .terms-userow-row{
         margin-top: 10px;
+}
+.errormsg{
+    color: #f00;
+    font-size: 11px;
 }
  @media only screen and (max-width:767px){
  .form-group {
     margin-bottom: 0px!important;
+}
+.joinnow-btn{
+    width: 100%!important;
+} 
+.mt-45{
+    margin-top:15px;
+}
+.p-left{
+            padding: 0px 7px;
 }
  }
 
@@ -50,9 +82,9 @@ position: relative;
             <?php echo $this->Form->create('CharterGuest', array('url' => array('controller' => 'charters', 'action' => 'index'),'id'=>'tokenVerifyForm'));?>
     <fieldset style="padding-top:10px;">
                     <?php echo $this->Session->flash();?>
-        Email / Username:
-        <div class="form-group form_margin">
-                    <?php echo $this->Form->input('email',array('label' => false,'div' => false, 'name' => 'email', 'id' => 'email', 'placeholder' => 'Enter Email or Username','class' => 'form-control','maxlength' => 55));?>
+        Username:
+        <div class="form-group form_margin">                                        
+                    <?php echo $this->Form->input('email',array('label' => false,'div' => false, 'name' => 'email', 'id' => 'email', 'placeholder' => 'Enter Username','class' => 'form-control','maxlength' => 55));?>
             <span class="text-small red errorMsg" id="emailError" style="color: red"></span>
         </div>
         Token/Password:
@@ -60,7 +92,12 @@ position: relative;
                     <?php echo $this->Form->input('token',array('type' => 'password', 'label' => false,'div' => false, 'name' => 'token', 'id' => 'token', 'placeholder' => 'Enter the Token/Password','class' => 'form-control','maxlength' => 55));?>
             <span class="text-small red errorMsg" id="tokenError" style="color: red"></span>
         </div>
-        <a class="forgot-link" href="<?php echo $this->request->base."/charters/forgot_password/" ?>">Forgot password </a>
+        <div class="inlonusercolumn">
+         <span> Forgot</span>
+        <a class="inlinetag" href="<?php echo $this->request->base."" ?>">Username</a>
+        <span>or</span>
+        <a class="inlinetag" href="<?php echo $this->request->base."/charters/forgot_password/" ?>">Password</a>
+       </div>
         <div class="terms-userow-row">
             <label class="terms-userow">
                 I agree with the <a href="<?php echo $this->request->base."/charters/privacytermsofuse/1" ?>" target="blank">terms of use </a>
@@ -69,9 +106,262 @@ position: relative;
             <?php echo $this->Form->button('Submit',array('class' => 'btn btn-default', 'id' => 'tokenSubmit'));?>                
             <span class="text-small red errorMsg" id="commonError" style="color: red"></span>
         </div>
+       <button class="btn btn-default joinnow-btn"  type="submit">New to Charter Guest? Join now</button>
     </fieldset>
             <?php echo $this->Form->end(); ?>
 </div>
+
+
+
+
+
+<div class="usernamereset" style="display: none;">
+    <form>
+        <fieldset style="padding-top:10px;">
+        <div class="form-group">
+         Username:
+         <div class="form-group form_margin">                                        
+         <input name="email" id="email" placeholder="Enter Username" class="form-control" maxlength="55" type="email" required="required">            <span class="text-small red errorMsg" id="emailError" style="color: red"></span>
+        <span class="errormsg">Sorry, this username is already in use</span>
+        </div> 
+       </div>
+        <div class="form-group mt-45">
+         Display Name:
+         <div class="row p-left">
+        <div class="col-md-6">
+        <div class="form-group form_margin">                                        
+         <input name="email" id="email" placeholder="First Name" class="form-control" maxlength="55" type="email" required="required">            <span class="text-small red errorMsg" id="emailError" style="color: red"></span>
+        </div>
+        </div>
+        <div class="col-md-6">
+        <div class="form-group form_margin">                                        
+         <input name="email" id="email" placeholder="Last    Name" class="form-control" maxlength="55" type="email" required="required">            <span class="text-small red errorMsg" id="emailError" style="color: red"></span>
+        </div>
+        </div>
+        </div>
+       </div>
+         New Password:
+         <div class="form-group form_margin">                                        
+         <input name="email" id="email" placeholder="Enter Password" class="form-control" maxlength="55" type="email" required="required">            <span class="text-small red errorMsg" id="emailError" style="color: red"></span>
+        </div> 
+        Confirm Password:
+         <div class="form-group form_margin">                                        
+         <input name="email" id="email" placeholder="Enter Password" class="form-control" maxlength="55" type="email" required="required">            <span class="text-small red errorMsg" id="emailError" style="color: red"></span>
+       </div>
+
+
+       <button class="btn btn-default joinnow-btn" type="submit">Next</button>
+    </fieldset>
+    </form>
+</div>
+
+
+
+
+
+<div class="usernamerecoveryrow"  style="display: none;">
+    <form>
+        <fieldset style="padding-top:10px;">
+         Username Recovery Hint:
+         <div class="form-group form_margin">                                        
+         <input name="email" id="email" placeholder=" Username Recovery Hint" class="form-control" maxlength="55" type="email" required="required">            <span class="text-small red errorMsg" id="emailError" style="color: red"></span>
+       </div>
+         Username Recovery Question:
+         <div class="form-group form_margin">  
+            <select class="form-select form-control">
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            </select>                                      
+        </div> 
+        Answer:
+         <div class="form-group form_margin">                                        
+         <input name="email" id="email" placeholder="Answer" class="form-control" maxlength="55" type="email" required="required">            <span class="text-small red errorMsg" id="emailError" style="color: red"></span>
+         </div>
+         <label class="labelhdpadd">Password Recovery Setup</label>
+         <div class="mtopqu">Question 1:</div>
+         <div class="form-group form_margin">  
+            <select class="form-select form-control">
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            </select>                                      
+        </div>
+         Answer 1:
+         <div class="form-group form_margin">                                        
+         <input name="email" id="email" placeholder=" Username Recovery Hint" class="form-control" maxlength="55" type="email" required="required">            <span class="text-small red errorMsg" id="emailError" style="color: red"></span>
+       </div>
+
+       <div class="mtopqu">Question 2:</div>
+         <div class="form-group form_margin">  
+            <select class="form-select form-control">
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            </select>                                      
+</div>
+
+        Answer 2:
+         <div class="form-group form_margin">                                        
+         <input name="email" id="email" placeholder=" Username Recovery Hint" class="form-control" maxlength="55" type="email" required="required">            <span class="text-small red errorMsg" id="emailError" style="color: red"></span>
+       </div>
+       <button class="btn btn-default joinnow-btn" type="submit">Submit</button>
+    </fieldset>
+    </form>
+</div>
+
+
+
+
+
+
+<div class="resetpassword"  style="display: none;">
+          <div class="form-group">       
+<label>Password Reset</label>
+</div>
+    <form>
+        <fieldset style="padding-top:10px;">
+         Username:
+         <div class="form-group form_margin">                                        
+         <input name="email" id="email" placeholder=" Username" class="form-control" maxlength="55" type="email" required="required">            <span class="text-small red errorMsg" id="emailError" style="color: red"></span>
+       </div>
+
+        <button class="btn btn-default joinnow-btn but-mb-5" type="submit">Reset Password</button>
+
+    
+       Question 1
+         <div class="form-group form_margin">                                        
+         <input name="email" id="email" placeholder="Answer" class="form-control" maxlength="55" type="email" required="required">            <span class="text-small red errorMsg" id="emailError" style="color: red"></span>
+         </div>
+
+          Answer 1:
+         <div class="form-group form_margin">                                        
+         <input name="email" id="email" placeholder="Answer" class="form-control" maxlength="55" type="email" required="required">            <span class="text-small red errorMsg" id="emailError" style="color: red"></span>
+         </div>
+
+            Question 2
+         <div class="form-group form_margin">                                        
+         <input name="email" id="email" placeholder="Answer" class="form-control" maxlength="55" type="email" required="required">            <span class="text-small red errorMsg" id="emailError" style="color: red"></span>
+         </div>
+
+          Answer 2:
+         <div class="form-group form_margin">                                        
+         <input name="email" id="email" placeholder="Answer" class="form-control" maxlength="55" type="email" required="required">            <span class="text-small red errorMsg" id="emailError" style="color: red"></span>
+         </div>
+
+
+
+
+       <button class="btn btn-default joinnow-btn" type="submit">Next</button>
+    </fieldset>
+
+    </form>
+        </div> 
+
+
+
+
+
+
+<div class="usernamerecoveryrow"  style="display: none;">
+    <form>
+        <fieldset style="padding-top:10px;">
+         Username Recovery Hint:
+         <div class="form-group form_margin">                                        
+         <input name="email" id="email" placeholder=" Username Recovery Hint" class="form-control" maxlength="55" type="email" required="required">            <span class="text-small red errorMsg" id="emailError" style="color: red"></span>
+       </div>
+         Username Recovery Question:
+         <div class="form-group form_margin">  
+            <select class="form-select form-control">
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            </select>                                      
+        </div> 
+        Answer:
+         <div class="form-group form_margin">                                        
+         <input name="email" id="email" placeholder="Answer" class="form-control" maxlength="55" type="email" required="required">            <span class="text-small red errorMsg" id="emailError" style="color: red"></span>
+         </div>
+                 <button class="btn btn-default joinnow-btn but-mb-5" type="submit">Get Security Question</button>
+
+        Question 1:
+         <div class="form-group form_margin">                                        
+         <input name="email" id="email" placeholder="Answer" class="form-control" maxlength="55" type="email" required="required">            <span class="text-small red errorMsg" id="emailError" style="color: red"></span>
+         </div>
+
+         Answer 1:
+         <div class="form-group form_margin">                                        
+         <input name="email" id="email" placeholder=" Username Recovery Hint" class="form-control" maxlength="55" type="email" required="required">            <span class="text-small red errorMsg" id="emailError" style="color: red"></span>
+       </div>
+
+        Question 2:
+         <div class="form-group form_margin">                                        
+         <input name="email" id="email" placeholder="Answer" class="form-control" maxlength="55" type="email" required="required">            <span class="text-small red errorMsg" id="emailError" style="color: red"></span>
+         </div>
+
+         Answer 2:
+         <div class="form-group form_margin">                                        
+         <input name="email" id="email" placeholder=" Username Recovery Hint" class="form-control" maxlength="55" type="email" required="required">            <span class="text-small red errorMsg" id="emailError" style="color: red"></span>
+       </div>
+
+    
+       <button class="btn btn-default joinnow-btn" type="submit">Next</button>
+    </fieldset>
+    </form>
+</div>
+
+
+
+
+<div class="newpassword" style="display: none;">
+    <form>
+        <fieldset style="padding-top:10px;">
+        Username
+         <div class="form-group form_margin">                                        
+         <input name="email" id="email" placeholder="Username" class="form-control" maxlength="55" type="email" required="required">            <span class="text-small red errorMsg" id="emailError" style="color: red"></span>
+        </div> 
+         New Password:
+         <div class="form-group form_margin">                                        
+         <input name="email" id="email" placeholder=" New Password" class="form-control" maxlength="55" type="email" required="required">            <span class="text-small red errorMsg" id="emailError" style="color: red"></span>
+        </div> 
+        Confirm Password:
+         <div class="form-group form_margin">                                        
+         <input name="email" id="email" placeholder="Confirm Password" class="form-control" maxlength="55" type="email" required="required">            <span class="text-small red errorMsg" id="emailError" style="color: red"></span>
+       </div>
+
+
+       <button class="btn btn-default joinnow-btn" type="submit">Submit</button>
+    </fieldset>
+    </form>
+</div>
+
+
+
+
+<div class="newpassword" style="display: none;">
+    <form>
+        <fieldset style="padding-top:10px;">
+         New Password:
+         <div class="form-group form_margin">                                        
+         <input name="email" id="email" placeholder="Enter Password" class="form-control" maxlength="55" type="email" required="required">            <span class="text-small red errorMsg" id="emailError" style="color: red"></span>
+        </div> 
+        Confirm Password:
+         <div class="form-group form_margin">                                        
+         <input name="email" id="email" placeholder="Enter Password" class="form-control" maxlength="55" type="email" required="required">            <span class="text-small red errorMsg" id="emailError" style="color: red"></span>
+       </div>
+
+
+       <button class="btn btn-default joinnow-btn" type="submit">Submit</button>
+    </fieldset>
+    </form>
+</div>
+
+
+
 
 <div id="passwordDiv" style="display: none;">
     <h3 class="text-center">Create Password</h3>
@@ -117,7 +407,7 @@ $("#tokenSubmit").on("click", function(e) {
     }
     if (email.trim() == '') {
         flag = 0;
-        $("#emailError").text("Please enter the Email or Username.").slideDown('slow').delay(3000).slideUp();
+        $("#emailError").text("Please enter the Email.").slideDown('slow').delay(3000).slideUp();
     }
     var data = $("#tokenVerifyForm").serialize();
 
