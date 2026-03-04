@@ -16,9 +16,47 @@ class ChartersController extends AppController {
         * Created date - 23-May-2018
         * Modified date - 
     */
-    public function index() {          
+    public function index() {
         $this->Session->destroy();
-        $this->layout = 'login';        
+        $this->layout = 'login';
+
+        $urlStatus = 'no_uuid';
+        $uuid = null;
+
+        if (!empty($this->request->query['uuid'])) {
+            $uuid = $this->request->query['uuid'];
+            $this->loadModel('CharterGuest');
+            $charterGuest = $this->CharterGuest->find('first', array(
+                'conditions' => array('CharterGuest.charter_program_id' => $uuid),
+                'fields' => array('CharterGuest.charter_program_id', 'CharterGuest.qr_activation')
+            ));
+
+            if (!empty($charterGuest)) {
+                if (!empty($charterGuest['CharterGuest']['qr_activation'])) {
+                    $qrActivation = strtotime($charterGuest['CharterGuest']['qr_activation']);
+                    if (time() < $qrActivation) {
+                        $urlStatus = 'valid';
+                    } else {
+                        $urlStatus = 'expired';
+                    }
+                } else {
+                    $urlStatus = 'expired'; // qr_activation is null/empty
+                }
+            } else {
+                $urlStatus = 'not_found';
+            }
+        }
+
+        $this->set('urlStatus', $urlStatus);
+        $this->set('uuid', $uuid);
+
+        $this->loadModel('SecurityQuestion');
+        $securityQuestions = $this->SecurityQuestion->find('list', array(
+            'conditions' => array('SecurityQuestion.is_deleted' => 0),
+            'fields' => array('SecurityQuestion.id', 'SecurityQuestion.question'),
+            'order' => array('SecurityQuestion.id ASC')
+        ));
+        $this->set('securityQuestions', $securityQuestions);
     }
     
     public function forgot_password() {       
@@ -148,6 +186,97 @@ class ChartersController extends AppController {
         * Created date - 24-May-2018
         * Modified date - 
     */
+    public function registerGuestUser() {
+        $this->layout = false;
+        $this->autoRender = false;
+        $result = array('status' => 'fail', 'message' => 'Invalid request.');
+
+        if ($this->request->is('ajax')) {
+            $data = $this->request->data;
+
+            $username  = isset($data['reg_username'])  ? trim($data['reg_username'])  : '';
+            $firstName = isset($data['reg_first_name']) ? trim($data['reg_first_name']) : '';
+            $lastName  = isset($data['reg_last_name'])  ? trim($data['reg_last_name'])  : '';
+            $password  = isset($data['reg_password'])  ? $data['reg_password']  : '';
+            $uuid      = isset($data['reg_uuid'])      ? trim($data['reg_uuid'])      : '';
+
+            if (empty($username) || empty($password) || empty($uuid)) {
+                $result['message'] = 'Missing required fields.';
+                echo json_encode($result);
+                exit;
+            }
+
+            $this->loadModel('CharterGuest');
+            $this->loadModel('GuestList');
+
+            $charterGuest = $this->CharterGuest->find('first', array(
+                'conditions' => array('CharterGuest.charter_program_id' => $uuid)
+            ));
+
+            if (empty($charterGuest)) {
+                $result['message'] = 'Invalid invitation link.';
+                echo json_encode($result);
+                exit;
+            }
+
+            $fleetcompanyId = $charterGuest['CharterGuest']['charter_company_id'];
+            $yachtId        = $charterGuest['CharterGuest']['yacht_id'];
+            $guestType      = $fleetcompanyId . '-' . $yachtId . '-email_recipient';
+
+            $saveData = array(
+                'GuestList' => array(
+                    'username'                        => $username,
+                    'first_name'                      => $firstName,
+                    'last_name'                       => $lastName,
+                    'password'                        => md5($password),
+                    //'email'                           => $charterGuest['CharterGuest']['email'],
+                    //'charter_guest_id'                => $charterGuest['CharterGuest']['id'],
+                    'fleetcompany_id'                 => $fleetcompanyId,
+                    'yacht_id'                        => $yachtId,
+                    'guest_type'                      => $guestType,
+                    'username_recovery_hint'          => isset($data['username_recovery_hint']) ? trim($data['username_recovery_hint']) : '',
+                    'username_security_question_id'   => isset($data['username_security_question_id']) ? (int)$data['username_security_question_id'] : null,
+                    'username_security_answer'        => isset($data['username_security_answer']) ? trim($data['username_security_answer']) : '',
+                    'password_security_question_id_1' => isset($data['password_security_question_id_1']) ? (int)$data['password_security_question_id_1'] : null,
+                    'password_security_answer_1'      => isset($data['password_security_answer_1']) ? trim($data['password_security_answer_1']) : '',
+                    'password_security_question_id_2' => isset($data['password_security_question_id_2']) ? (int)$data['password_security_question_id_2'] : null,
+                    'password_security_answer_2'      => isset($data['password_security_answer_2']) ? trim($data['password_security_answer_2']) : '',
+                    'UUID'                            => String::uuid(),
+                    'status'                          => '1',
+                    'is_deleted'                      => 0,
+                )
+            );
+
+            $this->GuestList->create();
+            if ($this->GuestList->save($saveData)) {
+                $result['status']  = 'success';
+                $result['message'] = 'Registration successful.';
+            } else {
+                $result['message'] = 'Could not save. Please try again.';
+            }
+        }
+
+        echo json_encode($result);
+        exit;
+    }
+
+    public function checkUsername() {
+        $this->layout = false;
+        $this->autoRender = false;
+        $result = array('exists' => false);
+
+        if ($this->request->is('ajax') && !empty($this->request->data['username'])) {
+            $username = trim($this->request->data['username']);
+            $this->loadModel('GuestList');
+            $count = $this->GuestList->find('count', array(
+                'conditions' => array('GuestList.username' => $username)
+            ));
+            $result['exists'] = ($count > 0);
+        }
+
+        echo json_encode($result);
+    }
+
     public function verifyToken() {
         
         if($this->request->is('ajax')){
