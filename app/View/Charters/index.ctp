@@ -515,9 +515,40 @@ $("#profileSetupSubmit").on("click", function(e) {
         success: function(result) {
             $("#hideloader").hide();
             if (result.status === 'success') {
-                alert("Registration successful! You can now log in.");
-                $(".usernamerecoveryrow").hide();
-                $("#tokenDiv").show();
+                var loginData = {
+                    email: result.username,
+                    token: $("#hiddenPassword").val()
+                };
+                $("#hideloader").show();
+                $.ajax({
+                    type: "POST",
+                    url: '<?php echo $this->request->base; ?>/charters/verifyToken',
+                    dataType: 'json',
+                    data: loginData,
+                    success: function(loginResult) {
+                        $("#hideloader").hide();
+                        if (loginResult.status === 'success_redirect') {
+                            window.location.href = '<?php echo $this->request->base; ?>/' + loginResult.url;
+                        } else if (loginResult.status === 'success') {
+                            $(".usernamerecoveryrow").hide();
+                            $("#passwordDiv").show();
+                            $("#redirectUrl").val(loginResult.url);
+                            $("#charterGuestId").val(loginResult.charter_guest_id);
+                            $("#GuestListId").val(loginResult.guest_list_id);
+                            $("#charterAssocId").val(loginResult.charter_assoc_id);
+                        } else {
+                            alert("Registration succeeded but auto-login failed. Please log in manually.");
+                            $(".usernamerecoveryrow").hide();
+                            $("#tokenDiv").show();
+                        }
+                    },
+                    error: function() {
+                        $("#hideloader").hide();
+                        alert("Registration succeeded. Please log in manually.");
+                        $(".usernamerecoveryrow").hide();
+                        $("#tokenDiv").show();
+                    }
+                });
             } else {
                 alert(result.message || "An error occurred. Please try again.");
             }

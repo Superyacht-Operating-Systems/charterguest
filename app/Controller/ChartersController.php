@@ -300,15 +300,15 @@ class ChartersController extends AppController {
             // 7. db_checklistapp: charter_guest_associates — INSERT new record
             // -------------------------------------------------------
             $db->query("INSERT INTO db_checklistapp.charter_guest_associates
-                (charter_guest_id, UUID, email, token, password, charter_program_id, yacht_id, created,
+                (charter_guest_id, UUID, email, username, token, password, charter_program_id, yacht_id, created,
                  fleetcompany_id, is_head_charterer, allow_comments, first_name, last_name, is_email_recipient)
                 VALUES
-                ('{$charterProgId}', '{$userUUID}', '{$usernameSafe}', '{$userToken}', '{$hashedPwd}', '{$charterProgId}',
+                ('{$charterProgId}', '{$userUUID}', '{$usernameSafe}', '{$usernameSafe}', '{$userToken}', '{$hashedPwd}', '{$charterProgId}',
                  {$yachtId}, '{$created}', '{$charterCompanyId}', '0', '0',
                  '{$firstNameSafe}', '{$lastNameSafe}', '1')");
 
-            $result['status']  = 'success';
-            $result['message'] = 'Registration successful.';
+            $result['status']   = 'success';
+            $result['username'] = $username;
         }
 
         echo json_encode($result);
@@ -479,8 +479,9 @@ class ChartersController extends AppController {
                         }
                         
                     } else {
-                        $assocConditions = array('email' => $email);
-                        $assocConditions['OR'] = array('token' => $token, 'password' => md5($token));
+                        $assocConditions = array();
+                        $assocConditions['OR'] = array('email' => $email, 'username' => $loginInput);
+                        $assocConditions['AND'][] = array('OR' => array('token' => $token, 'password' => md5($token)));
                         // Verifying the email and token - Charter guests
                         $this->loadModel('CharterGuestAssociate');
                         $charterAssocData = $this->CharterGuestAssociate->find('first', array('conditions' => $assocConditions));
