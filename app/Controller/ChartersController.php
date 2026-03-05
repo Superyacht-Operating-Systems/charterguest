@@ -7,6 +7,7 @@ App::uses('ConnectionManager', 'Model');
     * Created date - 23-May-2018
     * Modified date -
 */
+
 class ChartersController extends AppController {
     var $name = 'Charters';    
     public $components = array('Paginator');
