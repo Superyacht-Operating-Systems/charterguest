@@ -81,6 +81,7 @@ margin-top: 30px !important;
 <div id="tokenDiv" class="panel-body" style="height: 250px;">        
             <?php echo $this->Form->create('CharterGuest', array('url' => array('controller' => 'charters', 'action' => 'index'),'id'=>'tokenVerifyForm'));?>
     <fieldset style="padding-top:10px;">
+        <input type="hidden" name="charter_uuid" value="<?php echo h(isset($uuid) ? $uuid : ''); ?>">
                     <?php echo $this->Session->flash();?>
         Username:
         <div class="form-group form_margin">                                        
@@ -94,9 +95,9 @@ margin-top: 30px !important;
         </div>
         <div class="inlonusercolumn">
          <span> Forgot</span>
-        <a class="inlinetag" href="<?php echo $this->request->base."" ?>">Username</a>
+        <a class="inlinetag" href="#" id="forgotUsernameLink">Username</a>
         <span>or</span>
-        <a class="inlinetag" href="<?php echo $this->request->base."/charters/forgot_password/" ?>">Password</a>
+        <a class="inlinetag" href="#" id="forgotPasswordLink">Password</a>
        </div>
         <div class="terms-userow-row">
             <label class="terms-userow">
@@ -114,8 +115,24 @@ margin-top: 30px !important;
 </div>
 
 <?php if (isset($urlStatus) && in_array($urlStatus, array('expired', 'not_found'))): ?>
-<div id="expiredLinkDiv" class="panel-body text-center" style="padding: 30px 15px;">
-    <p style="color: #c0392b; font-size: 15px; font-weight: bold;">This link has expired. Please contact your charter manager for a new invitation.</p>
+<div id="expiredLinkDiv" class="panel-body text-center" style="padding: 30px 15px; color: #c0392b;">
+    <div style="font-size: 17px; font-weight: bold; margin-bottom: 16px;">
+        Your invitation link has expired.
+    </div>
+    <div style="font-size: 14px; margin-bottom: 16px;">
+        For security, the one-time access link<br>
+        is valid for 72 hours only.
+    </div>
+    <div style="font-size: 14px; margin-bottom: 12px;">
+        <strong>If you have a Charter Guest Profile:</strong><br>
+        Please proceed to the login page<br>
+        and use your regular credentials.
+    </div>
+    <div style="font-size: 14px;">
+        <strong>If you are new to Charter Guest:</strong><br>
+        Please contact the captain or agent<br>
+        who invited you to request a new link.
+    </div>
 </div>
 <?php endif; ?>
 
@@ -236,31 +253,46 @@ margin-top: 30px !important;
     </div>
     <form id="resetPasswordForm">
         <fieldset style="padding-top:10px;">
-         Username:
-         <div class="form-group form_margin">
-         <input name="reset_username" id="resetUsername" placeholder="Username" class="form-control" maxlength="55" type="text">
-         <span class="text-small red errorMsg" id="resetUsernameError" style="color: red"></span>
-         </div>
-         <button class="btn btn-default joinnow-btn but-mb-5" type="button" id="resetPasswordBtn">Reset Password</button>
-         Question 1:
-         <div class="form-group form_margin">
-         <input name="reset_question_1_display" id="resetQuestion1Display" placeholder="Question 1" class="form-control" maxlength="500" type="text" readonly>
-         </div>
-         Answer 1:
-         <div class="form-group form_margin">
-         <input name="reset_answer_1" id="resetAnswer1" placeholder="Answer" class="form-control" maxlength="500" type="text">
-         <span class="text-small red errorMsg" id="resetAnswer1Error" style="color: red"></span>
-         </div>
-         Question 2:
-         <div class="form-group form_margin">
-         <input name="reset_question_2_display" id="resetQuestion2Display" placeholder="Question 2" class="form-control" maxlength="500" type="text" readonly>
-         </div>
-         Answer 2:
-         <div class="form-group form_margin">
-         <input name="reset_answer_2" id="resetAnswer2" placeholder="Answer" class="form-control" maxlength="500" type="text">
-         <span class="text-small red errorMsg" id="resetAnswer2Error" style="color: red"></span>
-         </div>
-         <button class="btn btn-default joinnow-btn" type="button" id="resetPasswordNextBtn">Next</button>
+
+            <!-- Step 1: Username -->
+            <div id="resetStep1">
+                Username:
+                <div class="form-group form_margin">
+                    <input name="reset_username" id="resetUsername" placeholder="Username" class="form-control" maxlength="55" type="text">
+                    <span class="text-small red errorMsg" id="resetUsernameError" style="color: red; display:none;"></span>
+                </div>
+                <button class="btn btn-default joinnow-btn but-mb-5" type="button" id="resetPasswordBtn">Next</button>
+            </div>
+
+            <!-- Step 2: Security questions (hidden until username verified) -->
+            <div id="resetPasswordQuestionsDiv" style="display:none;">
+                <input type="hidden" id="resetPQId1">
+                <input type="hidden" id="resetPQId2">
+                Question 1:
+                <div class="form-group form_margin">
+                    <input name="reset_question_1_display" id="resetQuestion1Display" placeholder="Question 1" class="form-control" maxlength="500" type="text" readonly>
+                </div>
+                Answer 1:
+                <div class="form-group form_margin">
+                    <input name="reset_answer_1" id="resetAnswer1" placeholder="Answer" class="form-control" maxlength="500" type="text">
+                    <span class="text-small red errorMsg" id="resetAnswer1Error" style="color: red; display:none;"></span>
+                </div>
+                Question 2:
+                <div class="form-group form_margin">
+                    <input name="reset_question_2_display" id="resetQuestion2Display" placeholder="Question 2" class="form-control" maxlength="500" type="text" readonly>
+                </div>
+                Answer 2:
+                <div class="form-group form_margin">
+                    <input name="reset_answer_2" id="resetAnswer2" placeholder="Answer" class="form-control" maxlength="500" type="text">
+                    <span class="text-small red errorMsg" id="resetAnswer2Error" style="color: red; display:none;"></span>
+                </div>
+                <button class="btn btn-default joinnow-btn" type="button" id="resetPasswordNextBtn">Verify Answers</button>
+            </div>
+
+            <div style="margin-top:10px;">
+                <a href="#" id="backToLoginFromResetBtn" class="inlinetag">Back to Login</a>
+            </div>
+
         </fieldset>
     </form>
 </div>
@@ -269,66 +301,85 @@ margin-top: 30px !important;
 <div class="forgotusernamerow" style="display: none;">
     <form id="forgotUsernameForm">
         <fieldset style="padding-top:10px;">
-         Username Recovery Hint:
-         <div class="form-group form_margin">
-         <input name="forgot_recovery_hint" id="forgotRecoveryHint" placeholder="Username Recovery Hint" class="form-control" maxlength="500" type="text">
-         <span class="text-small red errorMsg" id="forgotHintError" style="color: red"></span>
-         </div>
-         Username Recovery Question:
-         <div class="form-group form_margin">
-            <select name="forgot_recovery_question_id" id="forgotRecoveryQuestion" class="form-select form-control">
-            <option value="">-- Select a question --</option>
-            </select>
-         </div>
-         Answer:
-         <div class="form-group form_margin">
-         <input name="forgot_recovery_answer" id="forgotRecoveryAnswer" placeholder="Answer" class="form-control" maxlength="500" type="text">
-         <span class="text-small red errorMsg" id="forgotRecoveryAnswerError" style="color: red"></span>
-         </div>
-         <button class="btn btn-default joinnow-btn but-mb-5" type="button" id="getSecurityQuestionsBtn">Get Security Question</button>
-         Question 1:
-         <div class="form-group form_margin">
-         <input name="forgot_question_1_display" id="forgotQuestion1Display" placeholder="Question 1" class="form-control" maxlength="500" type="text" readonly>
-         </div>
-         Answer 1:
-         <div class="form-group form_margin">
-         <input name="forgot_answer_1" id="forgotAnswer1" placeholder="Answer" class="form-control" maxlength="500" type="text">
-         <span class="text-small red errorMsg" id="forgotAnswer1Error" style="color: red"></span>
-         </div>
-         Question 2:
-         <div class="form-group form_margin">
-         <input name="forgot_question_2_display" id="forgotQuestion2Display" placeholder="Question 2" class="form-control" maxlength="500" type="text" readonly>
-         </div>
-         Answer 2:
-         <div class="form-group form_margin">
-         <input name="forgot_answer_2" id="forgotAnswer2" placeholder="Answer" class="form-control" maxlength="500" type="text">
-         <span class="text-small red errorMsg" id="forgotAnswer2Error" style="color: red"></span>
-         </div>
-         <button class="btn btn-default joinnow-btn" type="button" id="forgotUsernameNextBtn">Next</button>
+
+            <!-- Step 1: Hint -->
+            <div id="recoveryStep1">
+                <label>Username Recovery Hint:</label>
+                <div class="form-group form_margin">
+                    <input name="forgot_recovery_hint" id="forgotRecoveryHint" placeholder="Enter your recovery hint" class="form-control" maxlength="500" type="text">
+                    <span class="errormsg" id="forgotHintError" style="display:none;"></span>
+                </div>
+                <button class="btn btn-default joinnow-btn" type="button" id="getSecurityQuestionBtn">Get My Username Question</button>
+            </div>
+
+            <!-- Step 2: Security question + answer (hidden until Step 1 passes) -->
+            <div id="recoveryStep2" style="display:none;">
+                <label>Security Question:</label>
+                <div class="form-group form_margin">
+                    <input id="recoveryQuestionDisplay" class="form-control" type="text" readonly>
+                </div>
+                <label>Answer:</label>
+                <div class="form-group form_margin">
+                    <input name="forgot_recovery_answer" id="forgotRecoveryAnswer" placeholder="Your answer" class="form-control" maxlength="500" type="text">
+                    <span class="errormsg" id="forgotAnswerError" style="display:none;"></span>
+                </div>
+                <button class="btn btn-default joinnow-btn" type="button" id="revealUsernameBtn">Get Security Question</button>
+            </div>
+
+            <!-- Step 3: Password security questions (hidden until Step 2 passes) -->
+            <div id="recoveryStep3" style="display:none;">
+                <input type="hidden" id="recoveredUsernameHidden">
+                <div id="passwordQuestionsDiv">
+                    <label>Question 1:</label>
+                    <div class="form-group form_margin">
+                        <input id="recoveryPQ1Display" class="form-control" type="text" readonly>
+                        <input type="hidden" id="recoveryPQId1">
+                    </div>
+                    <label>Answer 1:</label>
+                    <div class="form-group form_margin">
+                        <input id="recoveryPAnswer1" placeholder="Your answer" class="form-control" maxlength="500" type="text">
+                        <span class="errormsg" id="recoveryPAnswer1Error" style="display:none;"></span>
+                    </div>
+                    <label>Question 2:</label>
+                    <div class="form-group form_margin">
+                        <input id="recoveryPQ2Display" class="form-control" type="text" readonly>
+                        <input type="hidden" id="recoveryPQId2">
+                    </div>
+                    <label>Answer 2:</label>
+                    <div class="form-group form_margin">
+                        <input id="recoveryPAnswer2" placeholder="Your answer" class="form-control" maxlength="500" type="text">
+                        <span class="errormsg" id="recoveryPAnswer2Error" style="display:none;"></span>
+                    </div>
+                    <button class="btn btn-default joinnow-btn" type="button" id="pwdRecoveryNextBtn">Next</button>
+                </div>
+            </div>
+
         </fieldset>
     </form>
 </div>
 
 
 <div class="setnewpassword" style="display: none;">
+    <div class="form-group">
+        <label>Set New Password</label>
+    </div>
     <form id="setNewPasswordForm">
         <fieldset style="padding-top:10px;">
-         Username:
-         <div class="form-group form_margin">
-         <input name="snp_username" id="snpUsername" placeholder="Username" class="form-control" maxlength="55" type="text">
-         <span class="text-small red errorMsg" id="snpUsernameError" style="color: red"></span>
-         </div>
+         <input type="hidden" id="snpUsernameHidden">
          New Password:
          <div class="form-group form_margin">
          <input name="snp_new_password" id="snpNewPassword" placeholder="New Password" class="form-control" maxlength="55" type="password">
-         <span class="text-small red errorMsg" id="snpPasswordError" style="color: red"></span>
+         <span class="text-small red errorMsg" id="snpPasswordError" style="color: red; display:none;"></span>
          </div>
          Confirm Password:
          <div class="form-group form_margin">
          <input name="snp_confirm_password" id="snpConfirmPassword" placeholder="Confirm Password" class="form-control" maxlength="55" type="password">
-         <span class="text-small red errorMsg" id="snpConfirmError" style="color: red"></span>
+         <span class="text-small red errorMsg" id="snpConfirmError" style="color: red; display:none;"></span>
          </div>
          <button class="btn btn-default joinnow-btn" type="button" id="setNewPasswordSubmit">Submit</button>
+         <div style="margin-top:10px;">
+             <a href="#" id="backToLoginFromSnpBtn" class="inlinetag">Back to Login</a>
+         </div>
         </fieldset>
     </form>
 </div>
@@ -337,15 +388,20 @@ margin-top: 30px !important;
 <div class="confirmpassword" style="display: none;">
     <form id="confirmPasswordForm">
         <fieldset style="padding-top:10px;">
+         <input type="hidden" id="cpUsernameHidden">
+         Username:
+         <div class="form-group form_margin">
+         <input id="cpUsernameDisplay" class="form-control" maxlength="55" type="text" readonly>
+         </div>
          New Password:
          <div class="form-group form_margin">
          <input name="cp_new_password" id="cpNewPassword" placeholder="Enter Password" class="form-control" maxlength="55" type="password">
-         <span class="text-small red errorMsg" id="cpPasswordError" style="color: red"></span>
+         <span class="text-small red errorMsg" id="cpPasswordError" style="color: red; display:none;"></span>
          </div>
          Confirm Password:
          <div class="form-group form_margin">
          <input name="cp_confirm_password" id="cpConfirmPassword" placeholder="Enter Password" class="form-control" maxlength="55" type="password">
-         <span class="text-small red errorMsg" id="cpConfirmError" style="color: red"></span>
+         <span class="text-small red errorMsg" id="cpConfirmError" style="color: red; display:none;"></span>
          </div>
          <button class="btn btn-default joinnow-btn" type="button" id="confirmPasswordSubmit">Submit</button>
         </fieldset>
@@ -635,5 +691,422 @@ function ToggleDisable () {
         myObj.disabled = (myObj.disabled == true)? false : true;
     }
 }
+
+// Forgot username link — show recovery form, hide login
+$("#forgotUsernameLink").on("click", function(e) {
+    e.preventDefault();
+    $("#tokenDiv").hide();
+    $("#expiredLinkDiv").hide();
+    $(".forgotusernamerow").show();
+    $("#forgotRecoveryHint").val('').prop('readonly', false);
+    $("#forgotRecoveryAnswer").val('');
+    $("#getSecurityQuestionBtn").show();
+    $("#recoveryStep1").show();
+    $("#recoveryStep2").hide();
+    $("#recoveryStep3").hide();
+    $("#passwordQuestionsDiv").hide();
+});
+
+// Step 1: verify hint and load security question
+$("#getSecurityQuestionBtn").on("click", function() {
+    var hint = $("#forgotRecoveryHint").val().trim();
+    if (hint === '') {
+        $("#forgotHintError").text("Please enter your recovery hint.").show();
+        return;
+    }
+    $("#forgotHintError").hide();
+    $("#hideloader").show();
+    $.ajax({
+        type: "POST",
+        url: '<?php echo $this->request->base; ?>/charters/getRecoveryQuestion',
+        dataType: 'json',
+        data: { hint: hint },
+        success: function(result) {
+            $("#hideloader").hide();
+            if (result.status === 'success') {
+                $("#recoveryQuestionDisplay").val(result.question);
+                $("#forgotRecoveryHint").prop('readonly', true);
+                $("#getSecurityQuestionBtn").hide();
+                $("#recoveryStep2").show();
+            } else {
+                $("#forgotHintError").text(result.message || "Hint not found. Please try again.").show();
+            }
+        },
+        error: function() {
+            $("#hideloader").hide();
+            $("#forgotHintError").text("An error occurred. Please try again.").show();
+        }
+    });
+});
+
+// Step 2: verify answer and reveal username
+$("#revealUsernameBtn").on("click", function() {
+    var hint   = $("#forgotRecoveryHint").val().trim();
+    var answer = $("#forgotRecoveryAnswer").val().trim();
+    if (answer === '') {
+        $("#forgotAnswerError").text("Please enter your answer.").show();
+        return;
+    }
+    $("#forgotAnswerError").hide();
+    $("#hideloader").show();
+    $.ajax({
+        type: "POST",
+        url: '<?php echo $this->request->base; ?>/charters/verifyRecoveryAnswer',
+        dataType: 'json',
+        data: { hint: hint, answer: answer },
+        success: function(result) {
+            $("#hideloader").hide();
+            if (result.status === 'success') {
+                var username = result.username;
+                $("#recoveredUsernameHidden").val(username);
+                // Auto-load password security questions
+                $("#hideloader").show();
+                $.ajax({
+                    type: "POST",
+                    url: '<?php echo $this->request->base; ?>/charters/getPasswordRecoveryQuestions',
+                    dataType: 'json',
+                    data: { username: username },
+                    success: function(pResult) {
+                        $("#hideloader").hide();
+                        if (pResult.status === 'success') {
+                            $("#recoveryPQ1Display").val(pResult.question1);
+                            $("#recoveryPQId1").val(pResult.pq_id_1);
+                            $("#recoveryPQ2Display").val(pResult.question2);
+                            $("#recoveryPQId2").val(pResult.pq_id_2);
+                            $("#recoveryPAnswer1").val('');
+                            $("#recoveryPAnswer2").val('');
+                            $("#recoveryPAnswer1Error").hide();
+                            $("#recoveryPAnswer2Error").hide();
+                            $("#recoveryStep3").show();
+                            $("#passwordQuestionsDiv").show();
+                        } else {
+                            $("#forgotAnswerError").text(pResult.message || "Could not load security questions.").show();
+                        }
+                    },
+                    error: function() {
+                        $("#hideloader").hide();
+                        $("#forgotAnswerError").text("An error occurred. Please try again.").show();
+                    }
+                });
+            } else {
+                $("#forgotAnswerError").text(result.message || "Incorrect answer. Please try again.").show();
+            }
+        },
+        error: function() {
+            $("#hideloader").hide();
+            $("#forgotAnswerError").text("An error occurred. Please try again.").show();
+        }
+    });
+});
+
+
+// Forgot password link — show reset form, hide login
+$("#forgotPasswordLink").on("click", function(e) {
+    e.preventDefault();
+    $("#tokenDiv").hide();
+    $("#expiredLinkDiv").hide();
+    $("#resetStep1").show();
+    $("#resetPasswordQuestionsDiv").hide();
+    $("#resetUsername").val('');
+    $("#resetUsernameError").hide();
+    $(".resetpassword").show();
+});
+
+// Reset Step 1: verify username and load security questions
+$("#resetPasswordBtn").on("click", function() {
+    var username = $("#resetUsername").val().trim();
+    if (username === '') {
+        $("#resetUsernameError").text("Please enter your username.").show();
+        return;
+    }
+    $("#resetUsernameError").hide();
+    $("#hideloader").show();
+    $.ajax({
+        type: "POST",
+        url: '<?php echo $this->request->base; ?>/charters/getPasswordRecoveryQuestions',
+        dataType: 'json',
+        data: { username: username },
+        success: function(result) {
+            $("#hideloader").hide();
+            if (result.status === 'success') {
+                $("#resetQuestion1Display").val(result.question1);
+                $("#resetQuestion2Display").val(result.question2);
+                $("#resetPQId1").val(result.pq_id_1);
+                $("#resetPQId2").val(result.pq_id_2);
+                $("#resetAnswer1").val('');
+                $("#resetAnswer2").val('');
+                $("#resetAnswer1Error").hide();
+                $("#resetAnswer2Error").hide();
+                $("#resetStep1").hide();
+                $("#resetPasswordQuestionsDiv").show();
+            } else {
+                $("#resetUsernameError").text(result.message || "Username not found.").show();
+            }
+        },
+        error: function() {
+            $("#hideloader").hide();
+            $("#resetUsernameError").text("An error occurred. Please try again.").show();
+        }
+    });
+});
+
+// Reset Step 2: verify security answers
+$("#resetPasswordNextBtn").on("click", function() {
+    var answer1 = $("#resetAnswer1").val().trim();
+    var answer2 = $("#resetAnswer2").val().trim();
+    var valid = true;
+    if (answer1 === '') {
+        $("#resetAnswer1Error").text("Please enter your answer.").show();
+        valid = false;
+    } else {
+        $("#resetAnswer1Error").hide();
+    }
+    if (answer2 === '') {
+        $("#resetAnswer2Error").text("Please enter your answer.").show();
+        valid = false;
+    } else {
+        $("#resetAnswer2Error").hide();
+    }
+    if (!valid) return;
+    $("#hideloader").show();
+    $.ajax({
+        type: "POST",
+        url: '<?php echo $this->request->base; ?>/charters/verifyPasswordRecovery',
+        dataType: 'json',
+        data: {
+            username: $("#resetUsername").val().trim(),
+            pq_id_1:  $("#resetPQId1").val(),
+            answer1:  answer1,
+            pq_id_2:  $("#resetPQId2").val(),
+            answer2:  answer2
+        },
+        success: function(result) {
+            $("#hideloader").hide();
+            if (result.status === 'success') {
+                $(".resetpassword").hide();
+                $("#snpUsernameHidden").val($("#resetUsername").val().trim());
+                $("#snpNewPassword").val('');
+                $("#snpConfirmPassword").val('');
+                $("#snpPasswordError").hide();
+                $("#snpConfirmError").hide();
+                $(".setnewpassword").show();
+            } else {
+                if (result.field === '1') {
+                    $("#resetAnswer1Error").text(result.message || "Incorrect answer.").show();
+                } else if (result.field === '2') {
+                    $("#resetAnswer2Error").text(result.message || "Incorrect answer.").show();
+                } else {
+                    $("#resetAnswer1Error").text(result.message || "Verification failed.").show();
+                }
+            }
+        },
+        error: function() {
+            $("#hideloader").hide();
+            $("#resetAnswer1Error").text("An error occurred. Please try again.").show();
+        }
+    });
+});
+
+// Back to login from reset password form
+$("#backToLoginFromResetBtn").on("click", function(e) {
+    e.preventDefault();
+    $(".resetpassword").hide();
+    $("#expiredLinkDiv").show();
+    $("#tokenDiv").show();
+});
+
+// Set new password submit
+$("#setNewPasswordSubmit").on("click", function() {
+    var newPwd  = $("#snpNewPassword").val().trim();
+    var confPwd = $("#snpConfirmPassword").val().trim();
+    var valid = true;
+    if (newPwd === '') {
+        $("#snpPasswordError").text("Please enter a new password.").show();
+        valid = false;
+    } else {
+        $("#snpPasswordError").hide();
+    }
+    if (confPwd === '') {
+        $("#snpConfirmError").text("Please confirm your password.").show();
+        valid = false;
+    } else if (newPwd !== confPwd) {
+        $("#snpConfirmError").text("Passwords do not match.").show();
+        valid = false;
+    } else {
+        $("#snpConfirmError").hide();
+    }
+    if (!valid) return;
+    $("#hideloader").show();
+    $.ajax({
+        type: "POST",
+        url: '<?php echo $this->request->base; ?>/charters/resetGuestPassword',
+        dataType: 'json',
+        data: {
+            username:     $("#snpUsernameHidden").val(),
+            new_password: newPwd
+        },
+        success: function(result) {
+            $("#hideloader").hide();
+            if (result.status === 'success') {
+                $(".setnewpassword").hide();
+                alert("Password reset successful! Please log in with your new password.");
+                $("#expiredLinkDiv").show();
+                $("#tokenDiv").show();
+            } else {
+                $("#snpPasswordError").text(result.message || "Failed to reset password.").show();
+            }
+        },
+        error: function() {
+            $("#hideloader").hide();
+            $("#snpPasswordError").text("An error occurred. Please try again.").show();
+        }
+    });
+});
+
+// Back to login from set new password
+$("#backToLoginFromSnpBtn").on("click", function(e) {
+    e.preventDefault();
+    $(".setnewpassword").hide();
+    $("#expiredLinkDiv").show();
+    $("#tokenDiv").show();
+});
+
+
+// Step 3: Next — verify password security answers
+$("#pwdRecoveryNextBtn").on("click", function() {
+    var answer1 = $("#recoveryPAnswer1").val().trim();
+    var answer2 = $("#recoveryPAnswer2").val().trim();
+    var valid = true;
+    if (answer1 === '') {
+        $("#recoveryPAnswer1Error").text("Please enter your answer.").show();
+        valid = false;
+    } else {
+        $("#recoveryPAnswer1Error").hide();
+    }
+    if (answer2 === '') {
+        $("#recoveryPAnswer2Error").text("Please enter your answer.").show();
+        valid = false;
+    } else {
+        $("#recoveryPAnswer2Error").hide();
+    }
+    if (!valid) return;
+    $("#hideloader").show();
+    $.ajax({
+        type: "POST",
+        url: '<?php echo $this->request->base; ?>/charters/verifyPasswordRecovery',
+        dataType: 'json',
+        data: {
+            username: $("#recoveredUsernameHidden").val(),
+            pq_id_1:  $("#recoveryPQId1").val(),
+            answer1:  answer1,
+            pq_id_2:  $("#recoveryPQId2").val(),
+            answer2:  answer2
+        },
+        success: function(result) {
+            $("#hideloader").hide();
+            if (result.status === 'success') {
+                var uname = $("#recoveredUsernameHidden").val();
+                $(".forgotusernamerow").hide();
+                $("#cpUsernameHidden").val(uname);
+                $("#cpUsernameDisplay").val(uname);
+                $("#cpNewPassword").val('');
+                $("#cpConfirmPassword").val('');
+                $("#cpPasswordError").hide();
+                $("#cpConfirmError").hide();
+                $(".confirmpassword").show();
+            } else {
+                if (result.field === '1') {
+                    $("#recoveryPAnswer1Error").text(result.message || "Incorrect answer.").show();
+                } else if (result.field === '2') {
+                    $("#recoveryPAnswer2Error").text(result.message || "Incorrect answer.").show();
+                } else {
+                    $("#recoveryPAnswer1Error").text(result.message || "Verification failed.").show();
+                }
+            }
+        },
+        error: function() {
+            $("#hideloader").hide();
+            $("#recoveryPAnswer1Error").text("An error occurred. Please try again.").show();
+        }
+    });
+});
+
+// Confirm password submit (from username recovery flow)
+$("#confirmPasswordSubmit").on("click", function() {
+    var newPwd  = $("#cpNewPassword").val().trim();
+    var confPwd = $("#cpConfirmPassword").val().trim();
+    var valid = true;
+    if (newPwd === '') {
+        $("#cpPasswordError").text("Please enter a new password.").show();
+        valid = false;
+    } else {
+        $("#cpPasswordError").hide();
+    }
+    if (confPwd === '') {
+        $("#cpConfirmError").text("Please confirm your password.").show();
+        valid = false;
+    } else if (newPwd !== confPwd) {
+        $("#cpConfirmError").text("Passwords do not match.").show();
+        valid = false;
+    } else {
+        $("#cpConfirmError").hide();
+    }
+    if (!valid) return;
+    $("#hideloader").show();
+    $.ajax({
+        type: "POST",
+        url: '<?php echo $this->request->base; ?>/charters/resetGuestPassword',
+        dataType: 'json',
+        data: {
+            username:     $("#cpUsernameHidden").val(),
+            new_password: newPwd
+        },
+        success: function(result) {
+            $("#hideloader").hide();
+            if (result.status === 'success') {
+                // Auto-login with the recovered username and new password
+                $("#hideloader").show();
+                $.ajax({
+                    type: "POST",
+                    url: '<?php echo $this->request->base; ?>/charters/verifyToken',
+                    dataType: 'json',
+                    data: {
+                        email: $("#cpUsernameHidden").val(),
+                        token: $("#cpNewPassword").val()
+                    },
+                    success: function(loginResult) {
+                        $("#hideloader").hide();
+                        if (loginResult.status === 'success_redirect') {
+                            window.location.href = '<?php echo $this->request->base; ?>/' + loginResult.url;
+                        } else if (loginResult.status === 'success') {
+                            $(".confirmpassword").hide();
+                            $("#passwordDiv").show();
+                            $("#redirectUrl").val(loginResult.url);
+                            $("#charterGuestId").val(loginResult.charter_guest_id);
+                            $("#GuestListId").val(loginResult.guest_list_id);
+                            $("#charterAssocId").val(loginResult.charter_assoc_id);
+                        } else {
+                            $(".confirmpassword").hide();
+                            $("#expiredLinkDiv").show();
+                            $("#tokenDiv").show();
+                        }
+                    },
+                    error: function() {
+                        $("#hideloader").hide();
+                        $(".confirmpassword").hide();
+                        $("#expiredLinkDiv").show();
+                        $("#tokenDiv").show();
+                    }
+                });
+            } else {
+                $("#cpPasswordError").text(result.message || "Failed to reset password.").show();
+            }
+        },
+        error: function() {
+            $("#hideloader").hide();
+            $("#cpPasswordError").text("An error occurred. Please try again.").show();
+        }
+    });
+});
 
 </script>

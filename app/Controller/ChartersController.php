@@ -333,6 +333,214 @@ class ChartersController extends AppController {
         echo json_encode($result);
     }
 
+    public function getRecoveryQuestion() {
+        $this->layout = false;
+        $this->autoRender = false;
+        $result = array('status' => 'fail', 'message' => 'Hint not found.');
+        if ($this->request->is('ajax') && !empty($this->request->data['hint'])) {
+            $hint = addslashes(trim($this->request->data['hint']));
+            $db   = ConnectionManager::getDataSource('default');
+            $rows = $db->query("SELECT gl.username_security_question_id, sq.question
+                FROM db_checklistapp.guest_lists gl
+                JOIN db_checklistapp.security_questions sq
+                  ON sq.id = gl.username_security_question_id
+                WHERE gl.username_recovery_hint = '{$hint}' AND gl.is_deleted = 0 LIMIT 1");
+            if (!empty($rows)) {
+                $result['status']   = 'success';
+                $result['question'] = $rows[0]['sq']['question'];
+            }
+        }
+        echo json_encode($result);
+        exit;
+    }
+
+    public function verifyRecoveryAnswer() {
+        $this->layout = false;
+        $this->autoRender = false;
+        $result = array('status' => 'fail', 'message' => 'Incorrect answer.');
+        if ($this->request->is('ajax') && !empty($this->request->data['hint']) && !empty($this->request->data['answer'])) {
+            $hint   = addslashes(trim($this->request->data['hint']));
+            $answer = addslashes(trim($this->request->data['answer']));
+            $db     = ConnectionManager::getDataSource('default');
+            $rows   = $db->query("SELECT username FROM db_checklistapp.guest_lists
+                WHERE username_recovery_hint = '{$hint}'
+                  AND username_security_answer = '{$answer}'
+                  AND is_deleted = 0 LIMIT 1");
+            if (!empty($rows)) {
+                $result['status']   = 'success';
+                $result['username'] = $rows[0]['guest_lists']['username'];
+            }
+        }
+        echo json_encode($result);
+        exit;
+    }
+
+    public function getPasswordRecoveryQuestions() {
+        $this->layout = false;
+        $this->autoRender = false;
+        $result = array('status' => 'fail', 'message' => 'Username not found.');
+        if ($this->request->is('ajax') && !empty($this->request->data['username'])) {
+            $username = addslashes(trim($this->request->data['username']));
+            $db = ConnectionManager::getDataSource('default');
+            $rows = $db->query("SELECT password_security_question_id_1, password_security_question_id_2
+                FROM db_checklistapp.guest_lists
+                WHERE (username = '{$username}' OR email = '{$username}')
+                  AND is_deleted = 0 LIMIT 1");
+            if (!empty($rows)) {
+                $pqId1 = (int)$rows[0]['guest_lists']['password_security_question_id_1'];
+                $pqId2 = (int)$rows[0]['guest_lists']['password_security_question_id_2'];
+                $q1Rows = $db->query("SELECT question FROM db_checklistapp.security_questions WHERE id = {$pqId1} LIMIT 1");
+                $q2Rows = $db->query("SELECT question FROM db_checklistapp.security_questions WHERE id = {$pqId2} LIMIT 1");
+                if (!empty($q1Rows) && !empty($q2Rows)) {
+                    $result['status']    = 'success';
+                    $result['pq_id_1']   = $pqId1;
+                    $result['question1'] = $q1Rows[0]['security_questions']['question'];
+                    $result['pq_id_2']   = $pqId2;
+                    $result['question2'] = $q2Rows[0]['security_questions']['question'];
+                }
+            }
+        }
+        echo json_encode($result);
+        exit;
+    }
+
+    public function verifyPasswordRecovery() {
+        $this->layout = false;
+        $this->autoRender = false;
+        $result = array('status' => 'fail', 'message' => 'Incorrect answer.', 'field' => '');
+        if ($this->request->is('ajax') && !empty($this->request->data['username'])) {
+            $username = addslashes(trim($this->request->data['username']));
+            $answer1  = addslashes(trim(isset($this->request->data['answer1'])  ? $this->request->data['answer1']  : ''));
+            $answer2  = addslashes(trim(isset($this->request->data['answer2'])  ? $this->request->data['answer2']  : ''));
+            $db = ConnectionManager::getDataSource('default');
+            $rows = $db->query("SELECT password_security_answer_1, password_security_answer_2
+                FROM db_checklistapp.guest_lists
+                WHERE (username = '{$username}' OR email = '{$username}')
+                  AND is_deleted = 0 LIMIT 1");
+            if (!empty($rows)) {
+                $storedA1 = strtolower(trim($rows[0]['guest_lists']['password_security_answer_1']));
+                $storedA2 = strtolower(trim($rows[0]['guest_lists']['password_security_answer_2']));
+                if (strtolower($answer1) !== $storedA1) {
+                    $result['field']   = '1';
+                    $result['message'] = 'Answer to question 1 is incorrect.';
+                } elseif (strtolower($answer2) !== $storedA2) {
+                    $result['field']   = '2';
+                    $result['message'] = 'Answer to question 2 is incorrect.';
+                } else {
+                    $result['status'] = 'success';
+                }
+            } else {
+                $result['message'] = 'Username not found.';
+            }
+        }
+        echo json_encode($result);
+        exit;
+    }
+
+    public function resetGuestPassword() {
+        $this->layout = false;
+        $this->autoRender = false;
+        $result = array('status' => 'fail', 'message' => 'Failed to reset password.');
+        if ($this->request->is('ajax') && !empty($this->request->data['username']) && !empty($this->request->data['new_password'])) {
+            $username    = addslashes(trim($this->request->data['username']));
+            $hashedPwd   = md5(trim($this->request->data['new_password']));
+            $db = ConnectionManager::getDataSource('default');
+            $db->query("UPDATE db_checklistapp.guest_lists SET password = '{$hashedPwd}'
+                WHERE (username = '{$username}' OR email = '{$username}') AND is_deleted = 0");
+            $db->query("UPDATE db_checklistapp.charter_guest_associates SET password = '{$hashedPwd}'
+                WHERE (username = '{$username}' OR email = '{$username}')");
+            $result['status'] = 'success';
+        }
+        echo json_encode($result);
+        exit;
+    }
+
+    /**
+     * Assign a charter program to an existing guest user.
+     * Called from verifyToken when a valid charter_uuid is present in the request.
+     * Mirrors registerGuestUser inserts but skips guest_lists (user already exists)
+     * and checks before inserting to stay idempotent.
+     */
+    private function assignCharterToExistingUser($guestData, $charterUuid) {
+        try {
+            $db = ConnectionManager::getDataSource('default');
+            $charterUuid = addslashes($charterUuid);
+
+            // Get charter_guests record
+            $cgRows = $db->query("SELECT * FROM db_checklistapp.charter_guests WHERE charter_program_id = '{$charterUuid}' LIMIT 1");
+            if (empty($cgRows)) return;
+            $cg               = $cgRows[0]['charter_guests'];
+            $charterProgId    = $cg['charter_program_id'];
+            $charterCompanyId = $cg['charter_company_id'];
+            $yachtId          = $cg['yacht_id'];
+
+            // Get yacht DB name
+            $yachtRows = $db->query("SELECT ydb_name FROM db_checklistapp.yachts WHERE id = '{$yachtId}' LIMIT 1");
+            if (empty($yachtRows)) return;
+            $ydbname = $yachtRows[0]['yachts']['ydb_name'];
+
+            // Use existing user's data
+            $userUUID     = $guestData['UUID'];
+            $usernameSafe = addslashes($guestData['username']);
+            $firstNameSafe = addslashes($guestData['first_name']);
+            $lastNameSafe  = addslashes($guestData['last_name']);
+            $userToken    = $guestData['token'];
+            $hashedPwd    = $guestData['password'];
+            $created      = date('Y-m-d H:i:s');
+
+            // 1. Yacht DB: passenger_lists — insert if not already there
+            $existing = $db->query("SELECT id FROM {$ydbname}.passenger_lists WHERE email = '{$usernameSafe}' OR UUID = '{$userUUID}' LIMIT 1");
+            if (empty($existing)) {
+                $db->query("INSERT INTO {$ydbname}.passenger_lists
+                    (UUID, email, first_name, family_name, token)
+                    VALUES ('{$userUUID}', '{$usernameSafe}', '{$firstNameSafe}', '{$lastNameSafe}', '{$userToken}')");
+            }
+
+            // 2. Yacht DB: charter_guest_associates — insert if not already for this program
+            $existYCga = $db->query("SELECT id FROM {$ydbname}.charter_guest_associates WHERE (email = '{$usernameSafe}' OR UUID = '{$userUUID}') AND charter_program_id = '{$charterProgId}' LIMIT 1");
+            if (empty($existYCga)) {
+                $db->query("INSERT INTO {$ydbname}.charter_guest_associates
+                    (charter_guest_id, UUID, email, charter_program_id, allow_comments, first_name, last_name, is_email_recipient, token)
+                    VALUES ('{$charterProgId}', '{$userUUID}', '{$usernameSafe}', '{$charterProgId}', '0', '{$firstNameSafe}', '{$lastNameSafe}', '1', '{$userToken}')");
+            }
+
+            // 3. db_checklistapp: charter_guest_associates — insert if not already for this program
+            $existCga = $db->query("SELECT id FROM db_checklistapp.charter_guest_associates WHERE (email = '{$usernameSafe}' OR username = '{$usernameSafe}') AND charter_program_id = '{$charterProgId}' LIMIT 1");
+            if (empty($existCga)) {
+                $db->query("INSERT INTO db_checklistapp.charter_guest_associates
+                    (charter_guest_id, UUID, email, username, token, password, charter_program_id, yacht_id, created,
+                     fleetcompany_id, is_head_charterer, allow_comments, first_name, last_name, is_email_recipient)
+                    VALUES
+                    ('{$charterProgId}', '{$userUUID}', '{$usernameSafe}', '{$usernameSafe}', '{$userToken}', '{$hashedPwd}', '{$charterProgId}',
+                     {$yachtId}, '{$created}', '{$charterCompanyId}', '0', '0', '{$firstNameSafe}', '{$lastNameSafe}', '1')");
+            }
+
+            // 4. guest_lists — UPDATE existing record to append new charter program values
+            $glRows = $db->query("SELECT id, fleetcompany_id, yacht_id, guest_type FROM db_checklistapp.guest_lists
+                WHERE (username = '{$usernameSafe}' OR email = '{$usernameSafe}' OR UUID = '{$userUUID}') LIMIT 1");
+            if (!empty($glRows)) {
+                $gl           = $glRows[0]['guest_lists'];
+                $newGuestType  = !empty($charterCompanyId)
+                    ? $charterCompanyId . '-' . $yachtId . '-email_recipient'
+                    : $yachtId . '-email_recipient';
+                $existingGuestTypes = array_map('trim', explode(',', $gl['guest_type']));
+                if (!in_array($newGuestType, $existingGuestTypes)) {
+                    $updFleetcompanyId = $gl['fleetcompany_id'] . ',' . $charterCompanyId;
+                    $updYachtId        = $gl['yacht_id'] . ',' . $yachtId;
+                    $updGuestType      = $gl['guest_type'] . ',' . $newGuestType;
+                    $glId              = (int)$gl['id'];
+                    $db->query("UPDATE db_checklistapp.guest_lists
+                        SET fleetcompany_id = '{$updFleetcompanyId}',
+                            yacht_id        = '{$updYachtId}',
+                            guest_type      = '{$updGuestType}'
+                        WHERE id = {$glId}");
+                }
+            }
+        } catch (Exception $e) {
+            // Silent fail — do not block login if assignment fails
+        }
+    }
+
     public function verifyToken() {
         
         if($this->request->is('ajax')){
@@ -565,6 +773,11 @@ class ChartersController extends AppController {
                 } 
                 
             }
+        }
+        // Assign charter program to existing user if they came via an invitation link
+        if (in_array($result['status'], array('success', 'success_redirect')) && !empty($this->request->data['charter_uuid']) && !empty($GuestListData)) {
+            //echo "<pre>"; print_r($GuestListData['GuestList']);echo $this->request->data['charter_uuid']; exit('herer');
+            $this->assignCharterToExistingUser($GuestListData['GuestList'], trim($this->request->data['charter_uuid']));
         }
         echo json_encode($result);
         exit;
