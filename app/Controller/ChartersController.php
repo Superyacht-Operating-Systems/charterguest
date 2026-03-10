@@ -30,19 +30,19 @@ class ChartersController extends AppController {
             $this->loadModel('CharterGuest');
             $charterGuest = $this->CharterGuest->find('first', array(
                 'conditions' => array('CharterGuest.charter_program_id' => $uuid),
-                'fields' => array('CharterGuest.charter_program_id', 'CharterGuest.qr_activation')
+                'fields' => array('CharterGuest.charter_program_id', 'CharterGuest.link_expires')
             ));
 
             if (!empty($charterGuest)) {
-                if (!empty($charterGuest['CharterGuest']['qr_activation'])) {
-                    $qrActivation = strtotime($charterGuest['CharterGuest']['qr_activation']);
+                if (!empty($charterGuest['CharterGuest']['link_expires'])) {
+                    $qrActivation = strtotime($charterGuest['CharterGuest']['link_expires']);
                     if (time() < $qrActivation) {
                         $urlStatus = 'valid';
                     } else {
                         $urlStatus = 'expired';
                     }
                 } else {
-                    $urlStatus = 'expired'; // qr_activation is null/empty
+                    $urlStatus = 'expired'; // link_expires is null/empty
                 }
             } else {
                 $urlStatus = 'not_found';
