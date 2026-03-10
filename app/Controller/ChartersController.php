@@ -252,6 +252,7 @@ class ChartersController extends AppController {
             } else {
                 $guestType = $yachtId . '-email_recipient';
             }
+            $allowComments = (strpos($guestType, 'email_recipient') !== false) ? '1' : '0';
 
             // Security question fields
             $recoveryHint = isset($data['username_recovery_hint'])          ? addslashes(trim($data['username_recovery_hint']))       : '';
@@ -277,7 +278,7 @@ class ChartersController extends AppController {
             $db->query("INSERT INTO {$ydbname}.charter_guest_associates
                 (UUID, charter_program_id, allow_comments, first_name, last_name, is_email_recipient, token)
                 VALUES
-                ('{$userUUID}', '{$charterProgId}', '1', '{$firstNameSafe}', '{$lastNameSafe}', '1', '{$userToken}')");
+                ('{$userUUID}', '{$charterProgId}', '{$allowComments}', '{$firstNameSafe}', '{$lastNameSafe}', '1', '{$userToken}')");
 
             // -------------------------------------------------------
             // 6. db_checklistapp: guest_lists — INSERT new user record
@@ -305,7 +306,7 @@ class ChartersController extends AppController {
                  fleetcompany_id, is_head_charterer, allow_comments, first_name, last_name, is_email_recipient)
                 VALUES
                 ('{$charterProgId}', '{$userUUID}', '{$usernameSafe}', '{$usernameSafe}', '{$userToken}', '{$hashedPwd}', '{$charterProgId}',
-                 {$yachtId}, '{$created}', '{$charterCompanyId}', '0', '0',
+                 {$yachtId}, '{$created}', '{$charterCompanyId}', '0', '{$allowComments}',
                  '{$firstNameSafe}', '{$lastNameSafe}', '1')");
 
             $result['status']   = 'success';
@@ -474,10 +475,11 @@ class ChartersController extends AppController {
             $charterCompanyId = $cg['charter_company_id'];
             $yachtId          = $cg['yacht_id'];
 
-            // Get yacht DB name
-            $yachtRows = $db->query("SELECT ydb_name FROM db_checklistapp.yachts WHERE id = '{$yachtId}' LIMIT 1");
-            if (empty($yachtRows)) return;
-            $ydbname = $yachtRows[0]['yachts']['ydb_name'];
+            // Get yacht DB name and display name
+            $yachtRows = $db->query("SELECT ydb_name, yfullName FROM db_checklistapp.yachts WHERE id = '{$yachtId}' LIMIT 1");
+            if (empty($yachtRows)) return null;
+            $ydbname   = $yachtRows[0]['yachts']['ydb_name'];
+            $yachtName = isset($yachtRows[0]['yachts']['yfullName']) ? $yachtRows[0]['yachts']['yfullName'] : $ydbname;
 
             // Use existing user's data
             $userUUID     = $guestData['UUID'];
@@ -497,11 +499,13 @@ class ChartersController extends AppController {
             }
 
             // 2. Yacht DB: charter_guest_associates — insert if not already for this program
+            $newGuestType  = !empty($charterCompanyId) ? $charterCompanyId . '-' . $yachtId . '-email_recipient' : $yachtId . '-email_recipient';
+            $allowComments = (strpos($newGuestType, 'email_recipient') !== false) ? '1' : '0';
             $existYCga = $db->query("SELECT id FROM {$ydbname}.charter_guest_associates WHERE (email = '{$usernameSafe}' OR UUID = '{$userUUID}') AND charter_program_id = '{$charterProgId}' LIMIT 1");
             if (empty($existYCga)) {
                 $db->query("INSERT INTO {$ydbname}.charter_guest_associates
                     (charter_guest_id, UUID, email, charter_program_id, allow_comments, first_name, last_name, is_email_recipient, token)
-                    VALUES ('{$charterProgId}', '{$userUUID}', '{$usernameSafe}', '{$charterProgId}', '0', '{$firstNameSafe}', '{$lastNameSafe}', '1', '{$userToken}')");
+                    VALUES ('{$charterProgId}', '{$userUUID}', '{$usernameSafe}', '{$charterProgId}', '{$allowComments}', '{$firstNameSafe}', '{$lastNameSafe}', '1', '{$userToken}')");
             }
 
             // 3. db_checklistapp: charter_guest_associates — insert if not already for this program
@@ -512,17 +516,14 @@ class ChartersController extends AppController {
                      fleetcompany_id, is_head_charterer, allow_comments, first_name, last_name, is_email_recipient)
                     VALUES
                     ('{$charterProgId}', '{$userUUID}', '{$usernameSafe}', '{$usernameSafe}', '{$userToken}', '{$hashedPwd}', '{$charterProgId}',
-                     {$yachtId}, '{$created}', '{$charterCompanyId}', '0', '0', '{$firstNameSafe}', '{$lastNameSafe}', '1')");
+                     {$yachtId}, '{$created}', '{$charterCompanyId}', '0', '{$allowComments}', '{$firstNameSafe}', '{$lastNameSafe}', '1')");
             }
 
             // 4. guest_lists — UPDATE existing record to append new charter program values
             $glRows = $db->query("SELECT id, fleetcompany_id, yacht_id, guest_type FROM db_checklistapp.guest_lists
                 WHERE (username = '{$usernameSafe}' OR email = '{$usernameSafe}' OR UUID = '{$userUUID}') LIMIT 1");
             if (!empty($glRows)) {
-                $gl           = $glRows[0]['guest_lists'];
-                $newGuestType  = !empty($charterCompanyId)
-                    ? $charterCompanyId . '-' . $yachtId . '-email_recipient'
-                    : $yachtId . '-email_recipient';
+                $gl = $glRows[0]['guest_lists']; // $newGuestType already set above
                 $existingGuestTypes = array_map('trim', explode(',', $gl['guest_type']));
                 if (!in_array($newGuestType, $existingGuestTypes)) {
                     $updFleetcompanyId = $gl['fleetcompany_id'] . ',' . $charterCompanyId;
@@ -536,8 +537,10 @@ class ChartersController extends AppController {
                         WHERE id = {$glId}");
                 }
             }
+            return array('yacht_name' => $yachtName);
         } catch (Exception $e) {
             // Silent fail — do not block login if assignment fails
+            return null;
         }
     }
 
@@ -776,8 +779,13 @@ class ChartersController extends AppController {
         }
         // Assign charter program to existing user if they came via an invitation link
         if (in_array($result['status'], array('success', 'success_redirect')) && !empty($this->request->data['charter_uuid']) && !empty($GuestListData)) {
-            //echo "<pre>"; print_r($GuestListData['GuestList']);echo $this->request->data['charter_uuid']; exit('herer');
-            $this->assignCharterToExistingUser($GuestListData['GuestList'], trim($this->request->data['charter_uuid']));
+            $assignResult = $this->assignCharterToExistingUser($GuestListData['GuestList'], trim($this->request->data['charter_uuid']));
+            if (!empty($assignResult)) {
+                $result['status']     = 'success_new_charter';
+                $result['first_name'] = $GuestListData['GuestList']['first_name'];
+                $result['last_name']  = $GuestListData['GuestList']['last_name'];
+                $result['yacht_name'] = $assignResult['yacht_name'];
+            }
         }
         echo json_encode($result);
         exit;
