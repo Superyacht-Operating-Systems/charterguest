@@ -92,10 +92,6 @@ Configure::write('Dispatcher.filters', array(
 	'CacheDispatcher'
 ));
 
-// URL encryption keys — must match superyacht app config
-Configure::write('UrlCrypt.key',    'SY_CG_URL_CRYPT_KEY_2024_SECURE!');
-Configure::write('UrlCrypt.secret', 'SY_CG_URL_CRYPT_HMAC_SECRET_2024');
-
 /**
  * Configures default file logging options
  */
