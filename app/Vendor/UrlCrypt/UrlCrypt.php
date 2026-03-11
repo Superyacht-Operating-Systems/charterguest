@@ -7,6 +7,19 @@
  *   $token = UrlCrypt::encrypt($plainUrl, $key, $secret);
  *   $plain = UrlCrypt::decrypt($token, $key, $secret);
  */
+if (!function_exists('hash_equals')) {
+    function hash_equals($known_string, $user_string) {
+        if (strlen($known_string) !== strlen($user_string)) {
+            return false;
+        }
+        $result = 0;
+        for ($i = 0; $i < strlen($known_string); $i++) {
+            $result |= ord($known_string[$i]) ^ ord($user_string[$i]);
+        }
+        return $result === 0;
+    }
+}
+
 class UrlCrypt {
 
     const CIPHER  = 'AES-256-CBC';
