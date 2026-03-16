@@ -82,6 +82,8 @@ margin-top: 30px !important;
             <?php echo $this->Form->create('CharterGuest', array('url' => array('controller' => 'charters', 'action' => 'index'),'id'=>'tokenVerifyForm'));?>
     <fieldset style="padding-top:10px;">
         <input type="hidden" name="charter_uuid" value="<?php echo h(isset($uuid) ? $uuid : ''); ?>">
+        <input type="hidden" name="guest_type" value="<?php echo h(isset($guestType) ? $guestType : ''); ?>">
+        <input type="hidden" name="link_source" value="<?php echo h(isset($linkSource) ? $linkSource : ''); ?>">
                     <?php echo $this->Session->flash();?>
         Username:
         <div class="form-group form_margin">                                        
@@ -203,6 +205,8 @@ margin-top: 30px !important;
         <input type="hidden" id="hiddenLastName" name="reg_last_name">
         <input type="hidden" id="hiddenPassword" name="reg_password">
         <input type="hidden" id="hiddenUuid" name="reg_uuid" value="<?php echo h($uuid); ?>">
+        <input type="hidden" name="reg_guest_type" value="<?php echo h(isset($guestType) ? $guestType : ''); ?>">
+        <input type="hidden" name="reg_link_source" value="<?php echo h(isset($linkSource) ? $linkSource : ''); ?>">
         <fieldset style="padding-top:10px;">
          Username Recovery Hint:
          <div class="form-group form_margin">
