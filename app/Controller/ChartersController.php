@@ -360,6 +360,38 @@ class ChartersController extends AppController {
         exit;
     }
 
+    /**
+     * Returns an encrypted charterguest.net invite URL for opening the email client.
+     * POST params: uuid (charter_program_id)
+     */
+    public function getEncryptedShareUrl() {
+        $this->autoRender = false;
+        $uuid = isset($this->request->data['uuid']) ? trim($this->request->data['uuid']) : '';
+        if (empty($uuid)) {
+            echo json_encode(array('success' => false, 'msg' => 'Missing uuid'));
+            exit;
+        }
+        // Update link_expires to now + 72 hours in db_checklistapp.charter_guests
+        $linkExpires = date('Y-m-d H:i:s', strtotime('+72 hours'));
+        $uuidSafe    = addslashes($uuid);
+        $this->loadModel('CharterGuest');
+        $this->CharterGuest->query(
+            "UPDATE db_checklistapp.charter_guests SET link_expires = '{$linkExpires}' WHERE charter_program_id = '{$uuidSafe}'"
+        );
+
+        App::import('Vendor', 'UrlCrypt', array('file' => 'UrlCrypt/UrlCrypt.php'));
+        $key    = Configure::read('UrlCrypt.key');
+        $secret = Configure::read('UrlCrypt.secret');
+        $plain  = 'uuid=' . $uuid . '&guest_type=guest';
+        $token  = UrlCrypt::encrypt($plain, $key, $secret);
+        if ($token === false) {
+            echo json_encode(array('success' => false, 'msg' => 'Encryption failed'));
+            exit;
+        }
+        echo json_encode(array('success' => true, 'url' => 'https://charterguest.net/charterguest/?token=' . $token));
+        exit;
+    }
+
     public function checkUsername() {
         $this->layout = false;
         $this->autoRender = false;
@@ -7028,7 +7060,7 @@ class ChartersController extends AppController {
                             $this->CharterGuest->query("UPDATE $yachtDbName.charter_programs SET salutation='$headSalutation' WHERE UUID='$charterProgramId'");
                         }
                             // update head charter salutation to guest list table
-                            $guestHeadExistdata = $this->GuestList->find('first', array('conditions' => array('first_name' => $data['first_name'][0],'last_name'=>$data['last_name'][0],'email'=>$data['email'][0])));
+                            $guestHeadExistdata = $this->GuestList->find('first', array('conditions' => array('first_name' => $data['first_name'][0],'last_name'=>$data['last_name'][0])));
                             if(isset($guestHeadExistdata) && !empty($guestHeadExistdata)){
                                 $guestlistHDataArray = array();
                                 $guestlistHDataArray['id'] = $guestHeadExistdata['GuestList']['id'];
@@ -7106,7 +7138,7 @@ class ChartersController extends AppController {
                             $guestlistData['id'] = $existingGuestListPrimaryId;
                        }
 
-                       if (!empty($guestlistData['first_name']) && !empty($guestlistData['last_name']) && !empty($guestlistData['email'])) {
+                       if (!empty($guestlistData['first_name']) && !empty($guestlistData['last_name'])) {
 
                             if(!empty($data['is_head_charterer_checked'][$i])){
                                 if($guestlistData['first_name'] == 'ff'){
@@ -7127,8 +7159,8 @@ class ChartersController extends AppController {
                         $insertData['salutation'] = $data['salutation'][$i];
                         $insertData['first_name'] = $data['first_name'][$i];
                         $insertData['last_name'] = $data['last_name'][$i];
-                        $insertData['email'] = $data['email'][$i];
-                        
+                        $insertData['email'] = isset($data['email'][$i]) ? $data['email'][$i] : '';
+
                         // Check whether the assoc is already added
                         if (isset($data['charter_assoc_id'][$i]) && !empty($data['charter_assoc_id'][$i])) {
                             $insertData['id'] = $charterAssocId = $data['charter_assoc_id'][$i];
@@ -7143,7 +7175,7 @@ class ChartersController extends AppController {
                             $this->CharterGuestAssociate->create();
                         }
 
-                        if (!empty($insertData['salutation']) && !empty($insertData['first_name']) && !empty($insertData['last_name']) && !empty($insertData['email'])) {
+                        if (!empty($insertData['salutation']) && !empty($insertData['first_name']) && !empty($insertData['last_name'])) {
                            // check weather head charter is checked or not
                             if(!empty($insertData['is_head_charterer'])){
                             if ($this->CharterGuestAssociate->save($insertData)) {

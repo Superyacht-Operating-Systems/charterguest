@@ -876,6 +876,10 @@ font-size: 11px;
         <input type="hidden" id="charter_company_id" value="<?php echo $charter_company_id; ?>">
         <!-- Charter head salutation -->
         <input type="hidden" id="existSalutation" value="<?php echo $charterData['CharterGuest']['salutation']; ?>">
+        <!-- Email client data -->
+        <input type="hidden" id="yachtName" value="<?php echo htmlspecialchars($charterData['CharterGuest']['charter_name']); ?>">
+        <input type="hidden" id="headChartererName" value="<?php echo htmlspecialchars($charterData['CharterGuest']['first_name'].' '.$charterData['CharterGuest']['last_name']); ?>">
+        <input type="hidden" id="captainName" value="<?php echo htmlspecialchars(isset($session['captain_name']) ? $session['captain_name'] : ''); ?>">
 
 <div class="table table-condensed no-border" id="guestDetailsTable">
 <div class="header-row">
@@ -885,8 +889,10 @@ font-size: 11px;
 <div class="tcont-center md-row-hd-12 md-hdtilt">Title</div>
 <div class="tcont-center md-row-hd-20 p-first-name">First Name</div>
 <div class="tcont-center md-row-hd-20 p-last-name">Last Name</div>
+<!--
 <div class="tcont-center emailFieldClass md-row-hd-30 p-email-name">Email</div>
-<div class="tcont-center md-row-hd-20 p-prefrenace-name md-row-hd-20-10">Preference Sheets</div>
+-->
+<div class="tcont-center md-row-hd-20 p-prefrenace-name md-row-hd-20-10">Preferences</div>
 <!--    <th class="tcont-center" colspan="2">Submitted P-Sheets</th> -->
 </div>
 <div id="charterguest">
@@ -901,8 +907,9 @@ font-size: 11px;
 <?php } ?>
 </div></div>
 <div class="col-md-12">
-            <div class="pull-right footer-mob-row">
+            <div class="pull-right footer-mob-row" style="display:flex;align-items:center;gap:8px;">
                 <button class="btn btn-success" id="saveBtn">Save</button>
+                <button class="btn btn-primary" id="saveAndEmailBtn">Save &amp; Email</button>
             </div>
         </div> 
 </div>
@@ -954,10 +961,64 @@ font-size: 11px;
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-<script> 
-    
+<script>
+
+// Open local email client with pre-populated invitation email
+jQuery(document).on("click", ".openEmailClientBtn", function(e) {
+    e.preventDefault();
+    var btn        = $(this);
+    var rowObj     = btn.closest('div .row');
+    var email      = btn.data('email')     || rowObj.find("input[name='email[]']").val()     || '';
+    var firstName  = btn.data('firstname') || rowObj.find("input[name='first_name[]']").val() || '';
+    var yachtName  = $("#yachtName").val();
+    var headName   = $("#headChartererName").val();
+    var captainName = $("#captainName").val();
+    var charterId  = $("#charterProgramId").val();
+
+    $.ajax({
+        type: "POST",
+        url: BASE_FOLDER + "/charters/getEncryptedShareUrl",
+        data: { uuid: charterId },
+        dataType: "json",
+        success: function(res) {
+            var loginUrl = (res && res.success && res.url) ? res.url
+                         : 'https://charterguest.net/charterguest/';
+
+            var subject = 'Welcome to the charter guest program for the ' + yachtName;
+
+            var body =
+                'Hi ' + firstName + ',\n\n'
+                + 'You have been invited to join ' + headName + ' for a cruise onboard the ' + yachtName + '.\n\n'
+                + 'To tailor our services so we can provide you a 7 star experience we kindly request that you login to the below secure website and complete your preference sheets.\n\n'
+                + loginUrl + '\n\n'
+                + 'When you complete your preference sheets ' + headName + ' will be notified by email and your completed preference sheets and personal details will be automatically made available to the Captain of the ' + yachtName + '.\n\n'
+                + 'Please watch this 3 min video to learn how to use the charter guest program:\n'
+                + 'https://youtu.be/5MYJqIhZnHo\n\n'
+                + 'We look forward to welcoming you onboard soon.\n\n'
+                + 'Kind regards,\n'
+                + captainName + '\n'
+                + yachtName;
+
+            window.location.href = 'mailto:?subject=' + encodeURIComponent(subject)
+                + '&body=' + encodeURIComponent(body);
+        },
+        error: function() {
+            // Fallback without encrypted URL
+            var subject = 'Welcome to the charter guest program for the ' + yachtName;
+            var body =
+                'Hi ' + firstName + ',\n\n'
+                + 'You have been invited to join ' + headName + ' for a cruise onboard the ' + yachtName + '.\n\n'
+                + 'Please visit: https://charterguest.net/charterguest/\n\n'
+                + 'Kind regards,\n' + captainName + '\n' + yachtName;
+            window.location.href = 'mailto:?subject=' + encodeURIComponent(subject)
+                + '&body=' + encodeURIComponent(body);
+        }
+    });
+});
+
 // Submit Guests with mail sending
 jQuery(document).on("click",".sendMailClass",function(e){
+    if ($(this).hasClass('openEmailClientBtn')) return; // handled by email client handler
     //alert('961'); return false;
 //$(".sendMailClass").on("click", function(e) {
     console.log('kkk');
@@ -1394,7 +1455,7 @@ $("#saveBtn").on("click", function(e) {
                     $(this).find('.gry-btn').removeClass("inputError");
                 }
 
-                if (empty == 4) {
+                if (empty == 3) {
                     $(this).find(".validateInput").removeClass("inputError");
                     $(this).find('.gry-btn').removeClass("inputError");
                     error = 0;
@@ -1420,20 +1481,108 @@ $("#saveBtn").on("click", function(e) {
                 if (result.status == 'success') {
                     location.reload();
                 } else {
-                    
+
                     alert('Please select if guest is Head Charterer or not.');
                     $("#saveBtn").attr("disabled", false);
                     return false;
-                }   
+                }
             },
-            error: function(jqxhr) { 
+            error: function(jqxhr) {
                 $("#hideloader").hide();
             }
         });
     } else {
         return false;
     }
-    
+
+});
+
+// Save & Email button
+$("#saveAndEmailBtn").on("click", function(e) {
+    var error = 0;
+    $(".inputError").removeClass('inputError');
+    $("#guestDetailsTable div").each(function() {
+        var empty = 0;
+        var divobj = $(this);
+        divobj.find('.charterRow').each(function () {
+            var validateMessage = $(this).find(".validateMessage");
+            $(validateMessage).css({ display: "none" });
+            $(this).find(".validateInput").each(function () {
+                if ($(this).val().trim() == "") {
+                    $(this).addClass("inputError").blur();
+                    empty++;
+                    error = 1;
+                    $(validateMessage).css({ display: "block" });
+                } else {
+                    $(this).removeClass("inputError");
+                }
+            });
+            if ($(this).find('.isHeadChartererChecked').val() == "") {
+                $(this).find('.gry-btn').addClass("inputError").blur();
+                error = 1;
+            } else {
+                $(this).find('.gry-btn').removeClass("inputError");
+            }
+            if (empty == 3) {
+                $(this).find(".validateInput").removeClass("inputError");
+                $(this).find('.gry-btn').removeClass("inputError");
+                error = 0;
+            } else if (empty > 0) {
+                return true;
+            }
+        });
+    });
+
+    if (error) return false;
+
+    var data = $("#guestDetailsTable div").find(".rowInput").serialize();
+    $("#hideloader").show();
+    $.ajax({
+        type: "POST",
+        url: BASE_FOLDER + '/charters/saveGuests',
+        dataType: 'json',
+        data: data,
+        success: function(result) {
+            $("#hideloader").hide();
+            if (result.status == 'success') {
+                var charterId   = $("#charterProgramId").val();
+                var yachtName   = $("#yachtName").val();
+                var headName    = $("#headChartererName").val();
+                var captainName = $("#captainName").val();
+                $.ajax({
+                    type: "POST",
+                    url: BASE_FOLDER + "/charters/getEncryptedShareUrl",
+                    data: { uuid: charterId },
+                    dataType: "json",
+                    success: function(res) {
+                        var loginUrl = (res && res.success && res.url) ? res.url : 'https://charterguest.net/charterguest/';
+                        var subject  = 'Welcome to the charter guest program for the ' + yachtName;
+                        var body =
+                            'You have been invited to join ' + headName + ' for a cruise onboard the ' + yachtName + '.\n\n'
+                            + 'To tailor our services so we can provide you a 7 star experience we kindly request that you login to the below secure website and complete your preference sheets.\n\n'
+                            + loginUrl + '\n\n'
+                            + 'When you complete your preference sheets ' + headName + ' will be notified by email and your completed preference sheets and personal details will be automatically made available to the Captain of the ' + yachtName + '.\n\n'
+                            + 'Please watch this 3 min video to learn how to use the charter guest program:\n'
+                            + 'https://youtu.be/5MYJqIhZnHo\n\n'
+                            + 'We look forward to welcoming you onboard soon.\n\n'
+                            + 'Kind regards,\n'
+                            + captainName + '\n'
+                            + yachtName;
+                        window.location.href = 'mailto:?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+                        setTimeout(function() { location.reload(); }, 1000);
+                    },
+                    error: function() {
+                        location.reload();
+                    }
+                });
+            } else {
+                alert('Please select if guest is Head Charterer or not.');
+            }
+        },
+        error: function() {
+            $("#hideloader").hide();
+        }
+    });
 });
 
 </script>
