@@ -877,9 +877,9 @@ font-size: 11px;
         <!-- Charter head salutation -->
         <input type="hidden" id="existSalutation" value="<?php echo $charterData['CharterGuest']['salutation']; ?>">
         <!-- Email client data -->
-        <input type="hidden" id="yachtName" value="<?php echo htmlspecialchars($charterData['CharterGuest']['charter_name']); ?>">
+        <input type="hidden" id="yachtName" value="<?php echo htmlspecialchars($this->Session->read('GuestListYname')); ?>">
         <input type="hidden" id="headChartererName" value="<?php echo htmlspecialchars($charterData['CharterGuest']['first_name'].' '.$charterData['CharterGuest']['last_name']); ?>">
-        <input type="hidden" id="captainName" value="<?php echo htmlspecialchars(isset($session['captain_name']) ? $session['captain_name'] : ''); ?>">
+        <input type="hidden" id="captainName" value="<?php echo htmlspecialchars($this->Session->read('GuestCaptaionName')); ?>">
 
 <div class="table table-condensed no-border" id="guestDetailsTable">
 <div class="header-row">

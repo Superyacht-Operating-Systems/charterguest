@@ -33,6 +33,7 @@ class ChartersController extends AppController {
             $key    = Configure::read('UrlCrypt.key');
             $secret = Configure::read('UrlCrypt.secret');
             $plain  = UrlCrypt::decrypt($this->request->query['token'], $key, $secret);
+            CakeLog::write('debug', '[index] token received, decrypt result: ' . ($plain === false ? 'FAILED' : $plain));
             if ($plain !== false) {
                 parse_str($plain, $params);
                 if (!empty($params['uuid'])) {
@@ -302,9 +303,9 @@ class ChartersController extends AppController {
             if (!in_array($guestType, array('head_charterer', 'owner'))) {
                 // 5. YACHT DB: charter_guest_associates
                 $db->query("INSERT INTO {$ydbname}.charter_guest_associates
-                    (UUID, charter_program_id, allow_comments, first_name, last_name, is_email_recipient, token)
+                    (UUID, charter_program_id, allow_comments, first_name, last_name, token, created)
                     VALUES
-                    ('{$userUUID}', '{$charterProgId}', '{$allowComments}', '{$firstNameSafe}', '{$lastNameSafe}', '1', '{$userToken}')");
+                    ('{$userUUID}', '{$charterProgId}', '{$allowComments}', '{$firstNameSafe}', '{$lastNameSafe}', '{$userToken}', '{$created}')");
 
                 // 7. db_checklistapp: charter_guest_associates
                 $db->query("INSERT INTO db_checklistapp.charter_guest_associates
@@ -582,8 +583,8 @@ class ChartersController extends AppController {
                 $existYCga = $db->query("SELECT id FROM {$ydbname}.charter_guest_associates WHERE (email = '{$usernameSafe}' OR UUID = '{$userUUID}') AND charter_program_id = '{$charterProgId}' LIMIT 1");
                 if (empty($existYCga)) {
                     $db->query("INSERT INTO {$ydbname}.charter_guest_associates
-                        (charter_guest_id, UUID, email, charter_program_id, allow_comments, first_name, last_name, is_email_recipient, token)
-                        VALUES ('{$charterProgId}', '{$userUUID}', '{$usernameSafe}', '{$charterProgId}', '{$allowComments}', '{$firstNameSafe}', '{$lastNameSafe}', '1', '{$userToken}')");
+                        (charter_guest_id, UUID, email, charter_program_id, allow_comments, first_name, last_name, token, created)
+                        VALUES ('{$charterProgId}', '{$userUUID}', '{$usernameSafe}', '{$charterProgId}', '{$allowComments}', '{$firstNameSafe}', '{$lastNameSafe}', '{$userToken}', '{$created}')");
                 }
 
                 // 3. db_checklistapp: charter_guest_associates
@@ -664,6 +665,7 @@ class ChartersController extends AppController {
             $this->layout = false;
             $this->autoRender = false;
             $result = array();
+            CakeLog::write('debug', '[verifyToken] charter_uuid=' . (isset($this->request->data['charter_uuid']) ? $this->request->data['charter_uuid'] : 'MISSING') . ' guest_type=' . (isset($this->request->data['guest_type']) ? $this->request->data['guest_type'] : 'MISSING') . ' email=' . (isset($this->request->data['email']) ? $this->request->data['email'] : 'MISSING'));
             if (isset($this->request->data['token']) && !empty($this->request->data['token']) && isset($this->request->data['email']) && !empty($this->request->data['email'])) {
                 $token = $this->request->data['token'];
                 $loginInput = trim($this->request->data['email']); // can be email or username
@@ -882,8 +884,36 @@ class ChartersController extends AppController {
                             }
                         
                         } else {
-                            $result['status'] = "fail";
-                            $result['message'] = "Invalid Email/Username/Token/Password.";
+                            // No charter_guest_associates record found, but check if user exists
+                            // in guest_lists and is coming from a token URL (guest_type=guest first-time login).
+                            if (!empty($GuestListData) && !empty($this->request->data['charter_uuid'])) {
+                                $cgUuidSafe = addslashes(trim($this->request->data['charter_uuid']));
+                                $charterHeadForGuest = $this->CharterGuest->find('first', array('conditions' => array('charter_program_id' => $cgUuidSafe)));
+                                if (!empty($charterHeadForGuest)) {
+                                    $this->Session->destroy();
+                                    $gLoginUser = $GuestListData['GuestList']['first_name'].' '.$GuestListData['GuestList']['last_name'];
+                                    $this->Session->write("login_username", $gLoginUser);
+                                    $this->Session->write("charter_info", $charterHeadForGuest);
+                                    $this->Session->write("charter_info.CharterGuest.users_UUID", $GuestListData['GuestList']['UUID']);
+                                    $this->loadModel('Yacht');
+                                    $gYachtData = $this->Yacht->find('first', array('conditions' => array('id' => $charterHeadForGuest['CharterGuest']['yacht_id'])));
+                                    if (!empty($gYachtData)) {
+                                        $this->Session->write("yachFullName", $gYachtData['Yacht']['yfullName']);
+                                        $this->Session->write("charter_info.CharterGuest.yacht_name", $gYachtData['Yacht']['yfullName']);
+                                        $this->Session->write("charter_info.CharterGuest.captain_name", $gYachtData['Yacht']['captain_name']);
+                                        $this->Session->write("charter_info.CharterGuest.ydb_name", $gYachtData['Yacht']['ydb_name']);
+                                    }
+                                    $this->Session->write("guestListUUID", $GuestListData['GuestList']['UUID']);
+                                    $result['status'] = 'success_redirect';
+                                    $result['url']    = 'charters/programs/'.$GuestListData['GuestList']['UUID'];
+                                } else {
+                                    $result['status'] = "fail";
+                                    $result['message'] = "Invalid Email/Username/Token/Password.";
+                                }
+                            } else {
+                                $result['status'] = "fail";
+                                $result['message'] = "Invalid Email/Username/Token/Password.";
+                            }
                         }
                         $this->Session->write("charter_info.CharterGuest.Adminlogin",0);
                     }
@@ -892,10 +922,12 @@ class ChartersController extends AppController {
             }
         }
         // Assign charter program to existing user if they came via an invitation link
+        CakeLog::write('debug', '[verifyToken] result_status=' . (isset($result['status']) ? $result['status'] : 'none') . ' charter_uuid_in_req=' . (empty($this->request->data['charter_uuid']) ? 'empty' : $this->request->data['charter_uuid']) . ' GuestListData=' . (empty($GuestListData) ? 'empty' : 'found'));
         if (in_array($result['status'], array('success', 'success_redirect')) && !empty($this->request->data['charter_uuid']) && !empty($GuestListData)) {
             $incomingGuestType  = isset($this->request->data['guest_type'])  ? trim($this->request->data['guest_type'])  : '';
             $incomingLinkSource = isset($this->request->data['link_source']) ? trim($this->request->data['link_source']) : '';
             $assignResult = $this->assignCharterToExistingUser($GuestListData['GuestList'], trim($this->request->data['charter_uuid']), $incomingGuestType, $incomingLinkSource);
+            CakeLog::write('debug', '[verifyToken] assignResult=' . json_encode($assignResult));
             if (!empty($assignResult)) {
                 $result['status']     = 'success_new_charter';
                 $result['first_name'] = $GuestListData['GuestList']['first_name'];
