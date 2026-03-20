@@ -276,7 +276,8 @@ class ChartersController extends AppController {
             // Build guest_type suffix from URL param; fall back to email_recipient for plain yacht links
             $guestTypeSuffix = !empty($guestType) ? $guestType : 'email_recipient';
             $newGuestType    = !empty($charterCompanyId) ? $charterCompanyId . '-' . $yachtId . '-' . $guestTypeSuffix : $yachtId . '-' . $guestTypeSuffix;
-            $allowComments   = (strpos($newGuestType, 'email_recipient') !== false) ? '1' : '0';
+            $allowComments    = (strpos($newGuestType, 'email_recipient') !== false) ? '1' : '0';
+            $isEmailRecipient = (strpos($newGuestType, 'email_recipient') !== false) ? '1' : '0';
 
             // Security question fields
             $recoveryHint = isset($data['username_recovery_hint'])          ? addslashes(trim($data['username_recovery_hint']))       : '';
@@ -314,7 +315,7 @@ class ChartersController extends AppController {
                     VALUES
                     ('{$charterProgId}', '{$userUUID}', '{$usernameSafe}', '{$usernameSafe}', '{$userToken}', '{$hashedPwd}', '{$charterProgId}',
                      {$yachtId}, '{$created}', '{$charterCompanyId}', '0', '{$allowComments}',
-                     '{$firstNameSafe}', '{$lastNameSafe}', '1')");
+                     '{$firstNameSafe}', '{$lastNameSafe}', '{$isEmailRecipient}')");
             }
 
             // -------------------------------------------------------
@@ -577,7 +578,8 @@ class ChartersController extends AppController {
 
             // 2 & 3. charter_guest_associates — skip for head_charterer / owner (they use charter_guests record directly)
             $newGuestType  = !empty($charterCompanyId) ? $charterCompanyId . '-' . $yachtId . '-' . $guestType : $yachtId . '-' . $guestType;
-            $allowComments = (strpos($newGuestType, 'email_recipient') !== false) ? '1' : '0';
+            $allowComments    = (strpos($newGuestType, 'email_recipient') !== false) ? '1' : '0';
+            $isEmailRecipient = (strpos($newGuestType, 'email_recipient') !== false) ? '1' : '0';
             if (!in_array($guestType, array('head_charterer', 'owner'))) {
                 // 2. Yacht DB: charter_guest_associates
                 $existYCga = $db->query("SELECT id FROM {$ydbname}.charter_guest_associates WHERE (email = '{$usernameSafe}' OR UUID = '{$userUUID}') AND charter_program_id = '{$charterProgId}' LIMIT 1");
@@ -595,7 +597,7 @@ class ChartersController extends AppController {
                          fleetcompany_id, is_head_charterer, allow_comments, first_name, last_name, is_email_recipient)
                         VALUES
                         ('{$charterProgId}', '{$userUUID}', '{$usernameSafe}', '{$usernameSafe}', '{$userToken}', '{$hashedPwd}', '{$charterProgId}',
-                         {$yachtId}, '{$created}', '{$charterCompanyId}', '0', '{$allowComments}', '{$firstNameSafe}', '{$lastNameSafe}', '1')");
+                         {$yachtId}, '{$created}', '{$charterCompanyId}', '0', '{$allowComments}', '{$firstNameSafe}', '{$lastNameSafe}', '{$isEmailRecipient}')");
                 }
             }
 
