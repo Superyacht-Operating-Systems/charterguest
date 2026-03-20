@@ -996,6 +996,9 @@ if(isset($charterAssocData) && !empty($charterAssocData)){
             // for email recipents is_head_charter will become the 0 by defalut.
             $is_head_charter = $data['CharterGuestAssociate']['is_head_charterer'];
 
+            // email recipent
+            $is_email_recipent = $data['CharterGuestAssociate']['is_email_recipient'];
+
             
 
             $associd = $data['CharterGuestAssociate']['id'];
@@ -1063,14 +1066,15 @@ if(isset($charterAssocData) && !empty($charterAssocData)){
             <li>
             <?php //echo "===>".$is_head_charter;
             // $is_head_charter based on the value we can find the email recipents or other if 0 
-            if($is_head_charter == 1 ){ ?>
+            // for guest also we need to show the guest list @mar20 2026
+            if($is_head_charter == 1 || $is_email_recipent == 0){ ?>
                 <a href="<?php echo $basefolder."/charters/view_guest/".$id."/".$charter_program_id."/".$fleetcompany_id.'/'.$data['charterDetails']['ydb_name'].'/guest'.'/'.$guestListData['GuestList']['guest_type'].'/'.$data['CharterGuestAssociate']['allow_comments']; ?>">Guest List</a>
                 <?php } ?>
             </li>
             
              <?php if ($dateTimestamp1 >= $dateTimestamp2){ ?>
             <li>
-            <?php if($is_head_charter == 1){ ?>
+            <?php if($is_head_charter == 1 || $is_email_recipent == 0){ ?>
                 <a href="#"><span class="existingCheckFunction" data-guestype="guest" data-associd ="<?php echo $associd; ?>">Preference Sheets</span></a>
                 <?php } ?>
             </li>
