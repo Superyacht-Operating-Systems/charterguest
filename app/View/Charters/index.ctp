@@ -92,10 +92,12 @@ margin-top: 30px !important;
 
 <?php $basefolder = $this->request->base; ?>
 
-<div id="tokenDiv" class="panel-body" style="height: 250px; "> 
+<div id="tokenDiv" class="panel-body" style="height: 250px; <?php if (isset($urlStatus) && in_array($urlStatus, array('expired', 'not_found'))): ?>display:none;<?php endif; ?>">        
             <?php echo $this->Form->create('CharterGuest', array('url' => array('controller' => 'charters', 'action' => 'index'),'id'=>'tokenVerifyForm'));?>
     <fieldset style="padding-top:10px;" class="logmin">
         <input type="hidden" name="charter_uuid" value="<?php echo h(isset($uuid) ? $uuid : ''); ?>">
+        <input type="hidden" name="guest_type" value="<?php echo h(isset($guestType) ? $guestType : ''); ?>">
+        <input type="hidden" name="link_source" value="<?php echo h(isset($linkSource) ? $linkSource : ''); ?>">
                     <?php echo $this->Session->flash();?>
         Username:
         <div class="form-group form_margin">                                        
@@ -129,11 +131,14 @@ margin-top: 30px !important;
 </div>
 
 <?php if (isset($urlStatus) && in_array($urlStatus, array('expired', 'not_found'))): ?>
-<div id="expiredLinkDiv" class="panel-body text-center" style="padding: 30px 15px; color: #c0392b;">
-    <div style="font-size: 17px; font-weight: bold; margin-bottom: 16px;">
-        Your invitation link has expired.
+<div id="expiredLinkDiv" class="panel-body text-center" style="padding: 30px 15px; color: #ffffff;">
+    <div style="font-size: 22px; font-weight: bold; margin-bottom: 6px;">
+        Your invitation link
     </div>
-    <div style="font-size: 14px; margin-bottom: 16px;">
+    <div style="font-size: 22px; font-weight: bold; margin-bottom: 16px;">
+        has expired.
+    </div>
+    <div style="font-size: 15px; margin-bottom: 16px;">
         For security, the one-time access link<br>
         is valid for 72 hours only.
     </div>
@@ -142,14 +147,24 @@ margin-top: 30px !important;
         Please proceed to the login page<br>
         and use your regular credentials.
     </div>
-    <div style="font-size: 14px;">
+    <div style="font-size: 14px; margin-bottom: 20px;">
         <strong>If you are new to Charter Guest:</strong><br>
         Please contact the captain or agent<br>
         who invited you to request a new link.
     </div>
+    <button class="btn btn-default joinnow-btn" type="button" id="goToLoginBtn">Go To Login Page</button>
 </div>
 <?php endif; ?>
 
+<div class="welcomconatainer panel-body text-center" style="display:none; padding: 30px 15px; color: #ffffff;">
+    <input type="hidden" id="welcomeRedirectUrl">
+    <div style="font-size: 22px; font-weight: bold; margin-bottom: 6px;">Welcome Back</div>
+    <div id="welcomeUserName" style="font-size: 22px; font-weight: bold; margin-bottom: 16px;"></div>
+    <div style="font-size: 15px; margin-bottom: 5px;">Your new cruise on board</div>
+    <div id="welcomeYachtName" style="font-size: 15px; margin-bottom: 16px;"></div>
+    <div style="font-size: 14px; margin-bottom: 20px;">Is added to your profile.</div>
+    <button class="btn btn-default joinnow-btn" type="button" id="welcomeOpenBtn">OPEN</button>
+</div>
 
 
 
@@ -218,6 +233,8 @@ margin-top: 30px !important;
         <input type="hidden" id="hiddenLastName" name="reg_last_name">
         <input type="hidden" id="hiddenPassword" name="reg_password">
         <input type="hidden" id="hiddenUuid" name="reg_uuid" value="<?php echo h($uuid); ?>">
+        <input type="hidden" name="reg_guest_type" value="<?php echo h(isset($guestType) ? $guestType : ''); ?>">
+        <input type="hidden" name="reg_link_source" value="<?php echo h(isset($linkSource) ? $linkSource : ''); ?>">
         <fieldset style="padding-top:10px;">
          Username Recovery Hint:
          <div class="form-group form_margin">
@@ -289,7 +306,7 @@ margin-top: 30px !important;
                     <input name="reset_username" id="resetUsername" placeholder="Username" class="form-control" maxlength="55" type="text">
                     <span class="text-small red errorMsg" id="resetUsernameError" style="color: red; display:none;"></span>
                 </div>
-                <button class="btn btn-default joinnow-btn but-mb-5" type="button" id="resetPasswordBtn">Next</button>
+                <button class="btn btn-default joinnow-btn but-mb-5" type="button" id="resetPasswordBtn">Reset Password</button>
             </div>
 
             <!-- Step 2: Security questions (hidden until username verified) -->
@@ -314,11 +331,7 @@ margin-top: 30px !important;
                     <input name="reset_answer_2" id="resetAnswer2" placeholder="Answer" class="form-control" maxlength="500" type="text">
                     <span class="text-small red errorMsg" id="resetAnswer2Error" style="color: red; display:none;"></span>
                 </div>
-                <button class="btn btn-default joinnow-btn" type="button" id="resetPasswordNextBtn">Verify Answers</button>
-            </div>
-
-            <div style="margin-top:10px;">
-                <a href="#" id="backToLoginFromResetBtn" class="inlinetag">Back to Login</a>
+                <button class="btn btn-default joinnow-btn" type="button" id="resetPasswordNextBtn">Next</button>
             </div>
 
         </fieldset>
@@ -405,9 +418,6 @@ margin-top: 30px !important;
          <span class="text-small red errorMsg" id="snpConfirmError" style="color: red; display:none;"></span>
          </div>
          <button class="btn btn-default joinnow-btn" type="button" id="setNewPasswordSubmit">Submit</button>
-         <div style="margin-top:10px;">
-             <a href="#" id="backToLoginFromSnpBtn" class="inlinetag">Back to Login</a>
-         </div>
         </fieldset>
     </form>
 </div>
@@ -515,7 +525,13 @@ $("#tokenSubmit").on("click", function(e) {
                     $("#emailError").text(result.message).slideDown('slow').delay(3000).slideUp(); 
                 } else if (result.status == 'success_redirect') {
                     window.location.href = result.url;
-                }   
+                } else if (result.status == 'success_new_charter') {
+                    $("#tokenDiv").hide();
+                    $("#welcomeUserName").text(result.first_name + ' ' + result.last_name);
+                    $("#welcomeYachtName").text(result.yacht_name);
+                    $("#welcomeRedirectUrl").val(result.url);
+                    $(".welcomconatainer").show();
+                }
             },
             error: function(jqxhr) { 
                 $("#hideloader").hide();
@@ -720,6 +736,20 @@ function ToggleDisable () {
     }
 }
 
+// Welcome back OPEN button — redirect to programs page
+$("#welcomeOpenBtn").on("click", function() {
+    var url = $("#welcomeRedirectUrl").val();
+    if (url) {
+        window.location.href = '<?php echo $this->request->base; ?>/' + url;
+    }
+});
+
+// Go To Login Page from expired link div
+$("#goToLoginBtn").on("click", function() {
+    $("#expiredLinkDiv").hide();
+    $("#tokenDiv").show();
+});
+
 // Forgot username link — show recovery form, hide login
 $("#forgotUsernameLink").on("click", function(e) {
     e.preventDefault();
@@ -865,7 +895,6 @@ $("#resetPasswordBtn").on("click", function() {
                 $("#resetAnswer2").val('');
                 $("#resetAnswer1Error").hide();
                 $("#resetAnswer2Error").hide();
-                $("#resetStep1").hide();
                 $("#resetPasswordQuestionsDiv").show();
             } else {
                 $("#resetUsernameError").text(result.message || "Username not found.").show();
@@ -935,13 +964,6 @@ $("#resetPasswordNextBtn").on("click", function() {
     });
 });
 
-// Back to login from reset password form
-$("#backToLoginFromResetBtn").on("click", function(e) {
-    e.preventDefault();
-    $(".resetpassword").hide();
-    $("#expiredLinkDiv").show();
-    $("#tokenDiv").show();
-});
 
 // Set new password submit
 $("#setNewPasswordSubmit").on("click", function() {
@@ -977,7 +999,7 @@ $("#setNewPasswordSubmit").on("click", function() {
             $("#hideloader").hide();
             if (result.status === 'success') {
                 $(".setnewpassword").hide();
-                alert("Password reset successful! Please log in with your new password.");
+                // alert("Password reset successful! Please log in with your new password.");
                 $("#expiredLinkDiv").show();
                 $("#tokenDiv").show();
             } else {
@@ -991,13 +1013,6 @@ $("#setNewPasswordSubmit").on("click", function() {
     });
 });
 
-// Back to login from set new password
-$("#backToLoginFromSnpBtn").on("click", function(e) {
-    e.preventDefault();
-    $(".setnewpassword").hide();
-    $("#expiredLinkDiv").show();
-    $("#tokenDiv").show();
-});
 
 
 // Step 3: Next — verify password security answers
