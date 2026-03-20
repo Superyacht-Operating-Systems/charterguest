@@ -25,6 +25,14 @@
     );
 ?>
 <style>
+.container-row-column .row>div:last-child{
+    margin-right:0px;
+}
+.footer-mob-row .btn-success{
+        width: 136px;
+}
+
+
     @media only screen and (min-width: 1024px) and (max-width: 1031px){
 .p-email-name {
   width: 29%!important;
@@ -42,10 +50,10 @@
   width: 28%;
 }
 .p-last-name {
-  width: 14%;
+  width: 25%;
 }
 .p-first-name {
-  width: 14%;
+  width: 25%;
 }
       }
 
@@ -62,7 +70,7 @@
     }
     @media only screen and (min-width:1024px){
     body .mydemolabel {
-  font-size: 36px !important;
+  font-size: 30px !important;
 }
     }
 @media only screen and (min-width:771px) and (max-width:1024px){
@@ -79,6 +87,7 @@
 }
     .md-row-h-8 button{
         text-transform: uppercase;
+            width: 67px;
     }
     @media only screen and (max-width: 360px) {
 .rowm-md-mob-resize {
@@ -117,10 +126,20 @@ margin-right: 0px!important;
 }
 @media only screen and (min-width: 360px) and (max-width: 990px) {
 .md-row-h-18 {
-  width: 175px !important;
-  float: right !important;
+  width:100%!important;
+  float: none !important;
   position: relative;
-  right: 9px;
+  right: 0px;
+    text-align: center;
+}
+.owl-carousel label{
+    text-align: center;
+}
+
+
+.btn-open1, .md-row-h-18 .btn,
+.container-row-column .row>div{
+ margin-right: 3%;
 }
 .md-row-h-8 {
   width: 50% !important;
@@ -129,14 +148,16 @@ margin-right: 0px!important;
   position: absolute;
   top: 275px;
 }
+
 }
 
     @media only screen and (min-width: 1000px) and (max-width: 2000px) {
     .header-row {
-		width: 940px!important;
+		width: 970px!important;
 	}
     .p-prefrenace-name {
-		width: 17% !important;
+		width: 24% !important;
+    
 	}
 }
 @media only screen and (min-width: 990px) and (max-width: 1000px){
@@ -273,8 +294,12 @@ font-weight: bold;
 
 .flexrow .one {
     float: left;
-        margin-top: 101px;
+        /* margin-top: 101px; */
 }
+.container-row-all  .container-fluid{
+    padding: 0px;
+}
+
 
 .flexrow .two {
     width: 100%;
@@ -338,7 +363,7 @@ font-weight: bold;
     text-align: center;
     float: left;
     font-weight: bold;
-    margin: 0px 0.4%;
+    margin-right: 3%;
     text-transform: uppercase;
     top:10px;position: relative;
 }
@@ -404,9 +429,8 @@ font-weight: bold;
 }
 .md-left-text{    text-align: left!important;
     padding: -3px;
-    margin-left: -5px;
+    /* margin-left: -5px; */
     position: relative;
-    top:-10px!important;
 
 
 }
@@ -414,7 +438,7 @@ font-weight: bold;
        position: absolute;
     top: -2px;
     font-size: 12px;
-    right: 10px;
+    right: -22px;
         background: rgba(82, 130, 240, 0.48);
         height: 18px;
     width: 18px;
@@ -465,29 +489,33 @@ font-weight: bold;
 
 }
 .container-row-column .row>section>div{
-    float: left;    margin: 0px 0.4%;
+    float: left;   
+     margin-right:3%;
+     margin-left:5px;
 }
 .owl-carousel label{width:100%;display: none;}
 .container-row-column{margin: 0px 13px;}
 .bigitem{float: left;
     flex: none!important;}
-.md-row-h-10{width:15%;}
+.md-row-h-10{width:19%;}
 /* .md-row-h-8{width:8%;} */
-.md-row-h-18{width:16%;}
-.md-row-h-12{width:11%;}
+.md-row-h-18{width:18%;}
+.md-row-h-12{width:14%;}
 .md-row-h-30{width:30%;}
 .md-row-h-20{width:15%;}
 
-.md-row-hd-10{width:15%;}
+.md-row-hd-10{width:18%;}
 .md-row-hd-18{width:18%;}
-
+.header-row div:last-child{
+    margin-right:0px
+}
 
 
 .header-row {
     display: inline-block;}
 .container-row-column .row>div {
     float: left;
-    margin: 0px 0.4%;
+    margin-right: 3%;
 
 }
 .btn-eml-send{width:78px; color: #000}
@@ -502,14 +530,19 @@ font-weight: bold;
 }
 }
 
-@media screen and (max-width: 2000px) {
-
-.md-row-h-10{width:14%;}
-.md-row-h-18{width:18%;}
-.md-row-h-12{width:11%;}
+@media screen and (max-width: 4000px) {
+    .md-row-h-8 {
+        width: 15% !important;
+    }
+.md-row-h-10{width:25%;}
+.md-row-h-18{width:21%;}
+.md-row-h-12{width:14%;}
 .md-row-h-30{width:28%;}
 .md-row-hd-18{width:18%;}
-.header-row div{}
+.header-row div{
+            position: relative;
+        top: -9px;
+}
 }
 
 .owl-nav{display: none;}
@@ -517,6 +550,12 @@ font-weight: bold;
 .nav-side-menu {
     display: block;
 }
+.md-row-h-8 button {
+    width: 48px;
+}
+
+
+
   .label-bold {
         font-size:16px;
     }
@@ -740,7 +779,10 @@ color: #000;
 }
 @media screen and (max-width: 771px) {
 .label-preference , .md-row-h-8 label{
-  font-size: 11px !important;
+  font-size: 15px !important;
+  }
+  .md-row-h-18 .btn{
+            margin-right: 0% !important;
   }
   .md-row-h-18 button {
   font-size: 11px !important;
@@ -771,6 +813,17 @@ font-size: 11px;
     width: 160px !important;
     
 }
+@media screen and (max-width: 900px) {
+    .md-row-h-8 {
+        width: 100% !important;
+    }
+        .md-row-h-8 {
+        top: 184px !important;
+    }
+}
+
+
+
 @media only screen and (max-width: 767px){
     .nav-side-menu-full-container .nav-side-menu .sidebar {
   width: 120px;
@@ -879,14 +932,14 @@ font-size: 11px;
 
 <div class="table table-condensed no-border" id="guestDetailsTable">
 <div class="header-row">
-    <div class="tcont-center md-row-h-8 md-left-text">HEAD CHARTERER
+   <!--  <div class="tcont-center md-row-h-8 md-left-text">HEAD CHARTERER
      <div class="info-box" data-toggle="modal" data-target="#info-modal"><img src="../../../../img/info-icon.jpg"></div>       
-    </div>
+    </div> -->
 <div class="tcont-center md-row-hd-12 md-hdtilt">Title</div>
 <div class="tcont-center md-row-hd-20 p-first-name">First Name</div>
 <div class="tcont-center md-row-hd-20 p-last-name">Last Name</div>
-<div class="tcont-center emailFieldClass md-row-hd-30 p-email-name">Email</div>
-<div class="tcont-center md-row-hd-20 p-prefrenace-name md-row-hd-20-10">Preference Sheets</div>
+<!-- <div class="tcont-center emailFieldClass md-row-hd-30 p-email-name">Email</div> -->
+<div class="tcont-center md-row-hd-20 p-prefrenace-name md-row-hd-20-10">Preferences</div>
 <!--    <th class="tcont-center" colspan="2">Submitted P-Sheets</th> -->
 </div>
 <div id="charterguest">
@@ -902,7 +955,7 @@ font-size: 11px;
 </div></div>
 <div class="col-md-12">
             <div class="pull-right footer-mob-row">
-                <button class="btn btn-success" id="saveBtn">Save</button>
+                <button class="btn btn-success" id="saveBtn">Send Invitation</button>
             </div>
         </div> 
 </div>

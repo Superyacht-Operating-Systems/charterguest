@@ -131,7 +131,7 @@ body .menu .menu__item a{
       margin-top: -50px;
 }
 .md-row-h-18 button{
-  width: 80px!important;
+  width: 110px!important;
   font-size: 12px!important;
 }
 body .menu .menu__item{
@@ -201,7 +201,7 @@ body .menu .menu__item{
   width: 90%;
 }
 .p-last-name{
-  margin-left: 5px!important;
+  margin-left: 0px!important;
 }
 .col-11 ul li a{
   color: #000;
@@ -327,7 +327,7 @@ transition: 0.5s;
 
 .flexrow .two.view-mainrow span.sp-leftalign{
 	text-align: left;
-	 font-size: 18px!important;
+	 font-size: 15px!important;
 	     position: relative;
     width:30%;
 }
@@ -346,7 +346,7 @@ text-align: center;
 text-align: right;
 white-space: nowrap;
 overflow: hidden;
-    font-size: 18px!important;
+    font-size: 15px!important;
     position: relative;
 }
 .flexrow .two.view-mainrow .md-row-space{
@@ -647,7 +647,7 @@ button:hover, button:focus {
 }
 .btn-open1,
 .md-row-h-18 .btn{
-margin-right: 5px;
+margin-right: 10%;
 }
 .btn-warning:focus, 
 .btn-warning:active:hover,
@@ -802,13 +802,13 @@ color: #000;
   color: #fff!important;
 }
 .md-row-hd-12 {
-    width: 11%;
+    width: 14%;
 }
 .p-first-name {
-  width: 15%;
+  width: 20%;
 }
 .p-last-name{
-  width: 15%;
+  width: 20%;
 }
 .p-email-name {
     width: 30%;
@@ -1775,7 +1775,7 @@ position: absolute;
 
 
 .flexrow .two.view-mainrow{
-margin-top: 25px!important;
+margin-top: 35px!important;
 }
 .flexrow .two.view-mainrow span.sp-leftalign{
 width: 300px;
@@ -1784,7 +1784,7 @@ white-space: nowrap;
 .yacht-centerlabel{
     position: absolute;
     left: 0px;
-    font-size: 18px!important;
+    font-size: 15px!important;
     right: 0;
     font-weight: bold;
 }

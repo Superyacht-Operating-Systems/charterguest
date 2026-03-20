@@ -129,7 +129,7 @@
     }
     @media only screen and (min-width:1024px){
     body .mydemolabel {
-  font-size: 36px !important;
+  font-size: 30px !important;
 }
 .yachtHeaderName {
   font-size: 36px;

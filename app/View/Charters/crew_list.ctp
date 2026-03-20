@@ -834,6 +834,13 @@ color: #000;
     padding-top: 0px!important;
     margin-bottom: 100px;
 }
+@media only screen and (max-width: 1100px){
+.flexrow .two.view-mainrow {
+    margin-top: 40px !important;
+}
+}
+
+
 
 @media only screen and (max-width: 771px){
 .flexrow .two.view-mainrow span.sp-leftalign {
