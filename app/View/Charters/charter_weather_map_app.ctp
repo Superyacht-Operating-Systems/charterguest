@@ -1606,7 +1606,7 @@ span.sp-leftalign {
 .yacht-centerlabel {
     position: absolute;
     left: 0px;
-    font-size: 18px!important;
+    font-size: 15px!important;
     right: 0;
     font-weight: bold;
     text-align: center;

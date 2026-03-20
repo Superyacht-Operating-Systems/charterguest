@@ -486,7 +486,7 @@ font-weight: bold;
 
 .none-mob-ctrl{display: none;}
 
-.label-preference{margin-top: 10px; text-align: left;}
+.label-preference{margin-top: 10px;  text-align: center;}
 .btn-warning-bg{
     padding: 0px;
     width: 55px;

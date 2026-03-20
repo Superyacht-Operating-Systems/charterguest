@@ -55,6 +55,20 @@ margin-top: 30px !important;
     color: #f00;
     font-size: 11px;
 }
+
+.form-group {
+    margin-bottom: 0px;
+}
+.login-panel fieldset{
+    width: 300px;
+    margin: 0 auto;
+}
+.login-panel  .logmin {
+    width: 330px;
+}
+
+
+
  @media only screen and (max-width:767px){
  .form-group {
     margin-bottom: 0px!important;
@@ -80,7 +94,7 @@ margin-top: 30px !important;
 
 <div id="tokenDiv" class="panel-body" style="height: 250px; <?php if (isset($urlStatus) && in_array($urlStatus, array('expired', 'not_found'))): ?>display:none;<?php endif; ?>">        
             <?php echo $this->Form->create('CharterGuest', array('url' => array('controller' => 'charters', 'action' => 'index'),'id'=>'tokenVerifyForm'));?>
-    <fieldset style="padding-top:10px;">
+    <fieldset style="padding-top:10px;" class="logmin">
         <input type="hidden" name="charter_uuid" value="<?php echo h(isset($uuid) ? $uuid : ''); ?>">
         <input type="hidden" name="guest_type" value="<?php echo h(isset($guestType) ? $guestType : ''); ?>">
         <input type="hidden" name="link_source" value="<?php echo h(isset($linkSource) ? $linkSource : ''); ?>">
@@ -165,19 +179,33 @@ margin-top: 30px !important;
          <span class="text-small red errorMsg" id="newUsernameError" style="color: red; display:none;">Sorry, this username is already in use</span>
         </div>
        </div>
+       <div class="form-group">
+         Title:
+         <div class="form-group form_margin">
+         <select name="username_security_question_id" id="usernameSecurityQuestion" class="form-select form-control">
+            <option value="">Title</option>
+                        <option value="1">rferrer</option>
+                        <option value="2">dfsfdffdf</option>
+                        </select>
+        </div>
+       </div>
         <div class="form-group mt-45">
          Display Name:
          <div class="row p-left">
-        <div class="col-md-6">
+        <div class="col-md-12">
         <div class="form-group form_margin">
          <input name="new_first_name" id="newFirstName" placeholder="First Name" class="form-control" maxlength="55" type="text">
         </div>
-        </div>
-        <div class="col-md-6">
+        </div>       </div>  </div>
+        <div class="form-group mt-45">
+                    Last Name:
+
+              <div class="row p-left">
+        <div class="col-md-12">
         <div class="form-group form_margin">
          <input name="new_last_name" id="newLastName" placeholder="Last Name" class="form-control" maxlength="55" type="text">
-        </div>
-        </div>
+        </div></div>
+      
         </div>
        </div>
          New Password:

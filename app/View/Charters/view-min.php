@@ -19,7 +19,7 @@
                                     <!-- Empty assoc id -->
                                     <input type="hidden" class="rowInput newGuestAssocId" name="charter_assoc_id[]" value="">
  
-                                    <div class="md-row-h-8 ddddsdd">
+                                    <div class="md-row-h-8 ddddsdd" style="display: none;">
                                         <label>Head Charterer
                                             <span class="tooltip-mob">
                                                  <div class="info-box" data-toggle="modal" data-target="#info-modal"><img src="../../../../img/info-icon.jpg"></div> 
@@ -63,11 +63,15 @@
                                             <label>Last Name</label> 
                                             <input type="text" class="form-control tinput rowInput" name="last_name[]" value="<?php echo $charterData['CharterGuest']['last_name']; ?>" readonly="true" ></div>
                                     
-                                        <!--
+<!-- 
                                            <div class="md-row-h-30"> 
                                            <label>Email</label>  
                                                             <input type="text" class="form-control tinput rowInput form-mob-ctrl" name="email[]"  value="<?php echo $charterData['CharterGuest']['email']; ?>" readonly="true">
                                                 
+<<<<<<< HEAD
+                                        </div>  
+                                    
+                                    </section>
                                         </div>  
                                         -->
                                      </section>
@@ -83,7 +87,7 @@
                                             ?>
 
                                         <div class="md-row-h-18">
-                                             <label class="label-preference">Preferences</label>
+                                             <label class="label-preference">Preferences</label>  
                                              <?php 
                                                  $openButtonLink = "/charters/preference?CharterGuestId=". base64_encode($charterData['CharterGuest']['id']);
 
@@ -115,6 +119,9 @@
                                                 //     }
                                                 // }
                                                 ?>
+                                                <!-- <button type="button" data-charterHeadId="<?php echo $charterData['CharterGuest']['id']; ?>" data-charterAssocId="" data-guestype="owner" data-associd ="<?php echo $charterData['CharterGuest']['id']; ?>" class="btn  btn-eml-send <?php echo $sendMailClassHC; ?> <?php echo $disableBeforesaveHC; ?>  <?php echo ($charterData['CharterGuest']['is_email_sent']) ? "displayNone" : ""; ?>">OPEN</button> -->
+                                                                
+                                                 <!-- <button type="button" data-charterHeadId="<?php echo $charterData['CharterGuest']['id']; ?>" data-charterAssocId="" class="btn btn-eml-send1 sent-btnr  emailSentClass <?php echo ($charterData['CharterGuest']['is_email_sent']) ? "" : "displayNone"; ?>"><a></a></button> -->
                                                 <button type="button" data-charterHeadId="<?php echo $charterData['CharterGuest']['id']; ?>" data-charterAssocId="" data-guestype="owner" data-associd ="<?php echo $charterData['CharterGuest']['id']; ?>" data-email="<?php echo htmlspecialchars($charterData['CharterGuest']['email']); ?>" data-firstname="<?php echo htmlspecialchars($charterData['CharterGuest']['first_name']); ?>" class="btn btn-eml-send <?php echo $sendMailClassHC; ?> openEmailClientBtn <?php echo $disableBeforesaveHC; ?> displayNone">Email</button>
 
                                                  <button type="button" data-charterHeadId="<?php echo $charterData['CharterGuest']['id']; ?>" data-charterAssocId="" class="btn btn-eml-send1 sent-btnr emailSentClass displayNone"><a></a></button>
@@ -137,7 +144,7 @@
                                         <input type="hidden" class="rowInput newGuestAssocId" name="charter_assoc_id[]" value="<?php echo $charterAssoc['CharterGuestAssociate']['id']; ?>">
 
 
-                                         <div class="md-row-h-8">
+                                         <div class="md-row-h-8" style="display: none;">
                                          <label>Head Charterer
                                           <span class="tooltip-mob">
                                                  <div class="info-box" data-toggle="modal" data-target="#info-modal"><img src="../../../../img/info-icon.jpg"></div> 
@@ -228,6 +235,7 @@
                                           <label>Last Name</label>
                                             <input type="text" class="form-control tinput rowInput validateInput" name="last_name[]" value="<?php echo $charterAssoc['CharterGuestAssociate']['last_name']; ?>"></div>
                                   
+                                        <div class="md-row-h-30" style="display:none;">
                                             <!--
                                         <div class="md-row-h-30">
                                                    <label>Email</label>
@@ -245,6 +253,11 @@
                                                     $sendMailBtnDisable = "";
                                                     $sendMailClass = "existingCheckFunction";
                                                 }
+<<<<<<< HEAD
+                                            ?>         </div> 
+                                            
+                                        
+                                        </section>
                                             */?>         </div>  --> </section>
                                                <div class="md-row-h-18">
                                                <label class="label-preference">Preferences</label>
@@ -286,6 +299,8 @@
                                                 
                                             ?>
                                             <?php //echo $baseFolder.$openButtonLink; ?>
+                                            <!-- <button type="button" data-charterHeadId=""  data-charterAssocId="<?php echo $charterAssoc['CharterGuestAssociate']['id']; ?>" data-guestype="guest" data-associd ="<?php echo $charterAssoc['CharterGuestAssociate']['id']; ?>" class="btn btn-danger btn-eml-send <?php echo $sendMailClass; ?> <?php echo $disableBeforesave; ?> <?php echo ($charterAssoc['CharterGuestAssociate']['is_email_sent']) ? "displayNone" : ""; ?>" <?php echo $sendMailBtnDisable; ?>><?php echo $textOpen; ?></button> -->
+                                                                <!-- <button type="button" data-charterHeadId=""  data-charterAssocId="<?php echo $charterAssoc['CharterGuestAssociate']['id']; ?>"  class="btn btn-success btn-eml-send1 sent-btnr emailSentClass <?php echo ($charterAssoc['CharterGuestAssociate']['is_email_sent']) ? "" : "displayNone"; ?>"></button> -->
                                             <button type="button" data-charterHeadId="" data-charterAssocId="<?php echo $charterAssoc['CharterGuestAssociate']['id']; ?>" data-guestype="guest" data-associd="<?php echo $charterAssoc['CharterGuestAssociate']['id']; ?>" data-email="<?php echo htmlspecialchars($charterAssoc['CharterGuestAssociate']['email']); ?>" data-firstname="<?php echo htmlspecialchars($charterAssoc['CharterGuestAssociate']['first_name']); ?>" class="btn btn-danger btn-eml-send <?php echo $sendMailClass; ?> openEmailClientBtn <?php echo $disableBeforesave; ?> displayNone" <?php echo $sendMailBtnDisable; ?>><?php echo $textOpen; ?></button>
                                                                 <button type="button" data-charterHeadId=""  data-charterAssocId="<?php echo $charterAssoc['CharterGuestAssociate']['id']; ?>"  class="btn btn-success btn-eml-send1 sent-btnr emailSentClass displayNone"></button>
 
@@ -307,7 +322,7 @@
                                 <div class="charterRow newGuestAssocRow">
                                 <div class="container-row-column">
                                     <div class="row">
-                                    <div class="md-row-h-8">
+                                    <div class="md-row-h-8" style="display: none;">
                                         <label>Head Charterer
                                          <span class="tooltip-mob">
                                                  <div class="info-box" data-toggle="modal" data-target="#info-modal"><img src="../../../../img/info-icon.jpg"></div> 
@@ -332,6 +347,11 @@
                                             <input type="text" class="form-control tinput rowInput validateInput" name="last_name[]" value="">
                                         </div>
                                
+                                        <!-- <div class="md-row-h-30">
+                                             <label>Email</label>
+                                                                <input type="text" class="form-control tinput rowInput validateInput"  name="email[]" value="">
+    
+                                        </div> -->
                                         <!--
                                         <div class="md-row-h-30">
                                              <label>Email</label>
@@ -342,6 +362,8 @@
                                          <div class="md-row-h-18">
                                             <label class="label-preference">Preferences</label>
                                              <a href="javascript:void(0);" data-charterHeadId=""  data-charterAssocId=""  class="btn btn-default btn-open newGuestAssoc">OPEN</a> 
+                                           <!-- <button type="button" data-charterHeadId=""  data-charterAssocId="" class="btn btn-danger btn-eml-send sendMailClass displayNone">OPEN</button> -->
+                                        <!-- <button type="button" data-charterHeadId=""  data-charterAssocId="" class="sent-btnr btn btn-success btn-eml-send emailSentClass displayNone"></button> -->
                                            <button type="button" data-charterHeadId=""  data-charterAssocId="" class="btn btn-danger btn-eml-send sendMailClass openEmailClientBtn displayNone">Email</button>
                                         <button type="button" data-charterHeadId=""  data-charterAssocId="" class="sent-btnr btn btn-success btn-eml-send emailSentClass displayNone"></button>
 
