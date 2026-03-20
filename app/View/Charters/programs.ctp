@@ -1065,7 +1065,7 @@ if(isset($charterAssocData) && !empty($charterAssocData)){
              
             <li>
             <?php //echo "===>".$is_head_charter;
-            // $is_head_charter based on the value we can find the email recipents or other if 0 
+            // $is_head_charter based on the value we can find the email recipents or other if 0
             // for guest also we need to show the guest list @mar20 2026
             if($is_head_charter == 1 || $is_email_recipent == 0){ ?>
                 <a href="<?php echo $basefolder."/charters/view_guest/".$id."/".$charter_program_id."/".$fleetcompany_id.'/'.$data['charterDetails']['ydb_name'].'/guest'.'/'.$guestListData['GuestList']['guest_type'].'/'.$data['CharterGuestAssociate']['allow_comments']; ?>">Guest List</a>

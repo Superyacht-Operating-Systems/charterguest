@@ -504,7 +504,7 @@ width: max-content;
             <option>Gingers Irish Whiskey</option>
             </select>
             -->
-            <?php echo $this->Form->input("wine_color_list",array("id" => "wine_color_list", "label"=>false,'options' => $colorList,'class'=>'form-control wlinput','empty'=>'Select')); ?>
+            <?php echo $this->Form->input("wine_color_list",array("id" => "wine_color_list", "label"=>false,'options' => isset($colorList) ? $colorList : array(),'class'=>'form-control wlinput','empty'=>'Select')); ?>
             <span id="span_wine_color_list" style="color:red;"> </span>
         </div>
          <div class="form-group">
@@ -791,7 +791,7 @@ width: max-content;
             <option>Gingers Irish Whiskey</option>
             </select>
             -->
-            <?php echo $this->Form->input("product_type",array("id" => "product_type", "label"=>false,'options' => $typeList,'class'=>'form-control bsinput','empty'=>'Select')); ?>
+            <?php echo $this->Form->input("product_type",array("id" => "product_type", "label"=>false,'options' => isset($typeList) ? $typeList : array(),'class'=>'form-control bsinput','empty'=>'Select')); ?>
             <span id="span_product_type" style="color:red;"> </span>
         </div>
          <div class="form-group">
@@ -802,7 +802,7 @@ width: max-content;
             <option>O'Clock Gin</option>
             </select>
             -->
-            <?php echo $this->Form->input("category_list",array("id" => "category_list", "label"=>false,'options' => $categoryList,'class'=>'form-control bsinput','empty'=>'Select')); ?>
+            <?php echo $this->Form->input("category_list",array("id" => "category_list", "label"=>false,'options' => isset($categoryList) ? $categoryList : array(),'class'=>'form-control bsinput','empty'=>'Select')); ?>
             <span id="span_category_list" style="color:red;"> </span>
         </div>
     </div>

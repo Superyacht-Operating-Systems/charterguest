@@ -221,13 +221,14 @@ class ChartersController extends AppController {
         if ($this->request->is('ajax')) {
             $data = $this->request->data;
 
-            $username   = isset($data['reg_username'])    ? trim($data['reg_username'])    : '';
-            $firstName  = isset($data['reg_first_name']) ? trim($data['reg_first_name'])  : '';
-            $lastName   = isset($data['reg_last_name'])  ? trim($data['reg_last_name'])   : '';
-            $password   = isset($data['reg_password'])   ? $data['reg_password']          : '';
-            $uuid       = isset($data['reg_uuid'])       ? trim($data['reg_uuid'])        : '';
-            $guestType  = isset($data['reg_guest_type']) ? trim($data['reg_guest_type'])  : '';
-            $linkSource = isset($data['reg_link_source'])? trim($data['reg_link_source']) : '';
+            $username   = isset($data['reg_username'])         ? trim($data['reg_username'])              : '';
+            $firstName  = isset($data['reg_first_name'])      ? trim($data['reg_first_name'])             : '';
+            $lastName   = isset($data['reg_last_name'])       ? trim($data['reg_last_name'])              : '';
+            $password   = isset($data['reg_password'])        ? $data['reg_password']                    : '';
+            $uuid       = isset($data['reg_uuid'])            ? trim($data['reg_uuid'])                  : '';
+            $guestType  = isset($data['reg_guest_type'])      ? trim($data['reg_guest_type'])             : '';
+            $linkSource = isset($data['reg_link_source'])     ? trim($data['reg_link_source'])            : '';
+            $salutation = isset($data['username_salutation']) ? addslashes(trim($data['username_salutation'])) : '';
 
             if (empty($username) || empty($password) || empty($uuid)) {
                 $result['message'] = 'Missing required fields.';
@@ -293,9 +294,9 @@ class ChartersController extends AppController {
             // -------------------------------------------------------
             if ($linkSource !== 'fleet') {
                 $db->query("INSERT INTO {$ydbname}.passenger_lists
-                    (UUID, email, first_name, family_name, token)
+                    (UUID, email, salutation, first_name, family_name, token)
                     VALUES
-                    ('{$userUUID}', '{$usernameSafe}', '{$firstNameSafe}', '{$lastNameSafe}', '{$userToken}')");
+                    ('{$userUUID}', '{$usernameSafe}', '{$salutation}', '{$firstNameSafe}', '{$lastNameSafe}', '{$userToken}')");
             }
 
             // -------------------------------------------------------
@@ -304,32 +305,32 @@ class ChartersController extends AppController {
             if (!in_array($guestType, array('head_charterer', 'owner'))) {
                 // 5. YACHT DB: charter_guest_associates
                 $db->query("INSERT INTO {$ydbname}.charter_guest_associates
-                    (charter_guest_id, UUID, charter_program_id, allow_comments, first_name, last_name, token, created)
+                    (charter_guest_id, UUID, charter_program_id, allow_comments, salutation, first_name, last_name, token, created)
                     VALUES
-                    ('{$charterProgId}', '{$userUUID}', '{$charterProgId}', '{$allowComments}', '{$firstNameSafe}', '{$lastNameSafe}', '{$userToken}', '{$created}')");
+                    ('{$charterProgId}', '{$userUUID}', '{$charterProgId}', '{$allowComments}', '{$salutation}', '{$firstNameSafe}', '{$lastNameSafe}', '{$userToken}', '{$created}')");
 
                 // 7. db_checklistapp: charter_guest_associates
                 $db->query("INSERT INTO db_checklistapp.charter_guest_associates
                     (charter_guest_id, UUID, email, username, token, password, charter_program_id, yacht_id, created,
-                     fleetcompany_id, is_head_charterer, allow_comments, first_name, last_name, is_email_recipient)
+                     fleetcompany_id, is_head_charterer, allow_comments, salutation, first_name, last_name, is_email_recipient)
                     VALUES
                     ('{$charterProgId}', '{$userUUID}', '{$usernameSafe}', '{$usernameSafe}', '{$userToken}', '{$hashedPwd}', '{$charterProgId}',
                      {$yachtId}, '{$created}', '{$charterCompanyId}', '0', '{$allowComments}',
-                     '{$firstNameSafe}', '{$lastNameSafe}', '{$isEmailRecipient}')");
+                     '{$salutation}', '{$firstNameSafe}', '{$lastNameSafe}', '{$isEmailRecipient}')");
             }
 
             // -------------------------------------------------------
             // 6. db_checklistapp: guest_lists — INSERT new user record
             // -------------------------------------------------------
             $db->query("INSERT INTO db_checklistapp.guest_lists
-                (UUID, username, first_name, last_name, password, email,
+                (UUID, username, salutation, first_name, last_name, password, email,
                  fleetcompany_id, yacht_id, guest_type, token, charter_guest_id,
                  username_recovery_hint, username_security_question_id, username_security_answer,
                  password_security_question_id_1, password_security_answer_1,
                  password_security_question_id_2, password_security_answer_2,
                  status, is_deleted)
                 VALUES
-                ('{$userUUID}', '{$usernameSafe}', '{$firstNameSafe}', '{$lastNameSafe}', '{$hashedPwd}', '{$usernameSafe}',
+                ('{$userUUID}', '{$usernameSafe}', '{$salutation}', '{$firstNameSafe}', '{$lastNameSafe}', '{$hashedPwd}', '{$usernameSafe}',
                  '{$charterCompanyId}', '{$yachtId}', '{$newGuestType}', '{$userToken}', '{$charterProgId}',
                  '{$recoveryHint}', '{$uQuestionId}', '{$uAnswer}',
                  '{$pQId1}', '{$pAnswer1}', '{$pQId2}', '{$pAnswer2}',
@@ -340,13 +341,15 @@ class ChartersController extends AppController {
             // -------------------------------------------------------
             if (in_array($guestType, array('head_charterer', 'owner'))) {
                 $db->query("UPDATE {$ydbname}.charter_programs
-                    SET first_name = '{$firstNameSafe}',
+                    SET salutation = '{$salutation}',
+                        first_name = '{$firstNameSafe}',
                         last_name  = '{$lastNameSafe}',
                         users_UUID = '{$userUUID}'
                     WHERE UUID = '{$charterProgId}'");
 
                 $db->query("UPDATE db_checklistapp.charter_guests
-                    SET first_name = '{$firstNameSafe}',
+                    SET salutation = '{$salutation}',
+                        first_name = '{$firstNameSafe}',
                         last_name  = '{$lastNameSafe}',
                         users_UUID = '{$userUUID}',
                         email      = '{$usernameSafe}',
@@ -558,13 +561,14 @@ class ChartersController extends AppController {
             $yachtName = isset($yachtRows[0]['yachts']['yfullName']) ? $yachtRows[0]['yachts']['yfullName'] : $ydbname;
 
             // Use existing user's data
-            $userUUID     = $guestData['UUID'];
-            $usernameSafe = addslashes($guestData['username']);
+            $userUUID      = $guestData['UUID'];
+            $usernameSafe  = addslashes($guestData['username']);
             $firstNameSafe = addslashes($guestData['first_name']);
             $lastNameSafe  = addslashes($guestData['last_name']);
-            $userToken    = $guestData['token'];
-            $hashedPwd    = $guestData['password'];
-            $created      = date('Y-m-d H:i:s');
+            $userToken     = $guestData['token'];
+            $hashedPwd     = $guestData['password'];
+            $salutation    = isset($guestData['salutation']) ? addslashes($guestData['salutation']) : '';
+            $created       = date('Y-m-d H:i:s');
 
             // 1. Yacht DB: passenger_lists — skip if link came from fleet site
             if ($linkSource !== 'fleet') {
@@ -585,8 +589,8 @@ class ChartersController extends AppController {
                 $existYCga = $db->query("SELECT id, charter_guest_id FROM {$ydbname}.charter_guest_associates WHERE (email = '{$usernameSafe}' OR UUID = '{$userUUID}') AND charter_program_id = '{$charterProgId}' LIMIT 1");
                 if (empty($existYCga)) {
                     $db->query("INSERT INTO {$ydbname}.charter_guest_associates
-                        (charter_guest_id, UUID, email, charter_program_id, allow_comments, first_name, last_name, token, created)
-                        VALUES ('{$charterProgId}', '{$userUUID}', '{$usernameSafe}', '{$charterProgId}', '{$allowComments}', '{$firstNameSafe}', '{$lastNameSafe}', '{$userToken}', '{$created}')");
+                        (charter_guest_id, UUID, email, charter_program_id, allow_comments, salutation, first_name, last_name, token, created)
+                        VALUES ('{$charterProgId}', '{$userUUID}', '{$usernameSafe}', '{$charterProgId}', '{$allowComments}', '{$salutation}', '{$firstNameSafe}', '{$lastNameSafe}', '{$userToken}', '{$created}')");
                 } else if (empty($existYCga[0]['charter_guest_associates']['charter_guest_id'])) {
                     $db->query("UPDATE {$ydbname}.charter_guest_associates
                         SET charter_guest_id = '{$charterProgId}'
@@ -598,10 +602,10 @@ class ChartersController extends AppController {
                 if (empty($existCga)) {
                     $db->query("INSERT INTO db_checklistapp.charter_guest_associates
                         (charter_guest_id, UUID, email, username, token, password, charter_program_id, yacht_id, created,
-                         fleetcompany_id, is_head_charterer, allow_comments, first_name, last_name, is_email_recipient)
+                         fleetcompany_id, is_head_charterer, allow_comments, salutation, first_name, last_name, is_email_recipient)
                         VALUES
                         ('{$charterProgId}', '{$userUUID}', '{$usernameSafe}', '{$usernameSafe}', '{$userToken}', '{$hashedPwd}', '{$charterProgId}',
-                         {$yachtId}, '{$created}', '{$charterCompanyId}', '0', '{$allowComments}', '{$firstNameSafe}', '{$lastNameSafe}', '{$isEmailRecipient}')");
+                         {$yachtId}, '{$created}', '{$charterCompanyId}', '0', '{$allowComments}', '{$salutation}', '{$firstNameSafe}', '{$lastNameSafe}', '{$isEmailRecipient}')");
                 }
             }
 
@@ -2335,7 +2339,7 @@ class ChartersController extends AppController {
      $charterAssocData = $this->CharterGuestAssociate->find('first', array(
          'conditions' => $charterAssocConditions
      ));
-     if(isset($charterAssocData) && $charterAssocData!=''){
+     if(!empty($charterAssocData) && isset($charterAssocData['CharterGuestAssociate'])){
          $associd = $charterAssocData['CharterGuestAssociate']['id'];
          $is_head_charter = $charterAssocData['CharterGuestAssociate']['is_head_charterer'];
          $this->set('is_head_charter',$is_head_charter);
@@ -2416,7 +2420,11 @@ class ChartersController extends AppController {
 
         /****************** */
         $programFiles  = array();
-        $mapdetails = array();
+        $mapdetails    = array();
+        $attachment    = array();
+        $website       = '';
+        $SITE_URL      = 'https://charterguest.net/';
+        $fleetname     = '';
         $programFilesCond = array('CharterProgramFile.charter_program_id' => $charterData['CharterGuest']['charter_program_id'],'CharterProgramFile.yacht_id' => $charterData['CharterGuest']['yacht_id'],'CharterProgramFile.is_deleted'=>0);
         $programFiledata = $this->CharterProgramFile->find('all', array('conditions' => $programFilesCond));
 
@@ -2591,7 +2599,7 @@ class ChartersController extends AppController {
      $charterAssocData = $this->CharterGuestAssociate->find('first', array(
          'conditions' => $charterAssocConditions
      ));
-     if(isset($charterAssocData) && $charterAssocData!=''){
+     if(!empty($charterAssocData) && isset($charterAssocData['CharterGuestAssociate'])){
          $associd = $charterAssocData['CharterGuestAssociate']['id'];
          $is_head_charter = $charterAssocData['CharterGuestAssociate']['is_head_charterer'];
          $this->set('is_head_charter',$is_head_charter);
@@ -2604,8 +2612,9 @@ class ChartersController extends AppController {
      }
      // echo "<pre>"; print_r($charterAssocData); exit; 
      $YachtWeblinkdata = $this->CharterProgramFile->query("SELECT * FROM $ydb_name.yachts");
-          
+
      //echo "<pre>";print_r($YachtWeblinkdata); exit;
+      $website = '';
       if(isset($YachtWeblinkdata) && !empty($YachtWeblinkdata)){
           //$isValid = preg_match("@^https?://@", $YachtWeblinkdata['YachtWeblink']['weblink']);
           //echo "<pre>";print_r($YachtWeblinkdata); exit;
@@ -2766,9 +2775,10 @@ class ChartersController extends AppController {
                 $this->Session->write("cgBackgroundImage", $cgBackgroundImage);
         }
            // collecting nav panel details for common
-           if(isset($guesttype) && ($guesttype == "owner")){ 
+           $guestlink = '';
+           if(isset($guesttype) && ($guesttype == "owner")){
                 $guestlink = "/charters/view/".$charterData['CharterGuest']['id']."/".$charterData['CharterGuest']['charter_program_id']."/".$charterData['CharterGuest']['charter_company_id'];
-            }else if(isset($guesttype) && ($guesttype == "guest")){ 
+            }else if(isset($guesttype) && ($guesttype == "guest")){
                 $guestlink = "/charters/view_guest/".$charterData['CharterGuest']['charter_program_id']."/".$charterData['CharterGuest']['charter_company_id'];
             }
             $this->set('guestlink', $guestlink);

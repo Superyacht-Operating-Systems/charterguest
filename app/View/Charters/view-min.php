@@ -244,21 +244,11 @@
                                            
 
                                  
-                                            <?php 
-                                              /*  $sendMailClass = "sendMailClass";
+                                            <?php
+                                                $sendMailClass = "sendMailClass";
                                                 $sendMailBtnDisable = "";
-                                                // Disabling the SEND MAIL button if head charterer is checked
-                                                //if ($charterAssoc['CharterGuestAssociate']['is_head_charterer']) {
-                                                if (isset($charterAssoc['CharterGuestAssociate']['is_head_charterer']) && $charterAssoc['CharterGuestAssociate']['is_head_charterer'] !=1) {
-                                                    $sendMailBtnDisable = "";
-                                                    $sendMailClass = "existingCheckFunction";
-                                                }
-<<<<<<< HEAD
-                                            ?>         </div> 
-                                            
-                                        
+                                            ?>
                                         </section>
-                                            */?>         </div>  --> </section>
                                                <div class="md-row-h-18">
                                                <label class="label-preference">Preferences</label>
                                                  <?php
@@ -299,8 +289,8 @@
                                                 
                                             ?>
                                             <?php //echo $baseFolder.$openButtonLink; ?>
-                                            <!-- <button type="button" data-charterHeadId=""  data-charterAssocId="<?php echo $charterAssoc['CharterGuestAssociate']['id']; ?>" data-guestype="guest" data-associd ="<?php echo $charterAssoc['CharterGuestAssociate']['id']; ?>" class="btn btn-danger btn-eml-send <?php echo $sendMailClass; ?> <?php echo $disableBeforesave; ?> <?php echo ($charterAssoc['CharterGuestAssociate']['is_email_sent']) ? "displayNone" : ""; ?>" <?php echo $sendMailBtnDisable; ?>><?php echo $textOpen; ?></button> -->
-                                                                <!-- <button type="button" data-charterHeadId=""  data-charterAssocId="<?php echo $charterAssoc['CharterGuestAssociate']['id']; ?>"  class="btn btn-success btn-eml-send1 sent-btnr emailSentClass <?php echo ($charterAssoc['CharterGuestAssociate']['is_email_sent']) ? "" : "displayNone"; ?>"></button> -->
+                                            <!-- <button type="button" data-charterHeadId=""  data-charterAssocId="<?php //echo $charterAssoc['CharterGuestAssociate']['id']; ?>" data-guestype="guest" data-associd ="<?php //echo $charterAssoc['CharterGuestAssociate']['id']; ?>" class="btn btn-danger btn-eml-send <?php //echo $sendMailClass; ?> <?php //echo $disableBeforesave; ?> <?php //echo ($charterAssoc['CharterGuestAssociate']['is_email_sent']) ? "displayNone" : ""; ?>" <?php //echo $sendMailBtnDisable; ?>><?php //echo $textOpen; ?></button> -->
+                                                                <!-- <button type="button" data-charterHeadId=""  data-charterAssocId="<?php //echo $charterAssoc['CharterGuestAssociate']['id']; ?>"  class="btn btn-success btn-eml-send1 sent-btnr emailSentClass <?php //echo ($charterAssoc['CharterGuestAssociate']['is_email_sent']) ? "" : "displayNone"; ?>"></button> -->
                                             <button type="button" data-charterHeadId="" data-charterAssocId="<?php echo $charterAssoc['CharterGuestAssociate']['id']; ?>" data-guestype="guest" data-associd="<?php echo $charterAssoc['CharterGuestAssociate']['id']; ?>" data-email="<?php echo htmlspecialchars($charterAssoc['CharterGuestAssociate']['email']); ?>" data-firstname="<?php echo htmlspecialchars($charterAssoc['CharterGuestAssociate']['first_name']); ?>" class="btn btn-danger btn-eml-send <?php echo $sendMailClass; ?> openEmailClientBtn <?php echo $disableBeforesave; ?> displayNone" <?php echo $sendMailBtnDisable; ?>><?php echo $textOpen; ?></button>
                                                                 <button type="button" data-charterHeadId=""  data-charterAssocId="<?php echo $charterAssoc['CharterGuestAssociate']['id']; ?>"  class="btn btn-success btn-eml-send1 sent-btnr emailSentClass displayNone"></button>
 

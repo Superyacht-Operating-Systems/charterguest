@@ -1555,6 +1555,8 @@ $("#saveBtn").on("click", function(e) {
 
 // Save & Email button
 $("#saveAndEmailBtn").on("click", function(e) {
+
+    /* --- SAVE functionality commented out temporarily ---
     var error = 0;
     $(".inputError").removeClass('inputError');
     $("#guestDetailsTable div").each(function() {
@@ -1601,36 +1603,42 @@ $("#saveAndEmailBtn").on("click", function(e) {
         success: function(result) {
             $("#hideloader").hide();
             if (result.status == 'success') {
-                var charterId   = $("#charterProgramId").val();
-                var yachtName   = $("#yachtName").val();
-                var headName    = $("#headChartererName").val();
-                var captainName = $("#captainName").val();
-                $.ajax({
-                    type: "POST",
-                    url: BASE_FOLDER + "/charters/getEncryptedShareUrl",
-                    data: { uuid: charterId },
-                    dataType: "json",
-                    success: function(res) {
-                        var loginUrl = (res && res.success && res.url) ? res.url : 'https://charterguest.net/charterguest/';
-                        var subject  = 'Welcome to the charter guest program for the ' + yachtName;
-                        var body =
-                            'You have been invited to join ' + headName + ' for a cruise onboard the ' + yachtName + '.\n\n'
-                            + 'To tailor our services so we can provide you a 7 star experience we kindly request that you login to the below secure website and complete your preference sheets.\n\n'
-                            + loginUrl + '\n\n'
-                            + 'When you complete your preference sheets ' + headName + ' will be notified by email and your completed preference sheets and personal details will be automatically made available to the Captain of the ' + yachtName + '.\n\n'
-                            + 'Please watch this 3 min video to learn how to use the charter guest program:\n'
-                            + 'https://youtu.be/5MYJqIhZnHo\n\n'
-                            + 'We look forward to welcoming you onboard soon.\n\n'
-                            + 'Kind regards,\n'
-                            + captainName + '\n'
-                            + yachtName;
-                        window.location.href = 'mailto:?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
-                        setTimeout(function() { location.reload(); }, 1000);
-                    },
-                    error: function() {
-                        location.reload();
-                    }
-                });
+    --- END SAVE functionality --- */
+
+    // Directly open email client
+    var charterId   = $("#charterProgramId").val();
+    var yachtName   = $("#yachtName").val();
+    var headName    = $("#headChartererName").val();
+    var captainName = $("#captainName").val();
+    $("#hideloader").show();
+    $.ajax({
+        type: "POST",
+        url: BASE_FOLDER + "/charters/getEncryptedShareUrl",
+        data: { uuid: charterId },
+        dataType: "json",
+        success: function(res) {
+            $("#hideloader").hide();
+            var loginUrl = (res && res.success && res.url) ? res.url : 'https://charterguest.net/charterguest/';
+            var subject  = 'Welcome to the charter guest program for the ' + yachtName;
+            var body =
+                'You have been invited to join ' + headName + ' for a cruise onboard the ' + yachtName + '.\n\n'
+                + 'To tailor our services so we can provide you a 7 star experience we kindly request that you login to the below secure website and complete your preference sheets.\n\n'
+                + loginUrl + '\n\n'
+                + 'When you complete your preference sheets ' + headName + ' will be notified by email and your completed preference sheets and personal details will be automatically made available to the Captain of the ' + yachtName + '.\n\n'
+                + 'Please watch this 3 min video to learn how to use the charter guest program:\n'
+                + 'https://youtu.be/5MYJqIhZnHo\n\n'
+                + 'We look forward to welcoming you onboard soon.\n\n'
+                + 'Kind regards,\n'
+                + captainName + '\n'
+                + yachtName;
+            window.location.href = 'mailto:?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+        },
+        error: function() {
+            $("#hideloader").hide();
+        }
+    });
+
+    /* --- SAVE functionality commented out temporarily ---
             } else {
                 alert('Please select if guest is Head Charterer or not.');
             }
@@ -1639,6 +1647,7 @@ $("#saveAndEmailBtn").on("click", function(e) {
             $("#hideloader").hide();
         }
     });
+    --- END SAVE functionality --- */
 });
 
 </script>

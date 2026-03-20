@@ -182,11 +182,25 @@ margin-top: 30px !important;
        <div class="form-group">
          Title:
          <div class="form-group form_margin">
-         <select name="username_security_question_id" id="usernameSecurityQuestion" class="form-select form-control">
+         <select name="username_salutation" id="username_salutation" class="form-select form-control">
             <option value="">Title</option>
-                        <option value="1">rferrer</option>
-                        <option value="2">dfsfdffdf</option>
-                        </select>
+            <option value="Mr.">Mr.</option>
+            <option value="Ms.">Ms.</option>
+            <option value="Mrs.">Mrs.</option>
+            <option value="Miss">Miss</option>
+            <option value="Dr.">Dr.</option>
+            <option value="Prof.">Prof.</option>
+            <option value="Rev.">Rev.</option>
+            <option value="Lady">Lady</option>
+            <option value="Sir">Sir</option>
+            <option value="The Hon. Mr">The Hon. Mr</option>
+            <option value="The Hon. Mrs">The Hon. Mrs</option>
+            <option value="Dame">Dame</option>
+            <option value="Monsieur">Monsieur</option>
+            <option value="Madame">Madame</option>
+            <option value="Judge">Judge</option>
+            <option value="Lord">Lord</option>
+         </select>
         </div>
        </div>
         <div class="form-group mt-45">
@@ -235,6 +249,7 @@ margin-top: 30px !important;
         <input type="hidden" id="hiddenUuid" name="reg_uuid" value="<?php echo h($uuid); ?>">
         <input type="hidden" name="reg_guest_type" value="<?php echo h(isset($guestType) ? $guestType : ''); ?>">
         <input type="hidden" name="reg_link_source" value="<?php echo h(isset($linkSource) ? $linkSource : ''); ?>">
+        <input type="hidden" id="hiddenSalutation" name="username_salutation">
         <fieldset style="padding-top:10px;">
          Username Recovery Hint:
          <div class="form-group form_margin">
@@ -592,6 +607,7 @@ $("#passwordSubmit").on("click", function(e) {
 // Profile setup form submit — save new user
 $("#profileSetupSubmit").on("click", function(e) {
     e.preventDefault();
+    $("#hiddenSalutation").val($("#username_salutation").val());
 
     var hint     = $("#usernameRecoveryHint").val().trim();
     var uQuestion = $("#usernameSecurityQuestion").val();
