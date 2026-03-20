@@ -304,9 +304,9 @@ class ChartersController extends AppController {
             if (!in_array($guestType, array('head_charterer', 'owner'))) {
                 // 5. YACHT DB: charter_guest_associates
                 $db->query("INSERT INTO {$ydbname}.charter_guest_associates
-                    (UUID, charter_program_id, allow_comments, first_name, last_name, token, created)
+                    (charter_guest_id, UUID, charter_program_id, allow_comments, first_name, last_name, token, created)
                     VALUES
-                    ('{$userUUID}', '{$charterProgId}', '{$allowComments}', '{$firstNameSafe}', '{$lastNameSafe}', '{$userToken}', '{$created}')");
+                    ('{$charterProgId}', '{$userUUID}', '{$charterProgId}', '{$allowComments}', '{$firstNameSafe}', '{$lastNameSafe}', '{$userToken}', '{$created}')");
 
                 // 7. db_checklistapp: charter_guest_associates
                 $db->query("INSERT INTO db_checklistapp.charter_guest_associates
@@ -582,11 +582,15 @@ class ChartersController extends AppController {
             $isEmailRecipient = (strpos($newGuestType, 'email_recipient') !== false) ? '1' : '0';
             if (!in_array($guestType, array('head_charterer', 'owner'))) {
                 // 2. Yacht DB: charter_guest_associates
-                $existYCga = $db->query("SELECT id FROM {$ydbname}.charter_guest_associates WHERE (email = '{$usernameSafe}' OR UUID = '{$userUUID}') AND charter_program_id = '{$charterProgId}' LIMIT 1");
+                $existYCga = $db->query("SELECT id, charter_guest_id FROM {$ydbname}.charter_guest_associates WHERE (email = '{$usernameSafe}' OR UUID = '{$userUUID}') AND charter_program_id = '{$charterProgId}' LIMIT 1");
                 if (empty($existYCga)) {
                     $db->query("INSERT INTO {$ydbname}.charter_guest_associates
                         (charter_guest_id, UUID, email, charter_program_id, allow_comments, first_name, last_name, token, created)
                         VALUES ('{$charterProgId}', '{$userUUID}', '{$usernameSafe}', '{$charterProgId}', '{$allowComments}', '{$firstNameSafe}', '{$lastNameSafe}', '{$userToken}', '{$created}')");
+                } else if (empty($existYCga[0]['charter_guest_associates']['charter_guest_id'])) {
+                    $db->query("UPDATE {$ydbname}.charter_guest_associates
+                        SET charter_guest_id = '{$charterProgId}'
+                        WHERE (email = '{$usernameSafe}' OR UUID = '{$userUUID}') AND charter_program_id = '{$charterProgId}'");
                 }
 
                 // 3. db_checklistapp: charter_guest_associates
