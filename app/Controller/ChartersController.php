@@ -294,9 +294,9 @@ class ChartersController extends AppController {
             // -------------------------------------------------------
             if ($linkSource !== 'fleet') {
                 $db->query("INSERT INTO {$ydbname}.passenger_lists
-                    (UUID, email, salutation, first_name, family_name, token)
+                    (UUID, salutation, first_name, family_name, token)
                     VALUES
-                    ('{$userUUID}', '{$usernameSafe}', '{$salutation}', '{$firstNameSafe}', '{$lastNameSafe}', '{$userToken}')");
+                    ('{$userUUID}', '{$salutation}', '{$firstNameSafe}', '{$lastNameSafe}', '{$userToken}')");
             }
 
             // -------------------------------------------------------
@@ -575,8 +575,8 @@ class ChartersController extends AppController {
                 $existing = $db->query("SELECT id FROM {$ydbname}.passenger_lists WHERE email = '{$usernameSafe}' OR UUID = '{$userUUID}' LIMIT 1");
                 if (empty($existing)) {
                     $db->query("INSERT INTO {$ydbname}.passenger_lists
-                        (UUID, email, first_name, family_name, token)
-                        VALUES ('{$userUUID}', '{$usernameSafe}', '{$firstNameSafe}', '{$lastNameSafe}', '{$userToken}')");
+                        (UUID, first_name, family_name, token)
+                        VALUES ('{$userUUID}', '{$firstNameSafe}', '{$lastNameSafe}', '{$userToken}')");
                 }
             }
 
