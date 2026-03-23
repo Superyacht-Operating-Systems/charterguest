@@ -1774,9 +1774,7 @@ position: absolute;
 
 
 
-.flexrow .two.view-mainrow{
-margin-top: 35px!important;
-}
+
 .flexrow .two.view-mainrow span.sp-leftalign{
 width: 300px;
 white-space: nowrap;
@@ -1931,6 +1929,9 @@ white-space: nowrap;
   .logoimg + a.navbar-brand.logotxt{display:none;}
 .dropdown.user-dropdown a br{display: block;}
 .dropdown.user-dropdown a i{display:none;}
+.flexrow .two.view-mainrow{
+margin-top: 35px!important;
+}
 }
 .location{float:left;}
 .location span{float:left; font-size:15px; line-height:32px; margin-left:0; margin-right:10px;}
@@ -3455,6 +3456,7 @@ font-size: 30px!important;
 }
 body .mydemolabel{
   font-size: 30px!important;
+  margin-top: 0;
 }
 .top-align-md-class {
 display:none!important  ;
@@ -5788,4 +5790,23 @@ cursor: pointer;
 .sidebar a {
   height: 37px;
   line-height: 17px;
+}
+
+
+@media only screen and (max-width:990px){
+.nav-side-menu-full-container .nav-side-menu .sidebar-btn{
+    top: -14px;
+}
+.dbtn-none{
+    display: none !important;
+}
+}
+
+
+
+
+@media (min-width: 768px) {
+     .container {
+        width: 100%;
+    }
 }

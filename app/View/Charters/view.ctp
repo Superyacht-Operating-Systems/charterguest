@@ -961,12 +961,10 @@ font-size: 11px;
 <?php } ?>
 </div></div>
 <div class="col-md-12">
-            <div class="pull-right footer-mob-row">
                 <!-- <button class="btn btn-success" id="saveBtn"></button> -->
             <div class="pull-right footer-mob-row" style="display:flex;align-items:center;gap:8px;">
                 <!-- <button class="btn btn-success" id="saveBtn">Save</button> -->
                 <button class="btn btn-primary" id="saveAndEmailBtn">Send Invitation</button>
-            </div>
         </div> 
 </div>
 </div></div></div>
