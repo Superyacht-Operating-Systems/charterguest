@@ -1917,9 +1917,17 @@ white-space: nowrap;
     width: 23%;
 }
 .p-prefrenace-name {
-    width: 18%!important;
+    width: 14%!important;
 }
-
+    body .p-first-name {
+        width: 30%;
+    }
+        .md-row-h-18 {
+        width: 18% !important;
+    }
+.p-prefrenace-name {
+        width: 22% !important;
+    }
 }
 
 
@@ -3194,7 +3202,7 @@ and (orientation : portrait) {
     width: 15%!important;
 }
 .md-row-h-18 {
-    width: 18%!important;
+    width: 21%!important;
 }
 a.logotxt{
   width: 55%;
@@ -3764,6 +3772,13 @@ border:none;
   display: none!important;
 }
 
+
+.md-row-h-18 {
+        margin-top: -20px;
+    }
+body .md-row-h-30 .md-row-h-30 {
+    margin-bottom: 0 !important;
+}
 .foodpreferences-container table.table tbody tr{
 position: relative;
 
@@ -4537,7 +4552,6 @@ left: 0px!important;
 .survey-contain-row  .radio label{
   padding-left: 0px!important;
       color: #000;
-}
 }
 
 @media only screen and (max-width: 520px){
@@ -5585,7 +5599,7 @@ label.footsize{
 @media only screen and (max-width:1024px)
 { 
 .md-row-hd-12{
-  width: 12%;
+  width: 14%;
 }
 .p-email-name {
     width: 24%;
@@ -5799,6 +5813,9 @@ cursor: pointer;
 }
 .dbtn-none{
     display: none !important;
+}
+body .mydemolabel{
+            margin-top: 15px !important;
 }
 }
 
