@@ -999,6 +999,15 @@ if(isset($charterAssocData) && !empty($charterAssocData)){
             // email recipent
             $is_email_recipent = $data['CharterGuestAssociate']['is_email_recipient'];
 
+            // Derive simple guest_type for URLs (guest_lists.guest_type is compound e.g. "148-74-guest,310-74-email_recipient")
+            if ($is_head_charter == 1) {
+                $simpleGuestType = 'head_charterer';
+            } else if ($is_email_recipent == 1) {
+                $simpleGuestType = 'email_recipient';
+            } else {
+                $simpleGuestType = 'guest';
+            }
+
             
 
             $associd = $data['CharterGuestAssociate']['id'];
@@ -1052,14 +1061,14 @@ if(isset($charterAssocData) && !empty($charterAssocData)){
             <li><a href="<?php echo $website; ?>" target="_blank" style="text-decoration:none;">Yachts Website</a></li>
            
             <?php if($data['charterDetails']['map_url'] == "link"){ ?>
-              <li><a href="<?php echo $baseFolder."/charters/charter_program_map/".$charter_program_id.'/'.$data['charterDetails']['ydb_name'].'/guest'.'/'.$guestListData['GuestList']['guest_type'].'/'.$data['CharterGuestAssociate']['allow_comments']; ?>" title="Map is Published">Cruising Map</a><?php if(isset($msg_count_assc) && $msg_count_assc > 0){ ?><span class="cardbell-icon"><span class="avacard-cunt"><?php echo $msg_count_assc; ?></span><i class="fa fa-bell"></i></span><?php } ?> </li>
+              <li><a href="<?php echo $baseFolder."/charters/charter_program_map/".$charter_program_id.'/'.$data['charterDetails']['ydb_name'].'/guest'.'/'.$simpleGuestType.'/'.$data['CharterGuestAssociate']['allow_comments']; ?>" title="Map is Published">Cruising Map</a><?php if(isset($msg_count_assc) && $msg_count_assc > 0){ ?><span class="cardbell-icon"><span class="avacard-cunt"><?php echo $msg_count_assc; ?></span><i class="fa fa-bell"></i></span><?php } ?> </li>
             <?php }else if($data['charterDetails']['map_url'] == "nolink"){  ?>
             <!-- <li><span datahover="Map is Not Published" title="Map is Not Published"><a href="#" role="button" title="Map is Not Published" aria-current="mapnolink">Cruising Map</a></span> </li> -->
             <li class="btnNoLink" data-value="<?php echo $id; ?>"><span datahover="Map is Not Published" title="Map is Not Published"><a   role="button" title="Map is Not Published" aria-current="mapnolink">Cruising Map</a></span></li>
             <?php } ?>
             <!-- <li><a href="#"><span class="" >Memories</span></a></li> -->
             <!--<li><a href="#"><span class="" >Crew List11111</span></a></li>-->
-            <li><a href="<?php echo $basefolder."/charters/crew_list/".$id."/".$charter_program_id."/".$fleetcompany_id.'/guest'."/".$guestListData['GuestList']['guest_type']."/".$data['CharterGuestAssociate']['allow_comments']; ?>"><span class="" >Crew List</span></a></li>
+            <li><a href="<?php echo $basefolder."/charters/crew_list/".$id."/".$charter_program_id."/".$fleetcompany_id.'/guest'."/".$simpleGuestType."/".$data['CharterGuestAssociate']['allow_comments']; ?>"><span class="" >Crew List</span></a></li>
             
              <!-- only show guest type not email recipient -->
              
@@ -1068,7 +1077,7 @@ if(isset($charterAssocData) && !empty($charterAssocData)){
             // $is_head_charter based on the value we can find the email recipents or other if 0
             // for guest also we need to show the guest list @mar20 2026
             if($is_head_charter == 1 || $is_email_recipent == 0){ ?>
-                <a href="<?php echo $basefolder."/charters/view_guest/".$id."/".$charter_program_id."/".$fleetcompany_id.'/'.$data['charterDetails']['ydb_name'].'/guest'.'/'.$guestListData['GuestList']['guest_type'].'/'.$data['CharterGuestAssociate']['allow_comments']; ?>">Guest List</a>
+                <a href="<?php echo $basefolder."/charters/view_guest/".$id."/".$charter_program_id."/".$fleetcompany_id.'/'.$data['charterDetails']['ydb_name'].'/guest'.'/'.$simpleGuestType.'/'.$data['CharterGuestAssociate']['allow_comments']; ?>">Guest List</a>
                 <?php } ?>
             </li>
             

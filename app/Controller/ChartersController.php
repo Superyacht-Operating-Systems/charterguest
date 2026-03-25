@@ -2303,9 +2303,10 @@ class ChartersController extends AppController {
         //echo "<pre>";print_r($guestType);exit;
          // collecting nav panel details for common
          //echo "<pre>"; print_r($guesttype); exit;
-         if(isset($guesttype) && ($guesttype == "owner")){ 
+        $guestlink = '';
+         if(isset($guesttype) && ($guesttype == "owner")){
             $guestlink = "/charters/view/".$charterData['CharterGuest']['id']."/".$charterData['CharterGuest']['charter_program_id']."/".$charterData['CharterGuest']['charter_company_id'];
-        }else if(isset($guesttype) && ($guesttype == "guest")){ 
+        }else if(isset($guesttype) && ($guesttype == "guest")){
             $guestlink = "/charters/view_guest/".$charterData['CharterGuest']['charter_program_id']."/".$charterData['CharterGuest']['charter_company_id'];
         }
         //echo "<pre>"; print_r($guestlink); exit;
