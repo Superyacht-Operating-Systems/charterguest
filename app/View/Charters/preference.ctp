@@ -346,7 +346,7 @@ body .menu .menu__item a{
   overflow-y: inherit;
 }
 body .menu .submenu .menu__item a {
-  padding: 8px 8px;
+  padding: 9px 8px;
   border: none;
 }
 .menu .submenu .menu__item:hover{

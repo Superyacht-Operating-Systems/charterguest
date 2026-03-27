@@ -836,7 +836,7 @@ color: #000;
 }
 @media only screen and (max-width: 1100px){
 .flexrow .two.view-mainrow {
-    margin-top: 40px !important;
+    /* margin-top: 40px !important; */
 }
 }
 
@@ -844,8 +844,14 @@ color: #000;
 
 @media only screen and (max-width: 771px){
 .flexrow .two.view-mainrow span.sp-leftalign {
-    margin-top: 10px;
-}}
+    margin-top: 0px;
+}
+    .flexrow .two.view-mainrow .md-row-space {
+        padding-top: 0px;
+    }
+
+
+}
 @media only screen and (min-width: 772px) and (max-width: 990px){
 .yacht-centerlabel{
     display:none;
