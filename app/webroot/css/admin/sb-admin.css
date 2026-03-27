@@ -79,7 +79,7 @@ body .mydemolabel{
     right: 0;
     text-align: center;
     top: 76px!important;
-        font-size: 46px!important;
+        font-size: 30px!important;
 }
 span.sp-rightalign{
   white-space: nowrap;
@@ -552,9 +552,10 @@ background: rgb(179, 163, 163);
 }
 body .menu .submenu .menu__item{
     margin-bottom: 3px;
+        border-radius: 5px;
 }
 body .menu .menu__item a{
-  padding: 8px 20px;
+  padding: 9px 20px;
 }
 .btn.previous-btn{
  background-color: #1eabfc;
@@ -661,7 +662,7 @@ margin-right: 10%;
 }
 .menu .submenu .menu__item a {
   width: 140px;
-  padding: 8px 20px;
+  padding: 9px 20px;
 }
 
 .menu .menu__item a:hover{
@@ -1077,11 +1078,14 @@ border-radius: 4px!important;
     width: 14%;
 
 }
+.menu .submenu .menu__item a{
+    border-radius: 5px;
+}
 .list-logout-row{display: none!important;}
 .nav-side-menu-full-container .nav-justified > li > a{
     transition: 0.3s;
     font-size: 12px!important;
-        border-radius: 0px;cursor: pointer;
+        border-radius: 5px;cursor: pointer;
 }
 .nav-side-menu-full-container .nav-justified > li {
     display: block;
@@ -2723,8 +2727,9 @@ body .menu .menu__item{
     font-size: 12px;
 }
 body .menu .submenu .menu__item a {
-    padding: 8px 0px;
+    padding: 9px 0px;
     border: none;
+
 }
 table#selectedProductListTableId tr td {
     height: auto;
@@ -5752,7 +5757,11 @@ margin-top: 9px!important;
   padding-bottom: 10px;
 }
 }
-
+@media only screen and (min-width: 771px) and (max-width: 1024px) {
+    .yachtHeaderName {
+        margin-top: 4px !important;
+    }
+}
 @media only screen and (min-width: 771px) and (max-width: 1020px){
 /* .bigitem .label-bold {
     padding-top: 32px!important;
@@ -5815,15 +5824,32 @@ cursor: pointer;
     display: none !important;
 }
 body .mydemolabel{
-            margin-top: 15px !important;
+            margin-top: 0px !important;
 }
 }
+@media (max-width: 990px) {
+    .container {
+        width: 970px;
+    }
+}
 
-
-
-
-@media (min-width: 768px) {
+@media (max-width: 768px) {
      .container {
         width: 100%;
+    }
+body .lfetlabel {
+    padding-left: 80px;
+}
+}
+
+@media only screen and (max-width: 771px) {
+   body .mydemolabel{
+        margin-top: 15px !important;
+    }
+
+}
+@media (min-width: 1200px) {
+    .container {
+        width: 970px;
     }
 }

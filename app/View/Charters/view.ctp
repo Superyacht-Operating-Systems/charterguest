@@ -31,7 +31,27 @@
 .footer-mob-row .btn-success{
         width: 136px;
 }
-
+.sendinvitation{
+        color: #428bca;
+    font-size: 14px;
+    cursor: pointer;
+}
+ .tooltip-inner {
+    white-space: pre-line !important;
+    text-align: left !important;
+    max-width: 300px !important;
+    background: #fff;
+    color: #000;
+    font-size: 14px;
+    padding: 13px;
+    }
+    div.ui-tooltip {
+        background: #fff !important;
+        max-width: 350px !important;
+        font-size: 14px !important;
+        line-height: 20px;
+        color: #000;
+    }
 
     @media only screen and (min-width: 1024px) and (max-width: 1031px){
 .p-email-name {
@@ -965,6 +985,7 @@ font-size: 11px;
             <div class="pull-right footer-mob-row" style="display:flex;align-items:center;gap:8px;">
                 <!-- <button class="btn btn-success" id="saveBtn">Save</button> -->
                 <button class="btn btn-primary" id="saveAndEmailBtn">Send Invitation</button>
+                <span class="sendinvitation" data-toggle="tooltip" data-placement="top" title="<p>Sending the invitation will allow your guests to enter their own names which will display in this Guest List page once they create their profile.</p><p> When the guest logs into charterguest.net they can complete their preferences and submit them directly to the Captain of the Yacht.</p>"><i class="fa fa-info-circle" ></i></span>
         </div> 
 </div>
 </div></div></div>
@@ -1697,6 +1718,12 @@ $('.menu > .menu__item').hover(function(){
 }, function() {
   $(this).children('.submenu').hide();
   
+});
+
+
+
+$('[data-toggle="tooltip"]').tooltip({
+  html: true
 });
 
 </script> 
