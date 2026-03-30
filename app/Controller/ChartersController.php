@@ -330,7 +330,7 @@ class ChartersController extends AppController {
                  password_security_question_id_2, password_security_answer_2,
                  status, is_deleted)
                 VALUES
-                ('{$userUUID}', '{$usernameSafe}', '{$salutation}', '{$firstNameSafe}', '{$lastNameSafe}', '{$hashedPwd}', '{$usernameSafe}',
+                ('{$userUUID}', '{$usernameSafe}', '{$salutation}', '{$firstNameSafe}', '{$lastNameSafe}', '{$hashedPwd}', '',
                  '{$charterCompanyId}', '{$yachtId}', '{$newGuestType}', '{$userToken}', '{$charterProgId}',
                  '{$recoveryHint}', '{$uQuestionId}', '{$uAnswer}',
                  '{$pQId1}', '{$pAnswer1}', '{$pQId2}', '{$pAnswer2}',
@@ -387,7 +387,7 @@ class ChartersController extends AppController {
         App::import('Vendor', 'UrlCrypt', array('file' => 'UrlCrypt/UrlCrypt.php'));
         $key    = Configure::read('UrlCrypt.key');
         $secret = Configure::read('UrlCrypt.secret');
-        $plain  = 'uuid=' . $uuid . '&guest_type=guest';
+        $plain  = 'uuid=' . $uuid . '&guest_type=Guest';
         $token  = UrlCrypt::encrypt($plain, $key, $secret);
         if ($token === false) {
             echo json_encode(array('success' => false, 'msg' => 'Encryption failed'));
