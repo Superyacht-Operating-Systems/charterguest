@@ -120,7 +120,7 @@
 .lfetlabel
  {
     float: left;
-        padding-left: 10px;
+    padding-left: 34px;
 }
 
 
@@ -428,7 +428,6 @@ justify-content: center;
     }
     .container-row-all-innerpages .nav-justified2 {
         margin-bottom: 0px;
-  justify-content: inherit;
   overflow: scroll;
   
     }
@@ -448,7 +447,7 @@ justify-content: center;
     margin-top: 0px;
 }
 .nav-pills > li{
-    margin: 0px 0px 0px 0px!important;
+    margin: 0px 0px 0px 5px!important;
     
 }
 .nav-pills > li > a.nav-anch {
@@ -457,7 +456,7 @@ justify-content: center;
    width: 95px;  */
 }
 .nav-side-menu-full-container .nav-side-menu .sidebar {
-    top: 60px;
+    top: 0px;
 }
 .position-mobile-head {
     text-transform: inherit;

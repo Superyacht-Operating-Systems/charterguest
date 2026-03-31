@@ -211,14 +211,15 @@ body .mydemolabel .user-subnamep {
   padding-right: 0px;
 }
 .chr-block{
-  display: block;
+  /* display: block; */
   text-align: center;
       padding-top: 5px;
 }
 .modalmsg-container .modal-content{
 width: max-content;
-    max-width: 100%;
-    min-width:100%;
+max-width: 300px;
+        min-width: 300px;
+        margin: 0 auto;
 }
 }
 

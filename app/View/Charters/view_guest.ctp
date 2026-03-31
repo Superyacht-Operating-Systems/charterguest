@@ -547,7 +547,7 @@ font-weight: bold;
 
 }
 .nav-side-menu-full-container .nav-side-menu .sidebar-btn {
-    top: 53px;
+    /* top: 53px; */
 }
 .charterRow, .mobile-owl-view {
     width: auto;
@@ -585,12 +585,10 @@ font-weight: bold;
 }
 
 @media only screen and (max-width:990px){
-.container {
-    width: 100%;
-}
 .bigitem {
     padding-bottom:0px;
 }
+
 }
 
 
@@ -622,7 +620,7 @@ font-weight: bold;
 top:50px!important;
 } 
 .sp-leftalign{
-margin-top: 26px!important;
+/* margin-top: 26px!important; */
 }
 .bigitem{
 text-align: left!important;
@@ -682,6 +680,7 @@ color: #000;
     width: 168px !important;
     
 }
+
 </style>
   
 

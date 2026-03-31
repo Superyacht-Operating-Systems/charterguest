@@ -98,7 +98,8 @@ body .mydemolabel {
   max-width: 156px !important;
   width: 156px !important;
   margin-right: 0px !important;
-  float: right !important;
+  float: left !important;
+          margin: 0 auto;
 }
 .md-row-h-18 button {
   width: 75px !important;

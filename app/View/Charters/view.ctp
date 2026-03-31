@@ -180,11 +180,9 @@ margin-right: 0px!important;
     
 	}
 }
-@media only screen and (min-width: 990px) and (max-width: 1000px){
-    .header-row {
-  width: 895px;
-}
-}
+   
+
+
 
 @media (min-width: 990px){
     .container {
@@ -841,6 +839,12 @@ font-size: 11px;
         top: 184px !important;
     }
 }
+@media (max-width: 990px) {
+    .container {
+        width: 100%;
+    }
+} 
+
 
 
 
@@ -938,7 +942,7 @@ font-size: 11px;
     </div>
 
 <div  class="container-fluid">
-  <div class="charterer-viewcontainer">  
+  <div class="charterer-viewcontainer dwddsdsd">  
         <!-- Head charterer id -->
         <input type="hidden" id="headChartererId" value="<?php echo $charterData['CharterGuest']['id']; ?>">
         <!-- Charter program id -->
