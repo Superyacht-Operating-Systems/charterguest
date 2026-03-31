@@ -626,6 +626,11 @@ and (max-device-width : 667px) {
 .has-error{
   border: 1px solid rgb(255 0 0)!important;
 }
+@media only screen and (max-width: 990px) {
+    .nav-side-menu-full-container .nav-side-menu .sidebar-btn {
+        top: 38px;
+    }
+}
 </style>
 <!-- personal details -->
 

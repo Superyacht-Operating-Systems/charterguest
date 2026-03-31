@@ -4988,7 +4988,7 @@ display: inline-block!important;
 .flexrow .two.view-mainrow span.sp-leftalign{
 	font-size: 14px!important;
 	width: 100%!important;
-    margin-top: 20px;
+    /* margin-top: 20px; */
 }
 .bigitem .label-bold {
     margin-top: 2px;
@@ -5817,39 +5817,57 @@ cursor: pointer;
 
 
 @media only screen and (max-width:990px){
-.nav-side-menu-full-container .nav-side-menu .sidebar-btn{
+/* .nav-side-menu-full-container .nav-side-menu .sidebar-btn{
     top: -14px;
-}
+} */
 .dbtn-none{
     display: none !important;
 }
 body .mydemolabel{
             margin-top: 0px !important;
 }
+.nav-side-menu-full-container .nav-side-menu .sidebar-btn {
+    top: -14px;
 }
+}
+
 @media (max-width: 990px) {
     .container {
-        width: 970px;
+        width: 100%;
     }
 }
 
+
 @media (max-width: 768px) {
-     .container {
-        width: 100%;
-    }
 body .lfetlabel {
     padding-left: 80px;
 }
 }
 
+
 @media only screen and (max-width: 771px) {
    body .mydemolabel{
         margin-top: 15px !important;
     }
+    .flexrow .two.view-mainrow span.sp-rightalign{
+    display: none;
+}
 
 }
-@media (min-width: 1200px) {
+/* @media (min-width: 1200px) {
     .container {
         width: 970px;
     }
+} */
+
+@media only screen and (min-width: 300px) and (max-width: 319px){
+    .flexrow .two.view-mainrow {
+        margin-top: 60px !important;
+    }
+    .flexrow .two.view-mainrow span.sp-rightalign {
+        top: 65px;
+    }
+
+
+
 }
