@@ -1963,6 +1963,11 @@ border-radius: 4px; */
     position: fixed;
     top: 0;
 }
+@media only screen and (max-width: 990px) {
+    .nav-side-menu-full-container .nav-side-menu .sidebar-btn {
+         top: 54px;
+    }
+}
 </style>  
 
 <?php   // echo $this->Html->script('jquery-1.7.2.min');

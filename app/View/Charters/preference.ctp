@@ -119,8 +119,12 @@
 <style>
 .lfetlabel
  {
-    float: left;
-    padding-left: 34px;
+float: none;
+    padding-left: 0px;
+    margin-top: 0;
+    position: relative;
+    top: -15px;
+        text-align: center;
 }
 
 
@@ -153,6 +157,13 @@ body .mydemolabel {
 position: relative; 
 height:auto;
 }
+ .lfetlabel {
+    float: left;
+    top: 0px;
+}
+    body .lfetlabel {
+        padding-left: 80px;
+    }
 .nav-side-menu-full-container .nav-side-menu .sidebar-btn {
     top: -44px!important;
 }
@@ -212,7 +223,7 @@ body .mydemolabel .user-subnamep {
     .modal-body {
   padding: 5px;
 }
- 
+
 }
 
       @media only screen and (min-width: 300px) and (max-width: 1024px){
@@ -553,6 +564,20 @@ margin-top: 50px;
     border-color: #eea236 !important;
 }
 
+@media only screen and (max-width: 530px) {
+.respomenu{
+        width: 100%;
+    overflow: scroll;
+    height: 46px;
+}
+.container-row-all-innerpages .nav-justified2 {
+    justify-content: left;
+    padding:0px 10px;
+}
+}
+
+
+
 
 </style>
 
@@ -724,7 +749,8 @@ margin-top: 50px;
 
 ?>
 <div class="lfetlabel"><p>Preferences last updated : <span><b><?php echo !empty($psheetModified) ? $psheetModified : 'N/A'; ?></b></span></p></div>
-    <nav class="menu"> 
+  <div class="respomenu">  
+<nav class="menu"> 
         <ul id="prefmenu" class="menu menu-level1 no-style nav nav-pills nav-justified2">
           <li class="<?php echo $personalDetailsTab; ?> chkpersonalvflag"><a data-toggle="tab" href="#personal_det" class="nav-anch pl-wt">Personal</a></li>
           <li class="<?php echo $mealPreferenceTab; ?> chkpersonal"><a data-toggle="<?php echo $datatoggle; ?>" href="#meals" class="nav-anch meal-wt">Meal Service</a></li>
@@ -744,7 +770,7 @@ margin-top: 50px;
           
           </ul>
     </nav>
-
+</div>
 
 <div class="row mob_mr_0">
     <div class="col-lg-4">
