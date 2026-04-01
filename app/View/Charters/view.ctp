@@ -957,6 +957,10 @@ font-size: 11px;
         <input type="hidden" id="yachtName" value="<?php echo htmlspecialchars($this->Session->read('GuestListYname')); ?>">
         <input type="hidden" id="headChartererName" value="<?php echo htmlspecialchars($charterData['CharterGuest']['first_name'].' '.$charterData['CharterGuest']['last_name']); ?>">
         <input type="hidden" id="captainName" value="<?php echo htmlspecialchars($this->Session->read('GuestCaptaionName')); ?>">
+        <input type="hidden" id="embarkation" value="<?php echo htmlspecialchars($charterData['CharterGuest']['embarkation']); ?>">
+        <input type="hidden" id="debarkation" value="<?php echo htmlspecialchars($charterData['CharterGuest']['debarkation']); ?>">
+        <input type="hidden" id="charterFromDate" value="<?php echo htmlspecialchars(date_format(date_create($charterData['CharterGuest']['charter_from_date']), 'd M Y')); ?>">
+        <input type="hidden" id="charterToDate" value="<?php echo htmlspecialchars(date_format(date_create($charterData['CharterGuest']['charter_to_date']), 'd M Y')); ?>">
 
 <div class="table table-condensed no-border" id="guestDetailsTable">
 <div class="header-row">
@@ -1633,6 +1637,10 @@ $("#saveAndEmailBtn").on("click", function(e) {
     var yachtName   = $("#yachtName").val();
     var headName    = $("#headChartererName").val();
     var captainName = $("#captainName").val();
+    var embarkation = $("#embarkation").val();
+    var debarkation = $("#debarkation").val();
+    var fromDate    = $("#charterFromDate").val();
+    var toDate      = $("#charterToDate").val();
     $("#hideloader").show();
     $.ajax({
         type: "POST",
@@ -1645,11 +1653,12 @@ $("#saveAndEmailBtn").on("click", function(e) {
             var subject  = 'Welcome to the charter guest program for the ' + yachtName;
             var body =
                 'You have been invited to join ' + headName + ' for a cruise onboard the ' + yachtName + '.\n\n'
+                + 'The cruise will depart from ' + embarkation + ' on the ' + fromDate + ' and end in ' + debarkation + ' on the ' + toDate + '.\n\n'
                 + 'To tailor our services so we can provide you a 7 star experience we kindly request that you login to the below secure website and complete your preference sheets.\n\n'
                 + loginUrl + '\n\n'
-                + 'When you complete your preference sheets ' + headName + ' will be notified by email and your completed preference sheets and personal details will be automatically made available to the Captain of the ' + yachtName + '.\n\n'
-                + 'Please watch this 3 min video to learn how to use the charter guest program:\n'
-                + 'https://youtu.be/5MYJqIhZnHo\n\n'
+                + 'When you complete your preferences, they will be automatically sent to the Captain of the ' + yachtName + '.\n\n'
+                + 'Please watch this 3 min video to learn how to use the charter guest program:\n\n'
+                + 'https://youtu.be/dQFHpxENsPk\n\n'
                 + 'We look forward to welcoming you onboard soon.\n\n'
                 + 'Kind regards,\n'
                 + captainName + '\n'
