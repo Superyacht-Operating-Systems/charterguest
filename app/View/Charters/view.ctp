@@ -1092,7 +1092,10 @@ jQuery(document).on("click", ".openEmailClientBtn", function(e) {
                 'Hi ' + firstName + ',\n\n'
                 + 'You have been invited to join ' + headName + ' for a cruise onboard the ' + yachtName + '.\n\n'
                 + 'Please visit: https://charterguest.net/charterguest/\n\n'
-                + 'Kind regards,\n' + captainName + '\n' + yachtName;
+                + 'We look forward to welcoming you onboard soon.\n\n'
+                + 'Kind regards,\n'
+                + captainName + '\n'
+                + yachtName;
             window.location.href = 'mailto:?subject=' + encodeURIComponent(subject)
                 + '&body=' + encodeURIComponent(body);
         }
@@ -1659,10 +1662,7 @@ $("#saveAndEmailBtn").on("click", function(e) {
                 + 'When you complete your preferences, they will be automatically sent to the Captain of the ' + yachtName + '.\n\n'
                 + 'Please watch this 3 min video to learn how to use the charter guest program:\n\n'
                 + 'https://youtu.be/dQFHpxENsPk\n\n'
-                + 'We look forward to welcoming you onboard soon.\n\n'
-                + 'Kind regards,\n'
-                + captainName + '\n'
-                + yachtName;
+                + 'We look forward to welcoming you onboard soon.';
             window.location.href = 'mailto:?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
         },
         error: function() {

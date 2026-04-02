@@ -50,7 +50,7 @@ $dateTimestamp2 = strtotime($date2);
             <li data-value="<?php echo $id; ?>" datahover="Map is Not Published" title="Map is Not Published" role="button" title="Map is Not Published" aria-current="mapnolink"><a>Cruising Map</a></li>
       
         <?php } ?>
-        <li><a href="<?php echo $basefolder."/charters/crew_list/".$id."/".$charter_program_id."/".$fleetcompany_id.'/'.$guesttype.'/'.$cp_guesttype.'/'.$allow_comments; ?>"><span class="" >Crew List</span></a></li>
+        <li><a href="<?php echo $basefolder."/charters/crew_list/".$id."/".$charter_program_id."/".$fleetcompany_id.(($guesttype != 'owner') ? '/'.$guesttype.'/'.$cp_guesttype.'/'.$allow_comments : ''); ?>"><span class="" >Crew List</span></a></li>
               
         <?php //echo $is_head_charter; 
         if(isset($cp_guesttype) && !empty($cp_guesttype)){ //echo "kk".$is_head_charter;

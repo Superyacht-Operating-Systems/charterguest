@@ -2308,6 +2308,9 @@ class ChartersController extends AppController {
             $guestlink = "/charters/view/".$charterData['CharterGuest']['id']."/".$charterData['CharterGuest']['charter_program_id']."/".$charterData['CharterGuest']['charter_company_id'];
         }else if(isset($guesttype) && ($guesttype == "guest")){
             $guestlink = "/charters/view_guest/".$charterData['CharterGuest']['charter_program_id']."/".$charterData['CharterGuest']['charter_company_id'];
+        }else{
+            // Head charterer from programs page (no guesttype param) — default to view page
+            $guestlink = "/charters/view/".$charterData['CharterGuest']['id']."/".$charterData['CharterGuest']['charter_program_id']."/".$charterData['CharterGuest']['charter_company_id'];
         }
         //echo "<pre>"; print_r($guestlink); exit;
         $this->set('guestlink', $guestlink);
