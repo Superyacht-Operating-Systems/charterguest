@@ -486,11 +486,11 @@ font-weight: bold;
                                             <input type="text" class="form-control tinput rowInput" name="last_name[]" value="<?php echo $charterData['CharterGuest']['last_name']; ?>" readonly="true" ></div>
                                        </section>
 
-                                           <div class="md-row-h-30"> 
+                                           <!-- <div class="md-row-h-30"> 
                                            <label>Email-Address</label>  
                                                             <input type="text" class="form-control tinput rowInput" name="email[]"  value="<?php echo $charterData['CharterGuest']['email']; ?>" readonly="true">
                                                 
-                                        </div>
+                                        </div> -->
                                         <div class="md-row-h-18">
                                              <label>Preference Sheets</label>  
                                           <a href="preference"><button type="button" class="btn btn-open">OPEN</button></a>
@@ -537,49 +537,7 @@ font-weight: bold;
                                           <label>Last Name</label>
                                             <input type="text" class="form-control tinput rowInput validateInput" name="last_name[]" value="<?php echo $charterAssoc['CharterGuestAssociate']['last_name']; ?>"></div>
                                     </section>
-                                        <div class="md-row-h-30">
-                                                   <label>Email-Address</label>
-                                                                <input type="text" class="form-control tinput rowInput validateInput"  name="email[]" value="<?php echo $charterAssoc['CharterGuestAssociate']['email']; ?>">
-
-                                           
-
-                                 
-                                            <?php 
-                                                $sendMailBtnDisable = "";
-                                                // Disabling the SEND MAIL button if head charterer is checked
-                                                if ($charterAssoc['CharterGuestAssociate']['is_head_charterer']) {
-                                                    $sendMailBtnDisable = "disabled";
-                                                }
-                                            ?>         </div>
-                                               <div class="md-row-h-18">
-                                               <label>Preference Sheets</label>
-                                                 <?php
-                                                $openButtonLink = "javascript:void(0);";
-                                                $openBtnColor = "btn-default";
-                                                $openBtnDisable = "disabled";
-                                                // Enabling the button and will be read-only pages If P-sheets done
-                                                if ($charterAssoc['CharterGuestAssociate']['is_psheets_done']) {
-                                                    $openButtonLink = "preference?id=". base64_encode($charterAssoc['CharterGuestAssociate']['id']);
-                                                    $openBtnColor = "btn-primary";
-                                                    $openBtnDisable = "";
-                                                }
-                                                // Enabling the button and will be editable pages If Head Charterer is checked
-                                                if ($charterAssoc['CharterGuestAssociate']['is_head_charterer']) {
-                                                    $openButtonLink = "preference?assocId=". base64_encode($charterAssoc['CharterGuestAssociate']['id']);
-                                                    $openBtnColor = "btn-primary";
-                                                    $openBtnDisable = "";
-                                                }
-                                                
-                                            ?>
-                                            <a href="<?php echo $openButtonLink; ?>"><button type="button" class="btn btn-open <?php echo $openBtnColor; ?>" <?php echo $openBtnDisable; ?>>OPEN</button></a>
-
-
-
-                                                                <button type="button" data-charterHeadId=""  data-charterAssocId="<?php echo $charterAssoc['CharterGuestAssociate']['id']; ?>" class="btn btn-danger btn-eml-send sendMailClass <?php echo ($charterAssoc['CharterGuestAssociate']['is_email_sent']) ? "displayNone" : ""; ?>" <?php echo $sendMailBtnDisable; ?>>SEND</button>
-                                                                <button type="button" data-charterHeadId=""  data-charterAssocId="<?php echo $charterAssoc['CharterGuestAssociate']['id']; ?>"  class="btn btn-success btn-eml-send emailSentClass <?php echo ($charterAssoc['CharterGuestAssociate']['is_email_sent']) ? "" : "displayNone"; ?>">SENT</button>
                                        
-                                           
-                                      </div>
                                 </div> </div> </div>
                             <?php 
                                 $i++;
@@ -610,11 +568,11 @@ font-weight: bold;
                                             <input type="text" class="form-control tinput rowInput validateInput" name="last_name[]" value="">
                                         </div>
                                     </section>
-                                        <div class="md-row-h-30">
+                                        <!-- <div class="md-row-h-30">
                                              <label>Email-Address</label>
                                                                 <input type="text" class="form-control tinput rowInput validateInput"  name="email[]" value="">
     
-                                        </div>
+                                        </div> -->
     
                                          <div class="md-row-h-18">
                                             <label>Preference Sheets</label>
