@@ -5871,3 +5871,11 @@ body .lfetlabel {
 
 
 }
+
+@media only screen and (min-width: 320px) and (max-width: 771px) {
+    .userhead-name .acti-countnav {
+        top: 19px;
+        right: 0;
+        left: auto;
+    }
+}
