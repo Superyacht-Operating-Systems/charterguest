@@ -1162,12 +1162,16 @@ class ChartersController extends AppController {
 
                 if(isset($fleet_domain_name) && $fleet_domain_name == "charterguest"){
                     $SITE_URL = "https://charterguest.net/";
+                    $site_full_path = "/var/www/cg-vhost/";
                 }else if(isset($fleet_domain_name) && $fleet_domain_name == "totalsuperyacht"){
                     $SITE_URL = "https://totalsuperyacht.com:8080/";
+                    $site_full_path = "/var/www/vhosts/wamp/www/";
                 }else if(isset($domain_name) && $domain_name == "charterguest"){
                     $SITE_URL = "https://charterguest.net/";
+                    $site_full_path = "/var/www/cg-vhost/";
                 }else{
                     $SITE_URL = "https://totalsuperyacht.com:8080/";
+                    $site_full_path = "/var/www/vhosts/wamp/www/";
                 }
 
                 if(isset($YFileData) && !empty($YFileData)){
