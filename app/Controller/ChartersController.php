@@ -12664,7 +12664,7 @@ public function getmsgcountonclosecruisingschedulemodal() {
                 $downloadcontractfile = $postData['downloadcontractfile'];
                 $filename = $postData['fileName'];
 
-                $SITE_URL    = Configure::read('BASE_URL');
+                $SITE_URL    = 'https://' . $_SERVER['HTTP_HOST'];
                 $destPath    = $_SERVER['DOCUMENT_ROOT']."/charterguest/app/webroot/img/admin/".$filename;
 
                 // Use curl to download (handles HTTPS without SSL cert issues)
@@ -12682,7 +12682,6 @@ public function getmsgcountonclosecruisingschedulemodal() {
                 if(!$copy){
                     $result['status'] = "fail";
                     $result['link']   = "fail";
-                    $result['debug']  = "url=".$downloadcontractfile." http=".$httpcode." dest=".$destPath." dest_dir_writable=".is_writable(dirname($destPath));
                 } else {
                     @chmod($destPath, 0777);
                     $result['status'] = "success";
