@@ -1369,7 +1369,7 @@ catch (error) {
                     //window.location.href = result.link
                    
                 }else{
-                  alert('Unable to download file. URL tried: ' + (result.debug_url || 'unknown'));
+                  alert('Sorry!! Unable to download file');
                   return false;
                 }
             },

@@ -1275,28 +1275,16 @@ class ChartersController extends AppController {
             $fleetname = $this->Session->read('fleetname');
             if(isset($programFiles) && !empty($programFiles) ){
                 $attachment = array();
-                //$SITE_URL = Configure::read('BASE_URL');
-                //$SITE_URL = "https://totalsuperyacht.com:8080/";
-                foreach($programFiles as $startdate => $filedata){ 
-                    foreach($filedata['attachment'] as $file){ 
-                        $fleetname = $this->Session->read('fleetname');
-                        if(isset($filedata['fleetname'])){
-                            $fleetname = $filedata['fleetname'];
-                            $companyData1 = $this->Fleetcompany->find('first', array('fields' => array('management_company_name','logo','fleetname','domain_name'), 'conditions' => array('management_company' => $fleetname)));
-                            if(isset($companyData1['Fleetcompany']['domain_name'])){
-                                $fleet_domain_name = $companyData1['Fleetcompany']['domain_name'];
-                            }
-                            
-                        }
-                         if(isset($fleet_domain_name) && $fleet_domain_name == "charterguest"){
-                            $SITE_URL = "https://charterguest.net/";
-                         }else if(isset($filedata['siteurl'])){
+                foreach($programFiles as $startdate => $filedata){
+                    foreach($filedata['attachment'] as $file){
+                        if(isset($filedata['siteurl'])){
                             $SITE_URL = $filedata['siteurl'];
                         }
-                        $sourceImagePath = $SITE_URL.$fleetname."/app/webroot/img/charter_program_files/".$file['CharterProgramFile']['file_name'];
+                        // Files are always stored in superyacht's webroot regardless of fleet
+                        $sourceImagePath = $SITE_URL."superyacht/app/webroot/img/charter_program_files/".$file['CharterProgramFile']['file_name'];
                         $attachment[$startdate] = $sourceImagePath;
                     }
-                } 
+                }
             }
         //echo "<pre>";print_r($attachment); echo "<pre>";print_r($programFiles); exit;
 
@@ -12688,7 +12676,6 @@ public function getmsgcountonclosecruisingschedulemodal() {
 
                         $result['status'] = "fail";
                         $result['link'] = "fail";
-                        $result['debug_url'] = $remote_file_url;
                     }
                     else{
                         chmod($sourceImagePath, 0777);
