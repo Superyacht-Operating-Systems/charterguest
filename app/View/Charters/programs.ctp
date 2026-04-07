@@ -799,7 +799,7 @@ margin: 30px auto;
         <li class="menu__item" ><a>How To Video</a>
            <ul class="submenu">
                    <li class="menu__item" id="MenuHowToVideo"><a target="_blank" href="https://www.youtube.com/watch?v=dQFHpxENsPk">Preference Sheets</a></li>
-                   <li class="menu__item" id="MenuHowToVideoCharterHead"><a target="_blank" href="https://www.youtube.com/watch?v=5MYJqIhZnHo">Head Charterer</a></li>
+                   <li class="menu__item" id="MenuHowToVideoCharterHead"><a target="_blank" href="https://youtu.be/uk_hTLv8LkM">Head Charterer</a></li>
                 </ul>
             </li>
             <?php }else{ ?>
