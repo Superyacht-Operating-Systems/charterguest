@@ -564,7 +564,7 @@ margin-top: 50px;
     border-color: #eea236 !important;
 }
 
-@media only screen and (max-width: 530px) {
+@media only screen and (max-width:771px) {
 .respomenu{
         width: 100%;
     overflow: scroll;
@@ -572,7 +572,7 @@ margin-top: 50px;
 }
 .container-row-all-innerpages .nav-justified2 {
     justify-content: left;
-    padding:0px 10px;
+    padding:0px 10px 0px 5px;
 }
 }
 

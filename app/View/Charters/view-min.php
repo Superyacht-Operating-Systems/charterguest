@@ -237,7 +237,7 @@
                                           <label>Last Name</label>
                                             <input type="text" class="form-control tinput rowInput validateInput" name="last_name[]" value="<?php echo $charterAssoc['CharterGuestAssociate']['last_name']; ?>"></div>
                                   
-                                        <div class="md-row-h-30" style="display:none;">
+                                        <div class="md-row-h-30" style="display:none !important;">
                                             
                                         <div class="md-row-h-30">
                                                    <label>Email</label>
