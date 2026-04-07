@@ -1369,7 +1369,7 @@ catch (error) {
                     //window.location.href = result.link
                    
                 }else{
-                  alert('Sorry!! Unable to download file');
+                  alert('Sorry!! Unable to download file\n' + (result.debug || ''));
                   return false;
                 }
             },

@@ -12678,6 +12678,7 @@ public function getmsgcountonclosecruisingschedulemodal() {
                 if(!$copy){
                     $result['status'] = "fail";
                     $result['link']   = "fail";
+                    $result['debug']  = "url=".$downloadcontractfile." http=".$httpcode." dest=".$destPath." dest_dir_writable=".is_writable(dirname($destPath));
                 } else {
                     @chmod($destPath, 0777);
                     $result['status'] = "success";
