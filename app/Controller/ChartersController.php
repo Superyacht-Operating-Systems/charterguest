@@ -723,7 +723,13 @@ class ChartersController extends AppController {
                     if (count($charterData) != 0) {
                         $this->Session->destroy();
                         //echo "<pre>"; print_r($charterData); exit;
-                        $loginUser = $charterData['CharterGuest']['first_name'].' '.$charterData['CharterGuest']['last_name'];
+                        // Use guest_lists name if available (reliable — found by exact username/email match).
+                        // charter_guests can return a wrong record when email is empty.
+                        if (!empty($GuestListData['GuestList']['first_name'])) {
+                            $loginUser = $GuestListData['GuestList']['first_name'].' '.$GuestListData['GuestList']['last_name'];
+                        } else {
+                            $loginUser = $charterData['CharterGuest']['first_name'].' '.$charterData['CharterGuest']['last_name'];
+                        }
                         $this->Session->write("login_username", $loginUser);
                         $this->Session->write("charter_info", $charterData);
                         $session = $this->Session->read('charter_info.CharterGuest');

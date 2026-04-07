@@ -768,11 +768,28 @@ margin: 30px auto;
         <li class="menu__item"> <a href="#">Charter Contracts</a>
             <?php if(isset($programFiles) && !empty($programFiles)){ ?>
                 <ul class="submenu">
-                    <?php foreach($programFiles as $startdate => $filepath){ ?>
-                    <li class="menu__item"><a href="#" data-href="<?php echo $filepath; ?>" class="download"><?php echo $startdate; ?></a></li>
-                    <?php
-                            
-                        } ?>
+                    <?php foreach($programFiles as $startdate => $fileinfo){
+                        $attachments = isset($fileinfo['attachment']) ? $fileinfo['attachment'] : array();
+                        $siteurl     = isset($fileinfo['siteurl'])    ? $fileinfo['siteurl']    : '';
+                        $fleetname   = isset($fileinfo['fleetname'])  ? $fileinfo['fleetname']  : '';
+                        // Build URL from first attachment; fall back to '#' if none
+                        $fileUrl = '#';
+                        if(!empty($attachments)){
+                            $firstFile = reset($attachments);
+                            $fname = isset($firstFile['CharterProgramFile']['file_name'])
+                                ? $firstFile['CharterProgramFile']['file_name']
+                                : '';
+                            if(!empty($fname)){
+                                if(!empty($fleetname)){
+                                    $fileUrl = $siteurl.$fleetname."/app/webroot/img/charter_program_files/".$fname;
+                                } else {
+                                    $fileUrl = $siteurl."charterguest/app/webroot/img/admin/".$fname;
+                                }
+                            }
+                        }
+                    ?>
+                    <li class="menu__item"><a href="#" data-href="<?php echo $fileUrl; ?>" class="download"><?php echo $startdate; ?></a></li>
+                    <?php } ?>
                 </ul>
             <?php } ?>
     
