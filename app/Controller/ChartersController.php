@@ -1160,28 +1160,20 @@ class ChartersController extends AppController {
                 }
                 /**************Yacht contract files  ************************************/
 
-                
                 if(isset($fleet_domain_name) && $fleet_domain_name == "charterguest"){
-                    // charter fleet
                     $SITE_URL = "https://charterguest.net/";
-                    $site_full_path = "/var/www/cg-vhost/";
                 }else if(isset($fleet_domain_name) && $fleet_domain_name == "totalsuperyacht"){
-                    // TCY fleet
                     $SITE_URL = "https://totalsuperyacht.com:8080/";
-                    $site_full_path = "/var/www/vhosts/wamp/www/";
                 }else if(isset($domain_name) && $domain_name == "charterguest"){
-                    // CG Yacht
                     $SITE_URL = "https://charterguest.net/";
-                    $site_full_path = "/var/www/cg-vhost/";
                 }else{
-                    // TSY Yacht
                     $SITE_URL = "https://totalsuperyacht.com:8080/";
-                    $site_full_path = "/var/www/vhosts/wamp/www/";
                 }
-                
-                if(isset($programFiledata) && isset($fleetname) && !empty($fleetname)){
+
+                if(isset($YFileData) && !empty($YFileData)){
                     $programFiles[$charter_from_date]['fleetname'] = $fleetname;
-                    $programFiles[$charter_from_date]['siteurl'] = $SITE_URL;
+                    $programFiles[$charter_from_date]['yname']     = $yname;
+                    $programFiles[$charter_from_date]['siteurl']   = $SITE_URL;
                 }
                 if(isset($value['CharterGuest']['program_image']) && !empty($value['CharterGuest']['program_image'])){
                     //echo $fleetname.$value['CharterGuest']['program_image'];
@@ -1276,12 +1268,20 @@ class ChartersController extends AppController {
             if(isset($programFiles) && !empty($programFiles) ){
                 $attachment = array();
                 foreach($programFiles as $startdate => $filedata){
+                    $fn    = isset($filedata['fleetname']) ? $filedata['fleetname'] : '';
+                    $yn    = isset($filedata['yname'])     ? $filedata['yname']     : '';
+                    $surl  = isset($filedata['siteurl'])   ? $filedata['siteurl']   : '';
                     foreach($filedata['attachment'] as $file){
-                        if(isset($filedata['siteurl'])){
-                            $SITE_URL = $filedata['siteurl'];
+                        $fname = $file['CharterProgramFile']['file_name'];
+                        if(!empty($fn) && !empty($yn)){
+                            // Fleet yacht: fleetname/app/webroot/yname/app/webroot/img/charter_program_files/
+                            $sourceImagePath = $surl.$fn."/app/webroot/".$yn."/app/webroot/img/charter_program_files/".$fname;
+                        } elseif(!empty($yn)){
+                            // Standalone yacht: yname/app/webroot/img/charter_program_files/
+                            $sourceImagePath = $surl.$yn."/app/webroot/img/charter_program_files/".$fname;
+                        } else {
+                            $sourceImagePath = $surl."superyacht/app/webroot/img/charter_program_files/".$fname;
                         }
-                        // Files are always stored in superyacht's webroot regardless of fleet
-                        $sourceImagePath = $SITE_URL."superyacht/app/webroot/img/charter_program_files/".$file['CharterProgramFile']['file_name'];
                         $attachment[$startdate] = $sourceImagePath;
                     }
                 }
