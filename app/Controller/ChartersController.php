@@ -12659,32 +12659,31 @@ public function getmsgcountonclosecruisingschedulemodal() {
                 
                 $downloadcontractfile = $postData['downloadcontractfile'];
                 $filename = $postData['fileName'];
-                $remoteURL = $downloadcontractfile;
 
-                $remote_file_url = $downloadcontractfile;
-                
-                    /* New file name and path for this file */
-                    $SITE_URL = Configure::read('BASE_URL');
-                    $sourceImagePath = $_SERVER['DOCUMENT_ROOT']."/charterguest/app/webroot/img/admin/".$filename;
-                    $local_file = $sourceImagePath;
-                    
-                    /* Copy the file from source url to server */
-                    $copy = copy( $remote_file_url, $local_file );
-                    
-                    /* Add notice for success/failure */
-                    if( !$copy ) {
+                $SITE_URL    = Configure::read('BASE_URL');
+                $destPath    = $_SERVER['DOCUMENT_ROOT']."/charterguest/app/webroot/img/admin/".$filename;
 
-                        $result['status'] = "fail";
-                        $result['link'] = "fail";
-                    }
-                    else{
-                        chmod($sourceImagePath, 0777);
-                        
-                        $successlink = $SITE_URL."/charterguest/app/webroot/img/admin/";
-                        $result['status'] = "success";
-                        $result['link'] =$successlink;
-                        $result['file'] =$filename;
-                    }
+                // Use curl to download (handles HTTPS without SSL cert issues)
+                $ch = curl_init($downloadcontractfile);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+                curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+                curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+                $filedata = curl_exec($ch);
+                $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+                curl_close($ch);
+
+                $copy = ($filedata !== false && $httpcode == 200 && file_put_contents($destPath, $filedata) !== false);
+
+                if(!$copy){
+                    $result['status'] = "fail";
+                    $result['link']   = "fail";
+                } else {
+                    @chmod($destPath, 0777);
+                    $result['status'] = "success";
+                    $result['link']   = $SITE_URL."/charterguest/app/webroot/img/admin/";
+                    $result['file']   = $filename;
+                }
 
 
                 echo json_encode($result);
