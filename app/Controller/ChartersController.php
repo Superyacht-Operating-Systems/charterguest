@@ -12685,9 +12685,10 @@ public function getmsgcountonclosecruisingschedulemodal() {
                     
                     /* Add notice for success/failure */
                     if( !$copy ) {
-                        
+
                         $result['status'] = "fail";
-                        $result['link'] ="fail";
+                        $result['link'] = "fail";
+                        $result['debug_url'] = $remote_file_url;
                     }
                     else{
                         chmod($sourceImagePath, 0777);

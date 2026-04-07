@@ -1369,9 +1369,9 @@ catch (error) {
                     //window.location.href = result.link
                    
                 }else{
-                  alert('Sorry!! Unable to download file');
+                  alert('Unable to download file. URL tried: ' + (result.debug_url || 'unknown'));
                   return false;
-                } 
+                }
             },
             error: function(jqxhr) { 
                 $("#hideloader").hide();
