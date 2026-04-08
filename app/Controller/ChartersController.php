@@ -306,7 +306,7 @@ class ChartersController extends AppController {
             // -------------------------------------------------------
             // 5 & 7. charter_guest_associates — skip for head_charterer / owner
             // -------------------------------------------------------
-            if (!in_array($guestType, array('head_charterer', 'Head Charterer', 'owner'))) {
+            if (!in_array($guestType, array('head_charterer', 'Head Charterer', 'owner', 'Owner'))) {
                 // 5. YACHT DB: charter_guest_associates
                 $db->query("INSERT INTO {$ydbname}.charter_guest_associates
                     (charter_guest_id, UUID, charter_program_id, allow_comments, salutation, first_name, last_name, token, created)
@@ -343,7 +343,7 @@ class ChartersController extends AppController {
             // -------------------------------------------------------
             // 8. If head_charterer or owner — update charter_programs and charter_guests
             // -------------------------------------------------------
-            if (in_array($guestType, array('head_charterer', 'Head Charterer', 'owner'))) {
+            if (in_array($guestType, array('head_charterer', 'Head Charterer', 'owner', 'Owner'))) {
                 $db->query("UPDATE {$ydbname}.charter_programs
                     SET salutation = '{$salutation}',
                         first_name = '{$firstNameSafe}',
@@ -589,7 +589,7 @@ class ChartersController extends AppController {
             $newGuestType  = !empty($charterCompanyId) ? $charterCompanyId . '-' . $yachtId . '-' . $guestTypeLabel : $yachtId . '-' . $guestTypeLabel;
             $allowComments    = (strpos($newGuestType, 'email_recipient') !== false) ? '1' : '0';
             $isEmailRecipient = (strpos($newGuestType, 'email_recipient') !== false) ? '1' : '0';
-            if (!in_array($guestType, array('head_charterer', 'Head Charterer', 'owner'))) {
+            if (!in_array($guestType, array('head_charterer', 'Head Charterer', 'owner', 'Owner'))) {
                 // 2. Yacht DB: charter_guest_associates
                 $existYCga = $db->query("SELECT id, charter_guest_id FROM {$ydbname}.charter_guest_associates WHERE (email = '{$usernameSafe}' OR UUID = '{$userUUID}') AND charter_program_id = '{$charterProgId}' LIMIT 1");
                 if (empty($existYCga)) {
@@ -651,7 +651,7 @@ class ChartersController extends AppController {
                 }
             }
             // 5. If head_charterer or owner — update charter_programs and charter_guests with existing user's identity
-            if (in_array($guestType, array('head_charterer', 'Head Charterer', 'owner'))) {
+            if (in_array($guestType, array('head_charterer', 'Head Charterer', 'owner', 'Owner'))) {
                 $db->query("UPDATE {$ydbname}.charter_programs
                     SET first_name = '{$firstNameSafe}',
                         last_name  = '{$lastNameSafe}',

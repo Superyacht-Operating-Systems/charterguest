@@ -80,8 +80,8 @@ $dateTimestamp2 = strtotime($date2);
         
             <li class="menu__item" ><a>How To Video</a>
            <ul class="submenu">
-           <li class="menu__item" id="MenuHowToVideo"><a target="_blank" href="https://www.youtube.com/watch?v=dQFHpxENsPk">Preference Sheets</a></li>
-                   <li class="menu__item" id="MenuHowToVideoCharterHead"><a target="_blank" href="https://youtu.be/uk_hTLv8LkM">Head Charterer</a></li>
+           <li class="menu__item" id="MenuHowToVideo"><a href="#">Preference Sheets</a></li>
+                   <li class="menu__item" id="MenuHowToVideoCharterHead"><a href="#">Head Charterer</a></li>
   
                 </ul>
                 </li>

@@ -713,10 +713,11 @@ max-width: 300px;
         <!-- <video width="100%" height="100%" class="video videoclass" playsinline autoplay muted loop controls="true"  preload="metadata" id="preferencesheetvideo">
         <source src="https://youtu.be/4aMP61dg-cQ" type="video/mp4">
         </video> -->
-        <iframe class="videomodalcontent" width="100%" height="100%" 
-          src="https://www.youtube.com/embed/dQFHpxENsPk" 
-          frameborder="0" 
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+        <iframe id="preferenceSheetVideoIframe" class="videomodalcontent" width="100%" height="100%"
+          src=""
+          data-src="https://www.youtube.com/embed/dQFHpxENsPk?enablejsapi=1"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowfullscreen>
         </iframe>
         </div>
@@ -757,7 +758,13 @@ max-width: 300px;
         <!-- <video width="100%" height="100%" class="video videoclass" playsinline autoplay muted loop controls="true"  preload="metadata" id="charterheadvideo">
         <source src="https://youtu.be/ExAG5mRmGAU" type="video/mp4">
         </video> -->
-                            
+        <iframe id="charterHeadVideoIframe" class="videomodalcontent" width="100%" height="100%"
+          src=""
+          data-src="https://www.youtube.com/embed/uk_hTLv8LkM?enablejsapi=1"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen>
+        </iframe>
         </div>
         <div class="modal-footer">
             
@@ -1060,26 +1067,28 @@ function createNew(guuid,assid){
     
 }
 
-$(document).on("click", "#MenuHowToVideo", function(e) { 
+$(document).on("click", "#MenuHowToVideo", function(e) {
+  e.preventDefault();
+  var iframe = $("#preferenceSheetVideoIframe");
+  iframe.attr("src", iframe.data("src"));
   $("#howtovideo").modal("show");
-  
-       $("#sidebar-btn").click();
-            
-           // $('#content').off();
-        //toggleMenu();
-    
-
+  $("#sidebar-btn").click();
 });
 
-$(document).on("click", "#MenuHowToVideoCharterHead", function(e) { 
-  $("#howtovideocharterhead").modal("show");
-  
-       $("#sidebar-btn").click();
-            
-           // $('#content').off();
-        //toggleMenu();
-    
+$("#howtovideo").on("hidden.bs.modal", function() {
+  $("#preferenceSheetVideoIframe").attr("src", "");
+});
 
+$(document).on("click", "#MenuHowToVideoCharterHead", function(e) {
+  e.preventDefault();
+  var iframe = $("#charterHeadVideoIframe");
+  iframe.attr("src", iframe.data("src"));
+  $("#howtovideocharterhead").modal("show");
+  $("#sidebar-btn").click();
+});
+
+$("#howtovideocharterhead").on("hidden.bs.modal", function() {
+  $("#charterHeadVideoIframe").attr("src", "");
 });
 
 // var vid = document.getElementById("preferencesheetvideo");
