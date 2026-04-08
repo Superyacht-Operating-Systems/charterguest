@@ -82,7 +82,7 @@ $dateTimestamp2 = strtotime($date2);
            <ul class="submenu">
            <li class="menu__item" id="MenuHowToVideo"><a href="#">Preference Sheets</a></li>
                    <li class="menu__item" id="MenuHowToVideoCharterHead"><a href="#">Head Charterer</a></li>
-  
+
                 </ul>
                 </li>
                 
