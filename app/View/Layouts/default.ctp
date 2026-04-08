@@ -102,9 +102,36 @@ $actual_link_defaultctp = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on
 .modalmsg-container .modal-dialog{
 padding-left: 0px;
 }
+.vidmodal{
+      background: rgba(0, 0, 0, 0.68);
+}
+
+
 .chr-block {
     display: inline;
 }
+.videomodalcontent{
+  height:400px;
+}
+.modalmsg-container.vidmodal  .modal-body {
+    margin: 0px;
+    padding: 0;
+    border: solid 10px #fff;
+    border-radius: 10px;
+}
+.modalmsg-container.vidmodal .modal-content{
+   border-radius: 10px;
+}
+.modalmsg-container.vidmodal .modal-header {
+    padding: 0;
+    border: none;
+}
+.modalmsg-container.vidmodal .modal-header .close {
+    top: -10px;
+    z-index: 1;
+    right: -9px;
+}
+
 
 body .mydemolabel .user-subnamep{
     font-size: 36px!important;
@@ -144,10 +171,14 @@ body .mydemolabel {
 	}
 .modalmsg-container .modal-content{
 width: max-content;
-    max-width: 491px;
-    min-width: 300px;
+    max-width: 700px;
+    min-width: 700px;
+        height: 100%;
 }
-
+.vidmodal .modal-dialog{
+   max-width: 700px;
+    min-width: 700px;
+}
 @media (min-width: 768px){
 .modal-dialog {
     width: 400px;
@@ -157,6 +188,14 @@ width: max-content;
 
 
 }
+
+@media screen and (max-device-width: 1366px) and (orientation: landscape) {
+    .videomodalcontent {
+        width: 100% !important;
+    }
+}
+
+
 
 /*	.iter-pref{
 		width: 32%;
@@ -193,6 +232,12 @@ body .mydemolabel{
 .modalmsg-container .modal-content{
   width: 100%;
 }
+.vidmodal .modal-dialog {
+    max-width: 90%;
+    min-width: 90%;
+    margin: 0 auto;
+            margin-top: 30px;
+}
 
 .user-subnamep .sp-noe{
 font-size: 14px;
@@ -217,8 +262,8 @@ body .mydemolabel .user-subnamep {
 }
 .modalmsg-container .modal-content{
 width: max-content;
-max-width: 300px;
-        min-width: 300px;
+max-width: 100%;
+        min-width: 100%;
         margin: 0 auto;
 }
 }
@@ -243,104 +288,8 @@ max-width: 300px;
 
 } */
 
-@media only screen and (max-device-width : 700px) {
-  .videomodalcontent{
-      width: 482px !important;
-    }
-
-    .videoclass{
-      width: 450px !important;
-      height : 250px !important;
-    }
-}
-
-@media screen 
-  and (max-device-width: 1000px) 
-  { 
-
-    .videomodalcontent{
-      width: 482px !important;
-    }
-
-    .videoclass{
-      width: 450px !important;
-      height : 250px !important;
-    }
-
-}
-
-@media screen 
-  and (max-device-width: 900px) 
-  { 
-
-    .videomodalcontent{
-      width: 482px !important;
-      
-    }
-
-    .videoclass{
-      width: 450px !important;
-      height : 250px !important;
-    }
-
-}
 
 
-
-@media only screen and (device-width: 768px) {
-  /* For general iPad layouts */
-  .videomodalcontent{
-      width: 482px !important;
-      
-    }
-
-    .videoclass{
-      width: 450px !important;
-      height : 250px !important;
-    }
-}
-
-@media only screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:portrait) {
-  /* For portrait layouts only */
-  .videomodalcontent{
-      width: 482px !important;
-      
-    }
-
-    .videoclass{
-      width: 450px !important;
-      height : 250px !important;
-    }
-}
-
-@media only screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:landscape) {
-  /* For landscape layouts only */
-  .videomodalcontent{
-      width: 560px !important;
-      
-    }
-
-    .videoclass{
-      width: 375px !important;
-      height : 250px !important;
-    }
-}
-
-@media screen 
-  and (max-device-width: 1366px)  and (orientation:landscape) 
-  { 
-
-    .videomodalcontent{
-      width: 560px !important;
-      
-    }
-
-    .videoclass{
-      width: 375px !important;
-      height : 250px !important;
-    }
-
-}
 
 			</style>              
 </head>
@@ -680,11 +629,10 @@ max-width: 300px;
 </div>
 
 
-<div id="howtovideo" class="modal modalmsg-container" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" style="margin-top: 55px;">
+<div id="howtovideo" class="modal modalmsg-container vidmodal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" style="margin-top: 55px;">
   <div class="modal-dialog" role="document">
     <div class="modal-content mc-bord  videomodalcontent">
      <div class="modal-header">
-        <h5 class="modal-title">How To Video</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -713,54 +661,27 @@ max-width: 300px;
         <!-- <video width="100%" height="100%" class="video videoclass" playsinline autoplay muted loop controls="true"  preload="metadata" id="preferencesheetvideo">
         <source src="https://youtu.be/4aMP61dg-cQ" type="video/mp4">
         </video> -->
-        <iframe class="videomodalcontent" width="100%" height="100%" 
+        <iframe class="videomodalcontent" width="100%" 
           src="https://www.youtube.com/embed/dQFHpxENsPk" 
           frameborder="0" 
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
           allowfullscreen>
         </iframe>
         </div>
-        <div class="modal-footer">
-            
-        </div>
     </div>
   </div>
 </div>
 
-<div id="howtovideocharterhead" class="modal modalmsg-container" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" style="margin-top: 55px;">
+<div id="howtovideocharterhead" class="modal modalmsg-container vidmodal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" style="margin-top: 55px;">
   <div class="modal-dialog" role="document">
     <div class="modal-content mc-bord  videomodalcontent">
      <div class="modal-header">
-        <h5 class="modal-title">How To Video</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
         <div class="modal-body">
-        <!-- <video
-    id="charterheadvideo"
-    class="video-js videoclass"
-    controls
-    preload="auto"
-    poster=""
-    data-setup='{ "techOrder": ["youtube"], "sources": [{ "type": "video/youtube", "src": "https://youtu.be/1JrP38CXlSQ"}]}'>
-  <source src="https://youtu.be/1JrP38CXlSQ" type="video/mp4"></source>
-  
-  <p class="vjs-no-js"> 
-    To view this video please enable JavaScript, and consider upgrading to a
-    web browser that
-    <a href="https://videojs.com/html5-video-support/" target="_blank">
-      supports HTML5 video
-    </a>
-  </p>
-</video> -->
-        <!-- <video width="100%" height="100%" class="video videoclass" playsinline autoplay muted loop controls="true"  preload="metadata" id="charterheadvideo">
-        <source src="https://youtu.be/ExAG5mRmGAU" type="video/mp4">
-        </video> -->
-                            
-        </div>
-        <div class="modal-footer">
-            
+         <iframe width="100%" class="videomodalcontent" src="https://www.youtube.com/embed/uk_hTLv8LkM?si=gBDWl3Yb354wpdSQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>         
         </div>
     </div>
   </div>
