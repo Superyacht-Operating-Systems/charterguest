@@ -40,6 +40,11 @@
 .ch-card{
     border-radius: 10px;
 }
+.fabellcount{
+        left: -13px !important;
+    top: -3px !important;
+    z-index: 9 !important;
+}
 .ch-card-body{
 position: relative;
 }
@@ -1059,7 +1064,7 @@ if(isset($charterAssocData) && !empty($charterAssocData)){
             <li><a href="<?php echo $website; ?>" target="_blank" style="text-decoration:none;">Yachts Website</a></li>
            
             <?php if($data['charterDetails']['map_url'] == "link"){ ?>
-              <li><a href="<?php echo $baseFolder."/charters/charter_program_map/".$charter_program_id.'/'.$data['charterDetails']['ydb_name'].'/guest'.'/'.$simpleGuestType.'/'.$data['CharterGuestAssociate']['allow_comments']; ?>" title="Map is Published">Cruising Map</a><?php if(isset($msg_count_assc) && $msg_count_assc > 0){ ?><span class="cardbell-icon"><span class="avacard-cunt"><?php echo $msg_count_assc; ?></span><i class="fa fa-bell"></i></span><?php } ?> </li>
+              <li><a href="<?php echo $baseFolder."/charters/charter_program_map/".$charter_program_id.'/'.$data['charterDetails']['ydb_name'].'/guest'.'/'.$simpleGuestType.'/'.$data['CharterGuestAssociate']['allow_comments']; ?>" title="Map is Published">Cruising Map</a><?php if(isset($msg_count_assc) && $msg_count_assc > 0){ ?><span class="cardbell-icon"><span class="avacard-cunt fabellcount"><?php echo $msg_count_assc; ?></span><i class="fa fa-bell"></i></span><?php } ?> </li>
             <?php }else if($data['charterDetails']['map_url'] == "nolink"){  ?>
             <!-- <li><span datahover="Map is Not Published" title="Map is Not Published"><a href="#" role="button" title="Map is Not Published" aria-current="mapnolink">Cruising Map</a></span> </li> -->
             <li class="btnNoLink" data-value="<?php echo $id; ?>"><span datahover="Map is Not Published" title="Map is Not Published"><a   role="button" title="Map is Not Published" aria-current="mapnolink">Cruising Map</a></span></li>

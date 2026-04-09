@@ -173,7 +173,6 @@ body .mydemolabel {
 width: max-content;
     max-width: 700px;
     min-width: 700px;
-        height: 100%;
 }
 .vidmodal .modal-dialog{
    max-width: 700px;
@@ -184,8 +183,6 @@ width: max-content;
     width: 400px;
     margin: 30px auto;
 }
-
-
 
 }
 
@@ -238,7 +235,9 @@ body .mydemolabel{
     margin: 0 auto;
             margin-top: 30px;
 }
-
+.modalmsg-container .modal-content{
+        height: 100%;
+}
 .user-subnamep .sp-noe{
 font-size: 14px;
 
@@ -710,12 +709,31 @@ max-width: 100%;
           allowfullscreen>
         </iframe>
         </div>
-        <div class="modal-footer">
+    </div>
+  </div>
+</div>
+
+<div id="MenuHowReviewersmodal" class="modal modalmsg-container vidmodal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" style="margin-top: 55px;">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content mc-bord  videomodalcontent">
+     <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+        <div class="modal-body">
+
+         <iframe id="ReviewersmodalVideoIframe" class="videomodalcontent" width="100%" height="100%" src="https://www.youtube.com/embed/RICNK80nQIQ?si=fPUUGlsF7QFUgU8x" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
         </div>
     </div>
   </div>
 </div>
+
+
+
+
+
 
 <!-- The Modal -->
 <!-- Modal -->
@@ -1034,6 +1052,19 @@ $(document).on("click", "#MenuHowToVideoCharterHead a", function(e) {
 $("#howtovideocharterhead").on("hidden.bs.modal", function() {
   $("#charterHeadVideoIframe").attr("src", "");
 });
+
+$(document).on("click", "#MenuHowReviewers a", function(e) {
+  e.preventDefault();
+  var iframe = $("#charterHeadVideoIframe");
+  iframe.attr("src", iframe.data("src"));
+  $("#MenuHowReviewersmodal").modal("show");
+  $("#sidebar-btn").click();
+});
+
+$("#MenuHowReviewersmodal").on("hidden.bs.modal", function() {
+  $("#ReviewersmodalVideoIframe").attr("src", "");
+});
+
 
 // var vid = document.getElementById("preferencesheetvideo");
 // alert("Start: " + vid.buffered.start(0)
