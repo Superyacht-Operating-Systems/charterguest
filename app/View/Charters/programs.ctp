@@ -48,6 +48,11 @@
 .ch-card{
     border-radius: 10px;
 }
+.fabellcount{
+        left: -13px !important;
+    top: -3px !important;
+    z-index: 9 !important;
+}
 .ch-card-body{
 position: relative;
 }

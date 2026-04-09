@@ -5083,6 +5083,20 @@ $(document).on("click", "#MenuHowToVideoCharterHead", function(e) {
     
 
 });
+
+$(document).on("click", "#MenuHowReviewers", function(e) { 
+  $("#MenuHowReviewersmodal").show();
+  
+       $("#sidebar-btn").click();
+            
+           // $('#content').off();
+        //toggleMenu();
+    
+
+});
+
+
+
 $(document).on("click", ".close", function(e) { 
     $("#howtovideo").hide();
     $("#howtovideocharterhead").hide();
