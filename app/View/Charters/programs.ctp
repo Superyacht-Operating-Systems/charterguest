@@ -3,6 +3,14 @@
     $noImageUrl = $basefolder."/app/webroot/img/noimage.png";
     $cloudUrl = Configure::read('cloudUrl');
     $session = $this->Session->read('charter_info.CharterGuest');
+
+    // Helper: encrypt map URL params into an opaque token
+    function makeMapToken($params) {
+        App::import('Vendor', 'UrlCrypt', array('file' => 'UrlCrypt/UrlCrypt.php'));
+        $key    = Configure::read('UrlCrypt.key');
+        $secret = Configure::read('UrlCrypt.secret');
+        return UrlCrypt::encrypt(http_build_query($params), $key, $secret);
+    }
     $sessionData = $this->Session->read();
     //print_r($sessionData["pSheetsColor"]);
     if(isset($sessionData["pSheetsColor"]) && !empty($sessionData["pSheetsColor"])) { ?>
@@ -785,7 +793,7 @@ margin: 30px auto;
             <?php if(isset($mapdetails)){ ?>
                 <ul class="submenu">
                     <?php foreach($mapdetails as $startdate => $data){ ?>
-                    <li class="menu__item"><a href="<?php echo $baseFolder."/charters/charter_program_map/".$data['programid'].'/'.$data['dbname'].'/owner'; ?>" target="_blank"><?php echo $startdate; ?> <span class="acti-countnav"><?php echo $data['count']; ?></span></a></li>
+                    <li class="menu__item"><a href="<?php echo $basefolder."/charters/charter_program_map_token/".makeMapToken(array('prgUUID'=>$data['programid'],'yachtdb'=>$data['dbname'],'guesttype'=>'owner','cp_guesttype'=>'','allow_comments'=>'')); ?>" target="_blank"><?php echo $startdate; ?> <span class="acti-countnav"><?php echo $data['count']; ?></span></a></li>
                     <?php
                             
                         } ?>
@@ -927,7 +935,7 @@ if(isset($charterGuestData) && !empty($charterGuestData)){
         <ul>
             <li><a href="<?php echo $website; ?>" target="_blank" style="text-decoration:none;">Yachts Website</a></li>
             <?php if($data['map_url'] == "link"){ ?>
-                <li><a href="<?php echo $baseFolder."/charters/charter_program_map/".$charter_program_id.'/'.$data['ydb_name'].'/owner'; ?>" title="Map is Published">Cruising Map</a>  <?php if(isset($msg_count) && $msg_count > 0){ ?><span class="cardbell-icon"><span class="avacard-cunt"><?php echo $msg_count; ?></span><i class="fa fa-comments"></i></span><?php } ?></li>
+                <li><a href="<?php echo $basefolder."/charters/charter_program_map_token/".makeMapToken(array('prgUUID'=>$charter_program_id,'yachtdb'=>$data['ydb_name'],'guesttype'=>'owner','cp_guesttype'=>'','allow_comments'=>'')); ?>" title="Map is Published">Cruising Map</a>  <?php if(isset($msg_count) && $msg_count > 0){ ?><span class="cardbell-icon"><span class="avacard-cunt"><?php echo $msg_count; ?></span><i class="fa fa-comments"></i></span><?php } ?></li>
                 <!-- target="_blank" -->
                 <?php }else if($data['map_url'] == "nolink"){ ?>
                 <!-- <li><span datahover="Map is Not Published" title="Map is Not Published"><a href="#" role="button" title="Map is Not Published" aria-current="mapnolink">Cruising Map</a></span></li> -->
@@ -1059,7 +1067,7 @@ if(isset($charterAssocData) && !empty($charterAssocData)){
             <li><a href="<?php echo $website; ?>" target="_blank" style="text-decoration:none;">Yachts Website</a></li>
            
             <?php if($data['charterDetails']['map_url'] == "link"){ ?>
-              <li><a href="<?php echo $baseFolder."/charters/charter_program_map/".$charter_program_id.'/'.$data['charterDetails']['ydb_name'].'/guest'.'/'.$simpleGuestType.'/'.$data['CharterGuestAssociate']['allow_comments']; ?>" title="Map is Published">Cruising Map</a><?php if(isset($msg_count_assc) && $msg_count_assc > 0){ ?><span class="cardbell-icon"><span class="avacard-cunt"><?php echo $msg_count_assc; ?></span><i class="fa fa-bell"></i></span><?php } ?> </li>
+              <li><a href="<?php echo $basefolder."/charters/charter_program_map_token/".makeMapToken(array('prgUUID'=>$charter_program_id,'yachtdb'=>$data['charterDetails']['ydb_name'],'guesttype'=>'guest','cp_guesttype'=>$simpleGuestType,'allow_comments'=>$data['CharterGuestAssociate']['allow_comments'])); ?>" title="Map is Published">Cruising Map</a><?php if(isset($msg_count_assc) && $msg_count_assc > 0){ ?><span class="cardbell-icon"><span class="avacard-cunt"><?php echo $msg_count_assc; ?></span><i class="fa fa-bell"></i></span><?php } ?> </li>
             <?php }else if($data['charterDetails']['map_url'] == "nolink"){  ?>
             <!-- <li><span datahover="Map is Not Published" title="Map is Not Published"><a href="#" role="button" title="Map is Not Published" aria-current="mapnolink">Cruising Map</a></span> </li> -->
             <li class="btnNoLink" data-value="<?php echo $id; ?>"><span datahover="Map is Not Published" title="Map is Not Published"><a   role="button" title="Map is Not Published" aria-current="mapnolink">Cruising Map</a></span></li>

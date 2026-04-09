@@ -58,9 +58,8 @@
                                       <section class="rowm-md-mob-resize">
 
                                         <div class="md-row-h-12"> 
-                                        <label>Title</label> 
-                                        <input type="text" class="form-control tinput rowInput" name="" value="Peter" readonly="true">
-                                            <!-- <//?php echo $this->Form->input("salutation",array("id" => "headCharterSalutation", "label"=>false,'name' => 'salutation[]','options' => $salutationList,'class'=>'form-control form-two tinput rowInput validateInput','default' => $charterData['CharterGuest']['salutation'])); ?> -->
+                                        <label>Title</label>
+                                        <input type="text" class="form-control tinput rowInput" name="salutation[]" value="<?php echo htmlspecialchars($charterData['CharterGuest']['salutation']); ?>" readonly="true">
                                             <span class="error validateMessage" style="display: none;">Enter Title</span>
                                         </div>
 
@@ -236,10 +235,7 @@
                                          <section class="rowm-md-mob-resize">
                                        <div class="md-row-h-12">
                                         <label>Title</label>
-                                        
-                                                                          <input type="text" class="form-control tinput rowInput" name="" value="Peter" readonly="true">
-
-                                            <!-- <//?php echo $this->Form->input("salutation",array("label"=>false,'name' => 'salutation[]','options' => $salutationList,'class'=>'form-control tinput rowInput validateInput','default' => $charterAssoc['CharterGuestAssociate']['salutation'])); ?> -->
+                                        <input type="text" class="form-control tinput rowInput" name="salutation[]" value="<?php echo htmlspecialchars($charterAssoc['CharterGuestAssociate']['salutation']); ?>">
                                             <span class="error validateMessage" style="display: none;">Enter Title</span>
                                         </div>
                                         <div class="md-row-h-10">
@@ -338,9 +334,7 @@
                                               <section class="rowm-md-mob-resize">
                                        <div class="md-row-h-12">  
                                         <label>Title</label>
-                                                                                <input type="text" class="form-control tinput rowInput" name="" value="Peter" readonly="true">
-
-                                            <!-- <//?php echo $this->Form->input("salutation",array("label"=>false,'name' => 'salutation[]','options' => $salutationList,'class'=>'form-control tinput rowInput validateInput')); ?> -->
+                                        <input type="text" class="form-control tinput rowInput" name="salutation[]" value="">
                                         </div>
                                         <div class="md-row-h-10">
                                              <label>First Name</label>
