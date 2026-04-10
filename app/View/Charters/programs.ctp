@@ -48,14 +48,14 @@
 .ch-card{
     border-radius: 10px;
 }
-
+/* 
 .avacard-cunt-number .avacard-cunt  {
  left: -16px;
     right: 0;
     position: absolute;
     z-index: 2;
     top: -6px;
-}
+} */
 
 .fabellcount{
         left: -13px !important;
