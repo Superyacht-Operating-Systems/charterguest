@@ -9318,11 +9318,33 @@ WHERE cga_menus.UUID = '$uuid'";
     }
     /*
      * Charter Program Map view
-     * Functionality -  Loading the Charter program Map view 
+     * Functionality -  Loading the Charter program Map view
      * Developer - Nagarajan
      * Created date - 28-May-2018
-     * Modified date - 
+     * Modified date -
      */
+
+    public function charter_program_map_token($token = null) {
+        if (empty($token)) {
+            $this->redirect(array('controller' => 'Charters', 'action' => 'index'));
+        }
+        App::import('Vendor', 'UrlCrypt', array('file' => 'UrlCrypt/UrlCrypt.php'));
+        $key    = Configure::read('UrlCrypt.key');
+        $secret = Configure::read('UrlCrypt.secret');
+        $plain  = UrlCrypt::decrypt($token, $key, $secret);
+        if ($plain === false) {
+            $this->redirect(array('controller' => 'Charters', 'action' => 'index'));
+        }
+        parse_str($plain, $params);
+        $prgUUID       = isset($params['prgUUID'])        ? $params['prgUUID']        : '';
+        $yachtdb       = isset($params['yachtdb'])        ? $params['yachtdb']        : '';
+        $guesttype     = isset($params['guesttype'])      ? $params['guesttype']      : '';
+        $cp_guesttype  = isset($params['cp_guesttype'])   ? $params['cp_guesttype']   : '';
+        $allow_comments= isset($params['allow_comments']) ? $params['allow_comments'] : '';
+        $this->charter_program_map($prgUUID, $yachtdb, $guesttype, $cp_guesttype, $allow_comments);
+        $this->render('/Charters/charter_program_map');
+    }
+
     public function charter_program_map($prgUUID,$yachtdb,$guesttype,$cp_guesttype='',$allow_comments='') {
 //        echo "<pre>";print_r($this->Session->read());exit; 
         Configure::write('debug',0);
