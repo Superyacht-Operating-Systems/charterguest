@@ -710,10 +710,11 @@ margin-top: 50px;
             <?php }
             } ?>
         </li>   
-        <li class="menu__item" ><a>How To Video</a>
+        <li class="menu__item" ><a>How To Videos</a>
            <ul class="submenu">
-                   <li class="menu__item" id="MenuHowToVideo"><a href="#">Preference Sheets</a></li>
-                   <li class="menu__item" id="MenuHowToVideoCharterHead"><a href="#">Head Charterer</a></li>
+                 <li class="menu__item" id="MenuHowToVideo"><a href="#">For Guests</a></li>
+            <li class="menu__item" id="MenuHowToVideoCharterHead"><a href="#">For Head Charterers</a></li>
+            <li class="menu__item" id="MenuHowReviewers"><a href="#">For Itinerary Reviewers</a></li>
                 </ul>
             </li>
            <li class="menu__item"> <a href="<?php echo $baseFolder."/charters/privacytermsofuse/1" ?>" target="blank">Terms of Use</a></li>
@@ -874,7 +875,7 @@ if(isset($defaultLastName) && !empty($defaultLastName)){
               <!------------------login or logout----------------->
 
     <div class="modal-content mc-bord" id="successUsePreference">
-      <div class="modal-body">
+      <div class="modal-body"> 
       <div class="modalmsg" style="margin-left: 30px;"> 
         <p>Would you like to allow your preferences to</p>
         <p>be provided to future charter programs</p>

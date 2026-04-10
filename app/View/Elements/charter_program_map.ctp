@@ -149,10 +149,11 @@ echo $this->Html->css('leaflet/dist/leaflet');
         <ul class="menu-level1 no-style nav nav-pills nav-justified">
           <li><a href="<?php echo $baseFolder."/charters/view"; ?>">Guest List</a></li>
            <li><?php echo $this->Html->link('Cruising Map','view',array('id' => 'charterProgramView', 'title' => 'Cruising Map '));?></li>
-           <li class="menu__item" ><a>How To Video</a>
+           <li class="menu__item" ><a>How To Videos</a>
            <ul class="submenu">
-                   <li class="menu__item" id="MenuHowToVideo"><a href="#">Preference <br>Sheets</a></li>
-                   <li class="menu__item" id="MenuHowToVideoCharterHead"><a href="#">Head Charterer</a></li>
+                  <li class="menu__item" id="MenuHowToVideo"><a href="#">For Guests</a></li>
+            <li class="menu__item" id="MenuHowToVideoCharterHead"><a href="#">For Head Charterers</a></li>
+            <li class="menu__item" id="MenuHowReviewers"><a href="#">For Itinerary Reviewers</a></li>
                 </ul>
             </li>
          <li class="list-logout-row"><?php echo $this->Html->link('  Logout','/',array('escape' =>false,'title' => 'Logout'));?></li>
