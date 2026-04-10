@@ -85,7 +85,7 @@ $dateTimestamp2 = strtotime($date2);
             <li class="menu__item" id="MenuHowReviewers"><a href="#">For Itinerary Reviewers</a></li>
 
                 </ul>
-                </li>
+                </li> 
                 
             
 

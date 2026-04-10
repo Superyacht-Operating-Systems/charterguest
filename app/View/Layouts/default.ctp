@@ -727,7 +727,7 @@ max-width: 100%;
 
         </div>
     </div>
-  </div>
+  </div> 
 </div>
 
 
