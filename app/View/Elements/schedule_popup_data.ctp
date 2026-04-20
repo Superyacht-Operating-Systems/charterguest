@@ -229,10 +229,10 @@ $charter_assoc_info = $this->Session->read('charter_assoc_info');
                             <div class="icons_fields">
                             <i style="color: #00a8f3;" class="fa fa-solid fa-calendar"><span class="icon_label" ><?php echo $schedule['CharterProgramSchedule']['week_days']; ?></span></i>
                                 <?php if($schedule['CharterProgramSchedule']['stationary'] == 0){?>
-                                <i style="color: #00a8f3;" class="fa fa-solid fa-clock-o "><span class="icon_label"><?php echo $markertotal[$df.' - Day '.$dnum]['duration'];  ?></span></i>
+                                <i style="color: #00a8f3;" class="fa fa-solid fa-clock "><span class="icon_label"><?php echo $markertotal[$df.' - Day '.$dnum]['duration'];  ?></span></i>
                                 <i style="color: #00a8f3;" class="fa fa-solid fa-ship" aria-hidden="true"><span class="icon_label" style="padding: 0px 0px 0px 5px;"><?php echo $markertotal[$df.' - Day '.$dnum]['distance']; ?></span></i>
                                 <?php }else if($schedule['CharterProgramSchedule']['stationary'] == 1){ ?>
-                                    <i style="color: #00a8f3;" class="fa fa-solid fa-clock-o "><span class="icon_label"></span></i>
+                                    <i style="color: #00a8f3;" class="fa fa-solid fa-clock "><span class="icon_label"></span></i>
                                 <i style="color: #00a8f3;" class="fa fa-solid fa-ship" aria-hidden="true"><span class="icon_label" style="padding: 0px 0px 0px 5px;"></span></i>
                                     <?php } ?>
                                 </div>
@@ -328,7 +328,7 @@ $charter_assoc_info = $this->Session->read('charter_assoc_info');
             <div style="color: #000;font-size: 15px;text-align:center;width:100%!important;margin: 0px 0px 5px 0px;padding: 8px 5px;font-weight: 600;"><span id="embarkation_sch"></span>  <span id="debarkation_sch"></span> </div>
             <div class="icons_fields" style="text-align:center;border-bottom: none;margin-bottom: 0px;padding-bottom: 0px;">
                                 <i style="color: #00a8f3;" class="fa fa-solid fa-calendar"><span class="icon_label charter_from_date_conv_CSMP" ></span></i>
-                                <i style="color: #00a8f3;" class="fa fa-solid fa-clock-o "><span class="icon_label markerdurationCSMP"></span></i>
+                                <i style="color: #00a8f3;" class="fa fa-solid fa-clock "><span class="icon_label markerdurationCSMP"></span></i>
                                 <i style="color: #00a8f3;" class="fa fa-solid fa-ship" aria-hidden="true"><span class="icon_label markerdistanceCSMP" style="padding: 0px 0px 0px 5px;"></span></i>
                                 </div>    
             <select name="markersnamescruisingsch" style="display:none;" class="form-control markersnamesmodalmapcruisingsch"></select>

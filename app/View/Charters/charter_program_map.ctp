@@ -2135,7 +2135,7 @@ border-radius: 4px; */
                 <div style="color: #000;font-size: 15px;text-align:center;width:100%!important;margin: 0px 0px 5px 0px;padding:3px 5px 8px 5px;font-weight: 600;"><span id="embarkation"></span>  <span id="debarkation"></span> </div>
                 <div class="icons_fields" style="text-align:center;">
                 <i style="color: #00a8f3;" class="fa fa-solid fa-calendar"><span class="icon_label charter_from_date_conv" ></span></i>
-                <i style="color: #00a8f3;" class="fa fa-solid fa-clock-o "><span class="icon_label markerduration"></span></i>
+                <i style="color: #00a8f3;" class="fa fa-solid fa-clock "><span class="icon_label markerduration"></span></i>
                 <i style="color: #00a8f3;" class="fa fa-solid fa-ship" aria-hidden="true"><span class="icon_label markerdistance" style="padding: 0px 0px 0px 5px;"></span></i>
                 </div>
                 <select name="markersnames" style="display:none;" class="form-control markersnamesmodalmap"></select>
