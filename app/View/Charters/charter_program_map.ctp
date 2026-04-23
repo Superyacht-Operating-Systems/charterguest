@@ -2319,7 +2319,7 @@ $(document).on("click", "#showmenu" ,function() {
 <script>
     var guesttype = '<?php echo $guesttype;?>';
     var allow_comments = '<?php echo $allow_comments;?>';
-    var Wmarker= '<?php echo BASE_URL.'/charterguest/app/webroot/css/leaflet/dist/images/marker-icon.png'; ?>';
+    var Wmarker= '<?php echo BASE_URL.'/charterguest/app/webroot/css/leaflet/dist/images/marker-icon-itinerary.png'; ?>';
 var basefolder = '<?php echo $basefolder;?>';
 var vessel = new L.LayerGroup();
 var markerArray = [];

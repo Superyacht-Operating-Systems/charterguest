@@ -2499,7 +2499,7 @@ document.addEventListener('orientationchange', () => {
 /* orientationchange end */
 
  var guesttype = '<?php echo $guesttype;?>';
- var Wmarker= '<?php echo BASE_URL.'/charterguest/app/webroot/css/leaflet/dist/images/marker-icon.png'; ?>';
+ var Wmarker= '<?php echo BASE_URL.'/charterguest/app/webroot/css/leaflet/dist/images/marker-icon-itinerary.png'; ?>';
 var basefolder = '<?php echo $basefolder;?>';
 var vessel = new L.LayerGroup();
 var markerArray = [];
