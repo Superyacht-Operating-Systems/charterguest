@@ -3554,7 +3554,6 @@ if(e.target.firstdaytoloc){
 
                     /////////////////////////////itineray modal map///////////////////////////////////////////////////
 
-                                ReloadModalMaplayer();
                                 //var popLocation = e.latlng;
                                 var tooltipcontent = e.target._tooltip._content;
                                 var selectedmarkertitle = e.target.daytitle;
@@ -3636,17 +3635,6 @@ console.log(value._latlng.lng);
                                 }
                                 //console.log(lattitude);
                                 //console.log(longitude);
-                                drawrouteinmodal(frommarker);
-                              
-                                // console.log(selectedmarkertitle);
-                                //modalmap.fitBounds(fitzoommap);
-                                //modalmap.setView(new L.LatLng(lattitude,longitude), 7);
-                                //modalmap.panBy([0,0]);
-                                // console.log(lattitude);  
-                                // console.log(longitude);  
-                                setTimeout(() => {
-                                    modalmap.invalidateSize();
-                                }, 0);
                                 $("#modalmap").find('.leaflet-control-attribution').hide();
                                 var myIcon = L.icon({
                                 iconUrl: Wmarker,
@@ -3658,12 +3646,11 @@ console.log(value._latlng.lng);
                                     pmIgnore: true,
                                     icon:myIcon
                                 }).bindTooltip(tooltipcontent, {
-                                    permanent: true,
+                                    permanent: false,
                                     direction: 'right',
                                     className: "Tooltipmodalmap",
                                     noWrap: false,
                                 });
-                                routemodalmarker.addTo(modalmap);
                                 if(selectedmarkerday_num < 10 ){
                                     newdaycount="<span>&nbsp;"+selectedmarkerday_num+"</span>";
                                 }
@@ -3675,20 +3662,26 @@ console.log(value._latlng.lng);
                                     html: newdaycount,
                                     className: 'text-below-marker-modalmap',
                                     })
-                                }).addTo(modalmap);
+                                });
+                                setTimeout(() => {
+                                    modalmap.invalidateSize();
+                                    ReloadModalMaplayer();
+                                    routemodalmarker.addTo(modalmap);
+                                    textMarkermodalmap.addTo(modalmap);
+                                    drawrouteinmodal(frommarker);
+                                }, 400);
 
-                                 $(".Tooltipmodalmap").hide();
                     ////////////////////////////////////////////////////////////////////////////////
-                    
-                    
+
+
                 }
             },
-            error: function(jqxhr) { 
+            error: function(jqxhr) {
                 $("#hideloader").hide();
             }
         });
     }
-        
+
 }
        
 
@@ -3983,7 +3976,6 @@ $(document).on("click", ".stationarydays", function(e) {
 
                     /////////////////////////////itineray modal map///////////////////////////////////////////////////
 
-                    ReloadModalMaplayer();
                                 //var popLocation = e.latlng;
                                 var tooltipcontent = mapmarkerglobalObj.target._tooltip._content;
                                 var selectedmarkertitle = mapmarkerglobalObj.target.daytitle;
@@ -4070,17 +4062,6 @@ $(document).on("click", ".stationarydays", function(e) {
                                 if(stationary_val == 1){
                                     frommarker = "";
                                 }
-                                drawrouteinmodal(frommarker);
-                              
-                                // console.log(selectedmarkertitle);
-                                //modalmap.fitBounds(fitzoommap);
-                                //modalmap.setView(new L.LatLng(lattitude,longitude), 7);
-                                //modalmap.panBy([0,0]);
-                                // console.log(lattitude);  
-                                // console.log(longitude);  
-                                // setTimeout(() => {
-                                //     modalmap.invalidateSize();
-                                // }, 0);
                                 $("#modalmap").find('.leaflet-control-attribution').hide();
                                 var myIcon = L.icon({
                                 iconUrl: Wmarker,
@@ -4092,12 +4073,11 @@ $(document).on("click", ".stationarydays", function(e) {
                                     pmIgnore: true,
                                     icon:myIcon
                                 }).bindTooltip(tooltipcontent, {
-                                    permanent: true,
+                                    permanent: false,
                                     direction: 'right',
                                     className: "Tooltipmodalmap",
                                     noWrap: false,
                                 });
-                                routemodalmarker.addTo(modalmap);
                                 if(selecteddaynumstationary < 10 ){
                                     newdaycount="<span>&nbsp;"+selecteddaynumstationary+"</span>";
                                 }
@@ -4109,17 +4089,21 @@ $(document).on("click", ".stationarydays", function(e) {
                                     html: newdaycount,
                                     className: 'text-below-marker-modalmap',
                                     })
-                                }).addTo(modalmap);
+                                });
+                                setTimeout(() => {
+                                    modalmap.invalidateSize();
+                                    ReloadModalMaplayer();
+                                    routemodalmarker.addTo(modalmap);
+                                    textMarkermodalmap.addTo(modalmap);
+                                    drawrouteinmodal(frommarker);
+                                }, 400);
 
-                                 $(".Tooltipmodalmap").hide();
                     ////////////////////////////////////////////////////////////////////////////////
-                   
-                    
-                    //$('.expandField').autoResize();
-                     
+
+
                 }
             },
-            error: function(jqxhr) { 
+            error: function(jqxhr) {
                 $("#hideloader").hide();
             }
         });
