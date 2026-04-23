@@ -2780,6 +2780,19 @@ var modalmap = L.map('modalmap', {
 //L.control.ruler().addTo(modalmap);
 
 
+// L.divIcon with inline SVG — guaranteed to render on iOS Safari (no external image, no <img> element)
+function createModalPinIcon() {
+    return L.divIcon({
+        html: '<svg xmlns="http://www.w3.org/2000/svg" width="25" height="41" viewBox="0 0 25 41">'
+            + '<path d="M12.5 0C5.6 0 0 5.6 0 12.5c0 9.4 12.5 28.5 12.5 28.5S25 21.9 25 12.5C25 5.6 19.4 0 12.5 0z" fill="white" stroke="rgba(0,0,0,0.35)" stroke-width="1.5"/>'
+            + '<circle cx="12.5" cy="12.5" r="4.5" fill="rgba(0,0,0,0.45)"/>'
+            + '</svg>',
+        iconSize:   [25, 41],
+        iconAnchor: [12, 41],
+        className:  '',
+    });
+}
+
 // Removed the layer on close the route modal to clear any changes done and not saved.
 // On Opening the modal calling this function to load the layer
 var _modalmap_tilelayer = null;
@@ -3934,11 +3947,7 @@ textarea.addEventListener("input", function() {
                                     frommarker = "";
                                 }
                                 $("#modalmap").find('.leaflet-control-attribution').hide();
-                                var myIcon = L.icon({
-                                iconUrl: Wmarker,
-                                iconSize: [25, 41],
-                                className:'myIconClass',
-                            });
+                                var myIcon = createModalPinIcon();
                                 var routemodalmarker = L.marker([lattitude, longitude], {
                                     draggable: false,
                                     pmIgnore: true,
@@ -4040,11 +4049,7 @@ if (routemodalmarkerselected != "") { //alert();
 if (textMarkermodalmap != "") { //alert();
     modalmap.removeLayer(textMarkermodalmap);
 }
-var myIcon = L.icon({
-                                iconUrl: Wmarker,
-                                iconSize: [25, 41],
-                                className:'myIconClass',
-                            });
+var myIcon = createModalPinIcon();
 routemodalmarkerselected = L.marker([selectedlat,selectedlong], {
     draggable: false,
     pmIgnore: true,
@@ -4362,11 +4367,7 @@ $(document).on("click", ".stationarydays", function(e) { //alert();
                                     frommarker = "";
                                 }
                                 $("#modalmap").find('.leaflet-control-attribution').hide();
-                                var myIcon = L.icon({
-                                iconUrl: Wmarker,
-                                iconSize: [25, 41],
-                                className:'myIconClass',
-                            });
+                                var myIcon = createModalPinIcon();
                                 var routemodalmarker = L.marker([lattitude, longitude], {
                                     draggable: false,
                                     pmIgnore: true,
@@ -5214,11 +5215,7 @@ function markerOnClickCSMP(e) {
             drawrouteinmodalCSMP(frommarker);
         }, 400);
 
-        var myIcon = L.icon({
-                                iconUrl: Wmarker,
-                                iconSize: [25, 41],
-                                className:'myIconClass',
-                            });
+        var myIcon = createModalPinIcon();
         //$("#modalmap").find('.leaflet-control-attribution').hide();
         var routemodalmarkerCSMP = L.marker([lattitude, longitude], {
             draggable: false,
@@ -5279,11 +5276,7 @@ $(document).on("change", ".markersnamesmodalmapcruisingsch", function(e) {
         if (textMarkermodalmap != "") { //alert();
             modalmapcruisingsch.removeLayer(textMarkermodalmap);
         }
-        var myIcon = L.icon({
-                                iconUrl: Wmarker,
-                                iconSize: [25, 41],
-                                className:'myIconClass',
-                            });
+        var myIcon = createModalPinIcon();
         routemodalmarkerselected = L.marker([selectedlat,selectedlong], {
             draggable: false,
             pmIgnore: true,
