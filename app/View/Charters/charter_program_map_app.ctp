@@ -1,5 +1,5 @@
 <?php 
-exit('rakesh cp.net site');
+//exit('rakesh cp.net site');
 $isFleetUser = $this->Session->read('loggedUserInfo.is_fleet');
 $userType = $this->Session->read('loggedUserInfo.user_type');
 $basefolder = $this->request->base; 
