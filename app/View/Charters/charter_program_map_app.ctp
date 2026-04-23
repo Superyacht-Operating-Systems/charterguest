@@ -397,6 +397,8 @@ border-radius: 10px !important;
 -moz-border-radius: 10px !important;
 -webkit-appearance: none;
 overflow: hidden;
+-webkit-transform: translateZ(0);
+transform: translateZ(0);
     }
 
     #modalmapcruisingsch{
@@ -482,7 +484,8 @@ border-radius: 10px !important;
 -webkit-border-radius: 10px !important;
 -moz-border-radius: 10px !important;
 overflow: hidden;
-
+-webkit-transform: translateZ(0);
+transform: translateZ(0);
     }
 
     #modalmapcruisingsch{
@@ -769,6 +772,8 @@ border-radius: 10px !important;
 -khtml-border-radius: 10px !important;
 -webkit-appearance: none;
 overflow: hidden;
+-webkit-transform: translateZ(0);
+transform: translateZ(0);
     }
     #modalmapcruisingsch{
         height: 500px;
@@ -780,7 +785,8 @@ border-radius: 10px !important;
 -khtml-border-radius: 10px !important;
 margin-top:10px;
 overflow: hidden;
-
+-webkit-transform: translateZ(0);
+transform: translateZ(0);
     }
     .navbar {
   margin-bottom: 0px;
@@ -817,6 +823,8 @@ border-radius: 10px !important;
 -khtml-border-radius: 10px !important;
 -webkit-appearance: none;
 overflow: hidden;
+-webkit-transform: translateZ(0);
+transform: translateZ(0);
     }
     #modalmapcruisingsch{
         height: 500px;

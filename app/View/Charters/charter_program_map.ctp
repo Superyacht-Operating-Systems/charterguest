@@ -411,6 +411,8 @@ border-radius: 10px !important;
 -webkit-border-radius: 10px !important;
 -moz-border-radius: 10px !important;
 overflow: hidden;
+-webkit-transform: translateZ(0);
+transform: translateZ(0);
     }
     #modalmapcruisingsch{
         height: 600px;
@@ -490,7 +492,8 @@ width: 455px;
 margin:0 auto;
 border: none !important;
 border-radius: 10px;
-
+-webkit-transform: translateZ(0);
+transform: translateZ(0);
     }
     #modalmapcruisingsch{
         height: 300px;
