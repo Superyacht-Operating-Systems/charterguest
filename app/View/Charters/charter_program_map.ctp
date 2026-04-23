@@ -2388,17 +2388,24 @@ var modalmap = L.map('modalmap', {
 // Removed the layer on close the route modal to clear any changes done and not saved.
 // On Opening the modal calling this function to load the layer
 function ReloadModalMaplayer(){
+    // Remove existing tile layers to prevent stacking on repeated opens
+    modalmap.eachLayer(function(layer) {
+        if (layer instanceof L.TileLayer) {
+            modalmap.removeLayer(layer);
+        }
+    });
     var modalmapsatellite = L.tileLayer(mbUrl, {
-                                            id: 'ciurvui5100uz2iqqe929nrlr',
-                                            unloadInvisibleTiles: false,
-                                            reuseTiles: true,
-                                            updateWhenIdle: false,
-                                            continousWorld: true,
-                                            noWrap: false,
-                                            minZoom: 3, maxZoom: 18
-                                    });
-        modalmap.addLayer(modalmapsatellite);
-    }
+        id: 'ciurvui5100uz2iqqe929nrlr',
+        unloadInvisibleTiles: false,
+        reuseTiles: true,
+        updateWhenIdle: false,
+        continousWorld: true,
+        noWrap: false,
+        keepBuffer: 4,
+        minZoom: 3, maxZoom: 18
+    });
+    modalmap.addLayer(modalmapsatellite);
+}
 
 var centerLat = 40.58058466412764;
 var centerLng = -35.85937500000001;
@@ -3636,17 +3643,12 @@ console.log(value._latlng.lng);
                                 }
                                 //console.log(lattitude);
                                 //console.log(longitude);
-                                drawrouteinmodal(frommarker);
-                              
-                                // console.log(selectedmarkertitle);
-                                //modalmap.fitBounds(fitzoommap);
-                                //modalmap.setView(new L.LatLng(lattitude,longitude), 7);
-                                //modalmap.panBy([0,0]);
-                                // console.log(lattitude);  
-                                // console.log(longitude);  
+                                // Invalidate map size first (modal needs time to render),
+                                // then draw routes so markers/bounds use correct dimensions
                                 setTimeout(() => {
                                     modalmap.invalidateSize();
-                                }, 0);
+                                    drawrouteinmodal(frommarker);
+                                }, 400);
                                 $("#modalmap").find('.leaflet-control-attribution').hide();
                                 var myIcon = L.icon({
                                 iconUrl: Wmarker,
@@ -4070,17 +4072,10 @@ $(document).on("click", ".stationarydays", function(e) {
                                 if(stationary_val == 1){
                                     frommarker = "";
                                 }
-                                drawrouteinmodal(frommarker);
-                              
-                                // console.log(selectedmarkertitle);
-                                //modalmap.fitBounds(fitzoommap);
-                                //modalmap.setView(new L.LatLng(lattitude,longitude), 7);
-                                //modalmap.panBy([0,0]);
-                                // console.log(lattitude);  
-                                // console.log(longitude);  
-                                // setTimeout(() => {
-                                //     modalmap.invalidateSize();
-                                // }, 0);
+                                setTimeout(() => {
+                                    modalmap.invalidateSize();
+                                    drawrouteinmodal(frommarker);
+                                }, 400);
                                 $("#modalmap").find('.leaflet-control-attribution').hide();
                                 var myIcon = L.icon({
                                 iconUrl: Wmarker,
@@ -4186,16 +4181,10 @@ if (nextmarkername != "undefined" && nextmarkername != "" && nextmarkername != n
     
 //onsole.log(drawnItemsModalMap);
 setTimeout(() => {
-    modalmap.fitBounds(drawnItemsModalMap.getBounds());
- 
     modalmap.addLayer(drawnItemsModalMap);
-
+    modalmap.fitBounds(drawnItemsModalMap.getBounds(), { padding: [20, 20] });
     drawnItemsModalMap.snakeIn();
-}, 100);
-   
-    setTimeout(() => {
-        modalmap.invalidateSize();
-    }, 0);
+}, 500);
     
 //}
     
@@ -4741,7 +4730,6 @@ if(primaryids.length >= 1){
 }
     });
 
-    var resizeflag = true;
   //  $(document).ready(function () {
     $(document).on("click", "#CruisingButton", function(e) {
 
@@ -4800,12 +4788,9 @@ if(primaryids.length >= 1){
                 });
                 }
                 // Display the map tiles fully loaded in crusing schedule modal small map containers on each row
-                if(resizeflag){  
-                                    setTimeout(function () {
-                                    window.dispatchEvent(new Event("resize"));
-                                    resizeflag=false;  
-                                    }, 100);
-                                }
+                setTimeout(function () {
+                    window.dispatchEvent(new Event("resize"));
+                }, 400);
             //$(".csmp_body").scrollTop(0);
             //$("#hideloader").hide();
         }

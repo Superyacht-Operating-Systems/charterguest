@@ -366,6 +366,11 @@ var modalmapcruisingsch = L.map('modalmapcruisingsch', {
 });
 
 function ReloadModalMaplayerCSMP(){
+    modalmapcruisingsch.eachLayer(function(layer) {
+        if (layer instanceof L.TileLayer) {
+            modalmapcruisingsch.removeLayer(layer);
+        }
+    });
     var modalmapcruisingschsatellite = L.tileLayer(mbUrl, {
                                             id: 'ciurvui5100uz2iqqe929nrlr',
                                             unloadInvisibleTiles: false,
@@ -373,6 +378,7 @@ function ReloadModalMaplayerCSMP(){
                                             updateWhenIdle: false,
                                             continousWorld: true,
                                             noWrap: false,
+                                            keepBuffer: 4,
                                             minZoom: 3, maxZoom: 18
                                     });
                                     modalmapcruisingsch.addLayer(modalmapcruisingschsatellite);
@@ -619,9 +625,8 @@ function markerOnClickCSMP(e) {
     $("#markerModalcruisingsch").show();
 
     setTimeout(function () {
-                            window.dispatchEvent(new Event("resize"));
-                            
-                            }, 100);
+        modalmapcruisingsch.invalidateSize();
+    }, 400);
 
     if (markerArray.length > 0) {
             $('.markersnamesmodalmapcruisingsch').find('option').remove();
@@ -669,10 +674,6 @@ function markerOnClickCSMP(e) {
             frommarker = "";
         }
         drawrouteinmodalCSMP(frommarker);
-
-        setTimeout(() => {
-            modalmapcruisingsch.invalidateSize();
-        }, 0);
         //$("#modalmap").find('.leaflet-control-attribution').hide();
         var myIcon = L.icon({
                                 iconUrl: Wmarker,
@@ -832,16 +833,10 @@ function drawrouteinmodalCSMP(frommarker) { //alert();
         
 //onsole.log(drawnItemsModalMapCSMP);
 setTimeout(() => {
-        modalmapcruisingsch.fitBounds(drawnItemsModalMapCSMP.getBounds());
-     
         modalmapcruisingsch.addLayer(drawnItemsModalMapCSMP);
-
+        modalmapcruisingsch.fitBounds(drawnItemsModalMapCSMP.getBounds(), { padding: [20, 20] });
         drawnItemsModalMapCSMP.snakeIn();
-    }, 100);
-    
-        setTimeout(() => {
-            modalmapcruisingsch.invalidateSize();
-        }, 10);
+    }, 500);
         
     //}
     
