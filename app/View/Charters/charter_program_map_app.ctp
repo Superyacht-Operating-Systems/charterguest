@@ -1907,13 +1907,18 @@ border-radius: 4px;
 }
 .text-below-marker-modalmap {
     font-size: 11px;
-    font-weight: 1px solid;
+    font-weight: bold;
     margin-top: -35px !important;
-    /* margin-left: -3px !important; */
-color: #000;
-background-color: #fff;
-border-radius: 10px;
-    /* z-index:9999 !important; */
+    margin-left: -12px !important;
+    width: 25px;
+    height: 22px;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    color: #000;
+    background-color: transparent !important;
+    border-radius: 0;
+    line-height: 1;
 }
 
 #fancybox-thumbs{
@@ -2775,7 +2780,7 @@ function createModalPinIcon() {
     return L.divIcon({
         html: '<svg xmlns="http://www.w3.org/2000/svg" width="25" height="41" viewBox="0 0 25 41">'
             + '<path d="M12.5 0C5.6 0 0 5.6 0 12.5c0 9.4 12.5 28.5 12.5 28.5S25 21.9 25 12.5C25 5.6 19.4 0 12.5 0z" fill="#00b3f4"/>'
-            + '<circle cx="12.5" cy="12.5" r="6" fill="white"/>'
+            + '<circle cx="12.5" cy="12.5" r="11" fill="white"/>'
             + '</svg>',
         iconSize:   [25, 41],
         iconAnchor: [12, 41],
@@ -3959,7 +3964,7 @@ textarea.addEventListener("input", function() {
                                 var textMarkermodalmap = L.marker([lattitude,longitude], {
                                 icon: L.divIcon({
                                     html: newdaycount,
-                                    className: 'text-below-marker-modalmap',
+                                    className: 'text-below-marker-locsch',
                                     })
                                 });
 
@@ -4063,7 +4068,7 @@ if(modalmapdaynumber < 10 ){
 textMarkermodalmap = L.marker([selectedlat,selectedlong], {
 icon: L.divIcon({
     html: newdaycount,
-    className: 'text-below-marker-modalmap',
+    className: 'text-below-marker-locsch',
     })
 });
 textMarkermodalmap.addTo(modalmap);
@@ -4377,7 +4382,7 @@ $(document).on("click", ".stationarydays", function(e) { //alert();
                                 var textMarkermodalmap = L.marker([lattitude,longitude], {
                                 icon: L.divIcon({
                                     html: newdaycount,
-                                    className: 'text-below-marker-modalmap',
+                                    className: 'text-below-marker-locsch',
                                     })
                                 });
                                 setTimeout(() => {

@@ -10604,7 +10604,6 @@ WHERE cga_menus.UUID = '$uuid'";
                         $targetFullGalleryPathhref = "";
                     }
                     $markerimage = BASE_URL.'/charterguest/app/webroot/css/leaflet/dist/images/marker-icon-itinerary.png';
-                    $markersvg = '<svg xmlns="http://www.w3.org/2000/svg" style="height:35px;width:auto;" viewBox="0 0 25 41"><path d="M12.5 0C5.6 0 0 5.6 0 12.5c0 9.4 12.5 28.5 12.5 28.5S25 21.9 25 12.5C25 5.6 19.4 0 12.5 0z" fill="#00b3f4"/><circle cx="12.5" cy="12.5" r="6" fill="white"/></svg>';
                     //echo "<pre>"; print_r($titleimage); exit;
                     $val_pass = '"'.$title.'"';
                     //$CruisingMapCommentConditons = "activity_id = '$programScheduleUUID' AND activity_name = $val_pass AND type = 'schedule' AND publish_map = '1'";
@@ -10660,7 +10659,7 @@ WHERE cga_menus.UUID = '$uuid'";
                     <form id="scheduleFormEdit"><div class="inputContainerdiv">
                     <div class="Marker_container_div">
                     <div class="marker_desc_div">
-                    <div><span style="display: inline-block;position: relative;">'.$markersvg.'<span style="position: absolute;color:#000;top: 6px;right: 0px;left: 0px;text-align: center;font-size: 12px;">'.$dayNum.'</span></span>
+                    <div><span style="display: inline-block;position: relative;"><img src="'.$markerimage.'" style="object-fit: cover; height: 35px;" alt="" ><span style="position: absolute;color:#000;top: 6px;right: 0px;left: -1px;text-align: center;font-size: 12px;">'.$dayNum.'</span></span>
                     <input id="title_'.$scheduleData[0]['CharterProgramSchedule']['id'].'" type="text" name="title" value="'.htmlspecialchars($title).'" placeholder="Enter the Title" class="loc_name" '.$readonly.' >
                     <ul class="action-icon"><li><i class="'.$facomment.' fa-comments crew_comment_cruisingmaptitle"  style="'.$colorcodetitle.$displaynone.'" data-rel="'.$scheduleData[0]['CharterProgramSchedule']['UUID'].'" data-yachtid="'.$yacht_id.'" data-tempname="'.htmlspecialchars($daytitle).'"><input type="hidden" name=commentstitle value="" class="messagecommentstitle" /></i></li></ul>
                     </div>
@@ -11015,7 +11014,6 @@ WHERE cga_menus.UUID = '$uuid'";
 
                         
                         $markerimage = BASE_URL.'/charterguest/app/webroot/css/leaflet/dist/images/marker-icon-itinerary.png';
-                    $markersvg = '<svg xmlns="http://www.w3.org/2000/svg" style="height:35px;width:auto;" viewBox="0 0 25 41"><path d="M12.5 0C5.6 0 0 5.6 0 12.5c0 9.4 12.5 28.5 12.5 28.5S25 21.9 25 12.5C25 5.6 19.4 0 12.5 0z" fill="#00b3f4"/><circle cx="12.5" cy="12.5" r="6" fill="white"/></svg>';
                         
                         $readonly = "readonly";
                         $popupHtml .= '<div class="mapPopup sp-mp-detailsrow" data-schuuid="'.$scheduleData['CharterProgramSchedule']['UUID'].'">
@@ -11023,7 +11021,7 @@ WHERE cga_menus.UUID = '$uuid'";
                        <form id="scheduleFormEdit"><div class="inputContainer_div">
                         <div class="loc_desc_div">
                         <div>
-                        <span style="display: inline-block;position: relative;">'.$markersvg.'
+                        <span style="display: inline-block;position: relative;"><img src="'.$markerimage.'" style="object-fit: cover; height: 35px;" alt="" >
                         <span style="position: absolute;color:#000;top: 6px;right: 0px;left: -1px;text-align: center;font-size: 12px;">'.$dayNum.'</span></span>
                            <input type="text" name="title" value="'.htmlspecialchars($title).'" placeholder="Enter the Title" class="loc_name" '.$readonly.'>
                             <ul class="action-icon"><li><i class="fa fa-comments " style="color: #00a8f3;float: right;"></i></li></ul>
@@ -11147,7 +11145,6 @@ WHERE cga_menus.UUID = '$uuid'";
 
                         
                         $markerimage = BASE_URL.'/charterguest/app/webroot/css/leaflet/dist/images/marker-icon-itinerary.png';
-                    $markersvg = '<svg xmlns="http://www.w3.org/2000/svg" style="height:35px;width:auto;" viewBox="0 0 25 41"><path d="M12.5 0C5.6 0 0 5.6 0 12.5c0 9.4 12.5 28.5 12.5 28.5S25 21.9 25 12.5C25 5.6 19.4 0 12.5 0z" fill="#00b3f4"/><circle cx="12.5" cy="12.5" r="6" fill="white"/></svg>';
                         
                         $readonly = "readonly";
                         $popupHtml .= '<div class="mapPopup sp-mp-detailsrow" data-schuuid="'.$scheduleData['CharterProgramSchedule']['UUID'].'">
@@ -11155,7 +11152,7 @@ WHERE cga_menus.UUID = '$uuid'";
                        <form id="scheduleFormEdit"><div class="inputContainer_div">
                         <div class="loc_desc_div">
                         <div>
-                        <span style="display: inline-block;position: relative;">'.$markersvg.'
+                        <span style="display: inline-block;position: relative;"><img src="'.$markerimage.'" style="object-fit: cover; height: 35px;" alt="" >
                         <span style="position: absolute;color:#000;top: 4.5px;right: 0px;left: -2px;text-align: center;font-size: 14px;">'.$dayNum.'</span></span>
                            <input type="text" name="title" value="'.htmlspecialchars($title).'" placeholder="Enter the Title" class="loc_name" '.$readonly.'>
                             <ul class="action-icon"><li><i class="fa fa-comments " style="color: #00a8f3;float: right;"></i></li></ul>
