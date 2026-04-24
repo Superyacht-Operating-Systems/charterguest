@@ -1908,7 +1908,7 @@ border-radius: 4px;
 .text-below-marker-modalmap {
     font-size: 11px;
     font-weight: bold;
-    margin-top: -41px !important;
+    margin-top: -43px !important;
     margin-left: -12px !important;
     width: 25px;
     height: 22px;
