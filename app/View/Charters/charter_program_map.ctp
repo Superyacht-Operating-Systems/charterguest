@@ -1931,7 +1931,7 @@ z-index:999 !important;
     font-size: 11px;
     font-weight: bold;
     margin-top: -43px !important;
-    margin-left: -12px !important;
+    margin-left: -3px !important;
     width: 25px;
     height: 22px;
     display: flex !important;
