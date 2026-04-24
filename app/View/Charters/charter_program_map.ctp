@@ -1929,12 +1929,18 @@ z-index:999 !important;
 }
 .text-below-marker-modalmap {
     font-size: 11px;
-    font-weight: 1px solid;
-    margin-top: -35px !important;
-    /* margin-left: -3px !important; */
-color: #000;
-background-color: #fff;
-border-radius: 10px;
+    font-weight: bold;
+    margin-top: -41px !important;
+    margin-left: -12px !important;
+    width: 25px;
+    height: 22px;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    color: #000;
+    background-color: transparent !important;
+    border-radius: 0;
+    line-height: 1;
 }
 
 .text-below-marker-locsch {
